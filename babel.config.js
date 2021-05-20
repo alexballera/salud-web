@@ -7,6 +7,7 @@ module.exports = {
           "node": "current"
         }
       }
-    ]
-  ]
+    ],
+  ],
+  "plugins": ["@babel/plugin-transform-react-jsx"]
 }
