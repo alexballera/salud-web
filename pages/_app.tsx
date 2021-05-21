@@ -1,5 +1,7 @@
-import React from 'react'
+import * as React from 'react'
+
 import '../styles/globals.scss'
+import 'bootstrap/dist/css/bootstrap.css'
 
 interface IProps {
   Component: any
@@ -7,8 +9,6 @@ interface IProps {
 }
 
 function MyApp({ Component, pageProps }: IProps): JSX.Element {
-  console.log({ type: typeof Component })
-
   return <Component {...pageProps} />
 }
 
