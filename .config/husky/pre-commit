@@ -1,0 +1,37 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+# 😺 😸 😹 😻 😼 😽 🙀 😿 😾
+
+branch=$(git branch | grep '*' | sed 's/* //')
+SPLIT_BRANCH_TYPE=(${branch//\// })
+
+DISABLED_BRANCHES=("develop" "main")
+
+#! Branches for main or develop 
+ALLOWED_PREFIX_BRANCHES=("feature" "bugfix" "subtask" "release" "hotfix")
+echo "${SPLIT_BRANCH_TYPE[0]}"
+if [[ "${DISABLED_BRANCHES[@]}" =~ "$branch" ]]; then
+  echo "🙀 Branch protected: You can't commit directly to $branch branch"
+  exit 1
+fi
+
+if [[ ! "${ALLOWED_PREFIX_BRANCHES[@]}" =~ "${SPLIT_BRANCH_TYPE[0]}" ]]; then
+  echo "😿 Branch prefix error: Invalid branch name
+Please review documentation about Branches & Commits standard
+https://app.archbee.io/docs/r-zbVqkgwWBSnmUqKMaNH/p5KNhb22k4W3mxvqr-V_l
+
+Prefix allowed:
+    - feature/SLD-XX
+    - bugfix/SLD-XX
+    - release/SLD-XX
+    - hotfix/SLD-XX
+    - subtask/SLD-XX
+
+To change the name of your branch we must execute the following GIT command placed on the branch to be modified
+git branch -m newBranchName
+    "
+    exit 125;
+fi
+
+npx pretty-quick --staged
+npm run lint 
