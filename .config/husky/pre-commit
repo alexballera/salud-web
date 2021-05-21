@@ -9,7 +9,7 @@ DISABLED_BRANCHES=("develop" "main")
 
 #! Branches for main or develop 
 ALLOWED_PREFIX_BRANCHES=("feature" "bugfix" "subtask" "release" "hotfix")
-echo "${SPLIT_BRANCH_TYPE[0]}"
+
 if [[ "${DISABLED_BRANCHES[@]}" =~ "$branch" ]]; then
   echo "🙀 Branch protected: You can't commit directly to $branch branch"
   exit 1
