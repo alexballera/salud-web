@@ -1,10 +1,12 @@
+import { Box } from '@material-ui/core'
 import React from 'react'
+import Navbar from '../Navbar'
 
-export default function Layout({ children }: any): React.ReactNode {
+export default function Layout({ children }: any): JSX.Element {
   return (
-    <div>
-      Layout
-      <main>{children}</main>
-    </div>
+    <>
+      <Navbar />
+      <Box component="main">{children}</Box>
+    </>
   )
 }
