@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
+import Image from 'next/image'
 
 /// MATERIAL UI
 import Box from '@material-ui/core/Box'
@@ -33,18 +34,16 @@ export default function LoginPage(): JSX.Element {
       </Head>
 
       <Box component="main" className={styles.main}>
-        <Grid container component="ul" className={styles.mainList}>
-          <Grid item xs={12} md={8} justify="center" component="li">
+        <Button startIcon={<ArrowBackIcon />}>Volver</Button>
+        <Grid container component="ul" spacing={3} className={styles.mainList}>
+          <Grid item xs={12} md={6} component="li" className={styles.loginForm}>
             <Card className={styles.card}>
               <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <Button startIcon={<ArrowBackIcon />}>Volver</Button>
-                </Grid>
                 <Grid item xs={12}>
                   <Typography variant="h6">Inicie sesión</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <form>
+                  <form className={styles.formContainer}>
                     <Grid
                       container
                       component="ul"
@@ -78,6 +77,7 @@ export default function LoginPage(): JSX.Element {
                         xs={12}
                         component="li"
                         justify="center"
+                        alignItems="center"
                         className={styles.formButton}
                       >
                         <Button
@@ -97,7 +97,7 @@ export default function LoginPage(): JSX.Element {
           <Grid
             item
             xs={12}
-            md={4}
+            md={3}
             component="li"
             justify="center"
             direction="column"
@@ -109,7 +109,7 @@ export default function LoginPage(): JSX.Element {
             <Button variant="contained" fullWidth={true} color="secondary">
               CREAR CUENTA
             </Button>
-            <img src={registerImage} />
+            <Image src="/images/register.png" width="400" height="290" />
           </Grid>
         </Grid>
       </Box>
