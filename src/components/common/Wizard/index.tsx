@@ -32,6 +32,7 @@ function TabPanel({ data, value, index, ...other }: ITabPanelProps) {
             {data.title}
           </Typography>
           <Typography>{data.description}</Typography>
+          {data.component}
         </Box>
       )}
     </div>
