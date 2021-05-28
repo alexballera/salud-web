@@ -1,9 +1,14 @@
-import * as React from 'react'
+import React from 'react'
 import { NextPage } from 'next/types'
 
 /// MATERIAL UI
-import Button from '@material-ui/core/Button'
+import Box from '@material-ui/core/Box'
+import Typography from '@material-ui/core/Typography'
 /// MATERIAL UI END
+
+/// OWN COMPONENTS
+import Navbar from '../components/Navbar'
+/// OWN COMPONENTS END
 
 /// STYLES & TYPES
 import styles from '../styles/Home.module.scss'
@@ -11,16 +16,11 @@ import styles from '../styles/Home.module.scss'
 
 const HomePage: NextPage = (): JSX.Element => {
   return (
-    <div className={styles.container}>
-      Hello Next.js
-      <div className="row">
-        <div className="col-md-4">A</div>
-        <div className="col-md-4">B</div>
-        <Button color="primary" variant="contained">
-          My App
-        </Button>
-      </div>
-    </div>
+    <>
+      <Box component="main">
+        <Typography variant="h1">Landing Page</Typography>
+      </Box>
+    </>
   )
 }
 
