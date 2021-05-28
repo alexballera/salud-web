@@ -4,6 +4,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 /// UTILS
 import theme from '../utils/theme'
+import Layout from '../components/common/Layout'
 /// UTILS END
 
 class MyDocument extends Document {

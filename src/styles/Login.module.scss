@@ -1,0 +1,112 @@
+@import './variables.scss';
+
+.main {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.formContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  padding: 0;
+  margin: 0 !important;
+  max-width: 500px !important;
+  & > li {
+    display: flex;
+    list-style: none;
+  }
+}
+
+.mainList {
+  padding-left: 0 !important;
+  justify-content: center;
+
+  & > li {
+    align-items: center;
+  }
+
+  @media screen and (max-width: $sm) {
+    & {
+      justify-content: flex-start;
+    }
+  }
+
+  & > li {
+    display: flex;
+    list-style: none;
+
+    @media screen and (min-width: $sm) {
+      & {
+        align-items: center;
+      }
+    }
+
+    @media screen and (min-width: $md) {
+      & {
+        height: calc(100vh - 64px);
+      }
+    }
+  }
+}
+
+.formButton {
+  padding-left: 32px !important;
+  padding-right: 32px !important;
+
+  & button {
+    max-width: 200px
+  }
+
+  & img {
+    display: none !important;
+
+    @media screen and (min-width: $md) {
+      display: block !important;
+    }
+  }
+}
+
+.card {
+  @media screen and (max-width: $sm) {
+    & {
+      padding: 0;
+      background-color: transparent !important;
+      border-style: none !important;
+      box-shadow: none !important;
+    }
+  }
+
+  @media screen and (max-width: $md) {
+    & {
+      padding: 13px;
+      max-width: 526px;
+    }
+  }
+
+  @media screen and (min-width: $md) {
+    & {
+      padding: 13px;
+      max-width: 526px;
+      padding-bottom: 8em
+    }
+  }
+}
+
+.registerText {
+  @media screen and (min-width: $md) {
+    font-size: 18px !important;
+    font-weight: bold !important;
+  }
+}
+
+.loginForm {
+  justify-content: center;
+
+  @media screen and (min-width: $md) {
+    justify-content: flex-end;
+  }
+}

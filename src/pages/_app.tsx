@@ -10,6 +10,8 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { ThemeProvider } from '@material-ui/core/styles'
 // Utils
 import theme from '../utils/theme'
+import Layout from '../components/common/Layout'
+import AppProvider from '../context/AppProvider'
 
 const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
   React.useEffect(() => {
@@ -30,8 +32,12 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
         />
       </Head>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Component {...pageProps} />
+        <AppProvider>
+          <CssBaseline />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </AppProvider>
       </ThemeProvider>
     </>
   )

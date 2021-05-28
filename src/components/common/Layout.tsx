@@ -1,10 +1,15 @@
-import React from 'react'
+import { Box } from '@material-ui/core'
+import React, { PropsWithChildren } from 'react'
+import Navbar from '../Navbar'
 
-export default function Layout({ children }: any): React.ReactNode {
+export default function Layout({
+  children
+}: PropsWithChildren<void>): JSX.Element {
   return (
-    <div>
-      Layout
-      <main>{children}</main>
-    </div>
+    <>
+      <Navbar />
+
+      <Box component="main">{children}</Box>
+    </>
   )
 }
