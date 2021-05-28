@@ -1,8 +1,14 @@
-import { AppBar, Button, Toolbar, Typography } from '@material-ui/core'
 import React from 'react'
 import Link from 'next/link'
-import styles from '../../styles/Navbar.module.scss'
-import { useRouter } from 'next/dist/client/router'
+import { useRouter } from 'next/router'
+
+/// MATERIAL UI
+import { AppBar, Button, Toolbar, Typography } from '@material-ui/core'
+/// MATERIAL UI END
+
+/// STYLES & TYPES
+import styles from './styles.module.scss'
+/// STYLES & TYPES END
 
 export default function Navbar(): JSX.Element {
   const router = useRouter()

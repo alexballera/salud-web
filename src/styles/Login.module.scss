@@ -60,6 +60,14 @@
   & button {
     max-width: 200px
   }
+
+  & img {
+    display: none !important;
+
+    @media screen and (min-width: $md) {
+      display: block !important;
+    }
+  }
 }
 
 .card {

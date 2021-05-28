@@ -6,16 +6,16 @@ import Image from 'next/image'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import { Button, Card, Grid, Snackbar, TextField } from '@material-ui/core'
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
-import Navbar from '../components/Navbar'
-import registerImage from '../assets/images/register.png'
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
 import styles from '../styles/Login.module.scss'
-import { Button, Card, Grid, TextField } from '@material-ui/core'
+import { loginService } from '../services/auth.service'
+import { withAppContext } from '../context'
 /// STYLES & TYPES END
 
 const InitialState = {
@@ -23,10 +23,36 @@ const InitialState = {
   password: ''
 }
 
-export default function LoginPage(): JSX.Element {
+const InitialErrorState = {
+  message: '',
+  open: false
+}
+
+function LoginPage(): JSX.Element {
   const [state, setState] = useState(InitialState)
+  const [errorState, setErrorState] = useState(InitialErrorState)
   const _handleFieldChange = field => e =>
     setState(prevState => ({ ...prevState, [field]: e.target.value }))
+
+  const _handleSubmit = () => {
+    loginService(state.email, state.password)
+      .then(response => {
+        console.log(response)
+      })
+      .catch(err => {
+        console.error({ ...err })
+        _handleError(true, err.response.data.error.message)
+      })
+  }
+
+  const _handleError = (open: boolean, message?: string) => {
+    setErrorState(prevState => ({
+      ...prevState,
+      message: message || prevState.message,
+      open
+    }))
+  }
+
   return (
     <>
       <Head>
@@ -84,6 +110,7 @@ export default function LoginPage(): JSX.Element {
                           variant="contained"
                           fullWidth={true}
                           color="primary"
+                          onClick={_handleSubmit}
                         >
                           INICIAR SESIÓN
                         </Button>
@@ -113,6 +140,14 @@ export default function LoginPage(): JSX.Element {
           </Grid>
         </Grid>
       </Box>
+
+      <Snackbar
+        open={errorState.open}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        message={errorState.message}
+      />
     </>
   )
 }
+
+export default withAppContext(LoginPage)
