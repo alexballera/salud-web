@@ -1,10 +1,9 @@
-import React from 'react'
-import { ServerStyleSheets } from '@material-ui/core/styles'
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import React from 'react';
+import { ServerStyleSheets } from '@material-ui/core/styles';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 /// UTILS
-import theme from '../utils/theme'
-import Layout from '../components/common/Layout'
+import theme from '../utils/theme';
 /// UTILS END
 
 class MyDocument extends Document {
@@ -13,17 +12,51 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta name="theme-color" content={theme.palette.primary.main} />
+          <meta name="application-name" content="OMN1 Salud" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+          <meta name="apple-mobile-web-app-title" content="OMN1 Salud" />
+          <meta name="description" content="OMN1 Salud es telemedicina" />
+          <meta name="format-detection" content="telephone=no" />
+          <meta name="mobile-web-app-capable" content="yes" />
+          <meta name="msapplication-config" content="/static/icons/browserconfig.xml" />
+          <meta name="msapplication-TileColor" content="#2B5797" />
+          <meta name="msapplication-tap-highlight" content="no" />
+          <meta name="theme-color" content="#000000" />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
           />
+          <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png" />
+          <link rel="apple-touch-icon" sizes="152x152" href="/static/icons/apple-touch-icon.png" />
+          <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png" />
+          <link rel="apple-touch-icon" sizes="167x167" href="/static/icons/apple-touch-icon.png" />
+
+          <link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicon-32x32.png" />
+          <link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png" />
+          <link rel="manifest" href="/manifest.json" />
+          <link rel="mask-icon" href="/static/icons/safari-pinned-tab.svg" color="#5bbad5" />
+          <link rel="shortcut icon" href="/favicon.ico" />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+          />
+
+          {/* apple splash screen images */}
+          {/* <link rel='apple-touch-startup-image' href='/static/images/apple_splash_2048.png' sizes='2048x2732' />
+<link rel='apple-touch-startup-image' href='/static/images/apple_splash_1668.png' sizes='1668x2224' />
+<link rel='apple-touch-startup-image' href='/static/images/apple_splash_1536.png' sizes='1536x2048' />
+<link rel='apple-touch-startup-image' href='/static/images/apple_splash_1125.png' sizes='1125x2436' />
+<link rel='apple-touch-startup-image' href='/static/images/apple_splash_1242.png' sizes='1242x2208' />
+<link rel='apple-touch-startup-image' href='/static/images/apple_splash_750.png' sizes='750x1334' />
+<link rel='apple-touch-startup-image' href='/static/images/apple_splash_640.png' sizes='640x1136' /> */}
         </Head>
         <body>
           <Main />
           <NextScript />
         </body>
       </Html>
-    )
+    );
   }
 }
 
@@ -53,24 +86,21 @@ MyDocument.getInitialProps = async ctx => {
   // 4. page.render
 
   // Render app and page and get the context of the page with collected side effects.
-  const sheets = new ServerStyleSheets()
-  const originalRenderPage = ctx.renderPage
+  const sheets = new ServerStyleSheets();
+  const originalRenderPage = ctx.renderPage;
 
   ctx.renderPage = () =>
     originalRenderPage({
       enhanceApp: App => props => sheets.collect(<App {...props} />)
-    })
+    });
 
-  const initialProps = await Document.getInitialProps(ctx)
+  const initialProps = await Document.getInitialProps(ctx);
 
   return {
     ...initialProps,
     // Styles fragment is rendered after the app and page rendering finish.
-    styles: [
-      ...React.Children.toArray(initialProps.styles),
-      sheets.getStyleElement()
-    ]
-  }
-}
+    styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()]
+  };
+};
 
-export default MyDocument
+export default MyDocument;

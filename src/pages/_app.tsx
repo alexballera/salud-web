@@ -1,26 +1,25 @@
-import * as React from 'react'
-
-import '../styles/globals.scss'
-import 'bootstrap/dist/css/bootstrap.css'
+import { useEffect } from 'react';
+import '../styles/globals.scss';
+import 'bootstrap/dist/css/bootstrap.css';
 // Modules
-import Head from 'next/head'
-import { AppProps } from 'next/app'
+import Head from 'next/head';
+import { AppProps } from 'next/app';
 // MUI Core
-import CssBaseline from '@material-ui/core/CssBaseline'
-import { ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
 // Utils
-import theme from '../utils/theme'
-import Layout from '../components/common/Layout'
-import AppProvider from '../context/AppProvider'
+import theme from '../utils/theme';
+import Layout from '../components/common/Layout';
+import AppProvider from '../context/AppProvider';
 
 const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
-  React.useEffect(() => {
+  useEffect(() => {
     // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector('#jss-server-side')
+    const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles && jssStyles.parentElement) {
-      jssStyles.parentElement.removeChild(jssStyles)
+      jssStyles.parentElement.removeChild(jssStyles);
     }
-  }, [])
+  }, []);
 
   return (
     <>
@@ -28,7 +27,7 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
         <title>My App</title>
         <meta
           name="viewport"
-          content="minimum-scale=1, initial-scale=1, width=device-width"
+          content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
         />
       </Head>
       <ThemeProvider theme={theme}>
@@ -40,7 +39,7 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
         </AppProvider>
       </ThemeProvider>
     </>
-  )
-}
+  );
+};
 
-export default MyApp
+export default MyApp;
