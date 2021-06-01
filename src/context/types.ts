@@ -3,6 +3,7 @@ export type AppStates = {
   user: any
   loggedIn: boolean
   fetching: boolean
+  errorState: { open: boolean; message: string }
 }
 
 export type Props = {

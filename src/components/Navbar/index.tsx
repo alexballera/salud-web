@@ -8,20 +8,25 @@ import { AppBar, Button, Toolbar, Typography } from '@material-ui/core'
 
 /// STYLES & TYPES
 import styles from './styles.module.scss'
+import { withAppContext } from '../../context'
 /// STYLES & TYPES END
 
-export default function Navbar(): JSX.Element {
+function Navbar({ loggedIn }: { loggedIn: boolean }): JSX.Element {
   const router = useRouter()
 
   const _drawAction = () => {
-    if (router?.pathname === '/login' || router?.pathname === '/signup') {
-      return <></>
+    if (!loggedIn) {
+      if (router?.pathname === '/login' || router?.pathname === '/signup') {
+        return <></>
+      } else {
+        return (
+          <Link href="login">
+            <Button color="inherit">INGRESAR</Button>
+          </Link>
+        )
+      }
     } else {
-      return (
-        <Link href="login">
-          <Button color="inherit">INGRESAR</Button>
-        </Link>
-      )
+      return <></>
     }
   }
 
@@ -34,3 +39,5 @@ export default function Navbar(): JSX.Element {
     </AppBar>
   )
 }
+
+export default withAppContext(Navbar)
