@@ -1,29 +1,29 @@
-import React, { useState } from 'react'
-import { AppContext } from './index'
+import React, { useState } from 'react';
+import { AppContext } from './index';
 // TYPES
-import { AppStates, Props } from './types'
+import { AppStates, Props } from './types';
 
 const initialStates: AppStates = {
   user: null,
   loggedIn: false,
   fetching: false,
   errorState: { open: false, message: '' }
-}
+};
 
 export default function AppProvider({ children }: Props): JSX.Element {
-  const [state, setState] = useState(initialStates)
+  const [state, setState] = useState(initialStates);
 
   const handleLogin = user => {
-    setState(prevState => ({ ...prevState, user, loggedIn: true }))
-  }
+    setState(prevState => ({ ...prevState, user, loggedIn: true }));
+  };
 
   const handleLoading = (isLoading = !state.fetching): void => {
-    setState(prevState => ({ ...prevState, fetching: isLoading }))
-  }
+    setState(prevState => ({ ...prevState, fetching: isLoading }));
+  };
 
   const handleError = (open: boolean, message = '') => {
-    setState(prevState => ({ ...prevState, errorState: { open, message } }))
-  }
+    setState(prevState => ({ ...prevState, errorState: { open, message } }));
+  };
 
   return (
     <AppContext.Provider
@@ -36,5 +36,5 @@ export default function AppProvider({ children }: Props): JSX.Element {
     >
       {children}
     </AppContext.Provider>
-  )
+  );
 }

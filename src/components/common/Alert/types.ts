@@ -1,3 +1,3 @@
 export type IProps = {
-  variant: 'success' | 'error' | 'warning'
-}
+  variant: 'success' | 'error' | 'warning';
+};
