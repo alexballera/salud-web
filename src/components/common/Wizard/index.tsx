@@ -1,20 +1,16 @@
-import React, { useState } from 'react'
-import SwipeableViews from 'react-swipeable-views'
+import React, { useState } from 'react';
+import SwipeableViews from 'react-swipeable-views';
 
 /// TYPES
-import {
-  IWizardProps,
-  ITabPanelProps,
-  IWizardDataSourceItem
-} from './index.types'
+import { IWizardProps, ITabPanelProps, IWizardDataSourceItem } from './index.types';
 
 /// MATERIAL-UI
-import Tab from '@material-ui/core/Tab'
-import Box from '@material-ui/core/Box'
-import Tabs from '@material-ui/core/Tabs'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles'
+import Tab from '@material-ui/core/Tab';
+import Box from '@material-ui/core/Box';
+import Tabs from '@material-ui/core/Tabs';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 /// MATERIAL-UI END
 
 function TabPanel({ data, value, index, ...other }: ITabPanelProps) {
@@ -36,14 +32,14 @@ function TabPanel({ data, value, index, ...other }: ITabPanelProps) {
         </Box>
       )}
     </div>
-  )
+  );
 }
 
 function a11yProps(index: number) {
   return {
     id: `full-width-tab-${index}`,
     'aria-controls': `full-width-tabpanel-${index}`
-  }
+  };
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -51,20 +47,20 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
     backgroundColor: theme.palette.background.paper
   }
-}))
+}));
 
 function Wizard({ dataSource }: IWizardProps): JSX.Element {
-  const theme = useTheme()
-  const classes = useStyles()
-  const [value, setValue] = useState<number>(0)
+  const theme = useTheme();
+  const classes = useStyles();
+  const [value, setValue] = useState<number>(0);
 
   const handleChange = (_event, newValue: number): void => {
-    setValue(newValue)
-  }
+    setValue(newValue);
+  };
 
   const handleChangeIndex = (index: number) => {
-    setValue(index)
-  }
+    setValue(index);
+  };
 
   return (
     <section className={classes.root}>
@@ -87,19 +83,13 @@ function Wizard({ dataSource }: IWizardProps): JSX.Element {
           onChangeIndex={handleChangeIndex}
         >
           {dataSource.map((data, i) => (
-            <TabPanel
-              key={i}
-              dir={theme.direction}
-              data={data}
-              value={value}
-              index={i}
-            />
+            <TabPanel key={i} dir={theme.direction} data={data} value={value} index={i} />
           ))}
         </SwipeableViews>
       </Paper>
     </section>
-  )
+  );
 }
 
-export default Wizard
-export type { IWizardDataSourceItem }
+export default Wizard;
+export type { IWizardDataSourceItem };

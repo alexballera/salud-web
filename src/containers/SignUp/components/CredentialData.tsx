@@ -1,14 +1,14 @@
-import React from 'react'
-import { FormikProps } from 'formik'
+import React from 'react';
+import { FormikProps } from 'formik';
 /// TYPES
-import { ICredentialDataForm } from '../index.types'
+import { ICredentialDataForm } from '../index.types';
 /// MATERIAL-UI
-import Switch from '@material-ui/core/Switch'
-import Checkbox from '@material-ui/core/Checkbox'
-import TextField from '@material-ui/core/TextField'
-import FormGroup from '@material-ui/core/FormGroup'
-import FormControl from '@material-ui/core/FormControl'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Switch from '@material-ui/core/Switch';
+import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 /// MATERIAL-UI END
 
 function ExtraData({
@@ -67,12 +67,7 @@ function ExtraData({
         />
         <FormControlLabel
           control={
-            <Checkbox
-              checked={values.terms}
-              onChange={handleChange}
-              name="terms"
-              color="primary"
-            />
+            <Checkbox checked={values.terms} onChange={handleChange} name="terms" color="primary" />
           }
           label="Acepto terminos y condiciones"
         />
@@ -89,7 +84,7 @@ function ExtraData({
         />
       </FormGroup>
     </div>
-  )
+  );
 }
 
-export default ExtraData
+export default ExtraData;

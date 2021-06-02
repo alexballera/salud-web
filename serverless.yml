@@ -1,0 +1,10 @@
+name: web-telemedicina
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  config: serverless-files/${self:custom.stage}/config.yml
+  fullName: ${self:name}-${self:custom.stage}
+
+nextApp:
+  component: './node_modules/@sls-next/serverless-component'
+  env: ${file(${self:custom.config}):environment}
