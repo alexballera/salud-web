@@ -15,7 +15,7 @@ import { Button, Card, Grid, TextField } from '@material-ui/core';
 
 /// OWN COMPONENTS
 import { withAppContext } from '../context';
-import { loginService } from '../services/auth.service';
+import loginService from '../services/auth.service';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
@@ -50,7 +50,6 @@ function LoginPage({
         router.replace('/main');
       })
       .catch(err => {
-        console.error({ ...err });
         if (err.response) handleError(true, err.response.data.error.message);
         else
           handleError(
@@ -95,40 +94,45 @@ function LoginPage({
                           spacing={3}
                           className={styles.form}
                         >
-                          <Grid item xs={12} component="li" justify="center">
+                          <Grid item xs={12} component="li">
                             <TextField
-                              label="Correo electronico"
+                              inputProps={{
+                                'aria-label': 'Correo electrónico'
+                              }}
+                              label="Correo electrónico"
                               name="email"
                               type="email"
                               fullWidth={true}
                               value={values.email}
                               onChange={handleChange}
-                              error={errors.email}
+                              error={!!errors.email}
                               helperText={errors.email || undefined}
+                              data-testid="email-field"
                             />
                           </Grid>
-                          <Grid item xs={12} component="li" justify="center">
+                          <Grid item xs={12} component="li">
                             <TextField
+                              inputProps={{ 'aria-label': 'Contraseña' }}
+                              aria-label="Contraseña"
                               label="Contraseña"
                               name="password"
                               type="password"
                               fullWidth={true}
                               value={values.password}
                               onChange={handleChange}
-                              error={errors.password}
+                              error={!!errors.password}
                               helperText={errors.password || undefined}
+                              data-testid="password-field"
                             />
                           </Grid>
-                          <Grid item xs={12} component="li" justify="flex-end">
+                          <Grid item xs={12} component="li" className="MuiGrid-justify-xs-flex-end">
                             <Button>¿Olvidó su contraseña?</Button>
                           </Grid>
                           <Grid
                             item
                             xs={12}
                             component="li"
-                            justify="center"
-                            alignItems="center"
-                            className={styles.formButton}
+                            className={`${styles.formButton} MuiGrid-justify-xs-center`}
                           >
                             <Button
                               type="submit"
@@ -136,7 +140,7 @@ function LoginPage({
                               fullWidth={true}
                               color="primary"
                               disabled={isLoading || Object.keys(errors).length > 0}
-                              test-id="login-button"
+                              data-testid="login-button"
                             >
                               INICIAR SESIÓN
                             </Button>
@@ -154,9 +158,7 @@ function LoginPage({
             xs={12}
             md={3}
             component="li"
-            justify="center"
-            direction="column"
-            className={styles.formButton}
+            className={`${styles.formButton} MuiGrid-justify-xs-center MuiGrid-direction-xs-column`}
           >
             <Typography variant="body1" className={styles.registerText}>
               ¿Aún no está registrado en OMNiSalud?
@@ -164,7 +166,7 @@ function LoginPage({
             <Button variant="contained" fullWidth={true} color="secondary">
               CREAR CUENTA
             </Button>
-            <Image src="/images/register.png" width="400" height="290" />
+            <Image src="/images/register.png" width="400" height="290" alt="" />
           </Grid>
         </Grid>
       </Box>

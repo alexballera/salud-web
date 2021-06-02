@@ -3,7 +3,7 @@ import { AppContext } from './index';
 // TYPES
 import { AppStates, Props } from './types';
 
-const initialStates: AppStates = {
+export const initialStates: AppStates = {
   user: null,
   loggedIn: false,
   fetching: false,

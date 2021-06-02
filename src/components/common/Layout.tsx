@@ -1,17 +1,17 @@
-import { Box, Snackbar, Typography } from '@material-ui/core'
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline'
-import React, { PropsWithChildren } from 'react'
-import { withAppContext } from '../../context'
-import Navbar from '../Navbar'
-import Alert from './Alert'
+import { Box, Snackbar, Typography } from '@material-ui/core';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import React, { PropsWithChildren } from 'react';
+import { withAppContext } from '../../context';
+import Navbar from './Navbar';
+import Alert from './Alert';
 
 export default withAppContext(function Layout({
   children,
   errorState,
   handleError
 }: PropsWithChildren<{
-  errorState: { open: boolean; message: string }
-  handleError: (open: boolean, message?: string) => void
+  errorState: { open: boolean; message: string };
+  handleError: (open: boolean, message?: string) => void;
 }>): JSX.Element {
   return (
     <>
@@ -33,5 +33,5 @@ export default withAppContext(function Layout({
         </Alert>
       </Snackbar>
     </>
-  )
-})
+  );
+});

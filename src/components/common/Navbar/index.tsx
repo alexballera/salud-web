@@ -8,7 +8,7 @@ import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
 
 /// STYLES & TYPES
 import styles from './styles.module.scss';
-import { withAppContext } from '../../context';
+import { withAppContext } from '../../../context';
 /// STYLES & TYPES END
 
 function Navbar({ loggedIn }: { loggedIn: boolean }): JSX.Element {
@@ -21,7 +21,9 @@ function Navbar({ loggedIn }: { loggedIn: boolean }): JSX.Element {
       } else {
         return (
           <Link href="login">
-            <Button color="inherit">INGRESAR</Button>
+            <Button color="inherit" data-testid="login-button">
+              INGRESAR
+            </Button>
           </Link>
         );
       }

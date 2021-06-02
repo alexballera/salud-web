@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
-import Navbar from '../components/Navbar';
+
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES

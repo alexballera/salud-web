@@ -10,6 +10,7 @@ export default function Alert({ children, variant }: PropsWithChildren<IProps>):
       borderRadius="5px"
       color="white"
       display="flex"
+      data-testid="alert-element"
     >
       {children}
     </Box>
