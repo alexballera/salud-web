@@ -1,57 +1,57 @@
-import React, { useState } from 'react';
-import Head from 'next/head';
-import Image from 'next/image';
+import React, { useState } from 'react'
+import Head from 'next/head'
+import Image from 'next/image'
 
 /// MATERIAL UI
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { Button, Card, Grid, Snackbar, TextField } from '@material-ui/core';
+import Box from '@material-ui/core/Box'
+import Typography from '@material-ui/core/Typography'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import { Button, Card, Grid, Snackbar, TextField } from '@material-ui/core'
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
-import styles from '../styles/Login.module.scss';
-import { loginService } from '../services/auth.service';
-import { withAppContext } from '../context';
+import styles from '../styles/Login.module.scss'
+import { loginService } from '../services/auth.service'
+import { withAppContext } from '../context'
 /// STYLES & TYPES END
 
 const InitialState = {
   email: '',
   password: ''
-};
+}
 
 const InitialErrorState = {
   message: '',
   open: false
-};
+}
 
 function LoginPage(): JSX.Element {
-  const [state, setState] = useState(InitialState);
-  const [errorState, setErrorState] = useState(InitialErrorState);
+  const [state, setState] = useState(InitialState)
+  const [errorState, setErrorState] = useState(InitialErrorState)
   const _handleFieldChange = field => e =>
-    setState(prevState => ({ ...prevState, [field]: e.target.value }));
+    setState(prevState => ({ ...prevState, [field]: e.target.value }))
 
   const _handleSubmit = () => {
     loginService(state.email, state.password)
       .then(response => {
-        console.log(response);
+        console.log(response)
       })
       .catch(err => {
-        console.error({ ...err });
-        _handleError(true, err.response.data.error.message);
-      });
-  };
+        console.error({ ...err })
+        _handleError(true, err.response.data.error.message)
+      })
+  }
 
   const _handleError = (open: boolean, message?: string) => {
     setErrorState(prevState => ({
       ...prevState,
       message: message || prevState.message,
       open
-    }));
-  };
+    }))
+  }
 
   return (
     <>
@@ -147,7 +147,7 @@ function LoginPage(): JSX.Element {
         message={errorState.message}
       />
     </>
-  );
+  )
 }
 
-export default withAppContext(LoginPage);
+export default withAppContext(LoginPage)

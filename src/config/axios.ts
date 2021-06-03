@@ -58,10 +58,10 @@ const handleTokenRefresh = () => {
 
   return new Promise((resolve, reject) => {
     refreshToken({ refreshToken: token })
-      .then(response => {
-        const { access_token, expires_in, refresh_token, token_type } = response['data'];
+      .then(({ data }) => {
+        const { access_token, expires_in, refresh_token, token_type } = data;
         setTokenData({ access_token, expires_in, refresh_token, token_type });
-        resolve(response['data']);
+        resolve(data);
       })
       .catch(err => {
         reject(err);

@@ -1,13 +1,13 @@
-import React from 'react';
-import { FormikProps } from 'formik';
+import React from 'react'
+import { FormikProps } from 'formik'
 /// TYPES
-import { IPersonalDataForm } from '../index.types';
+import { IPersonalDataForm } from '../index.types'
 /// MATERIAL-UI
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import TextField from '@material-ui/core/TextField'
+import InputLabel from '@material-ui/core/InputLabel'
+import FormControl from '@material-ui/core/FormControl'
 /// MATERIAL-UI END
 
 function PersonalData({
@@ -19,7 +19,9 @@ function PersonalData({
   return (
     <div>
       <FormControl fullWidth>
-        <InputLabel id="document-type-selector-label">Tipo de identificación</InputLabel>
+        <InputLabel id="document-type-selector-label">
+          Tipo de identificación
+        </InputLabel>
         <Select
           fullWidth
           id="document-type-selector"
@@ -48,7 +50,7 @@ function PersonalData({
         />
       </FormControl>
     </div>
-  );
+  )
 }
 
-export default PersonalData;
+export default PersonalData

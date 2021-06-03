@@ -1,16 +1,16 @@
-import React from 'react';
-import { useFormik } from 'formik';
+import React from 'react'
+import { useFormik } from 'formik'
 /// TYPES
-import { IFormData } from './index.types';
+import { IFormData } from './index.types'
 /// OWN COMPONENTS
-import ExtraDataForm from './components/ExtraData';
-import PersonalDataForm from './components/PersonalData';
-import CredentialDataForm from './components/CredentialData';
-import Wizard, { IWizardDataSourceItem } from '../../components/common/Wizard';
+import ExtraDataForm from './components/ExtraData'
+import PersonalDataForm from './components/PersonalData'
+import CredentialDataForm from './components/CredentialData'
+import Wizard, { IWizardDataSourceItem } from '../../components/common/Wizard'
 /// OWN COMPONENTS END
 
 /// STYLES
-import '../../styles/Signup.module.scss';
+import '../../styles/Signup.module.scss'
 
 const initialValues: IFormData = {
   email: 'prueba1010@hotmail.com',
@@ -30,15 +30,15 @@ const initialValues: IFormData = {
   mobilePhone1: '232323232',
   documentNumber: '16111134',
   confirmPassword: 'Pac1234567'
-};
+}
 
 function SignUpView(): JSX.Element {
   const formik = useFormik({
     initialValues,
     onSubmit: (values: IFormData) => {
-      alert(JSON.stringify(values, null, 2));
+      alert(JSON.stringify(values, null, 2))
     }
-  });
+  })
 
   const dataSource: IWizardDataSourceItem[] = [
     {
@@ -59,14 +59,14 @@ function SignUpView(): JSX.Element {
         'Estos datos se usarán unicamente con propósitos médicos dentro de la plataforma',
       component: <CredentialDataForm {...formik} />
     }
-  ];
+  ]
   return (
     <section>
       <form action="" onSubmit={formik.handleSubmit}>
         <Wizard dataSource={dataSource} />
       </form>
     </section>
-  );
+  )
 }
 
-export default SignUpView;
+export default SignUpView

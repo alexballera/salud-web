@@ -1,14 +1,14 @@
-import React from 'react';
-import { FormikProps } from 'formik';
+import React from 'react'
+import { FormikProps } from 'formik'
 /// TYPES
-import { IExtraDataForm } from '../index.types';
+import { IExtraDataForm } from '../index.types'
 /// MATERIAL-UI
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
+import InputLabel from '@material-ui/core/InputLabel'
+import FormControl from '@material-ui/core/FormControl'
 
 /// MATERIAL-UI END
 
@@ -21,7 +21,9 @@ function ExtraData({
   return (
     <div>
       <FormControl fullWidth margin="normal">
-        <InputLabel id="gender-selector-label">Sexo biológico designado al nacer</InputLabel>
+        <InputLabel id="gender-selector-label">
+          Sexo biológico designado al nacer
+        </InputLabel>
         <Select
           fullWidth
           id="gender-selector"
@@ -97,7 +99,7 @@ function ExtraData({
         </Select>
       </FormControl>
     </div>
-  );
+  )
 }
 
-export default ExtraData;
+export default ExtraData

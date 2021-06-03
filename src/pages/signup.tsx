@@ -1,3 +1,3 @@
-import SignUpView from '../containers/SignUp';
+import SignUpView from '../containers/SignUp'
 
-export default SignUpView;
+export default SignUpView
