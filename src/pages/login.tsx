@@ -1,57 +1,66 @@
-import React, { useState } from 'react'
-import Head from 'next/head'
-import Image from 'next/image'
+import React from 'react';
+
+import Head from 'next/head';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 /// MATERIAL UI
-import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
-import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-import { Button, Card, Grid, Snackbar, TextField } from '@material-ui/core'
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { Button, Card, Grid, TextField } from '@material-ui/core';
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
+import { withAppContext } from '../context';
+import loginService from '../services/auth.service';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
-import styles from '../styles/Login.module.scss'
-import { loginService } from '../services/auth.service'
-import { withAppContext } from '../context'
+import styles from '../styles/Login.module.scss';
+import { IProps } from '../types/login.types';
 /// STYLES & TYPES END
 
 const InitialState = {
   email: '',
   password: ''
-}
+};
 
-const InitialErrorState = {
-  message: '',
-  open: false
-}
+const ValidationSchema = Yup.object().shape({
+  email: Yup.string().email('Email invalido').required('Debes especificar un email'),
+  password: Yup.string().required('Debes especificar una contraseña')
+});
 
-function LoginPage(): JSX.Element {
-  const [state, setState] = useState(InitialState)
-  const [errorState, setErrorState] = useState(InitialErrorState)
-  const _handleFieldChange = field => e =>
-    setState(prevState => ({ ...prevState, [field]: e.target.value }))
+function LoginPage({
+  handleLogin,
+  handleLoading,
+  fetching: isLoading,
+  handleError
+}: IProps): JSX.Element {
+  const router = useRouter();
 
-  const _handleSubmit = () => {
-    loginService(state.email, state.password)
+  const _handleSubmit = (email: string, password: string) => {
+    handleLoading(true);
+    loginService(email, password)
       .then(response => {
-        console.log(response)
+        handleLogin(response.data.result);
+        handleError(false);
+        router.replace('/main');
       })
       .catch(err => {
-        console.error({ ...err })
-        _handleError(true, err.response.data.error.message)
+        if (err.response) handleError(true, err.response.data.error.message);
+        else
+          handleError(
+            true,
+            'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.'
+          );
       })
-  }
-
-  const _handleError = (open: boolean, message?: string) => {
-    setErrorState(prevState => ({
-      ...prevState,
-      message: message || prevState.message,
-      open
-    }))
-  }
+      .finally(() => {
+        handleLoading && handleLoading(false);
+      });
+  };
 
   return (
     <>
@@ -60,7 +69,9 @@ function LoginPage(): JSX.Element {
       </Head>
 
       <Box component="main" className={styles.main}>
-        <Button startIcon={<ArrowBackIcon />}>Volver</Button>
+        <Button startIcon={<ArrowBackIcon />} onClick={router.back}>
+          Volver
+        </Button>
         <Grid container component="ul" spacing={3} className={styles.mainList}>
           <Grid item xs={12} md={6} component="li" className={styles.loginForm}>
             <Card className={styles.card}>
@@ -69,54 +80,75 @@ function LoginPage(): JSX.Element {
                   <Typography variant="h6">Inicie sesión</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <form className={styles.formContainer}>
-                    <Grid
-                      container
-                      component="ul"
-                      justify="center"
-                      spacing={3}
-                      className={styles.form}
-                    >
-                      <Grid item xs={12} component="li" justify="center">
-                        <TextField
-                          label="Correo electronico"
-                          type="email"
-                          fullWidth={true}
-                          value={state.email}
-                          onChange={_handleFieldChange('email')}
-                        />
-                      </Grid>
-                      <Grid item xs={12} component="li" justify="center">
-                        <TextField
-                          label="Contraseña"
-                          type="password"
-                          fullWidth={true}
-                          value={state.password}
-                          onChange={_handleFieldChange('password')}
-                        />
-                      </Grid>
-                      <Grid item xs={12} component="li" justify="flex-end">
-                        <Button>¿Olvidó su contraseña?</Button>
-                      </Grid>
-                      <Grid
-                        item
-                        xs={12}
-                        component="li"
-                        justify="center"
-                        alignItems="center"
-                        className={styles.formButton}
-                      >
-                        <Button
-                          variant="contained"
-                          fullWidth={true}
-                          color="primary"
-                          onClick={_handleSubmit}
+                  <Formik
+                    initialValues={InitialState}
+                    validationSchema={ValidationSchema}
+                    onSubmit={values => _handleSubmit(values.email, values.password)}
+                  >
+                    {({ errors, handleChange, values, handleSubmit }: any) => (
+                      <form className={styles.formContainer} onSubmit={handleSubmit}>
+                        <Grid
+                          container
+                          component="ul"
+                          justify="center"
+                          spacing={3}
+                          className={styles.form}
                         >
-                          INICIAR SESIÓN
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </form>
+                          <Grid item xs={12} component="li">
+                            <TextField
+                              inputProps={{
+                                'aria-label': 'Correo electrónico'
+                              }}
+                              label="Correo electrónico"
+                              name="email"
+                              type="email"
+                              fullWidth={true}
+                              value={values.email}
+                              onChange={handleChange}
+                              error={!!errors.email}
+                              helperText={errors.email || undefined}
+                              data-testid="email-field"
+                            />
+                          </Grid>
+                          <Grid item xs={12} component="li">
+                            <TextField
+                              inputProps={{ 'aria-label': 'Contraseña' }}
+                              aria-label="Contraseña"
+                              label="Contraseña"
+                              name="password"
+                              type="password"
+                              fullWidth={true}
+                              value={values.password}
+                              onChange={handleChange}
+                              error={!!errors.password}
+                              helperText={errors.password || undefined}
+                              data-testid="password-field"
+                            />
+                          </Grid>
+                          <Grid item xs={12} component="li" className="MuiGrid-justify-xs-flex-end">
+                            <Button>¿Olvidó su contraseña?</Button>
+                          </Grid>
+                          <Grid
+                            item
+                            xs={12}
+                            component="li"
+                            className={`${styles.formButton} MuiGrid-justify-xs-center`}
+                          >
+                            <Button
+                              type="submit"
+                              variant="contained"
+                              fullWidth={true}
+                              color="primary"
+                              disabled={isLoading || Object.keys(errors).length > 0}
+                              data-testid="login-button"
+                            >
+                              INICIAR SESIÓN
+                            </Button>
+                          </Grid>
+                        </Grid>
+                      </form>
+                    )}
+                  </Formik>
                 </Grid>
               </Grid>
             </Card>
@@ -126,28 +158,25 @@ function LoginPage(): JSX.Element {
             xs={12}
             md={3}
             component="li"
-            justify="center"
-            direction="column"
-            className={styles.formButton}
+            className={`${styles.formButton} MuiGrid-justify-xs-center MuiGrid-direction-xs-column`}
           >
             <Typography variant="body1" className={styles.registerText}>
               ¿Aún no está registrado en OMNiSalud?
             </Typography>
-            <Button variant="contained" fullWidth={true} color="secondary">
+            <Button
+              variant="contained"
+              fullWidth={true}
+              color="secondary"
+              onClick={() => router.push('/signup')}
+            >
               CREAR CUENTA
             </Button>
-            <Image src="/images/register.png" width="400" height="290" />
+            <Image src="/images/register.png" width="400" height="290" alt="" />
           </Grid>
         </Grid>
       </Box>
-
-      <Snackbar
-        open={errorState.open}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        message={errorState.message}
-      />
     </>
-  )
+  );
 }
 
-export default withAppContext(LoginPage)
+export default withAppContext(LoginPage);

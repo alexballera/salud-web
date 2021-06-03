@@ -12,7 +12,11 @@ import theme from '../utils/theme';
 import Layout from '../components/common/Layout';
 import AppProvider from '../context/AppProvider';
 
-const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
+interface IProps extends AppProps {
+  errorState: { open: boolean; message: string };
+}
+
+const MyApp = ({ Component, pageProps }: IProps): JSX.Element => {
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
