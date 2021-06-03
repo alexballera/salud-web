@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { withAppContext } from '../../../context';
 
 /// MATERIAL UI
 import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
@@ -8,10 +9,10 @@ import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
 
 /// STYLES & TYPES
 import styles from './styles.module.scss';
-import { withAppContext } from '../../../context';
+import { IProps } from './types';
 /// STYLES & TYPES END
 
-function Navbar({ loggedIn }: { loggedIn: boolean }): JSX.Element {
+function Navbar({ loggedIn }: IProps): JSX.Element {
   const router = useRouter();
 
   const _drawAction = () => {
