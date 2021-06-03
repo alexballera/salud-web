@@ -163,7 +163,12 @@ function LoginPage({
             <Typography variant="body1" className={styles.registerText}>
               ¿Aún no está registrado en OMNiSalud?
             </Typography>
-            <Button variant="contained" fullWidth={true} color="secondary">
+            <Button
+              variant="contained"
+              fullWidth={true}
+              color="secondary"
+              onClick={() => router.push('/signup')}
+            >
               CREAR CUENTA
             </Button>
             <Image src="/images/register.png" width="400" height="290" alt="" />

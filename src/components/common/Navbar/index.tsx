@@ -15,21 +15,18 @@ function Navbar({ loggedIn }: { loggedIn: boolean }): JSX.Element {
   const router = useRouter();
 
   const _drawAction = () => {
-    if (!loggedIn) {
-      if (router?.pathname === '/login' || router?.pathname === '/signup') {
-        return <></>;
-      } else {
-        return (
-          <Link href="login">
-            <Button color="inherit" data-testid="login-button">
-              INGRESAR
-            </Button>
-          </Link>
-        );
-      }
-    } else {
+    const noLoginPathNames = ['/login', '/signup'];
+    if (loggedIn || noLoginPathNames.includes(router.pathname)) {
       return <></>;
     }
+
+    return (
+      <Link href="login">
+        <Button color="inherit" data-testid="login-button">
+          INGRESAR
+        </Button>
+      </Link>
+    );
   };
 
   return (
