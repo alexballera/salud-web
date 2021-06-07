@@ -19,6 +19,11 @@
 .DS_Store
 *.pem
 
+# PWA
+public/workbox*
+public/fallback*
+public/sw*
+
 # debug
 npm-debug.log*
 yarn-debug.log*

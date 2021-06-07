@@ -24,6 +24,13 @@ export type IGetCantones = {
     segundoNivel: IGeneralAdressOption[];
   };
 };
+
+export type IGetDistricts = {
+  result: {
+    error: boolean;
+    catalogo: IGeneralAdressOption[];
+  };
+};
 /// TYPES END
 
 export const getProvinces = (): Promise<AxiosResponse<IGetProvinces>> => {

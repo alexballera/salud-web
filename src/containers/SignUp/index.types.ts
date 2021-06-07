@@ -1,4 +1,11 @@
+import { IAppProps } from '../../context/index';
+
 /// TYPES
+export type IProps = {
+  handleLogin: (user: any) => void;
+  handleError: (open: boolean, message: string) => void;
+} & IAppProps;
+
 export type IFormData = {
   email: string;
   terms: boolean;
@@ -16,7 +23,7 @@ export type IFormData = {
   documentType: documentType;
   mobilePhone1: string;
   documentNumber: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 };
 
 type documentType = number | string;
@@ -95,7 +102,7 @@ export type ICredentialDataForm = {
   password: string;
   services: boolean;
   superappUser: boolean;
-  confirmPassword: string;
+  confirmPassword?: string;
 };
 
 export type GenderEnum = '1' | '2' | '';

@@ -40,12 +40,15 @@ function ExtraData({
   errors,
   touched,
   handleBlur,
-  handleChange
+  handleChange,
+  setFieldValue
 }: FormikProps<IExtraDataForm>): JSX.Element {
   const [cantonStates, setCantonStates] = useState(initialCantonStates);
   const [provinceStates, setProvinceStates] = useState(initialProvinceStates);
   const [districtStates, setDistrictStates] = useState(initialDistrictStates);
   /// USE EFFECTS
+
+  const onChangeSelect = (value: any, fieldName: string) => setFieldValue(fieldName, value.codigo);
 
   /* PRVINCES FETCHER */
   useEffect(() => {
@@ -127,7 +130,7 @@ function ExtraData({
         <Autocomplete
           id="province-selector"
           options={provinceStates.data}
-          onChange={handleChange}
+          onChange={(_e, value) => onChangeSelect(value, 'province')}
           renderInput={params => (
             <TextField {...params} name="province" label="Seleccione Provincia" variant="filled" />
           )}
@@ -141,7 +144,7 @@ function ExtraData({
         <Autocomplete
           id="canton-selector-label"
           options={cantonStates.data}
-          onChange={handleChange}
+          onChange={(_e, value) => onChangeSelect(value, 'canton')}
           renderInput={params => (
             <TextField {...params} name="canton" label="Seleccione Canton" variant="filled" />
           )}
@@ -153,7 +156,7 @@ function ExtraData({
         <Autocomplete
           id="district-selector-label"
           options={districtStates.data}
-          onChange={handleChange}
+          onChange={(_e, value) => onChangeSelect(value, 'district')}
           renderInput={params => (
             <TextField {...params} name="district" label="Seleccione Distrito" variant="filled" />
           )}
