@@ -14,21 +14,23 @@ const refreshToken = async ({ refreshToken }) =>
 
 // https://gist.github.com/Godofbrowser/bf118322301af3fc334437c683887c5f
 const axiosClient = axios.create({
-  baseURL: process.env.REACT_APP_API_URL
+  baseURL: process.env.apiUrl
 });
 
 axiosClient.interceptors.request.use(
   config => {
-    const access_token = localStorage.getItem('access_token');
-    const token_type = localStorage.getItem('token_type');
-    const token = `${token_type} ${access_token}`;
+    if (typeof window !== 'undefined') {
+      const access_token = window.localStorage.getItem('access_token');
+      const token_type = window.localStorage.getItem('token_type');
+      const token = `${token_type} ${access_token}`;
 
-    if (access_token && access_token !== '') {
-      config.headers.Authorization = token;
-    } else {
-      delete config.headers.Authorization;
+      if (access_token && access_token !== '') {
+        config.headers.Authorization = token;
+      } else {
+        delete config.headers.Authorization;
+      }
+      return config;
     }
-    return config;
   },
   error => {
     Promise.reject(error);
@@ -44,29 +46,33 @@ const shouldIntercept = error => {
 };
 
 const setTokenData = ({ access_token, expires_in, refresh_token, token_type }) => {
-  localStorage.setItem('access_token', access_token);
-  localStorage.setItem('expires_in', expires_in);
-  localStorage.setItem('refresh_token', refresh_token);
-  localStorage.setItem('update_at', `${Date.now()}`);
+  if (typeof window !== 'undefined') {
+    window.localStorage.setItem('access_token', access_token);
+    window.localStorage.setItem('expires_in', expires_in);
+    window.localStorage.setItem('refresh_token', refresh_token);
+    window.localStorage.setItem('update_at', `${Date.now()}`);
 
-  const token = `${token_type} ${access_token}`;
-  axiosClient.defaults.headers.common.Authorization = token;
+    const token = `${token_type} ${access_token}`;
+    axiosClient.defaults.headers.common.Authorization = token;
+  }
 };
 
 const handleTokenRefresh = () => {
-  const token = localStorage.getItem('refresh_token');
+  if (typeof window !== 'undefined') {
+    const token = window.localStorage.getItem('refresh_token');
 
-  return new Promise((resolve, reject) => {
-    refreshToken({ refreshToken: token })
-      .then(({ data }) => {
-        const { access_token, expires_in, refresh_token, token_type } = data;
-        setTokenData({ access_token, expires_in, refresh_token, token_type });
-        resolve(data);
-      })
-      .catch(err => {
-        reject(err);
-      });
-  });
+    return new Promise((resolve, reject) => {
+      refreshToken({ refreshToken: token })
+        .then(({ data }) => {
+          const { access_token, expires_in, refresh_token, token_type } = data;
+          setTokenData({ access_token, expires_in, refresh_token, token_type });
+          resolve(data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
 };
 
 const attachTokenToRequest = (request, token) => {

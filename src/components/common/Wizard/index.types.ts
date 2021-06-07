@@ -1,18 +1,21 @@
 /// TYPES
 export type IWizardProps = {
-  dataSource: IWizardDataSourceItem[]
-}
+  footer?: JSX.Element;
+  onChange?: (currentStep: number) => void;
+  activeStep: number;
+  dataSource: IWizardDataSourceItem[];
+  disabledButton?: boolean;
+};
 
-export type ITabPanelProps = {
-  dir?: string
-  index: number
-  value: number
-  data?: IWizardDataSourceItem
-}
+export type IStepPanelProps = {
+  dir?: string;
+  index: number;
+  data?: IWizardDataSourceItem;
+};
 
 export type IWizardDataSourceItem = {
-  title: string
-  component: JSX.Element
-  description: string
-}
+  title: string;
+  component: JSX.Element;
+  description: string;
+};
 /// TYPES END

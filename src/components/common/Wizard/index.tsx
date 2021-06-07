@@ -1,105 +1,112 @@
-import React, { useState } from 'react'
-import SwipeableViews from 'react-swipeable-views'
-
+import React, { useState, useEffect } from 'react';
 /// TYPES
-import {
-  IWizardProps,
-  ITabPanelProps,
-  IWizardDataSourceItem
-} from './index.types'
-
+import { IWizardProps, IStepPanelProps, IWizardDataSourceItem } from './index.types';
 /// MATERIAL-UI
-import Tab from '@material-ui/core/Tab'
-import Box from '@material-ui/core/Box'
-import Tabs from '@material-ui/core/Tabs'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles'
+import Box from '@material-ui/core/Box';
+import Step from '@material-ui/core/Step';
+import Button from '@material-ui/core/Button';
+import Stepper from '@material-ui/core/Stepper';
+import StepLabel from '@material-ui/core/StepLabel';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 /// MATERIAL-UI END
 
-function TabPanel({ data, value, index, ...other }: ITabPanelProps) {
-  return (
-    <div
-      id={`full-width-tabpanel-${index}`}
-      role="tabpanel"
-      hidden={value !== index}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography variant="h5" component="h5" gutterBottom>
-            {data.title}
-          </Typography>
-          <Typography>{data.description}</Typography>
-          {data.component}
-        </Box>
-      )}
-    </div>
-  )
+function getStepContent(stepIndex: number, dataSource: IWizardDataSourceItem[]) {
+  return <StepPanel data={dataSource[stepIndex]} index={stepIndex} />;
 }
 
-function a11yProps(index: number) {
-  return {
-    id: `full-width-tab-${index}`,
-    'aria-controls': `full-width-tabpanel-${index}`
-  }
+function StepPanel({ data, index }: IStepPanelProps) {
+  return (
+    <div
+      id={`full-width-steppanel-${index}`}
+      role="steppanel"
+      aria-labelledby={`full-width-step-${index}`}
+    >
+      <Box p={3}>
+        <Typography variant="h5" component="h5" gutterBottom>
+          {data.title}
+        </Typography>
+        <Typography className="mb-4">{data.description}</Typography>
+        {data.component}
+      </Box>
+    </div>
+  );
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    width: '100%',
-    backgroundColor: theme.palette.background.paper
+    width: '100%'
+  },
+  backButton: {
+    marginRight: theme.spacing(1)
+  },
+  instructions: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1)
   }
-}))
+}));
 
-function Wizard({ dataSource }: IWizardProps): JSX.Element {
-  const theme = useTheme()
-  const classes = useStyles()
-  const [value, setValue] = useState<number>(0)
+function Wizard({
+  footer,
+  onChange,
+  dataSource,
+  disabledButton,
+  ...props
+}: IWizardProps): JSX.Element {
+  const classes = useStyles();
+  const [activeStep, setActiveStep] = useState<number>(0);
 
-  const handleChange = (_event, newValue: number): void => {
-    setValue(newValue)
-  }
+  /// HANDLERS
+  const handleNext = () => {
+    setActiveStep(prevActiveStep => prevActiveStep + 1);
+  };
 
-  const handleChangeIndex = (index: number) => {
-    setValue(index)
-  }
+  const handleBack = () => {
+    setActiveStep(prevActiveStep => prevActiveStep - 1);
+  };
+  /// HANDLERS END
+
+  /// USE EFECTS
+  useEffect(() => {
+    if (onChange) onChange(activeStep);
+    if (props.activeStep) setActiveStep(props.activeStep);
+  }, [activeStep, props.activeStep]);
+  /// USE EFECTS END
 
   return (
     <section className={classes.root}>
-      <Paper square>
-        <Tabs
-          value={value}
-          variant="fullWidth"
-          onChange={handleChange}
-          textColor="primary"
-          aria-label="disabled tabs example"
-          indicatorColor="primary"
-        >
-          {dataSource.map((_data, i) => (
-            <Tab key={i} label={`Paso ${i + 1}`} {...a11yProps(i)} />
-          ))}
-        </Tabs>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-        >
-          {dataSource.map((data, i) => (
-            <TabPanel
-              key={i}
-              dir={theme.direction}
-              data={data}
-              value={value}
-              index={i}
-            />
-          ))}
-        </SwipeableViews>
-      </Paper>
+      <Stepper activeStep={activeStep} alternativeLabel>
+        {dataSource.map((data, index) => (
+          <Step key={index}>
+            <StepLabel>{data.title}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+      <div>
+        {getStepContent(activeStep, dataSource)}
+        {!footer ? (
+          <div>
+            <Button fullWidth color="primary" variant="contained" onClick={handleBack}>
+              back
+            </Button>
+            <Button
+              fullWidth
+              type="submit"
+              color="primary"
+              variant="contained"
+              onClick={handleNext}
+              disabled={disabledButton}
+            >
+              {activeStep === dataSource.length - 1 ? 'Finish' : 'Next'}
+            </Button>
+          </div>
+        ) : (
+          <div>{footer}</div>
+        )}
+      </div>
     </section>
-  )
+  );
 }
 
-export default Wizard
-export type { IWizardDataSourceItem }
+export default Wizard;
+export type { IWizardDataSourceItem };

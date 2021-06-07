@@ -5,6 +5,8 @@ import Layout from '../../../src/components/common/Layout';
 import AppProvider, { initialStates } from '../../../src/context/AppProvider';
 import { AppContext } from '../../../src/context';
 
+jest.mock('next/router', () => require('next-router-mock'));
+
 let container = null;
 
 expect.extend(toHaveNoViolations);
