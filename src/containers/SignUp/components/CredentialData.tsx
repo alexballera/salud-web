@@ -174,9 +174,9 @@ CredentialData.description =
 CredentialData.validations = {
   name: 'CredentialStep',
   schema: yup.object().shape({
-    terms: yup.boolean().required(),
-    services: yup.boolean().required(),
+    terms: yup.bool().oneOf([true], 'Campo requerido').required('Campo requerido'),
     email: yup.string().email('Formato de correo incorrecto').required('Email requerido'),
+    services: yup.bool().oneOf([true], 'Campo requerido').required('Campo requerido'),
     password: yup
       .string()
       .required('Contraseña requerida')

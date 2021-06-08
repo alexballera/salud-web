@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import { Form, Formik } from 'formik';
+/// CONTEXT
+import { withAppContext } from '../context/index';
+/// SERVICES
+import { signUp } from '../services/auth.service';
 /// TYPES
-import { IFormData } from '../containers/SignUp/index.types';
+import { IFormData, IProps } from '../containers/SignUp/index.types';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 /// OWN COMPONENTS
 import Wizard from '../components/common/Wizard';
 import ExtraDataForm from '../containers/SignUp/components/ExtraData';
 import PersonalDataForm from '../containers/SignUp/components/PersonalData';
 import CredentialDataForm from '../containers/SignUp/components/CredentialData';
+
 /// OWN COMPONENTS END
 /// MATERIAL - UI
 import Button from '@material-ui/core/Button';
@@ -35,7 +41,7 @@ const initialValues: IFormData = {
   terms: false,
   gender: '',
   canton: '',
-  country: '',
+  country: 'CR',
   password: '',
   province: '',
   district: '',
@@ -58,23 +64,62 @@ const stepValidations = [
 /// FORM STATES & VALIDATIONS END
 
 function SignUpView({
+  handleLogin,
+  handleError,
   documentTypeOptions
-}: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element {
+}: InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
+  const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
   const [currentStep, setCurrentState] = useState<number>(0);
+
+  const onSubmit = (values: IFormData) => {
+    if (currentStep === 2) {
+      setLoading(true);
+
+      const body: IFormData = {
+        email: values.email,
+        terms: values.terms,
+        gender: values.gender,
+        canton: values.canton,
+        country: values.country,
+        province: values.province,
+        password: values.password,
+        lastName: values.lastName,
+        district: values.district,
+        services: values.services,
+        firstName: values.firstName,
+        birthDate: values.birthDate,
+        superappUser: values.superappUser,
+        mobilePhone1: values.mobilePhone1,
+        documentType: values.documentType,
+        documentNumber: values.documentNumber
+      };
+
+      signUp(body)
+        .then(res => {
+          handleLogin(res.data.result);
+          router.replace('/main');
+        })
+        .catch(err => {
+          handleError(true, err.response.data.error.message);
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setLoading(false);
+          }, 500);
+        });
+    } else {
+      setCurrentState(currentStep + 1);
+    }
+  };
 
   return (
     <section className="container signup-wrapper">
       <Formik
         validateOnMount
+        onSubmit={onSubmit}
         initialValues={initialValues}
         validationSchema={stepValidations[currentStep]}
-        onSubmit={(values: IFormData) => {
-          if (currentStep === 2) {
-            alert(JSON.stringify(values, null, 2));
-          } else {
-            setCurrentState(currentStep + 1);
-          }
-        }}
       >
         {formik => {
           const dataSource = [
@@ -103,7 +148,7 @@ function SignUpView({
                     type="submit"
                     color="primary"
                     variant="contained"
-                    disabled={!_.isEmpty(formik.errors)}
+                    disabled={!_.isEmpty(formik.errors) || loading}
                   >
                     {currentStep === dataSource.length ? 'Enviar' : 'Siguiente'}
                   </Button>
@@ -119,4 +164,4 @@ function SignUpView({
   );
 }
 
-export default SignUpView;
+export default withAppContext(SignUpView);
