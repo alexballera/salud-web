@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Wizard/> clicking the button calls event handler once and render the next step component without crashing 1`] = `
+"Snapshot Diff:
+- First value
++ Second value
+
+@@ -4,69 +4,59 @@
+    >
+      <div
+        class=\\"MuiPaper-root MuiStepper-root MuiStepper-horizontal MuiStepper-alternativeLabel MuiPaper-elevation0\\"
+      >
+        <div
+-         class=\\"MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel\\"
++         class=\\"MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel MuiStep-completed\\"
+        >
+          <span
+            class=\\"MuiStepLabel-root MuiStepLabel-horizontal MuiStepLabel-alternativeLabel\\"
+          >
+            <span
+              class=\\"MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel\\"
+            >
+              <svg
+                aria-hidden=\\"true\\"
+-               class=\\"MuiSvgIcon-root MuiStepIcon-root MuiStepIcon-active\\"
++               class=\\"MuiSvgIcon-root MuiStepIcon-root MuiStepIcon-completed\\"
+                focusable=\\"false\\"
+                viewBox=\\"0 0 24 24\\"
+              >
+-               <circle
+-                 cx=\\"12\\"
+-                 cy=\\"12\\"
+-                 r=\\"12\\"
++               <path
++                 d=\\"M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24zm-2 17l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z\\"
+                />
+-               <text
+-                 class=\\"MuiStepIcon-text\\"
+-                 text-anchor=\\"middle\\"
+-                 x=\\"12\\"
+-                 y=\\"16\\"
+-               >
+-                 1
+-               </text>
+              </svg>
+            </span>
+            <span
+              class=\\"MuiStepLabel-labelContainer\\"
+            >
+              <span
+-               class=\\"MuiTypography-root MuiStepLabel-label MuiStepLabel-alternativeLabel MuiStepLabel-active MuiTypography-body2 MuiTypography-displayBlock\\"
++               class=\\"MuiTypography-root MuiStepLabel-label MuiStepLabel-alternativeLabel MuiStepLabel-completed MuiTypography-body2 MuiTypography-displayBlock\\"
+              >
+                This is a test component 1
+              </span>
+            </span>
+          </span>
+        </div>
+        <div
+          class=\\"MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel\\"
+        >
+          <div
+-           class=\\"MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled\\"
++           class=\\"MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel MuiStepConnector-active\\"
+          >
+            <span
+              class=\\"MuiStepConnector-line MuiStepConnector-lineHorizontal\\"
+            />
+          </div>
+          <span
+-           class=\\"MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled MuiStepLabel-alternativeLabel\\"
++           class=\\"MuiStepLabel-root MuiStepLabel-horizontal MuiStepLabel-alternativeLabel\\"
+          >
+            <span
+              class=\\"MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel\\"
+            >
+              <svg
+                aria-hidden=\\"true\\"
+-               class=\\"MuiSvgIcon-root MuiStepIcon-root\\"
++               class=\\"MuiSvgIcon-root MuiStepIcon-root MuiStepIcon-active\\"
+                focusable=\\"false\\"
+                viewBox=\\"0 0 24 24\\"
+              >
+                <circle
+                  cx=\\"12\\"
+@@ -85,31 +75,31 @@
+            </span>
+            <span
+              class=\\"MuiStepLabel-labelContainer\\"
+            >
+              <span
+-               class=\\"MuiTypography-root MuiStepLabel-label MuiStepLabel-alternativeLabel MuiTypography-body2 MuiTypography-displayBlock\\"
++               class=\\"MuiTypography-root MuiStepLabel-label MuiStepLabel-alternativeLabel MuiStepLabel-active MuiTypography-body2 MuiTypography-displayBlock\\"
+              >
+                This is a test component 2
+              </span>
+            </span>
+          </span>
+        </div>
+      </div>
+      <div>
+        <div
+-         aria-labelledby=\\"full-width-step-0\\"
+-         id=\\"full-width-steppanel-0\\"
++         aria-labelledby=\\"full-width-step-1\\"
++         id=\\"full-width-steppanel-1\\"
+          role=\\"steppanel\\"
+        >
+          <div
+            class=\\"MuiBox-root MuiBox-root-12\\"
+          >
+            <h5
+              class=\\"MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom\\"
+            >
+-             This is a test component 1
++             This is a test component 2
+            </h5>
+            <p
+              class=\\"MuiTypography-root mb-4 MuiTypography-body1\\"
+            >
+              This is a test description
+@@ -124,11 +114,11 @@
+            type=\\"submit\\"
+          >
+            <span
+              class=\\"MuiButton-label\\"
+            >
+-             Siguiente
++             Enviar
+            </span>
+            <span
+              class=\\"MuiTouchRipple-root\\"
+            />
+          </button>"
+`;
