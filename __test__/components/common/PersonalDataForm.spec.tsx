@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import { act, cleanup, waitFor } from '@testing-library/react';
 /// COMPONENT
-import { render } from '../../../src/utils/formik-test-wraper';
+import { render } from '../../../__mock__/formik-test-wraper';
 import PersonalDataForm from '../../../src/containers/SignUp/components/PersonalData';
 
 const wrapperOptions = {
