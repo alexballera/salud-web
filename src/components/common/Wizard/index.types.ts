@@ -1,8 +1,9 @@
 /// TYPES
 export type IWizardProps = {
   footer?: JSX.Element;
+  onSubmit?: () => void;
   onChange?: (currentStep: number) => void;
-  activeStep: number;
+  activeStep?: number;
   dataSource: IWizardDataSourceItem[];
   disabledButton?: boolean;
 };

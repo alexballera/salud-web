@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 function Wizard({
   footer,
+  onSubmit,
   onChange,
   dataSource,
   disabledButton,
@@ -58,7 +59,8 @@ function Wizard({
 
   /// HANDLERS
   const handleNext = () => {
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
+    if (activeStep !== dataSource.length - 1) setActiveStep(prevActiveStep => prevActiveStep + 1);
+    else onSubmit();
   };
 
   const handleBack = () => {
@@ -86,9 +88,6 @@ function Wizard({
         {getStepContent(activeStep, dataSource)}
         {!footer ? (
           <div>
-            <Button fullWidth color="primary" variant="contained" onClick={handleBack}>
-              back
-            </Button>
             <Button
               fullWidth
               type="submit"
@@ -97,7 +96,7 @@ function Wizard({
               onClick={handleNext}
               disabled={disabledButton}
             >
-              {activeStep === dataSource.length - 1 ? 'Finish' : 'Next'}
+              {activeStep === dataSource.length - 1 ? 'Enviar' : 'Siguiente'}
             </Button>
           </div>
         ) : (

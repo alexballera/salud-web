@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import _ from 'lodash';
 /// FORM
 import * as yup from 'yup';
 import { FormikProps } from 'formik';
@@ -43,6 +44,28 @@ function PersonalData({
       ? currentDocumentType.length !== documentNumberSanitized.length
       : false;
   };
+
+  const userValuesAlreadyExist = (): boolean => {
+    let valuesAlreadyExist = false;
+    const stepValues = {
+      lastName: values.lastName,
+      firstName: values.firstName,
+      birthDate: values.birthDate,
+      documentType: values.documentType,
+      documentNumber: values.documentNumber
+    };
+
+    // eslint-disable-next-line no-unreachable-loop
+    for (const key in stepValues) {
+      if (_.isEmpty(stepValues[key])) {
+        return valuesAlreadyExist;
+      } else {
+        valuesAlreadyExist = true;
+        return valuesAlreadyExist;
+      }
+    }
+  };
+
   /// USE EFFECTS
   useEffect(() => {
     if (currentDocumentType) {
@@ -62,6 +85,7 @@ function PersonalData({
     }
   }, [values.documentNumber]);
   /// USE EFFECTS END
+
   return (
     <div>
       <FormControl fullWidth variant="filled">
@@ -75,6 +99,7 @@ function PersonalData({
           onBlur={handleBlur}
           labelId="document-type-selector-label"
           onChange={handleChange}
+          data-testid="document-type-selector"
         >
           <MenuItem value="">
             <em>None</em>
@@ -116,7 +141,8 @@ function PersonalData({
               /\d/,
               /\d/,
               /\d/
-            ]
+            ],
+            'data-testid': 'documentNumber'
           }}
           endAdornment={
             <InputAdornment position="end">
@@ -133,7 +159,7 @@ function PersonalData({
           </FormHelperText>
         )}
       </FormControl>
-      {data && (
+      {(data || userValuesAlreadyExist()) && (
         <Paper style={{ padding: 10, backgroundColor: '#F5F5F5' }} square elevation={0}>
           <FormControl fullWidth>
             <TextField
@@ -148,6 +174,7 @@ function PersonalData({
               disabled={true}
               onChange={handleChange}
               helperText={touched.firstName && errors.firstName}
+              data-testid="firstName"
             />
           </FormControl>
           <FormControl fullWidth>
@@ -163,6 +190,7 @@ function PersonalData({
               disabled={true}
               onChange={handleChange}
               helperText={touched.lastName && errors.lastName}
+              data-testid="lastName"
             />
           </FormControl>
           <FormControl fullWidth>
@@ -178,6 +206,7 @@ function PersonalData({
               disabled={true}
               onChange={handleChange}
               helperText={touched.birthDate && errors.birthDate}
+              data-testid="birthDate"
             />
           </FormControl>
         </Paper>
