@@ -7,7 +7,7 @@ export const initialStates: AppStates = {
   user: null,
   loggedIn: false,
   fetching: false,
-  errorState: { open: false, message: '' }
+  errorState: { open: false, message: '', type: 'error' }
 };
 
 export default function AppProvider({ children }: Props): JSX.Element {
@@ -21,8 +21,8 @@ export default function AppProvider({ children }: Props): JSX.Element {
     setState(prevState => ({ ...prevState, fetching: isLoading }));
   };
 
-  const handleError = (open: boolean, message = '') => {
-    setState(prevState => ({ ...prevState, errorState: { open, message } }));
+  const handleError = (open: boolean, message = '', type?: 'success' | 'error' | 'warning') => {
+    setState(prevState => ({ ...prevState, errorState: { open, message, type: type || 'error' } }));
   };
 
   return (

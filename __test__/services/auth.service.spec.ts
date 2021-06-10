@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import loginService from '../../src/services/auth.service';
+import { loginService } from '../../src/services/auth.service';
 import { ReturnedUser } from '../../__mock__/User.mock';
 
 jest.mock('axios');

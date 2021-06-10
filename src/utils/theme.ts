@@ -3,7 +3,7 @@ import indigo from '@material-ui/core/colors/indigo';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 export const errorColor = '#ff6666';
-export const successColor = '#4dff4d';
+export const successColor = '#4caf50';
 
 const theme = createMuiTheme({
   palette: {

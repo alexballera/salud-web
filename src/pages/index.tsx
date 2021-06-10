@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
-import styles from '../styles/Home.module.scss';
+/// import styles from '../styles/Home.module.scss';
 /// STYLES & TYPES END
 
 const HomePage: NextPage = (): JSX.Element => {

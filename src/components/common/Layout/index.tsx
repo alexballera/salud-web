@@ -20,11 +20,11 @@ export default withAppContext(function Layout({
       <Snackbar
         open={errorState?.open}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={() => handleError(false)}
+        onClose={() => handleError(false, '', errorState.type)}
         autoHideDuration={20000}
       >
-        <Alert variant="error">
-          <ErrorOutlineIcon />
+        <Alert variant={errorState.type}>
+          {errorState.type === 'error' && <ErrorOutlineIcon />}
           <Typography variant="body1" aria-live="assertive">
             {errorState?.message}
           </Typography>

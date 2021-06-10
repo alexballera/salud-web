@@ -15,7 +15,7 @@ import { Button, Card, Grid, TextField } from '@material-ui/core';
 
 /// OWN COMPONENTS
 import { withAppContext } from '../context';
-import loginService from '../services/auth.service';
+import { loginService } from '../services/auth.service';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
@@ -68,7 +68,7 @@ function LoginPage({
         <title>Login</title>
       </Head>
 
-      <Box component="main" className={styles.main}>
+      <Box className={styles.main}>
         <Button startIcon={<ArrowBackIcon />} onClick={router.back}>
           Volver
         </Button>
@@ -125,7 +125,13 @@ function LoginPage({
                               data-testid="password-field"
                             />
                           </Grid>
-                          <Grid item xs={12} component="li" className="MuiGrid-justify-xs-flex-end">
+                          <Grid
+                            item
+                            xs={12}
+                            component="li"
+                            className="MuiGrid-justify-xs-flex-end"
+                            onClick={() => router.push('/recover')}
+                          >
                             <Button>¿Olvidó su contraseña?</Button>
                           </Grid>
                           <Grid

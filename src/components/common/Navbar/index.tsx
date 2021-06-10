@@ -16,9 +16,25 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
   const router = useRouter();
 
   const _drawAction = () => {
-    const noLoginPathNames = ['/login', '/signup'];
-    if (loggedIn || noLoginPathNames.includes(router.pathname)) {
+    // No buttons
+    const noActionPathNames = ['/login'];
+    if (loggedIn || noActionPathNames.includes(router.pathname)) {
       return <></>;
+    }
+
+    // Exit buttons
+    const exitButtonPathNames = ['/recover', '/signup'];
+    if (exitButtonPathNames.includes(router.pathname)) {
+      return (
+        <Button
+          data-testid="login-button"
+          variant="contained"
+          color="secondary"
+          onClick={() => router.replace('/')}
+        >
+          SALIR
+        </Button>
+      );
     }
 
     return (

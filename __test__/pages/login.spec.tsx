@@ -225,7 +225,11 @@ describe('HomePage', () => {
     await act(async () => {
       render(
         <AppProvider>
-          <LoginPage />
+          <main>
+            {''}
+            {/* By default, all pages are wrapped in a main tag */}
+            <LoginPage />
+          </main>
         </AppProvider>,
         container
       );
