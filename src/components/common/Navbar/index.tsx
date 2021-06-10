@@ -16,9 +16,16 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
   const router = useRouter();
 
   const _drawAction = () => {
-    // No buttons
-    const noActionPathNames = ['/login'];
-    if (loggedIn || noActionPathNames.includes(router.pathname)) {
+    const noLoginPathNames = ['/login', '/signup'];
+    if (router.pathname === '/signup') {
+      return (
+        <Link href="main">
+          <Button color="inherit" data-testid="login-button">
+            Salir
+          </Button>
+        </Link>
+      );
+    } else if (loggedIn || noLoginPathNames.includes(router.pathname)) {
       return <></>;
     }
 

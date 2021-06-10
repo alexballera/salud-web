@@ -71,7 +71,7 @@ function Wizard({
   /// USE EFECTS
   useEffect(() => {
     if (onChange) onChange(activeStep);
-    if (props.activeStep) setActiveStep(props.activeStep);
+    if (props.activeStep !== undefined) setActiveStep(props.activeStep);
   }, [activeStep, props.activeStep]);
   /// USE EFECTS END
 
