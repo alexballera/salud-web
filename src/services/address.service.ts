@@ -34,7 +34,7 @@ export type IGetDistricts = {
 /// TYPES END
 
 export const getProvinces = (): Promise<AxiosResponse<IGetProvinces>> => {
-  return axios.get(`${process.env.apiUrl}sac-general/provinces-api?countryCode=3`);
+  return axios.get(`${process.env.apiUrl}sac-general/provinces-api?countryCode=1`);
 };
 
 export const getCanton = (provinceId: string | number): Promise<AxiosResponse<IGetCantones>> => {
