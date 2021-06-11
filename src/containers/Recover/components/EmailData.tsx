@@ -22,6 +22,7 @@ function EmailData({
           fullWidth
           id="email"
           name="email"
+          data-testid="email-input"
           label="Correo electrónico"
           value={values.email}
           error={touched.email && Boolean(errors.email)}

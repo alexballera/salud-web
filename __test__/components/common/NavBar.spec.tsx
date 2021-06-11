@@ -93,7 +93,25 @@ describe('<NavBar />', () => {
     }
   });
 
-  it('shouldn\'t render "INGRESAR" button on /login', () => {
+  it('should render "SALIR" button on /recover', () => {
+    router.push('/recover');
+
+    act(() => {
+      render(
+        <AppProvider>
+          <Navbar />
+        </AppProvider>,
+        container
+      );
+    });
+
+    const buttons = screen.getAllByTestId('exit-button');
+
+    expect(buttons.length).toEqual(1);
+    expect(buttons[0].textContent).toMatch(/SALIR/);
+  });
+
+  it('shouldn\'t render "INGRESAR" button when user is logged', () => {
     router.push('/');
 
     act(() => {
@@ -113,6 +131,31 @@ describe('<NavBar />', () => {
     } catch (err) {
       expect(err.name).toEqual('TestingLibraryElementError');
       expect(err.message).toMatch(/Unable to find an element by: \[data-testid="login-button"\]/);
+    }
+
+    expect(testFunction).not.toBeCalled();
+  });
+
+  it('shouldn\'t render "SALIR" button in /', () => {
+    router.push('/');
+
+    act(() => {
+      render(
+        <AppProvider>
+          <Navbar />
+        </AppProvider>,
+        container
+      );
+    });
+
+    const testFunction = jest.fn();
+
+    try {
+      screen.getAllByTestId('exit-button');
+      testFunction();
+    } catch (err) {
+      expect(err.name).toEqual('TestingLibraryElementError');
+      expect(err.message).toMatch(/Unable to find an element by: \[data-testid="exit-button"\]/);
     }
 
     expect(testFunction).not.toBeCalled();

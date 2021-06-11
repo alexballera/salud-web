@@ -20,6 +20,7 @@ function PasswordData({
         <TextField
           fullWidth
           id="newPassword"
+          data-testid="password-input"
           name="newPassword"
           label="Nueva contraseña"
           type="password"
@@ -34,6 +35,7 @@ function PasswordData({
         <TextField
           fullWidth
           id="newPasswordConfirm"
+          data-testid="password-confirm-input"
           name="newPasswordConfirm"
           label="Confirmar contraseña"
           type="password"

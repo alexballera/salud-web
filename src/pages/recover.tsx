@@ -9,7 +9,7 @@ import Wizard, { IWizardDataSourceItem } from '../components/common/Wizard';
 /// TYPES END
 
 /// MATERIAL UI
-import { Button } from '@material-ui/core';
+import { Box, Button, Typography } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 /// MATERIAL UI END
 
@@ -18,7 +18,7 @@ import EmailDataForm from '../containers/Recover/components/EmailData';
 import ValidationDataForm from '../containers/Recover/components/ValidationData';
 import PasswordDataForm from '../containers/Recover/components/PasswordData';
 import { withAppContext } from '../context';
-import { forgotPasswordChangePassword } from '../services/auth.service';
+import { forgotPasswordChangePassword, forgotPasswordResendPin } from '../services/auth.service';
 /// OWN COMPONENTS END
 
 type IProps = {
@@ -45,7 +45,20 @@ function RecoverView(props: IProps): JSX.Element {
 
   const router = useRouter();
 
+  const _handleResend = (email: string) => {
+    props.handleLoading(true);
+    forgotPasswordResendPin(email)
+      .then(res => {
+        console.log({ res, result: { ...res } });
+      })
+      .catch(err => {
+        console.log({ err, error: { ...err } });
+      })
+      .finally(() => props.handleLoading(false));
+  };
+
   const _handleSubmit = (values: IFormData) => {
+    props.handleLoading(true);
     forgotPasswordChangePassword(
       values.email,
       values.pinCode,
@@ -71,7 +84,8 @@ function RecoverView(props: IProps): JSX.Element {
             true,
             'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.'
           );
-      });
+      })
+      .finally(() => props.handleLoading(false));
   };
 
   return (
@@ -121,15 +135,25 @@ function RecoverView(props: IProps): JSX.Element {
               <Form autoComplete="off">
                 <Wizard
                   footer={
-                    <Button
-                      fullWidth
-                      type="submit"
-                      color="primary"
-                      variant="contained"
-                      disabled={!_.isEmpty(formik.errors)}
-                    >
-                      {currentStep === dataSource.length ? 'Enviar' : 'Siguiente'}
-                    </Button>
+                    <>
+                      <Button
+                        fullWidth
+                        type="submit"
+                        color="primary"
+                        variant="contained"
+                        disabled={!_.isEmpty(formik.errors)}
+                      >
+                        {currentStep === dataSource.length ? 'Enviar' : 'Siguiente'}
+                      </Button>
+                      {currentStep === 1 && (
+                        <Box display="flex" alignItems="center" justifyContent="center">
+                          <Typography>¿No recibiste el correo?</Typography>
+                          <Button onClick={() => _handleResend(formik.values.email)}>
+                            Reenviar correo
+                          </Button>
+                        </Box>
+                      )}
+                    </>
                   }
                   activeStep={currentStep}
                   dataSource={dataSource}

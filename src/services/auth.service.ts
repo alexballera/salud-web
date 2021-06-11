@@ -47,6 +47,13 @@ export function forgotPasswordConfirmCodeService(
   });
 }
 
+export function forgotPasswordResendPin(email: string): Promise<AxiosResponse<any>> {
+  return axios.post(`${process.env.NEXT_PUBLIC_API_URL}user/new-pin`, {
+    userEmail: email,
+    pinType: 'clave'
+  });
+}
+
 export function forgotPasswordChangePassword(
   email: string,
   pinCode: string,
