@@ -27,7 +27,7 @@ type ISignUpBody = {
 };
 
 export function signUp(body: ISignUpBody): Promise<AxiosResponse<any>> {
-  return axios.post(`${process.env.NEXT_PUBLIC_API_URL}user/register-patient`, body);
+  return axios.post(`${process.env.apiUrl}user/register-patient`, body);
 }
 /// SIGN UP SERVICE & TYPES END
 /// FORGOT PASSWORD

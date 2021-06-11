@@ -19,7 +19,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
     const noLoginPathNames = ['/login', '/signup'];
     if (router.pathname === '/signup') {
       return (
-        <Link href="main">
+        <Link href="/">
           <Button color="inherit" data-testid="login-button">
             Salir
           </Button>

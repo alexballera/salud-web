@@ -53,6 +53,14 @@ describe('<PersonalDataForm>', () => {
   });
 
   test('should submitting the form without crashing', async () => {
+    const initialValues = {
+      lastName: 'lastname',
+      firstName: 'firstname',
+      birthDate: '2020-11-11',
+      documentType: '0',
+      documentNumber: '123123123'
+    };
+
     await act(async () => {
       const mockHandleSubmit = jest.fn();
       const { getByText } = render(PersonalDataForm, {
@@ -60,13 +68,7 @@ describe('<PersonalDataForm>', () => {
           ...wrapperOptions,
           formikProps: {
             ...wrapperOptions.formikProps,
-            initialValues: {
-              lastName: 'lastname',
-              firstName: 'firstname',
-              birthDate: '2020-11-11',
-              documentType: '0',
-              documentNumber: '123123123'
-            },
+            initialValues,
             onSubmit: mockHandleSubmit
           }
         }
@@ -76,16 +78,7 @@ describe('<PersonalDataForm>', () => {
       userEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(mockHandleSubmit).toHaveBeenCalledWith(
-          {
-            lastName: 'lastname',
-            firstName: 'firstname',
-            birthDate: '2020-11-11',
-            documentType: '0',
-            documentNumber: '123123123'
-          },
-          expect.anything()
-        );
+        expect(mockHandleSubmit).toHaveBeenCalledWith(initialValues, expect.anything());
       });
     });
   });

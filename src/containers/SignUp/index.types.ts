@@ -48,6 +48,7 @@ export type IPersonalVerificatorResponse = {
 export type IGeneralAdressState = {
   data: IGeneralAdressOption[];
   fetching: boolean;
+  selectedOption?: null;
 };
 
 export type IGetProvinces = {

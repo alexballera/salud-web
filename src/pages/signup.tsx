@@ -19,7 +19,6 @@ import CredentialDataForm from '../containers/SignUp/components/CredentialData';
 /// OWN COMPONENTS END
 /// MATERIAL - UI
 import Button from '@material-ui/core/Button';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 /// MATERIAL - UI END
 
 /// STYLES
@@ -73,10 +72,6 @@ function SignUpView({
   const [loading, setLoading] = useState<boolean>(false);
   const [currentStep, setCurrentState] = useState<number>(0);
 
-  const goBack = () => {
-    if (currentStep > 0) setCurrentState(currentStep - 1);
-    else router.back();
-  };
   const onSubmit = (values: IFormData) => {
     if (currentStep === 2) {
       setLoading(true);
@@ -120,9 +115,6 @@ function SignUpView({
 
   return (
     <section className="container signup-wrapper">
-      <Button startIcon={<ArrowBackIosIcon />} onClick={goBack}>
-        Volver
-      </Button>
       <Formik
         validateOnMount
         onSubmit={onSubmit}
@@ -158,7 +150,6 @@ function SignUpView({
                     variant="contained"
                     disabled={!_.isEmpty(formik.errors) || loading}
                   >
-                    {console.log(currentStep)}
                     {currentStep === dataSource.length ? 'Enviar' : 'Siguiente'}
                   </Button>
                 }

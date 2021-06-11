@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { FormikProps } from 'formik';
 /// SERVICES
-import { getProvinces, getCanton, getDistrict } from '../../../services/adress.service';
+import { getProvinces, getCanton, getDistrict } from '../../../services/address.service';
 /// TYPES
 import { IExtraDataForm, IGeneralAdressState } from '../index.types';
 /// MATERIAL-UI
@@ -15,6 +15,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import LinearProgress from '@material-ui/core/LinearProgress';
 /// MATERIAL-UI END
 
 /// INITIAL STATES
@@ -25,12 +26,12 @@ const initialProvinceStates: IGeneralAdressState = {
 
 const initialDistrictStates: IGeneralAdressState = {
   data: [],
-  fetching: true
+  fetching: false
 };
 
 const initialCantonStates: IGeneralAdressState = {
   data: [],
-  fetching: true
+  fetching: false
 };
 
 /// INITIAL STATES END
@@ -48,7 +49,26 @@ function ExtraData({
   const [districtStates, setDistrictStates] = useState(initialDistrictStates);
   /// USE EFFECTS
 
-  const onChangeSelect = (value: any, fieldName: string) => setFieldValue(fieldName, value.codigo);
+  const onChangeSelect = (value: any, fieldName: string) => {
+    setFieldValue(fieldName, value?.codigo);
+
+    switch (fieldName) {
+      case 'province':
+        setFieldValue('canton', '');
+        setFieldValue('district', '');
+
+        setCantonStates({ ...cantonStates, data: [] });
+        setDistrictStates({ ...districtStates, data: [] });
+        break;
+      case 'canton':
+        setFieldValue('district', '');
+        setDistrictStates({ ...districtStates, data: [] });
+        break;
+
+      default:
+        break;
+    }
+  };
 
   /* PRVINCES FETCHER */
   useEffect(() => {
@@ -57,19 +77,19 @@ function ExtraData({
         data: res.data.result.primerNivel,
         fetching: false
       });
-      setCantonStates({ ...cantonStates, fetching: true });
     });
   }, []);
 
   /* CANTON FETCHER */
   useEffect(() => {
     if (values.province) {
+      setCantonStates({ ...cantonStates, fetching: true });
+
       getCanton(values.province).then(res => {
         setCantonStates({
           data: res.data.result.segundoNivel,
           fetching: false
         });
-        setDistrictStates({ ...cantonStates, fetching: true });
       });
     }
   }, [values.province]);
@@ -78,7 +98,6 @@ function ExtraData({
   useEffect(() => {
     if (values.canton) {
       getDistrict(values.canton).then(res => {
-        console.log(res.data);
         setDistrictStates({
           data: res.data.result.catalogo,
           fetching: false
@@ -87,7 +106,6 @@ function ExtraData({
     }
   }, [values.canton]);
   /// USE EFFECTS END
-
   return (
     <div>
       <FormControl fullWidth margin="normal" variant="filled">
@@ -129,13 +147,16 @@ function ExtraData({
       <FormControl fullWidth margin="normal" variant="filled">
         <Autocomplete
           id="province-selector"
+          onBlur={handleBlur}
           options={provinceStates.data}
           onChange={(_e, value) => onChangeSelect(value, 'province')}
           renderInput={params => (
             <TextField {...params} name="province" label="Seleccione Provincia" variant="filled" />
           )}
           getOptionLabel={option => option.nombre}
+          getOptionSelected={(option, value) => option.nombre === value.nombre}
         />
+        {provinceStates.fetching && <LinearProgress data-testid="provinces-loader" />}
         {touched.province && errors.province && (
           <FormHelperText error>{errors.province}</FormHelperText>
         )}
@@ -143,6 +164,7 @@ function ExtraData({
       <FormControl fullWidth margin="normal" variant="filled">
         <Autocomplete
           id="canton-selector-label"
+          onBlur={handleBlur}
           options={cantonStates.data}
           onChange={(_e, value) => onChangeSelect(value, 'canton')}
           renderInput={params => (
@@ -150,11 +172,13 @@ function ExtraData({
           )}
           getOptionLabel={option => option.nombre}
         />
+        {cantonStates.fetching && <LinearProgress data-testid="cantones-loader" />}
         {touched.canton && errors.canton && <FormHelperText error>{errors.canton}</FormHelperText>}
       </FormControl>
       <FormControl fullWidth margin="normal" variant="filled">
         <Autocomplete
           id="district-selector-label"
+          onBlur={handleBlur}
           options={districtStates.data}
           onChange={(_e, value) => onChangeSelect(value, 'district')}
           renderInput={params => (
@@ -162,6 +186,7 @@ function ExtraData({
           )}
           getOptionLabel={option => option.nombre}
         />
+        {districtStates.fetching && <LinearProgress data-testid="district-loader" />}
         {touched.district && errors.district && (
           <FormHelperText error>{errors.district}</FormHelperText>
         )}
