@@ -125,14 +125,10 @@ function LoginPage({
                               data-testid="password-field"
                             />
                           </Grid>
-                          <Grid
-                            item
-                            xs={12}
-                            component="li"
-                            className="MuiGrid-justify-xs-flex-end"
-                            onClick={() => router.push('/recover')}
-                          >
-                            <Button>¿Olvidó su contraseña?</Button>
+                          <Grid item xs={12} component="li" className="MuiGrid-justify-xs-flex-end">
+                            <Button onClick={() => router.push('/recover')}>
+                              ¿Olvidó su contraseña?
+                            </Button>
                           </Grid>
                           <Grid
                             item
