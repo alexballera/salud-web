@@ -44,7 +44,11 @@ EmailData.validations = {
     email: yup
       .string()
       .email('Formato de correo incorrecto')
+<<<<<<< HEAD
       .matches(/(.*\.[a-zA-Z]{2,}){1,}$/, 'Formato de correo incorrecto')
+=======
+      .matches(/(.*\.[a-zA-Z]{2,}){1,}$/)
+>>>>>>> SLD-435 correo debe finalizar con un punto y luego minimo 2 caracteres
       .required('Email requerido')
   })
 };
