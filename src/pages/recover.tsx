@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
 import _ from 'lodash';
@@ -19,6 +19,7 @@ import ValidationDataForm from '../containers/Recover/components/ValidationData'
 import PasswordDataForm from '../containers/Recover/components/PasswordData';
 import { withAppContext } from '../context';
 import { forgotPasswordChangePassword, forgotPasswordResendPin } from '../services/auth.service';
+
 /// OWN COMPONENTS END
 
 type IProps = {
@@ -45,16 +46,9 @@ function RecoverView(props: IProps): JSX.Element {
 
   const router = useRouter();
 
-  const _handleResend = (email: string) => {
-    props.handleLoading(true);
-    forgotPasswordResendPin(email)
-      .then(res => {
-        console.log({ res, result: { ...res } });
-      })
-      .catch(err => {
-        console.log({ err, error: { ...err } });
-      })
-      .finally(() => props.handleLoading(false));
+  const _handleBack = () => {
+    if (currentStep === 0) router.back();
+    else setCurrentState(currentStep - 1);
   };
 
   const _handleSubmit = (values: IFormData) => {
@@ -90,7 +84,7 @@ function RecoverView(props: IProps): JSX.Element {
 
   return (
     <>
-      <Button startIcon={<ArrowBackIcon />} onClick={router.back}>
+      <Button startIcon={<ArrowBackIcon />} onClick={_handleBack}>
         Volver
       </Button>
       <section className="container signup-wrapper">
@@ -143,16 +137,14 @@ function RecoverView(props: IProps): JSX.Element {
                         variant="contained"
                         disabled={!_.isEmpty(formik.errors)}
                       >
-                        {currentStep === dataSource.length ? 'Enviar' : 'Siguiente'}
+                        {
+                          {
+                            0: 'Enviar correo',
+                            1: 'Continuar',
+                            2: 'Guardar Cambios'
+                          }[currentStep]
+                        }
                       </Button>
-                      {currentStep === 1 && (
-                        <Box display="flex" alignItems="center" justifyContent="center">
-                          <Typography>¿No recibiste el correo?</Typography>
-                          <Button onClick={() => _handleResend(formik.values.email)}>
-                            Reenviar correo
-                          </Button>
-                        </Box>
-                      )}
                     </>
                   }
                   activeStep={currentStep}

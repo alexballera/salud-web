@@ -7,6 +7,7 @@ import { IPasswordDataForm } from '../../../types/recover.types';
 import FormControl from '@material-ui/core/FormControl';
 import { Box, TextField } from '@material-ui/core';
 /// MATERIAL-UI END
+import SecurityPasswordIndicator from '../../../components/common/SecurityPasswordIndicator';
 
 function PasswordData({
   values,
@@ -31,6 +32,7 @@ function PasswordData({
           helperText={touched.newPassword && errors.newPassword}
         />
       </FormControl>
+      <SecurityPasswordIndicator value={values.newPassword} />
       <FormControl fullWidth margin="normal">
         <TextField
           fullWidth

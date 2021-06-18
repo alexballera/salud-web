@@ -41,7 +41,11 @@ EmailData.description = 'Para recuperar su contraseña requerimos verificar su i
 EmailData.validations = {
   name: 'EmailStep',
   schema: yup.object().shape({
-    email: yup.string().email('Formato de correo incorrecto').required('Email requerido')
+    email: yup
+      .string()
+      .email('Formato de correo incorrecto')
+      .matches(/(.*\.[a-zA-Z]{2,}){1,}$/, 'Formato de correo incorrecto')
+      .required('Email requerido')
   })
 };
 

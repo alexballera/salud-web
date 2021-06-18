@@ -14,11 +14,13 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  Typography,
   makeStyles
 } from '@material-ui/core';
 import ReactCodeInput from 'react-code-input';
 import {
   forgotPasswordConfirmCodeService,
+  forgotPasswordResendPin,
   forgotPasswordSendEmailService
 } from '../../../services/auth.service';
 import { useRouter } from 'next/router';
@@ -33,10 +35,71 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function ValidationData({ values, handleChange, handleLoading, handleError }: IProps): JSX.Element {
+const ResendButton = props => {
+  const [modifiedDate, setModifiedDate] = useState(new Date(0));
+  const [restTime, setRestTime] = useState('');
+
+  useEffect(() => {
+    let continued = true;
+
+    const loopFunction = () => {
+      const modified = modifiedDate.getTime();
+      const now = Date.now();
+      console.log({ modified, now, rest: modified - now, rest2: now - modified });
+
+      const rest = (now - modified) / 1000;
+
+      if (rest < 60) {
+        setRestTime(` (Vuelve a probar en ${60 - Math.floor(rest)} segundos)`);
+      } else {
+        setRestTime('');
+      }
+      if (continued) setTimeout(loopFunction, 1000);
+    };
+
+    loopFunction();
+
+    return () => {
+      continued = false;
+    };
+  }, [modifiedDate]);
+
+  const _handleClick = () => {
+    props.onClick();
+    setModifiedDate(new Date(Date.now()));
+  };
+
+  return (
+    <Button disabled={restTime !== ''} onClick={_handleClick}>
+      Reenviar correo{restTime}
+    </Button>
+  );
+};
+
+function ValidationData({
+  values,
+  handleChange,
+  handleLoading,
+  handleError,
+  handleSubmit
+}: IProps): JSX.Element {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [expiredDialogOpen, setExpiredDialogOpen] = useState(false);
+
   const router = useRouter();
   const classes = useStyles();
+
+  const _handleResend = (email: string) => {
+    handleLoading(true);
+    forgotPasswordResendPin(email)
+      .then(res => {
+        console.log({ res, result: { ...res } });
+      })
+      .catch(err => {
+        console.log({ err, error: { ...err } });
+      })
+      .finally(() => handleLoading(false));
+  };
 
   useEffect(() => {
     handleLoading(true);
@@ -74,7 +137,10 @@ function ValidationData({ values, handleChange, handleLoading, handleError }: IP
               'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.'
             );
         } catch (err) {
-          if (err.response) handleError(true, err.response.data.error.message);
+          if (err.response?.data.error.code === 'sld-user-14') {
+            setExpiredDialogOpen(true);
+            _handleResend(values.email);
+          } else if (err.response) handleError(true, err.response.data.error.message);
           else
             handleError(
               true,
@@ -88,6 +154,9 @@ function ValidationData({ values, handleChange, handleLoading, handleError }: IP
       confirmPinCode().then(res => {
         handleChange('validPin')(res ? '1' : '0');
         handleLoading(false);
+        if (res) {
+          handleSubmit();
+        }
       });
     } else if (values.validPin === '1') {
       handleChange('validPin')('0');
@@ -108,6 +177,10 @@ function ValidationData({ values, handleChange, handleLoading, handleError }: IP
             disabled={values.validPin === '1'}
           />
         </FormControl>
+        <Box display="flex" alignItems="center" justifyContent="center">
+          <Typography>¿No recibiste el correo?</Typography>
+          <ResendButton onClick={() => _handleResend(values.email)} />
+        </Box>
       </Box>
 
       <Dialog
@@ -130,6 +203,27 @@ function ValidationData({ values, handleChange, handleLoading, handleError }: IP
           </Button>
           <Button onClick={() => router.replace('/signup')} color="primary">
             Registrarse
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={expiredDialogOpen}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={() => setExpiredDialogOpen(false)}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle id="alert-dialog-slide-title">Codigo de validación expirado</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            El código ingresado se ha vencido, se le ha enviado un nuevo código al correo
+            electrónico
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setExpiredDialogOpen(false)} color="secondary">
+            Cerrar
           </Button>
         </DialogActions>
       </Dialog>
