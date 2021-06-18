@@ -41,47 +41,6 @@ const stepValidations = [
   PasswordDataForm.validations.schema
 ];
 
-const ResendButton = props => {
-  const [modifiedDate, setModifiedDate] = useState(new Date(0));
-  const [restTime, setRestTime] = useState('');
-
-  useEffect(() => {
-    let continued = true;
-
-    const loopFunction = () => {
-      const modified = modifiedDate.getTime();
-      const now = Date.now();
-      console.log({ modified, now, rest: modified - now, rest2: now - modified });
-
-      const rest = (now - modified) / 1000;
-
-      if (rest < 60) {
-        setRestTime(` (Vuelve a probar en ${60 - Math.floor(rest)} segundos)`);
-      } else {
-        setRestTime('');
-      }
-      if (continued) setTimeout(loopFunction, 1000);
-    };
-
-    loopFunction();
-
-    return () => {
-      continued = false;
-    };
-  }, [modifiedDate]);
-
-  const _handleClick = () => {
-    props.onClick();
-    setModifiedDate(new Date(Date.now()));
-  };
-
-  return (
-    <Button disabled={restTime !== ''} onClick={_handleClick}>
-      Reenviar correo{restTime}
-    </Button>
-  );
-};
-
 function RecoverView(props: IProps): JSX.Element {
   const [currentStep, setCurrentState] = useState<number>(0);
 
