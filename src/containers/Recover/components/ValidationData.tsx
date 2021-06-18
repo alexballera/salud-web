@@ -15,7 +15,8 @@ import {
   DialogContentText,
   DialogActions,
   Typography,
-  makeStyles
+  makeStyles,
+  InputLabel
 } from '@material-ui/core';
 import ReactCodeInput from 'react-code-input';
 import {
@@ -31,7 +32,10 @@ interface IProps extends FormikProps<IValidationDataForm> {
   handleError: (open: boolean, message?: string) => void;
 }
 
-const Transition = React.forwardRef(function Transition(props, ref) {
+const Transition = React.forwardRef(function Transition(
+  props: { children: React.ReactElement<any, any> },
+  ref
+) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
@@ -70,7 +74,7 @@ const ResendButton = props => {
   };
 
   return (
-    <Button disabled={restTime !== ''} onClick={_handleClick}>
+    <Button disabled={restTime !== ''} onClick={_handleClick} data-testid="resend-button">
       Reenviar correo{restTime}
     </Button>
   );
@@ -85,7 +89,6 @@ function ValidationData({
 }: IProps): JSX.Element {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [expiredDialogOpen, setExpiredDialogOpen] = useState(false);
-
   const router = useRouter();
   const classes = useStyles();
 
@@ -103,6 +106,13 @@ function ValidationData({
 
   useEffect(() => {
     handleLoading(true);
+    // Add aria-label to input
+    /* const wrapper = document.getElementsByClassName('react-code-input')[0];
+    const nodes = wrapper.children;
+    for (let i = 0; i < nodes.length; i++) {
+      nodes[i].setAttribute('aria-label', 'Código de validación en el índice ' + i);
+    } */
+
     forgotPasswordSendEmailService(values.email)
       .catch(err => {
         if (err.response && err.response.status === 404) {
@@ -167,15 +177,25 @@ function ValidationData({
     <>
       <Box>
         <FormControl fullWidth margin="normal" className={classes.root}>
-          <ReactCodeInput
-            type="text"
-            name="pinCode"
-            fields={6}
-            inputMode="numeric"
-            value={values.pinCode}
-            onChange={handleChange('pinCode')}
-            disabled={values.validPin === '1'}
-          />
+          <label
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              color: 'transparent'
+            }}
+          >
+            Código de validación
+            <ReactCodeInput
+              type="text"
+              name="pinCode"
+              fields={6}
+              inputMode="numeric"
+              value={values.pinCode}
+              onChange={handleChange('pinCode')}
+              disabled={values.validPin === '1'}
+            />
+          </label>
         </FormControl>
         <Box display="flex" alignItems="center" justifyContent="center">
           <Typography>¿No recibiste el correo?</Typography>
