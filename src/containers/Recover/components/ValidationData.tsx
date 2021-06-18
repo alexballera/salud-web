@@ -15,8 +15,7 @@ import {
   DialogContentText,
   DialogActions,
   Typography,
-  makeStyles,
-  InputLabel
+  makeStyles
 } from '@material-ui/core';
 import ReactCodeInput from 'react-code-input';
 import {
@@ -234,7 +233,7 @@ function ValidationData({
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">Codigo de validación expirado</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">Código de validación expirado</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
             El código ingresado se ha vencido, se le ha enviado un nuevo código al correo

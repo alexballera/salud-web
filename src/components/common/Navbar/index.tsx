@@ -23,7 +23,10 @@ import styles from './styles.module.scss';
 import { IProps } from './types';
 /// STYLES & TYPES END
 
-const Transition = React.forwardRef(function Transition(props, ref) {
+const Transition = React.forwardRef(function Transition(
+  props: { children: React.ReactElement<any, any> },
+  ref
+) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
