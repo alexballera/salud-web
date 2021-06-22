@@ -90,52 +90,6 @@ describe('<ValidationDataForm />', () => {
     });
   });
 
-  /* it('should be limited for code resend', async () => {
-    axios.post = jest.fn();
-    const props = {
-      values: {
-        email: 'invld@email.com',
-        validPin: '0',
-        pinCode: ''
-      },
-      errors: {},
-      handleChange: value => (props.values.pinCode = value),
-      handleLoading: jest.fn(),
-      handleError: jest.fn()
-    };
-
-    const Comp = Component(ValidationDataForm);
-
-    let text;
-    await act(async () => {
-      render(
-        props => (
-          <AppProvider>
-            <Comp {...props} />
-          </AppProvider>
-        ),
-        {
-          wrapperOptions: {
-            ...wrapperOptions,
-            formikProps: {
-              ...wrapperOptions.formikProps,
-              onSubmit: jest.fn(),
-              initialValues: { email: 'invld@email.com', validPin: '0', pinCode: '' }
-            }
-          }
-        }
-      );
-
-      const resendButton = screen.findAllByTestId('resend-button');
-
-      fireEvent.click(resendButton[0]);
-
-      text = screen.findAllByText('(Vuelve a probar en');
-    });
-
-    expect(text.length).toEqual(1);
-  }); */
-
   it('should be accesible', async () => {
     let results;
 
