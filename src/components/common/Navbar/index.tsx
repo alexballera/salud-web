@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { withAppContext } from '../../../context';
@@ -53,7 +53,10 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
             open={dialogOpen}
             TransitionComponent={Transition}
             keepMounted
-            onClose={router.back}
+            onClose={() => {
+              setDialogOpen(false);
+              router.back();
+            }}
             aria-labelledby="alert-dialog-slide-title"
             aria-describedby="alert-dialog-slide-description"
           >
@@ -67,7 +70,13 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
               <Button onClick={() => setDialogOpen(false)} color="secondary">
                 Cancelar
               </Button>
-              <Button onClick={() => router.push('/')} color="primary">
+              <Button
+                onClick={() => {
+                  setDialogOpen(false);
+                  router.push('/');
+                }}
+                color="primary"
+              >
                 Salir
               </Button>
             </DialogActions>
@@ -90,6 +99,10 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
       </Link>
     );
   };
+
+  useEffect(() => {
+    setDialogOpen(false);
+  }, [router]);
 
   return (
     <AppBar position="static">

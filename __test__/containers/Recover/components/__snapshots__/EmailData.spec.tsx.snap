@@ -5,6 +5,65 @@ Object {
   "asFragment": [Function],
   "baseElement": <body>
     <div>
+      <main>
+         
+        <form
+          action="#"
+        >
+          <div
+            class="MuiBox-root MuiBox-root-1"
+          >
+            <div
+              class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
+            >
+              <div
+                class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+                data-testid="email-input"
+              >
+                <label
+                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
+                  data-shrink="false"
+                  for="email"
+                  id="email-label"
+                >
+                  Correo electrónico
+                </label>
+                <div
+                  class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-fullWidth MuiInputBase-formControl"
+                >
+                  <input
+                    aria-invalid="false"
+                    class="MuiInputBase-input MuiFilledInput-input"
+                    id="email"
+                    name="email"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-text"
+            tabindex="0"
+            type="submit"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              Enviar
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </button>
+        </form>
+      </main>
+    </div>
+  </body>,
+  "container": <div>
+    <main>
+       
       <form
         action="#"
       >
@@ -56,60 +115,7 @@ Object {
           />
         </button>
       </form>
-    </div>
-  </body>,
-  "container": <div>
-    <form
-      action="#"
-    >
-      <div
-        class="MuiBox-root MuiBox-root-1"
-      >
-        <div
-          class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
-        >
-          <div
-            class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
-            data-testid="email-input"
-          >
-            <label
-              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
-              data-shrink="false"
-              for="email"
-              id="email-label"
-            >
-              Correo electrónico
-            </label>
-            <div
-              class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-fullWidth MuiInputBase-formControl"
-            >
-              <input
-                aria-invalid="false"
-                class="MuiInputBase-input MuiFilledInput-input"
-                id="email"
-                name="email"
-                type="text"
-                value=""
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-text"
-        tabindex="0"
-        type="submit"
-      >
-        <span
-          class="MuiButton-label"
-        >
-          Enviar
-        </span>
-        <span
-          class="MuiTouchRipple-root"
-        />
-      </button>
-    </form>
+    </main>
   </div>,
   "debug": [Function],
   "findAllByAltText": [Function],

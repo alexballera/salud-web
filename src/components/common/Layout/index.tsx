@@ -15,7 +15,9 @@ export default withAppContext(function Layout({
     <>
       <Navbar />
 
-      <Box component="main">{children}</Box>
+      <Box component="main" data-testid="main">
+        {children}
+      </Box>
 
       <Snackbar
         open={errorState?.open}

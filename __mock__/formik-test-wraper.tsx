@@ -5,14 +5,18 @@ import Button from '@material-ui/core/Button';
 
 const AllTheSteps = ({ children, ...props }): JSX.Element => {
   return (
-    <Formik {...props.formikProps}>
-      {formik => (
-        <Form>
-          {children({ ...formik, ...props.componentProps })}
-          <Button type="submit">Enviar</Button>
-        </Form>
-      )}
-    </Formik>
+    <main>
+      {' '}
+      {/* main wrapper necessary for accesibility UT */}
+      <Formik {...props.formikProps}>
+        {formik => (
+          <Form>
+            {children({ ...formik, ...props.componentProps })}
+            <Button type="submit">Enviar</Button>
+          </Form>
+        )}
+      </Formik>
+    </main>
   );
 };
 

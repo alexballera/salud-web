@@ -1,6 +1,9 @@
+import { axe, toHaveNoViolations } from 'jest-axe';
 import EmailDataForm from '../../../../src/containers/Recover/components/EmailData';
 import { act, fireEvent, render, screen } from '../../../../__mock__/formik-test-wraper';
 import { wrapperOptions as defaultWrapperOptions } from '../../../../__mock__/Recover.mock';
+
+expect.extend(toHaveNoViolations);
 
 const wrapperOptions = {
   ...defaultWrapperOptions,
@@ -63,5 +66,19 @@ describe('<EmailDataForm />', () => {
     expect(inputContainer.textContent).toEqual('Correo electrónico');
     expect(inputContainer.textContent).not.toMatch(/Formato de correo incorrecto/);
     expect(submitMock).toBeCalled();
+  });
+
+  it('should be accesible', async () => {
+    let results;
+
+    await act(async () => {
+      render(props => <EmailDataForm {...props} />, {
+        wrapperOptions: wrapperOptions
+      });
+
+      results = await axe(document.body);
+    });
+
+    expect(results).toHaveNoViolations();
   });
 });

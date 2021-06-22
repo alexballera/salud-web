@@ -1,5 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
-import { loginService } from '../../src/services/auth.service';
+import {
+  forgotPasswordChangePassword,
+  forgotPasswordConfirmCodeService,
+  forgotPasswordResendPin,
+  forgotPasswordSendEmailService,
+  loginService
+} from '../../src/services/auth.service';
 import { ReturnedUser } from '../../__mock__/User.mock';
 
 jest.mock('axios');
@@ -39,12 +45,91 @@ describe('Auth Service', () => {
 
     const then = jest.fn();
 
-    loginService('test@email.com', 'testPassword12')
+    return loginService('test@email.com', 'testPassword12')
       .then(then)
       .catch(err => {
         expect(err.response.data.error.message).toEqual('Test error message');
+      })
+      .finally(() => {
+        expect(then).not.toBeCalled();
       });
+  });
+});
 
-    expect(then).not.toBeCalled();
+describe('Auth Service Forgot Password', () => {
+  it('should resolve on send email', async () => {
+    axios.post = jest.fn(
+      (): Promise<void> =>
+        // eslint-disable-next-line prefer-promise-reject-errors
+        Promise.resolve()
+    );
+
+    const successMock = jest.fn();
+    const errorMock = jest.fn();
+
+    return forgotPasswordSendEmailService('some@email.com')
+      .then(successMock)
+      .catch(errorMock)
+      .finally(() => {
+        expect(successMock).toBeCalled();
+        expect(errorMock).not.toBeCalled();
+      });
+  });
+
+  it('should resolve on verify code', async () => {
+    axios.post = jest.fn(
+      (): Promise<void> =>
+        // eslint-disable-next-line prefer-promise-reject-errors
+        Promise.resolve()
+    );
+
+    const successMock = jest.fn();
+    const errorMock = jest.fn();
+
+    return forgotPasswordConfirmCodeService('some@email.com', '123456')
+      .then(successMock)
+      .catch(errorMock)
+      .finally(() => {
+        expect(successMock).toBeCalled();
+        expect(errorMock).not.toBeCalled();
+      });
+  });
+
+  it('should resolve on resend code', async () => {
+    axios.post = jest.fn(
+      (): Promise<void> =>
+        // eslint-disable-next-line prefer-promise-reject-errors
+        Promise.resolve()
+    );
+
+    const successMock = jest.fn();
+    const errorMock = jest.fn();
+
+    return forgotPasswordResendPin('some@email.com')
+      .then(successMock)
+      .catch(errorMock)
+      .finally(() => {
+        expect(successMock).toBeCalled();
+        expect(errorMock).not.toBeCalled();
+      });
+  });
+
+  it('should resolve on change password', async () => {
+    axios.post = jest.fn(
+      (): Promise<void> =>
+        // eslint-disable-next-line prefer-promise-reject-errors
+        Promise.resolve()
+    );
+
+    const successMock = jest.fn();
+    const errorMock = jest.fn();
+
+    return forgotPasswordChangePassword('some@email.com', '123456', 'newPassword', 'newPassword')
+      .then(successMock)
+      .catch(errorMock)
+      .finally(() => {
+        expect(successMock).toBeCalled();
+        expect(errorMock).not.toBeCalled();
+      });
   });
 });
