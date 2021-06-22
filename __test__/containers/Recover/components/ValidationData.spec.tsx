@@ -3,7 +3,7 @@ import { axe, toHaveNoViolations } from 'jest-axe';
 import ValidationDataForm from '../../../../src/containers/Recover/components/ValidationData';
 import { withAppContext } from '../../../../src/context';
 import AppProvider from '../../../../src/context/AppProvider';
-import { act, fireEvent, render, screen } from '../../../../__mock__/formik-test-wraper';
+import { act, render } from '../../../../__mock__/formik-test-wraper';
 import { wrapperOptions as defaultWrapperOptions } from '../../../../__mock__/Recover.mock';
 
 jest.mock('axios');
