@@ -15,7 +15,8 @@ import {
   DialogContentText,
   DialogActions,
   Typography,
-  makeStyles
+  makeStyles,
+  InputLabel
 } from '@material-ui/core';
 import ReactCodeInput from 'react-code-input';
 import {
@@ -48,7 +49,6 @@ const ResendButton = props => {
     const loopFunction = () => {
       const modified = modifiedDate.getTime();
       const now = Date.now();
-      console.log({ modified, now, rest: modified - now, rest2: now - modified });
 
       const rest = (now - modified) / 1000;
 
@@ -146,11 +146,19 @@ function ValidationData({
               'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.'
             );
         } catch (err) {
-          if (err.response?.data.error.code === 'sld-user-14') {
-            setExpiredDialogOpen(true);
-            _handleResend(values.email);
-          } else if (err.response) handleError(true, err.response.data.error.message);
-          else
+          if (err.response) {
+            const message = err.response.data.error.message;
+
+            // Pa un futuro esto servirá para
+            switch (err.response.data.error.code) {
+              case 'sld-user-14':
+                setExpiredDialogOpen(true);
+                _handleResend(values.email);
+                return;
+            }
+
+            handleError(true, message);
+          } else
             handleError(
               true,
               'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.'

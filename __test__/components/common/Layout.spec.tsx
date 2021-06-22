@@ -1,5 +1,5 @@
 import { unmountComponentAtNode } from 'react-dom';
-import { act, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import Layout from '../../../src/components/common/Layout';
 import AppProvider, { initialStates } from '../../../src/context/AppProvider';
@@ -22,6 +22,7 @@ afterEach(() => {
   unmountComponentAtNode(container);
   container.remove();
   container = null;
+  jest.useRealTimers();
 });
 
 describe('<Layout />', () => {
@@ -67,6 +68,33 @@ describe('<Layout />', () => {
 
     expect(alert.length).toEqual(1);
     expect(alert[0].textContent).toMatch(/Test error/);
+  });
+
+  it('should close error snackbar', () => {
+    const handleErrorMock = jest.fn();
+    act(() => {
+      jest.useFakeTimers();
+      render(
+        <AppContext.Provider
+          value={{
+            ...initialStates,
+            errorState: { open: true, message: 'Test error', type: 'error' },
+            handleError: handleErrorMock
+          }}
+        >
+          <Layout duration={1} />
+        </AppContext.Provider>,
+        container
+      );
+
+      const main = screen.getAllByTestId('alert-element');
+
+      fireEvent.click(main[0]);
+    });
+
+    jest.runAllTimers();
+
+    expect(handleErrorMock).toBeCalledWith(false, '', 'error');
   });
 
   it('should be accesible', async () => {

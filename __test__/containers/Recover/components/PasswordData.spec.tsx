@@ -1,6 +1,9 @@
+import { axe, toHaveNoViolations } from 'jest-axe';
 import PasswordDataForm from '../../../../src/containers/Recover/components/PasswordData';
 import { act, fireEvent, render, screen } from '../../../../__mock__/formik-test-wraper';
 import { wrapperOptions as defaultWrapperOptions } from '../../../../__mock__/Recover.mock';
+
+expect.extend(toHaveNoViolations);
 
 const wrapperOptions = {
   ...defaultWrapperOptions,
@@ -9,12 +12,9 @@ const wrapperOptions = {
 
 describe('<PasswordDataForm />', () => {
   it('should render without throwing an error', () => {
-    let tree;
     act(() => {
-      tree = render(PasswordDataForm, { wrapperOptions });
+      render(PasswordDataForm, { wrapperOptions });
     });
-
-    expect(tree).toMatchSnapshot();
   });
 
   it('should show validation error on invalid password', async () => {
@@ -43,5 +43,19 @@ describe('<PasswordDataForm />', () => {
       });
       fireEvent.click(submitButton);
     });
+  });
+
+  it('should be accesible', async () => {
+    let results;
+
+    await act(async () => {
+      render(props => <PasswordDataForm {...props} />, {
+        wrapperOptions: wrapperOptions
+      });
+
+      results = await axe(document.body);
+    });
+
+    expect(results).toHaveNoViolations();
   });
 });
