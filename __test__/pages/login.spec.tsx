@@ -149,6 +149,7 @@ describe('HomePage', () => {
         response: {
           data: {
             error: {
+              code: 'random-error-code',
               message: 'Test error message'
             }
           }

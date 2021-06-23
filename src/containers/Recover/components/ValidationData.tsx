@@ -32,13 +32,6 @@ interface IProps extends FormikProps<IValidationDataForm> {
   handleError: (open: boolean, message?: string) => void;
 }
 
-const Transition = React.forwardRef(function Transition(
-  props: { children: React.ReactElement<any, any> },
-  ref
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
 const ResendButton = props => {
   const [modifiedDate, setModifiedDate] = useState(new Date(0));
   const [restTime, setRestTime] = useState('');
@@ -212,7 +205,6 @@ function ValidationData({
 
       <Dialog
         open={dialogOpen}
-        TransitionComponent={Transition}
         keepMounted
         onClose={router.back}
         aria-labelledby="alert-dialog-slide-title"
@@ -235,7 +227,6 @@ function ValidationData({
       </Dialog>
       <Dialog
         open={expiredDialogOpen}
-        TransitionComponent={Transition}
         keepMounted
         onClose={() => setExpiredDialogOpen(false)}
         aria-labelledby="alert-dialog-slide-title"

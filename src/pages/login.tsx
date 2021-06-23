@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Head from 'next/head';
 import Image from 'next/image';
@@ -10,7 +10,17 @@ import * as Yup from 'yup';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { Button, Card, Grid, TextField } from '@material-ui/core';
+import {
+  Button,
+  Card,
+  Grid,
+  TextField,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
+  DialogContentText
+} from '@material-ui/core';
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
@@ -39,6 +49,7 @@ function LoginPage({
   fetching: isLoading,
   handleError
 }: IProps): JSX.Element {
+  const [dialogOpen, setDialogOpen] = useState(false);
   const router = useRouter();
 
   const _handleSubmit = (email: string, password: string) => {
@@ -50,12 +61,19 @@ function LoginPage({
         router.replace('/main');
       })
       .catch(err => {
-        if (err.response) handleError(true, err.response.data.error.message);
-        else
+        if (err.response) {
+          const message = err.response.data.error.message;
+          switch (err.response.data.error.code) {
+            case 'sld-user-3':
+              return setDialogOpen(true);
+          }
+          handleError(true, message);
+        } else {
           handleError(
             true,
             'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.'
           );
+        }
       })
       .finally(() => {
         handleLoading && handleLoading(false);
@@ -177,6 +195,36 @@ function LoginPage({
           </Grid>
         </Grid>
       </Box>
+
+      {/* Unknown email */}
+      <Dialog
+        open={dialogOpen}
+        keepMounted
+        onClose={() => setDialogOpen(false)}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle id="alert-dialog-slide-title">Correo electrónico no encontrado</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            El correo indicado no está registrado, ¿desea registrarse?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)} color="secondary">
+            Cancelar
+          </Button>
+          <Button
+            onClick={() => {
+              setDialogOpen(false);
+              router.push('/signup');
+            }}
+            color="primary"
+          >
+            Registrarse
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
