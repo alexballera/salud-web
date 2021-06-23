@@ -228,6 +228,57 @@ describe('HomePage', () => {
     );
   });
 
+  it('should show modal on unknown email', async () => {
+    axios.post = jest.fn(() =>
+      // eslint-disable-next-line prefer-promise-reject-errors
+      Promise.reject({
+        response: {
+          data: {
+            error: {
+              code: 'sld-user-3',
+              message: 'Test error message'
+            }
+          }
+        }
+      })
+    );
+
+    const handleError = jest.fn();
+
+    let text: HTMLElement[];
+
+    await act(async () => {
+      render(
+        <AppContext.Provider value={{ fetching: false, handleError, handleLoading: jest.fn() }}>
+          <LoginPage />
+        </AppContext.Provider>,
+        container
+      );
+
+      // Fields and submit button
+      const loginButton = await screen.findByTestId('login-button');
+      const emailField = (await screen.findByTestId('email-field')).getElementsByTagName(
+        'input'
+      )[0];
+      const passwordField = (await screen.findByTestId('password-field')).getElementsByTagName(
+        'input'
+      )[0];
+
+      // Complete fields
+      fireEvent.change(emailField, { target: { value: 'email@test.com' } });
+      fireEvent.change(passwordField, { target: { value: 'PasswordTest12' } });
+
+      // Submit
+      fireEvent.click(loginButton);
+
+      // Get error
+      text = await screen.findAllByTestId('unknown-dialog-test');
+    });
+
+    expect(handleError).toBeCalledTimes(0);
+    expect(text.length).toBe(1);
+  });
+
   it('should be accesible', async () => {
     let results;
 

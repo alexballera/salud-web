@@ -203,6 +203,7 @@ function LoginPage({
         onClose={() => setDialogOpen(false)}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
+        data-testid="unknown-dialog-test"
       >
         <DialogTitle id="alert-dialog-slide-title">Correo electrónico no encontrado</DialogTitle>
         <DialogContent>
