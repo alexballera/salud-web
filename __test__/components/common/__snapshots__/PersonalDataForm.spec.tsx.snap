@@ -15,20 +15,20 @@ Object {
               class="MuiFormControl-root MuiFormControl-fullWidth"
             >
               <label
-                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
-                data-shrink="false"
+                class="MuiFormLabel-root"
                 id="document-type-selector-label"
+                style="margin-bottom: 10px;"
               >
                 Tipo de identificación
               </label>
               <div
-                class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-fullWidth MuiInputBase-formControl"
+                class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary MuiInputBase-fullWidth MuiInputBase-formControl"
                 data-testid="document-type-selector"
               >
                 <div
                   aria-haspopup="listbox"
                   aria-labelledby="document-type-selector-label document-type-selector"
-                  class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-filled MuiInputBase-input MuiFilledInput-input"
+                  class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input"
                   id="document-type-selector"
                   role="button"
                   tabindex="0"
@@ -46,7 +46,7 @@ Object {
                 />
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconFilled"
+                  class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -54,24 +54,39 @@ Object {
                     d="M7 10l5 5 5-5z"
                   />
                 </svg>
+                <fieldset
+                  aria-hidden="true"
+                  class="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
+                  style="padding-left: 8px;"
+                >
+                  <legend
+                    class="PrivateNotchedOutline-legend-2"
+                    style="width: 0.01px;"
+                  >
+                    <span>
+                      ​
+                    </span>
+                  </legend>
+                </fieldset>
               </div>
             </div>
             <div
               class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
             >
               <label
-                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
-                data-shrink="false"
+                class="MuiFormLabel-root"
                 for="documentNumber"
+                margin="normal"
+                style="margin-bottom: 10px;"
               >
                 Numero de identificación
               </label>
               <div
-                class="MuiInputBase-root MuiInput-root MuiInput-underline Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedEnd"
+                class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary Mui-disabled Mui-disabled MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
               >
                 <input
                   aria-invalid="false"
-                  class="MuiInputBase-input MuiInput-input Mui-disabled Mui-disabled MuiInputBase-inputAdornedEnd"
+                  class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled Mui-disabled MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
                   data-testid="documentNumber"
                   disabled=""
                   id="documentNumber"
@@ -80,8 +95,22 @@ Object {
                   value=""
                 />
                 <div
-                  class="MuiInputAdornment-root MuiInputAdornment-filled MuiInputAdornment-positionEnd"
+                  class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
                 />
+                <fieldset
+                  aria-hidden="true"
+                  class="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
+                  style="padding-left: 8px;"
+                >
+                  <legend
+                    class="PrivateNotchedOutline-legend-2"
+                    style="width: 0.01px;"
+                  >
+                    <span>
+                      ​
+                    </span>
+                  </legend>
+                </fieldset>
               </div>
             </div>
           </div>
@@ -111,20 +140,20 @@ Object {
             class="MuiFormControl-root MuiFormControl-fullWidth"
           >
             <label
-              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
-              data-shrink="false"
+              class="MuiFormLabel-root"
               id="document-type-selector-label"
+              style="margin-bottom: 10px;"
             >
               Tipo de identificación
             </label>
             <div
-              class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-fullWidth MuiInputBase-formControl"
+              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary MuiInputBase-fullWidth MuiInputBase-formControl"
               data-testid="document-type-selector"
             >
               <div
                 aria-haspopup="listbox"
                 aria-labelledby="document-type-selector-label document-type-selector"
-                class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-filled MuiInputBase-input MuiFilledInput-input"
+                class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input"
                 id="document-type-selector"
                 role="button"
                 tabindex="0"
@@ -142,7 +171,7 @@ Object {
               />
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconFilled"
+                class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -150,24 +179,39 @@ Object {
                   d="M7 10l5 5 5-5z"
                 />
               </svg>
+              <fieldset
+                aria-hidden="true"
+                class="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
+                style="padding-left: 8px;"
+              >
+                <legend
+                  class="PrivateNotchedOutline-legend-2"
+                  style="width: 0.01px;"
+                >
+                  <span>
+                    ​
+                  </span>
+                </legend>
+              </fieldset>
             </div>
           </div>
           <div
             class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
           >
             <label
-              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
-              data-shrink="false"
+              class="MuiFormLabel-root"
               for="documentNumber"
+              margin="normal"
+              style="margin-bottom: 10px;"
             >
               Numero de identificación
             </label>
             <div
-              class="MuiInputBase-root MuiInput-root MuiInput-underline Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedEnd"
+              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary Mui-disabled Mui-disabled MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
             >
               <input
                 aria-invalid="false"
-                class="MuiInputBase-input MuiInput-input Mui-disabled Mui-disabled MuiInputBase-inputAdornedEnd"
+                class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled Mui-disabled MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
                 data-testid="documentNumber"
                 disabled=""
                 id="documentNumber"
@@ -176,8 +220,22 @@ Object {
                 value=""
               />
               <div
-                class="MuiInputAdornment-root MuiInputAdornment-filled MuiInputAdornment-positionEnd"
+                class="MuiInputAdornment-root MuiInputAdornment-positionEnd"
               />
+              <fieldset
+                aria-hidden="true"
+                class="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
+                style="padding-left: 8px;"
+              >
+                <legend
+                  class="PrivateNotchedOutline-legend-2"
+                  style="width: 0.01px;"
+                >
+                  <span>
+                    ​
+                  </span>
+                </legend>
+              </fieldset>
             </div>
           </div>
         </div>

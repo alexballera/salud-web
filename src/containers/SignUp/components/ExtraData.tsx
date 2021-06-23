@@ -6,16 +6,17 @@ import { FormikProps } from 'formik';
 import { getProvinces, getCanton, getDistrict } from '../../../services/address.service';
 /// TYPES
 import { IExtraDataForm, IGeneralAdressState } from '../index.types';
+/// OWN COMPONENTS
+import CustomTextField from '../../../components/common/TextField';
+import CustomAutoComplete from '../../../components/common/Select';
 /// MATERIAL-UI
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import InputLabel from '@material-ui/core/InputLabel';
+import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import LinearProgress from '@material-ui/core/LinearProgress';
 /// MATERIAL-UI END
 
 /// INITIAL STATES
@@ -97,6 +98,8 @@ function ExtraData({
   /* DISTRICT FETCHER */
   useEffect(() => {
     if (values.canton) {
+      setDistrictStates({ ...districtStates, fetching: true });
+
       getDistrict(values.canton).then(res => {
         setDistrictStates({
           data: res.data.result.catalogo,
@@ -109,14 +112,18 @@ function ExtraData({
   return (
     <div>
       <FormControl fullWidth margin="normal" variant="filled">
-        <InputLabel id="gender-selector-label">Sexo biológico designado al nacer</InputLabel>
+        <FormLabel id="gender-selector-label" style={{ marginBottom: 10 }}>
+          Sexo biológico designado al nacer
+        </FormLabel>
         <Select
           fullWidth
           id="gender-selector"
           name="gender"
           value={values.gender}
+          color="secondary"
           labelId="gender-selector-label"
           onBlur={handleBlur}
+          variant="outlined"
           onChange={handleChange}
         >
           <MenuItem value={''}>
@@ -127,70 +134,64 @@ function ExtraData({
         </Select>
         {touched.gender && errors.gender && <FormHelperText error>{errors.gender}</FormHelperText>}
       </FormControl>
-      <FormControl fullWidth margin="normal">
-        <TextField
-          fullWidth
-          id="mobilePhone1"
-          name="mobilePhone1"
-          label="Numero de teléfono"
-          value={values.mobilePhone1}
-          error={touched.mobilePhone1 && Boolean(errors.mobilePhone1)}
-          variant="filled"
-          onBlur={handleBlur}
-          onChange={handleChange}
-          helperText={touched.mobilePhone1 && errors.mobilePhone1}
-        />
-      </FormControl>
+      <CustomTextField
+        id="mobilePhone1"
+        name="mobilePhone1"
+        label="Numero de teléfono"
+        value={values.mobilePhone1}
+        error={touched.mobilePhone1 && Boolean(errors.mobilePhone1)}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        helperText={errors.mobilePhone1}
+      />
       <Typography variant="h5" component="h5">
         Domicilio
       </Typography>
-      <FormControl fullWidth margin="normal" variant="filled">
-        <Autocomplete
-          id="province-selector"
-          onBlur={handleBlur}
-          options={provinceStates.data}
-          onChange={(_e, value) => onChangeSelect(value, 'province')}
-          renderInput={params => (
-            <TextField {...params} name="province" label="Seleccione Provincia" variant="filled" />
-          )}
-          getOptionLabel={option => option.nombre}
-          getOptionSelected={(option, value) => option.nombre === value.nombre}
-        />
-        {provinceStates.fetching && <LinearProgress data-testid="provinces-loader" />}
-        {touched.province && errors.province && (
-          <FormHelperText error>{errors.province}</FormHelperText>
-        )}
-      </FormControl>
-      <FormControl fullWidth margin="normal" variant="filled">
-        <Autocomplete
-          id="canton-selector-label"
-          onBlur={handleBlur}
-          options={cantonStates.data}
-          onChange={(_e, value) => onChangeSelect(value, 'canton')}
-          renderInput={params => (
-            <TextField {...params} name="canton" label="Seleccione Canton" variant="filled" />
-          )}
-          getOptionLabel={option => option.nombre}
-        />
-        {cantonStates.fetching && <LinearProgress data-testid="cantones-loader" />}
-        {touched.canton && errors.canton && <FormHelperText error>{errors.canton}</FormHelperText>}
-      </FormControl>
-      <FormControl fullWidth margin="normal" variant="filled">
-        <Autocomplete
-          id="district-selector-label"
-          onBlur={handleBlur}
-          options={districtStates.data}
-          onChange={(_e, value) => onChangeSelect(value, 'district')}
-          renderInput={params => (
-            <TextField {...params} name="district" label="Seleccione Distrito" variant="filled" />
-          )}
-          getOptionLabel={option => option.nombre}
-        />
-        {districtStates.fetching && <LinearProgress data-testid="district-loader" />}
-        {touched.district && errors.district && (
-          <FormHelperText error>{errors.district}</FormHelperText>
-        )}
-      </FormControl>
+      <CustomAutoComplete
+        id="province-selector"
+        label="Provincia"
+        error={touched.province && Boolean(errors.province)}
+        onBlur={handleBlur}
+        touched={touched.province}
+        options={provinceStates.data}
+        loading={provinceStates.fetching}
+        onChange={(_e, value) => onChangeSelect(value, 'province')}
+        helperText={errors.province}
+        renderInput={params => <TextField {...params} variant="outlined" color="secondary" />}
+        getOptionLabel={option => option.nombre}
+        getOptionSelected={(option, value) => option.nombre === value.nombre}
+        linearProgressProps={{ 'data-testid': 'provinces-loader' }}
+      />
+
+      <CustomAutoComplete
+        id="canton-selector-label"
+        label="Canton"
+        error={touched.canton && Boolean(errors.canton)}
+        onBlur={handleBlur}
+        touched={touched.canton}
+        options={cantonStates.data}
+        loading={cantonStates.fetching}
+        onChange={(_e, value) => onChangeSelect(value, 'canton')}
+        helperText={errors.canton}
+        renderInput={params => <TextField {...params} variant="outlined" color="secondary" />}
+        getOptionLabel={option => option.nombre}
+        getOptionSelected={(option, value) => option.nombre === value.nombre}
+      />
+
+      <CustomAutoComplete
+        id="district-selector-label"
+        label="Distrito"
+        error={touched.district && Boolean(errors.district)}
+        onBlur={handleBlur}
+        touched={touched.district}
+        options={districtStates.data}
+        loading={districtStates.fetching}
+        onChange={(_e, value) => onChangeSelect(value, 'district')}
+        helperText={errors.district}
+        renderInput={params => <TextField {...params} variant="outlined" color="secondary" />}
+        getOptionLabel={option => option.nombre}
+        getOptionSelected={(option, value) => option.nombre === value.nombre}
+      />
     </div>
   );
 }

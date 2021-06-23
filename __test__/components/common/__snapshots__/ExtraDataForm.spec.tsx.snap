@@ -15,19 +15,19 @@ Object {
               class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
             >
               <label
-                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
-                data-shrink="false"
+                class="MuiFormLabel-root"
                 id="gender-selector-label"
+                style="margin-bottom: 10px;"
               >
                 Sexo biológico designado al nacer
               </label>
               <div
-                class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-fullWidth MuiInputBase-formControl"
+                class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary MuiInputBase-fullWidth MuiInputBase-formControl"
               >
                 <div
                   aria-haspopup="listbox"
                   aria-labelledby="gender-selector-label gender-selector"
-                  class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-filled MuiInputBase-input MuiFilledInput-input"
+                  class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input"
                   id="gender-selector"
                   role="button"
                   tabindex="0"
@@ -45,7 +45,7 @@ Object {
                 />
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconFilled"
+                  class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -53,34 +53,58 @@ Object {
                     d="M7 10l5 5 5-5z"
                   />
                 </svg>
+                <fieldset
+                  aria-hidden="true"
+                  class="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
+                  style="padding-left: 8px;"
+                >
+                  <legend
+                    class="PrivateNotchedOutline-legend-2"
+                    style="width: 0.01px;"
+                  >
+                    <span>
+                      ​
+                    </span>
+                  </legend>
+                </fieldset>
               </div>
             </div>
             <div
               class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
             >
-              <div
-                class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+              <label
+                class="MuiFormLabel-root"
+                for="mobilePhone1"
+                margin="normal"
+                style="margin-bottom: 10px;"
               >
-                <label
-                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
-                  data-shrink="false"
-                  for="mobilePhone1"
-                  id="mobilePhone1-label"
+                Numero de teléfono
+              </label>
+              <div
+                class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary MuiInputBase-formControl"
+              >
+                <input
+                  aria-invalid="false"
+                  class="MuiInputBase-input MuiOutlinedInput-input"
+                  id="mobilePhone1"
+                  name="mobilePhone1"
+                  type="text"
+                  value=""
+                />
+                <fieldset
+                  aria-hidden="true"
+                  class="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
+                  style="padding-left: 8px;"
                 >
-                  Numero de teléfono
-                </label>
-                <div
-                  class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-fullWidth MuiInputBase-formControl"
-                >
-                  <input
-                    aria-invalid="false"
-                    class="MuiInputBase-input MuiFilledInput-input"
-                    id="mobilePhone1"
-                    name="mobilePhone1"
-                    type="text"
-                    value=""
-                  />
-                </div>
+                  <legend
+                    class="PrivateNotchedOutline-legend-2"
+                    style="width: 0.01px;"
+                  >
+                    <span>
+                      ​
+                    </span>
+                  </legend>
+                </fieldset>
               </div>
             </div>
             <h5
@@ -91,6 +115,13 @@ Object {
             <div
               class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
             >
+              <label
+                class="MuiFormLabel-root"
+                for="province-selector"
+                style="margin-bottom: 10px;"
+              >
+                Provincia
+              </label>
               <div
                 aria-expanded="false"
                 class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
@@ -99,25 +130,16 @@ Object {
                 <div
                   class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
                 >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
-                    data-shrink="false"
-                    for="province-selector"
-                    id="province-selector-label"
-                  >
-                    Seleccione Provincia
-                  </label>
                   <div
-                    class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiFilledInput-adornedEnd"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
                   >
                     <input
                       aria-autocomplete="list"
                       aria-invalid="false"
                       autocapitalize="none"
                       autocomplete="off"
-                      class="MuiInputBase-input MuiFilledInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiFilledInput-inputAdornedEnd"
+                      class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
                       id="province-selector"
-                      name="province"
                       spellcheck="false"
                       type="text"
                       value=""
@@ -170,25 +192,46 @@ Object {
                         </span>
                       </button>
                     </div>
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
+                      style="padding-left: 8px;"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legend-2"
+                        style="width: 0.01px;"
+                      >
+                        <span>
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
                   </div>
                 </div>
               </div>
               <div
-                class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate"
+                class="MuiLinearProgress-root MuiLinearProgress-colorSecondary MuiLinearProgress-indeterminate"
                 data-testid="provinces-loader"
                 role="progressbar"
               >
                 <div
-                  class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate"
+                  class="MuiLinearProgress-bar MuiLinearProgress-barColorSecondary MuiLinearProgress-bar1Indeterminate"
                 />
                 <div
-                  class="MuiLinearProgress-bar MuiLinearProgress-bar2Indeterminate MuiLinearProgress-barColorPrimary"
+                  class="MuiLinearProgress-bar MuiLinearProgress-bar2Indeterminate MuiLinearProgress-barColorSecondary"
                 />
               </div>
             </div>
             <div
               class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
             >
+              <label
+                class="MuiFormLabel-root"
+                for="canton-selector-label"
+                style="margin-bottom: 10px;"
+              >
+                Canton
+              </label>
               <div
                 aria-expanded="false"
                 class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
@@ -197,25 +240,16 @@ Object {
                 <div
                   class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
                 >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
-                    data-shrink="false"
-                    for="canton-selector-label"
-                    id="canton-selector-label-label"
-                  >
-                    Seleccione Canton
-                  </label>
                   <div
-                    class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiFilledInput-adornedEnd"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
                   >
                     <input
                       aria-autocomplete="list"
                       aria-invalid="false"
                       autocapitalize="none"
                       autocomplete="off"
-                      class="MuiInputBase-input MuiFilledInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiFilledInput-inputAdornedEnd"
+                      class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
                       id="canton-selector-label"
-                      name="canton"
                       spellcheck="false"
                       type="text"
                       value=""
@@ -268,6 +302,20 @@ Object {
                         </span>
                       </button>
                     </div>
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
+                      style="padding-left: 8px;"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legend-2"
+                        style="width: 0.01px;"
+                      >
+                        <span>
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
                   </div>
                 </div>
               </div>
@@ -275,6 +323,13 @@ Object {
             <div
               class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
             >
+              <label
+                class="MuiFormLabel-root"
+                for="district-selector-label"
+                style="margin-bottom: 10px;"
+              >
+                Distrito
+              </label>
               <div
                 aria-expanded="false"
                 class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
@@ -283,25 +338,16 @@ Object {
                 <div
                   class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
                 >
-                  <label
-                    class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
-                    data-shrink="false"
-                    for="district-selector-label"
-                    id="district-selector-label-label"
-                  >
-                    Seleccione Distrito
-                  </label>
                   <div
-                    class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiFilledInput-adornedEnd"
+                    class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
                   >
                     <input
                       aria-autocomplete="list"
                       aria-invalid="false"
                       autocapitalize="none"
                       autocomplete="off"
-                      class="MuiInputBase-input MuiFilledInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiFilledInput-inputAdornedEnd"
+                      class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
                       id="district-selector-label"
-                      name="district"
                       spellcheck="false"
                       type="text"
                       value=""
@@ -354,6 +400,20 @@ Object {
                         </span>
                       </button>
                     </div>
+                    <fieldset
+                      aria-hidden="true"
+                      class="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
+                      style="padding-left: 8px;"
+                    >
+                      <legend
+                        class="PrivateNotchedOutline-legend-2"
+                        style="width: 0.01px;"
+                      >
+                        <span>
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
                   </div>
                 </div>
               </div>
@@ -385,19 +445,19 @@ Object {
             class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
           >
             <label
-              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
-              data-shrink="false"
+              class="MuiFormLabel-root"
               id="gender-selector-label"
+              style="margin-bottom: 10px;"
             >
               Sexo biológico designado al nacer
             </label>
             <div
-              class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-fullWidth MuiInputBase-formControl"
+              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary MuiInputBase-fullWidth MuiInputBase-formControl"
             >
               <div
                 aria-haspopup="listbox"
                 aria-labelledby="gender-selector-label gender-selector"
-                class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-filled MuiInputBase-input MuiFilledInput-input"
+                class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input"
                 id="gender-selector"
                 role="button"
                 tabindex="0"
@@ -415,7 +475,7 @@ Object {
               />
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconFilled"
+                class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined"
                 focusable="false"
                 viewBox="0 0 24 24"
               >
@@ -423,34 +483,58 @@ Object {
                   d="M7 10l5 5 5-5z"
                 />
               </svg>
+              <fieldset
+                aria-hidden="true"
+                class="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
+                style="padding-left: 8px;"
+              >
+                <legend
+                  class="PrivateNotchedOutline-legend-2"
+                  style="width: 0.01px;"
+                >
+                  <span>
+                    ​
+                  </span>
+                </legend>
+              </fieldset>
             </div>
           </div>
           <div
             class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
           >
-            <div
-              class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+            <label
+              class="MuiFormLabel-root"
+              for="mobilePhone1"
+              margin="normal"
+              style="margin-bottom: 10px;"
             >
-              <label
-                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
-                data-shrink="false"
-                for="mobilePhone1"
-                id="mobilePhone1-label"
+              Numero de teléfono
+            </label>
+            <div
+              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary MuiInputBase-formControl"
+            >
+              <input
+                aria-invalid="false"
+                class="MuiInputBase-input MuiOutlinedInput-input"
+                id="mobilePhone1"
+                name="mobilePhone1"
+                type="text"
+                value=""
+              />
+              <fieldset
+                aria-hidden="true"
+                class="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
+                style="padding-left: 8px;"
               >
-                Numero de teléfono
-              </label>
-              <div
-                class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-fullWidth MuiInputBase-formControl"
-              >
-                <input
-                  aria-invalid="false"
-                  class="MuiInputBase-input MuiFilledInput-input"
-                  id="mobilePhone1"
-                  name="mobilePhone1"
-                  type="text"
-                  value=""
-                />
-              </div>
+                <legend
+                  class="PrivateNotchedOutline-legend-2"
+                  style="width: 0.01px;"
+                >
+                  <span>
+                    ​
+                  </span>
+                </legend>
+              </fieldset>
             </div>
           </div>
           <h5
@@ -461,6 +545,13 @@ Object {
           <div
             class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
           >
+            <label
+              class="MuiFormLabel-root"
+              for="province-selector"
+              style="margin-bottom: 10px;"
+            >
+              Provincia
+            </label>
             <div
               aria-expanded="false"
               class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
@@ -469,25 +560,16 @@ Object {
               <div
                 class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
               >
-                <label
-                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
-                  data-shrink="false"
-                  for="province-selector"
-                  id="province-selector-label"
-                >
-                  Seleccione Provincia
-                </label>
                 <div
-                  class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiFilledInput-adornedEnd"
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
                 >
                   <input
                     aria-autocomplete="list"
                     aria-invalid="false"
                     autocapitalize="none"
                     autocomplete="off"
-                    class="MuiInputBase-input MuiFilledInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiFilledInput-inputAdornedEnd"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
                     id="province-selector"
-                    name="province"
                     spellcheck="false"
                     type="text"
                     value=""
@@ -540,25 +622,46 @@ Object {
                       </span>
                     </button>
                   </div>
+                  <fieldset
+                    aria-hidden="true"
+                    class="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
+                    style="padding-left: 8px;"
+                  >
+                    <legend
+                      class="PrivateNotchedOutline-legend-2"
+                      style="width: 0.01px;"
+                    >
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
                 </div>
               </div>
             </div>
             <div
-              class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate"
+              class="MuiLinearProgress-root MuiLinearProgress-colorSecondary MuiLinearProgress-indeterminate"
               data-testid="provinces-loader"
               role="progressbar"
             >
               <div
-                class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate"
+                class="MuiLinearProgress-bar MuiLinearProgress-barColorSecondary MuiLinearProgress-bar1Indeterminate"
               />
               <div
-                class="MuiLinearProgress-bar MuiLinearProgress-bar2Indeterminate MuiLinearProgress-barColorPrimary"
+                class="MuiLinearProgress-bar MuiLinearProgress-bar2Indeterminate MuiLinearProgress-barColorSecondary"
               />
             </div>
           </div>
           <div
             class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
           >
+            <label
+              class="MuiFormLabel-root"
+              for="canton-selector-label"
+              style="margin-bottom: 10px;"
+            >
+              Canton
+            </label>
             <div
               aria-expanded="false"
               class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
@@ -567,25 +670,16 @@ Object {
               <div
                 class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
               >
-                <label
-                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
-                  data-shrink="false"
-                  for="canton-selector-label"
-                  id="canton-selector-label-label"
-                >
-                  Seleccione Canton
-                </label>
                 <div
-                  class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiFilledInput-adornedEnd"
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
                 >
                   <input
                     aria-autocomplete="list"
                     aria-invalid="false"
                     autocapitalize="none"
                     autocomplete="off"
-                    class="MuiInputBase-input MuiFilledInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiFilledInput-inputAdornedEnd"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
                     id="canton-selector-label"
-                    name="canton"
                     spellcheck="false"
                     type="text"
                     value=""
@@ -638,6 +732,20 @@ Object {
                       </span>
                     </button>
                   </div>
+                  <fieldset
+                    aria-hidden="true"
+                    class="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
+                    style="padding-left: 8px;"
+                  >
+                    <legend
+                      class="PrivateNotchedOutline-legend-2"
+                      style="width: 0.01px;"
+                    >
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
                 </div>
               </div>
             </div>
@@ -645,6 +753,13 @@ Object {
           <div
             class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
           >
+            <label
+              class="MuiFormLabel-root"
+              for="district-selector-label"
+              style="margin-bottom: 10px;"
+            >
+              Distrito
+            </label>
             <div
               aria-expanded="false"
               class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon"
@@ -653,25 +768,16 @@ Object {
               <div
                 class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
               >
-                <label
-                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
-                  data-shrink="false"
-                  for="district-selector-label"
-                  id="district-selector-label-label"
-                >
-                  Seleccione Distrito
-                </label>
                 <div
-                  class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiFilledInput-adornedEnd"
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary MuiAutocomplete-inputRoot MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
                 >
                   <input
                     aria-autocomplete="list"
                     aria-invalid="false"
                     autocapitalize="none"
                     autocomplete="off"
-                    class="MuiInputBase-input MuiFilledInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiFilledInput-inputAdornedEnd"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
                     id="district-selector-label"
-                    name="district"
                     spellcheck="false"
                     type="text"
                     value=""
@@ -724,6 +830,20 @@ Object {
                       </span>
                     </button>
                   </div>
+                  <fieldset
+                    aria-hidden="true"
+                    class="PrivateNotchedOutline-root-1 MuiOutlinedInput-notchedOutline"
+                    style="padding-left: 8px;"
+                  >
+                    <legend
+                      class="PrivateNotchedOutline-legend-2"
+                      style="width: 0.01px;"
+                    >
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
                 </div>
               </div>
             </div>

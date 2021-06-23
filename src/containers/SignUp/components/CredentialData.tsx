@@ -7,21 +7,13 @@ import { ICredentialDataForm, IEmailStates } from '../index.types';
 /// SERVICES
 import { getPersonalData } from '../../../services/getPersonalData.service';
 /// OWN COMPONENTS
+import Input from '../../../components/common/TextField';
 import SecurityPasswordIdicator from '../../../components/common/SecurityPasswordIndicator';
 /// MATERIAL-UI
-import Input from '@material-ui/core/Input';
 import Switch from '@material-ui/core/Switch';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
-import InputLabel from '@material-ui/core/InputLabel';
-import IconButton from '@material-ui/core/IconButton';
-import Visibility from '@material-ui/icons/Visibility';
-import FormControl from '@material-ui/core/FormControl';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import CircularProgress from '@material-ui/core/CircularProgress';
 /// MATERIAL-UI END
 
 /// INITIAL STATES
@@ -38,11 +30,7 @@ function CredentialData({
   handleBlur,
   handleChange
 }: FormikProps<ICredentialDataForm>): JSX.Element {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [inputEmailStates, setInputEmailStates] = useState(initialEmailStates);
-  const handleClickShowPassword = (): void => {
-    setShowPassword(!showPassword);
-  };
 
   /// USE EFFECTS
   useEffect(() => {
@@ -68,75 +56,44 @@ function CredentialData({
 
   return (
     <div>
-      <FormControl variant="filled" fullWidth margin="normal">
-        <InputLabel htmlFor="email">Correo electrónico</InputLabel>
-        <Input
-          fullWidth
-          id="email"
-          name="email"
-          value={values.email}
-          error={touched.email && (Boolean(errors.email) || Boolean(inputEmailStates.message))}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          endAdornment={
-            <InputAdornment position="end">
-              {inputEmailStates.fetching && <CircularProgress size={20} />}
-            </InputAdornment>
-          }
-        />
-        {touched.email && (errors.email || inputEmailStates.message) && (
-          <FormHelperText error>
-            {errors.email ? errors.email : inputEmailStates.message}
-          </FormHelperText>
-        )}
-      </FormControl>
-      <FormControl variant="filled" fullWidth margin="normal">
-        <InputLabel htmlFor="password">Contraseña</InputLabel>
-        <Input
-          fullWidth
-          id="password"
-          name="password"
-          type={showPassword ? 'text' : 'password'}
-          value={values.password}
-          error={touched.password && Boolean(errors.password)}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword}>
-                {showPassword ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-        {touched.password && errors.password && (
-          <FormHelperText error>{errors.password}</FormHelperText>
-        )}
-      </FormControl>
+      <Input
+        fullWidth
+        id="email"
+        name="email"
+        label="Correo electrónico"
+        value={values.email}
+        error={touched.email && (Boolean(errors.email) || Boolean(inputEmailStates.message))}
+        onBlur={handleBlur}
+        loading={inputEmailStates.fetching}
+        onChange={handleChange}
+        helperText={errors.email ? errors.email : inputEmailStates.message}
+      />
+      <Input
+        fullWidth
+        id="password"
+        name="password"
+        type="password"
+        label="Contraseña"
+        value={values.password}
+        error={touched.password && Boolean(errors.password)}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        helperText={errors.password}
+      />
       <SecurityPasswordIdicator value={values.password} />
-      <FormControl variant="filled" fullWidth margin="normal">
-        <InputLabel htmlFor="confirmPassword">Contraseña</InputLabel>
-        <Input
-          fullWidth
-          id="confirmPassword"
-          name="confirmPassword"
-          type={showPassword ? 'text' : 'password'}
-          value={values.confirmPassword}
-          error={touched.confirmPassword && Boolean(errors.confirmPassword)}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword}>
-                {showPassword ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-        {touched.confirmPassword && errors.confirmPassword && (
-          <FormHelperText error>{errors.confirmPassword}</FormHelperText>
-        )}
-      </FormControl>
+      <Input
+        fullWidth
+        id="confirmPassword"
+        name="confirmPassword"
+        type="password"
+        label="Contraseña"
+        value={values.confirmPassword}
+        error={touched.confirmPassword && Boolean(errors.confirmPassword)}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        helperText={errors.confirmPassword}
+      />
+
       <FormGroup>
         <FormControlLabel
           name="superappUser"

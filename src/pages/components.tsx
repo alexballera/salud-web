@@ -3,7 +3,6 @@ import DefaultErrorPage from 'next/error';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
-import InputAdornment from '@material-ui/core/InputAdornment';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
@@ -13,8 +12,14 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 /// MATERIAL - UI END
+
+/// CUSTOMIZED COMPONENTS
+import CustomTextField from '../components/common/TextField';
+import TextMaskCustom from '../components/common/InputTextMask';
+/// CUSTOMIZED COMPONENTS END
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -134,6 +139,53 @@ function ComponentsView(): JSX.Element {
             }
           />
         </FormControl>
+        <CustomTextField
+          loading={true}
+          id="firstName"
+          name="firstname"
+          label="Outlined"
+          helperText="Campo requerido"
+        />
+        <CustomTextField
+          loading={true}
+          type="password"
+          id="firstName"
+          name="firstname"
+          label="Outlined"
+          helperText="Campo requerido"
+        />
+
+        <CustomTextField
+          fullWidth
+          id="documentNumber"
+          name="documentNumber"
+          label="Numero de identificación"
+          error={true}
+          loading={true}
+          helperText="Campo requerido"
+          inputProps={{
+            // eslint-disable-next-line prettier/prettier
+            mask: [
+              /[1-9]/,
+              /\d/,
+              /\d/,
+              ' ',
+              '-',
+              ' ',
+              /\d/,
+              /\d/,
+              /\d/,
+              ' ',
+              '-',
+              ' ',
+              /\d/,
+              /\d/,
+              /\d/
+            ],
+            'data-testid': 'documentNumber'
+          }}
+          inputComponent={TextMaskCustom as any}
+        />
       </form>
     </div>
   );

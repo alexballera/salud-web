@@ -8,18 +8,15 @@ import { personVerifier } from '../../../services/personVerifier.service';
 /// TYPES
 import { IPersonalDataForm, IPersonalDataProps } from '../index.types';
 /// OWN COMPONENTS
+import TextField from '../../../components/common/TextField';
 import TextMaskCustom from '../../../components/common/InputTextMask';
 /// MATERIAL-UI
-import Input from '@material-ui/core/Input';
 import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
+import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import CircularProgress from '@material-ui/core/CircularProgress';
 /// MATERIAL-UI END
 
 function PersonalData({
@@ -85,19 +82,22 @@ function PersonalData({
     }
   }, [values.documentNumber]);
   /// USE EFFECTS END
-
   return (
     <div>
       <FormControl fullWidth variant="filled">
-        <InputLabel id="document-type-selector-label">Tipo de identificación</InputLabel>
+        <FormLabel id="document-type-selector-label" style={{ marginBottom: 10 }}>
+          Tipo de identificación
+        </FormLabel>
         <Select
           fullWidth
           id="document-type-selector"
           name="documentType"
           value={values.documentType}
           error={touched.documentType && Boolean(errors.documentType)}
+          color="secondary"
           onBlur={handleBlur}
           labelId="document-type-selector-label"
+          variant="outlined"
           onChange={handleChange}
           data-testid="document-type-selector"
         >
@@ -114,101 +114,88 @@ function PersonalData({
           <FormHelperText error>{errors.documentType}</FormHelperText>
         )}
       </FormControl>
-      <FormControl variant="filled" fullWidth margin="normal">
-        <InputLabel htmlFor="documentNumber">Numero de identificación</InputLabel>
-        <Input
-          fullWidth
-          id="documentNumber"
-          name="documentNumber"
-          value={values.documentNumber}
-          onBlur={handleBlur}
-          disabled={!values.documentType}
-          onChange={handleChange}
-          inputProps={{
-            mask: [
-              /[1-9]/,
-              /\d/,
-              /\d/,
-              ' ',
-              '-',
-              ' ',
-              /\d/,
-              /\d/,
-              /\d/,
-              ' ',
-              '-',
-              ' ',
-              /\d/,
-              /\d/,
-              /\d/
-            ],
-            'data-testid': 'documentNumber'
-          }}
-          endAdornment={
-            <InputAdornment position="end">
-              {loading && <CircularProgress size={20} />}
-            </InputAdornment>
-          }
-          inputComponent={TextMaskCustom as any}
-        />
-        {((touched.documentNumber && errors.documentNumber) || compareLenghtRequired()) && (
-          <FormHelperText error>
-            {errors.documentNumber
-              ? errors.documentNumber
-              : `Caracteres requeridos: ${currentDocumentType.length}`}
-          </FormHelperText>
-        )}
-      </FormControl>
+      <TextField
+        id="documentNumber"
+        name="documentNumber"
+        type="text"
+        label="Numero de identificación"
+        value={values.documentNumber}
+        error={
+          (touched.documentNumber && Boolean(errors.documentNumber)) || compareLenghtRequired()
+        }
+        onBlur={handleBlur}
+        loading={loading}
+        disabled={!values.documentType}
+        onChange={handleChange}
+        helperText={
+          errors.documentNumber
+            ? errors.documentNumber
+            : `Caracteres requeridos: ${currentDocumentType?.length}`
+        }
+        inputProps={{
+          // eslint-disable-next-line prettier/prettier
+          mask: [
+            /[1-9]/,
+            /\d/,
+            /\d/,
+            ' ',
+            '-',
+            ' ',
+            /\d/,
+            /\d/,
+            /\d/,
+            ' ',
+            '-',
+            ' ',
+            /\d/,
+            /\d/,
+            /\d/
+          ],
+          'data-testid': 'documentNumber'
+        }}
+        inputComponent={TextMaskCustom as any}
+      />
       {(data || userValuesAlreadyExist()) && (
         <Paper style={{ padding: 10, backgroundColor: '#F5F5F5' }} square elevation={0}>
-          <FormControl fullWidth>
-            <TextField
-              fullWidth
-              id="firstName"
-              name="firstName"
-              label="Nombre"
-              value={values.firstName}
-              error={touched.firstName && Boolean(errors.firstName)}
-              margin="normal"
-              onBlur={handleBlur}
-              disabled={true}
-              onChange={handleChange}
-              helperText={touched.firstName && errors.firstName}
-              data-testid="firstName"
-            />
-          </FormControl>
-          <FormControl fullWidth>
-            <TextField
-              fullWidth
-              id="lastName"
-              name="lastName"
-              label="Nombre"
-              value={values.lastName}
-              error={touched.lastName && Boolean(errors.lastName)}
-              margin="normal"
-              onBlur={handleBlur}
-              disabled={true}
-              onChange={handleChange}
-              helperText={touched.lastName && errors.lastName}
-              data-testid="lastName"
-            />
-          </FormControl>
-          <FormControl fullWidth>
-            <TextField
-              fullWidth
-              id="birthDate"
-              name="birthDate"
-              label="Fecha de nacimiento"
-              value={values.birthDate}
-              error={touched.birthDate && Boolean(errors.birthDate)}
-              margin="normal"
-              onBlur={handleBlur}
-              disabled={true}
-              onChange={handleChange}
-              helperText={touched.birthDate && errors.birthDate}
-              data-testid="birthDate"
-            />
-          </FormControl>
+          <TextField
+            id="firstName"
+            name="firstName"
+            label="Nombre"
+            value={values.firstName}
+            error={touched.firstName && Boolean(errors.firstName)}
+            onBlur={handleBlur}
+            disabled={true}
+            onChange={handleChange}
+            helperText={errors.firstName}
+            data-testid="firstName"
+            formControlProps={{ margin: 'normal' }}
+          />
+          <TextField
+            id="lastName"
+            name="lastName"
+            label="Apellido"
+            value={values.lastName}
+            error={touched.lastName && Boolean(errors.lastName)}
+            onBlur={handleBlur}
+            disabled={true}
+            onChange={handleChange}
+            helperText={errors.lastName}
+            data-testid="lastName"
+            formControlProps={{ margin: 'normal' }}
+          />
+          <TextField
+            id="birthDate"
+            name="birthDate"
+            label="Fecha de nacimiento"
+            value={values.birthDate}
+            error={touched.birthDate && Boolean(errors.birthDate)}
+            onBlur={handleBlur}
+            disabled={true}
+            onChange={handleChange}
+            helperText={errors.birthDate}
+            data-testid="birthDate"
+            formControlProps={{ margin: 'normal' }}
+          />
         </Paper>
       )}
     </div>

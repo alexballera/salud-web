@@ -105,7 +105,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
   }, [router]);
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" color="inherit" elevation={0}>
       <Toolbar className={styles.toolbar}>
         <Typography variant="h6">OMNiSalud</Typography>
         {_drawAction()}
