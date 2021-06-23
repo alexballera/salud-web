@@ -17,6 +17,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 /// MATERIAL - UI END
 
 /// CUSTOMIZED COMPONENTS
+import Alert from '../components/common/Notifications';
 import CustomTextField from '../components/common/TextField';
 import TextMaskCustom from '../components/common/InputTextMask';
 /// CUSTOMIZED COMPONENTS END
@@ -187,6 +188,15 @@ function ComponentsView(): JSX.Element {
           inputComponent={TextMaskCustom as any}
         />
       </form>
+      <div>
+        <Typography component="h3" variant="h3">
+          Alerts
+        </Typography>
+        <Alert open message="There is a success alert" severity="success" />
+        <Alert open message="There is a success alert" severity="error" />
+        <Alert open message="There is a success alert" severity="warning" />
+        <Alert open message="There is a success alert" severity="info" />
+      </div>
     </div>
   );
 }

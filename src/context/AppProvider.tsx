@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AppContext } from './index';
 // TYPES
-import { AppStates, Props } from './types';
+import { AppStates, INotificationProps, Props } from './types';
 
 export const initialStates: AppStates = {
   user: null,
@@ -12,6 +12,18 @@ export const initialStates: AppStates = {
 
 export default function AppProvider({ children }: Props): JSX.Element {
   const [state, setState] = useState(initialStates);
+  const [notificationState, setNofiticationState] = useState<INotificationProps>({
+    open: false,
+    message: '',
+    severity: 'success'
+  });
+
+  const handleNotifications = (props: INotificationProps) => {
+    setNofiticationState({
+      ...notificationState,
+      ...props
+    });
+  };
 
   const handleLogin = user => {
     setState(prevState => ({ ...prevState, user, loggedIn: true }));
@@ -30,8 +42,10 @@ export default function AppProvider({ children }: Props): JSX.Element {
       value={{
         ...state,
         handleLogin,
+        handleError,
         handleLoading,
-        handleError
+        notificationState,
+        handleNotifications
       }}
     >
       {children}

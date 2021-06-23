@@ -1,20 +1,32 @@
-import { Box, Snackbar, Typography } from '@material-ui/core';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import React, { PropsWithChildren } from 'react';
-import { withAppContext } from '../../../context';
-import Navbar from '../Navbar';
+/// MATERIAL - UI
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import { Box, Snackbar, Typography } from '@material-ui/core';
+/// MATERIAL - UI END
+
+/// OWN COMPONENTS
 import Alert from '../Alert';
+import Navbar from '../Navbar';
+import Notification from '../Notifications';
+import { withAppContext } from '../../../context';
+/// OWN COMPONENTS END
+
 import { IProps } from './types';
 
 export default withAppContext(function Layout({
   children,
   errorState,
-  handleError
+  handleError,
+  notificationState,
+  handleNotifications
 }: PropsWithChildren<IProps>): JSX.Element {
   return (
     <>
       <Navbar />
-
+      <Notification
+        {...notificationState}
+        onClose={() => handleNotifications({ ...notificationState, open: false })}
+      />
       <Box component="main" data-testid="main">
         {children}
       </Box>
