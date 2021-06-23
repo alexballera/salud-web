@@ -13,6 +13,7 @@ function PasswordData({
   values,
   errors,
   touched,
+  handleBlur,
   handleChange
 }: FormikProps<IPasswordDataForm>): JSX.Element {
   return (
@@ -25,6 +26,7 @@ function PasswordData({
           name="newPassword"
           label="Nueva contraseña"
           type="password"
+          onBlur={handleBlur}
           value={values.newPassword}
           error={touched.newPassword && Boolean(errors.newPassword)}
           variant="filled"

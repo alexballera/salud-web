@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormikProps } from 'formik';
 import * as yup from 'yup';
 /// TYPES
@@ -7,12 +7,14 @@ import { IEmailDataForm } from '../../../types/recover.types';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import { Box } from '@material-ui/core';
+
 /// MATERIAL-UI END
 
 function EmailData({
   values,
   errors,
   touched,
+  handleBlur,
   handleChange
 }: FormikProps<IEmailDataForm>): JSX.Element {
   return (
@@ -24,6 +26,7 @@ function EmailData({
           name="email"
           data-testid="email-input"
           label="Correo electrónico"
+          onBlur={handleBlur}
           value={values.email}
           error={touched.email && Boolean(errors.email)}
           variant="filled"
