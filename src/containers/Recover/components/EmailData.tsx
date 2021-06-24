@@ -4,7 +4,7 @@ import * as yup from 'yup';
 /// TYPES
 import { IEmailDataForm } from '../../../types/recover.types';
 /// MATERIAL-UI
-import TextField from '@material-ui/core/TextField';
+import TextField from '../../../components/common/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import { Box } from '@material-ui/core';
 
@@ -19,21 +19,20 @@ function EmailData({
 }: FormikProps<IEmailDataForm>): JSX.Element {
   return (
     <Box>
-      <FormControl fullWidth margin="normal">
-        <TextField
-          fullWidth
-          id="email"
-          name="email"
-          data-testid="email-input"
-          label="Correo electrónico"
-          onBlur={handleBlur}
-          value={values.email}
-          error={touched.email && Boolean(errors.email)}
-          variant="filled"
-          onChange={handleChange}
-          helperText={touched.email && errors.email}
-        />
-      </FormControl>
+      <TextField
+        fullWidth
+        id="email"
+        name="email"
+        formControlProps={{
+          'data-testid': 'email-input'
+        }}
+        label="Correo electrónico"
+        onBlur={handleBlur}
+        value={values.email}
+        error={touched.email && Boolean(errors.email)}
+        onChange={handleChange}
+        helperText={touched.email && errors.email}
+      />
     </Box>
   );
 }

@@ -63,7 +63,7 @@ describe('<EmailDataForm />', () => {
       });
       fireEvent.click(submitButton);
     });
-    expect(inputContainer.textContent).toEqual('Correo electrónico');
+    expect(inputContainer.textContent).toEqual('Correo electrónico​');
     expect(inputContainer.textContent).not.toMatch(/Formato de correo incorrecto/);
     expect(submitMock).toBeCalled();
   });

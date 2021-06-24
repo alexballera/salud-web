@@ -14,32 +14,42 @@ Object {
             class="MuiBox-root MuiBox-root-1"
           >
             <div
-              class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
+              class="MuiFormControl-root MuiFormControl-fullWidth"
+              data-testid="email-input"
             >
-              <div
-                class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
-                data-testid="email-input"
+              <label
+                class="MuiFormLabel-root"
+                for="email"
+                margin="normal"
+                style="margin-bottom: 10px;"
               >
-                <label
-                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
-                  data-shrink="false"
-                  for="email"
-                  id="email-label"
+                Correo electrónico
+              </label>
+              <div
+                class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary MuiInputBase-fullWidth MuiInputBase-formControl"
+              >
+                <input
+                  aria-invalid="false"
+                  class="MuiInputBase-input MuiOutlinedInput-input"
+                  id="email"
+                  name="email"
+                  type="text"
+                  value=""
+                />
+                <fieldset
+                  aria-hidden="true"
+                  class="PrivateNotchedOutline-root-2 MuiOutlinedInput-notchedOutline"
+                  style="padding-left: 8px;"
                 >
-                  Correo electrónico
-                </label>
-                <div
-                  class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-fullWidth MuiInputBase-formControl"
-                >
-                  <input
-                    aria-invalid="false"
-                    class="MuiInputBase-input MuiFilledInput-input"
-                    id="email"
-                    name="email"
-                    type="text"
-                    value=""
-                  />
-                </div>
+                  <legend
+                    class="PrivateNotchedOutline-legend-3"
+                    style="width: 0.01px;"
+                  >
+                    <span>
+                      ​
+                    </span>
+                  </legend>
+                </fieldset>
               </div>
             </div>
           </div>
@@ -71,32 +81,42 @@ Object {
           class="MuiBox-root MuiBox-root-1"
         >
           <div
-            class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
+            class="MuiFormControl-root MuiFormControl-fullWidth"
+            data-testid="email-input"
           >
-            <div
-              class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
-              data-testid="email-input"
+            <label
+              class="MuiFormLabel-root"
+              for="email"
+              margin="normal"
+              style="margin-bottom: 10px;"
             >
-              <label
-                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled"
-                data-shrink="false"
-                for="email"
-                id="email-label"
+              Correo electrónico
+            </label>
+            <div
+              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary MuiInputBase-fullWidth MuiInputBase-formControl"
+            >
+              <input
+                aria-invalid="false"
+                class="MuiInputBase-input MuiOutlinedInput-input"
+                id="email"
+                name="email"
+                type="text"
+                value=""
+              />
+              <fieldset
+                aria-hidden="true"
+                class="PrivateNotchedOutline-root-2 MuiOutlinedInput-notchedOutline"
+                style="padding-left: 8px;"
               >
-                Correo electrónico
-              </label>
-              <div
-                class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-fullWidth MuiInputBase-formControl"
-              >
-                <input
-                  aria-invalid="false"
-                  class="MuiInputBase-input MuiFilledInput-input"
-                  id="email"
-                  name="email"
-                  type="text"
-                  value=""
-                />
-              </div>
+                <legend
+                  class="PrivateNotchedOutline-legend-3"
+                  style="width: 0.01px;"
+                >
+                  <span>
+                    ​
+                  </span>
+                </legend>
+              </fieldset>
             </div>
           </div>
         </div>

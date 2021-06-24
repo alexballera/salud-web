@@ -18,7 +18,7 @@ import {
   makeStyles,
   InputLabel
 } from '@material-ui/core';
-import ReactCodeInput from 'react-code-input';
+import ReactCodeInput from '../../../components/common/CodeInput';
 import {
   forgotPasswordConfirmCodeService,
   forgotPasswordResendPin,
@@ -82,7 +82,6 @@ function ValidationData({
   const [dialogOpen, setDialogOpen] = useState(false);
   const [expiredDialogOpen, setExpiredDialogOpen] = useState(false);
   const router = useRouter();
-  const classes = useStyles();
 
   const _handleResend = (email: string) => {
     handleLoading(true);
@@ -98,12 +97,6 @@ function ValidationData({
 
   useEffect(() => {
     handleLoading(true);
-    // Add aria-label to input
-    /* const wrapper = document.getElementsByClassName('react-code-input')[0];
-    const nodes = wrapper.children;
-    for (let i = 0; i < nodes.length; i++) {
-      nodes[i].setAttribute('aria-label', 'Código de validación en el índice ' + i);
-    } */
 
     forgotPasswordSendEmailService(values.email)
       .catch(err => {
@@ -176,27 +169,23 @@ function ValidationData({
   return (
     <>
       <Box>
-        <FormControl fullWidth margin="normal" className={classes.root}>
-          <label
-            style={{
+        <ReactCodeInput
+          type="text"
+          label="Código de validación"
+          name="pinCode"
+          fields={6}
+          inputMode="numeric"
+          value={values.pinCode}
+          onChange={handleChange('pinCode')}
+          disabled={values.validPin === '1'}
+          formLabelProps={{
+            style: {
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center',
-              color: 'transparent'
-            }}
-          >
-            Código de validación
-            <ReactCodeInput
-              type="text"
-              name="pinCode"
-              fields={6}
-              inputMode="numeric"
-              value={values.pinCode}
-              onChange={handleChange('pinCode')}
-              disabled={values.validPin === '1'}
-            />
-          </label>
-        </FormControl>
+              alignItems: 'center'
+            }
+          }}
+        />
         <Box display="flex" alignItems="center" justifyContent="center">
           <Typography>¿No recibiste el correo?</Typography>
           <ResendButton onClick={() => _handleResend(values.email)} />
@@ -248,14 +237,6 @@ function ValidationData({
     </>
   );
 }
-
-const useStyles = makeStyles(() => ({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-}));
 
 ValidationData.title = 'Código de verificación';
 ValidationData.description =
