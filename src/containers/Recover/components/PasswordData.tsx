@@ -5,8 +5,9 @@ import * as yup from 'yup';
 import { IPasswordDataForm } from '../../../types/recover.types';
 /// MATERIAL-UI
 import FormControl from '@material-ui/core/FormControl';
-import { Box, TextField } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 /// MATERIAL-UI END
+import TextField from '../../../components/common/TextField';
 import SecurityPasswordIndicator from '../../../components/common/SecurityPasswordIndicator';
 
 function PasswordData({
@@ -18,38 +19,33 @@ function PasswordData({
 }: FormikProps<IPasswordDataForm>): JSX.Element {
   return (
     <Box>
-      <FormControl fullWidth margin="normal">
-        <TextField
-          fullWidth
-          id="newPassword"
-          data-testid="password-input"
-          name="newPassword"
-          label="Nueva contraseña"
-          type="password"
-          onBlur={handleBlur}
-          value={values.newPassword}
-          error={touched.newPassword && Boolean(errors.newPassword)}
-          variant="filled"
-          onChange={handleChange}
-          helperText={touched.newPassword && errors.newPassword}
-        />
-      </FormControl>
+      <TextField
+        fullWidth
+        id="newPassword"
+        data-testid="password-input"
+        name="newPassword"
+        label="Nueva contraseña"
+        type="password"
+        onBlur={handleBlur}
+        value={values.newPassword}
+        error={touched.newPassword && Boolean(errors.newPassword)}
+        onChange={handleChange}
+        helperText={touched.newPassword && errors.newPassword}
+      />
       <SecurityPasswordIndicator value={values.newPassword} />
-      <FormControl fullWidth margin="normal">
-        <TextField
-          fullWidth
-          id="newPasswordConfirm"
-          data-testid="password-confirm-input"
-          name="newPasswordConfirm"
-          label="Confirmar contraseña"
-          type="password"
-          value={values.newPasswordConfirm}
-          error={touched.newPasswordConfirm && Boolean(errors.newPasswordConfirm)}
-          variant="filled"
-          onChange={handleChange}
-          helperText={touched.newPasswordConfirm && errors.newPasswordConfirm}
-        />
-      </FormControl>
+      <TextField
+        fullWidth
+        id="newPasswordConfirm"
+        data-testid="password-confirm-input"
+        name="newPasswordConfirm"
+        label="Confirmar contraseña"
+        type="password"
+        onBlur={handleBlur}
+        value={values.newPasswordConfirm}
+        error={touched.newPasswordConfirm && Boolean(errors.newPasswordConfirm)}
+        onChange={handleChange}
+        helperText={touched.newPasswordConfirm && errors.newPasswordConfirm}
+      />
     </Box>
   );
 }
