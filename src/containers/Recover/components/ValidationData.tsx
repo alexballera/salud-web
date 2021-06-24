@@ -11,7 +11,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions
+  DialogActions,
+  Typography
 } from '@material-ui/core';
 import ReactCodeInput from '../../../components/common/CodeInput';
 import {
