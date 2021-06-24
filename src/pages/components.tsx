@@ -18,6 +18,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 /// CUSTOMIZED COMPONENTS
 import Alert from '../components/common/Notifications';
+import ReactCodeInput from '../components/common/CodeInput';
 import CustomTextField from '../components/common/TextField';
 import TextMaskCustom from '../components/common/InputTextMask';
 /// CUSTOMIZED COMPONENTS END
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       '& > *': {
         margin: theme.spacing(1),
-        width: '25ch'
+        width: '50%'
       }
     },
     formControl: {
@@ -187,15 +188,23 @@ function ComponentsView(): JSX.Element {
           }}
           inputComponent={TextMaskCustom as any}
         />
+
+        <ReactCodeInput
+          label="Codigo de validación"
+          type="text"
+          name="pinCode"
+          fields={6}
+          inputMode="numeric"
+        />
       </form>
       <div>
         <Typography component="h3" variant="h3">
           Alerts
         </Typography>
-        <Alert open message="There is a success alert" severity="success" />
-        <Alert open message="There is a success alert" severity="error" />
-        <Alert open message="There is a success alert" severity="warning" />
-        <Alert open message="There is a success alert" severity="info" />
+        <Alert open message="There is a success alert" severity="success" onClose={() => {}} />
+        <Alert open message="There is a success alert" severity="error" onClose={() => {}} />
+        <Alert open message="There is a success alert" severity="warning" onClose={() => {}} />
+        <Alert open message="There is a success alert" severity="info" onClose={() => {}} />
       </div>
     </div>
   );
