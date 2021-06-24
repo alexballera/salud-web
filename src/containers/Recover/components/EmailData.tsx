@@ -23,9 +23,13 @@ function EmailData({
         fullWidth
         id="email"
         name="email"
+<<<<<<< HEAD
         formControlProps={{
           'data-testid': 'email-input'
         }}
+=======
+        data-testid="email-input"
+>>>>>>> SLD-589 step 1 high fidelity
         label="Correo electrónico"
         onBlur={handleBlur}
         value={values.email}
