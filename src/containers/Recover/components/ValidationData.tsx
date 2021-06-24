@@ -4,19 +4,15 @@ import * as yup from 'yup';
 /// TYPES
 import { IValidationDataForm } from '../../../types/recover.types';
 /// MATERIAL-UI
-import FormControl from '@material-ui/core/FormControl';
 import {
   Box,
   Button,
-  Slide,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
-  Typography,
-  makeStyles,
-  InputLabel
+  Typography
 } from '@material-ui/core';
 import ReactCodeInput from '../../../components/common/CodeInput';
 import {
@@ -77,8 +73,10 @@ function ValidationData({
   handleChange,
   handleLoading,
   handleError,
-  handleSubmit
+  handleSubmit,
+  setFieldValue
 }: IProps): JSX.Element {
+  const [initialized, setInitialized] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [expiredDialogOpen, setExpiredDialogOpen] = useState(false);
   const router = useRouter();
@@ -118,6 +116,14 @@ function ValidationData({
   }, []);
 
   useEffect(() => {
+    if (!initialized) {
+      setFieldValue('validPin', '0');
+      setFieldValue('pinCode', '');
+      setInitialized(true);
+      return;
+    }
+
+    console.log({ values });
     if (values.pinCode.length === 6) {
       const confirmPinCode = async () => {
         try {
