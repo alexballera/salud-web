@@ -96,23 +96,25 @@ function ValidationData({
   useEffect(() => {
     handleLoading(true);
 
-    forgotPasswordSendEmailService(values.email)
-      .catch(err => {
-        if (err.response && err.response.status === 404) {
-          return setDialogOpen(true);
-        } else if (err.response) {
-          handleError(true, err.response.data.error.message);
-        } else {
-          handleError(
-            true,
-            'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.'
-          );
-        }
-        router.back();
-      })
-      .finally(() => {
-        handleLoading(false);
-      });
+    if (values.pinCode.length === 0) {
+      forgotPasswordSendEmailService(values.email)
+        .catch(err => {
+          if (err.response && err.response.status === 404) {
+            return setDialogOpen(true);
+          } else if (err.response) {
+            handleError(true, err.response.data.error.message);
+          } else {
+            handleError(
+              true,
+              'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.'
+            );
+          }
+          router.back();
+        })
+        .finally(() => {
+          handleLoading(false);
+        });
+    }
   }, []);
 
   useEffect(() => {

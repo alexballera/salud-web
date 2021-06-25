@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FormikProps } from 'formik';
 import * as yup from 'yup';
 /// TYPES
 import { IEmailDataForm } from '../../../types/recover.types';
 /// MATERIAL-UI
 import TextField from '../../../components/common/TextField';
-import FormControl from '@material-ui/core/FormControl';
 import { Box } from '@material-ui/core';
 
 /// MATERIAL-UI END
-
 function EmailData({
   values,
   errors,

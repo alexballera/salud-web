@@ -22,7 +22,7 @@ type Props = {
   touched?: boolean;
   helperText: string;
   labelProps?: FormLabelProps;
-  formControlProps?: { 'data-testid': string } & FormControlProps;
+  formControlProps?: { 'data-testid'?: string } & FormControlProps;
 } & OutlinedInputProps;
 
 function CustomTextField({

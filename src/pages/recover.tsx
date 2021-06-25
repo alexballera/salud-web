@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
 import _ from 'lodash';
@@ -9,7 +9,7 @@ import Wizard, { IWizardDataSourceItem } from '../components/common/Wizard';
 /// TYPES END
 
 /// MATERIAL UI
-import { Box, Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 /// MATERIAL UI END
 
@@ -18,7 +18,7 @@ import EmailDataForm from '../containers/Recover/components/EmailData';
 import ValidationDataForm from '../containers/Recover/components/ValidationData';
 import PasswordDataForm from '../containers/Recover/components/PasswordData';
 import { withAppContext } from '../context';
-import { forgotPasswordChangePassword, forgotPasswordResendPin } from '../services/auth.service';
+import { forgotPasswordChangePassword } from '../services/auth.service';
 
 /// OWN COMPONENTS END
 
@@ -35,11 +35,7 @@ const initialValues: IFormData = {
   newPasswordConfirm: ''
 };
 
-const stepValidations = [
-  EmailDataForm.validations.schema,
-  ValidationDataForm.validations.schema,
-  PasswordDataForm.validations.schema
-];
+const steps = [EmailDataForm, ValidationDataForm, PasswordDataForm];
 
 function RecoverView(props: IProps): JSX.Element {
   const [currentStep, setCurrentState] = useState<number>(0);
@@ -91,13 +87,10 @@ function RecoverView(props: IProps): JSX.Element {
         <Formik
           validateOnMount
           initialValues={initialValues}
-          validationSchema={stepValidations[currentStep]}
+          validationSchema={steps[currentStep].validations.schema}
           onSubmit={(values: IFormData) => {
-            if (currentStep === 2) {
-              _handleSubmit(values);
-            } else {
-              setCurrentState(currentStep + 1);
-            }
+            if (currentStep === 2) _handleSubmit(values);
+            else setCurrentState(currentStep + 1);
           }}
         >
           {formik => {

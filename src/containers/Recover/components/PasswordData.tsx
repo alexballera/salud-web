@@ -4,7 +4,6 @@ import * as yup from 'yup';
 /// TYPES
 import { IPasswordDataForm } from '../../../types/recover.types';
 /// MATERIAL-UI
-import FormControl from '@material-ui/core/FormControl';
 import { Box } from '@material-ui/core';
 /// MATERIAL-UI END
 import TextField from '../../../components/common/TextField';
