@@ -107,7 +107,7 @@ describe('<ExtraDataForm>', () => {
       canton: 'canton',
       district: 'distrito',
       province: 'provincia',
-      mobilePhone1: '123123123'
+      mobilePhone1: '12312312312'
     };
 
     await act(async () => {
