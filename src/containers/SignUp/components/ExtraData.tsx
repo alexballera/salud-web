@@ -127,9 +127,6 @@ function ExtraData({
           variant="outlined"
           onChange={handleChange}
         >
-          <MenuItem value={''}>
-            <em>None</em>
-          </MenuItem>
           <MenuItem value={'1'}>Femenino</MenuItem>
           <MenuItem value={'2'}>Masculino</MenuItem>
         </Select>

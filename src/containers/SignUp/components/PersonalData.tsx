@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import _ from 'lodash';
 /// FORM
 import * as yup from 'yup';
@@ -28,6 +28,7 @@ function PersonalData({
   setFieldValue,
   documentTypesOptions
 }: IPersonalDataProps & FormikProps<IPersonalDataForm>): JSX.Element {
+  const inputMaskRef = useRef(null);
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -36,10 +37,20 @@ function PersonalData({
   );
   const documentNumberSanitized = values.documentNumber.replace(/\D+/g, '');
 
+  /// HANDLERS
   const compareLenghtRequired = () => {
     return currentDocumentType
       ? currentDocumentType.length !== documentNumberSanitized.length
       : false;
+  };
+
+  const handlerChangeSelector = (e: React.ChangeEvent<{ name?: string; value: unknown }>): void => {
+    handleChange(e);
+    setTimeout(() => {
+      inputMaskRef.current.focus();
+      inputMaskRef.current.setSelectionRange(0, 0);
+      setFieldValue('documentNumber', '');
+    }, 100);
   };
 
   const userValuesAlreadyExist = (): boolean => {
@@ -62,6 +73,7 @@ function PersonalData({
       }
     }
   };
+  /// HANDLERS END
 
   /// USE EFFECTS
   useEffect(() => {
@@ -98,12 +110,9 @@ function PersonalData({
           onBlur={handleBlur}
           labelId="document-type-selector-label"
           variant="outlined"
-          onChange={handleChange}
+          onChange={handlerChangeSelector}
           data-testid="document-type-selector"
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
           {documentTypesOptions.map((option, i) => (
             <MenuItem key={i} value={option.documentTypeId}>
               {option.name}
@@ -125,6 +134,7 @@ function PersonalData({
         }
         onBlur={handleBlur}
         loading={loading}
+        inputRef={inputMaskRef}
         disabled={!values.documentType}
         onChange={handleChange}
         helperText={
@@ -134,23 +144,7 @@ function PersonalData({
         }
         inputProps={{
           // eslint-disable-next-line prettier/prettier
-          mask: [
-            /[1-9]/,
-            /\d/,
-            /\d/,
-            ' ',
-            '-',
-            ' ',
-            /\d/,
-            /\d/,
-            /\d/,
-            ' ',
-            '-',
-            ' ',
-            /\d/,
-            /\d/,
-            /\d/
-          ],
+          mask: [/[1-9]/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/],
           'data-testid': 'documentNumber'
         }}
         inputComponent={TextMaskCustom as any}
