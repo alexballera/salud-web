@@ -3,21 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "local": "env-cmd -f .env.local next dev",
+    "dev": "env-cmd -f .env.development next dev",
     "start": "next start",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "prepare": "husky install .config/husky",
-    "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx --max-warnings=0"
+    "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx --max-warnings=0",
+    "sso-login": "aws sso login --profile omnisalud",
+    "build:serverless:dev": "SLS_DEBUG=1 env-cmd -f .env.development sls build --component=nextApp --stage dev",
+    "build:serverless:qa": "SLS_DEBUG=1 env-cmd -f .env.qa sls build --component=nextApp --stage dev",
+    "deploy:dev": "npm run build:serverless:dev && npm run sso-login && SLS_DEBUG=1 sls --component=nextApp -v --region us-east-1 --stage dev",
+    "deploy:qa": "npm run build:serverless:qa && npm run sso-login && SLS_DEBUG=1 sls --component=nextApp -v --region us-east-1 --stage qa"
   },
   "dependencies": {
     "@material-ui/core": "4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
+    "@sls-next/serverless-component": "1.19.0",
     "axios": "^0.21.1",
     "bootstrap": "^5.0.0-beta3",
+    "env-cmd": "^10.1.0",
     "formik": "^2.2.8",
     "next": "10.2.2",
     "next-pwa": "^5.2.21",
@@ -27,6 +34,7 @@
     "react-swipeable-views": "^0.13.9",
     "react-text-mask": "^5.4.3",
     "sass": "^1.33.0",
+    "webpack": "^5.38.1",
     "yup": "^0.32.9"
   },
   "devDependencies": {
@@ -45,7 +53,6 @@
     "@typescript-eslint/eslint-plugin": "^4.24.0",
     "@typescript-eslint/parser": "^4.24.0",
     "babel-jest": "^27.0.1",
-    "enzyme": "^3.11.0",
     "eslint": "^7.26.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-standard": "^16.0.2",

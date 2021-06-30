@@ -31,7 +31,8 @@
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/no-unused-vars": "error",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "dot-notation": "off"
   },
   "globals": {
     "React": "writable"

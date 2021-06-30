@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function ComponentsView(): JSX.Element {
   const classes = useStyles();
 
-  if (process.env.NODE_ENV !== 'development') {
+  if (process.env.NEXT_PUBLIC_ENV === 'production') {
     return (
       <>
         <DefaultErrorPage statusCode={404} />

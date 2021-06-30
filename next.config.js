@@ -6,6 +6,10 @@ module.exports = withPWA({
     dest: 'public'
   },
   env: {
-    apiUrl: process.env.NEXT_PUBLIC_API_URL
+    apiUrl: process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_ENV: process.env.NEXT_PUBLIC_ENV
+  },
+  future: {
+    webpack5: true
   }
 });
