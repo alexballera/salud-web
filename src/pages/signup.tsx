@@ -67,7 +67,8 @@ const stepValidations = [
 function SignUpView({
   handleLogin,
   handleError,
-  documentTypeOptions
+  documentTypeOptions,
+  handleNotifications
 }: InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
@@ -135,7 +136,13 @@ function SignUpView({
             {
               title: PersonalDataForm.title,
               description: PersonalDataForm.description,
-              component: <PersonalDataForm documentTypesOptions={documentTypeOptions} {...formik} />
+              component: (
+                <PersonalDataForm
+                  handleNotifications={handleNotifications}
+                  documentTypesOptions={documentTypeOptions}
+                  {...formik}
+                />
+              )
             },
             {
               title: ExtraDataForm.title,

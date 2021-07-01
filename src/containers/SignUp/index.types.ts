@@ -1,4 +1,5 @@
 import { IAppProps } from '../../context/index';
+import { INotificationProps } from '../../context/types';
 
 /// TYPES
 export type IProps = {
@@ -35,14 +36,16 @@ export type IEmailStates = {
 
 export type IPersonalVerificatorResponse = {
   result: {
-    paciente: {
-      name: string;
-      gender: 'F' | 'M';
-      surname: string;
-      dateOfBirth: string;
-      lastSurname: string;
-    };
+    paciente: IPaciente;
   };
+};
+
+export type IPaciente = {
+  name: string;
+  gender: 'F' | 'M';
+  surname: string;
+  dateOfBirth: string;
+  lastSurname: string;
 };
 
 export type IGeneralAdressState = {
@@ -87,6 +90,7 @@ export type IPersonalDataForm = {
 
 export type IPersonalDataProps = {
   documentTypesOptions: IDocumentTypes[];
+  handleNotifications: (props: INotificationProps) => void;
 };
 
 export type IExtraDataForm = {
@@ -109,7 +113,7 @@ export type ICredentialDataForm = {
 export type GenderEnum = '1' | '2' | '';
 
 export type IDocumentTypes = {
-  mask: string[];
+  mask: string;
   name: string;
   length: number;
   documentTypeId: number;

@@ -60,6 +60,7 @@ function CredentialData({
         fullWidth
         id="email"
         name="email"
+        type="text"
         label="Correo electrónico"
         value={values.email}
         error={touched.email && (Boolean(errors.email) || Boolean(inputEmailStates.message))}
@@ -127,7 +128,7 @@ function CredentialData({
 /// STEP VALIDATIONS
 CredentialData.title = 'Credenciales de ingreso';
 CredentialData.description =
-  'Estos datos se usarán unicamente con propósitos médicos dentro de la plataforma';
+  'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma';
 CredentialData.validations = {
   name: 'CredentialStep',
   schema: yup.object().shape({

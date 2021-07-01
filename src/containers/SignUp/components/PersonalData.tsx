@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import _ from 'lodash';
+import { convertToMask } from '../../../utils/helpers';
 /// FORM
 import * as yup from 'yup';
 import { FormikProps } from 'formik';
 /// SERVICE
 import { personVerifier } from '../../../services/personVerifier.service';
 /// TYPES
-import { IPersonalDataForm, IPersonalDataProps } from '../index.types';
+import { IPersonalDataForm, IPersonalDataProps, IPaciente } from '../index.types';
 /// OWN COMPONENTS
 import TextField from '../../../components/common/TextField';
 import TextMaskCustom from '../../../components/common/InputTextMask';
@@ -26,11 +27,13 @@ function PersonalData({
   handleBlur,
   handleChange,
   setFieldValue,
+  handleNotifications,
   documentTypesOptions
 }: IPersonalDataProps & FormikProps<IPersonalDataForm>): JSX.Element {
   const inputMaskRef = useRef(null);
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const isNotPhysicalID = !!(values.documentType !== 1 && values.documentType);
 
   const currentDocumentType = documentTypesOptions.find(
     data => data.documentTypeId === values.documentType
@@ -46,10 +49,11 @@ function PersonalData({
 
   const handlerChangeSelector = (e: React.ChangeEvent<{ name?: string; value: unknown }>): void => {
     handleChange(e);
+    setUserValues();
+    setFieldValue('documentNumber', '');
     setTimeout(() => {
       inputMaskRef.current.focus();
       inputMaskRef.current.setSelectionRange(0, 0);
-      setFieldValue('documentNumber', '');
     }, 100);
   };
 
@@ -73,27 +77,36 @@ function PersonalData({
       }
     }
   };
+
+  const setUserValues = (data: IPaciente = null) => {
+    setData(data);
+    setFieldValue('firstName', data ? data.name : '');
+    setFieldValue('lastName', data ? data.surname : '');
+    setFieldValue('birthDate', data ? data.dateOfBirth : '');
+  };
   /// HANDLERS END
 
   /// USE EFFECTS
   useEffect(() => {
-    if (currentDocumentType) {
+    if (currentDocumentType && !isNotPhysicalID) {
       if (documentNumberSanitized.length === currentDocumentType.length) {
         setLoading(true);
         personVerifier(values.documentType, documentNumberSanitized)
           .then(res => {
             const data = res.data.result.paciente;
-            setData(data);
-            setFieldValue('firstName', data.name);
-            setFieldValue('lastName', data.surname);
-            setFieldValue('birthDate', data.dateOfBirth);
+            setUserValues(data);
           })
-          .catch(err => ({ err }))
+          .catch(err => {
+            const message = err.response.data.error.message;
+            handleNotifications({ open: true, message, severity: 'error' });
+            setUserValues();
+          })
           .finally(() => setLoading(false));
       }
     }
   }, [values.documentNumber]);
   /// USE EFFECTS END
+
   return (
     <div>
       <FormControl fullWidth variant="filled">
@@ -137,19 +150,16 @@ function PersonalData({
         inputRef={inputMaskRef}
         disabled={!values.documentType}
         onChange={handleChange}
-        helperText={
-          errors.documentNumber
-            ? errors.documentNumber
-            : `Caracteres requeridos: ${currentDocumentType?.length}`
-        }
+        helperText={errors.documentNumber}
         inputProps={{
-          // eslint-disable-next-line prettier/prettier
-          mask: [/[1-9]/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/],
+          mask: convertToMask(currentDocumentType?.mask),
           'data-testid': 'documentNumber'
         }}
-        inputComponent={TextMaskCustom as any}
+        inputComponent={
+          convertToMask(currentDocumentType?.mask) ? (TextMaskCustom as any) : 'input'
+        }
       />
-      {(data || userValuesAlreadyExist()) && (
+      {(data || userValuesAlreadyExist() || isNotPhysicalID) && (
         <Paper style={{ padding: 10, backgroundColor: '#F5F5F5' }} square elevation={0}>
           <TextField
             id="firstName"
@@ -158,7 +168,7 @@ function PersonalData({
             value={values.firstName}
             error={touched.firstName && Boolean(errors.firstName)}
             onBlur={handleBlur}
-            disabled={true}
+            disabled={!isNotPhysicalID}
             onChange={handleChange}
             helperText={errors.firstName}
             data-testid="firstName"
@@ -171,7 +181,7 @@ function PersonalData({
             value={values.lastName}
             error={touched.lastName && Boolean(errors.lastName)}
             onBlur={handleBlur}
-            disabled={true}
+            disabled={!isNotPhysicalID}
             onChange={handleChange}
             helperText={errors.lastName}
             data-testid="lastName"
@@ -184,7 +194,7 @@ function PersonalData({
             value={values.birthDate}
             error={touched.birthDate && Boolean(errors.birthDate)}
             onBlur={handleBlur}
-            disabled={true}
+            disabled={!isNotPhysicalID}
             onChange={handleChange}
             helperText={errors.birthDate}
             data-testid="birthDate"
@@ -199,7 +209,7 @@ function PersonalData({
 /// STEP PARAMS
 PersonalData.title = 'Registrese';
 PersonalData.description =
-  'Estos datos se usarán unicamente con propósitos médicos dentro de la plataforma';
+  'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma';
 PersonalData.validations = {
   name: 'PersonalData',
   schema: yup.object().shape({
@@ -207,14 +217,34 @@ PersonalData.validations = {
     birthDate: yup.string().required('Campo requerido'),
     firstName: yup.string().required('Campo requerido'),
     documentType: yup.number().required('Campo requerido'),
-    documentNumber: yup.string().required('Campo requerido')
+    documentNumber: yup
+      .string()
+      .required('Campo requerido')
+      .when(['documentType'], {
+        is: documentType => documentType === 1,
+        then: yup
+          .string()
+          .transform(value => value.replace(/[^\d]/g, ''))
+          .min(9, 'Numero de caracteres minimos 8')
+      })
+      .when(['documentType'], {
+        is: documentType => documentType === 2,
+        then: yup
+          .string()
+          .transform(value => value.replace(/[^\d]/g, ''))
+          .min(15, 'Numero de caracteres minimos 15')
+      })
+      .when(['documentType'], {
+        is: documentType => documentType === 6,
+        then: yup.string().min(20, 'Numero de caracteres minimos 20')
+      })
   })
 };
 /// STEP PARAMS END
 
 /// DEFAULT PROPS
 PersonalData.defaultProps = {
-  documentTypesOptions: []
+  documentTypesOptions: ''
 };
 /// DEFAULT PROPS END
 

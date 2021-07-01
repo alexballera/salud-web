@@ -78,7 +78,7 @@ Object {
                 margin="normal"
                 style="margin-bottom: 10px;"
               >
-                Numero de teléfono
+                Número de teléfono
               </label>
               <div
                 class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
@@ -233,7 +233,7 @@ Object {
                 for="canton-selector-label"
                 style="margin-bottom: 10px;"
               >
-                Canton
+                Cantón
               </label>
               <div
                 aria-expanded="false"
@@ -511,7 +511,7 @@ Object {
               margin="normal"
               style="margin-bottom: 10px;"
             >
-              Numero de teléfono
+              Número de teléfono
             </label>
             <div
               class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
@@ -666,7 +666,7 @@ Object {
               for="canton-selector-label"
               style="margin-bottom: 10px;"
             >
-              Canton
+              Cantón
             </label>
             <div
               aria-expanded="false"

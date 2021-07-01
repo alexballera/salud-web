@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 /// FORM
 import * as yup from 'yup';
 import { FormikProps } from 'formik';
+import { PHONE_NUMBER_MASK } from '../../../utils/constants';
 /// SERVICES
 import { getProvinces, getCanton, getDistrict } from '../../../services/address.service';
 /// TYPES
@@ -136,15 +137,14 @@ function ExtraData({
         id="mobilePhone1"
         name="mobilePhone1"
         type="text"
-        label="Numero de teléfono"
+        label="Número de teléfono"
         value={values.mobilePhone1}
         error={touched.mobilePhone1 && Boolean(errors.mobilePhone1)}
         onBlur={handleBlur}
         onChange={handleChange}
         helperText={errors.mobilePhone1}
         inputProps={{
-          // eslint-disable-next-line prettier/prettier
-          mask: ['+', '5', '0', '6', '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+          mask: PHONE_NUMBER_MASK
         }}
         inputComponent={TextMaskCustom as any}
       />
@@ -169,7 +169,7 @@ function ExtraData({
 
       <CustomAutoComplete
         id="canton-selector-label"
-        label="Canton"
+        label="Cantón"
         error={touched.canton && Boolean(errors.canton)}
         onBlur={handleBlur}
         touched={touched.canton}
@@ -203,7 +203,7 @@ function ExtraData({
 /// STEP VALIDATIONS
 ExtraData.title = 'Datos adicionales';
 ExtraData.description =
-  'Estos datos se usarán unicamente con propósitos médicos dentro de la plataforma';
+  'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma';
 ExtraData.validations = {
   name: 'ExtraData',
   schema: yup.object().shape({

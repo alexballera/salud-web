@@ -49,7 +49,7 @@ function CustomTextField({
       case 'text':
         return (
           <InputAdornment position="end">
-            {loading && <CircularProgress size={20} />}
+            {loading ? <CircularProgress size={20} /> : <></>}
           </InputAdornment>
         );
 
@@ -62,7 +62,6 @@ function CustomTextField({
           </InputAdornment>
         );
       default:
-        return props.endAdornment;
     }
   };
   return (
