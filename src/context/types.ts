@@ -4,7 +4,6 @@ export type AppStates = {
   loggedIn: boolean;
   fetching: boolean;
   errorState: { open: boolean; message: string; type: 'success' | 'error' | 'warning' };
-  handleNotifications: (props: INotificationProps) => void;
 };
 
 export type Props = {
