@@ -79,7 +79,7 @@ Object {
                 margin="normal"
                 style="margin-bottom: 10px;"
               >
-                Numero de identificación
+                Número de identificación
               </label>
               <div
                 class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary Mui-disabled Mui-disabled MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
@@ -205,7 +205,7 @@ Object {
               margin="normal"
               style="margin-bottom: 10px;"
             >
-              Numero de identificación
+              Número de identificación
             </label>
             <div
               class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorSecondary MuiOutlinedInput-colorSecondary Mui-disabled Mui-disabled MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"

@@ -57,6 +57,27 @@ function PersonalData({
     }, 100);
   };
 
+  const handlerChangeDocument = (e: React.ChangeEvent<{ name?: string; value: string }>): void => {
+    const regex = /^[a-zA-Z0-9]+$/;
+    const value = e.target.value;
+    console.log(regex.test(value) && value.length <= currentDocumentType.length);
+
+    if (currentDocumentType.documentTypeId !== 6) {
+      handleChange(e);
+    } else if ((regex.test(value) && value.length <= currentDocumentType.length) || value === '') {
+      handleChange(e);
+    }
+  };
+
+  const handleChangeCustom = (e: React.ChangeEvent<{ name?: string; value: string }>): void => {
+    const regex = /[^a-zA-Z]/;
+    const value = e.target.value;
+
+    if (!regex.test(value) || value === '') {
+      handleChange(e);
+    }
+  };
+
   const userValuesAlreadyExist = (): boolean => {
     let valuesAlreadyExist = false;
     const stepValues = {
@@ -140,7 +161,7 @@ function PersonalData({
         id="documentNumber"
         name="documentNumber"
         type="text"
-        label="Numero de identificación"
+        label="Número de identificación"
         value={values.documentNumber}
         error={
           (touched.documentNumber && Boolean(errors.documentNumber)) || compareLenghtRequired()
@@ -149,7 +170,7 @@ function PersonalData({
         loading={loading}
         inputRef={inputMaskRef}
         disabled={!values.documentType}
-        onChange={handleChange}
+        onChange={handlerChangeDocument}
         helperText={errors.documentNumber}
         inputProps={{
           mask: convertToMask(currentDocumentType?.mask),
@@ -169,7 +190,7 @@ function PersonalData({
             error={touched.firstName && Boolean(errors.firstName)}
             onBlur={handleBlur}
             disabled={!isNotPhysicalID}
-            onChange={handleChange}
+            onChange={handleChangeCustom}
             helperText={errors.firstName}
             data-testid="firstName"
             formControlProps={{ margin: 'normal' }}
@@ -182,7 +203,7 @@ function PersonalData({
             error={touched.lastName && Boolean(errors.lastName)}
             onBlur={handleBlur}
             disabled={!isNotPhysicalID}
-            onChange={handleChange}
+            onChange={handleChangeCustom}
             helperText={errors.lastName}
             data-testid="lastName"
             formControlProps={{ margin: 'normal' }}
@@ -213,9 +234,9 @@ PersonalData.description =
 PersonalData.validations = {
   name: 'PersonalData',
   schema: yup.object().shape({
-    lastName: yup.string().required('Campo requerido'),
+    lastName: yup.string().required('Campo requerido').min(3, 'Numero de caracteres minimos 3'),
     birthDate: yup.string().required('Campo requerido'),
-    firstName: yup.string().required('Campo requerido'),
+    firstName: yup.string().required('Campo requerido').min(3, 'Numero de caracteres minimos 3'),
     documentType: yup.number().required('Campo requerido'),
     documentNumber: yup
       .string()
