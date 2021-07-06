@@ -2,7 +2,7 @@ import { toMatchDiffSnapshot } from 'snapshot-diff';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 
 /// COMPONENTS
-import Wizard, { IWizardDataSourceItem } from '../../../src/components/common/Wizard';
+import Wizard, { IWizardDataSourceItem } from '../../../../src/components/common/Wizard';
 
 expect.extend({ toMatchDiffSnapshot });
 

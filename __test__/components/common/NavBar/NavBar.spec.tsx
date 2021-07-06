@@ -2,9 +2,9 @@ import { unmountComponentAtNode } from 'react-dom';
 import { act, render, screen } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import router from 'next/router';
-import Navbar from '../../../src/components/common/Navbar';
-import { AppContext } from '../../../src/context';
-import AppProvider from '../../../src/context/AppProvider';
+import Navbar from '../../../../src/components/common/Navbar';
+import { AppContext } from '../../../../src/context';
+import AppProvider from '../../../../src/context/AppProvider';
 
 jest.mock('next/router', () => require('next-router-mock'));
 

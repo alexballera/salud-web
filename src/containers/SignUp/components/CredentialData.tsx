@@ -9,11 +9,14 @@ import { getPersonalData } from '../../../services/getPersonalData.service';
 /// OWN COMPONENTS
 import Input from '../../../components/common/TextField';
 import SecurityPasswordIdicator from '../../../components/common/SecurityPasswordIndicator';
+import Modal from '../../../components/common/Modal';
+import TermsAndConditions from '../../../components/TermsAndConditions';
 /// MATERIAL-UI
 import Switch from '@material-ui/core/Switch';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { Link, Typography } from '@material-ui/core';
 /// MATERIAL-UI END
 
 /// INITIAL STATES
@@ -31,7 +34,7 @@ function CredentialData({
   handleChange
 }: FormikProps<ICredentialDataForm>): JSX.Element {
   const [inputEmailStates, setInputEmailStates] = useState(initialEmailStates);
-
+  const [termsAndConditionOpen, setTermsAndConditionOpen] = useState(false);
   /// USE EFFECTS
   useEffect(() => {
     const regexp = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
@@ -105,10 +108,30 @@ function CredentialData({
         />
         <FormControlLabel
           control={
-            <Checkbox checked={values.terms} onChange={handleChange} name="terms" color="primary" />
+            <Checkbox
+              id="termsandconditions"
+              checked={values.terms}
+              onChange={handleChange}
+              name="terms"
+              color="primary"
+              style={{ zIndex: 3 }}
+            />
           }
-          label="Acepto terminos y condiciones"
+          label={
+            <Typography component="label" variant="body1">
+              Acepto{' '}
+              <Link
+                underline="always"
+                component="span"
+                variant="body1"
+                onClick={() => setTermsAndConditionOpen(true)}
+              >
+                términos y condiciones
+              </Link>
+            </Typography>
+          }
         />
+
         <FormControlLabel
           control={
             <Checkbox
@@ -121,6 +144,9 @@ function CredentialData({
           label="Acepto consentimiento informado"
         />
       </FormGroup>
+      <Modal open={termsAndConditionOpen} onClose={() => setTermsAndConditionOpen(false)}>
+        <TermsAndConditions />
+      </Modal>
     </div>
   );
 }

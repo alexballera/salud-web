@@ -1,8 +1,8 @@
 import userEvent from '@testing-library/user-event';
 import { act, cleanup, waitFor } from '@testing-library/react';
 /// COMPONENT
-import { render } from '../../../__mock__/formik-test-wraper';
-import CredentialDataForm from '../../../src/containers/SignUp/components/CredentialData';
+import { render } from '../../../../__mock__/formik-test-wraper';
+import CredentialDataForm from '../../../../src/containers/SignUp/components/CredentialData';
 
 const initialValues = {
   email: '',

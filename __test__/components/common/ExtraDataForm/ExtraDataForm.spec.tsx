@@ -8,10 +8,10 @@ import {
   mockDistrictResult,
   mockProvincesResult,
   wrapperOptions
-} from '../../../__mock__/extraData.mock';
+} from '../../../../__mock__/extraData.mock';
 /// COMPONENT
-import { render } from '../../../__mock__/formik-test-wraper';
-import ExtraDataForm from '../../../src/containers/SignUp/components/ExtraData';
+import { render } from '../../../../__mock__/formik-test-wraper';
+import ExtraDataForm from '../../../../src/containers/SignUp/components/ExtraData';
 
 const API_URL = 'https://nbej1dm79d.execute-api.us-east-1.amazonaws.com/dev/';
 

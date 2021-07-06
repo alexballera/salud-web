@@ -1,9 +1,9 @@
 import { unmountComponentAtNode } from 'react-dom';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
-import Layout from '../../../src/components/common/Layout';
-import AppProvider, { initialStates } from '../../../src/context/AppProvider';
-import { AppContext } from '../../../src/context';
+import Layout from '../../../../src/components/common/Layout';
+import AppProvider, { initialStates } from '../../../../src/context/AppProvider';
+import { AppContext } from '../../../../src/context';
 
 jest.mock('next/router', () => require('next-router-mock'));
 

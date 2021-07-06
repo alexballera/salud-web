@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { AppContext } from './index';
 // TYPES
 import { AppStates, INotificationProps, Props } from './types';
+// APOLLO
+import Client from '../config/apollo';
+import { ApolloProvider } from '@apollo/client';
+
+const apolloClient = Client.getInstance();
 
 export const initialStates: AppStates = {
   user: null,
@@ -48,7 +53,7 @@ export default function AppProvider({ children }: Props): JSX.Element {
         handleNotifications
       }}
     >
-      {children}
+      <ApolloProvider client={apolloClient}>{children}</ApolloProvider>
     </AppContext.Provider>
   );
 }

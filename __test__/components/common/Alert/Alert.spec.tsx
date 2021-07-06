@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import { toHaveNoViolations } from 'jest-axe';
 import { unmountComponentAtNode } from 'react-dom';
-import Alert from '../../../src/components/common/Alert';
+import Alert from '../../../../src/components/common/Alert';
 
 let container = null;
 
