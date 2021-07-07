@@ -53,19 +53,20 @@ function PersonalData({
   };
 
   const handlerChangeDocument = (e: React.ChangeEvent<{ name?: string; value: string }>): void => {
-    const regex = /[^a-zA-Z]/;
+    const regexAlphanumeric = /^[a-zA-Z0-9]*$/;
+    const regexNumeric = /^[0-9]*$/;
     const value = e.target.value;
 
     if (currentDocumentType.documentTypeId === 1) {
       handleChange(e);
-    } else if (
-      value.length <= 15 &&
-      !regex.test(value) &&
-      currentDocumentType.documentTypeId === 2
-    ) {
-      handleChange(e);
-    } else if ((regex.test(value) && value.length <= 20) || value === '') {
-      handleChange(e);
+    } else if (currentDocumentType.documentTypeId === 2) {
+      if (value.length <= 15 && regexNumeric.test(value)) {
+        handleChange(e);
+      }
+    } else {
+      if ((regexAlphanumeric.test(value) && value.length <= 20) || value === '') {
+        handleChange(e);
+      }
     }
   };
 
@@ -224,8 +225,6 @@ function PersonalData({
   );
 }
 
-/// STEP PARAMS
-PersonalData.title = 'Registrese';
 PersonalData.description =
   'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma';
 PersonalData.validations = {
