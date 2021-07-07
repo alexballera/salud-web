@@ -41,11 +41,6 @@ function PersonalData({
   const documentNumberSanitized = values.documentNumber.replace(/\D+/g, '');
 
   /// HANDLERS
-  const compareLenghtRequired = () => {
-    return currentDocumentType
-      ? currentDocumentType.length !== documentNumberSanitized.length
-      : false;
-  };
 
   const handlerChangeSelector = (e: React.ChangeEvent<{ name?: string; value: unknown }>): void => {
     handleChange(e);
@@ -58,13 +53,18 @@ function PersonalData({
   };
 
   const handlerChangeDocument = (e: React.ChangeEvent<{ name?: string; value: string }>): void => {
-    const regex = /^[a-zA-Z0-9]+$/;
+    const regex = /[^a-zA-Z]/;
     const value = e.target.value;
-    console.log(regex.test(value) && value.length <= currentDocumentType.length);
 
-    if (currentDocumentType.documentTypeId !== 6) {
+    if (currentDocumentType.documentTypeId === 1) {
       handleChange(e);
-    } else if ((regex.test(value) && value.length <= currentDocumentType.length) || value === '') {
+    } else if (
+      value.length <= 15 &&
+      !regex.test(value) &&
+      currentDocumentType.documentTypeId === 2
+    ) {
+      handleChange(e);
+    } else if ((regex.test(value) && value.length <= 20) || value === '') {
       handleChange(e);
     }
   };
@@ -127,7 +127,6 @@ function PersonalData({
     }
   }, [values.documentNumber]);
   /// USE EFFECTS END
-
   return (
     <div>
       <FormControl fullWidth variant="filled">
@@ -163,9 +162,7 @@ function PersonalData({
         type="text"
         label="Número de identificación"
         value={values.documentNumber}
-        error={
-          (touched.documentNumber && Boolean(errors.documentNumber)) || compareLenghtRequired()
-        }
+        error={touched.documentNumber && Boolean(errors.documentNumber)}
         onBlur={handleBlur}
         loading={loading}
         inputRef={inputMaskRef}
@@ -181,7 +178,7 @@ function PersonalData({
         }
       />
       {(data || userValuesAlreadyExist() || isNotPhysicalID) && (
-        <Paper style={{ padding: 10, backgroundColor: '#F5F5F5' }} square elevation={0}>
+        <Paper square elevation={0}>
           <TextField
             id="firstName"
             name="firstName"
@@ -234,9 +231,9 @@ PersonalData.description =
 PersonalData.validations = {
   name: 'PersonalData',
   schema: yup.object().shape({
-    lastName: yup.string().required('Campo requerido').min(3, 'Numero de caracteres minimos 3'),
+    lastName: yup.string().required('Campo requerido').min(3, 'Número de caracteres minimos 3'),
     birthDate: yup.string().required('Campo requerido'),
-    firstName: yup.string().required('Campo requerido').min(3, 'Numero de caracteres minimos 3'),
+    firstName: yup.string().required('Campo requerido').min(3, 'Número de caracteres minimos 3'),
     documentType: yup.number().required('Campo requerido'),
     documentNumber: yup
       .string()
@@ -246,18 +243,22 @@ PersonalData.validations = {
         then: yup
           .string()
           .transform(value => value.replace(/[^\d]/g, ''))
-          .min(9, 'Numero de caracteres minimos 8')
+          .min(9, 'Número de caracteres minimos 8')
       })
       .when(['documentType'], {
         is: documentType => documentType === 2,
         then: yup
           .string()
           .transform(value => value.replace(/[^\d]/g, ''))
-          .min(15, 'Numero de caracteres minimos 15')
+          .min(10, 'Caracteres mínimos para Residencia 10, máx 15')
+          .max(15, 'Caracteres mínimos para Residencia 10, máx 15')
       })
       .when(['documentType'], {
         is: documentType => documentType === 6,
-        then: yup.string().min(20, 'Numero de caracteres minimos 20')
+        then: yup
+          .string()
+          .min(9, 'Número de caracteres mínimos para Pasaporte 9, máx 20')
+          .max(20, 'Número de caracteres mínimos para Pasaporte 9, máx 20')
       })
   })
 };
