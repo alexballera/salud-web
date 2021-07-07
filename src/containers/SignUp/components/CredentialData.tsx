@@ -11,6 +11,8 @@ import Input from '../../../components/common/TextField';
 import SecurityPasswordIdicator from '../../../components/common/SecurityPasswordIndicator';
 import Modal from '../../../components/common/Modal';
 import TermsAndConditions from '../../../components/TermsAndConditions';
+import InformedConsent from '../../../components/InformedConsent';
+
 /// MATERIAL-UI
 import Switch from '@material-ui/core/Switch';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -35,6 +37,7 @@ function CredentialData({
 }: FormikProps<ICredentialDataForm>): JSX.Element {
   const [inputEmailStates, setInputEmailStates] = useState(initialEmailStates);
   const [termsAndConditionOpen, setTermsAndConditionOpen] = useState(false);
+  const [informedConsentOpen, setInformedConsentOpen] = useState(false);
   /// USE EFFECTS
   useEffect(() => {
     const regexp = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
@@ -125,6 +128,7 @@ function CredentialData({
                 component="span"
                 variant="body1"
                 onClick={() => setTermsAndConditionOpen(true)}
+                style={{ cursor: 'pointer' }}
               >
                 términos y condiciones
               </Link>
@@ -141,11 +145,27 @@ function CredentialData({
               color="primary"
             />
           }
-          label="Acepto consentimiento informado"
+          label={
+            <Typography component="label" variant="body1">
+              Acepto{' '}
+              <Link
+                underline="always"
+                component="span"
+                variant="body1"
+                onClick={() => setInformedConsentOpen(true)}
+                style={{ cursor: 'pointer' }}
+              >
+                consentimiento informado
+              </Link>
+            </Typography>
+          }
         />
       </FormGroup>
       <Modal open={termsAndConditionOpen} onClose={() => setTermsAndConditionOpen(false)}>
         <TermsAndConditions />
+      </Modal>
+      <Modal open={informedConsentOpen} onClose={() => setInformedConsentOpen(false)}>
+        <InformedConsent />
       </Modal>
     </div>
   );

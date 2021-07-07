@@ -3,6 +3,11 @@ import { act, cleanup, waitFor } from '@testing-library/react';
 /// COMPONENT
 import { render } from '../../../../__mock__/formik-test-wraper';
 import CredentialDataForm from '../../../../src/containers/SignUp/components/CredentialData';
+import { MockedProvider } from '@apollo/client/testing';
+import { mockSuccess } from '../../../../__mock__/cms/InformedConsent/InformedConsent.mock';
+import { FormikState } from 'formik';
+import { ICredentialDataForm } from '../../../../src/containers/SignUp/index.types';
+import InformedConsent from '../../../../src/components/TermsAndConditions';
 
 const initialValues = {
   email: '',
@@ -21,6 +26,16 @@ const wrapperOptions = {
 };
 
 afterEach(() => cleanup());
+
+jest.mock('../../../../src/components/InformedConsent', () => {
+  const ComponentToMock = () => <div />;
+  return ComponentToMock;
+});
+
+jest.mock('../../../../src/components/TermsAndConditions', () => {
+  const ComponentToMock = () => <div />;
+  return ComponentToMock;
+});
 
 describe('<CredentialDataForm>', () => {
   test('render without crashing', () => {

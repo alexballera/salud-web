@@ -1,9 +1,10 @@
-import { Typography } from '@material-ui/core';
+import { Typography, Divider } from '@material-ui/core';
 import React from 'react';
 
 enum TypeRichContent {
   Header = 'header',
-  Paragraph = 'paragraph'
+  Paragraph = 'paragraph',
+  Delimiter = 'delimiter'
 }
 
 type DataRichContent = {
@@ -36,6 +37,8 @@ export function RichTextTranslate(contents: RichContent[]): () => JSX.Element {
                 {content.data.text}
               </Typography>
             );
+          case TypeRichContent.Delimiter:
+            return <Divider key={index} />;
           default:
             return (
               <Typography key={index} variant="body1">
