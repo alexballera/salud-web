@@ -212,10 +212,9 @@ function PersonalData({
             formControlProps={{ margin: 'normal' }}
           />
           <DatePicker
-            disableToolbar
-            id="date-picker-inline"
+            id="birthDate"
             label="Fecha de nacimiento"
-            value={values.birthDate}
+            value={values.birthDate === '' ? null : values.birthDate}
             margin="normal"
             format="MM/dd/yyyy"
             onBlur={handleBlur}
@@ -223,6 +222,8 @@ function PersonalData({
             onChange={handleChangePicker}
             disabled={!isNotPhysicalID}
             inputVariant="outlined"
+            error={touched.birthDate && !!errors.birthDate}
+            helperText={touched.birthDate && !!errors.birthDate ? errors.birthDate : ''}
           />
         </Paper>
       )}
@@ -230,13 +231,14 @@ function PersonalData({
   );
 }
 
+PersonalData.title = 'Registrese';
 PersonalData.description =
   'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma';
 PersonalData.validations = {
   name: 'PersonalData',
   schema: yup.object().shape({
     lastName: yup.string().required('Campo requerido').min(3, 'Número de caracteres minimos 3'),
-    birthDate: yup.string().required('Campo requerido'),
+    birthDate: yup.date().max(new Date(), 'Fecha inválida').required('Campo requerido'),
     firstName: yup.string().required('Campo requerido').min(3, 'Número de caracteres minimos 3'),
     documentType: yup.number().required('Campo requerido'),
     documentNumber: yup
