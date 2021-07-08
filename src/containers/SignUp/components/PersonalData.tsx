@@ -222,6 +222,7 @@ function PersonalData({
             onChange={handleChangePicker}
             disabled={!isNotPhysicalID}
             inputVariant="outlined"
+            maxDate={new Date()}
             error={touched.birthDate && !!errors.birthDate}
             helperText={touched.birthDate && !!errors.birthDate ? errors.birthDate : ''}
           />
