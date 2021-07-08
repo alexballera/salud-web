@@ -6,7 +6,7 @@ import { Form, Formik } from 'formik';
 /// CONTEXT
 import { withAppContext } from '../context/index';
 /// SERVICES
-import { signUp } from '../services/auth.service';
+import { signUp, ISignUpBody } from '../services/auth.service';
 /// TYPES
 import { IFormData, IProps } from '../containers/SignUp/index.types';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
@@ -41,11 +41,11 @@ const initialValues: IFormData = {
   email: '',
   terms: false,
   gender: '',
-  canton: '',
+  canton: null,
   country: 'CR',
   password: '',
-  province: '',
-  district: '',
+  province: null,
+  district: null,
   lastName: '',
   services: false,
   firstName: '',
@@ -83,16 +83,16 @@ function SignUpView({
     if (currentStep === 2) {
       setLoading(true);
 
-      const body: IFormData = {
+      const body: ISignUpBody = {
         email: values.email,
         terms: values.terms,
         gender: values.gender,
-        canton: values.canton,
+        canton: values.canton.codigo,
         country: values.country,
-        province: values.province,
+        province: values.province.codigo,
         password: values.password,
         lastName: values.lastName,
-        district: values.district,
+        district: values.district.codigo,
         services: values.services,
         firstName: values.firstName,
         birthDate: values.birthDate,

@@ -10,7 +10,8 @@ export function loginService(email: string, password: string): Promise<AxiosResp
 /// LOGIN END
 
 /// SIGN UP SERVICE & TYPES
-type ISignUpBody = {
+export type ISignUpBody = {
+  terms: boolean;
   email: string;
   gender: string;
   canton: string;
@@ -19,8 +20,10 @@ type ISignUpBody = {
   province: string;
   lastName: string;
   district: string;
+  services: boolean;
   firstName: string;
   birthDate: string;
+  superappUser: boolean;
   documentType: string | number;
   mobilePhone1: string;
   documentNumber: string;

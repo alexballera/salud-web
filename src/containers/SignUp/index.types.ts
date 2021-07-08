@@ -11,12 +11,12 @@ export type IFormData = {
   email: string;
   terms: boolean;
   gender: GenderEnum | null;
-  canton: string;
+  canton: { codigo: string; nombre: string } | null;
   country: string;
-  province: string;
+  province: { codigo: string; nombre: string } | null;
   password: string;
   lastName: string;
-  district: string;
+  district: { codigo: string; nombre: string } | null;
   services: boolean;
   firstName: string;
   birthDate: string;
@@ -95,9 +95,9 @@ export type IPersonalDataProps = {
 
 export type IExtraDataForm = {
   gender: GenderEnum;
-  canton: string;
-  district: string;
-  province: string;
+  canton: any;
+  district: any;
+  province: any;
   mobilePhone1: string;
 };
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import _ from 'lodash';
 /// FORM
 import * as yup from 'yup';
 import { FormikProps } from 'formik';
@@ -53,18 +54,18 @@ function ExtraData({
   /// USE EFFECTS
 
   const onChangeSelect = (value: any, fieldName: string) => {
-    setFieldValue(fieldName, value?.codigo);
+    setFieldValue(fieldName, value);
 
     switch (fieldName) {
       case 'province':
-        setFieldValue('canton', '');
-        setFieldValue('district', '');
+        setFieldValue('canton', null);
+        setFieldValue('district', null);
 
         setCantonStates({ ...cantonStates, data: [] });
         setDistrictStates({ ...districtStates, data: [] });
         break;
       case 'canton':
-        setFieldValue('district', '');
+        setFieldValue('district', null);
         setDistrictStates({ ...districtStates, data: [] });
         break;
 
@@ -85,10 +86,10 @@ function ExtraData({
 
   /* CANTON FETCHER */
   useEffect(() => {
-    if (values.province) {
+    if (!_.isEmpty(values.province)) {
       setCantonStates({ ...cantonStates, fetching: true });
 
-      getCanton(values.province).then(res => {
+      getCanton(values.province.codigo).then(res => {
         setCantonStates({
           data: res.data.result.segundoNivel,
           fetching: false
@@ -99,10 +100,10 @@ function ExtraData({
 
   /* DISTRICT FETCHER */
   useEffect(() => {
-    if (values.canton) {
+    if (!_.isEmpty(values.canton)) {
       setDistrictStates({ ...districtStates, fetching: true });
 
-      getDistrict(values.canton).then(res => {
+      getDistrict(values.canton.codigo).then(res => {
         setDistrictStates({
           data: res.data.result.catalogo,
           fetching: false
@@ -111,7 +112,6 @@ function ExtraData({
     }
   }, [values.canton]);
   /// USE EFFECTS END
-
   return (
     <div>
       <FormControl fullWidth margin="normal" variant="filled">
@@ -155,9 +155,9 @@ function ExtraData({
       <CustomAutoComplete
         id="province-selector"
         label="Provincia"
+        value={values.province}
         error={touched.province && Boolean(errors.province)}
         onBlur={handleBlur}
-        touched={touched.province}
         options={provinceStates.data}
         loading={provinceStates.fetching}
         onChange={(_e, value) => onChangeSelect(value, 'province')}
@@ -171,9 +171,9 @@ function ExtraData({
       <CustomAutoComplete
         id="canton-selector-label"
         label="Cantón"
+        value={values.canton}
         error={touched.canton && Boolean(errors.canton)}
         onBlur={handleBlur}
-        touched={touched.canton}
         options={cantonStates.data}
         loading={cantonStates.fetching}
         onChange={(_e, value) => onChangeSelect(value, 'canton')}
@@ -186,9 +186,9 @@ function ExtraData({
       <CustomAutoComplete
         id="district-selector-label"
         label="Distrito"
+        value={values.district}
         error={touched.district && Boolean(errors.district)}
         onBlur={handleBlur}
-        touched={touched.district}
         options={districtStates.data}
         loading={districtStates.fetching}
         onChange={(_e, value) => onChangeSelect(value, 'district')}
@@ -208,10 +208,31 @@ ExtraData.description =
 ExtraData.validations = {
   name: 'ExtraData',
   schema: yup.object().shape({
-    canton: yup.string().required('Campo requerido'),
     gender: yup.string().required('Campo requerido'),
-    district: yup.string().required('Campo requerido'),
-    province: yup.string().required('Campo requerido'),
+    canton: yup
+      .object()
+      .shape({
+        codigo: yup.string().required('Campo requerido'),
+        nombre: yup.string().required('Campo requerido')
+      })
+      .nullable()
+      .required('Campo requerido'),
+    district: yup
+      .object()
+      .shape({
+        codigo: yup.string().required('Campo requerido'),
+        nombre: yup.string().required('Campo requerido')
+      })
+      .nullable()
+      .required('Campo requerido'),
+    province: yup
+      .object()
+      .shape({
+        codigo: yup.string().required('Campo requerido'),
+        nombre: yup.string().required('Campo requerido')
+      })
+      .nullable()
+      .required('Campo requerido'),
     mobilePhone1: yup
       .string()
       .required('Campo requerido')

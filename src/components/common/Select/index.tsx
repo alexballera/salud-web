@@ -17,8 +17,7 @@ type Props = {
   label: string;
   error: boolean;
   loading: boolean;
-  touched: boolean;
-  helperText: string;
+  helperText: any;
   formControlProps?: FormControlProps;
   linearProgressProps?: { 'data-testid': string } & LinearProgressProps;
 } & AutocompleteProps<any, any, any, any>;
@@ -26,7 +25,6 @@ type Props = {
 function CustomSelect({
   error,
   label,
-  touched,
   loading,
   helperText,
   formControlProps,
@@ -40,7 +38,7 @@ function CustomSelect({
       </FormLabel>
       <Autocomplete {...props} id={props.id} />
       {loading && <LinearProgress {...linearProgressProps} color="secondary" />}
-      {touched && error && <FormHelperText error>{helperText}</FormHelperText>}
+      {error && <FormHelperText error>{helperText}</FormHelperText>}
     </FormControl>
   );
 }

@@ -152,7 +152,7 @@ Object {
                     >
                       <button
                         aria-label="Clear"
-                        class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator"
+                        class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator MuiAutocomplete-clearIndicatorDirty"
                         tabindex="-1"
                         title="Clear"
                         type="button"
@@ -262,7 +262,7 @@ Object {
                     >
                       <button
                         aria-label="Clear"
-                        class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator"
+                        class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator MuiAutocomplete-clearIndicatorDirty"
                         tabindex="-1"
                         title="Clear"
                         type="button"
@@ -360,7 +360,7 @@ Object {
                     >
                       <button
                         aria-label="Clear"
-                        class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator"
+                        class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator MuiAutocomplete-clearIndicatorDirty"
                         tabindex="-1"
                         title="Clear"
                         type="button"
@@ -585,7 +585,7 @@ Object {
                   >
                     <button
                       aria-label="Clear"
-                      class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator"
+                      class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator MuiAutocomplete-clearIndicatorDirty"
                       tabindex="-1"
                       title="Clear"
                       type="button"
@@ -695,7 +695,7 @@ Object {
                   >
                     <button
                       aria-label="Clear"
-                      class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator"
+                      class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator MuiAutocomplete-clearIndicatorDirty"
                       tabindex="-1"
                       title="Clear"
                       type="button"
@@ -793,7 +793,7 @@ Object {
                   >
                     <button
                       aria-label="Clear"
-                      class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator"
+                      class="MuiButtonBase-root MuiIconButton-root MuiAutocomplete-clearIndicator MuiAutocomplete-clearIndicatorDirty"
                       tabindex="-1"
                       title="Clear"
                       type="button"
