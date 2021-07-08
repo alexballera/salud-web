@@ -10,6 +10,7 @@ import { personVerifier } from '../../../services/personVerifier.service';
 import { IPersonalDataForm, IPersonalDataProps, IPaciente } from '../index.types';
 /// OWN COMPONENTS
 import TextField from '../../../components/common/TextField';
+import DatePicker from '../../../components/common/DataPicker';
 import TextMaskCustom from '../../../components/common/InputTextMask';
 /// MATERIAL-UI
 import Paper from '@material-ui/core/Paper';
@@ -68,6 +69,10 @@ function PersonalData({
         handleChange(e);
       }
     }
+  };
+
+  const handleChangePicker = (date: Date): void => {
+    setFieldValue('birthDate', date);
   };
 
   const handleChangeCustom = (e: React.ChangeEvent<{ name?: string; value: string }>): void => {
@@ -206,18 +211,18 @@ function PersonalData({
             data-testid="lastName"
             formControlProps={{ margin: 'normal' }}
           />
-          <TextField
-            id="birthDate"
-            name="birthDate"
+          <DatePicker
+            disableToolbar
+            id="date-picker-inline"
             label="Fecha de nacimiento"
             value={values.birthDate}
-            error={touched.birthDate && Boolean(errors.birthDate)}
+            margin="normal"
+            format="MM/dd/yyyy"
             onBlur={handleBlur}
+            variant="inline"
+            onChange={handleChangePicker}
             disabled={!isNotPhysicalID}
-            onChange={handleChange}
-            helperText={errors.birthDate}
-            data-testid="birthDate"
-            formControlProps={{ margin: 'normal' }}
+            inputVariant="outlined"
           />
         </Paper>
       )}
