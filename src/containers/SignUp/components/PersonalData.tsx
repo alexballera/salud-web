@@ -85,7 +85,6 @@ function PersonalData({
   };
 
   const userValuesAlreadyExist = (): boolean => {
-    let valuesAlreadyExist = false;
     const stepValues = {
       lastName: values.lastName,
       firstName: values.firstName,
@@ -94,21 +93,13 @@ function PersonalData({
       documentNumber: values.documentNumber
     };
 
-    // eslint-disable-next-line no-unreachable-loop
-    for (const key in stepValues) {
-      if (_.isEmpty(stepValues[key])) {
-        return valuesAlreadyExist;
-      } else {
-        valuesAlreadyExist = true;
-        return valuesAlreadyExist;
-      }
-    }
+    return !Object.values(stepValues).some(value => _.isEmpty(value));
   };
 
   const setUserValues = (data: IPaciente = null) => {
     setData(data);
     setFieldValue('firstName', data ? data.name : '');
-    setFieldValue('lastName', data ? data.surname : '');
+    setFieldValue('lastName', data ? `${data.surname} ${data?.lastSurname ?? ''}` : '');
     setFieldValue('birthDate', data ? data.dateOfBirth : '');
   };
   /// HANDLERS END
