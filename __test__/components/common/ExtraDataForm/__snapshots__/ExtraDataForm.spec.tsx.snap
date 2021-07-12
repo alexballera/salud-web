@@ -120,7 +120,7 @@ Object {
             >
               <label
                 class="MuiFormLabel-root"
-                for="province-selector"
+                for="province"
                 style="margin-bottom: 10px;"
               >
                 Provincia
@@ -142,7 +142,7 @@ Object {
                       autocapitalize="none"
                       autocomplete="off"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
-                      id="province-selector"
+                      id="province"
                       spellcheck="false"
                       type="text"
                       value=""
@@ -230,7 +230,7 @@ Object {
             >
               <label
                 class="MuiFormLabel-root"
-                for="canton-selector-label"
+                for="canton"
                 style="margin-bottom: 10px;"
               >
                 Cantón
@@ -252,7 +252,7 @@ Object {
                       autocapitalize="none"
                       autocomplete="off"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
-                      id="canton-selector-label"
+                      id="canton"
                       spellcheck="false"
                       type="text"
                       value=""
@@ -328,7 +328,7 @@ Object {
             >
               <label
                 class="MuiFormLabel-root"
-                for="district-selector-label"
+                for="district"
                 style="margin-bottom: 10px;"
               >
                 Distrito
@@ -350,7 +350,7 @@ Object {
                       autocapitalize="none"
                       autocomplete="off"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
-                      id="district-selector-label"
+                      id="district"
                       spellcheck="false"
                       type="text"
                       value=""
@@ -553,7 +553,7 @@ Object {
           >
             <label
               class="MuiFormLabel-root"
-              for="province-selector"
+              for="province"
               style="margin-bottom: 10px;"
             >
               Provincia
@@ -575,7 +575,7 @@ Object {
                     autocapitalize="none"
                     autocomplete="off"
                     class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
-                    id="province-selector"
+                    id="province"
                     spellcheck="false"
                     type="text"
                     value=""
@@ -663,7 +663,7 @@ Object {
           >
             <label
               class="MuiFormLabel-root"
-              for="canton-selector-label"
+              for="canton"
               style="margin-bottom: 10px;"
             >
               Cantón
@@ -685,7 +685,7 @@ Object {
                     autocapitalize="none"
                     autocomplete="off"
                     class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
-                    id="canton-selector-label"
+                    id="canton"
                     spellcheck="false"
                     type="text"
                     value=""
@@ -761,7 +761,7 @@ Object {
           >
             <label
               class="MuiFormLabel-root"
-              for="district-selector-label"
+              for="district"
               style="margin-bottom: 10px;"
             >
               Distrito
@@ -783,7 +783,7 @@ Object {
                     autocapitalize="none"
                     autocomplete="off"
                     class="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
-                    id="district-selector-label"
+                    id="district"
                     spellcheck="false"
                     type="text"
                     value=""

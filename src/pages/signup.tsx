@@ -127,7 +127,10 @@ function SignUpView({
       </Button>
       <Formik
         validateOnMount
-        onSubmit={onSubmit}
+        onSubmit={(values, formik) => {
+          formik.setTouched({});
+          onSubmit(values);
+        }}
         initialValues={initialValues}
         validationSchema={stepValidations[currentStep]}
       >

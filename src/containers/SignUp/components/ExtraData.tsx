@@ -153,7 +153,7 @@ function ExtraData({
         Domicilio
       </Typography>
       <CustomAutoComplete
-        id="province-selector"
+        id="province"
         label="Provincia"
         value={values.province}
         error={touched.province && Boolean(errors.province)}
@@ -162,14 +162,13 @@ function ExtraData({
         loading={provinceStates.fetching}
         onChange={(_e, value) => onChangeSelect(value, 'province')}
         helperText={errors.province}
-        renderInput={params => <TextField {...params} variant="outlined" color="secondary" />}
         getOptionLabel={option => option.nombre}
         getOptionSelected={(option, value) => option.nombre === value.nombre}
         linearProgressProps={{ 'data-testid': 'provinces-loader' }}
       />
 
       <CustomAutoComplete
-        id="canton-selector-label"
+        id="canton"
         label="Cantón"
         value={values.canton}
         error={touched.canton && Boolean(errors.canton)}
@@ -178,13 +177,12 @@ function ExtraData({
         loading={cantonStates.fetching}
         onChange={(_e, value) => onChangeSelect(value, 'canton')}
         helperText={errors.canton}
-        renderInput={params => <TextField {...params} variant="outlined" color="secondary" />}
         getOptionLabel={option => option.nombre}
         getOptionSelected={(option, value) => option.nombre === value.nombre}
       />
 
       <CustomAutoComplete
-        id="district-selector-label"
+        id="district"
         label="Distrito"
         value={values.district}
         error={touched.district && Boolean(errors.district)}
@@ -193,7 +191,6 @@ function ExtraData({
         loading={districtStates.fetching}
         onChange={(_e, value) => onChangeSelect(value, 'district')}
         helperText={errors.district}
-        renderInput={params => <TextField {...params} variant="outlined" color="secondary" />}
         getOptionLabel={option => option.nombre}
         getOptionSelected={(option, value) => option.nombre === value.nombre}
       />
