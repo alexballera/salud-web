@@ -250,7 +250,7 @@ PersonalData.validations = {
         then: yup
           .string()
           .transform(value => value.replace(/[^\d]/g, ''))
-          .min(9, 'Número de caracteres minimos 8')
+          .min(9, 'Número de caracteres minimos 9')
       })
       .when(['documentType'], {
         is: documentType => documentType === 2,
