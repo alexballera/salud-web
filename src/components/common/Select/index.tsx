@@ -13,15 +13,14 @@ import { AutocompleteProps } from '@material-ui/lab';
 
 /// TYPES END
 
-type Props = {
+type Props = Omit<AutocompleteProps<any, any, any, any>, 'renderInput'> & {
   label: string;
   error: boolean;
   loading: boolean;
   helperText: any;
   formControlProps?: FormControlProps;
   linearProgressProps?: { 'data-testid': string } & LinearProgressProps;
-  renderInput?: (params: AutocompleteRenderInputParams) => React.ReactNode;
-} & AutocompleteProps<any, any, any, any>;
+};
 
 function CustomSelect({
   error,
