@@ -84,6 +84,15 @@ function PersonalData({
     }
   };
 
+  const handleChangeLabel = (val: string) => {
+    let label = {
+      'Cédula': 'Cédula Física',
+      'Residencia': 'Cédula de Residencia',
+      'Pasaporte': 'Pasaporte',
+    }
+    return label[val];
+  }
+
   const userValuesAlreadyExist = (): boolean => {
     const stepValues = {
       lastName: values.lastName,
@@ -145,7 +154,7 @@ function PersonalData({
         >
           {documentTypesOptions.map((option, i) => (
             <MenuItem key={i} value={option.documentTypeId}>
-              {option.name}
+              {handleChangeLabel(option.name)}
             </MenuItem>
           ))}
         </Select>
