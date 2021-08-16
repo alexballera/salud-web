@@ -16,7 +16,7 @@ const wrapperOptions = {
     validationSchema: PersonalDataForm.validations.schema
   },
   componentProps: {
-    documentTypesOptions: [{ documentTypeId: 0, name: 'cedula', mask: [], length: 9 }]
+    documentTypesOptions: [{ documentTypeId: 0, name: 'cedula fisica', mask: [], length: 9 }]
   }
 };
 

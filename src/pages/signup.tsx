@@ -167,7 +167,9 @@ function SignUpView({
                     type="submit"
                     color="primary"
                     variant="contained"
-                    disabled={!_.isEmpty(formik.errors) || loading}
+                    disabled={loading}
+                    // TODO verificar
+                    // disabled={!_.isEmpty(formik.errors) || loading}
                   >
                     {currentStep === dataSource.length ? 'Enviar' : 'Siguiente'}
                   </Button>

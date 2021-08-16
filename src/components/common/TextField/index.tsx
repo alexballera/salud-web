@@ -22,6 +22,7 @@ type Props = {
   touched?: boolean;
   helperText: string;
   labelProps?: FormLabelProps;
+  errorType?: string;
   formControlProps?: { 'data-testid'?: string } & FormControlProps;
 } & OutlinedInputProps;
 
@@ -31,6 +32,7 @@ function CustomTextField({
   labelProps,
   helperText,
   formControlProps,
+  errorType,
   ...props
 }: Props): JSX.Element {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -64,13 +66,22 @@ function CustomTextField({
       default:
     }
   };
+
+  const showErrorTypeMessage = (val: string) => {
+    const type = {
+      NotFound: 'Cédula inválida'
+    };
+    return type[val];
+  };
   return (
     <FormControl fullWidth {...formControlProps}>
       <FormLabel htmlFor={props.id} style={{ marginBottom: 10 }} {...labelProps}>
         {label}
       </FormLabel>
       <OutlinedInput {...props} type={handlerType()} endAdornment={_renderEndAdornment()} />
-      {props.error && <FormHelperText error>{helperText}</FormHelperText>}
+      {(props.error || errorType) && (
+        <FormHelperText error>{helperText || showErrorTypeMessage(errorType)}</FormHelperText>
+      )}
     </FormControl>
   );
 }

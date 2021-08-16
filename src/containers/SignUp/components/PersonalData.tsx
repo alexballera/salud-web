@@ -7,7 +7,12 @@ import { FormikProps } from 'formik';
 /// SERVICE
 import { personVerifier } from '../../../services/personVerifier.service';
 /// TYPES
-import { IPersonalDataForm, IPersonalDataProps, IPaciente } from '../index.types';
+import {
+  IPersonalDataForm,
+  IPersonalDataProps,
+  IPaciente,
+  ResponseDataError
+} from '../index.types';
 /// OWN COMPONENTS
 import TextField from '../../../components/common/TextField';
 import DatePicker from '../../../components/common/DataPicker';
@@ -33,6 +38,7 @@ function PersonalData({
 }: IPersonalDataProps & FormikProps<IPersonalDataForm>): JSX.Element {
   const inputMaskRef = useRef(null);
   const [data, setData] = useState<any>(null);
+  const [typeError, setTypeError] = useState<string>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const isNotPhysicalID = !!(values.documentType !== 1 && values.documentType);
 
@@ -85,13 +91,23 @@ function PersonalData({
   };
 
   const handleChangeLabel = (val: string) => {
-    let label = {
-      'Cédula': 'Cédula Física',
-      'Residencia': 'Cédula de Residencia',
-      'Pasaporte': 'Pasaporte',
-    }
+    const label = {
+      Cédula: 'Cédula Física',
+      Residencia: 'Cédula de Residencia',
+      Pasaporte: 'Pasaporte'
+    };
     return label[val];
-  }
+  };
+
+  const handleChangeError = (err: string) => {
+    return err;
+    /* const label = {
+      Cédula: 'Cédula Física',
+      Residencia: 'Cédula de Residencia',
+      Pasaporte: 'Pasaporte'
+    };
+    return label[err]; */
+  };
 
   const userValuesAlreadyExist = (): boolean => {
     const stepValues = {
@@ -111,6 +127,18 @@ function PersonalData({
     setFieldValue('lastName', data ? `${data.surname} ${data?.lastSurname ?? ''}` : '');
     setFieldValue('birthDate', data ? data.dateOfBirth : '');
   };
+
+  const getResponseDataError = (responseDataError: ResponseDataError) => {
+    setTypeError(responseDataError.type);
+  };
+
+  const showMessageDataError = (message: string) => {
+    const type = {
+      'Usuario no encontrado': 'Campos incorrectos, corregir para continuar.',
+      default: message
+    };
+    return type[message] || type.default;
+  };
   /// HANDLERS END
 
   /// USE EFFECTS
@@ -124,8 +152,9 @@ function PersonalData({
             setUserValues(data);
           })
           .catch(err => {
-            const message = err.response.data.error.message;
+            const message = showMessageDataError(err.response.data.error.message);
             handleNotifications({ open: true, message, severity: 'error' });
+            getResponseDataError(err.response.data.error);
             setUserValues();
           })
           .finally(() => setLoading(false));
@@ -168,13 +197,14 @@ function PersonalData({
         type="text"
         label="Número de identificación"
         value={values.documentNumber}
-        error={touched.documentNumber && Boolean(errors.documentNumber)}
+        error={(touched.documentNumber && Boolean(errors.documentNumber)) || Boolean(typeError)}
+        errorType={typeError}
         onBlur={handleBlur}
         loading={loading}
         inputRef={inputMaskRef}
         disabled={!values.documentType}
         onChange={handlerChangeDocument}
-        helperText={errors.documentNumber}
+        helperText={handleChangeError(errors.documentNumber)}
         inputProps={{
           mask: convertToMask(currentDocumentType?.mask),
           'data-testid': 'documentNumber'
