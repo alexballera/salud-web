@@ -90,23 +90,17 @@ function PersonalData({
     }
   };
 
-  const handleChangeLabel = (val: string) => {
+  const handleChangeLabel = (val: number) => {
     const label = {
-      Cédula: 'Cédula Física',
-      Residencia: 'Cédula de Residencia',
-      Pasaporte: 'Pasaporte'
+      1: 'Cédula Física',
+      2: 'Cédula de Residencia',
+      6: 'Pasaporte'
     };
     return label[val];
   };
 
   const handleChangeError = (err: string) => {
     return err;
-    /* const label = {
-      Cédula: 'Cédula Física',
-      Residencia: 'Cédula de Residencia',
-      Pasaporte: 'Pasaporte'
-    };
-    return label[err]; */
   };
 
   const userValuesAlreadyExist = (): boolean => {
@@ -183,7 +177,7 @@ function PersonalData({
         >
           {documentTypesOptions.map((option, i) => (
             <MenuItem key={i} value={option.documentTypeId}>
-              {handleChangeLabel(option.name)}
+              {handleChangeLabel(option.documentTypeId)}
             </MenuItem>
           ))}
         </Select>
@@ -262,9 +256,8 @@ function PersonalData({
   );
 }
 
-PersonalData.title = 'Registrese';
-PersonalData.description =
-  'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma';
+PersonalData.title = 'Identifícate';
+PersonalData.description = 'Para empezar tu registro bríndanos tu número de identificación';
 PersonalData.validations = {
   name: 'PersonalData',
   schema: yup.object().shape({
