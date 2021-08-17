@@ -118,4 +118,14 @@ export type IDocumentTypes = {
   length: number;
   documentTypeId: number;
 };
+
+export type ResponseDataError = {
+  code: string;
+  detail: string;
+  httpStatus: number;
+  message: string;
+  name: string;
+  stack: string;
+  type: string;
+};
 /// TYPES END

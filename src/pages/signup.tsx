@@ -18,8 +18,7 @@ import CredentialDataForm from '../containers/SignUp/components/CredentialData';
 
 /// OWN COMPONENTS END
 /// MATERIAL - UI
-import Button from '@material-ui/core/Button';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import { Button, Box, Grid } from '@material-ui/core';
 /// MATERIAL - UI END
 
 /// STYLES
@@ -122,9 +121,6 @@ function SignUpView({
 
   return (
     <section className="container signup-wrapper">
-      <Button startIcon={<ArrowBackIosIcon />} onClick={goBack}>
-        Volver
-      </Button>
       <Formik
         validateOnMount
         onSubmit={(values, formik) => {
@@ -162,15 +158,28 @@ function SignUpView({
             <Form autoComplete="off">
               <Wizard
                 footer={
-                  <Button
-                    fullWidth
-                    type="submit"
-                    color="primary"
-                    variant="contained"
-                    disabled={!_.isEmpty(formik.errors) || loading}
-                  >
-                    {currentStep === dataSource.length ? 'Enviar' : 'Siguiente'}
-                  </Button>
+                  <Box p={3}>
+                    <Grid container spacing={1}>
+                      <Grid item xs={6} md={6}>
+                        <Button fullWidth onClick={goBack} variant="outlined">
+                          Volver
+                        </Button>
+                      </Grid>
+                      <Grid item xs={6} md={6}>
+                        <Button
+                          fullWidth
+                          type="submit"
+                          color="primary"
+                          variant="contained"
+                          disabled={loading}
+                          // TODO verificar
+                          // disabled={!_.isEmpty(formik.errors) || loading}
+                        >
+                          {currentStep === dataSource.length ? 'Enviar' : 'Siguiente'}
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </Box>
                 }
                 activeStep={currentStep}
                 dataSource={dataSource}

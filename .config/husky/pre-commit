@@ -7,7 +7,7 @@ SPLIT_BRANCH_TYPE=(${branch//\// })
 
 DISABLED_BRANCHES=("develop" "main")
 
-#! Branches for main or develop 
+#! Branches for main or develop
 ALLOWED_PREFIX_BRANCHES=("feature" "bugfix" "subtask" "release" "hotfix")
 
 if [[ "${DISABLED_BRANCHES[@]}" =~ "$branch" ]]; then
@@ -34,4 +34,4 @@ git branch -m newBranchName
 fi
 
 npx pretty-quick --staged
-npm run lint 
+npm run lint

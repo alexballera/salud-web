@@ -16,12 +16,20 @@ import {
   DialogContentText,
   DialogActions
 } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 /// MATERIAL UI END
 
 /// STYLES & TYPES
+import { withStyles } from '@material-ui/core/styles';
 import styles from './styles.module.scss';
 import { IProps } from './types';
 /// STYLES & TYPES END
+
+const stylesMaterial = {
+  root: {
+    textTransform: 'capitalize'
+  }
+};
 
 const Transition = React.forwardRef(function Transition(
   props: { children: React.ReactElement<any, any> },
@@ -30,7 +38,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function Navbar({ loggedIn }: IProps): JSX.Element {
+function Navbar({ loggedIn, classes }: IProps): JSX.Element {
   const router = useRouter();
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -42,11 +50,12 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
         <>
           <Button
             data-testid="exit-button"
-            variant="contained"
-            color="secondary"
+            variant="text"
             onClick={() => setDialogOpen(true)}
+            endIcon={<CloseIcon />}
+            className={classes.root}
           >
-            SALIR
+            Salir
           </Button>
 
           <Dialog
@@ -114,4 +123,4 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
   );
 }
 
-export default withAppContext(Navbar);
+export default withStyles(stylesMaterial)(withAppContext(Navbar));
