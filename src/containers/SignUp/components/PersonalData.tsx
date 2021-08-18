@@ -122,8 +122,10 @@ function PersonalData({
     setFieldValue('birthDate', data ? data.dateOfBirth : '');
   };
 
-  const getResponseDataError = (responseDataError: ResponseDataError) => {
-    setTypeError(responseDataError.type);
+  const getResponseDataError = (responseDataError: ResponseDataError, currentDocumentType) => {
+    if (currentDocumentType.documentTypeId === 1) {
+      setTypeError(responseDataError.type);
+    }
   };
 
   const showMessageDataError = (message: string) => {
@@ -148,7 +150,7 @@ function PersonalData({
           .catch(err => {
             const message = showMessageDataError(err.response.data.error.message);
             handleNotifications({ open: true, message, severity: 'error' });
-            getResponseDataError(err.response.data.error);
+            getResponseDataError(err.response.data.error, currentDocumentType);
             setUserValues();
           })
           .finally(() => setLoading(false));
