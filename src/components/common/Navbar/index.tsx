@@ -19,17 +19,17 @@ import CloseIcon from '@material-ui/icons/Close';
 /// MATERIAL UI END
 
 /// STYLES & TYPES
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import styles from './styles.module.scss';
 import { IProps } from './types';
 import LogoIcon from '../LogoIcon/LogoIcon';
 /// STYLES & TYPES END
 
-const stylesMaterial = {
+const useStyles = makeStyles({
   root: {
     textTransform: 'capitalize'
   }
-};
+});
 
 const Transition = React.forwardRef(function Transition(
   props: { children: React.ReactElement<any, any> },
@@ -38,7 +38,8 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function Navbar({ loggedIn, classes }: IProps): JSX.Element {
+function Navbar({ loggedIn }: IProps): JSX.Element {
+  const classes = useStyles();
   const router = useRouter();
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -123,4 +124,4 @@ function Navbar({ loggedIn, classes }: IProps): JSX.Element {
   );
 }
 
-export default withStyles(stylesMaterial)(withAppContext(Navbar));
+export default withAppContext(Navbar);
