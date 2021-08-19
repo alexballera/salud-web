@@ -1,0 +1,65 @@
+#!/bin/zsh
+. "$(dirname "$0")/_/husky.sh"
+# 😺 😸 😹 😻 😼 😽 🙀 😿 😾
+
+echo "EXECUTING PRE PUSH SCRIPTS"
+
+function create_local() {
+    local origin=${1}
+    local branch=${2}
+    local existed_in_local=$(git branch --list ${branch})
+
+
+    if [[ -z ${existed_in_local} ]]; then
+        git checkout -b $branch HEAD@{1}
+        git checkout $origin
+    else
+        git branch -D $branch
+        git checkout -b $branch HEAD@{1}
+        git checkout $origin
+    fi
+}
+
+#! Branches prefix for develop
+DEVELOP_BRANCHES=("feature" "bugfix")
+
+#! Branches prefix for any branch
+SUBTASK_BRANCHES=("subtask")
+
+DISABLED_BRANCHES=("develop" "main")
+
+#! Extract your branch prefix
+NAME=$(git branch | grep '*' | sed 's/* //')
+SPLIT_BRANCH_TYPE=(${NAME//\// })
+echo "Your branch prefix is ${SPLIT_BRANCH_TYPE[0]}"
+
+if [[ "${DISABLED_BRANCHES[@]}" =~ "${SPLIT_BRANCH_TYPE[0]}" ]]; then
+  echo "🙀 Branch protected: You can't push your commits directly to $NAME branch. Please create a PR"
+  exit 1
+fi
+
+echo "😸 Creating a backup branch..."
+
+echo "${NAME}-BKP"
+BKP_NAME="${NAME}-BKP"
+create_local $NAME $BKP_NAME
+
+echo "😽 Your backup branch is ${NAME}-BKP, and only exist locally"
+
+#! Rebasing with develop
+if [[ " ${DEVELOP_BRANCHES[@]} " =~ " ${SPLIT_BRANCH_TYPE[0]} " ]]; then
+    echo "Rebasing with develop..."
+    git pull --rebase origin develop
+
+#! Asking your root branch for subtask branch
+elif [[ " ${SUBTASK_BRANCHES[@]} " =~ " ${SPLIT_BRANCH_TYPE[0]} " ]]; then
+    echo "Subtask branches require PR to feature branches manually"
+    # read -p "You write your root branch (feature/SLD-XXX):" branch_selected
+    # git pull --rebase origin $branch_selected
+fi
+
+echo "😻 Sync HEAD finished"
+
+echo "😼 Running test..."
+npm run test
+

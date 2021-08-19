@@ -1,0 +1,7 @@
+# File: ./.dockerignore.vscode/
+
+node_modules/
+.config/
+.next/
+.vscode/
+

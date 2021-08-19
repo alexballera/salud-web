@@ -1,0 +1,4 @@
+name: web-telemedicina
+
+nextApp:
+  component: './node_modules/@sls-next/serverless-component'
