@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import '../styles/globals.scss'
+import '../src/styles/globals.scss'
 import 'bootstrap/dist/css/bootstrap.css'
 
 type IProps = {
