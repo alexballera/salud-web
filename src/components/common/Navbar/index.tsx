@@ -16,10 +16,10 @@ import {
   DialogActions
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import { makeStyles } from '@material-ui/core/styles';
 /// MATERIAL UI END
 
 /// STYLES & TYPES
-import { makeStyles } from '@material-ui/core/styles';
 import styles from './styles.module.scss';
 import { IProps } from './types';
 import LogoIcon from '../LogoIcon/LogoIcon';

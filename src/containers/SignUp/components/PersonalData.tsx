@@ -37,11 +37,10 @@ function PersonalData({
   documentTypesOptions
 }: IPersonalDataProps & FormikProps<IPersonalDataForm>): JSX.Element {
   const inputMaskRef = useRef(null);
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<IPaciente>(null);
   const [typeError, setTypeError] = useState<string>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const isNotPhysicalID = !!(values.documentType !== 1 && values.documentType);
-
   const currentDocumentType = documentTypesOptions.find(
     data => data.documentTypeId === values.documentType
   );
@@ -52,7 +51,11 @@ function PersonalData({
   const handlerChangeSelector = (e: React.ChangeEvent<{ name?: string; value: unknown }>): void => {
     handleChange(e);
     setUserValues();
+    setTypeError('');
     setFieldValue('documentNumber', '');
+    setFieldValue('firstName', '');
+    setFieldValue('lastName', '');
+    setFieldValue('birthDate', '');
     setTimeout(() => {
       inputMaskRef.current.focus();
       inputMaskRef.current.setSelectionRange(0, 0);
