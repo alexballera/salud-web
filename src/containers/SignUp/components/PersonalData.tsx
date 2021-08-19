@@ -37,11 +37,10 @@ function PersonalData({
   documentTypesOptions
 }: IPersonalDataProps & FormikProps<IPersonalDataForm>): JSX.Element {
   const inputMaskRef = useRef(null);
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<IPaciente>(null);
   const [typeError, setTypeError] = useState<string>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const isNotPhysicalID = !!(values.documentType !== 1 && values.documentType);
-
   const currentDocumentType = documentTypesOptions.find(
     data => data.documentTypeId === values.documentType
   );
@@ -52,7 +51,11 @@ function PersonalData({
   const handlerChangeSelector = (e: React.ChangeEvent<{ name?: string; value: unknown }>): void => {
     handleChange(e);
     setUserValues();
+    setTypeError('');
     setFieldValue('documentNumber', '');
+    setFieldValue('firstName', '');
+    setFieldValue('lastName', '');
+    setFieldValue('birthDate', '');
     setTimeout(() => {
       inputMaskRef.current.focus();
       inputMaskRef.current.setSelectionRange(0, 0);
@@ -122,8 +125,10 @@ function PersonalData({
     setFieldValue('birthDate', data ? data.dateOfBirth : '');
   };
 
-  const getResponseDataError = (responseDataError: ResponseDataError) => {
-    setTypeError(responseDataError.type);
+  const getResponseDataError = (responseDataError: ResponseDataError, currentDocumentType) => {
+    if (currentDocumentType.documentTypeId === 1) {
+      setTypeError(responseDataError.type);
+    }
   };
 
   const showMessageDataError = (message: string) => {
@@ -148,7 +153,7 @@ function PersonalData({
           .catch(err => {
             const message = showMessageDataError(err.response.data.error.message);
             handleNotifications({ open: true, message, severity: 'error' });
-            getResponseDataError(err.response.data.error);
+            getResponseDataError(err.response.data.error, currentDocumentType);
             setUserValues();
           })
           .finally(() => setLoading(false));

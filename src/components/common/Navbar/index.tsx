@@ -8,7 +8,6 @@ import {
   AppBar,
   Button,
   Toolbar,
-  Typography,
   Slide,
   Dialog,
   DialogTitle,
@@ -17,12 +16,13 @@ import {
   DialogActions
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import { makeStyles } from '@material-ui/core/styles';
 /// MATERIAL UI END
 
 /// STYLES & TYPES
-import { makeStyles } from '@material-ui/core/styles';
-import stylesModule from './styles.module.scss';
+import styles from './styles.module.scss';
 import { IProps } from './types';
+import LogoIcon from '../LogoIcon/LogoIcon';
 /// STYLES & TYPES END
 
 const useStyles = makeStyles({
@@ -116,8 +116,8 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
 
   return (
     <AppBar position="static" color="inherit" elevation={0}>
-      <Toolbar className={stylesModule.toolbar}>
-        <Typography variant="h6">OMNiSalud</Typography>
+      <Toolbar className={styles.toolbar}>
+        <LogoIcon />
         {_drawAction()}
       </Toolbar>
     </AppBar>

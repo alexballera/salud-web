@@ -15,6 +15,7 @@ function TextMaskCustom(props: TextMaskCustomProps): JSX.Element {
         inputRef(ref ? ref.inputElement : null);
       }}
       showMask
+      guide={false}
     />
   );
 }
