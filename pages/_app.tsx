@@ -3,7 +3,7 @@ import * as React from 'react'
 import '../styles/globals.scss'
 import 'bootstrap/dist/css/bootstrap.css'
 
-interface IProps {
+type IProps = {
   Component: any
   pageProps: unknown
 }
