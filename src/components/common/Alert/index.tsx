@@ -1,6 +1,6 @@
 import { Box } from '@material-ui/core';
 import React, { PropsWithChildren } from 'react';
-import { errorColor, successColor } from '../../../utils/theme';
+import { errorColor, successColor } from '../../../styles/js/theme';
 import { IProps } from './types';
 
 export default function Alert({ children, variant }: PropsWithChildren<IProps>): JSX.Element {

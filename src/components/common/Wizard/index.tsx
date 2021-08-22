@@ -63,9 +63,9 @@ function Wizard({
     else onSubmit();
   };
 
-  const handleBack = () => {
+  /* const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
-  };
+  }; */
   /// HANDLERS END
 
   /// USE EFECTS

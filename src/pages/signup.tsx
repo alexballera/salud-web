@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import _ from 'lodash';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { Form, Formik } from 'formik';
@@ -22,7 +21,7 @@ import { Button, Box, Grid } from '@material-ui/core';
 /// MATERIAL - UI END
 
 /// STYLES
-import '../styles/Signup.module.scss';
+import '../styles/scss/Signup.module.scss';
 
 /// GET SERVICE
 export const getStaticProps: GetStaticProps = async () => {

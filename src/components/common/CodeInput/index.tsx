@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactCodeInput, { ReactCodeInputProps } from 'react-code-input';
 /// MATERIAL - UI
-import theme from '../../../utils/theme';
+import theme from '../../../styles/js/theme';
 import FormControl from '@material-ui/core/FormControl';
 import { FormControlProps, makeStyles } from '@material-ui/core';
 /// MATERIAL - UI END
@@ -9,6 +9,7 @@ import { FormControlProps, makeStyles } from '@material-ui/core';
 /// TYPES
 type IProps = {
   label: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formLabelProps?: any;
   formControlProps?: FormControlProps;
 } & ReactCodeInputProps;

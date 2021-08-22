@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import '../styles/globals.scss';
+import '../styles/scss/globals.scss';
 import 'bootstrap/dist/css/bootstrap.css';
 // Modules
 import Head from 'next/head';
@@ -8,7 +8,7 @@ import { AppProps } from 'next/app';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 // Utils
-import theme from '../utils/theme';
+import theme from '../styles/js/theme';
 import Layout from '../components/common/Layout';
 import AppProvider from '../context/AppProvider';
 

@@ -29,7 +29,7 @@ import { loginService } from '../services/auth.service';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
-import styles from '../styles/Login.module.scss';
+import styles from '../styles/scss/Login.module.scss';
 import { IProps } from '../types/login.types';
 /// STYLES & TYPES END
 
@@ -103,71 +103,79 @@ function LoginPage({
                     validationSchema={ValidationSchema}
                     onSubmit={values => _handleSubmit(values.email, values.password)}
                   >
-                    {({ errors, handleChange, values, handleSubmit }: any) => (
-                      <form className={styles.formContainer} onSubmit={handleSubmit}>
-                        <Grid
-                          container
-                          component="ul"
-                          justify="center"
-                          spacing={3}
-                          className={styles.form}
-                        >
-                          <Grid item xs={12} component="li">
-                            <TextField
-                              inputProps={{
-                                'aria-label': 'Correo electrónico'
-                              }}
-                              label="Correo electrónico"
-                              name="email"
-                              type="email"
-                              fullWidth={true}
-                              value={values.email}
-                              onChange={handleChange}
-                              error={!!errors.email}
-                              helperText={errors.email || undefined}
-                              data-testid="email-field"
-                            />
-                          </Grid>
-                          <Grid item xs={12} component="li">
-                            <TextField
-                              inputProps={{ 'aria-label': 'Contraseña' }}
-                              aria-label="Contraseña"
-                              label="Contraseña"
-                              name="password"
-                              type="password"
-                              fullWidth={true}
-                              value={values.password}
-                              onChange={handleChange}
-                              error={!!errors.password}
-                              helperText={errors.password || undefined}
-                              data-testid="password-field"
-                            />
-                          </Grid>
-                          <Grid item xs={12} component="li" className="MuiGrid-justify-xs-flex-end">
-                            <Button onClick={() => router.push('/recover')}>
-                              ¿Olvidó su contraseña?
-                            </Button>
-                          </Grid>
+                    {
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      ({ errors, handleChange, values, handleSubmit }: any) => (
+                        <form className={styles.formContainer} onSubmit={handleSubmit}>
                           <Grid
-                            item
-                            xs={12}
-                            component="li"
-                            className={`${styles.formButton} MuiGrid-justify-xs-center`}
+                            container
+                            component="ul"
+                            justify="center"
+                            spacing={3}
+                            className={styles.form}
                           >
-                            <Button
-                              type="submit"
-                              variant="contained"
-                              fullWidth={true}
-                              color="primary"
-                              disabled={isLoading || Object.keys(errors).length > 0}
-                              data-testid="login-button"
+                            <Grid item xs={12} component="li">
+                              <TextField
+                                inputProps={{
+                                  'aria-label': 'Correo electrónico'
+                                }}
+                                label="Correo electrónico"
+                                name="email"
+                                type="email"
+                                fullWidth={true}
+                                value={values.email}
+                                onChange={handleChange}
+                                error={!!errors.email}
+                                helperText={errors.email || undefined}
+                                data-testid="email-field"
+                              />
+                            </Grid>
+                            <Grid item xs={12} component="li">
+                              <TextField
+                                inputProps={{ 'aria-label': 'Contraseña' }}
+                                aria-label="Contraseña"
+                                label="Contraseña"
+                                name="password"
+                                type="password"
+                                fullWidth={true}
+                                value={values.password}
+                                onChange={handleChange}
+                                error={!!errors.password}
+                                helperText={errors.password || undefined}
+                                data-testid="password-field"
+                              />
+                            </Grid>
+                            <Grid
+                              item
+                              xs={12}
+                              component="li"
+                              className="MuiGrid-justify-xs-flex-end"
                             >
-                              INICIAR SESIÓN
-                            </Button>
+                              <Button onClick={() => router.push('/recover')}>
+                                ¿Olvidó su contraseña?
+                              </Button>
+                            </Grid>
+                            <Grid
+                              item
+                              xs={12}
+                              component="li"
+                              className={`${styles.formButton} MuiGrid-justify-xs-center`}
+                            >
+                              <Button
+                                type="submit"
+                                variant="contained"
+                                fullWidth={true}
+                                color="primary"
+                                disabled={isLoading || Object.keys(errors).length > 0}
+                                data-testid="login-button"
+                              >
+                                INICIAR SESIÓN
+                              </Button>
+                            </Grid>
                           </Grid>
-                        </Grid>
-                      </form>
-                    )}
+                        </form>
+                      )
+                    }
                   </Formik>
                 </Grid>
               </Grid>

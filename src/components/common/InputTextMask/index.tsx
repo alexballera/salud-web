@@ -11,6 +11,7 @@ function TextMaskCustom(props: TextMaskCustomProps): JSX.Element {
   return (
     <MaskedInput
       {...other}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ref={(ref: any) => {
         inputRef(ref ? ref.inputElement : null);
       }}
