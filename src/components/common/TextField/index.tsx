@@ -69,9 +69,10 @@ function CustomTextField({
 
   const showErrorTypeMessage = (val: string) => {
     const type = {
-      NotFound: 'Cédula inválida'
+      NotFound: 'Cédula inválida',
+      default: ''
     };
-    return type[val];
+    return type[val] || type['default'];
   };
   return (
     <FormControl fullWidth {...formControlProps}>

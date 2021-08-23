@@ -148,6 +148,7 @@ function PersonalData({
         personVerifier(values.documentType, documentNumberSanitized)
           .then(res => {
             const data = res.data.result.paciente;
+            setTypeError('');
             setUserValues(data);
           })
           .catch(err => {
@@ -230,7 +231,7 @@ function PersonalData({
           <TextField
             id="lastName"
             name="lastName"
-            label="Apellido"
+            label="Apellidos"
             value={values.lastName}
             error={touched.lastName && Boolean(errors.lastName)}
             onBlur={handleBlur}
