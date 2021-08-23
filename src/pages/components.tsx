@@ -186,6 +186,7 @@ function ComponentsView(): JSX.Element {
             ],
             'data-testid': 'documentNumber'
           }}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           inputComponent={TextMaskCustom as any}
         />
 
@@ -201,10 +202,38 @@ function ComponentsView(): JSX.Element {
         <Typography component="h3" variant="h3">
           Alerts
         </Typography>
-        <Alert open message="There is a success alert" severity="success" onClose={() => {}} />
-        <Alert open message="There is a success alert" severity="error" onClose={() => {}} />
-        <Alert open message="There is a success alert" severity="warning" onClose={() => {}} />
-        <Alert open message="There is a success alert" severity="info" onClose={() => {}} />
+        <Alert
+          open
+          message="There is a success alert"
+          severity="success"
+          onClose={() => {
+            'Success';
+          }}
+        />
+        <Alert
+          open
+          message="There is a success alert"
+          severity="error"
+          onClose={() => {
+            'Error';
+          }}
+        />
+        <Alert
+          open
+          message="There is a success alert"
+          severity="warning"
+          onClose={() => {
+            'Warning';
+          }}
+        />
+        <Alert
+          open
+          message="There is a success alert"
+          severity="info"
+          onClose={() => {
+            'Info';
+          }}
+        />
       </div>
     </div>
   );

@@ -32,6 +32,7 @@ const useStyles = makeStyles({
 });
 
 const Transition = React.forwardRef(function Transition(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   props: { children: React.ReactElement<any, any> },
   ref
 ) {

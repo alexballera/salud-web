@@ -3,7 +3,7 @@ import { ServerStyleSheets } from '@material-ui/core/styles';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 /// UTILS
-import theme from '../utils/theme';
+import theme from '../styles/js/theme';
 /// UTILS END
 
 class MyDocument extends Document {
