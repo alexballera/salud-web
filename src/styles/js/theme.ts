@@ -24,6 +24,15 @@ const defaultTheme: ThemeOptions = {
   },
   typography: {
     fontFamily: 'Poppins, Roboto, sans-serif'
+  },
+  overrides: {
+    MuiFormHelperText: {
+      root: {
+        '&$error': {
+          textAlign: 'right'
+        }
+      }
+    }
   }
 };
 
