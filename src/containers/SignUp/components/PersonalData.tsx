@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import _ from 'lodash';
 import { convertToMask } from '../../../utils/helpers';
+
 /// FORM
 import * as yup from 'yup';
 import { FormikProps } from 'formik';
@@ -118,11 +119,18 @@ function PersonalData({
     return !Object.values(stepValues).some(value => _.isEmpty(value));
   };
 
+  const setDataBirth = (date: string): string => {
+    if (date) {
+      const newDate = `${date} `;
+      return newDate;
+    }
+  };
+
   const setUserValues = (data: IPaciente = null) => {
     setData(data);
     setFieldValue('firstName', data ? data.name : '');
     setFieldValue('lastName', data ? `${data.surname} ${data?.lastSurname ?? ''}` : '');
-    setFieldValue('birthDate', data ? data.dateOfBirth : '');
+    setFieldValue('birthDate', data ? setDataBirth(data.dateOfBirth) : '');
   };
 
   const getResponseDataError = (responseDataError: ResponseDataError, currentDocumentType) => {
@@ -246,7 +254,7 @@ function PersonalData({
             label="Fecha de nacimiento"
             value={values.birthDate === '' ? null : values.birthDate}
             margin="normal"
-            format="MM/dd/yyyy"
+            format="dd/MM/yyyy"
             onBlur={handleBlur}
             variant="inline"
             onChange={handleChangePicker}
