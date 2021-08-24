@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useQuery } from '@apollo/client';
-import Skeleton from '@material-ui/lab/Skeleton';
-import { Typography } from '@material-ui/core';
+// import Skeleton from '@material-ui/lab/Skeleton';
+import { CircularProgress, Typography } from '@material-ui/core';
 import { TERMS_AND_CONDITIONS } from '../../services/queries/TermsAndConditions';
 import { withAppContext } from '../../context';
 import { RichTextTranslate } from '../../utils/cmsUtils';
@@ -20,12 +20,16 @@ function TermsAndConditions(): JSX.Element {
       <Fragment>
         <Title />
         <div data-testid="loading-skeleton">
+          {/*
+          TODO Revisar: Skeleton está presentando error se agrega spinner de manera temporal
           <Skeleton animation="wave" style={{ marginBottom: 6, marginTop: 8 }} height={16} />
           <Skeleton animation="wave" style={{ marginBottom: 6 }} width="80%" height={16} />
           <Skeleton animation="wave" style={{ marginBottom: 6 }} height={16} />
           <Skeleton animation="wave" style={{ marginBottom: 6 }} height={16} />
           <Skeleton animation="wave" style={{ marginBottom: 6 }} height={16} />
           <Skeleton animation="wave" width="80%" height={16} />
+          */}
+          <CircularProgress />
         </div>
       </Fragment>
     );
