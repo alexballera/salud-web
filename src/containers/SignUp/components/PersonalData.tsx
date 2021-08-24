@@ -86,7 +86,7 @@ function PersonalData({
   };
 
   const handleChangeCustom = (e: React.ChangeEvent<{ name?: string; value: string }>): void => {
-    const regex = /[^a-zA-Z]/;
+    const regex = /[^a-zA-Z ]/;
     const value = e.target.value;
 
     if (!regex.test(value) || value === '') {
