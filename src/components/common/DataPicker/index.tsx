@@ -1,4 +1,5 @@
 import DateFnsUtils from '@date-io/date-fns';
+import { es } from 'date-fns/locale';
 
 /// MATERIAL - UI
 import FormLabel from '@material-ui/core/FormLabel';
@@ -18,7 +19,7 @@ function DataPicker({ label, formControlProps, labelProps, ...props }: IProps): 
       <FormLabel style={{ marginBottom: 10 }} {...labelProps}>
         {label}
       </FormLabel>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={es}>
         <DatePicker {...props} />
       </MuiPickersUtilsProvider>
     </FormControl>
