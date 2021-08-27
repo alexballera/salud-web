@@ -1,5 +1,4 @@
-# File: ./Dockerfile
-FROM node:lts-buster
+FROM public.ecr.aws/t1q3d8f8/node-14-buster:latest
 
 EXPOSE 3000
 
