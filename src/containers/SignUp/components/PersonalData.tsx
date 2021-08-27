@@ -51,12 +51,11 @@ function PersonalData({
 
   const handlerChangeSelector = (e: React.ChangeEvent<{ name?: string; value: unknown }>): void => {
     handleChange(e);
-    setUserValues();
-    setTypeError('');
-    setFieldValue('documentNumber', '');
-    setFieldValue('firstName', '');
-    setFieldValue('lastName', '');
-    setFieldValue('birthDate', '');
+    touched.documentType = false;
+    touched.documentNumber = false;
+    touched.birthDate = false;
+    touched.firstName = false;
+    touched.lastName = false;
     setTimeout(() => {
       inputMaskRef.current.focus();
       inputMaskRef.current.setSelectionRange(0, 0);
@@ -67,7 +66,6 @@ function PersonalData({
     const regexAlphanumeric = /^[a-zA-Z0-9]*$/;
     const regexNumeric = /^[0-9]*$/;
     const value = e.target.value;
-
     if (currentDocumentType.documentTypeId === 1) {
       handleChange(e);
     } else if (currentDocumentType.documentTypeId === 2) {
@@ -116,7 +114,6 @@ function PersonalData({
       documentType: values.documentType,
       documentNumber: values.documentNumber
     };
-
     return !Object.values(stepValues).some(value => _.isEmpty(value));
   };
 
