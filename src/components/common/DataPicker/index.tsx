@@ -4,7 +4,8 @@ import { es } from 'date-fns/locale';
 /// MATERIAL - UI
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
-import { FormControlProps, FormLabelProps } from '@material-ui/core';
+import { FormControlProps, FormLabelProps, createMuiTheme } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/styles';
 import { DatePicker, DatePickerProps, MuiPickersUtilsProvider } from '@material-ui/pickers';
 /// MATERIAL - UI
 
@@ -13,16 +14,28 @@ type IProps = {
   formControlProps?: FormControlProps;
 } & DatePickerProps;
 
+const customtMaterialTheme = createMuiTheme({
+  overrides: {
+    MuiButton: {
+      label: {
+        textTransform: 'capitalize'
+      }
+    }
+  }
+});
+
 function DataPicker({ label, formControlProps, labelProps, ...props }: IProps): JSX.Element {
   return (
-    <FormControl fullWidth {...formControlProps}>
-      <FormLabel style={{ marginBottom: 10 }} {...labelProps}>
-        {label}
-      </FormLabel>
-      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={es}>
-        <DatePicker {...props} />
-      </MuiPickersUtilsProvider>
-    </FormControl>
+    <ThemeProvider theme={customtMaterialTheme}>
+      <FormControl fullWidth {...formControlProps}>
+        <FormLabel style={{ marginBottom: 10 }} {...labelProps}>
+          {label}
+        </FormLabel>
+        <MuiPickersUtilsProvider utils={DateFnsUtils} locale={es}>
+          <DatePicker {...props} />
+        </MuiPickersUtilsProvider>
+      </FormControl>
+    </ThemeProvider>
   );
 }
 
