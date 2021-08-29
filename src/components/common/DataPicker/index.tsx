@@ -20,6 +20,22 @@ const customtMaterialTheme = createMuiTheme({
       label: {
         textTransform: 'capitalize'
       }
+    },
+    MuiFormLabel: {
+      root: {
+        fontFamily: 'Poppins, Roboto, sans-serif'
+      }
+    },
+    MuiFormHelperText: {
+      root: {
+        fontFamily: 'Poppins, Roboto, sans-serif',
+        '&$error': {
+          textAlign: 'right'
+        },
+        '&$contained': {
+          margin: 0
+        }
+      }
     }
   }
 });
@@ -32,7 +48,7 @@ function DataPicker({ label, formControlProps, labelProps, ...props }: IProps): 
           {label}
         </FormLabel>
         <MuiPickersUtilsProvider utils={DateFnsUtils} locale={es}>
-          <DatePicker {...props} />
+          <DatePicker {...props} margin="none" />
         </MuiPickersUtilsProvider>
       </FormControl>
     </ThemeProvider>
