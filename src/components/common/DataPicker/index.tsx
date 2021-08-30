@@ -14,21 +14,26 @@ type IProps = {
   formControlProps?: FormControlProps;
 } & DatePickerProps;
 
-const customtMaterialTheme = createMuiTheme({
+const datepickerTheme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#56c8d8',
+      main: '#0097a7',
+      dark: '#006978',
+      contrastText: '#ffffff'
+    }
+  },
+  typography: {
+    fontFamily: 'Poppins, Roboto, sans-serif'
+  },
   overrides: {
     MuiButton: {
       label: {
         textTransform: 'capitalize'
       }
     },
-    MuiFormLabel: {
-      root: {
-        fontFamily: 'Poppins, Roboto, sans-serif'
-      }
-    },
     MuiFormHelperText: {
       root: {
-        fontFamily: 'Poppins, Roboto, sans-serif',
         '&$error': {
           textAlign: 'right'
         },
@@ -42,7 +47,7 @@ const customtMaterialTheme = createMuiTheme({
 
 function DataPicker({ label, formControlProps, labelProps, ...props }: IProps): JSX.Element {
   return (
-    <ThemeProvider theme={customtMaterialTheme}>
+    <ThemeProvider theme={datepickerTheme}>
       <FormControl fullWidth {...formControlProps}>
         <FormLabel style={{ marginBottom: 10 }} {...labelProps}>
           {label}
