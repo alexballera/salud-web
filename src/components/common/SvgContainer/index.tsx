@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 type Props = {
+  title?: string;
   className?: string;
   height?: number;
   width?: number;
@@ -8,10 +9,11 @@ type Props = {
   minY?: string;
   viewBoxbWidth?: string;
   viewBoxbHeight?: string;
+  svg: React.ReactElement;
 };
 
-const LogoIcon = (props: Props): JSX.Element => {
-  const { className, width, height, minX, minY, viewBoxbWidth, viewBoxbHeight } = props;
+const SvgContainer = (props: Props): JSX.Element => {
+  const { title, className, width, height, minX, minY, viewBoxbWidth, viewBoxbHeight, svg } = props;
   return (
     <svg
       width={width}
@@ -22,8 +24,9 @@ const LogoIcon = (props: Props): JSX.Element => {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <title>Logo Icon</title>
-      <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+      <title>{title}</title>
+      {svg}
+      {/* <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
         <g id="Group-3" transform="translate(0.000000, -0.000000)">
           <g id="Group-2" fill="#DAF0F0">
             <path
@@ -48,12 +51,13 @@ const LogoIcon = (props: Props): JSX.Element => {
             </tspan>
           </text>
         </g>
-      </g>
+      </g> */}
     </svg>
   );
 };
 
-LogoIcon.defaultProps = {
+SvgContainer.defaultProps = {
+  title: 'Svg Icon',
   className: '',
   width: 40,
   height: 30,
@@ -63,4 +67,4 @@ LogoIcon.defaultProps = {
   viewBoxbHeight: '30'
 };
 
-export default LogoIcon;
+export default SvgContainer;
