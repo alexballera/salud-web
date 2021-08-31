@@ -7,6 +7,13 @@ import FormControl from '@material-ui/core/FormControl';
 import { FormControlProps, FormLabelProps, createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import { DatePicker, DatePickerProps, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import {
+  poppinsFontFamily,
+  secondaryContrastTextColor,
+  secondaryDarkColor,
+  secondaryLightColor,
+  secondaryMainColor
+} from '../../../styles/js/theme';
 /// MATERIAL - UI
 
 type IProps = {
@@ -16,15 +23,15 @@ type IProps = {
 
 const datepickerTheme = createMuiTheme({
   palette: {
-    primary: {
-      light: '#56c8d8',
-      main: '#0097a7',
-      dark: '#006978',
-      contrastText: '#ffffff'
+    secondary: {
+      light: secondaryLightColor,
+      main: secondaryMainColor,
+      dark: secondaryDarkColor,
+      contrastText: secondaryContrastTextColor
     }
   },
   typography: {
-    fontFamily: 'Poppins, Roboto, sans-serif'
+    fontFamily: poppinsFontFamily
   },
   overrides: {
     MuiButton: {
@@ -53,7 +60,7 @@ function DataPicker({ label, formControlProps, labelProps, ...props }: IProps): 
           {label}
         </FormLabel>
         <MuiPickersUtilsProvider utils={DateFnsUtils} locale={es}>
-          <DatePicker {...props} margin="none" />
+          <DatePicker {...props} margin="none" color="secondary" />
         </MuiPickersUtilsProvider>
       </FormControl>
     </ThemeProvider>
