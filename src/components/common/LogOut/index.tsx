@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Button, Box, Grid, Typography } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SvgContainer from '../SvgContainer';
-import SvgBanner from './svgBanner.component';
+import SvgBanner from './SvgBanner.component';
 import LogOutStyles from './styles.module';
 
 function LogOut(): JSX.Element {
