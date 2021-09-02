@@ -7,6 +7,13 @@ import FormControl from '@material-ui/core/FormControl';
 import { FormControlProps, FormLabelProps, createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import { DatePicker, DatePickerProps, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import {
+  poppinsFontFamily,
+  secondaryContrastTextColor,
+  secondaryDarkColor,
+  secondaryLightColor,
+  secondaryMainColor
+} from '../../../styles/js/theme';
 /// MATERIAL - UI
 
 type IProps = {
@@ -14,11 +21,32 @@ type IProps = {
   formControlProps?: FormControlProps;
 } & DatePickerProps;
 
-const customtMaterialTheme = createMuiTheme({
+const datepickerTheme = createMuiTheme({
+  palette: {
+    secondary: {
+      light: secondaryLightColor,
+      main: secondaryMainColor,
+      dark: secondaryDarkColor,
+      contrastText: secondaryContrastTextColor
+    }
+  },
+  typography: {
+    fontFamily: poppinsFontFamily
+  },
   overrides: {
     MuiButton: {
       label: {
         textTransform: 'capitalize'
+      }
+    },
+    MuiFormHelperText: {
+      root: {
+        '&$error': {
+          textAlign: 'right'
+        },
+        '&$contained': {
+          margin: 0
+        }
       }
     }
   }
@@ -26,13 +54,13 @@ const customtMaterialTheme = createMuiTheme({
 
 function DataPicker({ label, formControlProps, labelProps, ...props }: IProps): JSX.Element {
   return (
-    <ThemeProvider theme={customtMaterialTheme}>
+    <ThemeProvider theme={datepickerTheme}>
       <FormControl fullWidth {...formControlProps}>
         <FormLabel style={{ marginBottom: 10 }} {...labelProps}>
           {label}
         </FormLabel>
         <MuiPickersUtilsProvider utils={DateFnsUtils} locale={es}>
-          <DatePicker {...props} />
+          <DatePicker {...props} margin="none" color="secondary" />
         </MuiPickersUtilsProvider>
       </FormControl>
     </ThemeProvider>

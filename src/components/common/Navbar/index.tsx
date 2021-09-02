@@ -22,7 +22,8 @@ import { makeStyles } from '@material-ui/core/styles';
 /// STYLES & TYPES
 import styles from './styles.module.scss';
 import { IProps } from './types';
-import LogoIcon from '../LogoIcon/LogoIcon';
+import SvgContainer from '../SvgContainer';
+import LogoIconSvg from './LogoIcon.component';
 /// STYLES & TYPES END
 
 const useStyles = makeStyles({
@@ -118,7 +119,9 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
   return (
     <AppBar position="static" color="inherit" elevation={0}>
       <Toolbar className={styles.toolbar}>
-        <LogoIcon />
+        <SvgContainer title="Logo Icon">
+          <LogoIconSvg />
+        </SvgContainer>
         {_drawAction()}
       </Toolbar>
     </AppBar>

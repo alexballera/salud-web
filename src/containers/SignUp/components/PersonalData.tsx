@@ -261,6 +261,7 @@ function PersonalData({
             maxDate={new Date()}
             error={touched.birthDate && !!errors.birthDate}
             helperText={touched.birthDate && !!errors.birthDate ? errors.birthDate : ''}
+            formControlProps={{ margin: 'normal' }}
           />
         </Paper>
       )}
