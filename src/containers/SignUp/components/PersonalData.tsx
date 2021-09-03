@@ -56,6 +56,11 @@ function PersonalData({
     touched.birthDate = false;
     touched.firstName = false;
     touched.lastName = false;
+    setData(null);
+    setFieldValue('firstName', '');
+    setFieldValue('lastName', '');
+    setFieldValue('birthDate', '');
+    setFieldValue('documentNumber', '');
     setTimeout(() => {
       inputMaskRef.current.focus();
       inputMaskRef.current.setSelectionRange(0, 0);
