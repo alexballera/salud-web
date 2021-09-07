@@ -137,7 +137,7 @@ export default function ValidateCodePage({
               <ReactCodeInput
                 name="pinCode"
                 inputMode="numeric"
-                type="number"
+                type="tel"
                 isValid={isPinCodeValid}
                 fields={6}
                 onChange={handlePinChange}
