@@ -103,7 +103,7 @@ function SignUpView({
       signUp(body)
         .then(res => {
           handleLogin(res.data.result);
-          router.replace('/main');
+          router.replace('/validate_code');
         })
         .catch(err => {
           handleError(true, err.response.data.error.message);
