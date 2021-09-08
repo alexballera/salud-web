@@ -14,11 +14,10 @@ import TermsAndConditions from '../../../components/TermsAndConditions';
 import InformedConsent from '../../../components/InformedConsent';
 
 /// MATERIAL-UI
-import Switch from '@material-ui/core/Switch';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { Link, Typography } from '@material-ui/core';
+import { FormControl, FormHelperText, Link, Typography } from '@material-ui/core';
 /// MATERIAL-UI END
 
 /// INITIAL STATES
@@ -101,66 +100,63 @@ function CredentialData({
         helperText={errors.confirmPassword}
       />
 
-      <FormGroup>
-        <FormControlLabel
-          name="superappUser"
-          value={values.superappUser}
-          label="¿Sos usuario de OMNI La SuperApp?"
-          control={<Switch onChange={handleChange} color="primary" />}
-          labelPlacement="start"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              id="termsandconditions"
-              checked={values.terms}
-              onChange={handleChange}
-              name="terms"
-              color="primary"
-              style={{ zIndex: 3 }}
-            />
-          }
-          label={
-            <Typography component="label" variant="body1">
-              Acepto{' '}
-              <Link
-                underline="always"
-                component="span"
-                variant="body1"
-                onClick={() => setTermsAndConditionOpen(true)}
-                style={{ cursor: 'pointer' }}
-              >
-                términos y condiciones
-              </Link>
-            </Typography>
-          }
-        />
+      <FormControl>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="termsandconditions"
+                checked={values.terms}
+                onChange={handleChange}
+                name="terms"
+                color="primary"
+                style={{ zIndex: 3 }}
+              />
+            }
+            label={
+              <Typography component="label" variant="body1">
+                Acepto{' '}
+                <Link
+                  underline="always"
+                  component="span"
+                  variant="body1"
+                  onClick={() => setTermsAndConditionOpen(true)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  términos y condiciones
+                </Link>
+              </Typography>
+            }
+          />
 
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={values.services}
-              onChange={handleChange}
-              name="services"
-              color="primary"
-            />
-          }
-          label={
-            <Typography component="label" variant="body1">
-              Acepto{' '}
-              <Link
-                underline="always"
-                component="span"
-                variant="body1"
-                onClick={() => setInformedConsentOpen(true)}
-                style={{ cursor: 'pointer' }}
-              >
-                consentimiento informado
-              </Link>
-            </Typography>
-          }
-        />
-      </FormGroup>
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="consent"
+                checked={values.services}
+                onChange={handleChange}
+                name="services"
+                color="primary"
+              />
+            }
+            label={
+              <Typography component="label" variant="body1">
+                Acepto{' '}
+                <Link
+                  underline="always"
+                  component="span"
+                  variant="body1"
+                  onClick={() => setInformedConsentOpen(true)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  consentimiento informado
+                </Link>
+              </Typography>
+            }
+          />
+        </FormGroup>
+        {errors.terms && <FormHelperText error>{errors.terms}</FormHelperText>}
+      </FormControl>
       <Modal open={termsAndConditionOpen} onClose={() => setTermsAndConditionOpen(false)}>
         <TermsAndConditions />
       </Modal>
@@ -178,13 +174,21 @@ CredentialData.description =
 CredentialData.validations = {
   name: 'CredentialStep',
   schema: yup.object().shape({
-    terms: yup.bool().oneOf([true], 'Campo requerido').required('Campo requerido'),
+    terms: yup
+      .bool()
+      .oneOf([true], 'Términos y condiciones es requerido')
+      .required('Términos y condiciones es requerido'),
+    consent: yup
+      .bool()
+      .oneOf([true], 'Consentimiento informado es requerido')
+      .required('Consentimiento informado es requerido'),
     email: yup.string().email('Formato de correo incorrecto').required('Email requerido'),
     services: yup.bool().oneOf([true], 'Campo requerido').required('Campo requerido'),
     password: yup
       .string()
       .required('Contraseña requerida')
       .min(8, 'La contraseña debe ser de al menos 8 caracteres')
+      .max(16, 'La contraseña debe ser máximo de 16 caracteres')
       .matches(
         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
         'La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número'
@@ -193,6 +197,8 @@ CredentialData.validations = {
       .string()
       .oneOf([yup.ref('password'), null], 'La contraseña no coincide')
       .required('Campo Requerido')
+      .min(8, 'La contraseña debe ser de al menos 8 caracteres')
+      .max(16, 'La contraseña debe ser máximo de 16 caracteres')
   })
 };
 /// STEP VALIDATIONS END
