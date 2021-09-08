@@ -155,7 +155,10 @@ function CredentialData({
             }
           />
         </FormGroup>
-        {errors.terms && <FormHelperText error>{errors.terms}</FormHelperText>}
+        {touched.terms && errors.terms && <FormHelperText error>{errors.terms}</FormHelperText>}
+        {touched.services && errors.services && (
+          <FormHelperText error>{errors.services}</FormHelperText>
+        )}
       </FormControl>
       <Modal open={termsAndConditionOpen} onClose={() => setTermsAndConditionOpen(false)}>
         <TermsAndConditions />
@@ -182,8 +185,11 @@ CredentialData.validations = {
       .bool()
       .oneOf([true], 'Consentimiento informado es requerido')
       .required('Consentimiento informado es requerido'),
+    services: yup
+      .bool()
+      .oneOf([true], 'Consentimiento informado es requerido')
+      .required('Consentimiento informado es requerido'),
     email: yup.string().email('Formato de correo incorrecto').required('Email requerido'),
-    services: yup.bool().oneOf([true], 'Campo requerido').required('Campo requerido'),
     password: yup
       .string()
       .required('Contraseña requerida')
