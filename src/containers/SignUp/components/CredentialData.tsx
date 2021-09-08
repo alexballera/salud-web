@@ -85,6 +85,9 @@ function CredentialData({
         onBlur={handleBlur}
         onChange={handleChange}
         helperText={errors.password}
+        inputProps={{
+          maxLength: 16
+        }}
       />
       <SecurityPasswordIdicator value={values.password} />
       <Input
@@ -98,6 +101,9 @@ function CredentialData({
         onBlur={handleBlur}
         onChange={handleChange}
         helperText={errors.confirmPassword}
+        inputProps={{
+          maxLength: 16
+        }}
       />
 
       <FormControl>
@@ -181,10 +187,6 @@ CredentialData.validations = {
       .bool()
       .oneOf([true], 'Términos y condiciones es requerido')
       .required('Términos y condiciones es requerido'),
-    consent: yup
-      .bool()
-      .oneOf([true], 'Consentimiento informado es requerido')
-      .required('Consentimiento informado es requerido'),
     services: yup
       .bool()
       .oneOf([true], 'Consentimiento informado es requerido')
