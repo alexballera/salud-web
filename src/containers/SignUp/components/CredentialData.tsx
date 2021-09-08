@@ -85,6 +85,9 @@ function CredentialData({
         onBlur={handleBlur}
         onChange={handleChange}
         helperText={errors.password}
+        inputProps={{
+          maxLength: 16
+        }}
       />
       <SecurityPasswordIdicator value={values.password} />
       <Input
@@ -98,6 +101,9 @@ function CredentialData({
         onBlur={handleBlur}
         onChange={handleChange}
         helperText={errors.confirmPassword}
+        inputProps={{
+          maxLength: 16
+        }}
       />
 
       <FormControl>
@@ -155,7 +161,10 @@ function CredentialData({
             }
           />
         </FormGroup>
-        {errors.terms && <FormHelperText error>{errors.terms}</FormHelperText>}
+        {touched.terms && errors.terms && <FormHelperText error>{errors.terms}</FormHelperText>}
+        {touched.services && errors.services && (
+          <FormHelperText error>{errors.services}</FormHelperText>
+        )}
       </FormControl>
       <Modal open={termsAndConditionOpen} onClose={() => setTermsAndConditionOpen(false)}>
         <TermsAndConditions />
@@ -178,12 +187,11 @@ CredentialData.validations = {
       .bool()
       .oneOf([true], 'Términos y condiciones es requerido')
       .required('Términos y condiciones es requerido'),
-    consent: yup
+    services: yup
       .bool()
       .oneOf([true], 'Consentimiento informado es requerido')
       .required('Consentimiento informado es requerido'),
     email: yup.string().email('Formato de correo incorrecto').required('Email requerido'),
-    services: yup.bool().oneOf([true], 'Campo requerido').required('Campo requerido'),
     password: yup
       .string()
       .required('Contraseña requerida')
