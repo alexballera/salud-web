@@ -15,7 +15,7 @@ type IProps = {
 const PasswordValidator = ({ value }: IProps): JSX.Element => {
   const getValidityIcon = (check: (value: string) => boolean) => {
     if (check(value)) {
-      return <CheckIcon style={{ marginRight: 10 }} />;
+      return <CheckIcon style={{ marginRight: 10 }} color="secondary" />;
     } else {
       return <CloseIcon style={{ marginRight: 10 }} />;
     }
@@ -35,8 +35,8 @@ const PasswordValidator = ({ value }: IProps): JSX.Element => {
         <Typography>Usar números</Typography>
       </div>
       <div style={{ display: 'flex' }}>
-        {getValidityIcon((val: string) => val.length >= 8)}
-        <Typography>Mínimo 8 caracteres</Typography>
+        {getValidityIcon((val: string) => val.length >= 8 && val.length <= 16)}
+        <Typography>Tener entre 8 y 16 caracteres</Typography>
       </div>
     </Paper>
   );
