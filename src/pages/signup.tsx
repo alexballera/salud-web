@@ -174,7 +174,7 @@ function SignUpView({
                           // TODO verificar
                           // disabled={!_.isEmpty(formik.errors) || loading}
                         >
-                          {currentStep === dataSource.length ? 'Enviar' : 'Siguiente'}
+                          {currentStep === dataSource.length ? 'Enviar' : 'Continuar'}
                         </Button>
                       </Grid>
                     </Grid>
