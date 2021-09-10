@@ -9,13 +9,17 @@ import Stepper from '@material-ui/core/Stepper';
 import StepLabel from '@material-ui/core/StepLabel';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Hidden } from '@material-ui/core';
 /// MATERIAL-UI END
 
 function getStepContent(stepIndex: number, dataSource: IWizardDataSourceItem[]) {
-  return <StepPanel data={dataSource[stepIndex]} index={stepIndex} />;
+  return (
+    <StepPanel data={dataSource[stepIndex]} index={stepIndex} totalSteps={dataSource.length} />
+  );
 }
 
-function StepPanel({ data, index }: IStepPanelProps) {
+function StepPanel({ data, index, totalSteps }: IStepPanelProps) {
+  const classes = useStyles();
   return (
     <div
       id={`full-width-steppanel-${index}`}
@@ -23,6 +27,11 @@ function StepPanel({ data, index }: IStepPanelProps) {
       aria-labelledby={`full-width-step-${index}`}
     >
       <Box p={3}>
+        <Hidden mdUp>
+          <Typography className={classes.stepIndicator} variant="h5" component="h5">
+            Paso {index + 1} de {totalSteps}
+          </Typography>
+        </Hidden>
         <Typography variant="h5" component="h5" gutterBottom>
           {data.title}
         </Typography>
@@ -43,6 +52,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   instructions: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1)
+  },
+  stepIndicator: {
+    color: 'rgba(0, 0, 0, 0.87)',
+    fontSize: 12,
+    letterSpacing: 1,
+    marginBottom: 8,
+    textTransform: 'uppercase'
   }
 }));
 
