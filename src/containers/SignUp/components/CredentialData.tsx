@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import * as yup from 'yup';
 import { FormikProps } from 'formik';
 /// TYPES
-import { ICredentialDataForm, IEmailStates } from '../index.types';
+import { ICredentialDataForm, ICredentialDataProps, IEmailStates } from '../index.types';
 /// SERVICES
 import { getPersonalData } from '../../../services/getPersonalData.service';
 /// OWN COMPONENTS
@@ -33,7 +33,7 @@ function CredentialData({
   touched,
   handleBlur,
   handleChange
-}: FormikProps<ICredentialDataForm>): JSX.Element {
+}: ICredentialDataProps & FormikProps<ICredentialDataForm>): JSX.Element {
   const [inputEmailStates, setInputEmailStates] = useState(initialEmailStates);
   const [termsAndConditionOpen, setTermsAndConditionOpen] = useState(false);
   const [informedConsentOpen, setInformedConsentOpen] = useState(false);
@@ -134,6 +134,7 @@ function CredentialData({
               </Typography>
             }
           />
+          {!values.terms && <FormHelperText error>{errors.terms}</FormHelperText>}
 
           <FormControlLabel
             control={
@@ -161,10 +162,7 @@ function CredentialData({
             }
           />
         </FormGroup>
-        {touched.terms && errors.terms && <FormHelperText error>{errors.terms}</FormHelperText>}
-        {touched.services && errors.services && (
-          <FormHelperText error>{errors.services}</FormHelperText>
-        )}
+        {!values.services && <FormHelperText error>{errors.services}</FormHelperText>}
       </FormControl>
       <Modal open={termsAndConditionOpen} onClose={() => setTermsAndConditionOpen(false)}>
         <TermsAndConditions />
@@ -183,14 +181,8 @@ CredentialData.description =
 CredentialData.validations = {
   name: 'CredentialStep',
   schema: yup.object().shape({
-    terms: yup
-      .bool()
-      .oneOf([true], 'Términos y condiciones es requerido')
-      .required('Términos y condiciones es requerido'),
-    services: yup
-      .bool()
-      .oneOf([true], 'Consentimiento informado es requerido')
-      .required('Consentimiento informado es requerido'),
+    terms: yup.bool().oneOf([true], 'Campo requerido').required('Campo requerido'),
+    services: yup.bool().oneOf([true], 'Campo requerido').required('Campo requerido'),
     email: yup.string().email('Formato de correo incorrecto').required('Email requerido'),
     password: yup
       .string()

@@ -81,7 +81,9 @@ function CustomTextField({
       </FormLabel>
       <OutlinedInput {...props} type={handlerType()} endAdornment={_renderEndAdornment()} />
       {(props.error || errorType) && (
-        <FormHelperText error>{helperText || showErrorTypeMessage(errorType)}</FormHelperText>
+        <FormHelperText error component="div">
+          {helperText || showErrorTypeMessage(errorType)}
+        </FormHelperText>
       )}
     </FormControl>
   );

@@ -101,6 +101,10 @@ export type IExtraDataForm = {
   mobilePhone1: string;
 };
 
+export type ICredentialDataProps = {
+  handleNotifications: (props: INotificationProps) => void;
+};
+
 export type ICredentialDataForm = {
   email: string;
   terms: boolean;
