@@ -17,8 +17,7 @@ import CredentialDataForm from '../containers/SignUp/components/CredentialData';
 
 /// OWN COMPONENTS END
 /// MATERIAL - UI
-import { Button, Box, Grid, Snackbar } from '@material-ui/core';
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+import { Button, Box, Grid } from '@material-ui/core';
 /// MATERIAL - UI END
 
 /// STYLES
@@ -62,10 +61,6 @@ const stepValidations = [
   CredentialDataForm.validations.schema
 ];
 /// FORM STATES & VALIDATIONS END
-function Alert(props: AlertProps) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
 function SignUpView({
   handleLogin,
   handleError,
@@ -75,33 +70,9 @@ function SignUpView({
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [currentStep, setCurrentState] = useState<number>(0);
-  const [messageAlert, setMessageAlert] = useState<string>('');
-  const [terms, setTerms] = useState<boolean>(false);
-  const [services, setServices] = useState<boolean>(false);
-  const [open, setOpen] = React.useState(false);
-
   const goBack = () => {
     if (currentStep > 0) setCurrentState(currentStep - 1);
     else router.back();
-  };
-
-  const handleClick = () => {
-    if (currentStep === 2) {
-      console.log('terms', terms);
-      console.log('services', services);
-      if (!terms && !services) {
-        setOpen(true);
-        setMessageAlert('Para continuar debes aceptar los términos');
-      }
-    }
-  };
-
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
   };
 
   const onSubmit = (values: IFormData) => {
@@ -144,22 +115,8 @@ function SignUpView({
     }
   };
 
-  const SnackbarComponent = ({ title }) => (
-    <Snackbar
-      open={open}
-      autoHideDuration={6000}
-      onClose={handleClose}
-      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-    >
-      <Alert variant="outlined" severity="error">
-        {title}
-      </Alert>
-    </Snackbar>
-  );
-
   return (
     <section className="container signup-wrapper">
-      <SnackbarComponent title={messageAlert} />
       <Formik
         validateOnMount
         onSubmit={(values, formik) => {
@@ -213,7 +170,6 @@ function SignUpView({
                           color="primary"
                           variant="contained"
                           disabled={loading}
-                          onClick={handleClick}
                           // TODO verificar
                           // disabled={!_.isEmpty(formik.errors) || loading}
                         >

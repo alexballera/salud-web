@@ -24,7 +24,6 @@ type Props = {
   labelProps?: FormLabelProps;
   errorType?: string;
   formControlProps?: { 'data-testid'?: string } & FormControlProps;
-  children?;
 } & OutlinedInputProps;
 
 function CustomTextField({
@@ -34,7 +33,6 @@ function CustomTextField({
   helperText,
   formControlProps,
   errorType,
-  children,
   ...props
 }: Props): JSX.Element {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -84,7 +82,7 @@ function CustomTextField({
       <OutlinedInput {...props} type={handlerType()} endAdornment={_renderEndAdornment()} />
       {(props.error || errorType) && (
         <FormHelperText error component="div">
-          {helperText || showErrorTypeMessage(errorType)} {children}
+          {helperText || showErrorTypeMessage(errorType)}
         </FormHelperText>
       )}
     </FormControl>

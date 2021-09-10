@@ -25,13 +25,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import { Snackbar } from '@material-ui/core';
 /// MATERIAL-UI END
-
-function Alert(props: AlertProps) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 function PersonalData({
   values,
@@ -47,7 +41,6 @@ function PersonalData({
   const [data, setData] = useState<IPaciente>(null);
   const [typeError, setTypeError] = useState<string>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(true);
   const isNotPhysicalID = !!(values.documentType !== 1 && values.documentType);
   const currentDocumentType = documentTypesOptions.find(
     data => data.documentTypeId === values.documentType
@@ -180,28 +173,6 @@ function PersonalData({
     }
   }, [values.documentNumber]);
   /// USE EFFECTS END
-
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
-
-  const SnackbarComponent = ({ title }) => {
-    return (
-      <Snackbar
-        open={open}
-        autoHideDuration={3000}
-        onClose={handleClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
-        <Alert severity="error">{title}</Alert>
-      </Snackbar>
-    );
-  };
-
   return (
     <div>
       <FormControl fullWidth variant="filled">
@@ -252,11 +223,7 @@ function PersonalData({
         inputComponent={
           convertToMask(currentDocumentType?.mask) ? (TextMaskCustom as any) : 'input'
         }
-      >
-        {(touched.documentNumber || !values.documentNumber) && (
-          <SnackbarComponent title={'Número de documento requeridos'} />
-        )}
-      </TextField>
+      />
       {(data || userValuesAlreadyExist() || isNotPhysicalID) && (
         <Paper square elevation={0}>
           <TextField
