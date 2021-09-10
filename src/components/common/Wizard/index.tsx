@@ -8,8 +8,8 @@ import Button from '@material-ui/core/Button';
 import Stepper from '@material-ui/core/Stepper';
 import StepLabel from '@material-ui/core/StepLabel';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Hidden } from '@material-ui/core';
+import wizardStyles from './styles.module';
 /// MATERIAL-UI END
 
 function getStepContent(stepIndex: number, dataSource: IWizardDataSourceItem[]) {
@@ -19,7 +19,7 @@ function getStepContent(stepIndex: number, dataSource: IWizardDataSourceItem[]) 
 }
 
 function StepPanel({ data, index, totalSteps }: IStepPanelProps) {
-  const classes = useStyles();
+  const classes = wizardStyles();
   return (
     <div
       id={`full-width-steppanel-${index}`}
@@ -42,26 +42,6 @@ function StepPanel({ data, index, totalSteps }: IStepPanelProps) {
   );
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    width: '100%'
-  },
-  backButton: {
-    marginRight: theme.spacing(1)
-  },
-  instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
-  },
-  stepIndicator: {
-    color: 'rgba(0, 0, 0, 0.87)',
-    fontSize: 12,
-    letterSpacing: 1,
-    marginBottom: 8,
-    textTransform: 'uppercase'
-  }
-}));
-
 function Wizard({
   footer,
   onSubmit,
@@ -70,7 +50,7 @@ function Wizard({
   disabledButton,
   ...props
 }: IWizardProps): JSX.Element {
-  const classes = useStyles();
+  const classes = wizardStyles();
   const [activeStep, setActiveStep] = useState<number>(0);
 
   /// HANDLERS
