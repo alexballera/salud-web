@@ -11,6 +11,7 @@ export type IWizardProps = {
 export type IStepPanelProps = {
   dir?: string;
   index: number;
+  totalSteps: number;
   data?: IWizardDataSourceItem;
 };
 
