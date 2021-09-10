@@ -13,7 +13,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions
+  DialogActions,
+  Hidden
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/core/styles';
@@ -24,6 +25,7 @@ import styles from './styles.module.scss';
 import { IProps } from './types';
 import SvgContainer from '../SvgContainer';
 import LogoIconSvg from './LogoIcon.component';
+import DrawerComponent from '../DrawerComponent';
 /// STYLES & TYPES END
 
 const useStyles = makeStyles({
@@ -98,7 +100,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
     }
 
     // No buttons
-    const noActionPathNames = ['/login'];
+    const noActionPathNames = ['/login', '/main'];
     if (loggedIn || noActionPathNames.includes(router.pathname)) {
       return <></>;
     }
@@ -118,12 +120,26 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
 
   return (
     <AppBar position="static" color="inherit" elevation={0}>
-      <Toolbar className={styles.toolbar}>
-        <SvgContainer title="Logo Icon">
-          <LogoIconSvg />
-        </SvgContainer>
-        {_drawAction()}
-      </Toolbar>
+      <Hidden smUp>
+        <Toolbar className={styles.toolbar}>
+          <DrawerComponent />
+          <SvgContainer title="Logo Icon">
+            <LogoIconSvg />
+          </SvgContainer>
+          Mobile
+          {_drawAction()}
+        </Toolbar>
+      </Hidden>
+
+      <Hidden xsDown>
+        <Toolbar className={styles.toolbar} variant="dense">
+          <SvgContainer title="Logo Icon">
+            <LogoIconSvg />
+          </SvgContainer>
+          Desktop
+          {_drawAction()}
+        </Toolbar>
+      </Hidden>
     </AppBar>
   );
 }
