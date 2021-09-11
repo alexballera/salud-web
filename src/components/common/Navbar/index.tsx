@@ -14,25 +14,19 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  Hidden
+  Hidden,
+  Grid
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { makeStyles } from '@material-ui/core/styles';
 /// MATERIAL UI END
 
 /// STYLES & TYPES
-import styles from './styles.module.scss';
 import { IProps } from './types';
 import SvgContainer from '../SvgContainer';
 import LogoIconSvg from './LogoIcon.component';
 import DrawerComponent from '../DrawerComponent';
+import navbarStyles from './styles.module';
 /// STYLES & TYPES END
-
-const useStyles = makeStyles({
-  root: {
-    textTransform: 'capitalize'
-  }
-});
 
 const Transition = React.forwardRef(function Transition(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -43,7 +37,7 @@ const Transition = React.forwardRef(function Transition(
 });
 
 function Navbar({ loggedIn }: IProps): JSX.Element {
-  const classes = useStyles();
+  const classes = navbarStyles();
   const router = useRouter();
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -58,7 +52,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
             variant="text"
             onClick={() => setDialogOpen(true)}
             endIcon={<CloseIcon />}
-            className={classes.root}
+            className={classes.button}
           >
             Salir
           </Button>
@@ -114,6 +108,15 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
     );
   };
 
+  const showMenuDrawer = () => {
+    switch (router.pathname) {
+      case '/main':
+        return true;
+      default:
+        break;
+    }
+  };
+
   useEffect(() => {
     setDialogOpen(false);
   }, [router]);
@@ -121,18 +124,27 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
   return (
     <AppBar position="static" color="inherit" elevation={0}>
       <Hidden smUp>
-        <Toolbar className={styles.toolbar}>
-          <DrawerComponent />
-          <SvgContainer title="Logo Icon">
-            <LogoIconSvg />
-          </SvgContainer>
-          Mobile
-          {_drawAction()}
+        <Toolbar>
+          <Grid container justify="center">
+            <Grid container>
+              <Grid item xs={6} md={6}>
+                <Grid container alignItems="center">
+                  {showMenuDrawer() && <DrawerComponent />}
+                  <SvgContainer title="Logo Icon">
+                    <LogoIconSvg />
+                  </SvgContainer>
+                </Grid>
+              </Grid>
+              <Grid item xs={6} md={6} className={classes.buttonAction}>
+                {_drawAction()}
+              </Grid>
+            </Grid>
+          </Grid>
         </Toolbar>
       </Hidden>
 
       <Hidden xsDown>
-        <Toolbar className={styles.toolbar} variant="dense">
+        <Toolbar variant="dense">
           <SvgContainer title="Logo Icon">
             <LogoIconSvg />
           </SvgContainer>

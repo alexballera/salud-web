@@ -10,6 +10,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles({
   list: {
@@ -74,13 +76,18 @@ export default function DrawerComponent() {
   );
 
   return (
-    <div>
-      <>
-        <Button onClick={toggleDrawer('left', true)}>{'left'}</Button>
-        <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
-          {list('left')}
-        </Drawer>
-      </>
-    </div>
+    <>
+      <IconButton
+        edge="start"
+        color="inherit"
+        aria-label="menu"
+        onClick={toggleDrawer('left', true)}
+      >
+        <MenuIcon />
+      </IconButton>
+      <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
+        {list('left')}
+      </Drawer>
+    </>
   );
 }
