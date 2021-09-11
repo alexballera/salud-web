@@ -41,7 +41,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
   const router = useRouter();
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const _drawAction = () => {
+  const ActionButtons = () => {
     // Exit buttons
     const exitButtonPathNames = ['/recover', '/signup'];
     if (exitButtonPathNames.includes(router.pathname)) {
@@ -100,7 +100,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
     }
 
     return (
-      <Link href="login">
+      <Link href="login" passHref>
         <Button color="inherit" data-testid="login-button">
           INGRESAR
         </Button>
@@ -136,7 +136,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                 </Grid>
               </Grid>
               <Grid item xs={6} md={6} className={classes.buttonAction}>
-                {_drawAction()}
+                {ActionButtons()}
               </Grid>
             </Grid>
           </Grid>
@@ -149,7 +149,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
             <LogoIconSvg />
           </SvgContainer>
           Desktop
-          {_drawAction()}
+          {ActionButtons()}
         </Toolbar>
       </Hidden>
     </AppBar>
