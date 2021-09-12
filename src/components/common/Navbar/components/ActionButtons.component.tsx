@@ -84,7 +84,7 @@ const ActionButtons = (): JSX.Element => {
   }
 
   // No buttons
-  const noActionPathNames = ['/login', '/main'];
+  const noActionPathNames = ['/login', '/main', '/profile', '/subscription', '/preferences'];
   if (noActionPathNames.includes(router.pathname)) {
     return <></>;
   }

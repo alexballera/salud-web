@@ -1,93 +1,100 @@
 import React from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import Link from 'next/link';
 import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import HomeIcon from '@material-ui/icons/Home';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import CardMembershipIcon from '@material-ui/icons/CardMembership';
+import SettingsIcon from '@material-ui/icons/Settings';
+import LogOut from '../LogOut';
+import SvgContainer from '../SvgContainer';
+import LogoIconSvg from '../Navbar/components/LogoIcon.component';
+import { Box } from '@material-ui/core';
+import DrawerStyles from './styles.module';
 
-const useStyles = makeStyles({
-  list: {
-    width: 250
+const items = [
+  {
+    title: 'Inicio',
+    icon: <HomeIcon />,
+    action: 'main'
   },
-  fullList: {
-    width: 'auto'
+  {
+    title: 'Perfil',
+    icon: <AccountCircleIcon />,
+    action: 'profile'
+  },
+  {
+    title: 'Tu suscripción',
+    icon: <CardMembershipIcon />,
+    action: 'subscription'
+  },
+  {
+    title: 'Preferencias',
+    icon: <SettingsIcon />,
+    action: 'preferences'
   }
-});
+];
 
-type Anchor = 'top' | 'left' | 'bottom' | 'right';
+const DrawerComponent = (): JSX.Element => {
+  const classes = DrawerStyles();
+  const [open, setOpen] = React.useState(false);
 
-export default function DrawerComponent() {
-  const classes = useStyles();
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false
-  });
+  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (
+      event.type === 'keydown' &&
+      ((event as React.KeyboardEvent).key === 'Tab' ||
+        (event as React.KeyboardEvent).key === 'Shift')
+    ) {
+      return;
+    }
 
-  const toggleDrawer =
-    (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
-      ) {
-        return;
-      }
+    setOpen(open);
+  };
 
-      setState({ ...state, [anchor]: open });
-    };
-
-  const list = (anchor: Anchor) => (
-    <div
-      className={clsx(classes.list, {
-        [classes.fullList]: anchor === 'top' || anchor === 'bottom'
-      })}
+  const list = () => (
+    <Box
+      className={classes.list}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
+      p={3}
     >
+      <Box className={classes.logo}>
+        <SvgContainer title="Logo Icon">
+          <LogoIconSvg />
+        </SvgContainer>
+      </Box>
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
+        {items.map(item => (
+          <Link href={item.action} passHref key={item.title}>
+            <ListItem button className={classes.item}>
+              <ListItemIcon className={classes.icon}>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.title} className={classes.text} />
+            </ListItem>
+          </Link>
         ))}
       </List>
       <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
+      <LogOut />
+    </Box>
   );
 
   return (
     <>
-      <IconButton
-        edge="start"
-        color="inherit"
-        aria-label="menu"
-        onClick={toggleDrawer('left', true)}
-      >
+      <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
         <MenuIcon />
       </IconButton>
-      <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
-        {list('left')}
+      <Drawer anchor={'left'} open={open} onClose={toggleDrawer(false)}>
+        {list()}
       </Drawer>
     </>
   );
-}
+};
+
+export default DrawerComponent;

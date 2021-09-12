@@ -24,6 +24,12 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
     switch (router.pathname) {
       case '/main':
         return true;
+      case '/profile':
+        return true;
+      case '/subscription':
+        return true;
+      case '/preferences':
+        return true;
       default:
         break;
     }
