@@ -79,6 +79,11 @@ const DrawerComponent = (): JSX.Element => {
           </Link>
         ))}
       </List>
+      <Box>
+        <Link href="/help" passHref>
+          <a color="secondary">Ir a ayuda</a>
+        </Link>
+      </Box>
       <Divider />
       <Link href="/logout" passHref>
         <Button

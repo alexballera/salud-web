@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function SubscriptionPage(): JSX.Element {
+export default function PreferencesPage(): JSX.Element {
   return (
     <>
       <h1>Preferencias</h1>

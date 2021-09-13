@@ -30,10 +30,23 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
         return true;
       case '/preferences':
         return true;
+      case '/help':
+        return true;
       default:
         break;
     }
   };
+
+  const noActionPathNames = [
+    '/login',
+    '/main',
+    '/profile',
+    '/subscription',
+    '/preferences',
+    '/help'
+  ];
+
+  const exitButtonPathNames = ['/recover', '/signup'];
 
   return (
     <AppBar position="static" color="inherit" elevation={0}>
@@ -50,7 +63,12 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                 </Grid>
               </Grid>
               <Grid item xs={6} md={6} className={classes.buttonAction}>
-                {!loggedIn && <ActionButtons />}
+                {!loggedIn && (
+                  <ActionButtons
+                    noActionPathNames={noActionPathNames}
+                    exitButtonPathNames={exitButtonPathNames}
+                  />
+                )}
               </Grid>
             </Grid>
           </Grid>
@@ -63,7 +81,12 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
             <LogoIconSvg />
           </SvgContainer>
           Desktop
-          {!loggedIn && <ActionButtons />}
+          {!loggedIn && (
+            <ActionButtons
+              noActionPathNames={noActionPathNames}
+              exitButtonPathNames={exitButtonPathNames}
+            />
+          )}
         </Toolbar>
       </Hidden>
     </AppBar>

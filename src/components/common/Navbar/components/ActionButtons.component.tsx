@@ -23,7 +23,12 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const ActionButtons = (): JSX.Element => {
+type IAction = {
+  noActionPathNames: Array<string>;
+  exitButtonPathNames: Array<string>;
+};
+
+const ActionButtons = ({ noActionPathNames, exitButtonPathNames }: IAction): JSX.Element => {
   const classes = navbarStyles();
   const router = useRouter();
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -33,7 +38,6 @@ const ActionButtons = (): JSX.Element => {
   }, [router]);
 
   // Exit buttons
-  const exitButtonPathNames = ['/recover', '/signup'];
   if (exitButtonPathNames.includes(router.pathname)) {
     return (
       <>
@@ -84,7 +88,6 @@ const ActionButtons = (): JSX.Element => {
   }
 
   // No buttons
-  const noActionPathNames = ['/login', '/main', '/profile', '/subscription', '/preferences'];
   if (noActionPathNames.includes(router.pathname)) {
     return <></>;
   }
