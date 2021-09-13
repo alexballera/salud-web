@@ -4,6 +4,8 @@ import { Button, Box, Grid, Typography } from '@material-ui/core';
 import SvgContainer from '../components/common/SvgContainer';
 import LogOutStyles from '../styles/js/LogOutStyles.module';
 import SvgBanner from '../components/common/Svg/SvgBanner.component';
+/// CONTEXT
+import { withAppContext } from '../context/index';
 
 function LogOut(): JSX.Element {
   const classes = LogOutStyles();
@@ -64,4 +66,4 @@ function LogOut(): JSX.Element {
   );
 }
 
-export default LogOut;
+export default withAppContext(LogOut);

@@ -15,7 +15,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SvgContainer from '../SvgContainer';
 import LogoIconSvg from '../Navbar/components/LogoIcon.component';
-import { Box, Button } from '@material-ui/core';
+import { Box, Button, Typography } from '@material-ui/core';
 import DrawerStyles from './styles.module';
 
 const items = [
@@ -79,23 +79,30 @@ const DrawerComponent = (): JSX.Element => {
           </Link>
         ))}
       </List>
+      <Box className={classes.helpContainer}>
+        <Box>
+          <Typography className={classes.helpText}>¿Tenés alguna consulta?</Typography>
+        </Box>
+        <Box>
+          <Link href="/help" passHref>
+            <a className={classes.helpLink}>Ir a ayuda</a>
+          </Link>
+        </Box>
+      </Box>
+      <Divider className={classes.divider} />
       <Box>
-        <Link href="/help" passHref>
-          <a color="secondary">Ir a ayuda</a>
+        <Link href="/logout" passHref>
+          <Button
+            data-testid="exit-button"
+            variant="text"
+            endIcon={<ExitToAppIcon />}
+            className={classes.button}
+            color="secondary"
+          >
+            Cerrar sesión
+          </Button>
         </Link>
       </Box>
-      <Divider />
-      <Link href="/logout" passHref>
-        <Button
-          data-testid="exit-button"
-          variant="text"
-          endIcon={<ExitToAppIcon />}
-          className={classes.button}
-          color="secondary"
-        >
-          Cerrar sesión
-        </Button>
-      </Link>
     </Box>
   );
 

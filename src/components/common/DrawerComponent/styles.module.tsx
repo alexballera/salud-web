@@ -3,7 +3,7 @@ import theme from '../../../styles/js/theme';
 
 const DrawerStyles = makeStyles({
   list: {
-    width: 250
+    width: 312
   },
   logo: {
     paddingBottom: 16,
@@ -30,6 +30,33 @@ const DrawerStyles = makeStyles({
   },
   button: {
     textTransform: 'initial'
+  },
+  helpContainer: {
+    border: '1px solid rgb(0, 151, 167)',
+    borderRadius: 5,
+    display: 'flex',
+    justifyContent: 'space-around',
+    flexDirection: 'column',
+    height: 93,
+    marginBottom: 26.5,
+    marginTop: 91,
+    padding: '8px 16px',
+    width: '100%'
+  },
+  helpText: {
+    lineHeight: '24px'
+  },
+  helpLink: {
+    color: theme.palette.secondary.light,
+    fontWeight: 500,
+    textDecoration: 'none'
+  },
+  divider: {
+    marginBottom: 36
+  },
+  logoutButton: {
+    position: 'absolute',
+    bottom: 16
   }
 });
 export default DrawerStyles;
