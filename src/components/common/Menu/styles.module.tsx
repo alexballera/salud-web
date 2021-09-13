@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import theme from '../../../styles/js/theme';
 
-const DrawerStyles = makeStyles({
+const MenuStyles = makeStyles({
   list: {
     width: 312
   },
@@ -57,6 +57,12 @@ const DrawerStyles = makeStyles({
   logoutButton: {
     position: 'absolute',
     bottom: 16
+  },
+  menuDesktopContainer: {
+    position: 'absolute',
+    top: 48,
+    width: 256,
+    backgroundColor: '#fafafa'
   }
 });
-export default DrawerStyles;
+export default MenuStyles;

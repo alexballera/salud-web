@@ -1,8 +1,8 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Button, Box, Grid, Typography } from '@material-ui/core';
-import SvgContainer from '../components/common/SvgContainer';
 import LogOutStyles from '../styles/js/LogOutStyles.module';
+import SvgContainer from '../components/common/SvgContainer';
 import SvgBanner from '../components/common/Svg/SvgBanner.component';
 /// CONTEXT
 import { withAppContext } from '../context/index';
