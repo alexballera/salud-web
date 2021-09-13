@@ -27,6 +27,9 @@ const DrawerStyles = makeStyles({
     '&>.MuiTypography-root': {
       fontSize: 15
     }
+  },
+  button: {
+    textTransform: 'initial'
   }
 });
 export default DrawerStyles;

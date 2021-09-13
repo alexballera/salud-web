@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -12,10 +12,10 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import CardMembershipIcon from '@material-ui/icons/CardMembership';
 import SettingsIcon from '@material-ui/icons/Settings';
-import LogOut from '../LogOut';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SvgContainer from '../SvgContainer';
 import LogoIconSvg from '../Navbar/components/LogoIcon.component';
-import { Box } from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
 import DrawerStyles from './styles.module';
 
 const items = [
@@ -43,7 +43,7 @@ const items = [
 
 const DrawerComponent = (): JSX.Element => {
   const classes = DrawerStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (
@@ -53,7 +53,6 @@ const DrawerComponent = (): JSX.Element => {
     ) {
       return;
     }
-
     setOpen(open);
   };
 
@@ -81,7 +80,17 @@ const DrawerComponent = (): JSX.Element => {
         ))}
       </List>
       <Divider />
-      <LogOut />
+      <Link href="/logout" passHref>
+        <Button
+          data-testid="exit-button"
+          variant="text"
+          endIcon={<ExitToAppIcon />}
+          className={classes.button}
+          color="secondary"
+        >
+          Cerrar sesión
+        </Button>
+      </Link>
     </Box>
   );
 
