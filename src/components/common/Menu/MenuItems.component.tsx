@@ -11,7 +11,7 @@ import CardMembershipIcon from '@material-ui/icons/CardMembership';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SvgContainer from '../SvgContainer';
-import LogoIconSvg from '../Navbar/components/LogoIcon.component';
+import SvgLogo from '../Svg/SvgLogo.component';
 import { Box, Button, Typography } from '@material-ui/core';
 import MenuStyles from './styles.module';
 import { IMenu } from './types';
@@ -53,7 +53,7 @@ const MenuItems = ({ type }: IMenu): JSX.Element => {
       {type === 'mobile' && (
         <Box className={classes.logo}>
           <SvgContainer title="Logo Icon">
-            <LogoIconSvg />
+            <SvgLogo />
           </SvgContainer>
         </Box>
       )}

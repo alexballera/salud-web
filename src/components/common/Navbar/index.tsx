@@ -12,7 +12,8 @@ import navbarStyles from './styles.module';
 /// STYLES & TYPES END
 
 import SvgContainer from '../SvgContainer';
-import LogoIconSvg from './components/LogoIcon.component';
+import SvgLogo from '../Svg/SvgLogo.component';
+import SvgLogoLarge from '../Svg/SvgLogoLarge.component';
 import ActionButtons from './components/ActionButtons.component';
 import Menu from '../Menu';
 
@@ -59,7 +60,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                   <Grid container alignItems="center">
                     {showMenu() && <Menu type="mobile" />}
                     <SvgContainer title="Logo Icon">
-                      <LogoIconSvg />
+                      <SvgLogo />
                     </SvgContainer>
                   </Grid>
                 </Grid>
@@ -84,8 +85,8 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
               <Grid container>
                 <Grid item xs={6} md={6}>
                   <Grid container alignItems="center">
-                    <SvgContainer title="Logo Icon">
-                      <LogoIconSvg />
+                    <SvgContainer title="Logo Icon Large" width={63} height={35}>
+                      <SvgLogoLarge />
                     </SvgContainer>
                   </Grid>
                 </Grid>

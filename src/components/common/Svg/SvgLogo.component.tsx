@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const LogoIconSvg = (): JSX.Element => (
+const SvgLogo = (): JSX.Element => (
   <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
     <g id="Group-3" transform="translate(0.000000, -0.000000)">
       <g id="Group-2" fill="#DAF0F0">
@@ -28,4 +28,4 @@ const LogoIconSvg = (): JSX.Element => (
     </g>
   </g>
 );
-export default LogoIconSvg;
+export default SvgLogo;
