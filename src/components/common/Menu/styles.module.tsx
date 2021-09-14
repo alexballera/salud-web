@@ -68,9 +68,22 @@ const MenuStyles = makeStyles({
   menuDesktopContainer: {
     backgroundColor: '#fafafa',
     height: '100vh',
+    overflowY: 'auto',
     paddingTop: 64,
     position: 'absolute',
     width: 256
+  },
+  terms: {
+    color: 'rgba(0, 0, 0, 0.6)',
+    cursor: 'pointer',
+    fontSize: 14,
+    fontWeight: 500,
+    textDecoration: 'underline',
+    marginBottom: 16
+  },
+  svgContainerDesktop: {
+    height: 110,
+    width: 161
   }
 });
 export default MenuStyles;

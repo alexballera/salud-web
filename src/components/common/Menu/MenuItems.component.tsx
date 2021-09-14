@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -17,6 +17,9 @@ import MenuStyles from './styles.module';
 import { IMenu } from './types';
 import SvgBanner from '../Svg/SvgBanner.component';
 import clsx from 'clsx';
+import Modal from '../Modal';
+import TermsAndConditions from '../../TermsAndConditions';
+import InformedConsent from '../../InformedConsent';
 
 const items = [
   {
@@ -43,6 +46,8 @@ const items = [
 
 const MenuItems = ({ type }: IMenu): JSX.Element => {
   const classes = MenuStyles();
+  const [termsAndConditionOpen, setTermsAndConditionOpen] = useState(false);
+  const [informedConsentOpen, setInformedConsentOpen] = useState(false);
   return (
     <>
       {type === 'mobile' && (
@@ -78,7 +83,7 @@ const MenuItems = ({ type }: IMenu): JSX.Element => {
           </Link>
         </Box>
         {type === 'desktop' && (
-          <Box style={{ width: '161px', height: '110px' }}>
+          <Box className={classes.svgContainerDesktop}>
             <SvgContainer title="Banner Svg" width={161} height={110}>
               <SvgBanner />
             </SvgContainer>
@@ -86,6 +91,16 @@ const MenuItems = ({ type }: IMenu): JSX.Element => {
         )}
       </Box>
       <Divider className={classes.divider} />
+      {type === 'desktop' && (
+        <Box>
+          <Typography onClick={() => setTermsAndConditionOpen(true)} className={classes.terms}>
+            Términos y condiciones
+          </Typography>
+          <Typography onClick={() => setInformedConsentOpen(true)} className={classes.terms}>
+            Consentimiento informado
+          </Typography>
+        </Box>
+      )}
       <Box>
         <Link href="/logout" passHref>
           <Button
@@ -99,6 +114,12 @@ const MenuItems = ({ type }: IMenu): JSX.Element => {
           </Button>
         </Link>
       </Box>
+      <Modal open={termsAndConditionOpen} onClose={() => setTermsAndConditionOpen(false)}>
+        <TermsAndConditions />
+      </Modal>
+      <Modal open={informedConsentOpen} onClose={() => setInformedConsentOpen(false)}>
+        <InformedConsent />
+      </Modal>
     </>
   );
 };
