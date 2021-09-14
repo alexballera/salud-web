@@ -61,7 +61,6 @@ const stepValidations = [
   CredentialDataForm.validations.schema
 ];
 /// FORM STATES & VALIDATIONS END
-
 function SignUpView({
   handleLogin,
   handleError,
@@ -71,7 +70,6 @@ function SignUpView({
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [currentStep, setCurrentState] = useState<number>(0);
-
   const goBack = () => {
     if (currentStep > 0) setCurrentState(currentStep - 1);
     else router.back();
@@ -80,7 +78,6 @@ function SignUpView({
   const onSubmit = (values: IFormData) => {
     if (currentStep === 2) {
       setLoading(true);
-
       const body: ISignUpBody = {
         email: values.email,
         terms: values.terms,
@@ -150,7 +147,9 @@ function SignUpView({
             {
               title: CredentialDataForm.title,
               description: CredentialDataForm.description,
-              component: <CredentialDataForm {...formik} />
+              component: (
+                <CredentialDataForm handleNotifications={handleNotifications} {...formik} />
+              )
             }
           ];
           return (

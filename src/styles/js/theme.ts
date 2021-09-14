@@ -43,6 +43,13 @@ const defaultTheme: ThemeOptions = {
           textAlign: 'right'
         }
       }
+    },
+    MuiStepper: {
+      root: {
+        '@media (max-width: 960px)': {
+          display: 'none'
+        }
+      }
     }
   }
 };

@@ -24,7 +24,8 @@ const customTheme = createMuiTheme({
       root: {
         '&$error': {
           textAlign: 'left'
-        }
+        },
+        marginBottom: 34
       }
     }
   }
@@ -63,9 +64,6 @@ const useStyles = makeStyles({
     marginBottom: 10,
     fontSize: 14,
     fontWeight: 500
-  },
-  input: {
-    marginBottom: 34
   },
   paperRoot: {
     fontSize: 14,
@@ -144,7 +142,6 @@ export default function ValidateCodePage({
                 value={pinCode}
                 inputStyle={inputStyle}
                 inputStyleInvalid={inputStyleInvalid}
-                className={classes.input}
               />
               {!isPinCodeValid && (
                 <ThemeProvider theme={customTheme}>
