@@ -50,7 +50,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
 
   return (
     <>
-      <Hidden smUp>
+      <Hidden lgUp>
         <AppBar position="static" color="inherit" elevation={0}>
           <Toolbar>
             <Grid container justify="center">
@@ -77,7 +77,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
         </AppBar>
       </Hidden>
 
-      <Hidden xsDown>
+      <Hidden mdDown>
         <AppBar position="static" color="inherit" elevation={1}>
           <Toolbar className={classes.toolbarDesktop}>
             <Grid container justify="center">
@@ -102,7 +102,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
           </Toolbar>
         </AppBar>
       </Hidden>
-      <Hidden xsDown>{showMenu() && <Menu type="desktop" />}</Hidden>
+      <Hidden mdDown>{showMenu() && <Menu type="desktop" />}</Hidden>
     </>
   );
 }
