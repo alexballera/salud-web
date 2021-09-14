@@ -35,19 +35,20 @@ const MenuStyles = makeStyles({
     border: '1px solid rgb(0, 151, 167)',
     borderRadius: 5,
     display: 'flex',
-    justifyContent: 'space-around',
     flexDirection: 'column',
     width: '100%'
   },
   helpContainerMobile: {
     marginTop: 91,
     padding: '8px 16px',
+    justifyContent: 'space-around',
     height: 93,
     marginBottom: 26.5
   },
   helpContainerDesktop: {
     padding: '8px 16px 0px 16px',
     height: 208,
+    justifyContent: 'space-between',
     marginBottom: 16
   },
   helpText: {
@@ -82,8 +83,8 @@ const MenuStyles = makeStyles({
     marginBottom: 16
   },
   svgContainerDesktop: {
-    height: 110,
-    width: 161
+    height: 112,
+    width: 162
   }
 });
 export default MenuStyles;

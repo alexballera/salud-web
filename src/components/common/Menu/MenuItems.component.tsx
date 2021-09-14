@@ -15,11 +15,11 @@ import SvgLogo from '../Svg/SvgLogo.component';
 import { Box, Button, Typography } from '@material-ui/core';
 import MenuStyles from './styles.module';
 import { IMenu } from './types';
-import SvgBanner from '../Svg/SvgBanner.component';
 import clsx from 'clsx';
 import Modal from '../Modal';
 import TermsAndConditions from '../../TermsAndConditions';
 import InformedConsent from '../../InformedConsent';
+import SvgHelp from '../Svg/SvgHelp.component';
 
 const items = [
   {
@@ -84,8 +84,8 @@ const MenuItems = ({ type }: IMenu): JSX.Element => {
         </Box>
         {type === 'desktop' && (
           <Box className={classes.svgContainerDesktop}>
-            <SvgContainer title="Banner Svg" width={161} height={110}>
-              <SvgBanner />
+            <SvgContainer title="Banner Svg" width={162} height={112}>
+              <SvgHelp />
             </SvgContainer>
           </Box>
         )}
