@@ -1,10 +1,10 @@
 import React from 'react';
 import LayoutInner from '../components/common/LayoutInner';
 
-export default function MainPage(): JSX.Element {
+export default function PreferencesPage(): JSX.Element {
   return (
     <LayoutInner>
-      <h1>Inicio</h1>
+      <h1>Preferencias</h1>
     </LayoutInner>
   );
 }

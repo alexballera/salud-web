@@ -13,10 +13,10 @@ import {
 } from '@material-ui/core';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import SvgContainer from '../components/common/SvgContainer';
-import SvgBanner from '../components/common/LogOut/SvgBanner.component';
 import ReactCodeInput from 'react-code-input';
 import theme, { errorColor } from '../styles/js/theme';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import SvgBanner from '../components/common/Svg/SvgBanner.component';
 
 const customTheme = createMuiTheme({
   overrides: {
