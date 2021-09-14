@@ -41,7 +41,7 @@ const Menu = ({ type }: IMenu): JSX.Element => {
         </>
       )}
       {type === 'desktop' && (
-        <Box className={classes.menuDesktopContainer}>
+        <Box p={3} className={classes.menuDesktopContainer}>
           <MenuItems type={'desktop'} />
         </Box>
       )}

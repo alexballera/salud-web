@@ -15,6 +15,8 @@ import LogoIconSvg from '../Navbar/components/LogoIcon.component';
 import { Box, Button, Typography } from '@material-ui/core';
 import MenuStyles from './styles.module';
 import { IMenu } from './types';
+import SvgBanner from '../Svg/SvgBanner.component';
+import clsx from 'clsx';
 
 const items = [
   {
@@ -60,7 +62,13 @@ const MenuItems = ({ type }: IMenu): JSX.Element => {
           </Link>
         ))}
       </List>
-      <Box className={classes.helpContainer}>
+      <Box
+        className={clsx({
+          [classes.helpContainer]: true,
+          [classes.helpContainerDesktop]: type === 'desktop',
+          [classes.helpContainerMobile]: type === 'mobile'
+        })}
+      >
         <Box>
           <Typography className={classes.helpText}>¿Tenés alguna consulta?</Typography>
         </Box>
@@ -69,6 +77,13 @@ const MenuItems = ({ type }: IMenu): JSX.Element => {
             <a className={classes.helpLink}>Ir a ayuda</a>
           </Link>
         </Box>
+        {type === 'desktop' && (
+          <Box style={{ width: '161px', height: '110px' }}>
+            <SvgContainer title="Banner Svg" width={161} height={110}>
+              <SvgBanner />
+            </SvgContainer>
+          </Box>
+        )}
       </Box>
       <Divider className={classes.divider} />
       <Box>

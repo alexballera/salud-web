@@ -37,11 +37,18 @@ const MenuStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-around',
     flexDirection: 'column',
-    height: 93,
-    marginBottom: 26.5,
+    width: '100%'
+  },
+  helpContainerMobile: {
     marginTop: 91,
     padding: '8px 16px',
-    width: '100%'
+    height: 93,
+    marginBottom: 26.5
+  },
+  helpContainerDesktop: {
+    padding: '8px 16px 0px 16px',
+    height: 208,
+    marginBottom: 16
   },
   helpText: {
     lineHeight: '24px'
@@ -52,17 +59,18 @@ const MenuStyles = makeStyles({
     textDecoration: 'none'
   },
   divider: {
-    marginBottom: 36
+    marginBottom: 16
   },
   logoutButton: {
     position: 'absolute',
     bottom: 16
   },
   menuDesktopContainer: {
+    backgroundColor: '#fafafa',
+    height: '100vh',
+    paddingTop: 64,
     position: 'absolute',
-    top: 48,
-    width: 256,
-    backgroundColor: '#fafafa'
+    width: 256
   }
 });
 export default MenuStyles;
