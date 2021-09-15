@@ -10,7 +10,7 @@ import { withAppContext } from '../../../context';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      [theme.breakpoints.up('lg')]: {
+      [theme.breakpoints.up('md')]: {
         paddingLeft: 256
       }
     }
