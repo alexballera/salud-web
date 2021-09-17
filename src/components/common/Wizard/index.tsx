@@ -8,7 +8,6 @@ import Button from '@material-ui/core/Button';
 import Stepper from '@material-ui/core/Stepper';
 import StepLabel from '@material-ui/core/StepLabel';
 import Typography from '@material-ui/core/Typography';
-import { Hidden } from '@material-ui/core';
 import wizardStyles from './styles.module';
 /// MATERIAL-UI END
 
@@ -27,11 +26,9 @@ function StepPanel({ data, index, totalSteps }: IStepPanelProps) {
       aria-labelledby={`full-width-step-${index}`}
     >
       <Box p={3}>
-        <Hidden mdUp>
-          <Typography className={classes.stepIndicator} variant="h5" component="h5">
-            Paso {index + 1} de {totalSteps}
-          </Typography>
-        </Hidden>
+        <Typography className={classes.stepIndicator} variant="h5" component="h5">
+          Paso {index + 1} de {totalSteps}
+        </Typography>
         <Typography variant="h5" component="h5" gutterBottom>
           {data.title}
         </Typography>

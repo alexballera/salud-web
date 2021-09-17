@@ -46,9 +46,7 @@ const defaultTheme: ThemeOptions = {
     },
     MuiStepper: {
       root: {
-        '@media (max-width: 960px)': {
-          display: 'none'
-        }
+        display: 'none'
       }
     }
   }
