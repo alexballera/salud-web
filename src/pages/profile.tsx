@@ -6,8 +6,10 @@ import { AvatarProfile } from '../containers/Profile/AvatarProfile';
 import { CredentialsProfile } from '../containers/Profile/CredentialsProfile';
 import { LegalProfile } from '../containers/Profile/LegalProfile';
 import { PersonalProfile } from '../containers/Profile/PersonalProfile';
+import ProfileStyles from '../containers/Profile/styles.module';
 
 export default function ProfilePage(): JSX.Element {
+  const classes = ProfileStyles();
   return (
     <LayoutInner>
       <Grid container>
@@ -15,16 +17,16 @@ export default function ProfilePage(): JSX.Element {
           <TitleProfile />
         </Grid>
         <Grid item xs={12} md={5}>
-          <AvatarProfile title="Avatar Profile" />
+          <AvatarProfile />
           <Hidden mdUp>
-            <Divider />
+            <Divider className={classes.divider} />
           </Hidden>
         </Grid>
         <Grid item xs={12} md={5}>
           <PersonalProfile title="Personal Profile" />
-          <Divider />
+          <Divider className={classes.divider} />
           <CredentialsProfile title="Credentials Profile" />
-          <Divider />
+          <Divider className={classes.divider} />
           <LegalProfile title="Legal Profile" />
         </Grid>
       </Grid>
