@@ -13,6 +13,12 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up('md')]: {
         paddingLeft: 256
       }
+    },
+    container: {
+      padding: `14px 24px`,
+      [theme.breakpoints.up('md')]: {
+        padding: `47px 134px`
+      }
     }
   })
 );
@@ -21,7 +27,9 @@ export default withAppContext(function LayoutInner({ children }): JSX.Element {
   const classes = useStyles();
   return (
     <Box component="div" data-testid="div" className={classes.root}>
-      {children}
+      <Box component="div" data-testid="div" className={classes.container}>
+        {children}
+      </Box>
     </Box>
   );
 });

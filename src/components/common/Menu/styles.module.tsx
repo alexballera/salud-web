@@ -29,7 +29,10 @@ const MenuStyles = makeStyles({
     }
   },
   button: {
-    textTransform: 'initial'
+    textTransform: 'initial',
+    '&:hover': {
+      color: theme.palette.secondary.light
+    }
   },
   helpContainer: {
     border: '1px solid rgb(0, 151, 167)',
@@ -57,7 +60,10 @@ const MenuStyles = makeStyles({
   helpLink: {
     color: theme.palette.secondary.light,
     fontWeight: 500,
-    textDecoration: 'none'
+    textDecoration: 'none',
+    '&:hover': {
+      color: theme.palette.secondary.light
+    }
   },
   divider: {
     marginBottom: 16
