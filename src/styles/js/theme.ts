@@ -37,13 +37,6 @@ const defaultTheme: ThemeOptions = {
     fontFamily: poppinsFontFamily
   },
   overrides: {
-    MuiFormHelperText: {
-      root: {
-        '&$error': {
-          textAlign: 'right'
-        }
-      }
-    },
     MuiStepper: {
       root: {
         display: 'none'

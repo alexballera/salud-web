@@ -35,11 +35,11 @@ export default function ProfilePage(): JSX.Element {
           </Hidden>
         </Grid>
         <Grid item xs={12} md={5}>
-          <PersonalProfile title="Personal Profile" />
+          <PersonalProfile />
           <Divider className={classes.divider} />
-          <CredentialsProfile title="Credentials Profile" />
+          <CredentialsProfile />
           <Divider className={classes.divider} />
-          <LegalProfile title="Legal Profile" />
+          <LegalProfile />
         </Grid>
       </Grid>
     </LayoutInner>
