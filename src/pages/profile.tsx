@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { Divider, Grid, Hidden } from '@material-ui/core';
+import { Box, Button, Divider, Grid, Hidden } from '@material-ui/core';
+import Link from 'next/link';
 import LayoutInner from '../components/common/LayoutInner';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { TitleProfile } from '../containers/Profile/TitleProfile';
 import { AvatarProfile } from '../containers/Profile/AvatarProfile';
 import { CredentialsProfile } from '../containers/Profile/CredentialsProfile';
 import { LegalProfile } from '../containers/Profile/LegalProfile';
 import { PersonalProfile } from '../containers/Profile/PersonalProfile';
-import ProfileStyles from '../containers/Profile/styles.module';
 import { getPersonalData, IPersonalData } from '../services/getPersonalData.service';
+import { SecondaryContactsProfile } from '../containers/Profile/SecondaryContactsProfile';
+import ProfileStyles from '../containers/Profile/styles.module';
 /// GET SERVICE END
 
 export default function ProfilePage(): JSX.Element {
@@ -39,7 +42,26 @@ export default function ProfilePage(): JSX.Element {
           <Divider className={classes.divider} />
           <CredentialsProfile />
           <Divider className={classes.divider} />
-          <LegalProfile />
+          <Hidden mdUp>
+            <LegalProfile />
+          </Hidden>
+          <Hidden smDown>
+            <SecondaryContactsProfile />
+            <Divider className={classes.divider} />
+            <Box>
+              <Link href="/logout" passHref>
+                <Button
+                  data-testid="exit-button"
+                  variant="text"
+                  endIcon={<ExitToAppIcon />}
+                  className={classes.button}
+                  color="secondary"
+                >
+                  Cerrar sesión
+                </Button>
+              </Link>
+            </Box>
+          </Hidden>
         </Grid>
       </Grid>
     </LayoutInner>

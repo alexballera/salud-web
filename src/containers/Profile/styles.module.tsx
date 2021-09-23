@@ -81,8 +81,13 @@ const ProfileStyles = makeStyles((theme: Theme) =>
       cursor: 'pointer',
       fontSize: 14,
       fontWeight: 500,
-      textDecoration: 'underline',
-      marginBottom: 16
+      textDecoration: 'underline'
+    },
+    button: {
+      textTransform: 'initial',
+      '&:hover': {
+        color: theme.palette.secondary.light
+      }
     }
   })
 );

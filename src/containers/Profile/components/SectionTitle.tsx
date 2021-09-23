@@ -22,6 +22,7 @@ export type ITitle = {
   linkText?: string;
   onClickLink?;
   data?: string;
+  relationship?: string;
 };
 
 export const SectionTitle = ({ title, linkText, onClickLink }: ITitle): JSX.Element => {

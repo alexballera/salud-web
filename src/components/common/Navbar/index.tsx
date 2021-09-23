@@ -79,7 +79,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
       </Hidden>
 
       <Hidden smDown>
-        <AppBar position="static" color="inherit" elevation={1}>
+        <AppBar color="inherit" elevation={1}>
           <Toolbar className={classes.toolbarDesktop}>
             <Grid container justify="center">
               <Grid container>

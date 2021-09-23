@@ -77,7 +77,7 @@ const MenuStyles = makeStyles({
     height: '100vh',
     overflowY: 'auto',
     paddingTop: 64,
-    position: 'absolute',
+    position: 'fixed',
     width: 256
   },
   terms: {
