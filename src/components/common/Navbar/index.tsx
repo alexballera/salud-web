@@ -97,6 +97,8 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                       exitButtonPathNames={exitButtonPathNames}
                     />
                   )}
+                  {/* TODO corregir mostrar solo para cuando esté logueado: usar "loggedIn" */}
+                  {showMenu() && <h5>perfil</h5>}
                 </Grid>
               </Grid>
             </Grid>
