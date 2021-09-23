@@ -21,14 +21,14 @@ const ProfileStyles = makeStyles((theme: Theme) =>
       position: 'relative'
     },
     imgAvatar: {
-      height: 86,
-      width: 86,
+      height: '86px !important',
+      width: '86px !important',
       boxShadow: `0px 8px 10px 1px rgba(0, 0, 0, 0.14),
 0px 3px 14px 2px rgba(0, 0, 0, 0.12),
 0px 5px 5px -3px rgba(0, 0, 0, 0.2)`,
       [theme.breakpoints.up('md')]: {
-        height: 164,
-        width: 164
+        height: '164px !important',
+        width: '164px !important'
       }
     },
     buttonIcon: {
