@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { Grid, Link, Typography } from '@material-ui/core';
+import { Chip, Grid, Link, Typography } from '@material-ui/core';
+import clsx from 'clsx';
 import { ITitle } from './SectionTitle';
 
 const useStyles = makeStyles(() =>
@@ -8,11 +9,20 @@ const useStyles = makeStyles(() =>
     title: {
       color: 'rgba(0, 0, 0, 0.6)',
       fontSize: 14,
+      fontWeight: 'normal',
       marginBottom: 4
     },
     data: {
       color: 'rgba(0, 0, 0, 0.87)',
-      fontSize: 16
+      fontSize: 16,
+      fontWeight: 'normal'
+    },
+    titleRelationship: {
+      color: 'rgba(0, 0, 0, 0.87)'
+    },
+    dataRelationship: {
+      color: 'rgba(0, 0, 0, 0.6)',
+      fontSize: 14
     },
     linkContainer: {
       textAlign: 'right'
@@ -24,15 +34,33 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export const FieldTextData = ({ title, linkText, onClickLink, data }: ITitle): JSX.Element => {
+export const FieldTextData = ({
+  title,
+  linkText,
+  onClickLink,
+  data,
+  relationship
+}: ITitle): JSX.Element => {
   const classes = useStyles();
   return (
     <Grid container alignItems="center">
       <Grid item xs={9}>
-        <Typography variant="h2" className={classes.title}>
+        <Typography
+          variant="h2"
+          className={clsx({
+            [classes.title]: true,
+            [classes.titleRelationship]: relationship
+          })}
+        >
           {title}
         </Typography>
-        <Typography variant="h2" className={classes.data}>
+        <Typography
+          variant="h2"
+          className={clsx({
+            [classes.data]: true,
+            [classes.dataRelationship]: relationship
+          })}
+        >
           {data}
         </Typography>
       </Grid>
@@ -50,6 +78,11 @@ export const FieldTextData = ({ title, linkText, onClickLink, data }: ITitle): J
           >
             {linkText}
           </Link>
+        </Grid>
+      )}
+      {relationship && (
+        <Grid item xs={9}>
+          <Chip label={relationship} />
         </Grid>
       )}
     </Grid>
