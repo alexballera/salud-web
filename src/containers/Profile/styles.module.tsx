@@ -75,6 +75,14 @@ const ProfileStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up('md')]: {
         fontSize: 16
       }
+    },
+    terms: {
+      color: 'rgba(0, 0, 0, 0.6)',
+      cursor: 'pointer',
+      fontSize: 14,
+      fontWeight: 500,
+      textDecoration: 'underline',
+      marginBottom: 16
     }
   })
 );
