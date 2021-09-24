@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { withAppContext } from '../../../context';
 
 /// MATERIAL UI
-import { AppBar, Toolbar, Hidden, Grid } from '@material-ui/core';
+import { AppBar, Toolbar, Hidden, Grid, Avatar, Typography } from '@material-ui/core';
 /// MATERIAL UI END
 
 /// STYLES & TYPES
@@ -16,10 +16,22 @@ import SvgLogo from '../Svg/SvgLogo.component';
 import SvgLogoLarge from '../Svg/SvgLogoLarge.component';
 import ActionButtons from './components/ActionButtons.component';
 import Menu from '../Menu';
+import { getPersonalData, IPersonalData } from '../../../services/getPersonalData.service';
 
 function Navbar({ loggedIn }: IProps): JSX.Element {
   const classes = navbarStyles();
   const router = useRouter();
+  const [firstName, setFirstName] = useState('');
+  const [documentNumber, setDocumentNumber] = useState('');
+
+  getPersonalData('bastidasarelis2021@gmail.com')
+    .then(res => {
+      const personalData: IPersonalData = res.data.result;
+      console.log(personalData);
+      setFirstName(personalData.firstName);
+      setDocumentNumber(personalData.documentNumber);
+    })
+    .catch(err => console.log(err));
 
   const showMenu = () => {
     switch (router.pathname) {
@@ -96,6 +108,18 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                       noActionPathNames={noActionPathNames}
                       exitButtonPathNames={exitButtonPathNames}
                     />
+                  )}
+                  {/* TODO corregir mostrar solo para cuando esté logueado: usar "loggedIn" */}
+                  {showMenu() && (
+                    <Grid container justify="flex-end" spacing={2}>
+                      <Grid item>
+                        <Avatar variant="square">{firstName?.charAt(0)}</Avatar>
+                      </Grid>
+                      <Grid container item xs={5}>
+                        <Typography className={classes.name}>{firstName}</Typography>
+                        <Typography className={classes.documentNumber}>{documentNumber}</Typography>
+                      </Grid>
+                    </Grid>
                   )}
                 </Grid>
               </Grid>

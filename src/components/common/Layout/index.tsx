@@ -2,6 +2,7 @@ import React, { PropsWithChildren } from 'react';
 /// MATERIAL - UI
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { Box, Snackbar, Typography } from '@material-ui/core';
+import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 /// MATERIAL - UI END
 
 /// OWN COMPONENTS
@@ -13,6 +14,16 @@ import { withAppContext } from '../../../context';
 
 import { IProps } from './types';
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      [theme.breakpoints.up('md')]: {
+        paddingTop: 64
+      }
+    }
+  })
+);
+
 export default withAppContext(function Layout({
   children,
   errorState,
@@ -20,6 +31,7 @@ export default withAppContext(function Layout({
   notificationState,
   handleNotifications
 }: PropsWithChildren<IProps>): JSX.Element {
+  const classes = useStyles();
   return (
     <>
       <Navbar />
@@ -27,7 +39,7 @@ export default withAppContext(function Layout({
         {...notificationState}
         onClose={() => handleNotifications({ ...notificationState, open: false })}
       />
-      <Box component="main" data-testid="main">
+      <Box component="main" data-testid="main" className={classes.root}>
         {children}
       </Box>
 

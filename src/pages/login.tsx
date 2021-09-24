@@ -7,10 +7,10 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 /// MATERIAL UI
-import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {
+  Box,
   Button,
   Card,
   Grid,

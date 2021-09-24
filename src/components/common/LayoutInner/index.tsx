@@ -11,8 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       [theme.breakpoints.up('md')]: {
-        paddingLeft: 256,
-        paddingTop: 64
+        paddingLeft: 256
       }
     },
     container: {
