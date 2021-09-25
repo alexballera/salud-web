@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
+
+/// MATERIAL UI
 import { Grid, Typography } from '@material-ui/core';
+/// MATERIAL UI END
+
+/// STYLES & TYPES
+import ProfileStyles from './styles.module';
+/// STYLES & TYPES END
+
+/// OWN COMPONENTS
 import { SectionTitle } from './components/SectionTitle';
 import TermsAndConditions from '../../components/TermsAndConditions';
 import InformedConsent from '../../components/InformedConsent';
 import ModalCustom from '../../components/common/Modal';
-import ProfileStyles from './styles.module';
+/// OWN COMPONENTS END
 
 export const LegalProfile = (): JSX.Element => {
   const classes = ProfileStyles();
