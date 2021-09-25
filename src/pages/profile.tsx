@@ -37,7 +37,7 @@ export default function ProfilePage(): JSX.Element {
             <Divider className={classes.divider} />
           </Hidden>
         </Grid>
-        <Grid item xs={12} md={5}>
+        <Grid item xs={12} md={7} lg={5}>
           <PersonalProfile />
           <Divider className={classes.divider} />
           <CredentialsProfile />
