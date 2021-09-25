@@ -15,6 +15,7 @@ import SvgContainer from '../SvgContainer';
 import SvgLogo from '../Svg/SvgLogo.component';
 import SvgLogoLarge from '../Svg/SvgLogoLarge.component';
 import ActionButtons from './components/ActionButtons.component';
+import DropDownButton from './components/DropDownButton';
 import Menu from '../Menu';
 import { getPersonalData, IPersonalData } from '../../../services/getPersonalData.service';
 
@@ -27,7 +28,6 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
   getPersonalData('bastidasarelis2021@gmail.com')
     .then(res => {
       const personalData: IPersonalData = res.data.result;
-      console.log(personalData);
       setFirstName(personalData.firstName);
       setDocumentNumber(personalData.documentNumber);
     })
@@ -111,13 +111,16 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                   )}
                   {/* TODO corregir mostrar solo para cuando esté logueado: usar "loggedIn" */}
                   {showMenu() && (
-                    <Grid container justify="flex-end" spacing={2}>
+                    <Grid container justify="flex-end" alignItems="center" spacing={2}>
                       <Grid item>
                         <Avatar variant="square">{firstName?.charAt(0)}</Avatar>
                       </Grid>
-                      <Grid container item xs={5}>
+                      <Grid container item xs={4}>
                         <Typography className={classes.name}>{firstName}</Typography>
                         <Typography className={classes.documentNumber}>{documentNumber}</Typography>
+                      </Grid>
+                      <Grid item xs={2} className={classes.dropDownContainer}>
+                        <DropDownButton />
                       </Grid>
                     </Grid>
                   )}

@@ -19,6 +19,9 @@ const navbarStyles = makeStyles({
     color: 'rgba(0, 0, 0, 0.6)',
     fontSize: 14,
     fontWeight: 'normal'
+  },
+  dropDownContainer: {
+    textAlign: 'center'
   }
 });
 
