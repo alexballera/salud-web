@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default withAppContext(function LayoutInner({ children }): JSX.Element {
+const LayoutInner = ({ children }): JSX.Element => {
   const classes = useStyles();
   return (
     <Box component="div" data-testid="div" className={classes.root}>
@@ -35,4 +35,5 @@ export default withAppContext(function LayoutInner({ children }): JSX.Element {
       </Box>
     </Box>
   );
-});
+};
+export default withAppContext(LayoutInner);
