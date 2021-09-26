@@ -83,7 +83,7 @@ exports[`<Wizard/> clicking the button calls event handler once and render the n
               >
                 <circle
                   cx=\\"12\\"
-@@ -85,31 +75,31 @@
+@@ -85,36 +75,36 @@
             </span>
             <span
               class=\\"MuiStepLabel-labelContainer\\"
@@ -107,8 +107,14 @@ exports[`<Wizard/> clicking the button calls event handler once and render the n
           role=\\"steppanel\\"
         >
           <div
-            class=\\"MuiBox-root MuiBox-root-12\\"
+            class=\\"MuiBox-root MuiBox-root-15\\"
           >
+            <h5
+              class=\\"MuiTypography-root makeStyles-stepIndicator-14 MuiTypography-h5\\"
+            >
+-             Paso 1 de 2
++             Paso 2 de 2
+            </h5>
             <h5
               class=\\"MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom\\"
             >
@@ -119,7 +125,7 @@ exports[`<Wizard/> clicking the button calls event handler once and render the n
               class=\\"MuiTypography-root mb-4 MuiTypography-body1\\"
             >
               This is a test description
-@@ -124,11 +114,11 @@
+@@ -129,11 +119,11 @@
             type=\\"submit\\"
           >
             <span

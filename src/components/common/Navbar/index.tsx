@@ -11,6 +11,7 @@ import { IProps } from './types';
 import navbarStyles from './styles.module';
 /// STYLES & TYPES END
 
+/// OWN COMPONENTS
 import SvgContainer from '../SvgContainer';
 import SvgLogo from '../Svg/SvgLogo.component';
 import SvgLogoLarge from '../Svg/SvgLogoLarge.component';
@@ -18,6 +19,7 @@ import ActionButtons from './components/ActionButtons.component';
 import DropDownButton from './components/DropDownButton';
 import Menu from '../Menu';
 import { getPersonalData, IPersonalData } from '../../../services/getPersonalData.service';
+/// OWN COMPONENTS END
 
 function Navbar({ loggedIn }: IProps): JSX.Element {
   const classes = navbarStyles();

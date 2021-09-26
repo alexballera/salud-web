@@ -1,12 +1,15 @@
 import React from 'react';
+
+/// CONTEXT
+import { withAppContext } from '../../context';
+/// CONTEXT END
+
 /// MATERIAL - UI
 import { Box } from '@material-ui/core';
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
+/// MATERIAL - UI END
 
-/// OWN COMPONENTS
-import { withAppContext } from '../../../context';
-/// OWN COMPONENTS END
-
+/// STYLES & TYPES
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -17,13 +20,17 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       padding: `14px 24px`,
       [theme.breakpoints.up('md')]: {
+        padding: 47
+      },
+      [theme.breakpoints.up('lg')]: {
         padding: `47px 134px`
       }
     }
   })
 );
+/// STYLES & TYPES END
 
-export default withAppContext(function LayoutInner({ children }): JSX.Element {
+const LayoutInner = ({ children }): JSX.Element => {
   const classes = useStyles();
   return (
     <Box component="div" data-testid="div" className={classes.root}>
@@ -32,4 +39,5 @@ export default withAppContext(function LayoutInner({ children }): JSX.Element {
       </Box>
     </Box>
   );
-});
+};
+export default withAppContext(LayoutInner);

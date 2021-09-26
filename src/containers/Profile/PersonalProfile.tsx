@@ -1,7 +1,13 @@
 import React from 'react';
+
+/// MATERIAL UI
 import { Grid } from '@material-ui/core';
+/// MATERIAL UI END
+
+/// OWN COMPONENTS
 import { SectionTitle } from './components/SectionTitle';
 import { FieldTextData } from './components/FieldTextData';
+/// OWN COMPONENTS END
 
 export const PersonalProfile = (): JSX.Element => {
   const onClickLink = () => {

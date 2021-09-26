@@ -1,7 +1,13 @@
 import React from 'react';
+
+/// MATERIAL UI
 import { Avatar, Grid, IconButton, Typography } from '@material-ui/core';
-import ProfileStyles from './styles.module';
 import EditIcon from '@material-ui/icons/Edit';
+/// MATERIAL UI END
+
+/// STYLES & TYPES
+import ProfileStyles from './styles.module';
+/// STYLES & TYPES END
 
 type IProps = {
   fullName: string;

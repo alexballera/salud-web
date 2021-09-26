@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
-import MenuIcon from '@material-ui/icons/Menu';
+
+/// MATERIAL UI
 import { Box, Drawer, IconButton } from '@material-ui/core';
-import MenuItems from './MenuItems.component';
+import MenuIcon from '@material-ui/icons/Menu';
+/// MATERIAL UI END
+
+/// STYLES & TYPES
 import { IMenu } from './types';
 import MenuStyles from './styles.module';
+/// STYLES & TYPES END
+
+/// OWN COMPONENTS
+import MenuItems from './MenuItems.component';
+/// OWN COMPONENTS END
 
 const Menu = ({ type }: IMenu): JSX.Element => {
   const classes = MenuStyles();

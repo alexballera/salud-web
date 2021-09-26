@@ -1,16 +1,33 @@
 import { useEffect } from 'react';
-import '../styles/scss/globals.scss';
-import 'bootstrap/dist/css/bootstrap.css';
+
 // Modules
 import Head from 'next/head';
 import { AppProps } from 'next/app';
-// MUI Core
+
+/// CONTEXT
+import AppProvider from '../context/AppProvider';
+/// CONTEXT END
+
+/// MATERIAL - UI
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
-// Utils
+/// MATERIAL - UI END
+
+/// SERVICES
+/// SERVICES END
+
+/// OWN COMPONENTS
+import Layout from '../layouts/Layout';
+/// OWN COMPONENTS END
+
+/// STYLES & TYPES
 import theme from '../styles/js/theme';
-import Layout from '../components/common/Layout';
-import AppProvider from '../context/AppProvider';
+import '../styles/scss/globals.scss';
+import 'bootstrap/dist/css/bootstrap.css';
+/// STYLES & TYPES END
+
+/// FORM STATES & VALIDATIONS
+/// FORM STATES & VALIDATIONS END
 
 interface IProps extends AppProps {
   errorState: { open: boolean; message: string };

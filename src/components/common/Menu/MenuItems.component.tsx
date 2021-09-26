@@ -1,25 +1,38 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import clsx from 'clsx';
+
+/// MATERIAL UI
+import {
+  Divider,
+  Box,
+  Button,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography
+} from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import HomeIcon from '@material-ui/icons/Home';
 import CardMembershipIcon from '@material-ui/icons/CardMembership';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import SvgContainer from '../SvgContainer';
-import SvgLogo from '../Svg/SvgLogo.component';
-import { Box, Button, Typography } from '@material-ui/core';
+/// MATERIAL UI END
+
+/// STYLES & TYPES
 import MenuStyles from './styles.module';
 import { IMenu } from './types';
-import clsx from 'clsx';
+/// STYLES & TYPES END
+
+/// OWN COMPONENTS
+import SvgContainer from '../SvgContainer';
+import SvgLogo from '../Svg/SvgLogo.component';
 import Modal from '../Modal';
 import TermsAndConditions from '../../TermsAndConditions';
 import InformedConsent from '../../InformedConsent';
 import SvgHelp from '../Svg/SvgHelp.component';
+/// OWN COMPONENTS END
 
 const items = [
   {

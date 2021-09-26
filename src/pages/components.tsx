@@ -1,9 +1,9 @@
 import DefaultErrorPage from 'next/error';
+
 /// MATERIAL - UI
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
-
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -16,13 +16,20 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 /// MATERIAL - UI END
 
-/// CUSTOMIZED COMPONENTS
+/// CONTEXT
+/// CONTEXT END
+
+/// SERVICES
+/// SERVICES END
+
+/// OWN COMPONENTS
 import Alert from '../components/common/Notifications';
 import ReactCodeInput from '../components/common/CodeInput';
 import CustomTextField from '../components/common/TextField';
 import TextMaskCustom from '../components/common/InputTextMask';
-/// CUSTOMIZED COMPONENTS END
+/// OWN COMPONENTS END
 
+/// STYLES & TYPES
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -37,6 +44,10 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
+/// STYLES & TYPES END
+
+/// FORM STATES & VALIDATIONS
+/// FORM STATES & VALIDATIONS END
 
 function ComponentsView(): JSX.Element {
   const classes = useStyles();

@@ -1,4 +1,4 @@
-import { AppStates, INotificationProps } from '../../../context/types';
+import { AppStates, INotificationProps } from '../../context/types';
 
 export type IProps = {
   errorState: { open: boolean; message: string; type: 'success' | 'error' | 'warning' };

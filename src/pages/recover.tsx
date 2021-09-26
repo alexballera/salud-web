@@ -3,11 +3,6 @@ import { Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
 import _ from 'lodash';
 
-/// TYPES
-import { IFormData } from '../types/recover.types';
-import Wizard, { IWizardDataSourceItem } from '../components/common/Wizard';
-/// TYPES END
-
 /// MATERIAL UI
 import { Button } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -19,13 +14,29 @@ import ValidationDataForm from '../containers/Recover/components/ValidationData'
 import PasswordDataForm from '../containers/Recover/components/PasswordData';
 import { withAppContext } from '../context';
 import { forgotPasswordChangePassword } from '../services/auth.service';
-
 /// OWN COMPONENTS END
+
+/// CONTEXT
+/// CONTEXT END
+
+/// SERVICES
+/// SERVICES END
+
+/// STYLES & TYPES
+/// STYLES & TYPES END
+
+/// FORM STATES & VALIDATIONS
+/// FORM STATES & VALIDATIONS END
+
+/// TYPES
+import { IFormData } from '../types/recover.types';
+import Wizard, { IWizardDataSourceItem } from '../components/common/Wizard';
 
 type IProps = {
   handleLoading: (loading: boolean) => void;
   handleError: (open: boolean, message?: string, type?: 'success' | 'error' | 'warning') => void;
 };
+/// TYPES END
 
 const initialValues: IFormData = {
   email: '',

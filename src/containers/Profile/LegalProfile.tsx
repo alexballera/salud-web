@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
-import { Grid, Modal, Typography } from '@material-ui/core';
+
+/// MATERIAL UI
+import { Grid, Typography } from '@material-ui/core';
+/// MATERIAL UI END
+
+/// STYLES & TYPES
+import ProfileStyles from './styles.module';
+/// STYLES & TYPES END
+
+/// OWN COMPONENTS
 import { SectionTitle } from './components/SectionTitle';
 import TermsAndConditions from '../../components/TermsAndConditions';
 import InformedConsent from '../../components/InformedConsent';
-import ProfileStyles from './styles.module';
+import ModalCustom from '../../components/common/Modal';
+/// OWN COMPONENTS END
 
 export const LegalProfile = (): JSX.Element => {
   const classes = ProfileStyles();
@@ -26,12 +36,12 @@ export const LegalProfile = (): JSX.Element => {
           </Typography>
         </Grid>
       </Grid>
-      <Modal open={termsAndConditionOpen} onClose={() => setTermsAndConditionOpen(false)}>
+      <ModalCustom open={termsAndConditionOpen} onClose={() => setTermsAndConditionOpen(false)}>
         <TermsAndConditions />
-      </Modal>
-      <Modal open={informedConsentOpen} onClose={() => setInformedConsentOpen(false)}>
+      </ModalCustom>
+      <ModalCustom open={informedConsentOpen} onClose={() => setInformedConsentOpen(false)}>
         <InformedConsent />
-      </Modal>
+      </ModalCustom>
     </>
   );
 };

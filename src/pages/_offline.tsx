@@ -1,5 +1,23 @@
 import Head from 'next/head';
 
+/// CONTEXT
+/// CONTEXT END
+
+/// MATERIAL - UI
+/// MATERIAL - UI END
+
+/// SERVICES
+/// SERVICES END
+
+/// OWN COMPONENTS
+/// OWN COMPONENTS END
+
+/// STYLES & TYPES
+/// STYLES & TYPES END
+
+/// FORM STATES & VALIDATIONS
+/// FORM STATES & VALIDATIONS END
+
 const OfflinePage = (): JSX.Element => {
   return (
     <>
