@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 
-/// CONTEXT
-/// CONTEXT END
-
 /// MATERIAL - UI
-import { Box, Button, Divider, Grid, Hidden } from '@material-ui/core';
+import { Box, Button, Divider, Hidden } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 /// MATERIAL - UI END
 
@@ -19,16 +16,13 @@ import { AvatarProfile } from '../containers/Profile/AvatarProfile';
 import { CredentialsProfile } from '../containers/Profile/CredentialsProfile';
 import { LegalProfile } from '../containers/Profile/LegalProfile';
 import { PersonalProfile } from '../containers/Profile/PersonalProfile';
-import LayoutInner from '../layouts/LayoutInner';
 import { SecondaryContactsProfile } from '../containers/Profile/SecondaryContactsProfile';
+import LayoutContent from '../layouts/LayoutContent';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
 import ProfileStyles from '../containers/Profile/styles.module';
 /// STYLES & TYPES END
-
-/// FORM STATES & VALIDATIONS
-/// FORM STATES & VALIDATIONS END
 
 export default function ProfilePage(): JSX.Element {
   const classes = ProfileStyles();
@@ -43,18 +37,18 @@ export default function ProfilePage(): JSX.Element {
     })
     .catch(err => console.log(err));
   return (
-    <LayoutInner>
-      <Grid container>
-        <Grid item xs={12}>
-          <TitleProfile />
-        </Grid>
-        <Grid item xs={12} md={5}>
+    <LayoutContent
+      title={<TitleProfile />}
+      leftContent={
+        <>
           <AvatarProfile fullName={fullName} documentNumber={documentNumber} />
           <Hidden mdUp>
             <Divider className={classes.divider} />
           </Hidden>
-        </Grid>
-        <Grid item xs={12} md={7} lg={5}>
+        </>
+      }
+      rightContent={
+        <>
           <PersonalProfile />
           <Divider className={classes.divider} />
           <CredentialsProfile />
@@ -79,8 +73,8 @@ export default function ProfilePage(): JSX.Element {
               </Link>
             </Box>
           </Hidden>
-        </Grid>
-      </Grid>
-    </LayoutInner>
+        </>
+      }
+    />
   );
 }
