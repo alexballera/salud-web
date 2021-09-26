@@ -41,6 +41,11 @@ const defaultTheme: ThemeOptions = {
       root: {
         display: 'none'
       }
+    },
+    MuiFormHelperText: {
+      contained: {
+        margin: '0px !important'
+      }
     }
   }
 };

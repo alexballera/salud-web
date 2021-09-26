@@ -1,17 +1,34 @@
 import React, { useState } from 'react';
-import { Box, Button, Divider, Grid, Hidden } from '@material-ui/core';
 import Link from 'next/link';
-import LayoutInner from '../components/common/LayoutInner';
+
+/// CONTEXT
+/// CONTEXT END
+
+/// MATERIAL - UI
+import { Box, Button, Divider, Grid, Hidden } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+/// MATERIAL - UI END
+
+/// SERVICES
+import { getPersonalData, IPersonalData } from '../services/getPersonalData.service';
+/// SERVICES END
+
+/// OWN COMPONENTS
 import { TitleProfile } from '../containers/Profile/TitleProfile';
 import { AvatarProfile } from '../containers/Profile/AvatarProfile';
 import { CredentialsProfile } from '../containers/Profile/CredentialsProfile';
 import { LegalProfile } from '../containers/Profile/LegalProfile';
 import { PersonalProfile } from '../containers/Profile/PersonalProfile';
-import { getPersonalData, IPersonalData } from '../services/getPersonalData.service';
+import LayoutInner from '../layouts/LayoutInner';
 import { SecondaryContactsProfile } from '../containers/Profile/SecondaryContactsProfile';
+/// OWN COMPONENTS END
+
+/// STYLES & TYPES
 import ProfileStyles from '../containers/Profile/styles.module';
-/// GET SERVICE END
+/// STYLES & TYPES END
+
+/// FORM STATES & VALIDATIONS
+/// FORM STATES & VALIDATIONS END
 
 export default function ProfilePage(): JSX.Element {
   const classes = ProfileStyles();

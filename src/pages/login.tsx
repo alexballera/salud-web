@@ -33,6 +33,10 @@ import styles from '../styles/scss/Login.module.scss';
 import { IProps } from '../types/login.types';
 /// STYLES & TYPES END
 
+/// SERVICES
+/// SERVICES END
+
+/// FORM STATES & VALIDATIONS
 const InitialState = {
   email: '',
   password: ''
@@ -42,6 +46,7 @@ const ValidationSchema = Yup.object().shape({
   email: Yup.string().email('Email invalido').required('Debes especificar un email'),
   password: Yup.string().required('Debes especificar una contraseña')
 });
+/// FORM STATES & VALIDATIONS END
 
 function LoginPage({
   handleLogin,

@@ -1,12 +1,15 @@
 import React from 'react';
+
+/// CONTEXT
+import { withAppContext } from '../../context';
+/// CONTEXT END
+
 /// MATERIAL - UI
 import { Box } from '@material-ui/core';
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
+/// MATERIAL - UI END
 
-/// OWN COMPONENTS
-import { withAppContext } from '../../../context';
-/// OWN COMPONENTS END
-
+/// STYLES & TYPES
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -25,6 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
+/// STYLES & TYPES END
 
 const LayoutInner = ({ children }): JSX.Element => {
   const classes = useStyles();

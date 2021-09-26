@@ -1,11 +1,28 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { Button, Box, Grid, Typography, Hidden } from '@material-ui/core';
-import LogOutStyles from '../styles/js/LogOutStyles.module';
-import SvgContainer from '../components/common/SvgContainer';
-import SvgBanner from '../components/common/Svg/SvgBanner.component';
+
 /// CONTEXT
 import { withAppContext } from '../context/index';
+/// CONTEXT END
+
+/// MATERIAL - UI
+import { Button, Box, Grid, Typography, Hidden } from '@material-ui/core';
+/// MATERIAL - UI END
+
+/// SERVICES
+/// SERVICES END
+
+/// OWN COMPONENTS
+import SvgContainer from '../components/common/SvgContainer';
+import SvgBanner from '../components/common/Svg/SvgBanner.component';
+/// OWN COMPONENTS END
+
+/// STYLES & TYPES
+import LogOutStyles from '../styles/js/LogOutStyles.module';
+/// STYLES & TYPES END
+
+/// FORM STATES & VALIDATIONS
+/// FORM STATES & VALIDATIONS END
 
 function LogOut(): JSX.Element {
   const classes = LogOutStyles();

@@ -6,10 +6,10 @@ import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 /// MATERIAL - UI END
 
 /// OWN COMPONENTS
-import Alert from '../Alert';
-import Navbar from '../Navbar';
-import Notification from '../Notifications';
-import { withAppContext } from '../../../context';
+import Notifications from '../../components/common/Notifications';
+import { withAppContext } from '../../context';
+import Navbar from '../../components/common/Navbar';
+import Alert from '../../components/common/Alert';
 /// OWN COMPONENTS END
 
 import { IProps } from './types';
@@ -35,7 +35,7 @@ export default withAppContext(function Layout({
   return (
     <>
       <Navbar />
-      <Notification
+      <Notifications
         {...notificationState}
         onClose={() => handleNotifications({ ...notificationState, open: false })}
       />

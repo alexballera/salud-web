@@ -2,9 +2,24 @@ import React from 'react';
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 
-/// UTILS
+/// CONTEXT
+/// CONTEXT END
+
+/// MATERIAL - UI
+/// MATERIAL - UI END
+
+/// SERVICES
+/// SERVICES END
+
+/// OWN COMPONENTS
+/// OWN COMPONENTS END
+
+/// STYLES & TYPES
 import theme from '../styles/js/theme';
-/// UTILS END
+/// STYLES & TYPES END
+
+/// FORM STATES & VALIDATIONS
+/// FORM STATES & VALIDATIONS END
 
 class MyDocument extends Document {
   render(): JSX.Element {
