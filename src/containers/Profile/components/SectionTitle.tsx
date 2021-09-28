@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Grid, Link, Typography } from '@material-ui/core';
 
@@ -27,7 +27,6 @@ export type ITitle = {
 
 export const SectionTitle = ({ title, linkText, onClickLink }: ITitle): JSX.Element => {
   const classes = useStyles();
-  const [fullName, setFullName] = useState('');
   return (
     <Grid container alignItems="center">
       <Grid item xs={9}>
@@ -44,8 +43,7 @@ export const SectionTitle = ({ title, linkText, onClickLink }: ITitle): JSX.Elem
             underline="none"
             color="secondary"
             onClick={() => {
-              setFullName('Me hicieron click');
-              onClickLink(fullName);
+              onClickLink();
             }}
           >
             {linkText}
