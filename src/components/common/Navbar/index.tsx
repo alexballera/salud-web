@@ -117,11 +117,11 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                       <Grid item>
                         <Avatar variant="square">{firstName?.charAt(0)}</Avatar>
                       </Grid>
-                      <Grid container item xs={4}>
+                      <Grid container direction="column" alignItems="baseline" item xs={4} md={3}>
                         <Typography className={classes.name}>{firstName}</Typography>
                         <Typography className={classes.documentNumber}>{documentNumber}</Typography>
                       </Grid>
-                      <Grid item xs={2} className={classes.dropDownContainer}>
+                      <Grid item xs={2} md={1} className={classes.dropDownContainer}>
                         <DropDownButton />
                       </Grid>
                     </Grid>

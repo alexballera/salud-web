@@ -19,6 +19,7 @@ import Typography from '@material-ui/core/Typography';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import SignUpStyles from '../styles.module';
 /// MATERIAL-UI END
 
 /// INITIAL STATES
@@ -47,6 +48,7 @@ function ExtraData({
   handleChange,
   setFieldValue
 }: FormikProps<IExtraDataForm>): JSX.Element {
+  const classes = SignUpStyles();
   const [cantonStates, setCantonStates] = useState(initialCantonStates);
   const [provinceStates, setProvinceStates] = useState(initialProvinceStates);
   const [districtStates, setDistrictStates] = useState(initialDistrictStates);
@@ -148,7 +150,7 @@ function ExtraData({
         }}
         inputComponent={TextMaskCustom as any}
       />
-      <Typography variant="h5" component="h5">
+      <Typography variant="h5" component="h5" className={classes.titleSection}>
         Domicilio
       </Typography>
       <CustomAutoComplete
