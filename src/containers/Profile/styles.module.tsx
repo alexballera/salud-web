@@ -88,6 +88,9 @@ const ProfileStyles = makeStyles((theme: Theme) =>
       '&:hover': {
         color: theme.palette.secondary.light
       }
+    },
+    containerButton: {
+      paddingRight: 0
     }
   })
 );
