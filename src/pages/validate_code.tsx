@@ -48,8 +48,11 @@ export default function ValidateCodePage({
 }: IValidateProps): JSX.Element {
   const classes = validateCodeStyles();
   const router = useRouter();
+  const time = 60;
   const [isPinCodeValid, setIsPinCodeValid] = useState(true);
   const [pinCode, setPinCode] = useState('');
+  const [show, setShow] = useState(false);
+  const [seconds, setSeconds] = useState(time);
 
   const checkPinCode = () => {
     const isPinCodeValid = pinCode === userPinCode;
@@ -60,6 +63,20 @@ export default function ValidateCodePage({
   const handlePinChange = (pinCode: string) => {
     setPinCode(pinCode);
     if (pinCode.length < 6) setIsPinCodeValid(true);
+  };
+
+  const handleShow = () => {
+    setShow(true);
+    let count = 0;
+    const handleCount = setInterval(() => {
+      count++;
+      setSeconds(seconds - count);
+    }, 1000);
+    setTimeout(() => {
+      setShow(false);
+      setSeconds(time);
+      clearInterval(handleCount);
+    }, time * 1000);
   };
 
   return (
@@ -73,14 +90,14 @@ export default function ValidateCodePage({
           </Grid>
         </Grid>
 
-        <Grid container>
+        <Grid container spacing={2}>
           <Grid item xs={10} md={10}>
             <Typography variant="h2" component="h2" className={classes.title}>
               Cuenta creada exitosamente
             </Typography>
           </Grid>
-          <Grid item xs={10} md={10}>
-            <Typography variant="h5" component="h5" className={classes.desciption}>
+          <Grid item xs={10} md={10} className={classes.desciption}>
+            <Typography variant="h5" component="h5" className={classes.desciptionText}>
               Felicidades {userName}, has creado tu cuenta correctamente, se envió un mensaje a tu
               correo electrónico para que actives tu cuenta.
             </Typography>
@@ -107,12 +124,26 @@ export default function ValidateCodePage({
             </FormControl>
           </Grid>
 
-          <Grid item xs={12} md={12}>
-            <Paper variant="outlined" className={classes.paperRoot}>
-              <AccessTimeIcon color="secondary" className={classes.iconRoot} />
-              Podés volver a intentar en 01:00
-            </Paper>
-          </Grid>
+          {!show && (
+            <Grid container item xs={12} spacing={2} justify="space-between">
+              <Grid item xs={6}>
+                <Typography className={classes.desciptionText}>¿No recibiste el código?</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography color="secondary" className={classes.link} onClick={() => handleShow()}>
+                  Reenviar correo
+                </Typography>
+              </Grid>
+            </Grid>
+          )}
+          {show && (
+            <Grid item xs={12} md={12}>
+              <Paper variant="outlined" className={classes.paperRoot}>
+                <AccessTimeIcon color="secondary" className={classes.iconRoot} />
+                Podés volver a intentar en {seconds === 60 ? '1:00 min' : `${seconds} seg`}
+              </Paper>
+            </Grid>
+          )}
         </Grid>
         <Grid container spacing={1}>
           <Grid item xs={6} md={6}>

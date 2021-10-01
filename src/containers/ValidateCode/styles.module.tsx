@@ -6,8 +6,7 @@ export const validateCodeCustomTheme = createMuiTheme({
       root: {
         '&$error': {
           textAlign: 'left'
-        },
-        marginBottom: 34
+        }
       }
     }
   }
@@ -36,10 +35,12 @@ export const validateCodeStyles = makeStyles({
     marginBottom: 8
   },
   desciption: {
+    marginBottom: 40
+  },
+  desciptionText: {
     color: 'rgba(0, 0, 0, 0.6)',
     fontSize: 14,
-    letterSpacing: 0.15,
-    marginBottom: 40
+    letterSpacing: 0.15
   },
   label: {
     color: 'rgba(0, 0, 0, 0.87)',
@@ -56,5 +57,12 @@ export const validateCodeStyles = makeStyles({
     height: 20,
     width: 20,
     marginRight: 16
+  },
+  link: {
+    fontSize: 14,
+    fontWeight: 500,
+    marginBottom: 16,
+    textAlign: 'right',
+    textDecoration: 'underline'
   }
 });
