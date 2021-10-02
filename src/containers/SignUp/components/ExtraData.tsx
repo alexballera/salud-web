@@ -7,7 +7,7 @@ import { PHONE_NUMBER_MASK } from '../../../utils/constants';
 /// SERVICES
 import { getProvinces, getCanton, getDistrict } from '../../../services/address.service';
 /// TYPES
-import { IExtraDataForm, IGeneralAdressState } from '../index.types';
+import { IExtraDataForm, IExtraDataProps, IGeneralAdressState } from '../index.types';
 /// OWN COMPONENTS
 import TextMaskCustom from '../../../components/common/InputTextMask';
 import CustomTextField from '../../../components/common/TextField';
@@ -46,8 +46,9 @@ function ExtraData({
   touched,
   handleBlur,
   handleChange,
-  setFieldValue
-}: FormikProps<IExtraDataForm>): JSX.Element {
+  setFieldValue,
+  updatePersonalData
+}: IExtraDataProps & FormikProps<IExtraDataForm>): JSX.Element {
   const classes = SignUpStyles();
   const [cantonStates, setCantonStates] = useState(initialCantonStates);
   const [provinceStates, setProvinceStates] = useState(initialProvinceStates);
@@ -135,21 +136,23 @@ function ExtraData({
         </Select>
         {touched.gender && errors.gender && <FormHelperText error>{errors.gender}</FormHelperText>}
       </FormControl>
-      <CustomTextField
-        id="mobilePhone1"
-        name="mobilePhone1"
-        type="text"
-        label="Número de teléfono"
-        value={values.mobilePhone1}
-        error={touched.mobilePhone1 && Boolean(errors.mobilePhone1)}
-        onBlur={handleBlur}
-        onChange={handleChange}
-        helperText={errors.mobilePhone1}
-        inputProps={{
-          mask: PHONE_NUMBER_MASK
-        }}
-        inputComponent={TextMaskCustom as any}
-      />
+      {!updatePersonalData && (
+        <CustomTextField
+          id="mobilePhone1"
+          name="mobilePhone1"
+          type="text"
+          label="Número de teléfono"
+          value={values.mobilePhone1}
+          error={touched.mobilePhone1 && Boolean(errors.mobilePhone1)}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          helperText={errors.mobilePhone1}
+          inputProps={{
+            mask: PHONE_NUMBER_MASK
+          }}
+          inputComponent={TextMaskCustom as any}
+        />
+      )}
       <Typography variant="h5" component="h5" className={classes.titleSection}>
         Domicilio
       </Typography>

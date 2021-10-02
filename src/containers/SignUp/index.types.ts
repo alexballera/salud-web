@@ -101,6 +101,9 @@ export type IExtraDataForm = {
   province: any;
   mobilePhone1: string;
 };
+export type IExtraDataProps = {
+  updatePersonalData?: boolean;
+};
 
 export type ICredentialDataProps = {
   handleNotifications: (props: INotificationProps) => void;

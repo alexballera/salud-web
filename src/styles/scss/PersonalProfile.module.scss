@@ -1,0 +1,5 @@
+@import 'mixins';
+
+.fadeIn {
+  @include fade(fadeIn, ease-in, 0.15s);
+}
