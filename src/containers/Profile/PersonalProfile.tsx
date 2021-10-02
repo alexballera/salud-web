@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 /// MATERIAL UI
 import { Grid } from '@material-ui/core';
+import styles from '../../styles/scss/PersonalProfile.module.scss';
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
@@ -25,17 +26,17 @@ export const PersonalProfile = (): JSX.Element => {
       </Grid>
       {!showForm && (
         <>
-          <Grid item xs={12}>
+          <Grid item xs={12} className={styles.fadeIn}>
             <FieldTextData title="Sexo asignado al nacer" data="Femenino" />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className={styles.fadeIn}>
             <FieldTextData title="Domicilio" data="San José, San José, Carmen" />
           </Grid>
         </>
       )}
       {showForm && (
-        <Grid item xs={12}>
-          <UpdatePersonalData onClickLink={onClickLink} />
+        <Grid item xs={12} className={styles.fadeIn}>
+          <UpdatePersonalData updatePersonalData onClickLink={onClickLink} />
         </Grid>
       )}
     </Grid>
