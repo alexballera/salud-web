@@ -111,7 +111,7 @@ function UpdatePersonalData({
       {formik => {
         return (
           <Form autoComplete="off">
-            <ExtraData {...formik} />
+            <ExtraData updatePersonalData {...formik} />
             <Box p={3} className={classes.containerButton}>
               <Grid container spacing={1} justify="flex-end">
                 <Grid item xs={4}>
