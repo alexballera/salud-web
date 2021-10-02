@@ -1,21 +1,19 @@
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 
-const LogOutStyles = makeStyles((theme: Theme) =>
+const LayoutCodeStyles = makeStyles((theme: Theme) =>
   createStyles({
     boxContainer: {
       position: 'absolute',
       top: 0,
       backgroundColor: 'white',
       zIndex: 1200,
-      height: '100vh',
       width: '100%'
     },
     wrapper: {
       height: '100vh'
     },
     container: {
-      height: '100vh',
-      justifyContent: 'space-between',
+      height: 'calc(100vh - 36px)',
       [theme.breakpoints.up('md')]: {
         justifyContent: 'center'
       }
@@ -35,13 +33,14 @@ const LogOutStyles = makeStyles((theme: Theme) =>
     content: {
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'space-around',
+      justifyContent: 'space-between',
       [theme.breakpoints.up('md')]: {
         justifyContent: 'center'
       }
     },
     contentContainer: {
-      marginBottom: 24
+      marginBottom: 16,
+      paddingBottom: '0px !important'
     },
     title: {
       fontSize: 20,
@@ -56,4 +55,4 @@ const LogOutStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default LogOutStyles;
+export default LayoutCodeStyles;
