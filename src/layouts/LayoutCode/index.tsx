@@ -46,22 +46,20 @@ const LayoutCode = ({
             </Hidden>
           </Grid>
           <Grid item xs={12} md={5} className={classes.content}>
-            <Grid container spacing={1} className={classes.contentContainer}>
-              <Grid item xs={12} md={10}>
+            <Grid container spacing={3} className={classes.contentContainer}>
+              <Grid item xs={12} md={10} className={classes.contentContainer}>
                 <Typography variant="h2" component="h2" className={classes.title}>
                   {title}
                 </Typography>
               </Grid>
-              <Grid item xs={12} md={10}>
+              <Grid item xs={12} md={10} className={classes.contentContainer}>
                 <Typography variant="h5" component="h5" className={classes.description}>
                   {description}
                 </Typography>
               </Grid>
               {content && (
-                <Grid item xs={12} md={10}>
-                  <Typography variant="h5" component="h5" className={classes.description}>
-                    {content}
-                  </Typography>
+                <Grid item xs={12} md={10} className={classes.contentContainer}>
+                  {content}
                 </Grid>
               )}
             </Grid>
