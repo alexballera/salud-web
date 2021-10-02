@@ -89,7 +89,7 @@ export default function ValidateCodePage({
               <FormLabel className={classes.label}>Código de validación</FormLabel>
               <ReactCodeInput
                 name="pinCode"
-                inputMode="numeric"
+                inputMode="tel"
                 type="tel"
                 isValid={isPinCodeValid}
                 fields={6}
