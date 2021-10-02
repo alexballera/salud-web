@@ -1,6 +1,6 @@
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 
-const LogOutStyles = makeStyles((theme: Theme) =>
+const LayoutCodeStyles = makeStyles((theme: Theme) =>
   createStyles({
     boxContainer: {
       position: 'absolute',
@@ -56,4 +56,4 @@ const LogOutStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default LogOutStyles;
+export default LayoutCodeStyles;
