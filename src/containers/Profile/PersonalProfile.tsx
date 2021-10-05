@@ -36,7 +36,7 @@ export const PersonalProfile = (): JSX.Element => {
       )}
       {showForm && (
         <Grid item xs={12} className={styles.fadeIn}>
-          <UpdatePersonalData updatePersonalData onClickLink={onClickLink} />
+          <UpdatePersonalData onClickLink={onClickLink} />
         </Grid>
       )}
     </Grid>

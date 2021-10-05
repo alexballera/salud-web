@@ -47,7 +47,8 @@ function ExtraData({
   handleBlur,
   handleChange,
   setFieldValue,
-  updatePersonalData
+  updatePersonalData,
+  UpdatePhone
 }: IExtraDataProps & FormikProps<IExtraDataForm>): JSX.Element {
   const classes = SignUpStyles();
   const [cantonStates, setCantonStates] = useState(initialCantonStates);
@@ -116,27 +117,31 @@ function ExtraData({
   /// USE EFFECTS END
   return (
     <div>
-      <FormControl fullWidth margin="normal" variant="filled">
-        <FormLabel id="gender-selector-label" style={{ marginBottom: 10 }}>
-          Sexo biológico designado al nacer
-        </FormLabel>
-        <Select
-          fullWidth
-          id="gender-selector"
-          name="gender"
-          value={values.gender}
-          color="secondary"
-          labelId="gender-selector-label"
-          onBlur={handleBlur}
-          variant="outlined"
-          onChange={handleChange}
-        >
-          <MenuItem value={'1'}>Femenino</MenuItem>
-          <MenuItem value={'2'}>Masculino</MenuItem>
-        </Select>
-        {touched.gender && errors.gender && <FormHelperText error>{errors.gender}</FormHelperText>}
-      </FormControl>
-      {!updatePersonalData && (
+      {!UpdatePhone && (
+        <FormControl fullWidth margin="normal" variant="filled">
+          <FormLabel id="gender-selector-label" style={{ marginBottom: 10 }}>
+            Sexo biológico designado al nacer
+          </FormLabel>
+          <Select
+            fullWidth
+            id="gender-selector"
+            name="gender"
+            value={values.gender}
+            color="secondary"
+            labelId="gender-selector-label"
+            onBlur={handleBlur}
+            variant="outlined"
+            onChange={handleChange}
+          >
+            <MenuItem value={'1'}>Femenino</MenuItem>
+            <MenuItem value={'2'}>Masculino</MenuItem>
+          </Select>
+          {touched.gender && errors.gender && (
+            <FormHelperText error>{errors.gender}</FormHelperText>
+          )}
+        </FormControl>
+      )}
+      {!updatePersonalData && UpdatePhone && (
         <CustomTextField
           id="mobilePhone1"
           name="mobilePhone1"
@@ -153,51 +158,55 @@ function ExtraData({
           inputComponent={TextMaskCustom as any}
         />
       )}
-      <Typography variant="h5" component="h5" className={classes.titleSection}>
-        Domicilio
-      </Typography>
-      <CustomAutoComplete
-        id="province"
-        label="Provincia"
-        value={values.province}
-        error={touched.province && Boolean(errors.province)}
-        onBlur={handleBlur}
-        options={provinceStates.data}
-        loading={provinceStates.fetching}
-        onChange={(_e, value) => onChangeSelect(value, 'province')}
-        helperText={errors.province}
-        getOptionLabel={option => option.nombre}
-        getOptionSelected={(option, value) => option.nombre === value.nombre}
-        linearProgressProps={{ 'data-testid': 'provinces-loader' }}
-      />
+      {!UpdatePhone && (
+        <>
+          <Typography variant="h5" component="h5" className={classes.titleSection}>
+            Domicilio
+          </Typography>
+          <CustomAutoComplete
+            id="province"
+            label="Provincia"
+            value={values.province}
+            error={touched.province && Boolean(errors.province)}
+            onBlur={handleBlur}
+            options={provinceStates.data}
+            loading={provinceStates.fetching}
+            onChange={(_e, value) => onChangeSelect(value, 'province')}
+            helperText={errors.province}
+            getOptionLabel={option => option.nombre}
+            getOptionSelected={(option, value) => option.nombre === value.nombre}
+            linearProgressProps={{ 'data-testid': 'provinces-loader' }}
+          />
 
-      <CustomAutoComplete
-        id="canton"
-        label="Cantón"
-        value={values.canton}
-        error={touched.canton && Boolean(errors.canton)}
-        onBlur={handleBlur}
-        options={cantonStates.data}
-        loading={cantonStates.fetching}
-        onChange={(_e, value) => onChangeSelect(value, 'canton')}
-        helperText={errors.canton}
-        getOptionLabel={option => option.nombre}
-        getOptionSelected={(option, value) => option.nombre === value.nombre}
-      />
+          <CustomAutoComplete
+            id="canton"
+            label="Cantón"
+            value={values.canton}
+            error={touched.canton && Boolean(errors.canton)}
+            onBlur={handleBlur}
+            options={cantonStates.data}
+            loading={cantonStates.fetching}
+            onChange={(_e, value) => onChangeSelect(value, 'canton')}
+            helperText={errors.canton}
+            getOptionLabel={option => option.nombre}
+            getOptionSelected={(option, value) => option.nombre === value.nombre}
+          />
 
-      <CustomAutoComplete
-        id="district"
-        label="Distrito"
-        value={values.district}
-        error={touched.district && Boolean(errors.district)}
-        onBlur={handleBlur}
-        options={districtStates.data}
-        loading={districtStates.fetching}
-        onChange={(_e, value) => onChangeSelect(value, 'district')}
-        helperText={errors.district}
-        getOptionLabel={option => option.nombre}
-        getOptionSelected={(option, value) => option.nombre === value.nombre}
-      />
+          <CustomAutoComplete
+            id="district"
+            label="Distrito"
+            value={values.district}
+            error={touched.district && Boolean(errors.district)}
+            onBlur={handleBlur}
+            options={districtStates.data}
+            loading={districtStates.fetching}
+            onChange={(_e, value) => onChangeSelect(value, 'district')}
+            helperText={errors.district}
+            getOptionLabel={option => option.nombre}
+            getOptionSelected={(option, value) => option.nombre === value.nombre}
+          />
+        </>
+      )}
     </div>
   );
 }
