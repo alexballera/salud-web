@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 /// MATERIAL UI
 import { Grid } from '@material-ui/core';
@@ -7,11 +7,16 @@ import { Grid } from '@material-ui/core';
 /// OWN COMPONENTS
 import { SectionTitle } from './components/SectionTitle';
 import { FieldTextData } from './components/FieldTextData';
+import UpdatePhone from './components/UpdatePhone';
 /// OWN COMPONENTS END
 
+import styles from '../../styles/scss/PersonalProfile.module.scss';
+
 export const CredentialsProfile = (): JSX.Element => {
+  const [showPhoneForm, setShowPhoneForm] = useState<boolean>(false);
+
   const changePhoneNumber = () => {
-    console.log('Cambiar teléfono');
+    setShowPhoneForm(!showPhoneForm);
   };
   const changeEmail = () => {
     console.log('Cambiar email');
@@ -32,6 +37,11 @@ export const CredentialsProfile = (): JSX.Element => {
           onClickLink={changePhoneNumber}
         />
       </Grid>
+      {showPhoneForm && (
+        <Grid item xs={12} className={styles.fadeIn}>
+          <UpdatePhone onClickLink={changePhoneNumber} />
+        </Grid>
+      )}
       <Grid item xs={12}>
         <FieldTextData
           title="Correo electrónico"
