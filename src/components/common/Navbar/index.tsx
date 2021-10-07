@@ -61,7 +61,13 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
     '/help'
   ];
 
-  const exitButtonPathNames = ['/recover', '/signup'];
+  const exitButtonPathNames = [
+    '/recover',
+    '/signup',
+    '/update/phone',
+    '/update/password',
+    '/update/email'
+  ];
 
   return (
     <>
