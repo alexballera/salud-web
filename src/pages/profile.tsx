@@ -28,6 +28,7 @@ export default function ProfilePage(): JSX.Element {
   const classes = ProfileStyles();
   const [fullName, setFullName] = useState('');
   const [documentNumber, setDocumentNumber] = useState('');
+  console.log(getPersonalData('bastidasarelis2021@gmail.com'));
 
   getPersonalData('bastidasarelis2021@gmail.com')
     .then(res => {
