@@ -1,10 +1,12 @@
 import React from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { Chip, Grid, Link, Typography } from '@material-ui/core';
+import { Chip, Grid, Theme, Typography } from '@material-ui/core';
+import LinkMaterial from '@material-ui/core/Link';
 import clsx from 'clsx';
 import { ITitle } from './SectionTitle';
+import Link from 'next/link';
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     title: {
       color: 'rgba(0, 0, 0, 0.6)',
@@ -30,6 +32,15 @@ const useStyles = makeStyles(() =>
     link: {
       fontSize: 14,
       fontWeight: 500
+    },
+    aLink: {
+      fontSize: 14,
+      fontWeight: 500,
+      color: theme.palette.secondary.main,
+      textDecoration: 'none',
+      '&:hover': {
+        color: theme.palette.secondary.main
+      }
     }
   })
 );
@@ -39,7 +50,9 @@ export const FieldTextData = ({
   linkText,
   onClickLink,
   data,
-  relationship
+  relationship,
+  href,
+  text
 }: ITitle): JSX.Element => {
   const classes = useStyles();
   return (
@@ -66,7 +79,7 @@ export const FieldTextData = ({
       </Grid>
       {linkText && (
         <Grid container item xs={3} justify="flex-end">
-          <Link
+          <LinkMaterial
             className={classes.link}
             component="button"
             variant="body2"
@@ -77,6 +90,15 @@ export const FieldTextData = ({
             }}
           >
             {linkText}
+          </LinkMaterial>
+        </Grid>
+      )}
+      {href && (
+        <Grid container item xs={3} justify="flex-end">
+          <Link href={href} passHref>
+            <a color="secondary" className={classes.aLink}>
+              {text}
+            </a>
           </Link>
         </Grid>
       )}
