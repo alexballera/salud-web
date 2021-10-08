@@ -4,8 +4,8 @@ import React from 'react';
 /// CONTEXT END
 
 /// MATERIAL - UI
-import { Button, Grid } from '@material-ui/core';
-import UpdateStyles from '../../../styles/js/UpdatePageStyles.module';
+import { Grid } from '@material-ui/core';
+import UpdatePhone from './UpdatePhone';
 /// MATERIAL - UI END
 
 /// SERVICES
@@ -21,38 +21,10 @@ import UpdateStyles from '../../../styles/js/UpdatePageStyles.module';
 /// FORM STATES & VALIDATIONS END
 
 const UpdateActions = (): JSX.Element => {
-  const classes = UpdateStyles();
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        <h1>formulario</h1>
-      </Grid>
-
-      <Grid
-        container
-        item
-        xs={12}
-        spacing={1}
-        justify="flex-end"
-        className={classes.containerActions}
-      >
-        <Grid item xs={6} md={2}>
-          <Button fullWidth variant="outlined">
-            Volver
-          </Button>
-        </Grid>
-        <Grid item xs={6} md={2}>
-          <Button
-            fullWidth
-            type="submit"
-            color="primary"
-            variant="contained"
-            // TODO verificar
-            // disabled={!_.isEmpty(formik.errors) || loading}
-          >
-            Continuar
-          </Button>
-        </Grid>
+        <UpdatePhone />
       </Grid>
     </Grid>
   );

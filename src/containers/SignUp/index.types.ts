@@ -103,7 +103,7 @@ export type IExtraDataForm = {
 };
 export type IExtraDataProps = {
   updatePersonalData?: boolean;
-  UpdatePhone?: boolean;
+  updatePhone?: boolean;
 };
 
 export type ICredentialDataProps = {

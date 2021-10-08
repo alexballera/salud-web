@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 /// MATERIAL UI
 import { Grid } from '@material-ui/core';
@@ -10,9 +11,6 @@ import { FieldTextData } from './components/FieldTextData';
 /// OWN COMPONENTS END
 
 export const CredentialsProfile = (): JSX.Element => {
-  const changePhoneNumber = () => {
-    console.log('editar telefono');
-  };
   const changeEmail = () => {
     console.log('Cambiar email');
   };
@@ -28,8 +26,8 @@ export const CredentialsProfile = (): JSX.Element => {
         <FieldTextData
           title="Número de teléfono"
           data="(+506) 8888-8888"
-          linkText="Cambiar"
-          onClickLink={changePhoneNumber}
+          text="Cambiar"
+          href="/update/phone"
         />
       </Grid>
       <Grid item xs={12}>

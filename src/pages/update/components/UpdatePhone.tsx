@@ -10,18 +10,21 @@ import { ISignUpBody, signUp } from '../../../services/auth.service';
 
 /// TYPES
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import { IFormData, IProps } from '../../../containers/SignUp/index.types';
+/// TYPES END
 
 /// OWN COMPONENTS
-import ExtraData from '../../SignUp/components/ExtraData';
+import ExtraData from '../../../containers/SignUp/components/ExtraData';
 /// OWN COMPONENTS END
 
 /// MATERIAL - UI
-import { Button, Box, Grid } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 /// MATERIAL - UI END
 
-/// STYLES & PROPS
-import { IFormData, IProps } from '../../SignUp/index.types';
-import ProfileStyles from '../styles.module';
+/// STYLES
+import UpdateStyles from '../../../styles/js/UpdatePageStyles.module';
+import { useRouter } from 'next/router';
+/// STYLES END
 
 /// GET SERVICE
 export const getStaticProps: GetStaticProps = async () => {
@@ -58,11 +61,15 @@ const initialValues: IFormData = {
 /// FORM STATES & VALIDATIONS END
 function UpdatePhone({
   handleLogin,
-  handleError,
-  onClickLink
+  handleError
 }: InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
-  const classes = ProfileStyles();
+  const classes = UpdateStyles();
+  const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
+
+  const goBack = () => {
+    router.back();
+  };
 
   const onSubmit = (values: IFormData) => {
     setLoading(true);
@@ -111,29 +118,33 @@ function UpdatePhone({
       {formik => {
         return (
           <Form autoComplete="off">
-            <ExtraData UpdatePhone {...formik} />
-            <Box p={3} className={classes.containerButton}>
-              <Grid container spacing={1} justify="flex-end">
-                <Grid item xs={4}>
-                  <Button fullWidth onClick={onClickLink} variant="outlined">
-                    Volver
-                  </Button>
-                </Grid>
-                <Grid item xs={4}>
-                  <Button
-                    fullWidth
-                    type="submit"
-                    color="primary"
-                    variant="contained"
-                    disabled={loading}
-                    // TODO verificar
-                    // disabled={!_.isEmpty(formik.errors) || loading}
-                  >
-                    Guardar
-                  </Button>
-                </Grid>
+            <ExtraData updatePhone {...formik} />
+            <Grid
+              container
+              item
+              xs={12}
+              spacing={1}
+              justify="flex-end"
+              className={classes.containerActions}
+            >
+              <Grid item xs={6} md={2}>
+                <Button fullWidth variant="outlined" onClick={goBack}>
+                  Volver
+                </Button>
               </Grid>
-            </Box>
+              <Grid item xs={6} md={2}>
+                <Button
+                  fullWidth
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  // TODO verificar
+                  // disabled={!_.isEmpty(formik.errors) || loading}
+                >
+                  Continuar
+                </Button>
+              </Grid>
+            </Grid>
           </Form>
         );
       }}
