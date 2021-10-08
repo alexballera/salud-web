@@ -23,7 +23,7 @@ import UpdatePhone from './UpdatePhone';
 const UpdateActions = (): JSX.Element => {
   return (
     <Grid container spacing={1}>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12}>
         <UpdatePhone />
       </Grid>
     </Grid>

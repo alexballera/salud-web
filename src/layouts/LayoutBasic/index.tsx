@@ -1,7 +1,7 @@
 import React from 'react';
 
 /// MATERIAL - UI
-import { Box, Grid } from '@material-ui/core';
+import { Box, Grid, Theme } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 /// MATERIAL - UI END
@@ -9,10 +9,14 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 /// OWN COMPONENTS
 /// OWN COMPONENTS END
 
-const useStyle = makeStyles(() =>
+const useStyle = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      height: 'calc(100vh - 64px)'
+      height: 'calc(100vh - 64px)',
+      [theme.breakpoints.up('md')]: {
+        paddingLeft: 165,
+        paddingRight: 165
+      }
     }
   })
 );
@@ -26,14 +30,14 @@ const LayoutBasic = ({ header, content, actions }: LCProps): JSX.Element => {
   const classes = useStyle();
   return (
     <Box p={3} className={classes.container}>
-      <Grid container>
-        <Grid item xs={12}>
+      <Grid container item xs={12}>
+        <Grid item xs={12} md={8}>
           {header}
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} md={8}>
           {content}
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} md={8}>
           {actions}
         </Grid>
       </Grid>
