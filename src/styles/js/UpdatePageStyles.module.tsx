@@ -37,7 +37,7 @@ const UpdateStyles = makeStyles((theme: Theme) =>
       position: 'fixed',
       width: '100%',
       [theme.breakpoints.up('md')]: {
-        paddingRight: '213px !important'
+        paddingRight: '40% !important'
       }
     }
   })

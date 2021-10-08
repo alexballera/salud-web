@@ -1,7 +1,7 @@
 import React from 'react';
 
 /// MATERIAL - UI
-import { Box, Grid, Theme } from '@material-ui/core';
+import { Box, Divider, Grid, Theme } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 /// MATERIAL - UI END
@@ -14,8 +14,8 @@ const useStyle = makeStyles((theme: Theme) =>
     container: {
       height: 'calc(100vh - 64px)',
       [theme.breakpoints.up('md')]: {
-        paddingLeft: 165,
-        paddingRight: 165
+        paddingLeft: '20%',
+        paddingRight: '20%'
       }
     }
   })
@@ -36,6 +36,9 @@ const LayoutBasic = ({ header, content, actions }: LCProps): JSX.Element => {
         </Grid>
         <Grid item xs={12} md={8}>
           {content}
+        </Grid>
+        <Grid item xs={12}>
+          <Divider />
         </Grid>
         <Grid item xs={12} md={8}>
           {actions}
