@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 
 /// CONTEXT
 /// CONTEXT END
@@ -6,6 +7,8 @@ import React from 'react';
 /// MATERIAL - UI
 import { Grid } from '@material-ui/core';
 import UpdatePhone from './UpdatePhone';
+import UpdatePassword from './UpdatePassword';
+import UpdateEmail from './UpdateEmail';
 /// MATERIAL - UI END
 
 /// SERVICES
@@ -21,10 +24,23 @@ import UpdatePhone from './UpdatePhone';
 /// FORM STATES & VALIDATIONS END
 
 const UpdateActions = (): JSX.Element => {
+  const router = useRouter();
+  const showUpdate = () => {
+    switch (router.pathname) {
+      case '/update/phone':
+        return <UpdatePhone />;
+      case '/update/password':
+        return <UpdatePassword />;
+      case '/update/email':
+        return <UpdateEmail />;
+      default:
+        break;
+    }
+  };
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        <UpdatePhone />
+        {showUpdate()}
       </Grid>
     </Grid>
   );

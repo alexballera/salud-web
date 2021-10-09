@@ -2,7 +2,6 @@ import React from 'react';
 
 /// CONTEXT
 import { withAppContext } from '../../context';
-import LayoutBasic from '../../layouts/LayoutBasic';
 /// CONTEXT END
 
 /// MATERIAL - UI
@@ -12,6 +11,10 @@ import LayoutBasic from '../../layouts/LayoutBasic';
 /// SERVICES END
 
 /// OWN COMPONENTS
+import LayoutBasic from '../../layouts/LayoutBasic';
+import UpdateActions from './components/UpdateActions';
+import UpdateContent from './components/UpdateContent';
+import UpdateHeader from './components/UpdateHeader';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
@@ -22,7 +25,20 @@ import LayoutBasic from '../../layouts/LayoutBasic';
 
 const UpdatePassword = (): JSX.Element => {
   return (
-    <LayoutBasic header={<h2>Header</h2>} content={<h2>Contenido</h2>} actions={<h2>Botones</h2>} />
+    <LayoutBasic
+      header={
+        <UpdateHeader
+          title="Nueva contraseña"
+          description="Ingresá tu contraseña anterior y la nueva"
+        />
+      }
+      content={
+        <>
+          <UpdateContent label="Número de teléfono actual" data="(+506) 8888-8888" />
+        </>
+      }
+      actions={<UpdateActions />}
+    />
   );
 };
 

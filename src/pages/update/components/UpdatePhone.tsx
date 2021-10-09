@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import { Form, Formik } from 'formik';
 
 /// CONTEXT
@@ -23,7 +24,6 @@ import { Button, Grid } from '@material-ui/core';
 
 /// STYLES
 import UpdateStyles from '../../../styles/js/UpdatePageStyles.module';
-import { useRouter } from 'next/router';
 /// STYLES END
 
 /// GET SERVICE
