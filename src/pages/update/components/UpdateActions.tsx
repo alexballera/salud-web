@@ -6,15 +6,15 @@ import { useRouter } from 'next/router';
 
 /// MATERIAL - UI
 import { Grid } from '@material-ui/core';
-import UpdatePhone from './UpdatePhone';
-import UpdatePassword from './UpdatePassword';
-import UpdateEmail from './UpdateEmail';
 /// MATERIAL - UI END
 
 /// SERVICES
 /// SERVICES END
 
 /// OWN COMPONENTS
+import UpdatePhone from './UpdatePhone';
+import UpdatePassword from './UpdatePassword';
+import UpdateEmail from './UpdateEmail';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
@@ -25,22 +25,18 @@ import UpdateEmail from './UpdateEmail';
 
 const UpdateActions = (): JSX.Element => {
   const router = useRouter();
-  const showUpdate = () => {
-    switch (router.pathname) {
-      case '/update/phone':
-        return <UpdatePhone />;
-      case '/update/password':
-        return <UpdatePassword />;
-      case '/update/email':
-        return <UpdateEmail />;
-      default:
-        break;
-    }
+  const showUpdate = (key: string): string => {
+    const route = {
+      '/update/phone': <UpdatePhone />,
+      '/update/password': <UpdatePassword />,
+      '/update/email': <UpdateEmail />
+    };
+    return route[key];
   };
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        {showUpdate()}
+        {showUpdate(router.pathname)}
       </Grid>
     </Grid>
   );
