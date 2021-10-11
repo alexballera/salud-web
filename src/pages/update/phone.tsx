@@ -1,4 +1,3 @@
-import { Divider } from '@material-ui/core';
 import React from 'react';
 
 /// CONTEXT
@@ -36,7 +35,6 @@ const UpdatePhone = (): JSX.Element => {
       content={
         <>
           <UpdateContent label="Número de teléfono actual" data="(+506) 8888-8888" />
-          <Divider />
         </>
       }
       actions={<UpdateActions />}

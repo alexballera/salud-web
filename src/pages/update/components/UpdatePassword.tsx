@@ -12,11 +12,12 @@ import { ISignUpBody, signUp } from '../../../services/auth.service';
 
 /// TYPES
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
-import { IFormData, IProps } from '../../../containers/SignUp/index.types';
+import { ICredentialDataProps, IFormData, IProps } from '../../../containers/SignUp/index.types';
 /// TYPES END
 
 /// OWN COMPONENTS
-import ExtraData from '../../../containers/SignUp/components/ExtraData';
+import CredentialData from '../../../containers/SignUp/components/CredentialData';
+import CustomTextField from '../../../components/common/TextField';
 /// OWN COMPONENTS END
 
 /// MATERIAL - UI
@@ -60,10 +61,11 @@ const initialValues: IFormData = {
 };
 
 /// FORM STATES & VALIDATIONS END
-function UpdatePhone({
+function UpdatePassword({
   handleLogin,
-  handleError
-}: InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
+  handleError,
+  handleNotifications
+}: ICredentialDataProps & InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
   const classes = UpdateStyles();
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
@@ -121,7 +123,26 @@ function UpdatePhone({
           <Form autoComplete="off">
             <Grid container item xs={12} md={8} spacing={1}>
               <Grid item xs={12} spacing={1}>
-                <ExtraData updatePhone {...formik} />
+                <CustomTextField
+                  fullWidth
+                  id="password"
+                  name="password"
+                  type="password"
+                  label="Contraseña"
+                  value={formik.values.password}
+                  error={formik.touched.password && Boolean(formik.errors.password)}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  helperText={formik.errors.password}
+                  inputProps={{
+                    maxLength: 16
+                  }}
+                />
+                <CredentialData
+                  handleNotifications={handleNotifications}
+                  updatePassword
+                  {...formik}
+                />
               </Grid>
             </Grid>
             <Grid
@@ -157,4 +178,4 @@ function UpdatePhone({
   );
 }
 
-export default withAppContext(UpdatePhone);
+export default withAppContext(UpdatePassword);
