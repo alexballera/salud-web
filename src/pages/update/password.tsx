@@ -32,11 +32,7 @@ const UpdatePassword = (): JSX.Element => {
           description="Ingresá tu contraseña anterior y la nueva"
         />
       }
-      content={
-        <>
-          <UpdateContent label="Número de teléfono actual" data="(+506) 8888-8888" />
-        </>
-      }
+      content={<UpdateContent />}
       actions={<UpdateActions />}
     />
   );

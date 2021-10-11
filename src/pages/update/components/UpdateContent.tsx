@@ -21,8 +21,8 @@ import UpdateStyles from '../../../styles/js/UpdatePageStyles.module';
 /// FORM STATES & VALIDATIONS END
 
 type Props = {
-  label: string;
-  data: string;
+  label?: string;
+  data?: string;
 };
 
 const UpdateContent = ({ label, data }: Props): JSX.Element => {

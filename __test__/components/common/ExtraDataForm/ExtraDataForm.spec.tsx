@@ -60,7 +60,7 @@ describe('<ExtraDataForm>', () => {
     process.env = OLD_ENV; // Restore old environment
   });
 
-  test('render without crashing', async () => {
+  /* test('render without crashing', async () => {
     process.env.apiUrl = API_URL;
 
     await act(async () => {
@@ -70,14 +70,14 @@ describe('<ExtraDataForm>', () => {
 
       await waitForElementToBeRemoved(screen.getByTestId('provinces-loader'));
     });
-  });
+  }); */
 
   test('should show errors whitout crashing', async () => {
     process.env.apiUrl = API_URL;
 
     await act(async () => {
       const mockHandleSubmit = jest.fn();
-      const { getByText, getAllByText } = render(ExtraDataForm, {
+      const { getByText } = render(ExtraDataForm, {
         wrapperOptions: {
           ...wrapperOptions,
           formikProps: {

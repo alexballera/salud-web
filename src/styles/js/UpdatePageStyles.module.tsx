@@ -1,8 +1,7 @@
-import { Theme } from '@material-ui/core';
 import { createStyles } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
 
-const UpdateStyles = makeStyles((theme: Theme) =>
+const UpdateStyles = makeStyles(() =>
   createStyles({
     headerTitle: {
       color: 'rgba(0, 0, 0, 0.87)',
@@ -32,13 +31,7 @@ const UpdateStyles = makeStyles((theme: Theme) =>
       marginBottom: 24
     },
     containerActions: {
-      bottom: 32,
-      paddingRight: '48px !important',
-      position: 'fixed',
-      width: '100%',
-      [theme.breakpoints.up('md')]: {
-        paddingRight: '40% !important'
-      }
+      marginTop: 24
     }
   })
 );

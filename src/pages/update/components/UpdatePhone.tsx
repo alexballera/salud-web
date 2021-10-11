@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// import _ from 'lodash';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { Form, Formik } from 'formik';
@@ -118,7 +119,11 @@ function UpdatePhone({
       {formik => {
         return (
           <Form autoComplete="off">
-            <ExtraData updatePhone {...formik} />
+            <Grid container item xs={12} md={8} spacing={1}>
+              <Grid item xs={12} spacing={1}>
+                <ExtraData updatePhone {...formik} />
+              </Grid>
+            </Grid>
             <Grid
               container
               item
@@ -127,12 +132,12 @@ function UpdatePhone({
               justify="flex-end"
               className={classes.containerActions}
             >
-              <Grid item xs={6} md={2}>
+              <Grid item xs={6} md={3}>
                 <Button fullWidth variant="outlined" onClick={goBack}>
                   Volver
                 </Button>
               </Grid>
-              <Grid item xs={6} md={2}>
+              <Grid item xs={6} md={3}>
                 <Button
                   fullWidth
                   type="submit"
