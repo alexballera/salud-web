@@ -109,6 +109,7 @@ export type IExtraDataProps = {
 export type ICredentialDataProps = {
   handleNotifications: (props: INotificationProps) => void;
   updatePassword?: boolean;
+  updateEmail?: boolean;
 };
 
 export type ICredentialDataForm = {

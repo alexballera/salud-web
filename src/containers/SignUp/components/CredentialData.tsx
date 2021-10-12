@@ -37,7 +37,8 @@ function CredentialData({
   touched,
   handleBlur,
   handleChange,
-  updatePassword
+  updatePassword,
+  updateEmail
 }: ICredentialDataProps & FormikProps<ICredentialDataForm>): JSX.Element {
   const [inputEmailStates, setInputEmailStates] = useState(initialEmailStates);
   const [termsAndConditionOpen, setTermsAndConditionOpen] = useState(false);
@@ -81,98 +82,103 @@ function CredentialData({
           helperText={errors.email ? errors.email : inputEmailStates.message}
         />
       )}
-      <Input
-        fullWidth
-        id="password"
-        name="password"
-        type="password"
-        label={updatePassword ? 'Contraseña nueva' : 'Contraseña'}
-        value={values.password}
-        error={touched.password && Boolean(errors.password)}
-        onBlur={handleBlur}
-        onChange={handleChange}
-        helperText={errors.password}
-        inputProps={{
-          maxLength: 16
-        }}
-      />
-      <SecurityPasswordIdicator value={values.password} />
-      <Input
-        fullWidth
-        id="confirmPassword"
-        name="confirmPassword"
-        type="password"
-        label={updatePassword ? 'Confirmación de nueva contraseña' : 'Contraseña'}
-        value={values.confirmPassword}
-        error={touched.confirmPassword && Boolean(errors.confirmPassword)}
-        onBlur={handleBlur}
-        onChange={handleChange}
-        helperText={errors.confirmPassword}
-        inputProps={{
-          maxLength: 16
-        }}
-      />
-
-      {!updatePassword && (
-        <FormControl>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  id="termsandconditions"
-                  checked={values.terms}
-                  onChange={handleChange}
-                  name="terms"
-                  color="primary"
-                  style={{ zIndex: 3 }}
-                />
-              }
-              label={
-                <Typography component="label" variant="body1">
-                  Acepto{' '}
-                  <Link
-                    underline="always"
-                    component="span"
-                    variant="body1"
-                    onClick={() => setTermsAndConditionOpen(true)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    términos y condiciones
-                  </Link>
-                </Typography>
-              }
-            />
-            {!values.terms && <FormHelperText error>{errors.terms}</FormHelperText>}
-
-            <FormControlLabel
-              control={
-                <Checkbox
-                  id="consent"
-                  checked={values.services}
-                  onChange={handleChange}
-                  name="services"
-                  color="primary"
-                />
-              }
-              label={
-                <Typography component="label" variant="body1">
-                  Acepto{' '}
-                  <Link
-                    underline="always"
-                    component="span"
-                    variant="body1"
-                    onClick={() => setInformedConsentOpen(true)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    consentimiento informado
-                  </Link>
-                </Typography>
-              }
-            />
-          </FormGroup>
-          {!values.services && <FormHelperText error>{errors.services}</FormHelperText>}
-        </FormControl>
+      {!updateEmail && (
+        <>
+          <Input
+            fullWidth
+            id="password"
+            name="password"
+            type="password"
+            label={updatePassword ? 'Contraseña nueva' : 'Contraseña'}
+            value={values.password}
+            error={touched.password && Boolean(errors.password)}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            helperText={errors.password}
+            inputProps={{
+              maxLength: 16
+            }}
+          />
+          <SecurityPasswordIdicator value={values.password} />
+          <Input
+            fullWidth
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            label={updatePassword ? 'Confirmación de nueva contraseña' : 'Contraseña'}
+            value={values.confirmPassword}
+            error={touched.confirmPassword && Boolean(errors.confirmPassword)}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            helperText={errors.confirmPassword}
+            inputProps={{
+              maxLength: 16
+            }}
+          />
+        </>
       )}
+
+      {!updatePassword ||
+        (!updateEmail && (
+          <FormControl>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    id="termsandconditions"
+                    checked={values.terms}
+                    onChange={handleChange}
+                    name="terms"
+                    color="primary"
+                    style={{ zIndex: 3 }}
+                  />
+                }
+                label={
+                  <Typography component="label" variant="body1">
+                    Acepto{' '}
+                    <Link
+                      underline="always"
+                      component="span"
+                      variant="body1"
+                      onClick={() => setTermsAndConditionOpen(true)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      términos y condiciones
+                    </Link>
+                  </Typography>
+                }
+              />
+              {!values.terms && <FormHelperText error>{errors.terms}</FormHelperText>}
+
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    id="consent"
+                    checked={values.services}
+                    onChange={handleChange}
+                    name="services"
+                    color="primary"
+                  />
+                }
+                label={
+                  <Typography component="label" variant="body1">
+                    Acepto{' '}
+                    <Link
+                      underline="always"
+                      component="span"
+                      variant="body1"
+                      onClick={() => setInformedConsentOpen(true)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      consentimiento informado
+                    </Link>
+                  </Typography>
+                }
+              />
+            </FormGroup>
+            {!values.services && <FormHelperText error>{errors.services}</FormHelperText>}
+          </FormControl>
+        ))}
 
       <Modal open={termsAndConditionOpen} onClose={() => setTermsAndConditionOpen(false)}>
         <TermsAndConditions />
