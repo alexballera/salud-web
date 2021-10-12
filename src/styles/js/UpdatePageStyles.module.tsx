@@ -29,9 +29,6 @@ const UpdateStyles = makeStyles(() =>
       fontSize: 16,
       fontWeight: 'normal',
       marginBottom: 24
-    },
-    containerActions: {
-      marginTop: 24
     }
   })
 );
