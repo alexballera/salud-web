@@ -12,6 +12,9 @@ import LayoutBasic from '../../layouts/LayoutBasic';
 /// SERVICES END
 
 /// OWN COMPONENTS
+import UpdateActions from './components/UpdateActions';
+import UpdateContent from './components/UpdateContent';
+import UpdateHeader from './components/UpdateHeader';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
@@ -21,7 +24,16 @@ import LayoutBasic from '../../layouts/LayoutBasic';
 /// FORM STATES & VALIDATIONS END
 
 const UpdateEmail = (): JSX.Element => (
-  <LayoutBasic header={<h2>Header</h2>} content={<h2>Contenido</h2>} actions={<h2>Botones</h2>} />
+  <LayoutBasic
+    header={
+      <UpdateHeader
+        title="Cambiar correo electrónico"
+        description="Ingresá tu nuevo correo electrónico para actualizarlo en la plataforma"
+      />
+    }
+    content={<UpdateContent label="Correo electrónico actual" data="mmorales@gmail.com" />}
+    actions={<UpdateActions />}
+  />
 );
 
 export default withAppContext(UpdateEmail);

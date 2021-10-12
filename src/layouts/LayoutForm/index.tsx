@@ -18,7 +18,7 @@ function LayoutForm({ form, buttonLeft, buttonRight }: IProps): JSX.Element {
   return (
     <>
       <Grid container item xs={12} md={8} spacing={1}>
-        <Grid item xs={12} spacing={1}>
+        <Grid item xs={12}>
           {form}
         </Grid>
       </Grid>
