@@ -16,15 +16,15 @@ import { IFormData, IProps } from '../../../containers/SignUp/index.types';
 /// TYPES END
 
 /// OWN COMPONENTS
+import LayoutForm from '../../../layouts/LayoutForm';
 import ExtraData from '../../../containers/SignUp/components/ExtraData';
 /// OWN COMPONENTS END
 
 /// MATERIAL - UI
-import { Button, Grid } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 /// MATERIAL - UI END
 
 /// STYLES
-import UpdateStyles from '../../../styles/js/UpdatePageStyles.module';
 /// STYLES END
 
 /// GET SERVICE
@@ -64,7 +64,6 @@ function UpdatePhone({
   handleLogin,
   handleError
 }: InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
-  const classes = UpdateStyles();
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -119,25 +118,14 @@ function UpdatePhone({
       {formik => {
         return (
           <Form autoComplete="off">
-            <Grid container item xs={12} md={8} spacing={1}>
-              <Grid item xs={12} spacing={1}>
-                <ExtraData updatePhone {...formik} />
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              item
-              xs={12}
-              spacing={1}
-              justify="flex-end"
-              className={classes.containerActions}
-            >
-              <Grid item xs={6} md={3}>
+            <LayoutForm
+              form={<ExtraData updatePhone {...formik} />}
+              buttonLeft={
                 <Button fullWidth variant="outlined" onClick={goBack}>
                   Volver
                 </Button>
-              </Grid>
-              <Grid item xs={6} md={3}>
+              }
+              buttonRight={
                 <Button
                   fullWidth
                   type="submit"
@@ -148,8 +136,8 @@ function UpdatePhone({
                 >
                   Continuar
                 </Button>
-              </Grid>
-            </Grid>
+              }
+            />
           </Form>
         );
       }}
