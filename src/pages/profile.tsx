@@ -16,7 +16,6 @@ import { AvatarProfile } from '../containers/Profile/AvatarProfile';
 import { CredentialsProfile } from '../containers/Profile/CredentialsProfile';
 import { LegalProfile } from '../containers/Profile/LegalProfile';
 import { PersonalProfile } from '../containers/Profile/PersonalProfile';
-import { SecondaryContactsProfile } from '../containers/Profile/SecondaryContactsProfile';
 import LayoutContent from '../layouts/LayoutContent';
 /// OWN COMPONENTS END
 
@@ -57,8 +56,6 @@ export default function ProfilePage(): JSX.Element {
             <LegalProfile />
           </Hidden>
           <Hidden smDown>
-            <SecondaryContactsProfile />
-            <Divider className={classes.divider} />
             <Box>
               <Link href="/logout" passHref>
                 <Button
