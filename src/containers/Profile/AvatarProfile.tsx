@@ -3,6 +3,7 @@ import React from 'react';
 /// MATERIAL UI
 import { Avatar, Grid, IconButton, Typography } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
+import PersonIcon from '@material-ui/icons/Person';
 /// MATERIAL UI END
 
 /// STYLES & TYPES
@@ -21,12 +22,17 @@ export const AvatarProfile = ({ fullName, documentNumber }: IProps): JSX.Element
   return (
     <Grid container className={classes.avatarContainer}>
       <Grid item xs={4} md={12}>
+        {/* TODO conectar con avatar de usuario
         <Avatar
           className={classes.imgAvatar}
           alt="Remy Sharp"
           src="https://place-hold.it/300"
           variant="square"
         />
+        */}
+        <Avatar className={classes.imgAvatar} variant="square">
+          <PersonIcon fontSize="large" />
+        </Avatar>
         <IconButton
           aria-label="delete"
           className={classes.buttonIcon}

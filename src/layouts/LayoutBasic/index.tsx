@@ -33,9 +33,11 @@ const LayoutBasic = ({ header, content, actions }: LCProps): JSX.Element => {
         <Grid item xs={12} md={8}>
           {header}
         </Grid>
-        <Grid item xs={12} md={8}>
-          {content}
-        </Grid>
+        {content && (
+          <Grid item xs={12} md={8}>
+            {content}
+          </Grid>
+        )}
         <Grid item xs={12}>
           <Divider />
         </Grid>
