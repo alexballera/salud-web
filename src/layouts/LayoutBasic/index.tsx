@@ -1,7 +1,7 @@
 import React from 'react';
 
 /// MATERIAL - UI
-import { Box, Divider, Grid, Theme } from '@material-ui/core';
+import { Box, Divider, Grid, Hidden, Theme } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 /// MATERIAL - UI END
 
@@ -28,24 +28,36 @@ type LCProps = {
 const LayoutBasic = ({ header, content, actions }: LCProps): JSX.Element => {
   const classes = useStyle();
   return (
-    <Box p={3} className={classes.container}>
-      <Grid container item xs={12}>
-        <Grid item xs={12} md={8}>
-          {header}
-        </Grid>
-        {content && (
+    <>
+      <Box p={3}>
+        <Grid container item xs={12} className={classes.container}>
           <Grid item xs={12} md={8}>
-            {content}
+            {header}
           </Grid>
-        )}
-        <Grid item xs={12}>
-          <Divider />
+          {content && (
+            <Grid item xs={12} md={8}>
+              {content}
+            </Grid>
+          )}
+          <Hidden mdUp>
+            <Grid item xs={12}>
+              <Divider />
+            </Grid>
+            <Grid item xs={12}>
+              {actions}
+            </Grid>
+          </Hidden>
         </Grid>
-        <Grid item xs={12}>
-          {actions}
+      </Box>
+
+      <Hidden smDown>
+        <Grid container item xs={12} className={classes.container}>
+          <Grid item xs={12}>
+            {actions}
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Hidden>
+    </>
   );
 };
 export default LayoutBasic;

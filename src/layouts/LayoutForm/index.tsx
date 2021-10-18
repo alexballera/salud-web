@@ -1,7 +1,7 @@
 import React from 'react';
 
 /// MATERIAL - UI
-import { Grid } from '@material-ui/core';
+import { Divider, Grid, Hidden } from '@material-ui/core';
 /// MATERIAL - UI END
 
 /// STYLES
@@ -28,6 +28,12 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up('md')]: {
         paddingRight: '35%'
       }
+    },
+    divider: {
+      bottom: 110,
+      position: 'absolute',
+      left: 0,
+      width: '100%'
     }
   })
 );
@@ -42,6 +48,9 @@ const LayoutForm = ({ form, buttonLeft, buttonRight }: IProps): JSX.Element => {
           {form}
         </Grid>
       </Grid>
+      <Hidden smDown>
+        <Divider className={classes.divider} />
+      </Hidden>
       <Grid
         container
         item
