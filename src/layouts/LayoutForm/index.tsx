@@ -30,6 +30,12 @@ const useStyles = makeStyles((theme: Theme) =>
         borderTop: '1px solid rgba(0, 0, 0, 0.12)',
         paddingRight: '15%'
       }
+    },
+    buttonLeftContainer: {
+      paddingLeft: '0px !important'
+    },
+    buttonRightContainer: {
+      paddingRight: '0px !important'
     }
   })
 );
@@ -52,10 +58,10 @@ const LayoutForm = ({ form, buttonLeft, buttonRight }: IProps): JSX.Element => {
         justify="flex-end"
         className={classes.containerButton}
       >
-        <Grid item xs={6} md={2}>
+        <Grid item xs={6} md={2} className={classes.buttonLeftContainer}>
           {buttonLeft}
         </Grid>
-        <Grid item xs={6} md={2}>
+        <Grid item xs={6} md={2} className={classes.buttonRightContainer}>
           {buttonRight}
         </Grid>
       </Grid>
