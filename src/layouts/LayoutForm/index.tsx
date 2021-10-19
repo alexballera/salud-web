@@ -16,24 +16,19 @@ type IProps = {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    containerForm: { marginBottom: 64 },
+    containerForm: { marginBottom: 96 },
     containerButton: {
       backgroundColor: 'white',
-      bottom: 4,
       paddingBottom: 24,
       paddingTop: 24,
-      paddingRight: 46,
-      position: 'fixed',
       zIndex: 1000,
       [theme.breakpoints.up('md')]: {
-        paddingRight: '35%'
+        borderTop: '1px solid rgba(0, 0, 0, 0.12)',
+        bottom: 6,
+        left: 4,
+        position: 'fixed',
+        paddingRight: '15%'
       }
-    },
-    divider: {
-      bottom: 110,
-      position: 'absolute',
-      left: 0,
-      width: '100%'
     }
   })
 );
@@ -48,9 +43,6 @@ const LayoutForm = ({ form, buttonLeft, buttonRight }: IProps): JSX.Element => {
           {form}
         </Grid>
       </Grid>
-      <Hidden smDown>
-        <Divider className={classes.divider} />
-      </Hidden>
       <Grid
         container
         item
@@ -59,10 +51,10 @@ const LayoutForm = ({ form, buttonLeft, buttonRight }: IProps): JSX.Element => {
         justify="flex-end"
         className={classes.containerButton}
       >
-        <Grid item xs={6} md={3}>
+        <Grid item xs={6} md={2}>
           {buttonLeft}
         </Grid>
-        <Grid item xs={6} md={3}>
+        <Grid item xs={6} md={2}>
           {buttonRight}
         </Grid>
       </Grid>

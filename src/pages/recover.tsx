@@ -67,7 +67,6 @@ function RecoverView(props: IProps): JSX.Element {
       values.newPasswordConfirm
     )
       .then(res => {
-        console.log({ res });
         if (res.data.result.passwordChanged === 1) {
           router.replace('/');
           props.handleError(true, 'La contraseña se ha cambiado correctamente.', 'success');
