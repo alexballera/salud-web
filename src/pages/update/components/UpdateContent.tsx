@@ -29,16 +29,24 @@ const UpdateContent = ({ label, data }: Props): JSX.Element => {
   const classes = UpdateStyles();
   return (
     <>
-      <Typography
-        data-testid="title-informed-consent"
-        className={classes.contentLabel}
-        variant="h2"
-      >
-        {label}
-      </Typography>
-      <Typography data-testid="title-informed-consent" className={classes.contentData} variant="h6">
-        {data}
-      </Typography>
+      {label && (
+        <Typography
+          data-testid="title-informed-consent"
+          className={classes.contentLabel}
+          variant="h2"
+        >
+          {label}
+        </Typography>
+      )}
+      {data && (
+        <Typography
+          data-testid="title-informed-consent"
+          className={classes.contentData}
+          variant="h6"
+        >
+          {data}
+        </Typography>
+      )}
     </>
   );
 };

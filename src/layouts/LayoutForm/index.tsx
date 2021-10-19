@@ -16,7 +16,12 @@ type IProps = {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    containerForm: { marginBottom: 96 },
+    containerForm: {
+      marginBottom: 16,
+      [theme.breakpoints.up('md')]: {
+        containerForm: { marginBottom: 96 }
+      }
+    },
     containerButton: {
       backgroundColor: 'white',
       paddingBottom: 24,
