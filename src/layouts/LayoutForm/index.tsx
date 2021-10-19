@@ -1,7 +1,7 @@
 import React from 'react';
 
 /// MATERIAL - UI
-import { Divider, Grid, Hidden } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 /// MATERIAL - UI END
 
 /// STYLES
@@ -24,14 +24,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     containerButton: {
       backgroundColor: 'white',
-      paddingBottom: 24,
-      paddingTop: 24,
+      padding: 24,
       zIndex: 1000,
+      position: 'fixed',
+      bottom: 6,
+      left: 4,
       [theme.breakpoints.up('md')]: {
         borderTop: '1px solid rgba(0, 0, 0, 0.12)',
-        bottom: 6,
-        left: 4,
-        position: 'fixed',
         paddingRight: '15%'
       }
     }
