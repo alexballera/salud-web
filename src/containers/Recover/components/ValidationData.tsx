@@ -125,7 +125,6 @@ function ValidationData({
       return;
     }
 
-    console.log({ values });
     if (values.pinCode.length === 6) {
       const confirmPinCode = async () => {
         try {
