@@ -17,18 +17,15 @@ type IProps = {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     containerForm: {
-      marginBottom: 16,
-      [theme.breakpoints.up('md')]: {
-        containerForm: { marginBottom: 96 }
-      }
+      marginBottom: 96
     },
     containerButton: {
       backgroundColor: 'white',
-      padding: 24,
-      zIndex: 1000,
-      position: 'fixed',
       bottom: 6,
       left: 4,
+      padding: 24,
+      position: 'fixed',
+      zIndex: 1000,
       [theme.breakpoints.up('md')]: {
         borderTop: '1px solid rgba(0, 0, 0, 0.12)',
         paddingRight: '15%'
