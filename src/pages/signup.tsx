@@ -22,7 +22,6 @@ import { Button, Box, Grid } from '@material-ui/core';
 /// MATERIAL - UI END
 
 /// STYLES
-import '../styles/scss/Signup.module.scss';
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 /// STYLES END
 

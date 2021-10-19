@@ -27,7 +27,7 @@ function StepPanel({ data, index, totalSteps }: IStepPanelProps) {
       aria-labelledby={`full-width-step-${index}`}
     >
       <Grid container className={classes.container}>
-        <Grid item xs={12} md={8} spacing={1} className={classes.containerForm}>
+        <Grid item xs={12} md={8} className={classes.containerForm}>
           <Box p={3}>
             <Typography className={classes.stepIndicator} variant="h5" component="h5">
               Paso {index + 1} de {totalSteps}
