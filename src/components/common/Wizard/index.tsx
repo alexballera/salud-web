@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Stepper from '@material-ui/core/Stepper';
 import StepLabel from '@material-ui/core/StepLabel';
 import Typography from '@material-ui/core/Typography';
+import { Grid } from '@material-ui/core';
 import wizardStyles from './styles.module';
 /// MATERIAL-UI END
 
@@ -25,16 +26,20 @@ function StepPanel({ data, index, totalSteps }: IStepPanelProps) {
       role="steppanel"
       aria-labelledby={`full-width-step-${index}`}
     >
-      <Box p={3}>
-        <Typography className={classes.stepIndicator} variant="h5" component="h5">
-          Paso {index + 1} de {totalSteps}
-        </Typography>
-        <Typography variant="h5" component="h5" gutterBottom>
-          {data.title}
-        </Typography>
-        <Typography className="mb-4">{data.description}</Typography>
-        {data.component}
-      </Box>
+      <Grid container className={classes.container}>
+        <Grid item xs={12} md={8} spacing={1} className={classes.containerForm}>
+          <Box p={3}>
+            <Typography className={classes.stepIndicator} variant="h5" component="h5">
+              Paso {index + 1} de {totalSteps}
+            </Typography>
+            <Typography variant="h5" component="h5" gutterBottom>
+              {data.title}
+            </Typography>
+            <Typography className="mb-4">{data.description}</Typography>
+            {data.component}
+          </Box>
+        </Grid>
+      </Grid>
     </div>
   );
 }
