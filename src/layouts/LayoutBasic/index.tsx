@@ -10,12 +10,21 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
+    wrapper: {
+      paddingBottom: 0
+    },
+    wrapperBottom: {
+      paddingBottom: 0,
+      paddingTop: 0
+    },
     container: {
-      // height: 'calc(100vh - 64px)',
       [theme.breakpoints.up('md')]: {
         paddingLeft: '20%',
         paddingRight: '20%'
       }
+    },
+    divider: {
+      marginTop: 16
     }
   })
 );
@@ -29,7 +38,7 @@ const LayoutBasic = ({ header, content, actions }: LCProps): JSX.Element => {
   const classes = useStyle();
   return (
     <>
-      <Box p={3}>
+      <Box p={3} className={classes.wrapper}>
         <Grid container item xs={12} className={classes.container}>
           <Grid item xs={12} md={8}>
             {header}
@@ -41,7 +50,7 @@ const LayoutBasic = ({ header, content, actions }: LCProps): JSX.Element => {
           )}
           <Hidden mdUp>
             <Grid item xs={12}>
-              <Divider />
+              <Divider className={classes.divider} />
             </Grid>
             <Grid item xs={12}>
               {actions}
@@ -51,11 +60,13 @@ const LayoutBasic = ({ header, content, actions }: LCProps): JSX.Element => {
       </Box>
 
       <Hidden smDown>
-        <Grid container item xs={12} className={classes.container}>
-          <Grid item xs={12}>
-            {actions}
+        <Box p={3} className={classes.wrapperBottom}>
+          <Grid container item xs={12} className={classes.container}>
+            <Grid item xs={12}>
+              {actions}
+            </Grid>
           </Grid>
-        </Grid>
+        </Box>
       </Hidden>
     </>
   );

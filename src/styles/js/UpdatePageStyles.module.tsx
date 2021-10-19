@@ -15,8 +15,7 @@ const UpdateStyles = makeStyles(() =>
       color: 'rgba(0, 0, 0, 0.6)',
       fontSize: 14,
       fontWeight: 'normal',
-      letterSpacing: 0.15,
-      marginBottom: 32
+      letterSpacing: 0.15
     },
     contentLabel: {
       color: 'rgba(0, 0, 0, 0.6)',
@@ -28,7 +27,7 @@ const UpdateStyles = makeStyles(() =>
       color: 'rgba(0, 0, 0, 0.87)',
       fontSize: 16,
       fontWeight: 'normal',
-      marginBottom: 24
+      marginTop: 24
     }
   })
 );
