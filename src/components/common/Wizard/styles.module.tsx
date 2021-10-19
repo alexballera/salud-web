@@ -4,6 +4,15 @@ const wizardStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%'
   },
+  containerForm: {
+    marginBottom: 96
+  },
+  container: {
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: '20%',
+      paddingRight: '20%'
+    }
+  },
   backButton: {
     marginRight: theme.spacing(1)
   },

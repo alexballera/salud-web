@@ -23,6 +23,8 @@ import { Button, Box, Grid } from '@material-ui/core';
 
 /// STYLES
 import '../styles/scss/Signup.module.scss';
+import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
+/// STYLES END
 
 /// GET SERVICE
 export const getStaticProps: GetStaticProps = async () => {
@@ -62,12 +64,37 @@ const stepValidations = [
   CredentialDataForm.validations.schema
 ];
 /// FORM STATES & VALIDATIONS END
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    containerButton: {
+      backgroundColor: 'white',
+      bottom: 6,
+      left: 4,
+      padding: 36,
+      position: 'fixed',
+      zIndex: 1000,
+      [theme.breakpoints.up('md')]: {
+        borderTop: '1px solid rgba(0, 0, 0, 0.12)',
+        paddingRight: '15%'
+      }
+    },
+    buttonLeftContainer: {
+      paddingLeft: '0px !important'
+    },
+    buttonRightContainer: {
+      paddingRight: '0px !important'
+    }
+  })
+);
+
 function SignUpView({
   handleLogin,
   handleError,
   documentTypeOptions,
   handleNotifications
 }: InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
+  const classes = useStyles();
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [currentStep, setCurrentState] = useState<number>(0);
@@ -117,77 +144,80 @@ function SignUpView({
   };
 
   return (
-    <section className="container signup-wrapper">
-      <Formik
-        validateOnMount
-        onSubmit={(values, formik) => {
-          formik.setTouched({});
-          onSubmit(values);
-        }}
-        initialValues={initialValues}
-        validationSchema={stepValidations[currentStep]}
-      >
-        {formik => {
-          const dataSource = [
-            {
-              title: PersonalDataForm.title,
-              description: PersonalDataForm.description,
-              component: (
-                <PersonalDataForm
-                  handleNotifications={handleNotifications}
-                  documentTypesOptions={documentTypeOptions}
-                  {...formik}
-                />
-              )
-            },
-            {
-              title: ExtraDataForm.title,
-              description: ExtraDataForm.description,
-              component: <ExtraDataForm {...formik} />
-            },
-            {
-              title: CredentialDataForm.title,
-              description: CredentialDataForm.description,
-              component: (
-                <CredentialDataForm handleNotifications={handleNotifications} {...formik} />
-              )
-            }
-          ];
-          return (
-            <Form autoComplete="off">
-              <Wizard
-                footer={
-                  <Box p={3}>
-                    <Grid container spacing={1}>
-                      <Grid item xs={6} md={6}>
-                        <Button fullWidth onClick={goBack} variant="outlined">
-                          Volver
-                        </Button>
-                      </Grid>
-                      <Grid item xs={6} md={6}>
-                        <Button
-                          fullWidth
-                          type="submit"
-                          color="primary"
-                          variant="contained"
-                          disabled={loading}
-                          // TODO verificar
-                          // disabled={!_.isEmpty(formik.errors) || loading}
-                        >
-                          {currentStep === dataSource.length ? 'Enviar' : 'Continuar'}
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                }
-                activeStep={currentStep}
-                dataSource={dataSource}
+    <Formik
+      validateOnMount
+      onSubmit={(values, formik) => {
+        formik.setTouched({});
+        onSubmit(values);
+      }}
+      initialValues={initialValues}
+      validationSchema={stepValidations[currentStep]}
+    >
+      {formik => {
+        const dataSource = [
+          {
+            title: PersonalDataForm.title,
+            description: PersonalDataForm.description,
+            component: (
+              <PersonalDataForm
+                handleNotifications={handleNotifications}
+                documentTypesOptions={documentTypeOptions}
+                {...formik}
               />
-            </Form>
-          );
-        }}
-      </Formik>
-    </section>
+            )
+          },
+          {
+            title: ExtraDataForm.title,
+            description: ExtraDataForm.description,
+            component: <ExtraDataForm {...formik} />
+          },
+          {
+            title: CredentialDataForm.title,
+            description: CredentialDataForm.description,
+            component: <CredentialDataForm handleNotifications={handleNotifications} {...formik} />
+          }
+        ];
+        return (
+          <Form autoComplete="off">
+            <Wizard
+              footer={
+                <Box p={3}>
+                  <Grid
+                    container
+                    item
+                    xs={12}
+                    spacing={1}
+                    justify="flex-end"
+                    className={classes.containerButton}
+                  >
+                    <Grid item xs={6} md={2} className={classes.buttonLeftContainer}>
+                      <Button fullWidth onClick={goBack} variant="outlined">
+                        Volver
+                      </Button>
+                    </Grid>
+                    <Grid item xs={6} md={2} className={classes.buttonRightContainer}>
+                      <Button
+                        fullWidth
+                        type="submit"
+                        color="primary"
+                        variant="contained"
+                        disabled={loading}
+                        // TODO verificar
+                        // disabled={!_.isEmpty(formik.errors) || loading}
+                      >
+                        {currentStep === dataSource.length ? 'Enviar' : 'Continuar'}
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Box>
+              }
+              activeStep={currentStep}
+              dataSource={dataSource}
+            />
+          </Form>
+        );
+      }}
+    </Formik>
   );
 }
 

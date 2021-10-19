@@ -38,26 +38,30 @@ const LayoutBasic = ({ header, content, actions }: LCProps): JSX.Element => {
   const classes = useStyle();
   return (
     <>
-      <Box p={3} className={classes.wrapper}>
-        <Grid container item xs={12} className={classes.container}>
-          <Grid item xs={12} md={8}>
-            {header}
+      {(header || content) && (
+        <Box p={3} className={classes.wrapper}>
+          <Grid container item xs={12} className={classes.container}>
+            {header && (
+              <Grid item xs={12} md={8}>
+                {header}
+              </Grid>
+            )}
+            {content && (
+              <Grid item xs={12} md={8}>
+                {content}
+              </Grid>
+            )}
+            <Hidden mdUp>
+              <Grid item xs={12}>
+                <Divider className={classes.divider} />
+              </Grid>
+              <Grid item xs={12}>
+                {actions}
+              </Grid>
+            </Hidden>
           </Grid>
-          {content && (
-            <Grid item xs={12} md={8}>
-              {content}
-            </Grid>
-          )}
-          <Hidden mdUp>
-            <Grid item xs={12}>
-              <Divider className={classes.divider} />
-            </Grid>
-            <Grid item xs={12}>
-              {actions}
-            </Grid>
-          </Hidden>
-        </Grid>
-      </Box>
+        </Box>
+      )}
 
       <Hidden smDown>
         <Box p={3} className={classes.wrapperBottom}>
