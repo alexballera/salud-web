@@ -6,10 +6,12 @@ import { Typography } from '@material-ui/core';
 
 /// STYLES & TYPES
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 /// STYLES & TYPES END
 
 type IProps = {
   title: string;
+  subTitle?: boolean;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -24,14 +26,27 @@ const useStyles = makeStyles((theme: Theme) =>
         fontWeight: 400,
         marginBottom: 45
       }
+    },
+    subTitle: {
+      color: 'rgba(0, 0, 0, 0.87)',
+      fontSize: 16,
+      fontWeight: 'normal',
+      marginBottom: 8,
+      marginTop: 8
     }
   })
 );
 
-export const TitleContent = ({ title }: IProps): JSX.Element => {
+export const TitleContent = ({ title, subTitle }: IProps): JSX.Element => {
   const classes = useStyles();
   return (
-    <Typography variant="h2" className={classes.title}>
+    <Typography
+      variant="h2"
+      className={clsx({
+        [classes.title]: !subTitle,
+        [classes.subTitle]: subTitle
+      })}
+    >
       {title}
     </Typography>
   );

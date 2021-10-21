@@ -19,6 +19,7 @@ const useStyles = makeStyles(() =>
 
 export type ITitle = {
   title: string;
+  titleUppercase?: boolean;
   linkText?: string;
   onClickLink?;
   data?: string;
