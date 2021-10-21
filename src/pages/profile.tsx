@@ -11,7 +11,7 @@ import { getPersonalData, IPersonalData } from '../services/getPersonalData.serv
 /// SERVICES END
 
 /// OWN COMPONENTS
-import { TitleProfile } from '../containers/Profile/TitleProfile';
+import { TitleContent } from '../components/common/TitleContent';
 import { AvatarProfile } from '../containers/Profile/AvatarProfile';
 import { CredentialsProfile } from '../containers/Profile/CredentialsProfile';
 import { LegalProfile } from '../containers/Profile/LegalProfile';
@@ -37,7 +37,7 @@ export default function ProfilePage(): JSX.Element {
     .catch(err => console.log(err));
   return (
     <LayoutContent
-      title={<TitleProfile />}
+      title={<TitleContent title="Perfil" />}
       leftContent={
         <>
           <AvatarProfile fullName={fullName} documentNumber={documentNumber} />

@@ -11,13 +11,17 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       color: 'rgba(0, 0, 0, 0.6)',
       fontSize: 14,
-      fontWeight: 'normal',
-      marginBottom: 4
+      fontWeight: 'normal'
+    },
+    titleUppercase: {
+      color: 'rgba(0, 0, 0, 0.87)',
+      textTransform: 'uppercase'
     },
     data: {
       color: 'rgba(0, 0, 0, 0.87)',
       fontSize: 16,
-      fontWeight: 'normal'
+      fontWeight: 'normal',
+      marginTop: 4
     },
     titleRelationship: {
       color: 'rgba(0, 0, 0, 0.87)'
@@ -47,6 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const FieldTextData = ({
   title,
+  titleUppercase,
   linkText,
   onClickLink,
   data,
@@ -62,20 +67,23 @@ export const FieldTextData = ({
           variant="h2"
           className={clsx({
             [classes.title]: true,
-            [classes.titleRelationship]: relationship
+            [classes.titleRelationship]: relationship,
+            [classes.titleUppercase]: titleUppercase
           })}
         >
           {title}
         </Typography>
-        <Typography
-          variant="h2"
-          className={clsx({
-            [classes.data]: true,
-            [classes.dataRelationship]: relationship
-          })}
-        >
-          {data}
-        </Typography>
+        {data && (
+          <Typography
+            variant="h2"
+            className={clsx({
+              [classes.data]: true,
+              [classes.dataRelationship]: relationship
+            })}
+          >
+            {data}
+          </Typography>
+        )}
       </Grid>
       {linkText && (
         <Grid container item xs={3} justify="flex-end">
