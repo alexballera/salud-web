@@ -12,11 +12,11 @@ const MenuStyles = makeStyles({
   item: {
     marginBottom: 8,
     '&:hover': {
-      color: theme.palette.secondary.light,
+      color: theme.palette.secondary.main,
       backgroundColor: '#DAF0F0',
 
       '&>.MuiListItemIcon-root': {
-        color: theme.palette.secondary.light
+        color: theme.palette.secondary.main
       }
     }
   },

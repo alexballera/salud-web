@@ -9,6 +9,7 @@ export const primaryContrastTextColor = '#ffffff';
 export const secondaryLightColor = '#56c8d8';
 export const secondaryMainColor = '#0097a7';
 export const secondaryDarkColor = '#006978';
+export const secondaryBackgroundLightColor = '#DAF0F0';
 export const secondaryContrastTextColor = '#ffffff';
 export const activeActionColor = 'rgba(0, 0, 0, 0.54)';
 export const hoverActionColor = 'rgba(0, 0, 0, 0.04)';
@@ -45,6 +46,12 @@ const defaultTheme: ThemeOptions = {
     MuiFormHelperText: {
       contained: {
         margin: '0px !important'
+      }
+    },
+    MuiChip: {
+      colorSecondary: {
+        color: secondaryMainColor,
+        backgroundColor: secondaryBackgroundLightColor
       }
     }
   }
