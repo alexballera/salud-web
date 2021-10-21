@@ -2,17 +2,6 @@ import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 
 const ProfileStyles = makeStyles((theme: Theme) =>
   createStyles({
-    title: {
-      color: 'rgba(0, 0, 0, 0.87)',
-      fontSize: 20,
-      fontWeight: 500,
-      marginBottom: 16,
-      [theme.breakpoints.up('md')]: {
-        fontSize: 42,
-        fontWeight: 400,
-        marginBottom: 45
-      }
-    },
     divider: {
       marginBottom: 16,
       marginTop: 34
