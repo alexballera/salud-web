@@ -31,6 +31,12 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up('md')]: {
         marginTop: 24
       }
+    },
+    chip: {
+      marginRight: 8
+    },
+    contentContainer: {
+      marginTop: 7
     }
   })
 );
@@ -57,13 +63,18 @@ export default function PreferencesPage(): JSX.Element {
               href="/preferences/notifications"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className={classes.contentContainer}>
             <TitleContent title="Publicidad" subTitle />
-            <Chip label="Email" color="secondary" />
-            <Chip label="SMS" color="secondary" />
+            <Chip label="Email" color="secondary" className={classes.chip} />
+            <Chip label="SMS" color="secondary" className={classes.chip} />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className={classes.contentContainer}>
             <TitleContent title="Recordatorios" subTitle />
+            <Chip label="Email" color="secondary" className={classes.chip} />
+          </Grid>
+
+          <Grid item xs={12} className={classes.contentContainer}>
+            <Divider className={classes.divider} />
           </Grid>
         </Grid>
       </Grid>
