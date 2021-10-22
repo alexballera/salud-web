@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import theme from '../../../styles/js/theme';
+import theme, { secondaryBackgroundLightColor } from '../../../styles/js/theme';
 
 const MenuStyles = makeStyles({
   list: {
@@ -13,7 +13,7 @@ const MenuStyles = makeStyles({
     marginBottom: 8,
     '&:hover': {
       color: theme.palette.secondary.main,
-      backgroundColor: '#DAF0F0',
+      backgroundColor: secondaryBackgroundLightColor,
 
       '&>.MuiListItemIcon-root': {
         color: theme.palette.secondary.main

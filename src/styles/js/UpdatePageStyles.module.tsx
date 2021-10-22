@@ -21,13 +21,13 @@ const UpdateStyles = makeStyles(() =>
       color: 'rgba(0, 0, 0, 0.6)',
       fontSize: 14,
       fontWeight: 'normal',
-      marginBottom: 8
+      marginBottom: 8,
+      marginTop: 32
     },
     contentData: {
       color: 'rgba(0, 0, 0, 0.87)',
       fontSize: 16,
-      fontWeight: 'normal',
-      marginTop: 24
+      fontWeight: 'normal'
     }
   })
 );

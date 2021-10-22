@@ -27,9 +27,14 @@ const Transition = React.forwardRef(function Transition(
 type IAction = {
   noActionPathNames: Array<string>;
   exitButtonPathNames: Array<string>;
+  backButtonPathNames: Array<string>;
 };
 
-const ActionButtons = ({ noActionPathNames, exitButtonPathNames }: IAction): JSX.Element => {
+const ActionButtons = ({
+  noActionPathNames,
+  exitButtonPathNames,
+  backButtonPathNames
+}: IAction): JSX.Element => {
   const classes = navbarStyles();
   const router = useRouter();
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -37,6 +42,21 @@ const ActionButtons = ({ noActionPathNames, exitButtonPathNames }: IAction): JSX
   useEffect(() => {
     setDialogOpen(false);
   }, [router]);
+
+  // Back buttons
+  if (backButtonPathNames.includes(router.pathname)) {
+    return (
+      <Button
+        data-testid="exit-button"
+        variant="text"
+        onClick={() => router.back()}
+        endIcon={<CloseIcon />}
+        className={classes.button}
+      >
+        Salir
+      </Button>
+    );
+  }
 
   // Exit buttons
   if (exitButtonPathNames.includes(router.pathname)) {

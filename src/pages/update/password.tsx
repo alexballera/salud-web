@@ -26,6 +26,7 @@ import UpdateHeader from './components/UpdateHeader';
 const UpdatePassword = (): JSX.Element => {
   return (
     <LayoutBasic
+      contentDivider
       header={
         <UpdateHeader
           title="Nueva contraseña"
@@ -33,7 +34,7 @@ const UpdatePassword = (): JSX.Element => {
         />
       }
       content={<UpdateContent />}
-      actions={<UpdateActions />}
+      form={<UpdateActions />}
     />
   );
 };
