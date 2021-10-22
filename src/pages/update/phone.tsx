@@ -26,6 +26,7 @@ import UpdateHeader from './components/UpdateHeader';
 const UpdatePhone = (): JSX.Element => {
   return (
     <LayoutBasic
+      contentDivider
       header={
         <UpdateHeader
           title="Cambiar número de teléfono"
@@ -37,7 +38,7 @@ const UpdatePhone = (): JSX.Element => {
           <UpdateContent label="Número de teléfono actual" data="(+506) 8888-8888" />
         </>
       }
-      actions={<UpdateActions />}
+      form={<UpdateActions />}
     />
   );
 };

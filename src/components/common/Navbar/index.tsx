@@ -61,12 +61,14 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
     '/help'
   ];
 
-  const exitButtonPathNames = [
-    '/recover',
-    '/signup',
+  const exitButtonPathNames = ['/recover', '/signup'];
+
+  const backButtonPathNames = [
     '/update/phone',
     '/update/password',
-    '/update/email'
+    '/update/email',
+    '/preferences/language',
+    '/preferences/notifications'
   ];
 
   return (
@@ -89,6 +91,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                     <ActionButtons
                       noActionPathNames={noActionPathNames}
                       exitButtonPathNames={exitButtonPathNames}
+                      backButtonPathNames={backButtonPathNames}
                     />
                   )}
                 </Grid>
@@ -115,6 +118,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                     <ActionButtons
                       noActionPathNames={noActionPathNames}
                       exitButtonPathNames={exitButtonPathNames}
+                      backButtonPathNames={backButtonPathNames}
                     />
                   )}
                   {/* TODO corregir mostrar solo para cuando esté logueado: usar "loggedIn" */}

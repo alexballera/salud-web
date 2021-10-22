@@ -32,9 +32,10 @@ const useStyle = makeStyles((theme: Theme) =>
 type LCProps = {
   header: JSX.Element;
   content?: JSX.Element;
-  actions: JSX.Element;
+  contentDivider?: boolean;
+  form: JSX.Element;
 };
-const LayoutBasic = ({ header, content, actions }: LCProps): JSX.Element => {
+const LayoutBasic = ({ header, content, contentDivider, form }: LCProps): JSX.Element => {
   const classes = useStyle();
   return (
     <>
@@ -52,11 +53,13 @@ const LayoutBasic = ({ header, content, actions }: LCProps): JSX.Element => {
               </Grid>
             )}
             <Hidden mdUp>
+              {contentDivider && (
+                <Grid item xs={12}>
+                  <Divider className={classes.divider} />
+                </Grid>
+              )}
               <Grid item xs={12}>
-                <Divider className={classes.divider} />
-              </Grid>
-              <Grid item xs={12}>
-                {actions}
+                {form}
               </Grid>
             </Hidden>
           </Grid>
@@ -67,7 +70,7 @@ const LayoutBasic = ({ header, content, actions }: LCProps): JSX.Element => {
         <Box p={3} className={classes.wrapperBottom}>
           <Grid container item xs={12} className={classes.container}>
             <Grid item xs={12}>
-              {actions}
+              {form}
             </Grid>
           </Grid>
         </Box>

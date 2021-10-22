@@ -1,10 +1,19 @@
 import React from 'react';
-import LayoutInner from '../../layouts/LayoutInner';
+import { withAppContext } from '../../context';
+import LayoutBasic from '../../layouts/LayoutBasic';
+import UpdateHeader from '../update/components/UpdateHeader';
 
 const UpdateLanguage = (): JSX.Element => (
-  <LayoutInner>
-    <h1>Cambiar Idioma</h1>
-  </LayoutInner>
+  <LayoutBasic
+    header={
+      <UpdateHeader
+        title="Editar idioma"
+        description="Seleccioná el idioma de tu preferencia para la plataforma"
+      />
+    }
+    content={<h2>Contenido</h2>}
+    form={<h2>Actions</h2>}
+  />
 );
 
-export default UpdateLanguage;
+export default withAppContext(UpdateLanguage);

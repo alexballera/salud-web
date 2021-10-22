@@ -25,6 +25,7 @@ import UpdateHeader from './components/UpdateHeader';
 
 const UpdateEmail = (): JSX.Element => (
   <LayoutBasic
+    contentDivider
     header={
       <UpdateHeader
         title="Cambiar correo electrónico"
@@ -32,7 +33,7 @@ const UpdateEmail = (): JSX.Element => (
       />
     }
     content={<UpdateContent label="Correo electrónico actual" data="mmorales@gmail.com" />}
-    actions={<UpdateActions />}
+    form={<UpdateActions />}
   />
 );
 
