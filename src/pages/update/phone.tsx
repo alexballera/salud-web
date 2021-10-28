@@ -33,11 +33,7 @@ const UpdatePhone = (): JSX.Element => {
           description="Ingresá tu nuevo número de teléfono para actualizarlo en la plataforma"
         />
       }
-      content={
-        <>
-          <UpdateContent label="Número de teléfono actual" data="(+506) 8888-8888" />
-        </>
-      }
+      content={<UpdateContent label="Número de teléfono actual" data="(+506) 8888-8888" />}
       form={<UpdateActions />}
     />
   );
