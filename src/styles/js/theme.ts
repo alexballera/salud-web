@@ -55,10 +55,20 @@ const defaultTheme: ThemeOptions = {
     },
     MuiFormControlLabel: {
       root: {
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        width: '100%'
       },
       labelPlacementStart: {
         margin: '0px !important'
+      },
+      label: {
+        color: 'rgba(0, 0, 0, 0.87)'
+      }
+    },
+    MuiFormLabel: {
+      root: {
+        color: 'rgba(0, 0, 0, 0.87)',
+        fontSize: 12
       }
     },
     MuiChip: {
