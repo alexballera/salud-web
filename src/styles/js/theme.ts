@@ -1,4 +1,4 @@
-import { createMuiTheme, ThemeOptions } from '@material-ui/core/styles';
+import { createMuiTheme, ThemeOptions, Theme } from '@material-ui/core/styles';
 
 export const errorColor = '#ff6666';
 export const successColor = '#4caf50';
@@ -45,6 +45,19 @@ const defaultTheme: ThemeOptions = {
     },
     MuiFormHelperText: {
       contained: {
+        margin: '0px !important'
+      }
+    },
+    MuiFormControl: {
+      root: {
+        width: '100%'
+      }
+    },
+    MuiFormControlLabel: {
+      root: {
+        justifyContent: 'space-between'
+      },
+      labelPlacementStart: {
         margin: '0px !important'
       }
     },

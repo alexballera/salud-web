@@ -1,11 +1,29 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Form } from 'formik';
+
+/// CONTEXT
 import { withAppContext } from '../../context';
+/// CONTEXT END
+
+/// MATERIAL - UI
+import { Button } from '@material-ui/core';
+/// MATERIAL - UI END
+
+/// SERVICES
+/// SERVICES END
+
+/// OWN COMPONENTS
 import UpdateHeader from '../update/components/UpdateHeader';
 import LayoutBasic from '../../layouts/LayoutBasic';
 import LayoutForm from '../../layouts/LayoutForm';
-import { Button } from '@material-ui/core';
+/// OWN COMPONENTS END
+
+/// STYLES & TYPES
+/// STYLES & TYPES END
+
+/// FORM STATES & VALIDATIONS
+/// FORM STATES & VALIDATIONS END
 
 const UpdateNotifications = (): JSX.Element => {
   const router = useRouter();
