@@ -1,3 +1,5 @@
+@import "variables.scss";
+
 html,
 body {
   padding: 0;
@@ -66,6 +68,14 @@ main {
   font-style: bold;
   font-weight: 700;
   font-display: swap;
+}
+
+.border-bottom {
+  &-desktop {
+    @media (min-width: $md) {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    }
+  }
 }
 
 // CUSTOMIZE POPPINS FONTS END

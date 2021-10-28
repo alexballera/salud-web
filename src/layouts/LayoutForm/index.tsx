@@ -17,11 +17,12 @@ type IProps = {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     containerForm: {
+      marginTop: 24,
       marginBottom: 96
     },
     containerButton: {
       backgroundColor: 'white',
-      bottom: 6,
+      bottom: 4,
       left: 4,
       padding: 24,
       position: 'fixed',
