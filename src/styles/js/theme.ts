@@ -67,8 +67,7 @@ const defaultTheme: ThemeOptions = {
     },
     MuiFormLabel: {
       root: {
-        color: 'rgba(0, 0, 0, 0.87)',
-        fontSize: 12
+        color: 'rgba(0, 0, 0, 0.87)'
       }
     },
     MuiChip: {
