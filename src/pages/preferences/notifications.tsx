@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 // import { Form } from 'formik';
 
@@ -16,7 +16,8 @@ import {
   FormGroup,
   FormLabel,
   makeStyles,
-  Switch
+  Switch,
+  Theme
 } from '@material-ui/core';
 /// MATERIAL - UI END
 
@@ -33,52 +34,117 @@ import LayoutForm from '../../layouts/LayoutForm';
 /// FORM STATES & VALIDATIONS END
 
 /// STYLES & TYPES
+import { withStyles } from '@material-ui/core/styles';
 const useStyle = makeStyles(() =>
   createStyles({
-    containerLegend: {
+    legend: {
+      marginBottom: 24
+    },
+    label: {
+      marginBottom: '16px !important'
+    },
+    divider: {
+      marginBottom: 28,
       marginTop: 28
     }
   })
 );
 /// STYLES & TYPES END
 
-const type = [
-  {
-    value: 'sms',
-    label: 'SMS'
+const AntSwitch = withStyles((theme: Theme) => ({
+  root: {
+    width: 28,
+    height: 16,
+    padding: 0,
+    display: 'flex'
   },
-  {
-    value: 'email',
-    label: 'Correos electrónicos'
+  switchBase: {
+    padding: 2,
+    color: theme.palette.grey[500],
+    '&$checked': {
+      transform: 'translateX(12px)',
+      color: theme.palette.common.white,
+      '& + $track': {
+        opacity: 1,
+        backgroundColor: '#4caf50',
+        borderColor: '#4caf50'
+      }
+    }
   },
-  {
-    value: 'push_notifications',
-    label: 'Push notifications'
-  }
-];
-
-const preferences = [
-  {
-    value: 'novedades',
-    label: 'Novedades'
+  thumb: {
+    width: 12,
+    height: 12,
+    boxShadow: 'none'
   },
-  {
-    value: 'promociones',
-    label: 'Promociones'
+  track: {
+    border: `1px solid ${theme.palette.grey[500]}`,
+    borderRadius: 16 / 2,
+    opacity: 1,
+    backgroundColor: theme.palette.common.white
   },
-  {
-    value: 'recordatorios',
-    label: 'Recordatorios'
-  },
-  {
-    value: 'campanas',
-    label: 'Campañas'
-  }
-];
+  checked: {}
+}))(Switch);
 
 const UpdateNotifications = (): JSX.Element => {
   const classes = useStyle();
   const router = useRouter();
+  const [state, setState] = useState({
+    sms: true,
+    email: true,
+    push: true,
+    novedades: true,
+    promociones: true,
+    recordatorios: true,
+    campanas: true
+  });
+
+  const type = [
+    {
+      value: 'sms',
+      label: 'SMS',
+      checked: state.sms
+    },
+    {
+      value: 'email',
+      label: 'Correos electrónicos',
+      checked: state.email
+    },
+    {
+      value: 'push',
+      label: 'Push notifications',
+      checked: state.push
+    }
+  ];
+
+  const preferences = [
+    {
+      value: 'novedades',
+      label: 'Novedades',
+      checked: state.novedades
+    },
+    {
+      value: 'promociones',
+      label: 'Promociones',
+      checked: state.promociones
+    },
+    {
+      value: 'recordatorios',
+      label: 'Recordatorios',
+      checked: state.recordatorios
+    },
+    {
+      value: 'campanas',
+      label: 'Campañas',
+      checked: state.campanas
+    }
+  ];
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setState({
+      ...state,
+      [event.target.name]: event.target.checked
+    });
+  };
 
   const goBack = () => {
     router.back();
@@ -95,22 +161,27 @@ const UpdateNotifications = (): JSX.Element => {
         <LayoutForm
           form={
             <FormControl component="fieldset">
-              <FormLabel component="legend">Tipo</FormLabel>
+              <FormLabel component="legend" className={classes.legend}>
+                Tipo
+              </FormLabel>
               <FormGroup aria-label="position" row>
                 {type.map(item => (
                   <FormControlLabel
                     key={item.value}
                     value={item.value}
-                    control={<Switch color="secondary" />}
+                    control={
+                      <AntSwitch checked={item.checked} onChange={handleChange} name={item.value} />
+                    }
                     label={item.label}
                     labelPlacement="start"
+                    className={classes.label}
                   />
                 ))}
               </FormGroup>
 
-              <Divider />
+              <Divider className={classes.divider} />
 
-              <FormLabel className={classes.containerLegend} component="legend">
+              <FormLabel component="legend" className={classes.legend}>
                 Preferencias
               </FormLabel>
               <FormGroup aria-label="position" row>
@@ -118,9 +189,12 @@ const UpdateNotifications = (): JSX.Element => {
                   <FormControlLabel
                     key={item.value}
                     value={item.value}
-                    control={<Switch color="secondary" />}
+                    control={
+                      <AntSwitch checked={item.checked} onChange={handleChange} name={item.value} />
+                    }
                     label={item.label}
                     labelPlacement="start"
+                    className={classes.label}
                   />
                 ))}
               </FormGroup>
