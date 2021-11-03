@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 
 /// CONTEXT
 import { withAppContext } from '../../context';
@@ -8,6 +9,11 @@ import { withAppContext } from '../../context';
 import { Box } from '@material-ui/core';
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 /// MATERIAL - UI END
+
+type IProps = {
+  children: React.ReactNode;
+  fullwidth?: boolean;
+};
 
 /// STYLES & TYPES
 const useStyles = makeStyles((theme: Theme) =>
@@ -25,16 +31,27 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up('lg')]: {
         padding: `47px 134px`
       }
+    },
+    fullwidth: {
+      paddingLeft: 0,
+      paddingRight: 0
     }
   })
 );
 /// STYLES & TYPES END
 
-const LayoutInner = ({ children }): JSX.Element => {
+const LayoutInner = ({ children, fullwidth }: IProps): JSX.Element => {
   const classes = useStyles();
   return (
     <Box component="div" data-testid="div" className={classes.root}>
-      <Box component="div" data-testid="div" className={classes.container}>
+      <Box
+        component="div"
+        data-testid="div"
+        className={clsx({
+          [classes.container]: true,
+          [classes.fullwidth]: fullwidth
+        })}
+      >
         {children}
       </Box>
     </Box>

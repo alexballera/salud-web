@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react';
-import { Box, makeStyles, Tab, Tabs, Theme, Typography } from '@material-ui/core';
+import { Box, makeStyles, Tab, Tabs, Theme } from '@material-ui/core';
 
 /// CONTEXT
 /// CONTEXT END
@@ -12,6 +12,8 @@ import { Box, makeStyles, Tab, Tabs, Theme, Typography } from '@material-ui/core
 
 /// OWN COMPONENTS
 import LayoutInner from '../layouts/LayoutInner';
+import SubscriptionConfiguration from '../containers/Subscription/SubscriptionConfiguration';
+import SubscriptionPlan from '../containers/Subscription/SubscriptionPlan';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
@@ -37,16 +39,12 @@ function TabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box p={3}>{children}</Box>}
     </div>
   );
 }
 
-function a11yProps(index: any) {
+function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
     'aria-controls': `simple-tabpanel-${index}`
@@ -68,16 +66,21 @@ export default function SubscriptionPage(): JSX.Element {
     setValue(newValue);
   };
   return (
-    <LayoutInner>
-      <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-        <Tab label="Item One" {...a11yProps(0)} />
-        <Tab label="Item Two" {...a11yProps(1)} />
+    <LayoutInner fullwidth>
+      <Tabs
+        variant="fullWidth"
+        value={value}
+        onChange={handleChange}
+        aria-label="simple tabs example"
+      >
+        <Tab label="Mi plan" {...a11yProps(0)} />
+        <Tab label="Configuración" {...a11yProps(1)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        Item One
+        <SubscriptionPlan />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <SubscriptionConfiguration />
       </TabPanel>
     </LayoutInner>
   );
