@@ -41,7 +41,9 @@ const useStyle = makeStyles(() =>
       marginBottom: 24
     },
     label: {
-      marginBottom: '16px !important'
+      justifyContent: 'space-between',
+      marginBottom: '16px !important',
+      width: '100%'
     },
     divider: {
       marginBottom: 28,
