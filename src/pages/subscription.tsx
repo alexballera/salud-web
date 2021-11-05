@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react';
-import { Box, makeStyles, Tab, Tabs, Theme } from '@material-ui/core';
+import { Box, Tab, Tabs } from '@material-ui/core';
 
 /// CONTEXT
 /// CONTEXT END
@@ -52,13 +52,6 @@ function a11yProps(index: number) {
   };
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper
-  }
-}));
-
 export default function SubscriptionPage(): JSX.Element {
   const [value, setValue] = React.useState(0);
 
@@ -69,7 +62,7 @@ export default function SubscriptionPage(): JSX.Element {
   return (
     <LayoutInner fullwidth>
       <Box p={3}>
-        <TitleContent title="Preferencias" />
+        <TitleContent title="Tu plan de suscripción" />
       </Box>
       <Tabs
         variant="fullWidth"
