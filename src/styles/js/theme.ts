@@ -54,10 +54,6 @@ const defaultTheme: ThemeOptions = {
       }
     },
     MuiFormControlLabel: {
-      root: {
-        justifyContent: 'space-between',
-        width: '100%'
-      },
       labelPlacementStart: {
         margin: '0px !important'
       },

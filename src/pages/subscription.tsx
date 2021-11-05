@@ -14,6 +14,7 @@ import { Box, makeStyles, Tab, Tabs, Theme } from '@material-ui/core';
 import LayoutInner from '../layouts/LayoutInner';
 import SubscriptionConfiguration from '../containers/Subscription/SubscriptionConfiguration';
 import SubscriptionPlan from '../containers/Subscription/SubscriptionPlan';
+import { TitleContent } from '../components/common/TitleContent';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
@@ -67,6 +68,9 @@ export default function SubscriptionPage(): JSX.Element {
   };
   return (
     <LayoutInner fullwidth>
+      <Box p={3}>
+        <TitleContent title="Preferencias" />
+      </Box>
       <Tabs
         variant="fullWidth"
         value={value}
