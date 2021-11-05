@@ -147,7 +147,9 @@ function CredentialData({
                 </Typography>
               }
             />
-            {!values.terms && <FormHelperText error>{errors.terms}</FormHelperText>}
+            {touched.terms && !values.terms && (
+              <FormHelperText error>{errors.terms}</FormHelperText>
+            )}
 
             <FormControlLabel
               control={
@@ -175,7 +177,9 @@ function CredentialData({
               }
             />
           </FormGroup>
-          {!values.services && <FormHelperText error>{errors.services}</FormHelperText>}
+          {touched.services && !values.services && (
+            <FormHelperText error>{errors.services}</FormHelperText>
+          )}
         </FormControl>
       )}
 
