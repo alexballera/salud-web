@@ -8,6 +8,7 @@ import { withAppContext } from '../../context';
 
 /// MATERIAL - UI
 import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 /// MATERIAL - UI END
 
 /// SERVICES
@@ -17,6 +18,8 @@ import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from '@mater
 import LayoutBasic from '../../layouts/LayoutBasic';
 import LayoutForm from '../../layouts/LayoutForm';
 import UpdateHeader from '../update/components/UpdateHeader';
+import theme from '../../styles/js/theme';
+
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
@@ -43,22 +46,44 @@ const data = [
   }
 ];
 
-const LanguageForm = () => (
-  <FormControl component="fieldset">
-    <RadioGroup aria-label="gender" defaultValue={data[0].value} name="radio-buttons-group">
-      {data.map(item => (
-        <FormControlLabel
-          key={item.value}
-          value={item.value}
-          labelPlacement="start"
-          control={<Radio />}
-          label={item.label}
-          className="border-bottom-desktop"
-        />
-      ))}
-    </RadioGroup>
-  </FormControl>
-);
+export const useStyle = createMuiTheme({
+  overrides: {
+    MuiFormControlLabel: {
+      root: {
+        justifyContent: 'space-between',
+        marginLeft: '0px !important'
+      }
+    },
+    MuiRadio: {
+      colorSecondary: {
+        color: theme.palette.secondary.main,
+        '&.Mui-checked': {
+          color: theme.palette.secondary.main
+        }
+      }
+    }
+  }
+});
+
+const LanguageForm = () => {
+  return (
+    <FormControl component="fieldset">
+      <RadioGroup aria-label="gender" defaultValue={data[0].value} name="radio-buttons-group">
+        {data.map(item => (
+          <ThemeProvider theme={useStyle} key={item.value}>
+            <FormControlLabel
+              value={item.value}
+              labelPlacement="start"
+              control={<Radio color="secondary" />}
+              label={item.label}
+              className="border-bottom-desktop"
+            />
+          </ThemeProvider>
+        ))}
+      </RadioGroup>
+    </FormControl>
+  );
+};
 
 const UpdateLanguage = (): JSX.Element => {
   const router = useRouter();

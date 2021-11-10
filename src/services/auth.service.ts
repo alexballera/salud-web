@@ -42,11 +42,13 @@ export function forgotPasswordSendEmailService(email: string): Promise<AxiosResp
 
 export function forgotPasswordConfirmCodeService(
   email: string,
-  pinCode: string
+  pinCode: string,
+  userTypeCode = 'activate'
 ): Promise<AxiosResponse<any>> {
   return axios.post(`${process.env.NEXT_PUBLIC_API_URL}user/code-reset-verify`, {
     userEmail: email,
-    userCode: pinCode
+    userCode: pinCode,
+    userTypeCode
   });
 }
 

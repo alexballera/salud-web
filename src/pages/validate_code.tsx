@@ -33,6 +33,7 @@ import {
   validateCodeStyles
 } from '../containers/ValidateCode/styles.module';
 import { IValidateProps } from '../containers/ValidateCode/types';
+import { forgotPasswordConfirmCodeService } from '../services/auth.service';
 /// STYLES & TYPES END
 
 /// FORM STATES & VALIDATIONS
@@ -51,6 +52,12 @@ export default function ValidateCodePage({
   const [pinCode, setPinCode] = useState('');
   const [show, setShow] = useState(false);
   const [seconds, setSeconds] = useState(time);
+
+  // forgotPasswordConfirmCodeService('alexballera@droptek.com', '682230')
+  //   .then(res => {
+  //     console.log('res', res);
+  //   })
+  //   .catch(err => console.log(err.response));
 
   const checkPinCode = () => {
     const isPinCodeValid = pinCode === userPinCode;
