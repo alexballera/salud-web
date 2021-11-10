@@ -14,7 +14,6 @@ import navbarStyles from './styles.module';
 /// OWN COMPONENTS
 import SvgContainer from '../SvgContainer';
 import SvgLogo from '../Svg/SvgLogo.component';
-import SvgLogoLarge from '../Svg/SvgLogoLarge.component';
 import ActionButtons from './components/ActionButtons.component';
 import DropDownButton from './components/DropDownButton';
 import Menu from '../Menu';
@@ -81,7 +80,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                 <Grid item xs={6} md={6}>
                   <Grid container alignItems="center">
                     {showMenu() && <Menu type="mobile" />}
-                    <SvgContainer title="Logo Icon">
+                    <SvgContainer title="Logo Icon" width={54} height={28}>
                       <SvgLogo />
                     </SvgContainer>
                   </Grid>
@@ -106,12 +105,10 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
           <Toolbar className={classes.toolbarDesktop}>
             <Grid container justify="center">
               <Grid container>
-                <Grid item xs={6} md={6}>
-                  <Grid container alignItems="center">
-                    <SvgContainer title="Logo Icon Large" width={63} height={35}>
-                      <SvgLogoLarge />
-                    </SvgContainer>
-                  </Grid>
+                <Grid item xs={6} md={6} container alignItems="center">
+                  <SvgContainer title="Logo Icon" width={54} height={28}>
+                    <SvgLogo />
+                  </SvgContainer>
                 </Grid>
                 <Grid item xs={6} md={6} className={classes.buttonAction}>
                   {!loggedIn && (
