@@ -58,8 +58,8 @@ export default function ValidateCodePage({
   const [name, setName] = useState('');
 
   useEffect(() => {
-    getDataUserStorage('person');
-    const user: ISignUpBody = getDataUserStorage('person');
+    const user: ISignUpBody = getDataUserStorage('user');
+    console.log(user);
     setEmail(user.email);
     setName(user.firstName);
   });
