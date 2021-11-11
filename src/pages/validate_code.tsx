@@ -35,6 +35,7 @@ import {
 import { IValidateProps } from '../containers/ValidateCode/types';
 import {
   forgotPasswordConfirmCodeService,
+  forgotPasswordResendPin,
   getDataUserStorage,
   ISignUpBody
 } from '../services/auth.service';
@@ -59,7 +60,6 @@ export default function ValidateCodePage({
 
   useEffect(() => {
     const user: ISignUpBody = getDataUserStorage('user');
-    console.log(user);
     setEmail(user.email);
     setName(user.firstName);
   });
@@ -67,8 +67,8 @@ export default function ValidateCodePage({
   const checkPinCode = () => {
     if (isPinCodeValid) {
       forgotPasswordConfirmCodeService(email, pinCode)
-        .then(res => {
-          console.log('res', res);
+        .then(() => {
+          // console.log('res', res.data.result[0][0]);
           router.replace('/main');
         })
         .catch(err => {
@@ -87,6 +87,7 @@ export default function ValidateCodePage({
 
   const handleShow = () => {
     setShow(true);
+    forgotPasswordResendPin(email);
     let count = 0;
     const handleCount = setInterval(() => {
       count++;
