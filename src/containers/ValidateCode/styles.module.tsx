@@ -40,7 +40,8 @@ export const validateCodeStyles = makeStyles({
     fontWeight: 500,
     marginBottom: 16,
     textAlign: 'right',
-    textDecoration: 'underline'
+    textDecoration: 'underline',
+    cursor: 'pointer'
   },
   containerContent: {
     marginBottom: 16,
