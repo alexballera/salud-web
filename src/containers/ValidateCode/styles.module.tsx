@@ -43,6 +43,7 @@ export const validateCodeStyles = makeStyles({
     textDecoration: 'underline'
   },
   containerContent: {
-    marginBottom: 16
+    marginBottom: 16,
+    backgroundColor: 'white'
   }
 });
