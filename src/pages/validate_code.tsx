@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import ReactCodeInput from 'react-code-input';
 
@@ -33,15 +33,17 @@ import {
   validateCodeStyles
 } from '../containers/ValidateCode/styles.module';
 import { IValidateProps } from '../containers/ValidateCode/types';
-import { forgotPasswordConfirmCodeService } from '../services/auth.service';
+import {
+  forgotPasswordConfirmCodeService,
+  getDataUserStorage,
+  ISignUpBody
+} from '../services/auth.service';
 /// STYLES & TYPES END
 
 /// FORM STATES & VALIDATIONS
 /// FORM STATES & VALIDATIONS END
 
 export default function ValidateCodePage({
-  userPinCode,
-  userName,
   inputStyle,
   inputStyleInvalid
 }: IValidateProps): JSX.Element {
@@ -52,17 +54,30 @@ export default function ValidateCodePage({
   const [pinCode, setPinCode] = useState('');
   const [show, setShow] = useState(false);
   const [seconds, setSeconds] = useState(time);
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
 
-  // forgotPasswordConfirmCodeService('alexballera@droptek.com', '682230')
-  //   .then(res => {
-  //     console.log('res', res);
-  //   })
-  //   .catch(err => console.log(err.response));
+  useEffect(() => {
+    getDataUserStorage('person');
+    const user: ISignUpBody = getDataUserStorage('person');
+    setEmail(user.email);
+    setName(user.firstName);
+  });
 
   const checkPinCode = () => {
-    const isPinCodeValid = pinCode === userPinCode;
-    setIsPinCodeValid(isPinCodeValid);
-    if (!isPinCodeValid) setPinCode('');
+    if (isPinCodeValid) {
+      forgotPasswordConfirmCodeService(email, pinCode)
+        .then(res => {
+          console.log('res', res);
+          router.replace('/main');
+        })
+        .catch(err => {
+          console.log(err.response.data.error.message);
+          setIsPinCodeValid(false);
+        });
+    } else {
+      setPinCode('');
+    }
   };
 
   const handlePinChange = (pinCode: string) => {
@@ -87,7 +102,7 @@ export default function ValidateCodePage({
   return (
     <LayoutCode
       title={'Cuenta creada exitosamente'}
-      description={`Felicidades ${userName}, has creado tu cuenta correctamente, se envió un mensaje a tu
+      description={`Felicidades ${name}, has creado tu cuenta correctamente, se envió un mensaje a tu
       correo electrónico para que actives tu cuenta.`}
       content={
         <>
@@ -161,8 +176,6 @@ export default function ValidateCodePage({
 }
 
 ValidateCodePage.defaultProps = {
-  userPinCode: '123456',
-  userName: 'Marco',
   inputStyle: {
     width: 43,
     height: 43,
