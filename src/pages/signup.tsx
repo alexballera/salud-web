@@ -6,7 +6,7 @@ import { Form, Formik } from 'formik';
 /// CONTEXT
 import { withAppContext } from '../context/index';
 /// SERVICES
-import { signUp, ISignUpBody, setDataUserStorage } from '../services/auth.service';
+import { signUp, ISignUpBody, setDataToLocalstorage } from '../services/auth.service';
 /// TYPES
 import { IFormData, IProps } from '../containers/SignUp/index.types';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
@@ -127,7 +127,7 @@ function SignUpView({
       signUp(body)
         .then(res => {
           handleLogin(res.data.result);
-          setDataUserStorage(body);
+          setDataToLocalstorage('user', res.data.result);
           router.replace('/validate_code');
         })
         .catch(err => {

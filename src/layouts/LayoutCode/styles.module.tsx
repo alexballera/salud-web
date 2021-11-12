@@ -13,7 +13,7 @@ const LayoutCodeStyles = makeStyles((theme: Theme) =>
       height: '100vh'
     },
     container: {
-      height: 'calc(100vh - 36px)',
+      height: 'calc(100vh - 104px)',
       [theme.breakpoints.up('md')]: {
         justifyContent: 'center'
       }

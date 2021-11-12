@@ -31,7 +31,7 @@ const LayoutCode = ({
   const classes = LayoutCodeStyles();
   return (
     <Box>
-      <Box p={3} className={classes.wrapper}>
+      <Box p={3}>
         <Grid container spacing={1} className={classes.container}>
           <Grid item xs={12} md={5} className={classes.imgContainer}>
             <Hidden mdUp>

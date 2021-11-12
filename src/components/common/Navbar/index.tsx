@@ -55,6 +55,8 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
     switch (router.pathname) {
       case '/validate_code':
         return false;
+      case '/logout':
+        return false;
       default:
         return true;
     }
@@ -129,7 +131,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                         />
                       )}
                       {/* TODO corregir mostrar solo para cuando esté logueado: usar "loggedIn" */}
-                      {showMenu() && (
+                      {showMenuMobile() && (
                         <Grid container justify="flex-end" alignItems="center" spacing={2}>
                           <Grid item>
                             <Avatar variant="square">{firstName?.charAt(0)}</Avatar>
@@ -158,7 +160,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
               </Toolbar>
             </AppBar>
           </Hidden>
-          <Hidden smDown>{showMenu() && <Menu type="desktop" />}</Hidden>
+          <Hidden smDown>{showMenuMobile() && <Menu type="desktop" />}</Hidden>
         </>
       )}
     </>

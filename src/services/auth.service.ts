@@ -8,6 +8,36 @@ export function loginService(email: string, password: string): Promise<AxiosResp
   });
 }
 /// LOGIN END
+export type User = {
+  terms: boolean;
+  email: string;
+  gender: string;
+  canton: string;
+  country: string;
+  password: string;
+  province: string;
+  lastName: string;
+  district: string;
+  services: boolean;
+  firstName: string;
+  birthDate: string;
+  superappUser: boolean;
+  documentType: string | number;
+  mobilePhone1: string;
+  documentNumber: string;
+  codSAC: number;
+  createdAt: string;
+  emailId: number;
+  firstMedicalRecordComplete: 0;
+  fullName: string;
+  isMedic: { type: string; data: [0] };
+  isPatient: { type: string; data: [1] };
+  secondName: string;
+  status: string;
+  statusCode: number;
+  updatedAt: string;
+  userId: number;
+};
 
 /// SIGN UP SERVICE & TYPES
 export type ISignUpBody = {
@@ -40,12 +70,12 @@ export function forgotPasswordSendEmailService(email: string): Promise<AxiosResp
   });
 }
 
-export function setDataUserStorage(user: ISignUpBody): void {
-  window.localStorage.setItem('user', JSON.stringify(user));
+export function setDataToLocalstorage(key: string, user: User): void {
+  window.localStorage.setItem(key, JSON.stringify(user));
 }
 
-export function getDataUserStorage(str: string): ISignUpBody {
-  const user: ISignUpBody = JSON.parse(window.localStorage.getItem(str));
+export function getDataFromLocalstorage(str: string): User {
+  const user: User = JSON.parse(window.localStorage.getItem(str));
   return user;
 }
 
