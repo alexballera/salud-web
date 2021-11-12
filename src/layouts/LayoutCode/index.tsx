@@ -30,7 +30,7 @@ const LayoutCode = ({
 }: LCProps): JSX.Element => {
   const classes = LayoutCodeStyles();
   return (
-    <Box className={classes.boxContainer}>
+    <Box>
       <Box p={3} className={classes.wrapper}>
         <Grid container spacing={1} className={classes.container}>
           <Grid item xs={12} md={5} className={classes.imgContainer}>

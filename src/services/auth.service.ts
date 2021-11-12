@@ -41,11 +41,11 @@ export function forgotPasswordSendEmailService(email: string): Promise<AxiosResp
 }
 
 export function setDataUserStorage(user: ISignUpBody): void {
-  localStorage.setItem('user', JSON.stringify(user));
+  window.localStorage.setItem('user', JSON.stringify(user));
 }
 
 export function getDataUserStorage(str: string): ISignUpBody {
-  const user: ISignUpBody = JSON.parse(localStorage.getItem(str));
+  const user: ISignUpBody = JSON.parse(window.localStorage.getItem(str));
   return user;
 }
 
