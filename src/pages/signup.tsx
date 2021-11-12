@@ -6,7 +6,7 @@ import { Form, Formik } from 'formik';
 /// CONTEXT
 import { withAppContext } from '../context/index';
 /// SERVICES
-import { signUp, ISignUpBody, setDataToLocalstorage } from '../services/auth.service';
+import { signUp, setDataToLocalstorage } from '../services/auth.service';
 /// TYPES
 import { IFormData, IProps } from '../containers/SignUp/index.types';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
@@ -23,6 +23,7 @@ import { Button, Box, Grid } from '@material-ui/core';
 
 /// STYLES
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
+import { ISignUpBody } from '../types/auth.types';
 /// STYLES END
 
 /// GET SERVICE

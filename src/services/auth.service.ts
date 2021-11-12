@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { User, ISignUpBody } from '../types/auth.types';
 
 /// LOGIN
 export function loginService(email: string, password: string): Promise<AxiosResponse<any>> {
@@ -8,56 +9,6 @@ export function loginService(email: string, password: string): Promise<AxiosResp
   });
 }
 /// LOGIN END
-export type User = {
-  terms: boolean;
-  email: string;
-  gender: string;
-  canton: string;
-  country: string;
-  password: string;
-  province: string;
-  lastName: string;
-  district: string;
-  services: boolean;
-  firstName: string;
-  birthDate: string;
-  superappUser: boolean;
-  documentType: string | number;
-  mobilePhone1: string;
-  documentNumber: string;
-  codSAC: number;
-  createdAt: string;
-  emailId: number;
-  firstMedicalRecordComplete: 0;
-  fullName: string;
-  isMedic: { type: string; data: [0] };
-  isPatient: { type: string; data: [1] };
-  secondName: string;
-  status: string;
-  statusCode: number;
-  updatedAt: string;
-  userId: number;
-};
-
-/// SIGN UP SERVICE & TYPES
-export type ISignUpBody = {
-  terms: boolean;
-  email: string;
-  gender: string;
-  canton: string;
-  country: string;
-  password: string;
-  province: string;
-  lastName: string;
-  district: string;
-  services: boolean;
-  firstName: string;
-  birthDate: string;
-  superappUser: boolean;
-  documentType: string | number;
-  mobilePhone1: string;
-  documentNumber: string;
-};
 
 export function signUp(body: ISignUpBody): Promise<AxiosResponse<any>> {
   return axios.post(`${process.env.apiUrl}user/register-patient`, body);
