@@ -6,7 +6,7 @@ import { Form, Formik } from 'formik';
 import { withAppContext } from '../../../context';
 
 /// SERVICES
-import { ISignUpBody, signUp } from '../../../services/auth.service';
+import { signUp } from '../../../services/auth.service';
 
 /// TYPES
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
@@ -22,6 +22,7 @@ import { Button, Box, Grid } from '@material-ui/core';
 /// STYLES & PROPS
 import { IFormData, IProps } from '../../SignUp/index.types';
 import ProfileStyles from '../styles.module';
+import { ISignUpBody } from '../../../types/auth.types';
 
 /// GET SERVICE
 export const getStaticProps: GetStaticProps = async () => {

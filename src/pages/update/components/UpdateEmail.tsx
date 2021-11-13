@@ -8,7 +8,7 @@ import { Form, Formik } from 'formik';
 import { withAppContext } from '../../../context';
 
 /// SERVICES
-import { ISignUpBody, signUp } from '../../../services/auth.service';
+import { signUp } from '../../../services/auth.service';
 
 /// TYPES
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
@@ -18,11 +18,11 @@ import { ICredentialDataProps, IFormData, IProps } from '../../../containers/Sig
 /// OWN COMPONENTS
 import LayoutForm from '../../../layouts/LayoutForm';
 import CredentialData from '../../../containers/SignUp/components/CredentialData';
-import CustomTextField from '../../../components/common/TextField';
 /// OWN COMPONENTS END
 
 /// MATERIAL - UI
 import { Button } from '@material-ui/core';
+import { ISignUpBody } from '../../../types/auth.types';
 /// MATERIAL - UI END
 
 /// STYLES
