@@ -25,7 +25,7 @@ import {
 
 /// OWN COMPONENTS
 import { withAppContext } from '../context';
-import { loginService } from '../services/auth.service';
+import { loginService, setDataToLocalstorage } from '../services/auth.service';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
@@ -62,6 +62,7 @@ function LoginPage({
     loginService(email, password)
       .then(response => {
         handleLogin(response.data.result);
+        setDataToLocalstorage('user', response.data.result);
         handleError(false);
         router.replace('/main');
       })

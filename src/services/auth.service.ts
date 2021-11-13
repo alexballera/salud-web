@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { User, ISignUpBody } from '../types/auth.types';
 
 /// LOGIN
 export function loginService(email: string, password: string): Promise<AxiosResponse<any>> {
@@ -8,26 +9,6 @@ export function loginService(email: string, password: string): Promise<AxiosResp
   });
 }
 /// LOGIN END
-
-/// SIGN UP SERVICE & TYPES
-export type ISignUpBody = {
-  terms: boolean;
-  email: string;
-  gender: string;
-  canton: string;
-  country: string;
-  password: string;
-  province: string;
-  lastName: string;
-  district: string;
-  services: boolean;
-  firstName: string;
-  birthDate: string;
-  superappUser: boolean;
-  documentType: string | number;
-  mobilePhone1: string;
-  documentNumber: string;
-};
 
 export function signUp(body: ISignUpBody): Promise<AxiosResponse<any>> {
   return axios.post(`${process.env.apiUrl}user/register-patient`, body);
@@ -40,13 +21,17 @@ export function forgotPasswordSendEmailService(email: string): Promise<AxiosResp
   });
 }
 
-export function setDataUserStorage(user: ISignUpBody): void {
-  localStorage.setItem('user', JSON.stringify(user));
+export function setDataToLocalstorage(key: string, user: User): void {
+  window.localStorage.setItem(key, JSON.stringify(user));
 }
 
-export function getDataUserStorage(str: string): ISignUpBody {
-  const user: ISignUpBody = JSON.parse(localStorage.getItem(str));
+export function getDataFromLocalstorage(str: string): User {
+  const user: User = JSON.parse(window.localStorage.getItem(str));
   return user;
+}
+
+export function removeDataToLocalstorage(key: string): void {
+  window.localStorage.removeItem(key);
 }
 
 export function forgotPasswordConfirmCodeService(

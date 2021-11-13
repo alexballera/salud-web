@@ -34,7 +34,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
     })
     .catch(err => console.log(err));
 
-  const showMenu = () => {
+  const showMenuMobile = () => {
     switch (router.pathname) {
       case '/main':
         return true;
@@ -48,6 +48,17 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
         return true;
       default:
         return false;
+    }
+  };
+
+  const showMenu = () => {
+    switch (router.pathname) {
+      case '/validate_code':
+        return false;
+      case '/logout':
+        return false;
+      default:
+        return true;
     }
   };
 
@@ -72,74 +83,86 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
 
   return (
     <>
-      <Hidden mdUp>
-        <AppBar position="static" color="inherit" elevation={0}>
-          <Toolbar>
-            <Grid container justify="center">
-              <Grid container>
-                <Grid item xs={6} md={6}>
-                  <Grid container alignItems="center">
-                    {showMenu() && <Menu type="mobile" />}
-                    <SvgContainer title="Logo Icon" width={54} height={28}>
-                      <SvgLogo />
-                    </SvgContainer>
-                  </Grid>
-                </Grid>
-                <Grid item xs={6} md={6} className={classes.buttonAction}>
-                  {!loggedIn && (
-                    <ActionButtons
-                      noActionPathNames={noActionPathNames}
-                      exitButtonPathNames={exitButtonPathNames}
-                      backButtonPathNames={backButtonPathNames}
-                    />
-                  )}
-                </Grid>
-              </Grid>
-            </Grid>
-          </Toolbar>
-        </AppBar>
-      </Hidden>
-
-      <Hidden smDown>
-        <AppBar color="inherit" elevation={1}>
-          <Toolbar className={classes.toolbarDesktop}>
-            <Grid container justify="center">
-              <Grid container>
-                <Grid item xs={6} md={6} container alignItems="center">
-                  <SvgContainer title="Logo Icon" width={54} height={28}>
-                    <SvgLogo />
-                  </SvgContainer>
-                </Grid>
-                <Grid item xs={6} md={6} className={classes.buttonAction}>
-                  {!loggedIn && (
-                    <ActionButtons
-                      noActionPathNames={noActionPathNames}
-                      exitButtonPathNames={exitButtonPathNames}
-                      backButtonPathNames={backButtonPathNames}
-                    />
-                  )}
-                  {/* TODO corregir mostrar solo para cuando esté logueado: usar "loggedIn" */}
-                  {showMenu() && (
-                    <Grid container justify="flex-end" alignItems="center" spacing={2}>
-                      <Grid item>
-                        <Avatar variant="square">{firstName?.charAt(0)}</Avatar>
-                      </Grid>
-                      <Grid container direction="column" alignItems="baseline" item xs={4} md={3}>
-                        <Typography className={classes.name}>{firstName}</Typography>
-                        <Typography className={classes.documentNumber}>{documentNumber}</Typography>
-                      </Grid>
-                      <Grid item xs={2} md={1} className={classes.dropDownContainer}>
-                        <DropDownButton />
+      {showMenu() && (
+        <>
+          <Hidden mdUp>
+            <AppBar position="static" color="inherit" elevation={0}>
+              <Toolbar>
+                <Grid container justify="center">
+                  <Grid container>
+                    <Grid item xs={6} md={6}>
+                      <Grid container alignItems="center">
+                        {showMenuMobile() && <Menu type="mobile" />}
+                        <SvgContainer title="Logo Icon" width={54} height={28}>
+                          <SvgLogo />
+                        </SvgContainer>
                       </Grid>
                     </Grid>
-                  )}
+                    <Grid item xs={6} md={6} className={classes.buttonAction}>
+                      {!loggedIn && (
+                        <ActionButtons
+                          noActionPathNames={noActionPathNames}
+                          exitButtonPathNames={exitButtonPathNames}
+                          backButtonPathNames={backButtonPathNames}
+                        />
+                      )}
+                    </Grid>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Grid>
-          </Toolbar>
-        </AppBar>
-      </Hidden>
-      <Hidden smDown>{showMenu() && <Menu type="desktop" />}</Hidden>
+              </Toolbar>
+            </AppBar>
+          </Hidden>
+          <Hidden smDown>
+            <AppBar color="inherit" elevation={1}>
+              <Toolbar className={classes.toolbarDesktop}>
+                <Grid container justify="center">
+                  <Grid container>
+                    <Grid item xs={6} md={6} container alignItems="center">
+                      <SvgContainer title="Logo Icon" width={54} height={28}>
+                        <SvgLogo />
+                      </SvgContainer>
+                    </Grid>
+                    <Grid item xs={6} md={6} className={classes.buttonAction}>
+                      {!loggedIn && (
+                        <ActionButtons
+                          noActionPathNames={noActionPathNames}
+                          exitButtonPathNames={exitButtonPathNames}
+                          backButtonPathNames={backButtonPathNames}
+                        />
+                      )}
+                      {/* TODO corregir mostrar solo para cuando esté logueado: usar "loggedIn" */}
+                      {showMenuMobile() && (
+                        <Grid container justify="flex-end" alignItems="center" spacing={2}>
+                          <Grid item>
+                            <Avatar variant="square">{firstName?.charAt(0)}</Avatar>
+                          </Grid>
+                          <Grid
+                            container
+                            direction="column"
+                            alignItems="baseline"
+                            item
+                            xs={4}
+                            md={3}
+                          >
+                            <Typography className={classes.name}>{firstName}</Typography>
+                            <Typography className={classes.documentNumber}>
+                              {documentNumber}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={2} md={1} className={classes.dropDownContainer}>
+                            <DropDownButton />
+                          </Grid>
+                        </Grid>
+                      )}
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Toolbar>
+            </AppBar>
+          </Hidden>
+          <Hidden smDown>{showMenuMobile() && <Menu type="desktop" />}</Hidden>
+        </>
+      )}
     </>
   );
 }

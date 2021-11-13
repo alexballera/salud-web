@@ -32,22 +32,27 @@ import {
   validateCodeCustomTheme,
   validateCodeStyles
 } from '../containers/ValidateCode/styles.module';
-import { IValidateProps } from '../containers/ValidateCode/types';
 import {
   forgotPasswordConfirmCodeService,
   forgotPasswordResendPin,
-  getDataUserStorage,
-  ISignUpBody
+  getDataFromLocalstorage
 } from '../services/auth.service';
+import { withAppContext } from '../context';
+import { getStaticProps } from './signup';
+import { IProps } from '../containers/SignUp/index.types';
+import { InferGetStaticPropsType } from 'next';
+import { IValidateProps } from '../containers/ValidateCode/types';
+import { User } from '../types/auth.types';
 /// STYLES & TYPES END
 
 /// FORM STATES & VALIDATIONS
 /// FORM STATES & VALIDATIONS END
 
-export default function ValidateCodePage({
+function ValidateCodePage({
   inputStyle,
-  inputStyleInvalid
-}: IValidateProps): JSX.Element {
+  inputStyleInvalid,
+  handleError
+}: InferGetStaticPropsType<typeof getStaticProps> & IProps & IValidateProps): JSX.Element {
   const classes = validateCodeStyles();
   const router = useRouter();
   const time = 60;
@@ -57,9 +62,10 @@ export default function ValidateCodePage({
   const [seconds, setSeconds] = useState(time);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  let user: User;
 
   useEffect(() => {
-    const user: ISignUpBody = getDataUserStorage('user');
+    user = getDataFromLocalstorage('user');
     setEmail(user.email);
     setName(user.firstName);
   });
@@ -68,11 +74,12 @@ export default function ValidateCodePage({
     if (isPinCodeValid) {
       forgotPasswordConfirmCodeService(email, pinCode)
         .then(() => {
-          // console.log('res', res.data.result[0][0]);
+          handleError(true, 'Usuario activado correctamente', 'success');
           router.replace('/main');
         })
         .catch(err => {
-          console.log(err.response.data.error.message);
+          const message = err.response.data.error.message;
+          handleError(true, message);
           setIsPinCodeValid(false);
         });
     } else {
@@ -201,3 +208,5 @@ ValidateCodePage.defaultProps = {
     color: errorColor
   }
 };
+
+export default withAppContext(ValidateCodePage);
