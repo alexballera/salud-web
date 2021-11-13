@@ -1,8 +1,9 @@
 import React, { PropsWithChildren } from 'react';
 /// MATERIAL - UI
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { Box, Snackbar, Typography } from '@material-ui/core';
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 /// MATERIAL - UI END
 
 /// OWN COMPONENTS
@@ -20,6 +21,9 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up('md')]: {
         paddingTop: 64
       }
+    },
+    alertText: {
+      marginLeft: 10
     }
   })
 );
@@ -50,8 +54,8 @@ export default withAppContext(function Layout({
         autoHideDuration={20000}
       >
         <Alert variant={errorState.type}>
-          {errorState.type === 'error' && <ErrorOutlineIcon />}
-          <Typography variant="body1" aria-live="assertive">
+          {errorState.type === 'error' ? <ErrorOutlineIcon /> : <CheckCircleOutlineIcon />}
+          <Typography variant="body1" aria-live="assertive" className={classes.alertText}>
             {errorState?.message}
           </Typography>
         </Alert>
