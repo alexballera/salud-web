@@ -8,7 +8,7 @@ import { Form, Formik } from 'formik';
 import { withAppContext } from '../../../context';
 
 /// SERVICES
-import { ISignUpBody, signUp } from '../../../services/auth.service';
+import { signUp } from '../../../services/auth.service';
 
 /// TYPES
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
@@ -23,6 +23,7 @@ import CustomTextField from '../../../components/common/TextField';
 
 /// MATERIAL - UI
 import { Button } from '@material-ui/core';
+import { ISignUpBody } from '../../../types/auth.types';
 /// MATERIAL - UI END
 
 /// STYLES

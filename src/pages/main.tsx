@@ -1,6 +1,7 @@
 import React from 'react';
 
 /// CONTEXT
+import { withAppContext } from '../context';
 /// CONTEXT END
 
 /// MATERIAL - UI
@@ -19,10 +20,11 @@ import LayoutInner from '../layouts/LayoutInner';
 /// FORM STATES & VALIDATIONS
 /// FORM STATES & VALIDATIONS END
 
-export default function MainPage(): JSX.Element {
+function MainPage(): JSX.Element {
   return (
     <LayoutInner>
       <h1>Inicio</h1>
     </LayoutInner>
   );
 }
+export default withAppContext(MainPage);

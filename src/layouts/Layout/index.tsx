@@ -49,7 +49,7 @@ export default withAppContext(function Layout({
         onClose={() => handleError(false, '', errorState.type)}
         autoHideDuration={20000}
       >
-        <Alert type={errorState.type}>
+        <Alert variant={errorState.type}>
           {errorState.type === 'error' && <ErrorOutlineIcon />}
           <Typography variant="body1" aria-live="assertive">
             {errorState?.message}
