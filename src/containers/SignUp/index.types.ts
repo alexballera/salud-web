@@ -4,7 +4,7 @@ import { INotificationProps } from '../../context/types';
 /// TYPES
 export type IProps = {
   handleLogin: (user: any) => void;
-  handleError: (open: boolean, message: string) => void;
+  handleError: (open: boolean, message: string, type?: string) => void;
   onClickLink?;
 } & IAppProps;
 

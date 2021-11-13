@@ -32,17 +32,17 @@ import {
   validateCodeCustomTheme,
   validateCodeStyles
 } from '../containers/ValidateCode/styles.module';
-import { IValidateProps } from '../containers/ValidateCode/types';
 import {
   forgotPasswordConfirmCodeService,
   forgotPasswordResendPin,
-  getDataFromLocalstorage,
-  User
+  getDataFromLocalstorage
 } from '../services/auth.service';
 import { withAppContext } from '../context';
 import { getStaticProps } from './signup';
 import { IProps } from '../containers/SignUp/index.types';
 import { InferGetStaticPropsType } from 'next';
+import { IValidateProps } from '../containers/ValidateCode/types';
+import { User } from '../types/auth.types';
 /// STYLES & TYPES END
 
 /// FORM STATES & VALIDATIONS
@@ -51,7 +51,7 @@ import { InferGetStaticPropsType } from 'next';
 function ValidateCodePage({
   inputStyle,
   inputStyleInvalid,
-  handleNotifications
+  handleError
 }: InferGetStaticPropsType<typeof getStaticProps> & IProps & IValidateProps): JSX.Element {
   const classes = validateCodeStyles();
   const router = useRouter();
@@ -66,7 +66,6 @@ function ValidateCodePage({
 
   useEffect(() => {
     user = getDataFromLocalstorage('user');
-    console.log(user);
     setEmail(user.email);
     setName(user.firstName);
   });
@@ -75,12 +74,12 @@ function ValidateCodePage({
     if (isPinCodeValid) {
       forgotPasswordConfirmCodeService(email, pinCode)
         .then(() => {
+          handleError(true, 'Usuario activado correctamente', 'success');
           router.replace('/main');
         })
         .catch(err => {
-          console.log(err.response.data.error.message);
           const message = err.response.data.error.message;
-          handleNotifications({ open: true, message, severity: 'error' });
+          handleError(true, message);
           setIsPinCodeValid(false);
         });
     } else {

@@ -30,6 +30,10 @@ export function getDataFromLocalstorage(str: string): User {
   return user;
 }
 
+export function removeDataToLocalstorage(key: string): void {
+  window.localStorage.removeItem(key);
+}
+
 export function forgotPasswordConfirmCodeService(
   email: string,
   pinCode: string,

@@ -18,6 +18,7 @@ import LayoutCode from '../layouts/LayoutCode';
 
 /// STYLES & TYPES
 import LayoutCodeStyles from '../layouts/LayoutCode/styles.module';
+import { removeDataToLocalstorage } from '../services/auth.service';
 /// STYLES & TYPES END
 
 /// FORM STATES & VALIDATIONS
@@ -26,6 +27,12 @@ import LayoutCodeStyles from '../layouts/LayoutCode/styles.module';
 function LogOut(): JSX.Element {
   const classes = LayoutCodeStyles();
   const router = useRouter();
+
+  const closeSession = (): void => {
+    removeDataToLocalstorage('user');
+    router.push('/');
+  };
+
   return (
     <LayoutCode
       title={'Cerrar sesión'}
@@ -44,9 +51,7 @@ function LogOut(): JSX.Element {
       rightButton={
         <Button
           fullWidth
-          onClick={() => {
-            router.push('/');
-          }}
+          onClick={() => closeSession()}
           color="primary"
           variant="contained"
           className={classes.button}
