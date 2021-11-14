@@ -1,15 +1,16 @@
 export type User = {
   terms: boolean;
+  firstName: string;
+  lastName: string;
+  secondName: string;
   email: string;
   gender: string;
   canton: string;
   country: string;
   password: string;
   province: string;
-  lastName: string;
   district: string;
   services: boolean;
-  firstName: string;
   birthDate: string;
   superappUser: boolean;
   documentType: string | number;
@@ -22,7 +23,6 @@ export type User = {
   fullName: string;
   isMedic: { type: string; data: [0] };
   isPatient: { type: string; data: [1] };
-  secondName: string;
   status: string;
   statusCode: number;
   updatedAt: string;
