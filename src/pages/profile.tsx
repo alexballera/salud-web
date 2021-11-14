@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 /// MATERIAL - UI
@@ -7,7 +7,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 /// MATERIAL - UI END
 
 /// SERVICES
-import { getPersonalData, IPersonalData } from '../services/getPersonalData.service';
+import { getDataFromLocalstorage } from '../services/auth.service';
 /// SERVICES END
 
 /// OWN COMPONENTS
@@ -21,6 +21,7 @@ import LayoutContent from '../layouts/LayoutContent';
 
 /// STYLES & TYPES
 import ProfileStyles from '../containers/Profile/styles.module';
+import { User } from '../types/auth.types';
 /// STYLES & TYPES END
 
 export default function ProfilePage(): JSX.Element {
@@ -28,13 +29,13 @@ export default function ProfilePage(): JSX.Element {
   const [fullName, setFullName] = useState('');
   const [documentNumber, setDocumentNumber] = useState('');
 
-  getPersonalData('bastidasarelis2021@gmail.com')
-    .then(res => {
-      const personalData: IPersonalData = res.data.result;
-      setFullName(personalData.fullName);
-      setDocumentNumber(personalData.documentNumber);
-    })
-    .catch(err => console.log(err));
+  useEffect(() => {
+    const user: User = getDataFromLocalstorage('user');
+    setFullName(user.fullName);
+    setDocumentNumber(user.documentNumber);
+    console.log(user);
+  });
+
   return (
     <LayoutContent
       title={<TitleContent title="Perfil" />}

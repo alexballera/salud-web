@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 /// CONTEXT
@@ -18,7 +18,12 @@ import LayoutCode from '../layouts/LayoutCode';
 
 /// STYLES & TYPES
 import LayoutCodeStyles from '../layouts/LayoutCode/styles.module';
-import { removeDataToLocalstorage } from '../services/auth.service';
+import {
+  getDataFromLocalstorage,
+  logoutService,
+  removeDataToLocalstorage
+} from '../services/auth.service';
+import { User } from '../types/auth.types';
 /// STYLES & TYPES END
 
 /// FORM STATES & VALIDATIONS
@@ -27,10 +32,17 @@ import { removeDataToLocalstorage } from '../services/auth.service';
 function LogOut(): JSX.Element {
   const classes = LayoutCodeStyles();
   const router = useRouter();
+  const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    const user: User = getDataFromLocalstorage('user');
+    setEmail(user.email);
+  });
 
   const closeSession = (): void => {
-    removeDataToLocalstorage('user');
-    router.push('/');
+    logoutService(email);
+    router.replace('/');
+    // removeDataToLocalstorage('user');
   };
 
   return (

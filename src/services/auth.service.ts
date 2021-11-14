@@ -13,6 +13,9 @@ export function loginService(email: string, password: string): Promise<AxiosResp
 export function signUp(body: ISignUpBody): Promise<AxiosResponse<any>> {
   return axios.post(`${process.env.apiUrl}user/register-patient`, body);
 }
+export function logoutService(email: string): Promise<AxiosResponse<any>> {
+  return axios.get(`${process.env.NEXT_PUBLIC_API_URL}auth/logout/${email}`);
+}
 /// SIGN UP SERVICE & TYPES END
 /// FORGOT PASSWORD
 export function forgotPasswordSendEmailService(email: string): Promise<AxiosResponse<any>> {

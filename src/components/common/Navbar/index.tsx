@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { withAppContext } from '../../../context';
 
@@ -17,7 +17,8 @@ import SvgLogo from '../Svg/SvgLogo.component';
 import ActionButtons from './components/ActionButtons.component';
 import DropDownButton from './components/DropDownButton';
 import Menu from '../Menu';
-import { getPersonalData, IPersonalData } from '../../../services/getPersonalData.service';
+import { getDataFromLocalstorage } from '../../../services/auth.service';
+import { User } from '../../../types/auth.types';
 /// OWN COMPONENTS END
 
 function Navbar({ loggedIn }: IProps): JSX.Element {
@@ -26,13 +27,13 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
   const [firstName, setFirstName] = useState('');
   const [documentNumber, setDocumentNumber] = useState('');
 
-  getPersonalData('bastidasarelis2021@gmail.com')
-    .then(res => {
-      const personalData: IPersonalData = res.data.result;
-      setFirstName(personalData.firstName);
-      setDocumentNumber(personalData.documentNumber);
-    })
-    .catch(err => console.log(err));
+  useEffect(() => {
+    if (loggedIn) {
+      const user: User = getDataFromLocalstorage('user');
+      setFirstName(user.firstName);
+      setDocumentNumber(user.documentNumber);
+    }
+  });
 
   const showMenuMobile = () => {
     switch (router.pathname) {
@@ -57,6 +58,8 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
         return false;
       case '/logout':
         return false;
+      case '/':
+        return true;
       default:
         return true;
     }
@@ -123,15 +126,13 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                       </SvgContainer>
                     </Grid>
                     <Grid item xs={6} md={6} className={classes.buttonAction}>
-                      {!loggedIn && (
-                        <ActionButtons
-                          noActionPathNames={noActionPathNames}
-                          exitButtonPathNames={exitButtonPathNames}
-                          backButtonPathNames={backButtonPathNames}
-                        />
-                      )}
+                      <ActionButtons
+                        noActionPathNames={noActionPathNames}
+                        exitButtonPathNames={exitButtonPathNames}
+                        backButtonPathNames={backButtonPathNames}
+                      />
                       {/* TODO corregir mostrar solo para cuando esté logueado: usar "loggedIn" */}
-                      {showMenuMobile() && (
+                      {showMenuMobile() && loggedIn && (
                         <Grid container justify="flex-end" alignItems="center" spacing={2}>
                           <Grid item>
                             <Avatar variant="square">{firstName?.charAt(0)}</Avatar>
@@ -160,7 +161,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
               </Toolbar>
             </AppBar>
           </Hidden>
-          <Hidden smDown>{showMenuMobile() && <Menu type="desktop" />}</Hidden>
+          <Hidden smDown>{showMenuMobile() && loggedIn && <Menu type="desktop" />}</Hidden>
         </>
       )}
     </>
