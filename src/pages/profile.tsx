@@ -33,7 +33,6 @@ export default function ProfilePage(): JSX.Element {
     const user: User = getDataFromLocalstorage('user');
     setFullName(user.fullName);
     setDocumentNumber(user.documentNumber);
-    console.log(user);
   });
 
   return (

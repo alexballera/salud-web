@@ -33,7 +33,7 @@ export function getDataFromLocalstorage(str: string): User {
   return user;
 }
 
-export function removeDataToLocalstorage(key: string): void {
+export function removeDataFromLocalstorage(key: string): void {
   window.localStorage.removeItem(key);
 }
 

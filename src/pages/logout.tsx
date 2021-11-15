@@ -18,11 +18,7 @@ import LayoutCode from '../layouts/LayoutCode';
 
 /// STYLES & TYPES
 import LayoutCodeStyles from '../layouts/LayoutCode/styles.module';
-import {
-  getDataFromLocalstorage,
-  logoutService,
-  removeDataToLocalstorage
-} from '../services/auth.service';
+import { getDataFromLocalstorage, logoutService } from '../services/auth.service';
 import { User } from '../types/auth.types';
 /// STYLES & TYPES END
 
@@ -42,7 +38,6 @@ function LogOut(): JSX.Element {
   const closeSession = (): void => {
     logoutService(email);
     router.replace('/');
-    // removeDataToLocalstorage('user');
   };
 
   return (
