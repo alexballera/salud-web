@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NextPage } from 'next/types';
 
 /// MATERIAL UI
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import { removeDataFromLocalstorage } from '../services/auth.service';
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
@@ -15,6 +16,9 @@ import Typography from '@material-ui/core/Typography';
 /// STYLES & TYPES END
 
 const HomePage: NextPage = (): JSX.Element => {
+  useEffect(() => {
+    removeDataFromLocalstorage('user');
+  });
   return (
     <>
       <Box component="main">
