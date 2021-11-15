@@ -105,7 +105,7 @@ function CredentialData({
             id="confirmPassword"
             name="confirmPassword"
             type="password"
-            label={updatePassword ? 'Confirmación de nueva contraseña' : 'Contraseña'}
+            label={updatePassword ? 'Contraseña' : 'Confirmar contraseña'}
             value={values.confirmPassword}
             error={touched.confirmPassword && Boolean(errors.confirmPassword)}
             onBlur={handleBlur}
