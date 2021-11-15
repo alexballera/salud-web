@@ -62,6 +62,7 @@ function LoginPage({
     loginService(email, password)
       .then(response => {
         handleLogin(response.data.result);
+        console.log(response.data);
         setDataToLocalstorage('user', response.data.result);
         handleError(false);
         router.replace('/main');
@@ -72,6 +73,9 @@ function LoginPage({
           switch (err.response.data.error.code) {
             case 'sld-user-3':
               return setDialogOpen(true);
+            case 'sld-user-15':
+              handleError(true, message);
+              router.replace('/validate_code');
           }
           handleError(true, message);
         } else {
