@@ -1,10 +1,12 @@
-import React, { ChangeEvent } from 'react';
-import { Box, Tab, Tabs } from '@material-ui/core';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 /// CONTEXT
+import { withAppContext } from '../context';
 /// CONTEXT END
 
 /// MATERIAL - UI
+import { Box, Tab, Tabs } from '@material-ui/core';
 /// MATERIAL - UI END
 
 /// SERVICES
@@ -15,9 +17,11 @@ import LayoutInner from '../layouts/LayoutInner';
 import SubscriptionConfiguration from '../containers/Subscription/SubscriptionConfiguration';
 import SubscriptionPlan from '../containers/Subscription/SubscriptionPlan';
 import { TitleContent } from '../components/common/TitleContent';
+import Redirect from '../components/common/Redirect';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
+import { AppStates } from '../context/types';
 /// STYLES & TYPES END
 
 /// FORM STATES & VALIDATIONS
@@ -52,33 +56,47 @@ function a11yProps(index: number) {
   };
 }
 
-export default function SubscriptionPage(): JSX.Element {
-  const [value, setValue] = React.useState(0);
+function SubscriptionPage({ user, loggedIn }: AppStates): JSX.Element {
+  const router = useRouter();
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (!(user || loggedIn)) {
+      router.replace('/login');
+    }
+  }, [user, loggedIn]);
 
   // eslint-disable-next-line @typescript-eslint/ban-types
   const handleChange = (event: ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
   return (
-    <LayoutInner fullwidth>
-      <Box p={3}>
-        <TitleContent title="Tu plan de suscripción" />
-      </Box>
-      <Tabs
-        variant="fullWidth"
-        value={value}
-        onChange={handleChange}
-        aria-label="simple tabs example"
-      >
-        <Tab label="Mi plan" {...a11yProps(0)} />
-        <Tab label="Configuración" {...a11yProps(1)} />
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        <SubscriptionPlan />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <SubscriptionConfiguration />
-      </TabPanel>
-    </LayoutInner>
+    <>
+      {user ? (
+        <LayoutInner fullwidth>
+          <Box p={3}>
+            <TitleContent title="Tu plan de suscripción" />
+          </Box>
+          <Tabs
+            variant="fullWidth"
+            value={value}
+            onChange={handleChange}
+            aria-label="simple tabs example"
+          >
+            <Tab label="Mi plan" {...a11yProps(0)} />
+            <Tab label="Configuración" {...a11yProps(1)} />
+          </Tabs>
+          <TabPanel value={value} index={0}>
+            <SubscriptionPlan />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <SubscriptionConfiguration />
+          </TabPanel>
+        </LayoutInner>
+      ) : (
+        <Redirect />
+      )}
+    </>
   );
 }
+export default withAppContext(SubscriptionPage);

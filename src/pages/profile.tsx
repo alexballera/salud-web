@@ -23,19 +23,18 @@ import LayoutContent from '../layouts/LayoutContent';
 import ProfileStyles from '../containers/Profile/styles.module';
 import { withAppContext } from '../context';
 import { AppStates } from '../context/types';
+import Redirect from '../components/common/Redirect';
 /// STYLES & TYPES END
 
-function ProfilePage({ user, loggedIn }: AppStates): JSX.Element {
+function ProfilePage({ user }: AppStates): JSX.Element {
   const classes = ProfileStyles();
   const router = useRouter();
-  console.log('user', user);
-  console.log('loggedIn', loggedIn);
 
   useEffect(() => {
-    if (!(user || loggedIn)) {
+    if (!user) {
       router.replace('/login');
     }
-  }, [user, loggedIn]);
+  }, [user]);
 
   return (
     <>
@@ -78,7 +77,7 @@ function ProfilePage({ user, loggedIn }: AppStates): JSX.Element {
           }
         />
       ) : (
-        <h2>Será redireccionado para que inicie sesión...</h2>
+        <Redirect />
       )}
     </>
   );
