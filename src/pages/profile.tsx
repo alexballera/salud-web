@@ -33,13 +33,13 @@ function ProfilePage({ user, loggedIn }: AppStates): JSX.Element {
 
   useEffect(() => {
     if (!(user || loggedIn)) {
-      router.push('/login');
+      router.replace('/login');
     }
   }, [user, loggedIn]);
 
   return (
     <>
-      {user && (
+      {user ? (
         <LayoutContent
           title={<TitleContent title="Perfil" />}
           leftContent={
@@ -77,8 +77,9 @@ function ProfilePage({ user, loggedIn }: AppStates): JSX.Element {
             </>
           }
         />
+      ) : (
+        <h2>Será redireccionado para que inicie sesión...</h2>
       )}
-      {!user && <h2>Será redireccionado para que inicie sesión...</h2>}
     </>
   );
 }
