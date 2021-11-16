@@ -62,7 +62,6 @@ function LoginPage({
     loginService(email, password)
       .then(response => {
         handleLogin(response.data.result);
-        console.log(response.data);
         setDataToLocalstorage('user', response.data.result);
         handleError(false);
         router.replace('/main');
