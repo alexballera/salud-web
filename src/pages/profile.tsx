@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 /// MATERIAL - UI
 import { Box, Button, Divider, Hidden } from '@material-ui/core';
@@ -7,7 +8,6 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 /// MATERIAL - UI END
 
 /// SERVICES
-import { getDataFromLocalstorage } from '../services/auth.service';
 /// SERVICES END
 
 /// OWN COMPONENTS
@@ -21,57 +21,66 @@ import LayoutContent from '../layouts/LayoutContent';
 
 /// STYLES & TYPES
 import ProfileStyles from '../containers/Profile/styles.module';
-import { User } from '../types/auth.types';
+import { withAppContext } from '../context';
+import { AppStates } from '../context/types';
 /// STYLES & TYPES END
 
-export default function ProfilePage(): JSX.Element {
+function ProfilePage({ user, loggedIn }: AppStates): JSX.Element {
   const classes = ProfileStyles();
-  const [fullName, setFullName] = useState('');
-  const [documentNumber, setDocumentNumber] = useState('');
+  const router = useRouter();
+  console.log('user', user);
+  console.log('loggedIn', loggedIn);
 
   useEffect(() => {
-    const user: User = getDataFromLocalstorage('user');
-    setFullName(user.fullName);
-    setDocumentNumber(user.documentNumber);
-  });
+    if (!(user || loggedIn)) {
+      router.push('/login');
+    }
+  }, [user, loggedIn]);
 
   return (
-    <LayoutContent
-      title={<TitleContent title="Perfil" />}
-      leftContent={
-        <>
-          <AvatarProfile fullName={fullName} documentNumber={documentNumber} />
-          <Hidden mdUp>
-            <Divider className={classes.divider} />
-          </Hidden>
-        </>
-      }
-      rightContent={
-        <>
-          <PersonalProfile />
-          <Divider className={classes.divider} />
-          <CredentialsProfile />
-          <Divider className={classes.divider} />
-          <Hidden mdUp>
-            <LegalProfile />
-          </Hidden>
-          <Hidden smDown>
-            <Box>
-              <Link href="/logout" passHref>
-                <Button
-                  data-testid="exit-button"
-                  variant="text"
-                  endIcon={<ExitToAppIcon />}
-                  className={classes.button}
-                  color="secondary"
-                >
-                  Cerrar sesión
-                </Button>
-              </Link>
-            </Box>
-          </Hidden>
-        </>
-      }
-    />
+    <>
+      {user && (
+        <LayoutContent
+          title={<TitleContent title="Perfil" />}
+          leftContent={
+            <>
+              <AvatarProfile fullName={user.fullName} documentNumber={user.documentNumber} />
+              <Hidden mdUp>
+                <Divider className={classes.divider} />
+              </Hidden>
+            </>
+          }
+          rightContent={
+            <>
+              <PersonalProfile />
+              <Divider className={classes.divider} />
+              <CredentialsProfile />
+              <Divider className={classes.divider} />
+              <Hidden mdUp>
+                <LegalProfile />
+              </Hidden>
+              <Hidden smDown>
+                <Box>
+                  <Link href="/logout" passHref>
+                    <Button
+                      data-testid="exit-button"
+                      variant="text"
+                      endIcon={<ExitToAppIcon />}
+                      className={classes.button}
+                      color="secondary"
+                    >
+                      Cerrar sesión
+                    </Button>
+                  </Link>
+                </Box>
+              </Hidden>
+            </>
+          }
+        />
+      )}
+      {!user && <h2>Será redireccionado para que inicie sesión...</h2>}
+    </>
   );
 }
+
+export default withAppContext(ProfilePage);
