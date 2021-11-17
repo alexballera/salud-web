@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { NextPage } from 'next/types';
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../i18n/home/i18n';
 
 /// MATERIAL UI
 import Box from '@material-ui/core/Box';
@@ -16,13 +18,14 @@ import { removeDataFromLocalstorage } from '../services/auth.service';
 /// STYLES & TYPES END
 
 const HomePage: NextPage = (): JSX.Element => {
+  const { t } = useTranslation(NAMESPACE_KEY);
   useEffect(() => {
     removeDataFromLocalstorage('user');
   });
   return (
     <>
       <Box component="main">
-        <Typography variant="h1">Landing Page</Typography>
+        <Typography variant="h1">{t('home_title')}</Typography>
       </Box>
     </>
   );

@@ -19,6 +19,7 @@ import LayoutBasic from '../../layouts/LayoutBasic';
 import LayoutForm from '../../layouts/LayoutForm';
 import UpdateHeader from '../update/components/UpdateHeader';
 import theme from '../../styles/js/theme';
+import LayoutLoggedIn from '../../layouts/LayoutLoggedIn';
 
 /// OWN COMPONENTS END
 
@@ -93,36 +94,38 @@ const UpdateLanguage = (): JSX.Element => {
   };
 
   return (
-    <LayoutBasic
-      header={
-        <UpdateHeader
-          title="Editar idioma"
-          description="Seleccioná el idioma de tu preferencia para la plataforma"
-        />
-      }
-      form={
-        <LayoutForm
-          form={<LanguageForm />}
-          buttonLeft={
-            <Button fullWidth variant="outlined" onClick={goBack}>
-              Volver
-            </Button>
-          }
-          buttonRight={
-            <Button
-              fullWidth
-              type="submit"
-              color="primary"
-              variant="contained"
-              // TODO verificar
-              // disabled={!_.isEmpty(formik.errors) || loading}
-            >
-              Continuar
-            </Button>
-          }
-        />
-      }
-    />
+    <LayoutLoggedIn>
+      <LayoutBasic
+        header={
+          <UpdateHeader
+            title="Editar idioma"
+            description="Seleccioná el idioma de tu preferencia para la plataforma"
+          />
+        }
+        form={
+          <LayoutForm
+            form={<LanguageForm />}
+            buttonLeft={
+              <Button fullWidth variant="outlined" onClick={goBack}>
+                Volver
+              </Button>
+            }
+            buttonRight={
+              <Button
+                fullWidth
+                type="submit"
+                color="primary"
+                variant="contained"
+                // TODO verificar
+                // disabled={!_.isEmpty(formik.errors) || loading}
+              >
+                Continuar
+              </Button>
+            }
+          />
+        }
+      />
+    </LayoutLoggedIn>
   );
 };
 
