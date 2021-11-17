@@ -35,6 +35,7 @@ import LayoutForm from '../../layouts/LayoutForm';
 
 /// STYLES & TYPES
 import { withStyles } from '@material-ui/core/styles';
+import LayoutLoggedIn from '../../layouts/LayoutLoggedIn';
 const useStyle = makeStyles(() =>
   createStyles({
     legend: {
@@ -152,76 +153,86 @@ const UpdateNotifications = (): JSX.Element => {
     router.back();
   };
   return (
-    <LayoutBasic
-      header={
-        <UpdateHeader
-          title="Notificaciones"
-          description="Indicá cuales son tus preferencias de notificaciones"
-        />
-      }
-      form={
-        <LayoutForm
-          form={
-            <FormControl component="fieldset">
-              <FormLabel component="legend" className={classes.legend}>
-                Tipo
-              </FormLabel>
-              <FormGroup aria-label="position" row>
-                {type.map(item => (
-                  <FormControlLabel
-                    key={item.value}
-                    value={item.value}
-                    control={
-                      <AntSwitch checked={item.checked} onChange={handleChange} name={item.value} />
-                    }
-                    label={item.label}
-                    labelPlacement="start"
-                    className={classes.label}
-                  />
-                ))}
-              </FormGroup>
+    <LayoutLoggedIn>
+      <LayoutBasic
+        header={
+          <UpdateHeader
+            title="Notificaciones"
+            description="Indicá cuales son tus preferencias de notificaciones"
+          />
+        }
+        form={
+          <LayoutForm
+            form={
+              <FormControl component="fieldset">
+                <FormLabel component="legend" className={classes.legend}>
+                  Tipo
+                </FormLabel>
+                <FormGroup aria-label="position" row>
+                  {type.map(item => (
+                    <FormControlLabel
+                      key={item.value}
+                      value={item.value}
+                      control={
+                        <AntSwitch
+                          checked={item.checked}
+                          onChange={handleChange}
+                          name={item.value}
+                        />
+                      }
+                      label={item.label}
+                      labelPlacement="start"
+                      className={classes.label}
+                    />
+                  ))}
+                </FormGroup>
 
-              <Divider className={classes.divider} />
+                <Divider className={classes.divider} />
 
-              <FormLabel component="legend" className={classes.legend}>
-                Preferencias
-              </FormLabel>
-              <FormGroup aria-label="position" row>
-                {preferences.map(item => (
-                  <FormControlLabel
-                    key={item.value}
-                    value={item.value}
-                    control={
-                      <AntSwitch checked={item.checked} onChange={handleChange} name={item.value} />
-                    }
-                    label={item.label}
-                    labelPlacement="start"
-                    className={classes.label}
-                  />
-                ))}
-              </FormGroup>
-            </FormControl>
-          }
-          buttonLeft={
-            <Button fullWidth variant="outlined" onClick={goBack}>
-              Volver
-            </Button>
-          }
-          buttonRight={
-            <Button
-              fullWidth
-              type="submit"
-              color="primary"
-              variant="contained"
-              // TODO verificar
-              // disabled={!_.isEmpty(formik.errors) || loading}
-            >
-              Continuar
-            </Button>
-          }
-        />
-      }
-    />
+                <FormLabel component="legend" className={classes.legend}>
+                  Preferencias
+                </FormLabel>
+                <FormGroup aria-label="position" row>
+                  {preferences.map(item => (
+                    <FormControlLabel
+                      key={item.value}
+                      value={item.value}
+                      control={
+                        <AntSwitch
+                          checked={item.checked}
+                          onChange={handleChange}
+                          name={item.value}
+                        />
+                      }
+                      label={item.label}
+                      labelPlacement="start"
+                      className={classes.label}
+                    />
+                  ))}
+                </FormGroup>
+              </FormControl>
+            }
+            buttonLeft={
+              <Button fullWidth variant="outlined" onClick={goBack}>
+                Volver
+              </Button>
+            }
+            buttonRight={
+              <Button
+                fullWidth
+                type="submit"
+                color="primary"
+                variant="contained"
+                // TODO verificar
+                // disabled={!_.isEmpty(formik.errors) || loading}
+              >
+                Continuar
+              </Button>
+            }
+          />
+        }
+      />
+    </LayoutLoggedIn>
   );
 };
 
