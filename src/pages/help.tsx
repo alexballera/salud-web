@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import React from 'react';
 
 /// CONTEXT
 import { withAppContext } from '../context';
@@ -13,33 +12,22 @@ import { withAppContext } from '../context';
 
 /// OWN COMPONENTS
 import LayoutInner from '../layouts/LayoutInner';
-import Redirect from '../components/common/Redirect';
+import LayoutLoggedIn from '../layouts/LayoutLoggedIn';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
-import { AppStates } from '../context/types';
 /// STYLES & TYPES END
 
 /// FORM STATES & VALIDATIONS
 /// FORM STATES & VALIDATIONS END
 
-function HelpPage({ user, loggedIn }: AppStates): JSX.Element {
-  const router = useRouter();
-  useEffect(() => {
-    if (!(user || loggedIn)) {
-      router.replace('/login');
-    }
-  }, [user, loggedIn]);
+function HelpPage(): JSX.Element {
   return (
-    <>
-      {user ? (
-        <LayoutInner>
-          <h1>Ayuda</h1>
-        </LayoutInner>
-      ) : (
-        <Redirect />
-      )}
-    </>
+    <LayoutLoggedIn>
+      <LayoutInner>
+        <h1>Ayuda</h1>
+      </LayoutInner>
+    </LayoutLoggedIn>
   );
 }
 export default withAppContext(HelpPage);

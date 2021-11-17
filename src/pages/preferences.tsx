@@ -17,11 +17,10 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { TitleContent } from '../components/common/TitleContent';
 import { FieldTextData } from '../containers/Profile/components/FieldTextData';
 import LayoutInner from '../layouts/LayoutInner';
-import Redirect from '../components/common/Redirect';
+import LayoutLoggedIn from '../layouts/LayoutLoggedIn';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
-import { AppStates } from '../context/types';
 /// STYLES & TYPES END
 
 /// FORM STATES & VALIDATIONS
@@ -45,61 +44,51 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function PreferencesPage({ user, loggedIn }: AppStates): JSX.Element {
-  const router = useRouter();
-  useEffect(() => {
-    if (!(user || loggedIn)) {
-      router.replace('/login');
-    }
-  }, [user, loggedIn]);
+function PreferencesPage(): JSX.Element {
   const classes = useStyles();
   return (
-    <>
-      {user ? (
-        <LayoutInner>
-          <Grid container spacing={2}>
+    <LayoutLoggedIn>
+      <LayoutInner>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TitleContent title="Preferencias" />
+          </Grid>
+          <Grid item xs={12} md={7}>
+            <FieldTextData
+              title="Idioma"
+              text="Editar"
+              titleUppercase
+              href="/preferences/language"
+            />
+            <TitleContent title="Español" subTitle />
+            <Divider className={classes.divider} />
+          </Grid>
+          <Grid container item xs={12} md={7}>
             <Grid item xs={12}>
-              <TitleContent title="Preferencias" />
-            </Grid>
-            <Grid item xs={12} md={7}>
               <FieldTextData
-                title="Idioma"
+                title="Notificaciones"
                 text="Editar"
                 titleUppercase
-                href="/preferences/language"
+                href="/preferences/notifications"
               />
-              <TitleContent title="Español" subTitle />
+            </Grid>
+            <Grid item xs={12} className={classes.contentContainer}>
+              <TitleContent title="Publicidad" subTitle />
+              <Chip label="Email" color="secondary" className={classes.chip} />
+              <Chip label="SMS" color="secondary" className={classes.chip} />
+            </Grid>
+            <Grid item xs={12} className={classes.contentContainer}>
+              <TitleContent title="Recordatorios" subTitle />
+              <Chip label="Email" color="secondary" className={classes.chip} />
+            </Grid>
+
+            <Grid item xs={12} className={classes.contentContainer}>
               <Divider className={classes.divider} />
             </Grid>
-            <Grid container item xs={12} md={7}>
-              <Grid item xs={12}>
-                <FieldTextData
-                  title="Notificaciones"
-                  text="Editar"
-                  titleUppercase
-                  href="/preferences/notifications"
-                />
-              </Grid>
-              <Grid item xs={12} className={classes.contentContainer}>
-                <TitleContent title="Publicidad" subTitle />
-                <Chip label="Email" color="secondary" className={classes.chip} />
-                <Chip label="SMS" color="secondary" className={classes.chip} />
-              </Grid>
-              <Grid item xs={12} className={classes.contentContainer}>
-                <TitleContent title="Recordatorios" subTitle />
-                <Chip label="Email" color="secondary" className={classes.chip} />
-              </Grid>
-
-              <Grid item xs={12} className={classes.contentContainer}>
-                <Divider className={classes.divider} />
-              </Grid>
-            </Grid>
           </Grid>
-        </LayoutInner>
-      ) : (
-        <Redirect />
-      )}
-    </>
+        </Grid>
+      </LayoutInner>
+    </LayoutLoggedIn>
   );
 }
 export default withAppContext(PreferencesPage);

@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Redirect = (): JSX.Element => {
+function Redirect(): JSX.Element {
   return <h2>Será redireccionado para que inicie sesión...</h2>;
-};
+}
 
 export default Redirect;
