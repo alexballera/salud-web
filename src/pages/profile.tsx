@@ -15,13 +15,13 @@ import { AvatarProfile } from '../containers/Profile/AvatarProfile';
 import { CredentialsProfile } from '../containers/Profile/CredentialsProfile';
 import { LegalProfile } from '../containers/Profile/LegalProfile';
 import { PersonalProfile } from '../containers/Profile/PersonalProfile';
+import { withAppContext } from '../context';
 import LayoutContent from '../layouts/LayoutContent';
 import LayoutLoggedIn from '../layouts/LayoutLoggedIn';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
 import ProfileStyles from '../containers/Profile/styles.module';
-import { withAppContext } from '../context';
 import { AppStates } from '../context/types';
 /// STYLES & TYPES END
 
