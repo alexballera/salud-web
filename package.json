@@ -33,6 +33,7 @@
     "formik": "^2.2.8",
     "graphql": "^15.5.1",
     "i18next": "^21.4.1",
+    "i18next-browser-languagedetector": "^6.1.2",
     "interweave": "^12.7.2",
     "next": "11.1.2",
     "next-pwa": "^5.2.21",
