@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY } from '../i18n/home/i18n';
 
 /// MATERIAL UI
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import { Button, ButtonGroup, Box, Typography } from '@material-ui/core';
 import { removeDataFromLocalstorage } from '../services/auth.service';
+import i18next from 'i18next';
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
@@ -26,6 +26,10 @@ const HomePage: NextPage = (): JSX.Element => {
     <>
       <Box component="main">
         <Typography variant="h1">{t('home_title')}</Typography>
+        <ButtonGroup color="primary" aria-label="outlined primary button group">
+          <Button onClick={() => i18next.changeLanguage('en')}>English</Button>
+          <Button onClick={() => i18next.changeLanguage('es')}>Español</Button>
+        </ButtonGroup>
       </Box>
     </>
   );
