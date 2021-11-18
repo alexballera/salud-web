@@ -26,6 +26,11 @@ import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 import { ISignUpBody } from '../types/auth.types';
 /// STYLES END
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../i18n/forms/i18n';
+/// i18n END
+
 /// GET SERVICE
 export const getStaticProps: GetStaticProps = async () => {
   const res = await axios.get(`${process.env.apiUrl}general/document-types`);
@@ -94,6 +99,7 @@ function SignUpView({
   documentTypeOptions,
   handleNotifications
 }: InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
+  const { t } = useTranslation(NAMESPACE_KEY);
   const classes = useStyles();
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
@@ -193,7 +199,7 @@ function SignUpView({
                   >
                     <Grid item xs={6} md={2} className={classes.buttonLeftContainer}>
                       <Button fullWidth onClick={goBack} variant="outlined">
-                        Volver
+                        {t('forms_signup_back_button')}
                       </Button>
                     </Grid>
                     <Grid item xs={6} md={2} className={classes.buttonRightContainer}>
@@ -206,7 +212,9 @@ function SignUpView({
                         // TODO verificar
                         // disabled={!_.isEmpty(formik.errors) || loading}
                       >
-                        {currentStep === dataSource.length ? 'Enviar' : 'Continuar'}
+                        {currentStep === dataSource.length
+                          ? `${t('forms_signup_send_button')}`
+                          : `${t('forms_signup_continue_button')}`}
                       </Button>
                     </Grid>
                   </Grid>

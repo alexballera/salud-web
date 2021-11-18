@@ -1,5 +1,7 @@
 {
-  "forms_message_error_submit": "Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.",
+  "forms_head_login_title": "Login.",
+  "forms_field_required": "Campo requerido",
+
   "forms_email": "Correo electrónico",
   "forms_email_invalid": "Email invalido.",
   "forms_email_required": "Debes especificar un email.",
@@ -9,9 +11,26 @@
   "forms_password": "Contraseña",
   "forms_password_required": "Debes especificar una contraseña.",
   "forms_password_button_recover": "¿Olvidó su contraseña?",
-  "forms_head_login_title": "Login.",
+
   "forms_login_title": "Inicie sesión.",
   "forms_login_button": "INICIAR SESIÓN",
   "forms_login_register_button": "Registrarse",
-  "forms_login_register_message": "¿Aún no está registrado en OMNiSalud?"
+  "forms_login_message_error_submit": "Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.",
+  "forms_login_register_message": "¿Aún no está registrado en OMNiSalud?",
+
+  "forms_signup_back_button": "Volver",
+  "forms_signup_send_button": "Enviar",
+  "forms_signup_continue_button": "Continuar",
+  "forms_signup_document_physical": "Cédula Física",
+  "forms_signup_document_residence": "Cédula de Residencia",
+  "forms_signup_document_passport": "Pasaporte",
+
+  "forms_signup_message_error_field_incorrect": "Campos incorrectos, corregir para continuar.",
+  "forms_signup_document_type": "Tipo de identificación",
+  "forms_signup_document_number": "Número de identificación",
+  "forms_name_label": "Nombre",
+  "forms_lastname_label": "Apellidos",
+  "forms_birthdate": "Fecha de nacimiento",
+  "forms_personal_data_title": "Identifícate",
+  "forms_personal_data_description": "Para empezar tu registro bríndanos tu número de identificación"
 }

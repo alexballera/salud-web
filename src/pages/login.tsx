@@ -84,7 +84,7 @@ function LoginPage({
           }
           handleError(true, message);
         } else {
-          handleError(true, `${t('forms_message_error_submit')}`);
+          handleError(true, `${t('forms_login_message_error_submit')}`);
         }
       })
       .finally(() => {
