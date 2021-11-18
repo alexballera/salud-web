@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
+import Head from 'next/head';
 import { NextPage } from 'next/types';
 import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY } from '../i18n/home/i18n';
+import i18next from 'i18next';
 
 /// MATERIAL UI
 import { Button, ButtonGroup, Box, Typography } from '@material-ui/core';
 import { removeDataFromLocalstorage } from '../services/auth.service';
-import i18next from 'i18next';
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
@@ -14,7 +15,6 @@ import i18next from 'i18next';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
-/// import styles from '../styles/Home.module.scss';
 /// STYLES & TYPES END
 
 const HomePage: NextPage = (): JSX.Element => {
@@ -24,6 +24,9 @@ const HomePage: NextPage = (): JSX.Element => {
   });
   return (
     <>
+      <Head>
+        <title>{t('home_title')}</title>
+      </Head>
       <Box component="main">
         <Typography variant="h1">{t('home_title')}</Typography>
         <ButtonGroup color="primary" aria-label="outlined primary button group">

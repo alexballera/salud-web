@@ -5,17 +5,25 @@ import en from './en.json';
 import es from './es.json';
 import esHome from './home/es.json';
 import enHome from './home/en.json';
+import esMenu from './menu/es.json';
+import enMenu from './menu/en.json';
+import esForms from './forms/es.json';
+import enForms from './forms/en.json';
 
 // the translations
 // (tip move them in a JSON file and import them)
 const resources = {
   en: {
     translation: en,
-    home: enHome
+    home: enHome,
+    menu: enMenu,
+    forms: enForms
   },
   es: {
     translation: es,
-    home: esHome
+    home: esHome,
+    menu: esMenu,
+    forms: esForms
   }
 };
 
