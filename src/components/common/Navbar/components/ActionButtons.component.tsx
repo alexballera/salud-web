@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../../../i18n/menu/i18n';
 
 /// MATERIAL UI
 import {
@@ -35,6 +37,7 @@ const ActionButtons = ({
   exitButtonPathNames,
   backButtonPathNames
 }: IAction): JSX.Element => {
+  const { t } = useTranslation(NAMESPACE_KEY);
   const classes = navbarStyles();
   const router = useRouter();
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -53,7 +56,7 @@ const ActionButtons = ({
         endIcon={<CloseIcon />}
         className={classes.button}
       >
-        Salir
+        {t('menu_button_exit')}
       </Button>
     );
   }
@@ -69,7 +72,7 @@ const ActionButtons = ({
           endIcon={<CloseIcon />}
           className={classes.button}
         >
-          Salir
+          {t('menu_button_exit')}
         </Button>
 
         <Dialog
@@ -83,15 +86,17 @@ const ActionButtons = ({
           aria-labelledby="alert-dialog-slide-title"
           aria-describedby="alert-dialog-slide-description"
         >
-          <DialogTitle id="alert-dialog-slide-title">Volver a la página principal</DialogTitle>
+          <DialogTitle id="alert-dialog-slide-title">
+            {t('menu_alert_dialog_slide_title')}
+          </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
-              ¿Seguro deseas salir?
+              {t('menu_alert_dialog_confirm_title')}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setDialogOpen(false)} color="secondary">
-              Cancelar
+              {t('menu_button_cancel')}
             </Button>
             <Button
               onClick={() => {
@@ -100,7 +105,7 @@ const ActionButtons = ({
               }}
               color="primary"
             >
-              Salir
+              {t('menu_button_exit')}
             </Button>
           </DialogActions>
         </Dialog>
@@ -116,7 +121,7 @@ const ActionButtons = ({
   return (
     <Link href="login" passHref>
       <Button color="inherit" data-testid="login-button">
-        INGRESAR
+        {t('menu_button_login')}
       </Button>
     </Link>
   );
