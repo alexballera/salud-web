@@ -22,8 +22,24 @@ const resources = {
 const namespaces = ['translation', 'home'];
 
 const DETECTION_OPTIONS = {
-  order: ['navigator']
+  order: ['localStorage', 'navigator'],
+  caches: ['localStorage']
 };
+
+function navigatorLanguageDetector() {
+  let ln = '';
+  if (typeof window !== 'undefined') {
+    // browser code
+    ln = window.navigator.language || window.navigator.userLanguage;
+    if (ln === 'es-Es' || ln === 'es') {
+      ln = 'es';
+    }
+    if (ln === 'en-En' || ln === 'en') {
+      ln = 'en';
+    }
+    return ln;
+  }
+}
 
 i18n
   .use(LanguageDetector)
@@ -31,8 +47,8 @@ i18n
   .init({
     detection: DETECTION_OPTIONS,
     resources,
-    lng: 'es',
-    fallbackLng: 'es',
+    lng: navigatorLanguageDetector(),
+    fallbackLng: navigatorLanguageDetector(),
     keySeparator: false, // we do not use keys in form messages.welcome
     interpolation: {
       escapeValue: false // react already safes from xss
