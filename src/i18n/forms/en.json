@@ -7,8 +7,11 @@
   "forms_email_required": "Debes especificar un email.",
   "forms_email_not_found": "Correo electrónico no encontrado",
   "forms_email_not_register": "El correo indicado no está registrado, ¿desea registrarse?",
+  "forms_email_is_register": "Este correo ya fue registrado previamente",
 
   "forms_password": "Contraseña",
+  "forms_password_new": "Contraseña nueva",
+  "forms_password_confirm": "Confirmar contraseña",
   "forms_password_required": "Debes especificar una contraseña.",
   "forms_password_button_recover": "¿Olvidó su contraseña?",
 
@@ -32,5 +35,22 @@
   "forms_lastname_label": "Apellidos",
   "forms_birthdate": "Fecha de nacimiento",
   "forms_personal_data_title": "Identifícate",
-  "forms_personal_data_description": "Para empezar tu registro bríndanos tu número de identificación"
+  "forms_personal_data_description": "Para empezar tu registro bríndanos tu número de identificación",
+
+  "forms_validations_min_3": "Número de caracteres minimos 3",
+  "forms_validations_min_9": "Número de caracteres minimos 9",
+  "forms_validations_min_10_max_15": "Caracteres mínimos para Residencia 10, máx 15",
+  "forms_validations_min_10_max_20": "Número de caracteres mínimos para Pasaporte 9, máx 20",
+
+  "forms_extra_data_gender_label": "Sexo biológico designado al nacer",
+  "forms_extra_data_gender_female": "Femenino",
+  "forms_extra_data_gender_male": "Masculino",
+  "forms_extra_data_phone": "Número de teléfono",
+  "forms_extra_data_address_label": "Domicilio",
+  "forms_extra_data_address_province": "Provincia",
+  "forms_extra_data_address_canton": "Cantón",
+  "forms_extra_data_address_district": "Distrito",
+  "forms_extra_data_term_accept": "Acepto",
+  "forms_extra_data_term_text": "términos y condiciones",
+  "forms_extra_data_consent_text": "consentimiento informado"
 }

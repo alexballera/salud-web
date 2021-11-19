@@ -22,6 +22,11 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import SignUpStyles from '../styles.module';
 /// MATERIAL-UI END
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../../i18n/forms/i18n';
+/// i18n END
+
 /// INITIAL STATES
 const initialProvinceStates: IGeneralAdressState = {
   data: [],
@@ -50,6 +55,7 @@ function ExtraData({
   updatePersonalData,
   updatePhone
 }: IExtraDataProps & FormikProps<IExtraDataForm>): JSX.Element {
+  const { t } = useTranslation(NAMESPACE_KEY);
   const classes = SignUpStyles();
   const [cantonStates, setCantonStates] = useState(initialCantonStates);
   const [provinceStates, setProvinceStates] = useState(initialProvinceStates);
@@ -120,7 +126,7 @@ function ExtraData({
       {!updatePhone && (
         <FormControl fullWidth margin="normal" variant="filled">
           <FormLabel id="gender-selector-label" style={{ marginBottom: 10 }}>
-            Sexo biológico designado al nacer
+            {t('forms_extra_data_gender_label')}
           </FormLabel>
           <Select
             fullWidth
@@ -133,8 +139,8 @@ function ExtraData({
             variant="outlined"
             onChange={handleChange}
           >
-            <MenuItem value={'1'}>Femenino</MenuItem>
-            <MenuItem value={'2'}>Masculino</MenuItem>
+            <MenuItem value={'1'}>{t('forms_extra_data_gender_female')}</MenuItem>
+            <MenuItem value={'2'}>{t('forms_extra_data_gender_male')}</MenuItem>
           </Select>
           {touched.gender && errors.gender && (
             <FormHelperText error>{errors.gender}</FormHelperText>
@@ -146,7 +152,9 @@ function ExtraData({
           id="mobilePhone1"
           name="mobilePhone1"
           type="text"
-          label={updatePhone ? 'Nuevo número de teléfono' : 'Número de teléfono'}
+          label={
+            updatePhone ? `${t('forms_extra_data_phone_new')}` : `${t('forms_extra_data_phone')}`
+          }
           value={values.mobilePhone1}
           error={touched.mobilePhone1 && Boolean(errors.mobilePhone1)}
           onBlur={handleBlur}
@@ -161,11 +169,11 @@ function ExtraData({
       {!updatePhone && (
         <>
           <Typography variant="h5" component="h5" className={classes.titleSection}>
-            Domicilio
+            {t('forms_extra_data_address_label')}
           </Typography>
           <CustomAutoComplete
             id="province"
-            label="Provincia"
+            label={t('forms_extra_data_address_province')}
             value={values.province}
             error={touched.province && Boolean(errors.province)}
             onBlur={handleBlur}
@@ -180,7 +188,7 @@ function ExtraData({
 
           <CustomAutoComplete
             id="canton"
-            label="Cantón"
+            label={t('forms_extra_data_address_canton')}
             value={values.canton}
             error={touched.canton && Boolean(errors.canton)}
             onBlur={handleBlur}
@@ -194,7 +202,7 @@ function ExtraData({
 
           <CustomAutoComplete
             id="district"
-            label="Distrito"
+            label={t('forms_extra_data_address_district')}
             value={values.district}
             error={touched.district && Boolean(errors.district)}
             onBlur={handleBlur}
