@@ -12,6 +12,11 @@ import { Button } from '@material-ui/core';
 /// SERVICES
 /// SERVICES END
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../i18n/forms/i18n';
+/// i18n END
+
 /// OWN COMPONENTS
 import LayoutCode from '../layouts/LayoutCode';
 /// OWN COMPONENTS END
@@ -26,6 +31,7 @@ import { User } from '../types/auth.types';
 /// FORM STATES & VALIDATIONS END
 
 function LogOut(): JSX.Element {
+  const { t } = useTranslation(NAMESPACE_KEY);
   const classes = LayoutCodeStyles();
   const router = useRouter();
   const [email, setEmail] = useState('');
@@ -42,8 +48,8 @@ function LogOut(): JSX.Element {
 
   return (
     <LayoutCode
-      title={'Cerrar sesión'}
-      description={'¿Estás seguro que querés cerrar tu sesión en plataforma?'}
+      title={t('forms_logout_title')}
+      description={t('forms_logout_description')}
       leftButton={
         <Button
           fullWidth
@@ -52,7 +58,7 @@ function LogOut(): JSX.Element {
           variant="outlined"
           className={classes.button}
         >
-          Cancelar
+          {t('forms_cancel_button')}
         </Button>
       }
       rightButton={
@@ -63,7 +69,7 @@ function LogOut(): JSX.Element {
           variant="contained"
           className={classes.button}
         >
-          Si, cerrar sesión
+          {t('forms_logout_button')}
         </Button>
       }
     />

@@ -2,6 +2,15 @@
   "forms_head_login_title": "Login.",
   "forms_field_required": "Campo requerido",
 
+  "forms_login_button": "INICIAR SESIÓN",
+  "forms_login_register_button": "Registrarse",
+  "forms_password_button_recover": "¿Olvidó su contraseña?",
+  "forms_signup_back_button": "Volver",
+  "forms_signup_send_button": "Enviar",
+  "forms_signup_continue_button": "Continuar",
+  "forms_cancel_button": "Cancelar",
+  "forms_logout_button": "Si, cerrar sesión",
+
   "forms_email": "Correo electrónico",
   "forms_email_invalid": "Email invalido.",
   "forms_email_required": "Debes especificar un email.",
@@ -13,17 +22,11 @@
   "forms_password_new": "Contraseña nueva",
   "forms_password_confirm": "Confirmar contraseña",
   "forms_password_required": "Debes especificar una contraseña.",
-  "forms_password_button_recover": "¿Olvidó su contraseña?",
 
   "forms_login_title": "Inicie sesión.",
-  "forms_login_button": "INICIAR SESIÓN",
-  "forms_login_register_button": "Registrarse",
   "forms_login_message_error_submit": "Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.",
   "forms_login_register_message": "¿Aún no está registrado en OMNiSalud?",
 
-  "forms_signup_back_button": "Volver",
-  "forms_signup_send_button": "Enviar",
-  "forms_signup_continue_button": "Continuar",
   "forms_signup_document_physical": "Cédula Física",
   "forms_signup_document_residence": "Cédula de Residencia",
   "forms_signup_document_passport": "Pasaporte",
@@ -38,10 +41,13 @@
   "forms_personal_data_description": "Para empezar tu registro bríndanos tu número de identificación",
 
   "forms_validations_min_3": "Número de caracteres minimos 3",
+  "forms_validations_min_8": "Número de caracteres minimos 8",
   "forms_validations_min_9": "Número de caracteres minimos 9",
   "forms_validations_min_10_max_15": "Caracteres mínimos para Residencia 10, máx 15",
   "forms_validations_min_10_max_20": "Número de caracteres mínimos para Pasaporte 9, máx 20",
 
+  "forms_extra_data_title": "Datos adicionales",
+  "forms_extra_data_description": "Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma",
   "forms_extra_data_gender_label": "Sexo biológico designado al nacer",
   "forms_extra_data_gender_female": "Femenino",
   "forms_extra_data_gender_male": "Masculino",
@@ -52,5 +58,11 @@
   "forms_extra_data_address_district": "Distrito",
   "forms_extra_data_term_accept": "Acepto",
   "forms_extra_data_term_text": "términos y condiciones",
-  "forms_extra_data_consent_text": "consentimiento informado"
+  "forms_extra_data_consent_text": "consentimiento informado",
+
+  "forms_credential_data_title": "Credenciales de ingreso",
+  "forms_credential_data_description": "Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma",
+
+  "forms_logout_title": "Cerrar sesión",
+  "forms_logout_description": "¿Estás seguro que querés cerrar tu sesión en plataforma?"
 }

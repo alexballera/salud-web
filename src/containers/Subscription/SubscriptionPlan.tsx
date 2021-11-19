@@ -27,6 +27,11 @@ import CheckIcon from '@material-ui/icons/Check';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../i18n/subscriptions/i18n';
+/// i18n END
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     card: {
@@ -94,30 +99,35 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const benefits = [
-  {
-    icon: <PlayCircleOutlineIcon />,
-    text: '3 Videoconsultas mensuales'
-  },
-  {
-    icon: <ChatBubbleOutlineIcon />,
-    text: 'Chat de orientación médica ilimitado'
-  },
-  {
-    icon: <SentimentSatisfiedAltIcon />,
-    text: 'Promociones con los mejores médicos y procedimientos'
-  }
-];
-
 const SubscriptionPlan = (): JSX.Element => {
+  const { t } = useTranslation(NAMESPACE_KEY);
   const classes = useStyles();
+  const benefits = [
+    {
+      icon: <PlayCircleOutlineIcon />,
+      text: `${t('subscription_plan_benefit1')}`
+    },
+    {
+      icon: <ChatBubbleOutlineIcon />,
+      text: `${t('subscription_plan_benefit2')}`
+    },
+    {
+      icon: <SentimentSatisfiedAltIcon />,
+      text: `${t('subscription_plan_benefit3')}`
+    }
+  ];
   return (
     <>
       <Card className={classes.card}>
         <CardContent className={classes.cardContent}>
           <Grid container justify="space-between" className={classes.containerText}>
             <Grid item xs={3} className={classes.text}>
-              <Chip size="small" label="Plan actual" color="secondary" className={classes.chip} />
+              <Chip
+                size="small"
+                label={t('subscription_plan_actual')}
+                color="secondary"
+                className={classes.chip}
+              />
             </Grid>
             <Grid item xs={9} className={classes.containerSvg}>
               <Box>
@@ -149,7 +159,7 @@ const SubscriptionPlan = (): JSX.Element => {
             className={classes.colorWhite}
             startIcon={<AutorenewIcon className={classes.colorWhite} />}
           >
-            Cambiar de plan
+            {t('subscription_change_plan')}
           </Button>
         </CardActions>
       </Card>
@@ -157,7 +167,7 @@ const SubscriptionPlan = (): JSX.Element => {
       <Grid container>
         <Grid item xs={12}>
           <Typography variant="h6" component="h6" gutterBottom className={classes.subtitle}>
-            Beneficios de mi plan
+            {t('subscription_plan_benefits')}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -181,12 +191,12 @@ const SubscriptionPlan = (): JSX.Element => {
         <Grid item xs={5}>
           <Box>
             <Typography variant="h6" component="h6" gutterBottom className={classes.helpTitle}>
-              ¿Tenés alguna consulta sobre tu suscripción?
+              {t('subscription_help')}
             </Typography>
           </Box>
           <Box>
             <Link href="/help" passHref>
-              <a className={classes.helpLink}>Ir a ayuda</a>
+              <a className={classes.helpLink}>{t('subscription_help_link')}</a>
             </Link>
           </Box>
         </Grid>

@@ -24,6 +24,11 @@ import Redirect from '../components/common/Redirect';
 import { AppStates } from '../context/types';
 /// STYLES & TYPES END
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../i18n/subscriptions/i18n';
+/// i18n END
+
 /// FORM STATES & VALIDATIONS
 /// FORM STATES & VALIDATIONS END
 
@@ -57,6 +62,7 @@ function a11yProps(index: number) {
 }
 
 function SubscriptionPage({ user, loggedIn }: AppStates): JSX.Element {
+  const { t } = useTranslation(NAMESPACE_KEY);
   const router = useRouter();
   const [value, setValue] = useState(0);
 
@@ -75,7 +81,7 @@ function SubscriptionPage({ user, loggedIn }: AppStates): JSX.Element {
       {user ? (
         <LayoutInner fullwidth>
           <Box p={3}>
-            <TitleContent title="Tu plan de suscripción" />
+            <TitleContent title={t('subscription_title')} />
           </Box>
           <Tabs
             variant="fullWidth"
@@ -83,8 +89,8 @@ function SubscriptionPage({ user, loggedIn }: AppStates): JSX.Element {
             onChange={handleChange}
             aria-label="simple tabs example"
           >
-            <Tab label="Mi plan" {...a11yProps(0)} />
-            <Tab label="Configuración" {...a11yProps(1)} />
+            <Tab label={t('subscription_tab_lavel1')} {...a11yProps(0)} />
+            <Tab label={t('subscription_tab_lavel2')} {...a11yProps(1)} />
           </Tabs>
           <TabPanel value={value} index={0}>
             <SubscriptionPlan />

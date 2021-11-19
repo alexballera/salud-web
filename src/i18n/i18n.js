@@ -1,33 +1,33 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import en from './en.json';
-import es from './es.json';
 import esHome from './home/es.json';
 import enHome from './home/en.json';
 import esMenu from './menu/es.json';
 import enMenu from './menu/en.json';
 import esForms from './forms/es.json';
 import enForms from './forms/en.json';
+import esSubscriptions from './subscriptions/es.json';
+import enSubscriptions from './subscriptions/en.json';
 
 // the translations
 // (tip move them in a JSON file and import them)
 const resources = {
   en: {
-    translation: en,
     home: enHome,
     menu: enMenu,
-    forms: enForms
+    forms: enForms,
+    subscriptions: enSubscriptions
   },
   es: {
-    translation: es,
     home: esHome,
     menu: esMenu,
-    forms: esForms
+    forms: esForms,
+    subscriptions: esSubscriptions
   }
 };
 
-const namespaces = ['translation', 'home'];
+const namespaces = ['home', 'menu', 'forms', 'subscriptions'];
 
 const DETECTION_OPTIONS = {
   order: ['localStorage', 'navigator'],
@@ -35,17 +35,16 @@ const DETECTION_OPTIONS = {
 };
 
 function navigatorLanguageDetector() {
-  let ln = '';
   if (typeof window !== 'undefined') {
-    // browser code
-    ln = window.navigator.language || window.navigator.userLanguage;
-    if (ln === 'es-Es' || ln === 'es') {
-      ln = 'es';
-    }
-    if (ln === 'en-En' || ln === 'en') {
-      ln = 'en';
-    }
-    return ln;
+    const ln = window.navigator.language;
+    const lang = {
+      en: 'en',
+      'en-US': 'en',
+      es: 'es',
+      'es-CR': 'es',
+      default: 'es'
+    };
+    return lang[ln] || lang['default'];
   }
 }
 
