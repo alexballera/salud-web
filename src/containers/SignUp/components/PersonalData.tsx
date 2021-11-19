@@ -280,44 +280,6 @@ function PersonalData({
   );
 }
 
-PersonalData.title = 'Identifícate';
-PersonalData.description = 'Para empezar tu registro bríndanos tu número de identificación';
-PersonalData.validations = {
-  name: 'PersonalData',
-  schema: yup.object().shape({
-    lastName: yup.string().required('Campo requerido').min(3, 'Número de caracteres minimos 3'),
-    birthDate: yup.date().max(new Date(), 'Fecha inválida').required('Campo requerido'),
-    firstName: yup.string().required('Campo requerido').min(3, 'Número de caracteres minimos 3'),
-    documentType: yup.number().required('Campo requerido'),
-    documentNumber: yup
-      .string()
-      .required('Campo requerido')
-      .when(['documentType'], {
-        is: documentType => documentType === 1,
-        then: yup
-          .string()
-          .transform(value => value.replace(/[^\d]/g, ''))
-          .min(9, 'Número de caracteres minimos 9')
-      })
-      .when(['documentType'], {
-        is: documentType => documentType === 2,
-        then: yup
-          .string()
-          .transform(value => value.replace(/[^\d]/g, ''))
-          .min(10, 'Caracteres mínimos para Residencia 10, máx 15')
-          .max(15, 'Caracteres mínimos para Residencia 10, máx 15')
-      })
-      .when(['documentType'], {
-        is: documentType => documentType === 6,
-        then: yup
-          .string()
-          .min(9, 'Número de caracteres mínimos para Pasaporte 9, máx 20')
-          .max(20, 'Número de caracteres mínimos para Pasaporte 9, máx 20')
-      })
-  })
-};
-/// STEP PARAMS END
-
 /// DEFAULT PROPS
 PersonalData.defaultProps = {
   documentTypesOptions: ''
