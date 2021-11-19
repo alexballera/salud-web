@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 /// FORM
-import * as yup from 'yup';
 import { FormikProps } from 'formik';
 
 /// TYPES
@@ -198,34 +197,5 @@ function CredentialData({
     </>
   );
 }
-
-/// STEP VALIDATIONS
-CredentialData.title = 'Credenciales de ingreso';
-CredentialData.description =
-  'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma';
-CredentialData.validations = {
-  name: 'CredentialStep',
-  schema: yup.object().shape({
-    terms: yup.bool().oneOf([true], 'Campo requerido').required('Campo requerido'),
-    services: yup.bool().oneOf([true], 'Campo requerido').required('Campo requerido'),
-    email: yup.string().email('Formato de correo incorrecto').required('Email requerido'),
-    password: yup
-      .string()
-      .required('Contraseña requerida')
-      .min(8, 'La contraseña debe ser de al menos 8 caracteres')
-      .max(16, 'La contraseña debe ser máximo de 16 caracteres')
-      .matches(
-        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
-        'La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número'
-      ),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref('password'), null], 'La contraseña no coincide')
-      .required('Campo Requerido')
-      .min(8, 'La contraseña debe ser de al menos 8 caracteres')
-      .max(16, 'La contraseña debe ser máximo de 16 caracteres')
-  })
-};
-/// STEP VALIDATIONS END
 
 export default CredentialData;

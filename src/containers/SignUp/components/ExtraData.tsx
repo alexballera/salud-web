@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 /// FORM
-import * as yup from 'yup';
 import { FormikProps } from 'formik';
 import { PHONE_NUMBER_MASK } from '../../../utils/constants';
 /// SERVICES
@@ -218,46 +217,5 @@ function ExtraData({
     </div>
   );
 }
-
-/// STEP VALIDATIONS
-ExtraData.title = 'Datos adicionales';
-ExtraData.description =
-  'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma';
-ExtraData.validations = {
-  name: 'ExtraData',
-  schema: yup.object().shape({
-    gender: yup.string().required('Campo requerido'),
-    canton: yup
-      .object()
-      .shape({
-        codigo: yup.string().required('Campo requerido'),
-        nombre: yup.string().required('Campo requerido')
-      })
-      .nullable()
-      .required('Campo requerido'),
-    district: yup
-      .object()
-      .shape({
-        codigo: yup.string().required('Campo requerido'),
-        nombre: yup.string().required('Campo requerido')
-      })
-      .nullable()
-      .required('Campo requerido'),
-    province: yup
-      .object()
-      .shape({
-        codigo: yup.string().required('Campo requerido'),
-        nombre: yup.string().required('Campo requerido')
-      })
-      .nullable()
-      .required('Campo requerido'),
-    mobilePhone1: yup
-      .string()
-      .required('Campo requerido')
-      .transform(value => value.replace(/[^\d]/g, ''))
-      .min(11, 'Numero de caracteres minimos 8')
-  })
-};
-/// STEP VALIDATIONS END
 
 export default ExtraData;
