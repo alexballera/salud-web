@@ -27,6 +27,11 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 /// MATERIAL-UI END
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../../i18n/forms/i18n';
+/// i18n END
+
 function PersonalData({
   values,
   errors,
@@ -37,6 +42,7 @@ function PersonalData({
   handleNotifications,
   documentTypesOptions
 }: IPersonalDataProps & FormikProps<IPersonalDataForm>): JSX.Element {
+  const { t } = useTranslation(NAMESPACE_KEY);
   const inputMaskRef = useRef(null);
   const [data, setData] = useState<IPaciente>(null);
   const [typeError, setTypeError] = useState<string>(null);
@@ -100,9 +106,9 @@ function PersonalData({
 
   const handleChangeLabel = (val: number) => {
     const label = {
-      1: 'Cédula Física',
-      2: 'Cédula de Residencia',
-      6: 'Pasaporte'
+      1: `${t('forms_signup_document_physical')}`,
+      2: `${t('forms_signup_document_residence')}`,
+      6: `${t('forms_signup_document_passport')}`
     };
     return label[val];
   };
@@ -144,7 +150,7 @@ function PersonalData({
 
   const showMessageDataError = (message: string) => {
     const type = {
-      'Usuario no encontrado': 'Campos incorrectos, corregir para continuar.',
+      'Usuario no encontrado': `${t('forms_signup_message_error_field_incorrect')}`,
       default: message
     };
     return type[message] || type.default;
@@ -177,7 +183,7 @@ function PersonalData({
     <div>
       <FormControl fullWidth variant="filled">
         <FormLabel id="document-type-selector-label" style={{ marginBottom: 10 }}>
-          Tipo de identificación
+          {t('forms_signup_document_type')}
         </FormLabel>
         <Select
           fullWidth
@@ -206,7 +212,7 @@ function PersonalData({
         id="documentNumber"
         name="documentNumber"
         type="text"
-        label="Número de identificación"
+        label={t('forms_signup_document_number')}
         value={values.documentNumber}
         error={(touched.documentNumber && Boolean(errors.documentNumber)) || Boolean(typeError)}
         errorType={typeError}
@@ -229,7 +235,7 @@ function PersonalData({
           <TextField
             id="firstName"
             name="firstName"
-            label="Nombre"
+            label={t('forms_name_label')}
             value={values.firstName}
             error={touched.firstName && Boolean(errors.firstName)}
             onBlur={handleBlur}
@@ -242,7 +248,7 @@ function PersonalData({
           <TextField
             id="lastName"
             name="lastName"
-            label="Apellidos"
+            label={t('forms_lastname_label')}
             value={values.lastName}
             error={touched.lastName && Boolean(errors.lastName)}
             onBlur={handleBlur}
@@ -254,7 +260,7 @@ function PersonalData({
           />
           <DatePicker
             id="birthDate"
-            label="Fecha de nacimiento"
+            label={t('forms_birthdate')}
             value={values.birthDate === '' ? null : values.birthDate}
             margin="normal"
             format="dd/MM/yyyy"

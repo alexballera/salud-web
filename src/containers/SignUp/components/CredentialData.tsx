@@ -24,6 +24,11 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { FormControl, FormHelperText, Link, Typography } from '@material-ui/core';
 /// MATERIAL-UI END
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../../i18n/forms/i18n';
+/// i18n END
+
 /// INITIAL STATES
 const initialEmailStates: IEmailStates = {
   message: '',
@@ -40,6 +45,7 @@ function CredentialData({
   updatePassword,
   updateEmail
 }: ICredentialDataProps & FormikProps<ICredentialDataForm>): JSX.Element {
+  const { t } = useTranslation(NAMESPACE_KEY);
   const [inputEmailStates, setInputEmailStates] = useState(initialEmailStates);
   const [termsAndConditionOpen, setTermsAndConditionOpen] = useState(false);
   const [informedConsentOpen, setInformedConsentOpen] = useState(false);
@@ -51,7 +57,7 @@ function CredentialData({
       getPersonalData(values.email)
         .then(() => {
           setInputEmailStates({
-            message: 'Este correo ya fue registrado previamente',
+            message: `${t('forms_email_is_register')}`,
             fetching: false
           });
         })
@@ -73,7 +79,7 @@ function CredentialData({
           id="email"
           name="email"
           type="text"
-          label="Correo electrónico"
+          label={t('forms_email')}
           value={values.email}
           error={touched.email && (Boolean(errors.email) || Boolean(inputEmailStates.message))}
           onBlur={handleBlur}
@@ -89,7 +95,7 @@ function CredentialData({
             id="password"
             name="password"
             type="password"
-            label={updatePassword ? 'Contraseña nueva' : 'Contraseña'}
+            label={updatePassword ? `${t('forms_password_new')}` : `${t('forms_password')}`}
             value={values.password}
             error={touched.password && Boolean(errors.password)}
             onBlur={handleBlur}
@@ -105,7 +111,7 @@ function CredentialData({
             id="confirmPassword"
             name="confirmPassword"
             type="password"
-            label={updatePassword ? 'Contraseña' : 'Confirmar contraseña'}
+            label={updatePassword ? `${t('forms_password')}` : `${t('forms_password_confirm')}`}
             value={values.confirmPassword}
             error={touched.confirmPassword && Boolean(errors.confirmPassword)}
             onBlur={handleBlur}
@@ -134,7 +140,7 @@ function CredentialData({
               }
               label={
                 <Typography component="label" variant="body1">
-                  Acepto{' '}
+                  {t('forms_extra_data_term_accept')}{' '}
                   <Link
                     underline="always"
                     component="span"
@@ -142,7 +148,7 @@ function CredentialData({
                     onClick={() => setTermsAndConditionOpen(true)}
                     style={{ cursor: 'pointer' }}
                   >
-                    términos y condiciones
+                    {t('forms_extra_data_term_text')}
                   </Link>
                 </Typography>
               }
@@ -163,7 +169,7 @@ function CredentialData({
               }
               label={
                 <Typography component="label" variant="body1">
-                  Acepto{' '}
+                  {t('forms_extra_data_term_accept')}{' '}
                   <Link
                     underline="always"
                     component="span"
@@ -171,7 +177,7 @@ function CredentialData({
                     onClick={() => setInformedConsentOpen(true)}
                     style={{ cursor: 'pointer' }}
                   >
-                    consentimiento informado
+                    {t('forms_extra_data_consent_text')}
                   </Link>
                 </Typography>
               }
