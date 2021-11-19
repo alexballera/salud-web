@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { Form, Formik } from 'formik';
+import * as yup from 'yup';
 /// CONTEXT
 import { withAppContext } from '../context/index';
 /// SERVICES
@@ -63,11 +64,6 @@ const initialValues: IFormData = {
   confirmPassword: ''
 };
 
-const stepValidations = [
-  PersonalDataForm.validations.schema,
-  ExtraDataForm.validations.schema,
-  CredentialDataForm.validations.schema
-];
 /// FORM STATES & VALIDATIONS END
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -108,6 +104,56 @@ function SignUpView({
     if (currentStep > 0) setCurrentState(currentStep - 1);
     else router.back();
   };
+
+  const PersonalDataValidations = {
+    name: 'PersonalData',
+    schema: yup.object().shape({
+      lastName: yup
+        .string()
+        .required(`${t('forms_field_required')}`)
+        .min(3, `${t('forms_validations_min_3')}`),
+      birthDate: yup
+        .date()
+        .max(new Date(), 'Fecha inválida')
+        .required(`${t('forms_field_required')}`),
+      firstName: yup
+        .string()
+        .required(`${t('forms_field_required')}`)
+        .min(3, `${t('forms_validations_min_3')}`),
+      documentType: yup.number().required(`${t('forms_field_required')}`),
+      documentNumber: yup
+        .string()
+        .required(`${t('forms_field_required')}`)
+        .when(['documentType'], {
+          is: documentType => documentType === 1,
+          then: yup
+            .string()
+            .transform(value => value.replace(/[^\d]/g, ''))
+            .min(9, `${t('forms_validations_min_9')}`)
+        })
+        .when(['documentType'], {
+          is: documentType => documentType === 2,
+          then: yup
+            .string()
+            .transform(value => value.replace(/[^\d]/g, ''))
+            .min(10, `${t('forms_validations_min_10_max_15')}`)
+            .max(15, `${t('forms_validations_min_10_max_15')}`)
+        })
+        .when(['documentType'], {
+          is: documentType => documentType === 6,
+          then: yup
+            .string()
+            .min(9, `${t('forms_validations_min_10_max_20')}`)
+            .max(20, `${t('forms_validations_min_10_max_20')}`)
+        })
+    })
+  };
+
+  const stepValidations = [
+    PersonalDataValidations.schema,
+    ExtraDataForm.validations.schema,
+    CredentialDataForm.validations.schema
+  ];
 
   const onSubmit = (values: IFormData) => {
     if (currentStep === 2) {
@@ -163,8 +209,8 @@ function SignUpView({
       {formik => {
         const dataSource = [
           {
-            title: PersonalDataForm.title,
-            description: PersonalDataForm.description,
+            title: `${t('forms_personal_data_title')}`,
+            description: `${t('forms_personal_data_description')}`,
             component: (
               <PersonalDataForm
                 handleNotifications={handleNotifications}
