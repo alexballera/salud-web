@@ -3,7 +3,6 @@ import _ from 'lodash';
 import { convertToMask } from '../../../utils/helpers';
 
 /// FORM
-import * as yup from 'yup';
 import { FormikProps } from 'formik';
 /// SERVICE
 import { personVerifier } from '../../../services/personVerifier.service';

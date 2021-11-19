@@ -148,11 +148,70 @@ function SignUpView({
         })
     })
   };
+  const ExtraDataValidations = {
+    name: 'ExtraData',
+    schema: yup.object().shape({
+      gender: yup.string().required(`${t('forms_field_required')}`),
+      canton: yup
+        .object()
+        .shape({
+          codigo: yup.string().required(`${t('forms_field_required')}`),
+          nombre: yup.string().required(`${t('forms_field_required')}`)
+        })
+        .nullable()
+        .required(`${t('forms_field_required')}`),
+      district: yup
+        .object()
+        .shape({
+          codigo: yup.string().required(`${t('forms_field_required')}`),
+          nombre: yup.string().required(`${t('forms_field_required')}`)
+        })
+        .nullable()
+        .required(`${t('forms_field_required')}`),
+      province: yup
+        .object()
+        .shape({
+          codigo: yup.string().required(`${t('forms_field_required')}`),
+          nombre: yup.string().required(`${t('forms_field_required')}`)
+        })
+        .nullable()
+        .required(`${t('forms_field_required')}`),
+      mobilePhone1: yup
+        .string()
+        .required(`${t('forms_field_required')}`)
+        .transform(value => value.replace(/[^\d]/g, ''))
+        .min(8, `${t('forms_validations_min_8')}`)
+    })
+  };
+
+  const CredentialDataValidations = {
+    name: 'CredentialStep',
+    schema: yup.object().shape({
+      terms: yup.bool().oneOf([true], 'Campo requerido').required('Campo requerido'),
+      services: yup.bool().oneOf([true], 'Campo requerido').required('Campo requerido'),
+      email: yup.string().email('Formato de correo incorrecto').required('Email requerido'),
+      password: yup
+        .string()
+        .required('Contraseña requerida')
+        .min(8, 'La contraseña debe ser de al menos 8 caracteres')
+        .max(16, 'La contraseña debe ser máximo de 16 caracteres')
+        .matches(
+          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
+          'La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número'
+        ),
+      confirmPassword: yup
+        .string()
+        .oneOf([yup.ref('password'), null], 'La contraseña no coincide')
+        .required('Campo Requerido')
+        .min(8, 'La contraseña debe ser de al menos 8 caracteres')
+        .max(16, 'La contraseña debe ser máximo de 16 caracteres')
+    })
+  };
 
   const stepValidations = [
     PersonalDataValidations.schema,
-    ExtraDataForm.validations.schema,
-    CredentialDataForm.validations.schema
+    ExtraDataValidations.schema,
+    CredentialDataValidations.schema
   ];
 
   const onSubmit = (values: IFormData) => {
@@ -220,13 +279,13 @@ function SignUpView({
             )
           },
           {
-            title: ExtraDataForm.title,
-            description: ExtraDataForm.description,
+            title: `${t('forms_extra_data_title')}`,
+            description: `${t('forms_extra_data_description')}`,
             component: <ExtraDataForm {...formik} />
           },
           {
-            title: CredentialDataForm.title,
-            description: CredentialDataForm.description,
+            title: `${t('forms_credential_data_title')}`,
+            description: `${t('forms_credential_data_description')}`,
             component: <CredentialDataForm handleNotifications={handleNotifications} {...formik} />
           }
         ];

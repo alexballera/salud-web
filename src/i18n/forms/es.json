@@ -38,10 +38,13 @@
   "forms_personal_data_description": "Para empezar tu registro bríndanos tu número de identificación",
 
   "forms_validations_min_3": "Número de caracteres minimos 3",
+  "forms_validations_min_8": "Número de caracteres minimos 8",
   "forms_validations_min_9": "Número de caracteres minimos 9",
   "forms_validations_min_10_max_15": "Caracteres mínimos para Residencia 10, máx 15",
   "forms_validations_min_10_max_20": "Número de caracteres mínimos para Pasaporte 9, máx 20",
 
+  "forms_extra_data_title": "Datos adicionales",
+  "forms_extra_data_description": "Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma",
   "forms_extra_data_gender_label": "Sexo biológico designado al nacer",
   "forms_extra_data_gender_female": "Femenino",
   "forms_extra_data_gender_male": "Masculino",
@@ -52,5 +55,8 @@
   "forms_extra_data_address_district": "Distrito",
   "forms_extra_data_term_accept": "Acepto",
   "forms_extra_data_term_text": "términos y condiciones",
-  "forms_extra_data_consent_text": "consentimiento informado"
+  "forms_extra_data_consent_text": "consentimiento informado",
+
+  "forms_credential_data_title": "Credenciales de ingreso",
+  "forms_credential_data_description": "Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma"
 }
