@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import Head from 'next/head';
 import { NextPage } from 'next/types';
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../i18n/home/i18n';
 
 /// MATERIAL UI
 import { Button, ButtonGroup, Box, Typography } from '@material-ui/core';
@@ -17,17 +16,17 @@ import { removeDataFromLocalstorage } from '../services/auth.service';
 /// STYLES & TYPES END
 
 const HomePage: NextPage = (): JSX.Element => {
-  const { t, i18n } = useTranslation(NAMESPACE_KEY);
+  const { t, i18n } = useTranslation('home', { keyPrefix: 'home' });
   useEffect(() => {
     removeDataFromLocalstorage('user');
   });
   return (
     <>
       <Head>
-        <title>{t('home_title')}</title>
+        <title>{t('title')}</title>
       </Head>
       <Box component="main">
-        <Typography variant="h2">{t('home_title')}</Typography>
+        <Typography variant="h2">{t('title')}</Typography>
         <ButtonGroup color="primary" aria-label="outlined primary button group">
           <Button onClick={() => i18n.changeLanguage('en')}>English</Button>
           <Button onClick={() => i18n.changeLanguage('es')}>Español</Button>
