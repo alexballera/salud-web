@@ -1,3 +1,5 @@
 {
-  "home_title": "OSPI English"
+  "home": {
+    "title": "OSPI English"
+  }
 }
