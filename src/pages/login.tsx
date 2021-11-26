@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../i18n/forms/i18n';
 
 /// MATERIAL UI
 import Typography from '@material-ui/core/Typography';
@@ -52,14 +51,14 @@ function LoginPage({
   fetching: isLoading,
   handleError
 }: IProps): JSX.Element {
-  const { t } = useTranslation(NAMESPACE_KEY);
+  const { t } = useTranslation('forms', { keyPrefix: 'forms' });
   const [dialogOpen, setDialogOpen] = useState(false);
   const router = useRouter();
 
   const ValidationSchema = Yup.object().shape({
     email: Yup.string()
-      .email(`${t('forms_email_invalid')}`)
-      .required(`${t('forms_email_required')}`),
+      .email(`${t('validations_email_invalid')}`)
+      .required(`${t('validations_email_required')}`),
     password: Yup.string().required(`${t('forms_password_required')}`)
   });
 
@@ -84,7 +83,7 @@ function LoginPage({
           }
           handleError(true, message);
         } else {
-          handleError(true, `${t('forms_login_message_error_submit')}`);
+          handleError(true, `${t('message_error_submit')}`);
         }
       })
       .finally(() => {
@@ -95,19 +94,19 @@ function LoginPage({
   return (
     <>
       <Head>
-        <title>{t('forms_head_login_title')}</title>
+        <title>{t('title')}</title>
       </Head>
 
       <Box className={styles.main}>
         <Button startIcon={<ArrowBackIcon />} onClick={router.back}>
-          Volver
+          {t('button_back')}
         </Button>
         <Grid container component="ul" spacing={3} className={styles.mainList}>
           <Grid item xs={12} md={6} component="li" className={styles.loginForm}>
             <Card className={styles.card}>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
-                  <Typography variant="h6">{t('forms_login_title')}</Typography>
+                  <Typography variant="h6">{t('login_title')}</Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <Formik
@@ -129,9 +128,9 @@ function LoginPage({
                             <Grid item xs={12} component="li">
                               <TextField
                                 inputProps={{
-                                  'aria-label': `${t('forms_email')}`
+                                  'aria-label': `${t('label_email')}`
                                 }}
-                                label={t('forms_email')}
+                                label={t('label_email')}
                                 name="email"
                                 type="email"
                                 fullWidth={true}
@@ -144,9 +143,9 @@ function LoginPage({
                             </Grid>
                             <Grid item xs={12} component="li">
                               <TextField
-                                inputProps={{ 'aria-label': `${t('forms_password')}` }}
-                                aria-label={t('forms_password')}
-                                label={t('forms_password')}
+                                inputProps={{ 'aria-label': `${t('label_password')}` }}
+                                aria-label={t('label_password')}
+                                label={t('label_password')}
                                 name="password"
                                 type="password"
                                 fullWidth={true}
@@ -164,7 +163,7 @@ function LoginPage({
                               className="MuiGrid-justify-xs-flex-end"
                             >
                               <Button onClick={() => router.push('/recover')}>
-                                {t('forms_password_button_recover')}
+                                {t('button_forgot_password')}
                               </Button>
                             </Grid>
                             <Grid
@@ -181,7 +180,7 @@ function LoginPage({
                                 disabled={isLoading || Object.keys(errors).length > 0}
                                 data-testid="login-button"
                               >
-                                {t('forms_login_button')}
+                                {t('button_login')}
                               </Button>
                             </Grid>
                           </Grid>
@@ -201,7 +200,7 @@ function LoginPage({
             className={`${styles.formButton} MuiGrid-justify-xs-center MuiGrid-direction-xs-column`}
           >
             <Typography variant="body1" className={styles.registerText}>
-              {t('forms_login_register_message')}
+              {t('message_register')}
             </Typography>
             <Button
               variant="contained"
@@ -209,7 +208,7 @@ function LoginPage({
               color="secondary"
               onClick={() => router.push('/signup')}
             >
-              CREAR CUENTA
+              {t('button_create_account')}
             </Button>
             <Image src="/images/register.png" width="400" height="290" alt="" />
           </Grid>
@@ -225,10 +224,10 @@ function LoginPage({
         aria-describedby="alert-dialog-slide-description"
         data-testid="unknown-dialog-test"
       >
-        <DialogTitle id="alert-dialog-slide-title">{t('forms_email_not_found')}</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">{t('message_email_not_found')}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            {t('forms_email_not_register')}
+            {t('message_email_not_register')}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -242,7 +241,7 @@ function LoginPage({
             }}
             color="primary"
           >
-            {t('forms_login_register_button')}
+            {t('button_register')}
           </Button>
         </DialogActions>
       </Dialog>
