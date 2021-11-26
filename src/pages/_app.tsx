@@ -16,6 +16,9 @@ import { ThemeProvider } from '@material-ui/core/styles';
 /// SERVICES
 /// SERVICES END
 
+import { I18nextProvider } from 'react-i18next';
+import i18next from 'i18next';
+
 /// OWN COMPONENTS
 import Layout from '../layouts/Layout';
 /// OWN COMPONENTS END
@@ -52,12 +55,14 @@ const MyApp = ({ Component, pageProps }: IProps): JSX.Element => {
         />
       </Head>
       <ThemeProvider theme={theme}>
-        <AppProvider>
-          <CssBaseline />
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </AppProvider>
+        <I18nextProvider i18n={i18next}>
+          <AppProvider>
+            <CssBaseline />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </AppProvider>
+        </I18nextProvider>
       </ThemeProvider>
     </>
   );

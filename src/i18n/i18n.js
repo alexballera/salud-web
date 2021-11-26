@@ -10,8 +10,6 @@ import enForms from './forms/en.json';
 import esSubscriptions from './subscriptions/es.json';
 import enSubscriptions from './subscriptions/en.json';
 
-// the translations
-// (tip move them in a JSON file and import them)
 const resources = {
   en: {
     home: enHome,
@@ -50,15 +48,15 @@ function navigatorLanguageDetector() {
 
 i18n
   .use(LanguageDetector)
-  .use(initReactI18next) // passes i18n down to react-i18next
+  .use(initReactI18next)
   .init({
     detection: DETECTION_OPTIONS,
     resources,
     lng: navigatorLanguageDetector(),
     fallbackLng: navigatorLanguageDetector(),
-    keySeparator: false, // we do not use keys in form messages.welcome
+    keySeparator: true,
     interpolation: {
-      escapeValue: false // react already safes from xss
+      escapeValue: false
     },
     ns: namespaces,
     debug: false

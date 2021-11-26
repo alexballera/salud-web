@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import { useTranslation, TFunction } from 'react-i18next';
-import { NAMESPACE_KEY } from '../../../src/i18n/home/i18n';
+import { NAMESPACE_KEY } from '../../i18n/subscriptions/i18n';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 type TLink = {
@@ -66,8 +66,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-// TODO: Change subscription type to home, waiting for i18n refactory
-const buildLinks = (t: TFunction<'home', undefined>): TLink[] => {
+const buildLinks = (t: TFunction<'subscriptions', undefined>): TLink[] => {
   return [
     {
       label: t('config_change_plan_link'),
@@ -94,7 +93,7 @@ const buildLinks = (t: TFunction<'home', undefined>): TLink[] => {
 
 const SubscriptionConfiguration = (): JSX.Element => {
   const classes = useStyles();
-  const { t } = useTranslation(NAMESPACE_KEY);
+  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'subscriptions' });
   const links = buildLinks(t);
   return (
     <div>

@@ -62,7 +62,7 @@ function a11yProps(index: number) {
 }
 
 function SubscriptionPage({ user, loggedIn }: AppStates): JSX.Element {
-  const { t } = useTranslation(NAMESPACE_KEY);
+  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'subscriptions' });
   const router = useRouter();
   const [value, setValue] = useState(0);
 
@@ -81,7 +81,7 @@ function SubscriptionPage({ user, loggedIn }: AppStates): JSX.Element {
       {user ? (
         <LayoutInner fullwidth>
           <Box p={3}>
-            <TitleContent title={t('subscription_title')} />
+            <TitleContent title={t('title')} />
           </Box>
           <Tabs
             variant="fullWidth"
@@ -89,8 +89,8 @@ function SubscriptionPage({ user, loggedIn }: AppStates): JSX.Element {
             onChange={handleChange}
             aria-label="simple tabs example"
           >
-            <Tab label={t('subscription_tab_lavel1')} {...a11yProps(0)} />
-            <Tab label={t('subscription_tab_lavel2')} {...a11yProps(1)} />
+            <Tab label={t('tab_lavel1')} {...a11yProps(0)} />
+            <Tab label={t('tab_lavel2')} {...a11yProps(1)} />
           </Tabs>
           <TabPanel value={value} index={0}>
             <SubscriptionPlan />
