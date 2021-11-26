@@ -1,15 +1,17 @@
 {
-  "subscription_title": "Tu plan de suscripción",
-  "subscription_tab_lavel1": "Mi plan",
-  "subscription_tab_lavel2": "Configuración",
+  "subscriptions": {
+    "title": "Tu plan de suscripción",
+    "tab_lavel1": "Mi plan",
+    "tab_lavel2": "Configuración",
 
-  "subscription_plan_change": "Cambiar de plan",
-  "subscription_plan_actual": "Plan actual",
-  "subscription_plan_benefits": "Beneficios de mi plan",
-  "subscription_plan_benefit1": "3 Videoconsultas mensuales",
-  "subscription_plan_benefit2": "Chat de orientación médica ilimitado",
-  "subscription_plan_benefit3": "Promociones con los mejores médicos y procedimientos",
+    "plan_change": "Cambiar de plan",
+    "plan_actual": "Plan actual",
+    "plan_benefits": "Beneficios de mi plan",
+    "plan_benefit1": "3 Videoconsultas mensuales",
+    "plan_benefit2": "Chat de orientación médica ilimitado",
+    "plan_benefit3": "Promociones con los mejores médicos y procedimientos",
 
-  "subscription_help": "¿Tenés alguna consulta sobre tu suscripción?",
-  "subscription_help_link": "Cambiar de plan"
+    "help": "¿Tenés alguna consulta sobre tu suscripción?",
+    "help_link": "Cambiar de plan"
+  }
 }

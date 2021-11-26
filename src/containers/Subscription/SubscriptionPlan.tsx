@@ -100,20 +100,20 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const SubscriptionPlan = (): JSX.Element => {
-  const { t } = useTranslation(NAMESPACE_KEY);
+  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'subscriptions' });
   const classes = useStyles();
   const benefits = [
     {
       icon: <PlayCircleOutlineIcon />,
-      text: `${t('subscription_plan_benefit1')}`
+      text: `${t('plan_benefit1')}`
     },
     {
       icon: <ChatBubbleOutlineIcon />,
-      text: `${t('subscription_plan_benefit2')}`
+      text: `${t('plan_benefit2')}`
     },
     {
       icon: <SentimentSatisfiedAltIcon />,
-      text: `${t('subscription_plan_benefit3')}`
+      text: `${t('plan_benefit3')}`
     }
   ];
   return (
@@ -124,7 +124,7 @@ const SubscriptionPlan = (): JSX.Element => {
             <Grid item xs={3} className={classes.text}>
               <Chip
                 size="small"
-                label={t('subscription_plan_actual')}
+                label={t('plan_actual')}
                 color="secondary"
                 className={classes.chip}
               />
@@ -159,7 +159,7 @@ const SubscriptionPlan = (): JSX.Element => {
             className={classes.colorWhite}
             startIcon={<AutorenewIcon className={classes.colorWhite} />}
           >
-            {t('subscription_change_plan')}
+            {t('plan_change')}
           </Button>
         </CardActions>
       </Card>
@@ -167,7 +167,7 @@ const SubscriptionPlan = (): JSX.Element => {
       <Grid container>
         <Grid item xs={12}>
           <Typography variant="h6" component="h6" gutterBottom className={classes.subtitle}>
-            {t('subscription_plan_benefits')}
+            {t('plan_benefits')}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -191,12 +191,12 @@ const SubscriptionPlan = (): JSX.Element => {
         <Grid item xs={5}>
           <Box>
             <Typography variant="h6" component="h6" gutterBottom className={classes.helpTitle}>
-              {t('subscription_help')}
+              {t('help')}
             </Typography>
           </Box>
           <Box>
             <Link href="/help" passHref>
-              <a className={classes.helpLink}>{t('subscription_help_link')}</a>
+              <a className={classes.helpLink}>{t('help_link')}</a>
             </Link>
           </Box>
         </Grid>

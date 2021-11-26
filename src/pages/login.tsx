@@ -5,7 +5,11 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+
+/// i18n
 import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../i18n/forms/i18n';
+/// i18n END
 
 /// MATERIAL UI
 import Typography from '@material-ui/core/Typography';
@@ -51,7 +55,7 @@ function LoginPage({
   fetching: isLoading,
   handleError
 }: IProps): JSX.Element {
-  const { t } = useTranslation('forms', { keyPrefix: 'forms' });
+  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'forms' });
   const [dialogOpen, setDialogOpen] = useState(false);
   const router = useRouter();
 
@@ -59,7 +63,7 @@ function LoginPage({
     email: Yup.string()
       .email(`${t('validations_email_invalid')}`)
       .required(`${t('validations_email_required')}`),
-    password: Yup.string().required(`${t('forms_password_required')}`)
+    password: Yup.string().required(`${t('validations_password_required')}`)
   });
 
   const _handleSubmit = (email: string, password: string) => {
@@ -79,7 +83,9 @@ function LoginPage({
               return setDialogOpen(true);
             case 'sld-user-15':
               handleError(true, message);
-              router.replace('/validate_code');
+            /* FIXME setear el correo cuando falte activación y dirigirlo a validate_code
+              setDataToLocalstorage('user', email);
+              router.replace('/validate_code'); */
           }
           handleError(true, message);
         } else {
