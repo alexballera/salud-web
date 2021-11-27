@@ -238,7 +238,7 @@ function LoginPage({
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialogOpen(false)} color="secondary">
-            Cancelar
+            {t('button_cancel')}
           </Button>
           <Button
             onClick={() => {

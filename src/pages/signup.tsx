@@ -95,7 +95,7 @@ function SignUpView({
   documentTypeOptions,
   handleNotifications
 }: InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
-  const { t } = useTranslation(NAMESPACE_KEY);
+  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'forms' });
   const classes = useStyles();
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
@@ -110,101 +110,110 @@ function SignUpView({
     schema: yup.object().shape({
       lastName: yup
         .string()
-        .required(`${t('forms_field_required')}`)
-        .min(3, `${t('forms_validations_min_3')}`),
+        .required(`${t('validations_required')}`)
+        .min(3, `${t('validations_min_3')}`),
       birthDate: yup
         .date()
-        .max(new Date(), 'Fecha inválida')
-        .required(`${t('forms_field_required')}`),
+        .max(new Date(), 'validations_date_invalid')
+        .required(`${t('validations_required')}`),
       firstName: yup
         .string()
-        .required(`${t('forms_field_required')}`)
-        .min(3, `${t('forms_validations_min_3')}`),
-      documentType: yup.number().required(`${t('forms_field_required')}`),
+        .required(`${t('validations_required')}`)
+        .min(3, `${t('validations_min_3')}`),
+      documentType: yup.number().required(`${t('validations_required')}`),
       documentNumber: yup
         .string()
-        .required(`${t('forms_field_required')}`)
+        .required(`${t('validations_required')}`)
         .when(['documentType'], {
           is: documentType => documentType === 1,
           then: yup
             .string()
             .transform(value => value.replace(/[^\d]/g, ''))
-            .min(9, `${t('forms_validations_min_9')}`)
+            .min(9, `${t('validations_min_9')}`)
         })
         .when(['documentType'], {
           is: documentType => documentType === 2,
           then: yup
             .string()
             .transform(value => value.replace(/[^\d]/g, ''))
-            .min(10, `${t('forms_validations_min_10_max_15')}`)
-            .max(15, `${t('forms_validations_min_10_max_15')}`)
+            .min(10, `${t('validations_min_10_max_15')}`)
+            .max(15, `${t('validations_min_10_max_15')}`)
         })
         .when(['documentType'], {
           is: documentType => documentType === 6,
           then: yup
             .string()
-            .min(9, `${t('forms_validations_min_10_max_20')}`)
-            .max(20, `${t('forms_validations_min_10_max_20')}`)
+            .min(9, `${t('validations_min_10_max_20')}`)
+            .max(20, `${t('validations_min_10_max_20')}`)
         })
     })
   };
   const ExtraDataValidations = {
     name: 'ExtraData',
     schema: yup.object().shape({
-      gender: yup.string().required(`${t('forms_field_required')}`),
+      gender: yup.string().required(`${t('validations_required')}`),
       canton: yup
         .object()
         .shape({
-          codigo: yup.string().required(`${t('forms_field_required')}`),
-          nombre: yup.string().required(`${t('forms_field_required')}`)
+          codigo: yup.string().required(`${t('validations_required')}`),
+          nombre: yup.string().required(`${t('validations_required')}`)
         })
         .nullable()
-        .required(`${t('forms_field_required')}`),
+        .required(`${t('validations_required')}`),
       district: yup
         .object()
         .shape({
-          codigo: yup.string().required(`${t('forms_field_required')}`),
-          nombre: yup.string().required(`${t('forms_field_required')}`)
+          codigo: yup.string().required(`${t('validations_required')}`),
+          nombre: yup.string().required(`${t('validations_required')}`)
         })
         .nullable()
-        .required(`${t('forms_field_required')}`),
+        .required(`${t('validations_required')}`),
       province: yup
         .object()
         .shape({
-          codigo: yup.string().required(`${t('forms_field_required')}`),
-          nombre: yup.string().required(`${t('forms_field_required')}`)
+          codigo: yup.string().required(`${t('validations_required')}`),
+          nombre: yup.string().required(`${t('validations_required')}`)
         })
         .nullable()
-        .required(`${t('forms_field_required')}`),
+        .required(`${t('validations_required')}`),
       mobilePhone1: yup
         .string()
-        .required(`${t('forms_field_required')}`)
+        .required(`${t('validations_required')}`)
         .transform(value => value.replace(/[^\d]/g, ''))
-        .min(8, `${t('forms_validations_min_8')}`)
+        .min(8, `${t('validations_min_8')}`)
     })
   };
 
   const CredentialDataValidations = {
     name: 'CredentialStep',
     schema: yup.object().shape({
-      terms: yup.bool().oneOf([true], 'Campo requerido').required('Campo requerido'),
-      services: yup.bool().oneOf([true], 'Campo requerido').required('Campo requerido'),
-      email: yup.string().email('Formato de correo incorrecto').required('Email requerido'),
+      terms: yup
+        .bool()
+        .oneOf([true], `${t('validations_required')}`)
+        .required(`${t('validations_required')}`),
+      services: yup
+        .bool()
+        .oneOf([true], `${t('validations_required')}`)
+        .required(`${t('validations_required')}`),
+      email: yup
+        .string()
+        .email(`${t('validations_email_incorrect')}`)
+        .required(`${t('validations_email_required')}`),
       password: yup
         .string()
-        .required('Contraseña requerida')
-        .min(8, 'La contraseña debe ser de al menos 8 caracteres')
-        .max(16, 'La contraseña debe ser máximo de 16 caracteres')
+        .required(`${t('validations_password_required_short')}`)
+        .min(8, `${t('validations_password_min_8')}`)
+        .max(16, `${t('validations_password_max_16')}`)
         .matches(
           /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
-          'La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número'
+          `${t('validations_password_regex')}`
         ),
       confirmPassword: yup
         .string()
-        .oneOf([yup.ref('password'), null], 'La contraseña no coincide')
-        .required('Campo Requerido')
-        .min(8, 'La contraseña debe ser de al menos 8 caracteres')
-        .max(16, 'La contraseña debe ser máximo de 16 caracteres')
+        .oneOf([yup.ref('password'), null], `${t('validations_password_matched')}`)
+        .required(`${t('validations_required')}`)
+        .min(8, `${t('validations_password_min_8')}`)
+        .max(16, `${t('validations_password_max_16')}`)
     })
   };
 
@@ -268,8 +277,8 @@ function SignUpView({
       {formik => {
         const dataSource = [
           {
-            title: `${t('forms_personal_data_title')}`,
-            description: `${t('forms_personal_data_description')}`,
+            title: `${t('personal_data_title')}`,
+            description: `${t('personal_data_description')}`,
             component: (
               <PersonalDataForm
                 handleNotifications={handleNotifications}
@@ -279,13 +288,13 @@ function SignUpView({
             )
           },
           {
-            title: `${t('forms_extra_data_title')}`,
-            description: `${t('forms_extra_data_description')}`,
+            title: `${t('extra_data_title')}`,
+            description: `${t('extra_data_description')}`,
             component: <ExtraDataForm {...formik} />
           },
           {
-            title: `${t('forms_credential_data_title')}`,
-            description: `${t('forms_credential_data_description')}`,
+            title: `${t('credential_data_title')}`,
+            description: `${t('credential_data_description')}`,
             component: <CredentialDataForm handleNotifications={handleNotifications} {...formik} />
           }
         ];
@@ -304,7 +313,7 @@ function SignUpView({
                   >
                     <Grid item xs={6} md={2} className={classes.buttonLeftContainer}>
                       <Button fullWidth onClick={goBack} variant="outlined">
-                        {t('forms_signup_back_button')}
+                        {t('button_back')}
                       </Button>
                     </Grid>
                     <Grid item xs={6} md={2} className={classes.buttonRightContainer}>
@@ -318,8 +327,8 @@ function SignUpView({
                         // disabled={!_.isEmpty(formik.errors) || loading}
                       >
                         {currentStep === dataSource.length
-                          ? `${t('forms_signup_send_button')}`
-                          : `${t('forms_signup_continue_button')}`}
+                          ? `${t('button_send')}`
+                          : `${t('button_continue')}`}
                       </Button>
                     </Grid>
                   </Grid>

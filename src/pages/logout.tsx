@@ -31,7 +31,7 @@ import { User } from '../types/auth.types';
 /// FORM STATES & VALIDATIONS END
 
 function LogOut(): JSX.Element {
-  const { t } = useTranslation(NAMESPACE_KEY);
+  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'forms' });
   const classes = LayoutCodeStyles();
   const router = useRouter();
   const [email, setEmail] = useState('');
@@ -48,8 +48,8 @@ function LogOut(): JSX.Element {
 
   return (
     <LayoutCode
-      title={t('forms_logout_title')}
-      description={t('forms_logout_description')}
+      title={t('logout_title')}
+      description={t('logout_description')}
       leftButton={
         <Button
           fullWidth
@@ -58,7 +58,7 @@ function LogOut(): JSX.Element {
           variant="outlined"
           className={classes.button}
         >
-          {t('forms_cancel_button')}
+          {t('button_cancel')}
         </Button>
       }
       rightButton={
@@ -69,7 +69,7 @@ function LogOut(): JSX.Element {
           variant="contained"
           className={classes.button}
         >
-          {t('forms_logout_button')}
+          {t('button_logout')}
         </Button>
       }
     />
