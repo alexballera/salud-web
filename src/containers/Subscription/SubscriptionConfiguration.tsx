@@ -69,22 +69,22 @@ const useStyles = makeStyles((theme: Theme) =>
 const buildLinks = (t: TFunction<'subscriptions', undefined>): TLink[] => {
   return [
     {
-      label: t('config_change_plan_link'),
+      label: t('conf_change_plan_link'),
       url: '/plan-change',
       target: '_self'
     },
     {
-      label: t('config_change_beneficiaries_link'),
+      label: t('conf_beneficiaries_link'),
       url: '/beneficiaries',
       target: '_self'
     },
     {
-      label: t('config_change_payment_inf_link'),
+      label: t('conf_payment_info_link'),
       url: '/payment-information',
       target: '_self'
     },
     {
-      label: t('config_change_billing_inf_link'),
+      label: t('conf_billing_info_link'),
       url: '/billing-information',
       target: '_self'
     }
@@ -109,7 +109,7 @@ const SubscriptionConfiguration = (): JSX.Element => {
         <div className={classes.divider} />
         <div className={classes.cancelSubscription}>
           <Link href="/cancel-subscription">
-            <a>{t('config_cancel_subs_link')}</a>
+            <a>{t('conf_cancel_subs_link')}</a>
           </Link>
         </div>
       </div>
