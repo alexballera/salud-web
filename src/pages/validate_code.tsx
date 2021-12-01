@@ -18,6 +18,11 @@ import {
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 /// MATERIAL - UI END
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../i18n/forms/i18n';
+/// i18n END
+
 /// SERVICES
 /// SERVICES END
 
@@ -53,6 +58,7 @@ function ValidateCodePage({
   inputStyleInvalid,
   handleError
 }: InferGetStaticPropsType<typeof getStaticProps> & IProps & IValidateProps): JSX.Element {
+  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'forms' });
   const classes = validateCodeStyles();
   const router = useRouter();
   const time = 60;
@@ -74,7 +80,7 @@ function ValidateCodePage({
     if (isPinCodeValid) {
       forgotPasswordConfirmCodeService(email, pinCode)
         .then(() => {
-          handleError(true, 'Usuario activado correctamente', 'success');
+          handleError(true, `${t('code_success')}`, 'success');
           router.replace('/main');
         })
         .catch(err => {
@@ -109,14 +115,13 @@ function ValidateCodePage({
 
   return (
     <LayoutCode
-      title={'Cuenta creada exitosamente'}
-      description={`Felicidades ${name}, has creado tu cuenta correctamente, se envió un mensaje a tu
-      correo electrónico para que actives tu cuenta.`}
+      title={t('code_title')}
+      description={t('code_description', { name })}
       content={
         <>
           <Grid container item xs={12} className={classes.containerContent}>
             <FormControl fullWidth>
-              <FormLabel className={classes.label}>Código de validación</FormLabel>
+              <FormLabel className={classes.label}>{t('code_label')}</FormLabel>
               <ReactCodeInput
                 name="pinCode"
                 inputMode="tel"
@@ -130,7 +135,7 @@ function ValidateCodePage({
               />
               {!isPinCodeValid && (
                 <ThemeProvider theme={validateCodeCustomTheme}>
-                  <FormHelperText error>Código inválido</FormHelperText>
+                  <FormHelperText error>{t('code_invalid')}</FormHelperText>
                 </ThemeProvider>
               )}
             </FormControl>
@@ -138,11 +143,11 @@ function ValidateCodePage({
           {!show && (
             <Grid container item xs={12} justify="space-between">
               <Grid item xs={6}>
-                <Typography className={classes.desciptionText}>¿No recibiste el código?</Typography>
+                <Typography className={classes.desciptionText}>{t('code_dont_recive')}</Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography color="secondary" className={classes.link} onClick={() => handleShow()}>
-                  Reenviar correo
+                  {t('code_resend_email')}
                 </Typography>
               </Grid>
             </Grid>
@@ -151,7 +156,7 @@ function ValidateCodePage({
             <Grid item xs={12} md={12}>
               <Paper variant="outlined" className={classes.paperRoot}>
                 <AccessTimeIcon color="secondary" className={classes.iconRoot} />
-                Podés volver a intentar en {seconds === 60 ? '1:00 min' : `${seconds}s`}
+                {t('code_resend_label')} {seconds === 60 ? '1:00 min' : `${seconds}s`}
               </Paper>
             </Grid>
           )}
@@ -165,7 +170,7 @@ function ValidateCodePage({
           variant="outlined"
           className={classes.button}
         >
-          Volver
+          {t('button_back')}
         </Button>
       }
       rightButton={
@@ -176,7 +181,7 @@ function ValidateCodePage({
           variant="contained"
           className={classes.button}
         >
-          Finalizar
+          {t('button_end')}
         </Button>
       }
     />

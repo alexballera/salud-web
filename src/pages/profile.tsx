@@ -1,6 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../i18n/forms/i18n';
+/// i18n END
+
 /// MATERIAL - UI
 import { Box, Button, Divider, Hidden } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -26,6 +31,7 @@ import { AppStates } from '../context/types';
 /// STYLES & TYPES END
 
 function ProfilePage({ user }: AppStates): JSX.Element {
+  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'forms' });
   const classes = ProfileStyles();
   return (
     <LayoutLoggedIn>
@@ -58,7 +64,7 @@ function ProfilePage({ user }: AppStates): JSX.Element {
                     className={classes.button}
                     color="secondary"
                   >
-                    Cerrar sesión
+                    {t('button_logout')}
                   </Button>
                 </Link>
               </Box>
