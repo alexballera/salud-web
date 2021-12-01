@@ -31,7 +31,7 @@ main {
 
 // CUSTOMIZE POPPINS FONTS
 @font-face {
-  font-family: 'Poppins';
+  font-family: 'Poppins-Light';
   src: url('/fonts/Poppins/Poppins-Light.ttf');
   font-style: normal;
   font-weight: 300;
@@ -39,7 +39,7 @@ main {
 }
 
 @font-face {
-  font-family: 'Poppins';
+  font-family: 'Poppins-Regular';
   src: url('/fonts/Poppins/Poppins-Regular.ttf');
   font-style: light;
   font-weight: 400;
@@ -47,7 +47,7 @@ main {
 }
 
 @font-face {
-  font-family: 'Poppins';
+  font-family: 'Poppins-Medium';
   src: url('/fonts/Poppins/Poppins-Medium.ttf');
   font-style: medium;
   font-weight: 500;
@@ -55,7 +55,7 @@ main {
 }
 
 @font-face {
-  font-family: 'Poppins';
+  font-family: 'Poppins-semiBold';
   src: url('/fonts/Poppins/Poppins-SemiBold.ttf');
   font-style: semibold;
   font-weight: 600;
@@ -63,7 +63,7 @@ main {
 }
 
 @font-face {
-  font-family: 'Poppins';
+  font-family: 'Poppins-Bold';
   src: url('/fonts/Poppins/Poppins-Bold.ttf');
   font-style: bold;
   font-weight: 700;
