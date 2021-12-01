@@ -54,7 +54,6 @@ i18n
     resources,
     lng: navigatorLanguageDetector(),
     fallbackLng: navigatorLanguageDetector(),
-    keySeparator: true,
     interpolation: {
       escapeValue: false
     },

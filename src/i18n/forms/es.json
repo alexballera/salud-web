@@ -1,24 +1,35 @@
 {
   "forms": {
     "title": "Login.",
+    "login_title": "Inicie sesión.",
+
     "personal_data_title": "Identifícate",
     "personal_data_description": "Para empezar tu registro bríndanos tu número de identificación",
-    "login_title": "Inicie sesión.",
+
     "extra_data_title": "Datos adicionales",
     "extra_data_description": "Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma",
+
     "credential_data_title": "Credenciales de ingreso",
     "credential_data_description": "Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma",
+
+    "credential_profile_title": "Credenciales y contacto",
+
     "logout_title": "Cerrar sesión",
     "logout_description": "¿Estás seguro que querés cerrar tu sesión en plataforma?",
+
+    "code_title": "Cuenta creada exitosamente",
+    "code_description": "Felicidades {{name}}, has creado tu cuenta correctamente, se envió un mensaje a tu correo electrónico para que actives tu cuenta.",
 
     "button_login": "INICIAR SESIÓN",
     "button_register": "Registrarse",
     "button_forgot_password": "¿Olvidó su contraseña?",
     "button_back": "Volver",
+    "button_end": "Finalizar",
     "button_send": "Enviar",
     "button_continue": "Continuar",
     "button_cancel": "Cancelar",
-    "button_logout": "Si, cerrar sesión",
+    "button_logout": "Cerrar sesión",
+    "button_logout_confirm": "Si, cerrar sesión",
     "button_create_account": "Crear cuenta",
 
     "validations_required": "Campo requerido",
@@ -61,6 +72,7 @@
     "label_term_accept": "Acepto",
     "label_term_text": "términos y condiciones",
     "label_consent_text": "consentimiento informado",
+    "label_change": "Cambiar",
 
     "message_email_required": "Debes especificar un email.",
     "message_email_not_found": "Correo electrónico no encontrado",
@@ -68,6 +80,13 @@
     "message_email_is_register": "Este correo ya fue registrado previamente",
     "message_error_submit": "Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.",
     "message_register": "¿Aún no está registrado en OMNiSalud?",
-    "message_field_incorrect": "Campos incorrectos, corregir para continuar."
+    "message_field_incorrect": "Campos incorrectos, corregir para continuar.",
+
+    "code_label": "Código de validación",
+    "code_success": "Usuario activado correctamente",
+    "code_invalid": "Código inválido",
+    "code_dont_recive": "¿No recibiste el código?",
+    "code_resend_email": "Reenviar correo",
+    "code_resend_label": "Podés volver a intentar en"
   }
 }

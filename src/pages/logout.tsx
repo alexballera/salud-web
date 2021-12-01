@@ -69,7 +69,7 @@ function LogOut(): JSX.Element {
           variant="contained"
           className={classes.button}
         >
-          {t('button_logout')}
+          {t('button_logout_confirm')}
         </Button>
       }
     />
