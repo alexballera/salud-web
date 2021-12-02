@@ -36,7 +36,7 @@ function ProfilePage({ user }: AppStates): JSX.Element {
   return (
     <LayoutLoggedIn>
       <LayoutContent
-        title={<TitleContent title="Perfil" />}
+        title={<TitleContent title={t('profile_title')} />}
         leftContent={
           <>
             <AvatarProfile fullName={user?.fullName} documentNumber={user?.documentNumber} />

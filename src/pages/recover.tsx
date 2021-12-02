@@ -16,6 +16,11 @@ import { withAppContext } from '../context';
 import { forgotPasswordChangePassword } from '../services/auth.service';
 /// OWN COMPONENTS END
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../i18n/forms/i18n';
+/// i18n END
+
 /// CONTEXT
 /// CONTEXT END
 
@@ -49,6 +54,7 @@ const initialValues: IFormData = {
 const steps = [EmailDataForm, ValidationDataForm, PasswordDataForm];
 
 function RecoverView(props: IProps): JSX.Element {
+  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'forms' });
   const [currentStep, setCurrentState] = useState<number>(0);
 
   const router = useRouter();
@@ -69,21 +75,14 @@ function RecoverView(props: IProps): JSX.Element {
       .then(res => {
         if (res.data.result.passwordChanged === 1) {
           router.replace('/');
-          props.handleError(true, 'La contraseña se ha cambiado correctamente.', 'success');
+          props.handleError(true, `${t('message_password_change_success')}`, 'success');
         } else {
-          props.handleError(
-            true,
-            'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.'
-          );
+          props.handleError(true, `${t('message_error_unknown')}`);
         }
       })
       .catch(err => {
         if (err.response) props.handleError(true, err.response.data.error.message);
-        else
-          props.handleError(
-            true,
-            'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.'
-          );
+        else props.handleError(true, `${t('message_error_unknown')}`);
       })
       .finally(() => props.handleLoading(false));
   };
@@ -91,7 +90,7 @@ function RecoverView(props: IProps): JSX.Element {
   return (
     <>
       <Button startIcon={<ArrowBackIcon />} onClick={_handleBack}>
-        Volver
+        {t('button_back')}
       </Button>
       <section className="container signup-wrapper">
         <Formik
@@ -142,9 +141,9 @@ function RecoverView(props: IProps): JSX.Element {
                       >
                         {
                           {
-                            0: 'Enviar correo',
-                            1: 'Continuar',
-                            2: 'Guardar Cambios'
+                            0: `${t('button_send_email')}`,
+                            1: `${t('button_continue')}`,
+                            2: `${t('button_save_changes')}`
                           }[currentStep]
                         }
                       </Button>
