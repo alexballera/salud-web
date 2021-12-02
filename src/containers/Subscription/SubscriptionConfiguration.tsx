@@ -75,7 +75,7 @@ const buildLinks = (t: TFunction<'subscriptions', undefined>): TLink[] => {
     },
     {
       label: t('conf_beneficiaries_link'),
-      url: '/beneficiaries',
+      url: '/subscriptions/beneficiaries',
       target: '_self'
     },
     {

@@ -1,24 +1,50 @@
 {
   "forms": {
     "title": "Login.",
+    "login_title": "Inicie sesión.",
+
     "personal_data_title": "Identifícate",
     "personal_data_description": "Para empezar tu registro bríndanos tu número de identificación",
-    "login_title": "Inicie sesión.",
+
     "extra_data_title": "Datos adicionales",
     "extra_data_description": "Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma",
+
     "credential_data_title": "Credenciales de ingreso",
     "credential_data_description": "Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma",
+
+    "credential_profile_title": "Credenciales y contacto",
+
     "logout_title": "Cerrar sesión",
     "logout_description": "¿Estás seguro que querés cerrar tu sesión en plataforma?",
+
+    "code_title": "Cuenta creada exitosamente",
+    "code_description": "Felicidades {{name}}, has creado tu cuenta correctamente, se envió un mensaje a tu correo electrónico para que actives tu cuenta.",
+
+    "beneficiaries_title": "Beneficiarios",
+    "beneficiaries_description": "La o las personas que querés que disfruten los beneficios de tu plan",
+
+    "preferences_title": "Preferencias",
+    "preferences_description": "La o las personas que querés que disfruten los beneficios de tu plan",
+
+    "publicity_title": "Publicidad",
+    "reminder_title": "Recordatorios",
+    "profile_title": "Perfil",
+    "legal_title": "Legal",
+    "personal_title": "Datos personales",
 
     "button_login": "INICIAR SESIÓN",
     "button_register": "Registrarse",
     "button_forgot_password": "¿Olvidó su contraseña?",
     "button_back": "Volver",
+    "button_save": "Guardar",
+    "button_save_changes": "Guardar cambios",
+    "button_end": "Finalizar",
     "button_send": "Enviar",
+    "button_send_email": "Enviar correo",
     "button_continue": "Continuar",
     "button_cancel": "Cancelar",
-    "button_logout": "Si, cerrar sesión",
+    "button_logout": "Cerrar sesión",
+    "button_logout_confirm": "Si, cerrar sesión",
     "button_create_account": "Crear cuenta",
 
     "validations_required": "Campo requerido",
@@ -39,6 +65,8 @@
     "validations_password_matched": "La contraseña no coincide",
 
     "label_email": "Correo electrónico",
+    "label_email_short": "Email",
+    "label_sms": "SMS",
     "label_password": "Contraseña",
     "label_password_new": "Contraseña nueva",
     "label_password_confirm": "Confirmar contraseña",
@@ -59,8 +87,15 @@
     "label_canton": "Cantón",
     "label_district": "Distrito",
     "label_term_accept": "Acepto",
-    "label_term_text": "términos y condiciones",
-    "label_consent_text": "consentimiento informado",
+    "label_term_text": "Términos y condiciones",
+    "label_consent_text": "Consentimiento informado",
+    "label_change": "Cambiar",
+    "label_language": "Idioma",
+    "label_edit": "Editar",
+    "label_language_device": "Idioma del dispositivo",
+    "label_language_english": "Inglés",
+    "label_language_french": "Francés",
+    "label_language_mandarin": "Mandarín",
 
     "message_email_required": "Debes especificar un email.",
     "message_email_not_found": "Correo electrónico no encontrado",
@@ -68,6 +103,15 @@
     "message_email_is_register": "Este correo ya fue registrado previamente",
     "message_error_submit": "Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.",
     "message_register": "¿Aún no está registrado en OMNiSalud?",
-    "message_field_incorrect": "Campos incorrectos, corregir para continuar."
+    "message_field_incorrect": "Campos incorrectos, corregir para continuar.",
+    "message_password_change_success": "La contraseña se ha cambiado correctamente.",
+    "message_error_unknown": "Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.",
+
+    "code_label": "Código de validación",
+    "code_success": "Usuario activado correctamente",
+    "code_invalid": "Código inválido",
+    "code_dont_recive": "¿No recibiste el código?",
+    "code_resend_email": "Reenviar correo",
+    "code_resend_label": "Podés volver a intentar en"
   }
 }
