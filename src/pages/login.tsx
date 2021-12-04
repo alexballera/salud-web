@@ -7,8 +7,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 /// i18n
-import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../i18n/forms/i18n';
+import { useTranslation, withTranslation } from 'react-i18next';
 /// i18n END
 
 /// MATERIAL UI
@@ -55,15 +54,15 @@ function LoginPage({
   fetching: isLoading,
   handleError
 }: IProps): JSX.Element {
-  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'forms' });
+  const { t } = useTranslation(['globals', 'forms']);
   const [dialogOpen, setDialogOpen] = useState(false);
   const router = useRouter();
 
   const ValidationSchema = Yup.object().shape({
     email: Yup.string()
-      .email(`${t('validations_email_invalid')}`)
-      .required(`${t('validations_email_required')}`),
-    password: Yup.string().required(`${t('validations_password_required')}`)
+      .email(`${t('validations.email.invalid', { ns: 'forms' })}`)
+      .required(`${t('validations.email.required', { ns: 'forms' })}`),
+    password: Yup.string().required(`${t('validations.password.required', { ns: 'forms' })}`)
   });
 
   const _handleSubmit = (email: string, password: string) => {
@@ -89,7 +88,7 @@ function LoginPage({
           }
           handleError(true, message);
         } else {
-          handleError(true, `${t('message_error_submit')}`);
+          handleError(true, `${t('message.error.submit', { ns: 'forms' })}`);
         }
       })
       .finally(() => {
@@ -100,19 +99,19 @@ function LoginPage({
   return (
     <>
       <Head>
-        <title>{t('title')}</title>
+        <title>{t('title.login_page')}</title>
       </Head>
 
       <Box className={styles.main}>
         <Button startIcon={<ArrowBackIcon />} onClick={router.back}>
-          {t('button_back')}
+          {t('button.back')}
         </Button>
         <Grid container component="ul" spacing={3} className={styles.mainList}>
           <Grid item xs={12} md={6} component="li" className={styles.loginForm}>
             <Card className={styles.card}>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
-                  <Typography variant="h6">{t('login_title')}</Typography>
+                  <Typography variant="h6">{t('title.login_title')}</Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <Formik
@@ -134,9 +133,9 @@ function LoginPage({
                             <Grid item xs={12} component="li">
                               <TextField
                                 inputProps={{
-                                  'aria-label': `${t('label_email')}`
+                                  'aria-label': `${t('label.email')}`
                                 }}
-                                label={t('label_email')}
+                                label={t('label.email')}
                                 name="email"
                                 type="email"
                                 fullWidth={true}
@@ -149,9 +148,9 @@ function LoginPage({
                             </Grid>
                             <Grid item xs={12} component="li">
                               <TextField
-                                inputProps={{ 'aria-label': `${t('label_password')}` }}
-                                aria-label={t('label_password')}
-                                label={t('label_password')}
+                                inputProps={{ 'aria-label': `${t('label.password.password')}` }}
+                                aria-label={t('label.password.password')}
+                                label={t('label.password.password')}
                                 name="password"
                                 type="password"
                                 fullWidth={true}
@@ -169,7 +168,7 @@ function LoginPage({
                               className="MuiGrid-justify-xs-flex-end"
                             >
                               <Button onClick={() => router.push('/recover')}>
-                                {t('button_forgot_password')}
+                                {t('button.forgot_password')}
                               </Button>
                             </Grid>
                             <Grid
@@ -186,7 +185,7 @@ function LoginPage({
                                 disabled={isLoading || Object.keys(errors).length > 0}
                                 data-testid="login-button"
                               >
-                                {t('button_login')}
+                                {t('button.login')}
                               </Button>
                             </Grid>
                           </Grid>
@@ -206,7 +205,7 @@ function LoginPage({
             className={`${styles.formButton} MuiGrid-justify-xs-center MuiGrid-direction-xs-column`}
           >
             <Typography variant="body1" className={styles.registerText}>
-              {t('message_register')}
+              {t('label.no_register')}
             </Typography>
             <Button
               variant="contained"
@@ -214,7 +213,7 @@ function LoginPage({
               color="secondary"
               onClick={() => router.push('/signup')}
             >
-              {t('button_create_account')}
+              {t('button.create_account')}
             </Button>
             <Image src="/images/register.png" width="400" height="290" alt="" />
           </Grid>
@@ -230,15 +229,17 @@ function LoginPage({
         aria-describedby="alert-dialog-slide-description"
         data-testid="unknown-dialog-test"
       >
-        <DialogTitle id="alert-dialog-slide-title">{t('message_email_not_found')}</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">
+          {t('message.email.not_found', { ns: 'forms' })}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            {t('message_email_not_register')}
+            {t('message.email.not_register', { ns: 'forms' })}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialogOpen(false)} color="secondary">
-            {t('button_cancel')}
+            {t('button.cancel')}
           </Button>
           <Button
             onClick={() => {
@@ -247,7 +248,7 @@ function LoginPage({
             }}
             color="primary"
           >
-            {t('button_register')}
+            {t('button.register')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -255,4 +256,4 @@ function LoginPage({
   );
 }
 
-export default withAppContext(LoginPage);
+export default withTranslation(['globals', 'forms'])(withAppContext(LoginPage));

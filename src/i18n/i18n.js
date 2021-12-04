@@ -1,23 +1,27 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import esHome from './home/es.json';
-import enHome from './home/en.json';
-import esMenu from './menu/es.json';
-import enMenu from './menu/en.json';
-import esForms from './forms/es.json';
-import enForms from './forms/en.json';
 import esSubscriptions from './subscriptions/es.json';
 import enSubscriptions from './subscriptions/en.json';
+import { enHome } from './home/en';
+import { esHome } from './home/es';
+import { enMenu } from './menu/en';
+import { esMenu } from './menu/es';
+import { enGlobals } from './globals/en';
+import { esGlobals } from './globals/es';
+import { enForms } from './forms/en';
+import { esForms } from './forms/es';
 
 const resources = {
   en: {
+    globals: enGlobals,
     home: enHome,
     menu: enMenu,
     forms: enForms,
     subscriptions: enSubscriptions
   },
   es: {
+    globals: esGlobals,
     home: esHome,
     menu: esMenu,
     forms: esForms,
@@ -25,7 +29,7 @@ const resources = {
   }
 };
 
-const namespaces = ['home', 'menu', 'forms', 'subscriptions'];
+const namespaces = ['globals', 'home', 'menu', 'forms', 'subscriptions'];
 
 const DETECTION_OPTIONS = {
   order: ['localStorage', 'navigator'],
