@@ -19,3 +19,7 @@ export const getPersonalData = (email: string): Promise<AxiosResponse<any>> => {
     userEmail: email
   });
 };
+
+export const getDocumentsTypes = (): Promise<AxiosResponse<any>> => {
+  return axios.get(`${process.env.NEXT_PUBLIC_API_URL}general/document-types`);
+};
