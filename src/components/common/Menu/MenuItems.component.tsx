@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 
 /// MATERIAL UI
 import {
@@ -34,33 +35,35 @@ import InformedConsent from '../../InformedConsent';
 import SvgHelp from '../Svg/SvgHelp.component';
 /// OWN COMPONENTS END
 
-const items = [
-  {
-    title: 'Inicio',
-    icon: <HomeIcon />,
-    action: 'main'
-  },
-  {
-    title: 'Perfil',
-    icon: <AccountCircleIcon />,
-    action: 'profile'
-  },
-  {
-    title: 'Tu suscripción',
-    icon: <CardMembershipIcon />,
-    action: 'subscription'
-  },
-  {
-    title: 'Preferencias',
-    icon: <SettingsIcon />,
-    action: 'preferences'
-  }
-];
-
 const MenuItems = ({ type }: IMenu): JSX.Element => {
+  const { t } = useTranslation(['globals', 'menu']);
   const classes = MenuStyles();
   const [termsAndConditionOpen, setTermsAndConditionOpen] = useState(false);
   const [informedConsentOpen, setInformedConsentOpen] = useState(false);
+
+  const items = [
+    {
+      title: `${t('items.main', { ns: 'menu' })}`,
+      icon: <HomeIcon />,
+      action: 'main'
+    },
+    {
+      title: `${t('items.profile', { ns: 'menu' })}`,
+      icon: <AccountCircleIcon />,
+      action: 'profile'
+    },
+    {
+      title: `${t('items.subscription', { ns: 'menu' })}`,
+      icon: <CardMembershipIcon />,
+      action: 'subscription'
+    },
+    {
+      title: `${t('items.preferences', { ns: 'menu' })}`,
+      icon: <SettingsIcon />,
+      action: 'preferences'
+    }
+  ];
+
   return (
     <>
       {type === 'mobile' && (
@@ -88,11 +91,13 @@ const MenuItems = ({ type }: IMenu): JSX.Element => {
         })}
       >
         <Box>
-          <Typography className={classes.helpText}>¿Tenés alguna consulta?</Typography>
+          <Typography className={classes.helpText}>
+            {t('text.helpTitle', { ns: 'menu' })}
+          </Typography>
         </Box>
         <Box>
           <Link href="/help" passHref>
-            <a className={classes.helpLink}>Ir a ayuda</a>
+            <a className={classes.helpLink}>{t('text.goHelp')}</a>
           </Link>
         </Box>
         {type === 'desktop' && (
@@ -107,10 +112,10 @@ const MenuItems = ({ type }: IMenu): JSX.Element => {
       {type === 'desktop' && (
         <Box>
           <Typography onClick={() => setTermsAndConditionOpen(true)} className={classes.terms}>
-            Términos y condiciones
+            {t('text.terms')}
           </Typography>
           <Typography onClick={() => setInformedConsentOpen(true)} className={classes.terms}>
-            Consentimiento informado
+            {t('text.consent')}
           </Typography>
         </Box>
       )}
@@ -123,7 +128,7 @@ const MenuItems = ({ type }: IMenu): JSX.Element => {
             className={classes.button}
             color="secondary"
           >
-            Cerrar sesión
+            {t('button.logout')}
           </Button>
         </Link>
       </Box>

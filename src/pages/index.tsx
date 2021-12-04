@@ -17,17 +17,17 @@ import { removeDataFromLocalstorage } from '../services/auth.service';
 /// STYLES & TYPES END
 
 const HomePage: NextPage = (): JSX.Element => {
-  const { t, i18n } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'home' });
+  const { t, i18n } = useTranslation(NAMESPACE_KEY);
   useEffect(() => {
     removeDataFromLocalstorage('user');
   });
   return (
     <>
       <Head>
-        <title>{t('title')}</title>
+        <title>{t('header.title')}</title>
       </Head>
       <Box component="main">
-        <Typography variant="h2">{t('title')}</Typography>
+        <Typography variant="h2">{t('header.title')}</Typography>
         <ButtonGroup color="primary" aria-label="outlined primary button group">
           <Button onClick={() => i18n.changeLanguage('en')}>English</Button>
           <Button onClick={() => i18n.changeLanguage('es')}>Español</Button>
