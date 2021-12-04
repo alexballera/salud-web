@@ -168,7 +168,7 @@ function LoginPage({
                               className="MuiGrid-justify-xs-flex-end"
                             >
                               <Button onClick={() => router.push('/recover')}>
-                                {t('button.forgotPassword')}
+                                {t('button.forgot_password')}
                               </Button>
                             </Grid>
                             <Grid
@@ -213,7 +213,7 @@ function LoginPage({
               color="secondary"
               onClick={() => router.push('/signup')}
             >
-              {t('button.createAccount')}
+              {t('button.create_account')}
             </Button>
             <Image src="/images/register.png" width="400" height="290" alt="" />
           </Grid>

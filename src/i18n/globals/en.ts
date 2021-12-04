@@ -11,16 +11,16 @@ export const enGlobals = {
     logout: 'Cerrar sesión',
     login: 'Iniciar sesión',
     register: 'Registrarse',
-    forgotPassword: '¿Olvidó su contraseña?',
+    forgot_password: '¿Olvidó su contraseña?',
     back: 'Volver',
     save: 'Guardar',
-    saveChanges: 'Guardar cambios',
+    save_changes: 'Guardar cambios',
     end: 'Finalizar',
     send: 'Enviar',
-    sendEmail: 'Enviar correo',
+    send_email: 'Enviar correo',
     continue: 'Continuar',
-    logoutConfirm: 'Si, cerrar sesión',
-    createAccount: 'Crear cuenta'
+    logout_confirm: 'Si, cerrar sesión',
+    create_account: 'Crear cuenta'
   },
 
   label: {
