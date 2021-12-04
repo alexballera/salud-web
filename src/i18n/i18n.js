@@ -1,8 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import esForms from './forms/es.json';
-import enForms from './forms/en.json';
 import esSubscriptions from './subscriptions/es.json';
 import enSubscriptions from './subscriptions/en.json';
 import { enHome } from './home/en';
@@ -11,6 +9,8 @@ import { enMenu } from './menu/en';
 import { esMenu } from './menu/es';
 import { enGlobals } from './globals/en';
 import { esGlobals } from './globals/es';
+import { enForms } from './forms/en';
+import { esForms } from './forms/es';
 
 const resources = {
   en: {

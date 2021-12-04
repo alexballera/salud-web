@@ -120,7 +120,7 @@ const ActionButtons = ({
   return (
     <Link href="login" passHref>
       <Button color="inherit" data-testid="login-button">
-        {t('button.login')}
+        {t('button.enter')}
       </Button>
     </Link>
   );

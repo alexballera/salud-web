@@ -1,6 +1,6 @@
 import i18next from '../i18n';
-import en from './en.json';
-import es from './es.json';
+import en from './en';
+import es from './es';
 
 export const NAMESPACE_KEY = 'forms';
 export const i18n = i18next;

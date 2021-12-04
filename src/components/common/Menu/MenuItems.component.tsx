@@ -97,7 +97,7 @@ const MenuItems = ({ type }: IMenu): JSX.Element => {
         </Box>
         <Box>
           <Link href="/help" passHref>
-            <a className={classes.helpLink}>{t('text.goHelp')}</a>
+            <a className={classes.helpLink}>{t('label.go_help')}</a>
           </Link>
         </Box>
         {type === 'desktop' && (
@@ -112,10 +112,10 @@ const MenuItems = ({ type }: IMenu): JSX.Element => {
       {type === 'desktop' && (
         <Box>
           <Typography onClick={() => setTermsAndConditionOpen(true)} className={classes.terms}>
-            {t('text.terms')}
+            {t('label.terms')}
           </Typography>
           <Typography onClick={() => setInformedConsentOpen(true)} className={classes.terms}>
-            {t('text.consent')}
+            {t('label.consent')}
           </Typography>
         </Box>
       )}
