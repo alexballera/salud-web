@@ -28,16 +28,17 @@ export const esGlobals = {
 
   button: {
     back: 'Volver',
+    cancel: 'Cancelar',
     continue: 'Continuar',
     create_account: 'Crear cuenta',
+    close: 'Cerrar',
     end: 'Finalizar',
     enter: 'Ingresar',
     exit: 'Salir',
-    cancel: 'Cancelar',
     forgot_password: '¿Olvidó su contraseña?',
+    login: 'Iniciar sesión',
     logout: 'Cerrar sesión',
     logout_confirm: 'Si, cerrar sesión',
-    login: 'Iniciar sesión',
     register: 'Registrarse',
     save: 'Guardar',
     save_changes: 'Guardar cambios',
@@ -51,14 +52,20 @@ export const esGlobals = {
     change: 'Cambiar',
     consent: 'Consentimiento informado',
     edit: 'Editar',
-    email: 'Correo electrónico',
-    email_en: 'Email',
     go_help: 'Ir a ayuda',
     lastname: 'Apellidos',
     name: 'Nombre',
     no_register: '¿Aún no está registrado en OMNiSalud?',
     sms: 'SMS',
     terms: 'Términos y condiciones',
+
+    email: {
+      actual: 'Correo electrónico actual',
+      change_description: 'Ingresá tu nuevo correo electrónico para actualizarlo en la plataforma',
+      email: 'Correo electrónico',
+      email_en: 'Email',
+      new: 'Cambiar correo electrónico'
+    },
 
     address: {
       address: 'Domicilio',
@@ -92,11 +99,15 @@ export const esGlobals = {
     password: {
       confirm: 'Confirmar contraseña',
       password: 'Contraseña',
-      new: 'Contraseña nueva'
+      new: 'Contraseña nueva',
+      change_description: 'Ingresá tu contraseña anterior y la nueva'
     },
 
     phone: {
       new: 'Nuevo número de teléfono',
+      change: 'Cambiar número de teléfono',
+      change_description: 'Ingresá tu nuevo número de teléfono para actualizarlo en la plataforma',
+      actual: 'Número de teléfono actual',
       phone: 'Número de teléfono'
     }
   }

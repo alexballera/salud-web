@@ -23,6 +23,11 @@ import {
 import { useRouter } from 'next/router';
 /// MATERIAL-UI END
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../../i18n/globals/i18n';
+/// i18n END
+
 interface IProps extends FormikProps<IValidationDataForm> {
   handleLoading(loading: boolean): void;
   handleError: (open: boolean, message?: string) => void;
@@ -76,6 +81,7 @@ function ValidationData({
   handleSubmit,
   setFieldValue
 }: IProps): JSX.Element {
+  const { t } = useTranslation([NAMESPACE_KEY, 'forms', 'code']);
   const [initialized, setInitialized] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [expiredDialogOpen, setExpiredDialogOpen] = useState(false);
@@ -104,10 +110,7 @@ function ValidationData({
           } else if (err.response) {
             handleError(true, err.response.data.error.message);
           } else {
-            handleError(
-              true,
-              'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.'
-            );
+            handleError(true, `${t('message.error.submit', { ns: 'forms' })}`);
           }
           router.back();
         })
@@ -133,11 +136,7 @@ function ValidationData({
             values.pinCode
           );
           if (isValidResponse) return true;
-          else
-            handleError(
-              true,
-              'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.'
-            );
+          else handleError(true, `${t('message.error.submit', { ns: 'forms' })}`);
         } catch (err) {
           if (err.response) {
             const message = err.response.data.error.message;
@@ -151,11 +150,7 @@ function ValidationData({
             }
 
             handleError(true, message);
-          } else
-            handleError(
-              true,
-              'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.'
-            );
+          } else handleError(true, `${t('message.error.submit', { ns: 'forms' })}`);
           return false;
         }
       };
@@ -178,7 +173,7 @@ function ValidationData({
       <Box>
         <ReactCodeInput
           type="text"
-          label="Código de validación"
+          label={t('label', { ns: 'code' })}
           name="pinCode"
           fields={6}
           inputMode="numeric"
@@ -194,7 +189,7 @@ function ValidationData({
           }}
         />
         <Box display="flex" alignItems="center" justifyContent="center">
-          <Typography>¿No recibiste el correo?</Typography>
+          <Typography>{t('message.email.not_received', { ns: 'forms' })}</Typography>
           <ResendButton onClick={() => _handleResend(values.email)} />
         </Box>
       </Box>
@@ -206,18 +201,20 @@ function ValidationData({
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">Correo electrónico no encontrado</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">
+          {t('message.email.not_found', { ns: 'forms' })}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            El correo indicado no está registrado, ¿desea registrarse?
+            {t('message.email.not_register', { ns: 'forms' })}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => router.back()} color="secondary">
-            Cancelar
+            {t('button.cancel', { ns: NAMESPACE_KEY })}
           </Button>
           <Button onClick={() => router.replace('/signup')} color="primary">
-            Registrarse
+            {t('button.register', { ns: NAMESPACE_KEY })}
           </Button>
         </DialogActions>
       </Dialog>
@@ -228,16 +225,17 @@ function ValidationData({
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">Código de validación expirado</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">
+          {t('messages.expired', { ns: 'code' })}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            El código ingresado se ha vencido, se le ha enviado un nuevo código al correo
-            electrónico
+            {t('message.expired_description', { ns: 'code' })}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setExpiredDialogOpen(false)} color="secondary">
-            Cerrar
+            {t('button.close', { ns: NAMESPACE_KEY })}
           </Button>
         </DialogActions>
       </Dialog>

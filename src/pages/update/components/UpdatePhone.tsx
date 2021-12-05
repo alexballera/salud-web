@@ -10,6 +10,11 @@ import { withAppContext } from '../../../context';
 /// SERVICES
 import { signUp } from '../../../services/auth.service';
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../../i18n/globals/i18n';
+/// i18n END
+
 /// TYPES
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { IFormData, IProps } from '../../../containers/SignUp/index.types';
@@ -65,6 +70,7 @@ function UpdatePhone({
   handleLogin,
   handleError
 }: InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
+  const { t } = useTranslation(NAMESPACE_KEY);
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -123,7 +129,7 @@ function UpdatePhone({
               form={<ExtraData updatePhone {...formik} />}
               buttonLeft={
                 <Button fullWidth variant="outlined" onClick={goBack}>
-                  Volver
+                  {t('button.back')}
                 </Button>
               }
               buttonRight={
@@ -135,7 +141,7 @@ function UpdatePhone({
                   // TODO verificar
                   // disabled={!_.isEmpty(formik.errors) || loading}
                 >
-                  Continuar
+                  {t('button.continue')}
                 </Button>
               }
             />

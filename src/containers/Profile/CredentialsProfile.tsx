@@ -31,7 +31,7 @@ export const CredentialsProfile = (): JSX.Element => {
       </Grid>
       <Grid item xs={12}>
         <FieldTextData
-          title={t('label.email')}
+          title={t('label.email.email')}
           data="mmorales@gmail.com"
           text={t('label.change')}
           href="/update/email"

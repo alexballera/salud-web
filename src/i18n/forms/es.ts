@@ -3,6 +3,7 @@ export const esForms = {
     email: {
       required: 'Debes especificar un email.',
       not_found: 'Correo electrónico no encontrado',
+      not_received: '¿No recibiste el correo?',
       not_register: 'El correo indicado no está registrado, ¿desea registrarse?',
       is_register: 'Este correo ya fue registrado previamente'
     },

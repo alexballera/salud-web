@@ -25,6 +25,7 @@ import { FormControl, FormHelperText, Link, Typography } from '@material-ui/core
 
 /// i18n
 import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../../i18n/globals/i18n';
 /// i18n END
 
 /// INITIAL STATES
@@ -43,7 +44,7 @@ function CredentialData({
   updatePassword,
   updateEmail
 }: ICredentialDataProps & FormikProps<ICredentialDataForm>): JSX.Element {
-  const { t } = useTranslation(['globals', 'forms']);
+  const { t } = useTranslation([NAMESPACE_KEY, 'forms']);
   const [inputEmailStates, setInputEmailStates] = useState(initialEmailStates);
   const [termsAndConditionOpen, setTermsAndConditionOpen] = useState(false);
   const [informedConsentOpen, setInformedConsentOpen] = useState(false);
@@ -77,7 +78,7 @@ function CredentialData({
           id="email"
           name="email"
           type="text"
-          label={t('label.email', { ns: 'globals' })}
+          label={t('label.email.email', { ns: NAMESPACE_KEY })}
           value={values.email}
           error={touched.email && (Boolean(errors.email) || Boolean(inputEmailStates.message))}
           onBlur={handleBlur}
@@ -95,8 +96,8 @@ function CredentialData({
             type="password"
             label={
               updatePassword
-                ? `${t('label.password.new', { ns: 'globals' })}`
-                : `${t('label.password.password', { ns: 'globals' })}`
+                ? `${t('label.password.new', { ns: NAMESPACE_KEY })}`
+                : `${t('label.password.password', { ns: NAMESPACE_KEY })}`
             }
             value={values.password}
             error={touched.password && Boolean(errors.password)}
@@ -115,8 +116,8 @@ function CredentialData({
             type="password"
             label={
               updatePassword
-                ? `${t('label.password.label', { ns: 'globals' })}`
-                : `${t('label.password.password_confirm', { ns: 'globals' })}`
+                ? `${t('label.password.label', { ns: NAMESPACE_KEY })}`
+                : `${t('label.password.confirm', { ns: NAMESPACE_KEY })}`
             }
             value={values.confirmPassword}
             error={touched.confirmPassword && Boolean(errors.confirmPassword)}
@@ -146,7 +147,7 @@ function CredentialData({
               }
               label={
                 <Typography component="label" variant="body1">
-                  {t('label.accept', { ns: 'globals' })}{' '}
+                  {t('label.accept', { ns: NAMESPACE_KEY })}{' '}
                   <Link
                     underline="always"
                     component="span"
@@ -154,7 +155,7 @@ function CredentialData({
                     onClick={() => setTermsAndConditionOpen(true)}
                     style={{ cursor: 'pointer' }}
                   >
-                    {t('label.terms', { ns: 'globals' })}
+                    {t('label.terms', { ns: NAMESPACE_KEY })}
                   </Link>
                 </Typography>
               }
@@ -175,7 +176,7 @@ function CredentialData({
               }
               label={
                 <Typography component="label" variant="body1">
-                  {t('label.accept', { ns: 'globals' })}{' '}
+                  {t('label.accept', { ns: NAMESPACE_KEY })}{' '}
                   <Link
                     underline="always"
                     component="span"
@@ -183,7 +184,7 @@ function CredentialData({
                     onClick={() => setInformedConsentOpen(true)}
                     style={{ cursor: 'pointer' }}
                   >
-                    {t('label.consent', { ns: 'globals' })}
+                    {t('label.consent', { ns: NAMESPACE_KEY })}
                   </Link>
                 </Typography>
               }

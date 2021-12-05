@@ -8,6 +8,11 @@ import UpdateContent from './components/UpdateContent';
 import UpdateHeader from './components/UpdateHeader';
 /// CONTEXT END
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../i18n/globals/i18n';
+/// i18n END
+
 /// MATERIAL - UI
 /// MATERIAL - UI END
 
@@ -24,16 +29,14 @@ import UpdateHeader from './components/UpdateHeader';
 /// FORM STATES & VALIDATIONS END
 
 const UpdatePhone = (): JSX.Element => {
+  const { t } = useTranslation(NAMESPACE_KEY);
   return (
     <LayoutBasic
       contentDivider
       header={
-        <UpdateHeader
-          title="Cambiar número de teléfono"
-          description="Ingresá tu nuevo número de teléfono para actualizarlo en la plataforma"
-        />
+        <UpdateHeader title={t('phone.change')} description={t('phone.change_description')} />
       }
-      content={<UpdateContent label="Número de teléfono actual" data="(+506) 8888-8888" />}
+      content={<UpdateContent label={t('actual')} data="(+506) 8888-8888" />}
       form={<UpdateActions />}
     />
   );

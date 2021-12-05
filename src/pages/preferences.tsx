@@ -61,7 +61,7 @@ function PreferencesPage(): JSX.Element {
           <Grid item xs={12} md={7}>
             <FieldTextData
               title={t('label.language.language', { ns: 'globals' })}
-              text={t('label_edit')}
+              text={t('label.edit', { ns: 'globals' })}
               titleUppercase
               href="/preferences/language"
             />
@@ -72,19 +72,31 @@ function PreferencesPage(): JSX.Element {
             <Grid item xs={12}>
               <FieldTextData
                 title="Notificaciones"
-                text={t('label_edit')}
+                text={t('label.edit', { ns: 'globals' })}
                 titleUppercase
                 href="/preferences/notifications"
               />
             </Grid>
             <Grid item xs={12} className={classes.contentContainer}>
-              <TitleContent title={t('publicity_title')} subTitle />
-              <Chip label={t('label_email_short')} color="secondary" className={classes.chip} />
-              <Chip label={t('label_sms')} color="secondary" className={classes.chip} />
+              <TitleContent title={t('title.publicity', { ns: 'globals' })} subTitle />
+              <Chip
+                label={t('label.email-email_en', { ns: 'globals' })}
+                color="secondary"
+                className={classes.chip}
+              />
+              <Chip
+                label={t('label.sms', { ns: 'globals' })}
+                color="secondary"
+                className={classes.chip}
+              />
             </Grid>
             <Grid item xs={12} className={classes.contentContainer}>
-              <TitleContent title={t('reminder_title')} subTitle />
-              <Chip label={t('label_email_short')} color="secondary" className={classes.chip} />
+              <TitleContent title={t('title.reminder', { ns: 'globals' })} subTitle />
+              <Chip
+                label={t('label.email.email_en', { ns: 'globals' })}
+                color="secondary"
+                className={classes.chip}
+              />
             </Grid>
 
             <Grid item xs={12} className={classes.contentContainer}>
