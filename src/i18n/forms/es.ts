@@ -1,15 +1,4 @@
 export const esForms = {
-  code_title: 'Cuenta creada exitosamente',
-  code_description:
-    'Felicidades {{name}}, has creado tu cuenta correctamente, se envió un mensaje a tu correo electrónico para que actives tu cuenta.',
-
-  code_label: 'Código de validación',
-  code_success: 'Usuario activado correctamente',
-  code_invalid: 'Código inválido',
-  code_dont_recive: '¿No recibiste el código?',
-  code_resend_email: 'Reenviar correo',
-  code_resend_label: 'Podés volver a intentar en',
-
   message: {
     email: {
       required: 'Debes especificar un email.',

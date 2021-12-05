@@ -11,6 +11,8 @@ import { enGlobals } from './globals/en';
 import { esGlobals } from './globals/es';
 import { enForms } from './forms/en';
 import { esForms } from './forms/es';
+import { enCode } from './code_validation/en';
+import { esCode } from './code_validation/es';
 
 const resources = {
   en: {
@@ -18,6 +20,7 @@ const resources = {
     home: enHome,
     menu: enMenu,
     forms: enForms,
+    code: enCode,
     subscriptions: enSubscriptions
   },
   es: {
@@ -25,11 +28,12 @@ const resources = {
     home: esHome,
     menu: esMenu,
     forms: esForms,
+    code: esCode,
     subscriptions: esSubscriptions
   }
 };
 
-const namespaces = ['globals', 'home', 'menu', 'forms', 'subscriptions'];
+const namespaces = ['globals', 'home', 'menu', 'forms', 'code', 'subscriptions'];
 
 const DETECTION_OPTIONS = {
   order: ['localStorage', 'navigator'],

@@ -57,7 +57,7 @@ export const enGlobals = {
     name: 'Nombre',
     no_register: '¿Aún no está registrado en OMNiSalud?',
     sms: 'SMS',
-    term_accept: 'Acepto',
+    accept: 'Acepto',
     terms: 'Términos y condiciones',
 
     address: {
