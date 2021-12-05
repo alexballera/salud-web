@@ -1,51 +1,52 @@
 export const enGlobals = {
   title: {
-    login_page: 'Login',
-    login_title: 'Inicie sesión',
-    identify: 'Identifícate',
-    extra_data: 'Datos adicionales',
+    beneficiaries: 'Beneficiarios',
     credential_data: 'Credenciales de ingreso',
     credential_profile: 'Credenciales y contacto',
-    logout: 'Cerrar sesión',
-    beneficiaries: 'Beneficiarios',
-    preferences: 'Preferencias',
-    publicity: 'Publicidad',
-    reminder: 'Recordatorios',
-    profile: 'Perfil',
+    extra_data: 'Datos adicionales',
+    identify: 'Identifícate',
     legal: 'Legal',
-    personal_data: 'Datos personales'
+    login_page: 'Login',
+    login_title: 'Inicie sesión',
+    logout: 'Cerrar sesión',
+    personal_data: 'Datos personales',
+    preferences: 'Preferencias',
+    profile: 'Perfil',
+    publicity: 'Publicidad',
+    reminder: 'Recordatorios'
   },
 
   description: {
-    identify: 'Para empezar tu registro bríndanos tu número de identificación',
+    beneficiaries: 'La o las personas que querés que disfruten los beneficios de tu plan',
     extra_data: 'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma',
     credential_data:
       'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma',
+    identify: 'Para empezar tu registro bríndanos tu número de identificación',
     logout: '¿Estás seguro que querés cerrar tu sesión en plataforma?',
-    beneficiaries: 'La o las personas que querés que disfruten los beneficios de tu plan',
     preferences: 'La o las personas que querés que disfruten los beneficios de tu plan'
   },
 
   button: {
-    exit: 'Salir',
+    back: 'Volver',
+    continue: 'Continuar',
+    create_account: 'Crear cuenta',
+    end: 'Finalizar',
     enter: 'Ingresar',
+    exit: 'Salir',
     cancel: 'Cancelar',
+    forgot_password: '¿Olvidó su contraseña?',
     logout: 'Cerrar sesión',
+    logout_confirm: 'Si, cerrar sesión',
     login: 'Iniciar sesión',
     register: 'Registrarse',
-    forgot_password: '¿Olvidó su contraseña?',
-    back: 'Volver',
     save: 'Guardar',
     save_changes: 'Guardar cambios',
-    end: 'Finalizar',
     send: 'Enviar',
-    send_email: 'Enviar correo',
-    continue: 'Continuar',
-    logout_confirm: 'Si, cerrar sesión',
-    create_account: 'Crear cuenta'
+    send_email: 'Enviar correo'
   },
 
   label: {
+    accept: 'Acepto',
     birthdate: 'Fecha de nacimiento',
     change: 'Cambiar',
     consent: 'Consentimiento informado',
@@ -57,7 +58,6 @@ export const enGlobals = {
     name: 'Nombre',
     no_register: '¿Aún no está registrado en OMNiSalud?',
     sms: 'SMS',
-    accept: 'Acepto',
     terms: 'Términos y condiciones',
 
     address: {
@@ -67,37 +67,37 @@ export const enGlobals = {
       province: 'Provincia'
     },
 
+    document: {
+      type: 'Tipo de identificación',
+      number: 'Número de identificación',
+      passport: 'Pasaporte',
+      physical: 'Cédula Física',
+      residence: 'Cédula de Residencia'
+    },
+
     gender: {
       gender: 'Sexo biológico designado al nacer',
       female: 'Femenino',
       male: 'Masculino'
     },
 
-    phone: {
-      phone: 'Número de teléfono',
-      new: 'Nuevo número de teléfono'
-    },
-
     language: {
-      language: 'Idioma',
       device: 'Idioma del dispositivo',
       english: 'Inglés',
       french: 'Francés',
+      language: 'Idioma',
       mandarin: 'Mandarín'
     },
 
-    document: {
-      type: 'Tipo de identificación',
-      number: 'Número de identificación',
-      physical: 'Cédula Física',
-      residence: 'Cédula de Residencia',
-      passport: 'Pasaporte'
+    password: {
+      confirm: 'Confirmar contraseña',
+      password: 'Contraseña',
+      new: 'Contraseña nueva'
     },
 
-    password: {
-      password: 'Contraseña',
-      new: 'Contraseña nueva',
-      confirm: 'Confirmar contraseña'
+    phone: {
+      new: 'Nuevo número de teléfono',
+      phone: 'Número de teléfono'
     }
   }
 };

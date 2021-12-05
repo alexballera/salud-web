@@ -49,18 +49,18 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function PreferencesPage(): JSX.Element {
-  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'forms' });
+  const { t } = useTranslation([NAMESPACE_KEY, 'globals']);
   const classes = useStyles();
   return (
     <LayoutLoggedIn>
       <LayoutInner>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <TitleContent title={t('preferences_title')} />
+            <TitleContent title={t('title.preferences', { ns: 'globals' })} />
           </Grid>
           <Grid item xs={12} md={7}>
             <FieldTextData
-              title={t('label_language')}
+              title={t('label.language.language', { ns: 'globals' })}
               text={t('label_edit')}
               titleUppercase
               href="/preferences/language"

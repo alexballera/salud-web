@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../i18n/forms/i18n';
+import { NAMESPACE_KEY } from '../i18n/globals/i18n';
 /// i18n END
 
 /// MATERIAL - UI
@@ -31,12 +31,12 @@ import { AppStates } from '../context/types';
 /// STYLES & TYPES END
 
 function ProfilePage({ user }: AppStates): JSX.Element {
-  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'forms' });
+  const { t } = useTranslation(NAMESPACE_KEY);
   const classes = ProfileStyles();
   return (
     <LayoutLoggedIn>
       <LayoutContent
-        title={<TitleContent title={t('profile_title')} />}
+        title={<TitleContent title={t('title.profile')} />}
         leftContent={
           <>
             <AvatarProfile fullName={user?.fullName} documentNumber={user?.documentNumber} />
@@ -64,7 +64,7 @@ function ProfilePage({ user }: AppStates): JSX.Element {
                     className={classes.button}
                     color="secondary"
                   >
-                    {t('button_logout')}
+                    {t('button.logout')}
                   </Button>
                 </Link>
               </Box>
