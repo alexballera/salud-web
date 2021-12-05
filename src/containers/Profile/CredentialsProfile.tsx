@@ -11,37 +11,37 @@ import { FieldTextData } from './components/FieldTextData';
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../../i18n/forms/i18n';
+import { NAMESPACE_KEY } from '../../i18n/globals/i18n';
 /// i18n END
 
 export const CredentialsProfile = (): JSX.Element => {
-  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'forms' });
+  const { t } = useTranslation(NAMESPACE_KEY);
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <SectionTitle title={t('credential_profile_title')} />
+        <SectionTitle title={t('title.credential_profile')} />
       </Grid>
       <Grid item xs={12}>
         <FieldTextData
-          title={t('label_phone')}
+          title={t('label.phone.phone')}
           data="(+506) 8888-8888"
-          text={t('label_change')}
+          text={t('label.change')}
           href="/update/phone"
         />
       </Grid>
       <Grid item xs={12}>
         <FieldTextData
-          title={t('label_email')}
+          title={t('label.email.email')}
           data="mmorales@gmail.com"
-          text={t('label_change')}
+          text={t('label.change')}
           href="/update/email"
         />
       </Grid>
       <Grid item xs={12}>
         <FieldTextData
-          title={t('label_password')}
+          title={t('label.password.password')}
           data="••••••••••"
-          text={t('label_change')}
+          text={t('label.change')}
           href="/update/password"
         />
       </Grid>

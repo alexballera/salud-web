@@ -10,7 +10,7 @@ import { signUp } from '../../../services/auth.service';
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../../../i18n/forms/i18n';
+import { NAMESPACE_KEY } from '../../../i18n/globals/i18n';
 /// i18n END
 
 /// TYPES
@@ -67,7 +67,7 @@ function UpdatePersonalData({
   handleError,
   onClickLink
 }: InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
-  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'forms' });
+  const { t } = useTranslation(NAMESPACE_KEY);
   const classes = ProfileStyles();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -123,7 +123,7 @@ function UpdatePersonalData({
               <Grid container spacing={1} justify="flex-end">
                 <Grid item xs={4}>
                   <Button fullWidth onClick={onClickLink} variant="outlined">
-                    {t('button_back')}
+                    {t('button.back')}
                   </Button>
                 </Grid>
                 <Grid item xs={4}>
@@ -136,7 +136,7 @@ function UpdatePersonalData({
                     // TODO verificar
                     // disabled={!_.isEmpty(formik.errors) || loading}
                   >
-                    {t('button_save')}
+                    {t('button.save')}
                   </Button>
                 </Grid>
               </Grid>

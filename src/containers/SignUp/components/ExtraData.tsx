@@ -23,7 +23,6 @@ import SignUpStyles from '../styles.module';
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../../../i18n/forms/i18n';
 /// i18n END
 
 /// INITIAL STATES
@@ -54,7 +53,7 @@ function ExtraData({
   updatePersonalData,
   updatePhone
 }: IExtraDataProps & FormikProps<IExtraDataForm>): JSX.Element {
-  const { t } = useTranslation(NAMESPACE_KEY);
+  const { t } = useTranslation(['globals', 'forms']);
   const classes = SignUpStyles();
   const [cantonStates, setCantonStates] = useState(initialCantonStates);
   const [provinceStates, setProvinceStates] = useState(initialProvinceStates);
@@ -125,7 +124,7 @@ function ExtraData({
       {!updatePhone && (
         <FormControl fullWidth margin="normal" variant="filled">
           <FormLabel id="gender-selector-label" style={{ marginBottom: 10 }}>
-            {t('forms_extra_data_gender_label')}
+            {t('label.gender.gender', { ns: 'globals' })}
           </FormLabel>
           <Select
             fullWidth
@@ -138,8 +137,8 @@ function ExtraData({
             variant="outlined"
             onChange={handleChange}
           >
-            <MenuItem value={'1'}>{t('forms_extra_data_gender_female')}</MenuItem>
-            <MenuItem value={'2'}>{t('forms_extra_data_gender_male')}</MenuItem>
+            <MenuItem value={'1'}>{t('label.gender.female', { ns: 'globals' })}</MenuItem>
+            <MenuItem value={'2'}>{t('label.gender.male', { ns: 'globals' })}</MenuItem>
           </Select>
           {touched.gender && errors.gender && (
             <FormHelperText error>{errors.gender}</FormHelperText>
@@ -152,7 +151,9 @@ function ExtraData({
           name="mobilePhone1"
           type="text"
           label={
-            updatePhone ? `${t('forms_extra_data_phone_new')}` : `${t('forms_extra_data_phone')}`
+            updatePhone
+              ? `${t('label.phone.new', { ns: 'globals' })}`
+              : `${t('label.phone.phone', { ne: 'globals' })}`
           }
           value={values.mobilePhone1}
           error={touched.mobilePhone1 && Boolean(errors.mobilePhone1)}
@@ -168,11 +169,11 @@ function ExtraData({
       {!updatePhone && (
         <>
           <Typography variant="h5" component="h5" className={classes.titleSection}>
-            {t('forms_extra_data_address_label')}
+            {t('label.address.address', { ns: 'globals' })}
           </Typography>
           <CustomAutoComplete
             id="province"
-            label={t('forms_extra_data_address_province')}
+            label={t('label.address.province', { ns: 'globals' })}
             value={values.province}
             error={touched.province && Boolean(errors.province)}
             onBlur={handleBlur}
@@ -187,7 +188,7 @@ function ExtraData({
 
           <CustomAutoComplete
             id="canton"
-            label={t('forms_extra_data_address_canton')}
+            label={t('label.address.canton', { ns: 'globals' })}
             value={values.canton}
             error={touched.canton && Boolean(errors.canton)}
             onBlur={handleBlur}
@@ -201,7 +202,7 @@ function ExtraData({
 
           <CustomAutoComplete
             id="district"
-            label={t('forms_extra_data_address_district')}
+            label={t('label.address.district', { ns: 'globals' })}
             value={values.district}
             error={touched.district && Boolean(errors.district)}
             onBlur={handleBlur}

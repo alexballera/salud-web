@@ -6,6 +6,10 @@ import { IEmailDataForm } from '../../../types/recover.types';
 /// MATERIAL-UI
 import TextField from '../../../components/common/TextField';
 import { Box } from '@material-ui/core';
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../../i18n/globals/i18n';
+/// i18n END
 
 /// MATERIAL-UI END
 function EmailData({
@@ -15,6 +19,7 @@ function EmailData({
   handleBlur,
   handleChange
 }: FormikProps<IEmailDataForm>): JSX.Element {
+  const { t } = useTranslation(NAMESPACE_KEY);
   return (
     <Box>
       <TextField
@@ -24,7 +29,7 @@ function EmailData({
         formControlProps={{
           'data-testid': 'email-input'
         }}
-        label="Correo electrónico"
+        label={t('label.email.email')}
         onBlur={handleBlur}
         value={values.email}
         error={touched.email && Boolean(errors.email)}

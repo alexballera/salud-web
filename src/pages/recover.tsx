@@ -18,7 +18,7 @@ import { forgotPasswordChangePassword } from '../services/auth.service';
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../i18n/forms/i18n';
+import { NAMESPACE_KEY } from '../i18n/globals/i18n';
 /// i18n END
 
 /// CONTEXT
@@ -54,7 +54,7 @@ const initialValues: IFormData = {
 const steps = [EmailDataForm, ValidationDataForm, PasswordDataForm];
 
 function RecoverView(props: IProps): JSX.Element {
-  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'forms' });
+  const { t } = useTranslation([NAMESPACE_KEY, 'forms']);
   const [currentStep, setCurrentState] = useState<number>(0);
 
   const router = useRouter();
@@ -75,14 +75,18 @@ function RecoverView(props: IProps): JSX.Element {
       .then(res => {
         if (res.data.result.passwordChanged === 1) {
           router.replace('/');
-          props.handleError(true, `${t('message_password_change_success')}`, 'success');
+          props.handleError(
+            true,
+            `${t('message.password.change_success', { ns: 'forms' })}`,
+            'success'
+          );
         } else {
-          props.handleError(true, `${t('message_error_unknown')}`);
+          props.handleError(true, `${t('message.error.submit', { ns: 'forms' })}`);
         }
       })
       .catch(err => {
         if (err.response) props.handleError(true, err.response.data.error.message);
-        else props.handleError(true, `${t('message_error_unknown')}`);
+        else props.handleError(true, `${t('message.error.submit', { ns: 'forms' })}`);
       })
       .finally(() => props.handleLoading(false));
   };
@@ -90,7 +94,7 @@ function RecoverView(props: IProps): JSX.Element {
   return (
     <>
       <Button startIcon={<ArrowBackIcon />} onClick={_handleBack}>
-        {t('button_back')}
+        {t('button.back', { ns: NAMESPACE_KEY })}
       </Button>
       <section className="container signup-wrapper">
         <Formik
@@ -141,9 +145,9 @@ function RecoverView(props: IProps): JSX.Element {
                       >
                         {
                           {
-                            0: `${t('button_send_email')}`,
-                            1: `${t('button_continue')}`,
-                            2: `${t('button_save_changes')}`
+                            0: `${t('button.send_email', { ns: NAMESPACE_KEY })}`,
+                            1: `${t('button.continue', { ns: NAMESPACE_KEY })}`,
+                            2: `${t('button.save_changes', { ns: NAMESPACE_KEY })}`
                           }[currentStep]
                         }
                       </Button>

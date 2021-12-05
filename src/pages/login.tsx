@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 
 /// i18n
 import { useTranslation, withTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../i18n/globals/i18n';
 /// i18n END
 
 /// MATERIAL UI
@@ -54,7 +55,7 @@ function LoginPage({
   fetching: isLoading,
   handleError
 }: IProps): JSX.Element {
-  const { t } = useTranslation(['globals', 'forms']);
+  const { t } = useTranslation([NAMESPACE_KEY, 'forms']);
   const [dialogOpen, setDialogOpen] = useState(false);
   const router = useRouter();
 
@@ -133,9 +134,9 @@ function LoginPage({
                             <Grid item xs={12} component="li">
                               <TextField
                                 inputProps={{
-                                  'aria-label': `${t('label.email')}`
+                                  'aria-label': `${t('label.email.email')}`
                                 }}
-                                label={t('label.email')}
+                                label={t('label.email.email')}
                                 name="email"
                                 type="email"
                                 fullWidth={true}
@@ -256,4 +257,4 @@ function LoginPage({
   );
 }
 
-export default withTranslation(['globals', 'forms'])(withAppContext(LoginPage));
+export default withTranslation([NAMESPACE_KEY, 'forms'])(withAppContext(LoginPage));
