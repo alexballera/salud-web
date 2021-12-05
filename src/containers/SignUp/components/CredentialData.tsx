@@ -25,7 +25,6 @@ import { FormControl, FormHelperText, Link, Typography } from '@material-ui/core
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../../../i18n/forms/i18n';
 /// i18n END
 
 /// INITIAL STATES
@@ -44,7 +43,7 @@ function CredentialData({
   updatePassword,
   updateEmail
 }: ICredentialDataProps & FormikProps<ICredentialDataForm>): JSX.Element {
-  const { t } = useTranslation(NAMESPACE_KEY);
+  const { t } = useTranslation(['globals', 'forms']);
   const [inputEmailStates, setInputEmailStates] = useState(initialEmailStates);
   const [termsAndConditionOpen, setTermsAndConditionOpen] = useState(false);
   const [informedConsentOpen, setInformedConsentOpen] = useState(false);
@@ -56,7 +55,7 @@ function CredentialData({
       getPersonalData(values.email)
         .then(() => {
           setInputEmailStates({
-            message: `${t('forms_email_is_register')}`,
+            message: `${t('message.email.is_register', { ns: 'forms' })}`,
             fetching: false
           });
         })
@@ -78,7 +77,7 @@ function CredentialData({
           id="email"
           name="email"
           type="text"
-          label={t('forms_email')}
+          label={t('label.email', { ns: 'globals' })}
           value={values.email}
           error={touched.email && (Boolean(errors.email) || Boolean(inputEmailStates.message))}
           onBlur={handleBlur}
@@ -94,7 +93,11 @@ function CredentialData({
             id="password"
             name="password"
             type="password"
-            label={updatePassword ? `${t('forms_password_new')}` : `${t('forms_password')}`}
+            label={
+              updatePassword
+                ? `${t('label.password.new', { ns: 'globals' })}`
+                : `${t('label.password.password', { ns: 'globals' })}`
+            }
             value={values.password}
             error={touched.password && Boolean(errors.password)}
             onBlur={handleBlur}
@@ -110,7 +113,11 @@ function CredentialData({
             id="confirmPassword"
             name="confirmPassword"
             type="password"
-            label={updatePassword ? `${t('forms_password')}` : `${t('forms_password_confirm')}`}
+            label={
+              updatePassword
+                ? `${t('label.password.label', { ns: 'globals' })}`
+                : `${t('label.password.password_confirm', { ns: 'globals' })}`
+            }
             value={values.confirmPassword}
             error={touched.confirmPassword && Boolean(errors.confirmPassword)}
             onBlur={handleBlur}
@@ -139,7 +146,7 @@ function CredentialData({
               }
               label={
                 <Typography component="label" variant="body1">
-                  {t('forms_extra_data_term_accept')}{' '}
+                  {t('label.accept', { ns: 'globals' })}{' '}
                   <Link
                     underline="always"
                     component="span"
@@ -147,7 +154,7 @@ function CredentialData({
                     onClick={() => setTermsAndConditionOpen(true)}
                     style={{ cursor: 'pointer' }}
                   >
-                    {t('forms_extra_data_term_text')}
+                    {t('label.terms', { ns: 'globals' })}
                   </Link>
                 </Typography>
               }
@@ -168,7 +175,7 @@ function CredentialData({
               }
               label={
                 <Typography component="label" variant="body1">
-                  {t('forms_extra_data_term_accept')}{' '}
+                  {t('label.accept', { ns: 'globals' })}{' '}
                   <Link
                     underline="always"
                     component="span"
@@ -176,7 +183,7 @@ function CredentialData({
                     onClick={() => setInformedConsentOpen(true)}
                     style={{ cursor: 'pointer' }}
                   >
-                    {t('forms_extra_data_consent_text')}
+                    {t('label.consent', { ns: 'globals' })}
                   </Link>
                 </Typography>
               }
