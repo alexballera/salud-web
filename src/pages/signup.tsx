@@ -29,7 +29,6 @@ import { ISignUpBody } from '../types/auth.types';
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../i18n/forms/i18n';
 /// i18n END
 
 /// GET SERVICE
@@ -95,7 +94,7 @@ function SignUpView({
   documentTypeOptions,
   handleNotifications
 }: InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
-  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'forms' });
+  const { t } = useTranslation(['global', 'forms']);
   const classes = useStyles();
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
@@ -110,77 +109,77 @@ function SignUpView({
     schema: yup.object().shape({
       lastName: yup
         .string()
-        .required(`${t('validations_required')}`)
-        .min(3, `${t('validations_min_3')}`),
+        .required(`${t('validations.required', { ns: 'forms' })}`)
+        .min(3, `${t('validations.min_3', { ns: 'forms' })}`),
       birthDate: yup
         .date()
-        .max(new Date(), 'validations_date_invalid')
-        .required(`${t('validations_required')}`),
+        .max(new Date(), `${t('validations.date_invalid', { ns: 'forms' })}`)
+        .required(`${t('validations.required', { ns: 'forms' })}`),
       firstName: yup
         .string()
-        .required(`${t('validations_required')}`)
-        .min(3, `${t('validations_min_3')}`),
-      documentType: yup.number().required(`${t('validations_required')}`),
+        .required(`${t('validations.required', { ns: 'forms' })}`)
+        .min(3, `${t('validations.min_3', { ns: 'forms' })}`),
+      documentType: yup.number().required(`${t('validations.required', { ns: 'forms' })}`),
       documentNumber: yup
         .string()
-        .required(`${t('validations_required')}`)
+        .required(`${t('validations.required', { ns: 'forms' })}`)
         .when(['documentType'], {
           is: documentType => documentType === 1,
           then: yup
             .string()
             .transform(value => value.replace(/[^\d]/g, ''))
-            .min(9, `${t('validations_min_9')}`)
+            .min(9, `${t('validations.min_9', { ns: 'forms' })}`)
         })
         .when(['documentType'], {
           is: documentType => documentType === 2,
           then: yup
             .string()
             .transform(value => value.replace(/[^\d]/g, ''))
-            .min(10, `${t('validations_min_10_max_15')}`)
-            .max(15, `${t('validations_min_10_max_15')}`)
+            .min(10, `${t('validations.min_10_max_15', { ns: 'forms' })}`)
+            .max(15, `${t('validations.min_10_max_15', { ns: 'forms' })}`)
         })
         .when(['documentType'], {
           is: documentType => documentType === 6,
           then: yup
             .string()
-            .min(9, `${t('validations_min_10_max_20')}`)
-            .max(20, `${t('validations_min_10_max_20')}`)
+            .min(9, `${t('validations.min_9_max_20', { ns: 'forms' })}`)
+            .max(20, `${t('validations.min_9_max_20', { ns: 'forms' })}`)
         })
     })
   };
   const ExtraDataValidations = {
     name: 'ExtraData',
     schema: yup.object().shape({
-      gender: yup.string().required(`${t('validations_required')}`),
+      gender: yup.string().required(`${t('validations.required', { ns: 'forms' })}`),
       canton: yup
         .object()
         .shape({
-          codigo: yup.string().required(`${t('validations_required')}`),
-          nombre: yup.string().required(`${t('validations_required')}`)
+          codigo: yup.string().required(`${t('validations.required', { ns: 'forms' })}`),
+          nombre: yup.string().required(`${t('validations.required', { ns: 'forms' })}`)
         })
         .nullable()
-        .required(`${t('validations_required')}`),
+        .required(`${t('validations.required', { ns: 'forms' })}`),
       district: yup
         .object()
         .shape({
-          codigo: yup.string().required(`${t('validations_required')}`),
-          nombre: yup.string().required(`${t('validations_required')}`)
+          codigo: yup.string().required(`${t('validations.required', { ns: 'forms' })}`),
+          nombre: yup.string().required(`${t('validations.required', { ns: 'forms' })}`)
         })
         .nullable()
-        .required(`${t('validations_required')}`),
+        .required(`${t('validations.required', { ns: 'forms' })}`),
       province: yup
         .object()
         .shape({
-          codigo: yup.string().required(`${t('validations_required')}`),
-          nombre: yup.string().required(`${t('validations_required')}`)
+          codigo: yup.string().required(`${t('validations.required', { ns: 'forms' })}`),
+          nombre: yup.string().required(`${t('validations.required', { ns: 'forms' })}`)
         })
         .nullable()
-        .required(`${t('validations_required')}`),
+        .required(`${t('validations.required', { ns: 'forms' })}`),
       mobilePhone1: yup
         .string()
-        .required(`${t('validations_required')}`)
+        .required(`${t('validations.required', { ns: 'forms' })}`)
         .transform(value => value.replace(/[^\d]/g, ''))
-        .min(8, `${t('validations_min_8')}`)
+        .min(8, `${t('validations.min_8', { ns: 'forms' })}`)
     })
   };
 
@@ -189,31 +188,31 @@ function SignUpView({
     schema: yup.object().shape({
       terms: yup
         .bool()
-        .oneOf([true], `${t('validations_required')}`)
-        .required(`${t('validations_required')}`),
+        .oneOf([true], `${t('validations.required', { ns: 'forms' })}`)
+        .required(`${t('validations.required', { ns: 'forms' })}`),
       services: yup
         .bool()
-        .oneOf([true], `${t('validations_required')}`)
-        .required(`${t('validations_required')}`),
+        .oneOf([true], `${t('validations.required', { ns: 'forms' })}`)
+        .required(`${t('validations.required', { ns: 'forms' })}`),
       email: yup
         .string()
-        .email(`${t('validations_email_incorrect')}`)
-        .required(`${t('validations_email_required')}`),
+        .email(`${t('validations.email.incorrect', { ns: 'forms' })}`)
+        .required(`${t('validations.email.required', { ns: 'forms' })}`),
       password: yup
         .string()
-        .required(`${t('validations_password_required_short')}`)
-        .min(8, `${t('validations_password_min_8')}`)
-        .max(16, `${t('validations_password_max_16')}`)
+        .required(`${t('validations.password.required_short', { ns: 'forms' })}`)
+        .min(8, `${t('validations.password.min_8', { ns: 'forms' })}`)
+        .max(16, `${t('validations.password.max_16', { ns: 'forms' })}`)
         .matches(
           /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
-          `${t('validations_password_regex')}`
+          `${t('validations.password.regex', { ns: 'forms' })}`
         ),
       confirmPassword: yup
         .string()
-        .oneOf([yup.ref('password'), null], `${t('validations_password_matched')}`)
-        .required(`${t('validations_required')}`)
-        .min(8, `${t('validations_password_min_8')}`)
-        .max(16, `${t('validations_password_max_16')}`)
+        .oneOf([yup.ref('password'), null], `${t('validations.password.matched', { ns: 'forms' })}`)
+        .required(`${t('validations.required', { ns: 'forms' })}`)
+        .min(8, `${t('validations.password.min_8', { ns: 'forms' })}`)
+        .max(16, `${t('validations.password.max_16', { ns: 'forms' })}`)
     })
   };
 
@@ -277,8 +276,8 @@ function SignUpView({
       {formik => {
         const dataSource = [
           {
-            title: `${t('personal_data_title')}`,
-            description: `${t('personal_data_description')}`,
+            title: `${t('title.identify', { ns: 'globals' })}`,
+            description: `${t('description.identify', { ns: 'globals' })}`,
             component: (
               <PersonalDataForm
                 handleNotifications={handleNotifications}
@@ -288,13 +287,13 @@ function SignUpView({
             )
           },
           {
-            title: `${t('extra_data_title')}`,
-            description: `${t('extra_data_description')}`,
+            title: `${t('title.extra_data', { ns: 'globals' })}`,
+            description: `${t('description.extra_data', { ns: 'globals' })}`,
             component: <ExtraDataForm {...formik} />
           },
           {
-            title: `${t('credential_data_title')}`,
-            description: `${t('credential_data_description')}`,
+            title: `${t('title.credential_data', { ns: 'globals' })}`,
+            description: `${t('description.credential_data', { ns: 'globals' })}`,
             component: <CredentialDataForm handleNotifications={handleNotifications} {...formik} />
           }
         ];
@@ -313,7 +312,7 @@ function SignUpView({
                   >
                     <Grid item xs={6} md={2} className={classes.buttonLeftContainer}>
                       <Button fullWidth onClick={goBack} variant="outlined">
-                        {t('button_back')}
+                        {t('button.back', { ns: 'globals' })}
                       </Button>
                     </Grid>
                     <Grid item xs={6} md={2} className={classes.buttonRightContainer}>
@@ -327,8 +326,8 @@ function SignUpView({
                         // disabled={!_.isEmpty(formik.errors) || loading}
                       >
                         {currentStep === dataSource.length
-                          ? `${t('button_send')}`
-                          : `${t('button_continue')}`}
+                          ? `${t('button.send', { ns: 'globals' })}`
+                          : `${t('button.continue', { ns: 'globals' })}`}
                       </Button>
                     </Grid>
                   </Grid>

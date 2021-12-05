@@ -29,8 +29,8 @@ const HomePage: NextPage = (): JSX.Element => {
       <Box component="main">
         <Typography variant="h2">{t('header.title')}</Typography>
         <ButtonGroup color="primary" aria-label="outlined primary button group">
-          <Button onClick={() => i18n.changeLanguage('en')}>English</Button>
-          <Button onClick={() => i18n.changeLanguage('es')}>Español</Button>
+          <Button onClick={() => i18n?.changeLanguage('en')}>English</Button>
+          <Button onClick={() => i18n?.changeLanguage('es')}>Español</Button>
         </ButtonGroup>
       </Box>
     </>
