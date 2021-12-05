@@ -1,7 +1,29 @@
 export const enGlobals = {
   title: {
     login_page: 'Login',
-    login_title: 'Inicie sesión'
+    login_title: 'Inicie sesión',
+    identify: 'Identifícate',
+    extra_data: 'Datos adicionales',
+    credential_data: 'Credenciales de ingreso',
+    credential_profile: 'Credenciales y contacto',
+    logout: 'Cerrar sesión',
+    beneficiaries: 'Beneficiarios',
+    preferences: 'Preferencias',
+    publicity: 'Publicidad',
+    reminder: 'Recordatorios',
+    profile: 'Perfil',
+    legal: 'Legal',
+    personal_data: 'Datos personales'
+  },
+
+  description: {
+    identify: 'Para empezar tu registro bríndanos tu número de identificación',
+    extra_data: 'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma',
+    credential_data:
+      'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma',
+    logout: '¿Estás seguro que querés cerrar tu sesión en plataforma?',
+    beneficiaries: 'La o las personas que querés que disfruten los beneficios de tu plan',
+    preferences: 'La o las personas que querés que disfruten los beneficios de tu plan'
   },
 
   button: {
@@ -24,27 +46,37 @@ export const enGlobals = {
   },
 
   label: {
-    go_help: 'Ir a ayuda',
+    birthdate: 'Fecha de nacimiento',
+    change: 'Cambiar',
+    consent: 'Consentimiento informado',
+    edit: 'Editar',
     email: 'Correo electrónico',
     email_en: 'Email',
-    sms: 'SMS',
-    name: 'Nombre',
+    go_help: 'Ir a ayuda',
     lastname: 'Apellidos',
-    birthdate: 'Fecha de nacimiento',
-    gender: 'Sexo biológico designado al nacer',
-    female: 'Femenino',
-    male: 'Masculino',
-    phone: 'Número de teléfono',
-    address: 'Domicilio',
-    province: 'Provincia',
-    canton: 'Cantón',
-    district: 'Distrito',
+    name: 'Nombre',
+    no_register: '¿Aún no está registrado en OMNiSalud?',
+    sms: 'SMS',
     term_accept: 'Acepto',
     terms: 'Términos y condiciones',
-    consent: 'Consentimiento informado',
-    change: 'Cambiar',
-    edit: 'Editar',
-    no_register: '¿Aún no está registrado en OMNiSalud?',
+
+    address: {
+      address: 'Domicilio',
+      canton: 'Cantón',
+      district: 'Distrito',
+      province: 'Provincia'
+    },
+
+    gender: {
+      gender: 'Sexo biológico designado al nacer',
+      female: 'Femenino',
+      male: 'Masculino'
+    },
+
+    phone: {
+      phone: 'Número de teléfono',
+      new: 'Nuevo número de teléfono'
+    },
 
     language: {
       language: 'Idioma',
