@@ -77,7 +77,7 @@ function RecoverView(props: IProps): JSX.Element {
           router.replace('/');
           props.handleError(true, `${t('message_password_change_success')}`, 'success');
         } else {
-          props.handleError(true, `${t('message_error_unknown')}`);
+          props.handleError(true, `${t('message_error_submit')}`);
         }
       })
       .catch(err => {

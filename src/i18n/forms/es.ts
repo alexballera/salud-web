@@ -20,13 +20,11 @@ export const esForms = {
     error: {
       submit:
         'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.',
-      unknown:
-        'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.'
+      field_incorrect: 'Campos incorrectos, corregir para continuar.'
     },
     password: {
       change_success: 'La contraseña se ha cambiado correctamente.'
-    },
-    field_incorrect: 'Campos incorrectos, corregir para continuar.'
+    }
   },
 
   validations: {

@@ -105,7 +105,6 @@
     "message_register": "¿Aún no está registrado en OMNiSalud?",
     "message_field_incorrect": "Campos incorrectos, corregir para continuar.",
     "message_password_change_success": "La contraseña se ha cambiado correctamente.",
-    "message_error_unknown": "Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.",
 
     "code_label": "Código de validación",
     "code_success": "Usuario activado correctamente",
