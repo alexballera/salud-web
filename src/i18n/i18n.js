@@ -13,6 +13,8 @@ import { enCode } from './code_validation/en';
 import { esCode } from './code_validation/es';
 import { enSubscriptions } from './subscriptions/en';
 import { esSubscriptions } from './subscriptions/es';
+import { enPreferences } from './preferences/en';
+import { esPreferences } from './preferences/es';
 
 const resources = {
   en: {
@@ -21,7 +23,8 @@ const resources = {
     menu: enMenu,
     forms: enForms,
     code: enCode,
-    subscriptions: enSubscriptions
+    subscriptions: enSubscriptions,
+    preferences: enPreferences
   },
   es: {
     globals: esGlobals,
@@ -29,11 +32,12 @@ const resources = {
     menu: esMenu,
     forms: esForms,
     code: esCode,
-    subscriptions: esSubscriptions
+    subscriptions: esSubscriptions,
+    preferences: esPreferences
   }
 };
 
-const namespaces = ['globals', 'home', 'menu', 'forms', 'code', 'subscriptions'];
+const namespaces = ['globals', 'home', 'menu', 'forms', 'code', 'subscriptions', 'preferences'];
 
 const DETECTION_OPTIONS = {
   order: ['localStorage', 'navigator'],
