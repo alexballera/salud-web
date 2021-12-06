@@ -11,6 +11,11 @@ import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from '@mater
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 /// MATERIAL - UI END
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../i18n/preferences/i18n';
+/// i18n END
+
 /// SERVICES
 /// SERVICES END
 
@@ -28,24 +33,6 @@ import LayoutLoggedIn from '../../layouts/LayoutLoggedIn';
 
 /// FORM STATES & VALIDATIONS
 /// FORM STATES & VALIDATIONS END
-const data = [
-  {
-    value: 'dispositivo',
-    label: 'Idioma del dispositivo'
-  },
-  {
-    value: 'ingles',
-    label: 'Inglés'
-  },
-  {
-    value: 'frances',
-    label: 'Francés'
-  },
-  {
-    value: 'mandarin',
-    label: 'Mandarín'
-  }
-];
 
 export const useStyle = createMuiTheme({
   overrides: {
@@ -67,6 +54,26 @@ export const useStyle = createMuiTheme({
 });
 
 const LanguageForm = () => {
+  const { t } = useTranslation(NAMESPACE_KEY);
+  const data = [
+    {
+      value: 'dispositivo',
+      label: `${t('language.device')}`
+    },
+    {
+      value: 'ingles',
+      label: `${t('language.english')}`
+    },
+    {
+      value: 'frances',
+      label: `${t('language.french')}`
+    },
+    {
+      value: 'mandarin',
+      label: `${t('language.mandarin')}`
+    }
+  ];
+
   return (
     <FormControl component="fieldset">
       <RadioGroup aria-label="gender" defaultValue={data[0].value} name="radio-buttons-group">
@@ -87,6 +94,7 @@ const LanguageForm = () => {
 };
 
 const UpdateLanguage = (): JSX.Element => {
+  const { t } = useTranslation([NAMESPACE_KEY, 'globals']);
   const router = useRouter();
 
   const goBack = () => {
@@ -98,8 +106,8 @@ const UpdateLanguage = (): JSX.Element => {
       <LayoutBasic
         header={
           <UpdateHeader
-            title="Editar idioma"
-            description="Seleccioná el idioma de tu preferencia para la plataforma"
+            title={t('language.title', { ns: NAMESPACE_KEY })}
+            description={t('language.description', { ns: NAMESPACE_KEY })}
           />
         }
         form={
@@ -107,7 +115,7 @@ const UpdateLanguage = (): JSX.Element => {
             form={<LanguageForm />}
             buttonLeft={
               <Button fullWidth variant="outlined" onClick={goBack}>
-                Volver
+                {t('button.back', { ns: 'globals' })}
               </Button>
             }
             buttonRight={
@@ -119,7 +127,7 @@ const UpdateLanguage = (): JSX.Element => {
                 // TODO verificar
                 // disabled={!_.isEmpty(formik.errors) || loading}
               >
-                Continuar
+                {t('button.continue', { ns: 'globals' })}
               </Button>
             }
           />

@@ -88,14 +88,6 @@ export const esGlobals = {
       male: 'Masculino'
     },
 
-    language: {
-      device: 'Idioma del dispositivo',
-      english: 'Inglés',
-      french: 'Francés',
-      language: 'Idioma',
-      mandarin: 'Mandarín'
-    },
-
     password: {
       confirm: 'Confirmar contraseña',
       password: 'Contraseña',
