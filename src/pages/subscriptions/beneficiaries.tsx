@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../../i18n/forms/i18n';
+import { NAMESPACE_KEY } from '../../i18n/globals/i18n';
 /// i18n END
 
 /// CONTEXT
@@ -54,23 +54,23 @@ export const useStyle = createMuiTheme({
 });
 
 const LanguageForm = () => {
-  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'forms' });
+  const { t } = useTranslation(NAMESPACE_KEY);
   const data = [
     {
       value: 'dispositivo',
-      label: `${t('label_language_device')}`
+      label: `${t('label.language.device')}`
     },
     {
       value: 'ingles',
-      label: `${t('label_language_english')}`
+      label: `${t('label.language.english')}`
     },
     {
       value: 'frances',
-      label: `${t('label_language_french')}`
+      label: `${t('label.language.french')}`
     },
     {
       value: 'mandarin',
-      label: `${t('label_language_mandarin')}`
+      label: `${t('label.language.mandarin')}`
     }
   ];
   return (
@@ -93,7 +93,7 @@ const LanguageForm = () => {
 };
 
 const Beneficiaries = (): JSX.Element => {
-  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'forms' });
+  const { t } = useTranslation(NAMESPACE_KEY);
   const router = useRouter();
 
   const goBack = () => {
@@ -105,8 +105,8 @@ const Beneficiaries = (): JSX.Element => {
       <LayoutBasic
         header={
           <UpdateHeader
-            title={t('beneficiaries_title')}
-            description={t('beneficiaries_description')}
+            title={t('title.beneficiaries')}
+            description={t('description.beneficiaries')}
           />
         }
         form={
@@ -114,7 +114,7 @@ const Beneficiaries = (): JSX.Element => {
             form={<LanguageForm />}
             buttonLeft={
               <Button fullWidth variant="outlined" onClick={goBack}>
-                {t('button_back')}
+                {t('button.back')}
               </Button>
             }
             buttonRight={
@@ -126,7 +126,7 @@ const Beneficiaries = (): JSX.Element => {
                 // TODO verificar
                 // disabled={!_.isEmpty(formik.errors) || loading}
               >
-                {t('button_continue')}
+                {t('button.continue')}
               </Button>
             }
           />

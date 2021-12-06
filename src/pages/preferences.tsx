@@ -80,7 +80,7 @@ function PreferencesPage(): JSX.Element {
             <Grid item xs={12} className={classes.contentContainer}>
               <TitleContent title={t('title.publicity', { ns: 'globals' })} subTitle />
               <Chip
-                label={t('label.email-email_en', { ns: 'globals' })}
+                label={t('label.email.email_en', { ns: 'globals' })}
                 color="secondary"
                 className={classes.chip}
               />

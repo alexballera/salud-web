@@ -1,9 +1,9 @@
 import i18next from '../i18n';
-import en from './en.json';
-import es from './es.json';
+import { enSubscriptions } from './en';
+import { esSubscriptions } from './es';
 
 export const NAMESPACE_KEY = 'subscriptions';
 export const i18n = i18next;
 
-i18next.addResourceBundle('es', NAMESPACE_KEY, es, true, false);
-i18next.addResourceBundle('en', NAMESPACE_KEY, en, true, false);
+i18next.addResourceBundle('es', NAMESPACE_KEY, esSubscriptions, true, false);
+i18next.addResourceBundle('en', NAMESPACE_KEY, enSubscriptions, true, false);

@@ -93,7 +93,7 @@ const buildLinks = (t: TFunction<'subscriptions', undefined>): TLink[] => {
 
 const SubscriptionConfiguration = (): JSX.Element => {
   const classes = useStyles();
-  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'subscriptions' });
+  const { t } = useTranslation(NAMESPACE_KEY);
   const links = buildLinks(t);
   return (
     <div>
