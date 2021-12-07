@@ -58,6 +58,7 @@ export const esGlobals = {
     no_register: '¿Aún no está registrado en OMNiSalud?',
     sms: 'SMS',
     terms: 'Términos y condiciones',
+    language: 'Idioma',
 
     email: {
       actual: 'Correo electrónico actual',

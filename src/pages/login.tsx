@@ -112,7 +112,9 @@ function LoginPage({
             <Card className={styles.card}>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
-                  <Typography variant="h6">{t('title.login_title')}</Typography>
+                  <Typography variant="h6">
+                    {t('title.login_title', { ns: NAMESPACE_KEY })}
+                  </Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <Formik
@@ -134,7 +136,7 @@ function LoginPage({
                             <Grid item xs={12} component="li">
                               <TextField
                                 inputProps={{
-                                  'aria-label': `${t('label.email.email')}`
+                                  'aria-label': `${t('label.email.email', { ns: NAMESPACE_KEY })}`
                                 }}
                                 label={t('label.email.email')}
                                 name="email"
@@ -149,9 +151,13 @@ function LoginPage({
                             </Grid>
                             <Grid item xs={12} component="li">
                               <TextField
-                                inputProps={{ 'aria-label': `${t('label.password.password')}` }}
-                                aria-label={t('label.password.password')}
-                                label={t('label.password.password')}
+                                inputProps={{
+                                  'aria-label': `${t('label.password.password', {
+                                    ns: NAMESPACE_KEY
+                                  })}`
+                                }}
+                                aria-label={t('label.password.password', { ns: NAMESPACE_KEY })}
+                                label={t('label.password.password', { ns: NAMESPACE_KEY })}
                                 name="password"
                                 type="password"
                                 fullWidth={true}
@@ -169,7 +175,7 @@ function LoginPage({
                               className="MuiGrid-justify-xs-flex-end"
                             >
                               <Button onClick={() => router.push('/recover')}>
-                                {t('button.forgot_password')}
+                                {t('button.forgot_password', { ns: NAMESPACE_KEY })}
                               </Button>
                             </Grid>
                             <Grid
@@ -186,7 +192,7 @@ function LoginPage({
                                 disabled={isLoading || Object.keys(errors).length > 0}
                                 data-testid="login-button"
                               >
-                                {t('button.login')}
+                                {t('button.login', { ns: NAMESPACE_KEY })}
                               </Button>
                             </Grid>
                           </Grid>
@@ -206,7 +212,7 @@ function LoginPage({
             className={`${styles.formButton} MuiGrid-justify-xs-center MuiGrid-direction-xs-column`}
           >
             <Typography variant="body1" className={styles.registerText}>
-              {t('label.no_register')}
+              {t('label.no_register', { ns: NAMESPACE_KEY })}
             </Typography>
             <Button
               variant="contained"
@@ -214,7 +220,7 @@ function LoginPage({
               color="secondary"
               onClick={() => router.push('/signup')}
             >
-              {t('button.create_account')}
+              {t('button.create_account', { ns: NAMESPACE_KEY })}
             </Button>
             <Image src="/images/register.png" width="400" height="290" alt="" />
           </Grid>
@@ -240,7 +246,7 @@ function LoginPage({
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialogOpen(false)} color="secondary">
-            {t('button.cancel')}
+            {t('button.cancel', { ns: NAMESPACE_KEY })}
           </Button>
           <Button
             onClick={() => {
@@ -249,7 +255,7 @@ function LoginPage({
             }}
             color="primary"
           >
-            {t('button.register')}
+            {t('button.register', { ns: NAMESPACE_KEY })}
           </Button>
         </DialogActions>
       </Dialog>

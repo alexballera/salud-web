@@ -29,6 +29,7 @@ import { ISignUpBody } from '../types/auth.types';
 
 /// i18n
 import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../i18n/forms/i18n';
 /// i18n END
 
 /// GET SERVICE
@@ -94,7 +95,7 @@ function SignUpView({
   documentTypeOptions,
   handleNotifications
 }: InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
-  const { t } = useTranslation(['global', 'forms']);
+  const { t } = useTranslation(['global', NAMESPACE_KEY]);
   const classes = useStyles();
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
@@ -109,77 +110,77 @@ function SignUpView({
     schema: yup.object().shape({
       lastName: yup
         .string()
-        .required(`${t('validations.required', { ns: 'forms' })}`)
-        .min(3, `${t('validations.min_3', { ns: 'forms' })}`),
+        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`)
+        .min(3, `${t('validations.min_3', { ns: NAMESPACE_KEY })}`),
       birthDate: yup
         .date()
-        .max(new Date(), `${t('validations.date_invalid', { ns: 'forms' })}`)
-        .required(`${t('validations.required', { ns: 'forms' })}`),
+        .max(new Date(), `${t('validations.date_invalid', { ns: NAMESPACE_KEY })}`)
+        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
       firstName: yup
         .string()
-        .required(`${t('validations.required', { ns: 'forms' })}`)
-        .min(3, `${t('validations.min_3', { ns: 'forms' })}`),
-      documentType: yup.number().required(`${t('validations.required', { ns: 'forms' })}`),
+        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`)
+        .min(3, `${t('validations.min_3', { ns: NAMESPACE_KEY })}`),
+      documentType: yup.number().required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
       documentNumber: yup
         .string()
-        .required(`${t('validations.required', { ns: 'forms' })}`)
+        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`)
         .when(['documentType'], {
           is: documentType => documentType === 1,
           then: yup
             .string()
             .transform(value => value.replace(/[^\d]/g, ''))
-            .min(9, `${t('validations.min_9', { ns: 'forms' })}`)
+            .min(9, `${t('validations.min_9', { ns: NAMESPACE_KEY })}`)
         })
         .when(['documentType'], {
           is: documentType => documentType === 2,
           then: yup
             .string()
             .transform(value => value.replace(/[^\d]/g, ''))
-            .min(10, `${t('validations.min_10_max_15', { ns: 'forms' })}`)
-            .max(15, `${t('validations.min_10_max_15', { ns: 'forms' })}`)
+            .min(10, `${t('validations.min_10_max_15', { ns: NAMESPACE_KEY })}`)
+            .max(15, `${t('validations.min_10_max_15', { ns: NAMESPACE_KEY })}`)
         })
         .when(['documentType'], {
           is: documentType => documentType === 6,
           then: yup
             .string()
-            .min(9, `${t('validations.min_9_max_20', { ns: 'forms' })}`)
-            .max(20, `${t('validations.min_9_max_20', { ns: 'forms' })}`)
+            .min(9, `${t('validations.min_9_max_20', { ns: NAMESPACE_KEY })}`)
+            .max(20, `${t('validations.min_9_max_20', { ns: NAMESPACE_KEY })}`)
         })
     })
   };
   const ExtraDataValidations = {
     name: 'ExtraData',
     schema: yup.object().shape({
-      gender: yup.string().required(`${t('validations.required', { ns: 'forms' })}`),
+      gender: yup.string().required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
       canton: yup
         .object()
         .shape({
-          codigo: yup.string().required(`${t('validations.required', { ns: 'forms' })}`),
-          nombre: yup.string().required(`${t('validations.required', { ns: 'forms' })}`)
+          codigo: yup.string().required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
+          nombre: yup.string().required(`${t('validations.required', { ns: NAMESPACE_KEY })}`)
         })
         .nullable()
-        .required(`${t('validations.required', { ns: 'forms' })}`),
+        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
       district: yup
         .object()
         .shape({
-          codigo: yup.string().required(`${t('validations.required', { ns: 'forms' })}`),
-          nombre: yup.string().required(`${t('validations.required', { ns: 'forms' })}`)
+          codigo: yup.string().required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
+          nombre: yup.string().required(`${t('validations.required', { ns: NAMESPACE_KEY })}`)
         })
         .nullable()
-        .required(`${t('validations.required', { ns: 'forms' })}`),
+        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
       province: yup
         .object()
         .shape({
-          codigo: yup.string().required(`${t('validations.required', { ns: 'forms' })}`),
-          nombre: yup.string().required(`${t('validations.required', { ns: 'forms' })}`)
+          codigo: yup.string().required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
+          nombre: yup.string().required(`${t('validations.required', { ns: NAMESPACE_KEY })}`)
         })
         .nullable()
-        .required(`${t('validations.required', { ns: 'forms' })}`),
+        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
       mobilePhone1: yup
         .string()
-        .required(`${t('validations.required', { ns: 'forms' })}`)
+        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`)
         .transform(value => value.replace(/[^\d]/g, ''))
-        .min(8, `${t('validations.min_8', { ns: 'forms' })}`)
+        .min(8, `${t('validations.min_8', { ns: NAMESPACE_KEY })}`)
     })
   };
 
@@ -188,31 +189,34 @@ function SignUpView({
     schema: yup.object().shape({
       terms: yup
         .bool()
-        .oneOf([true], `${t('validations.required', { ns: 'forms' })}`)
-        .required(`${t('validations.required', { ns: 'forms' })}`),
+        .oneOf([true], `${t('validations.required', { ns: NAMESPACE_KEY })}`)
+        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
       services: yup
         .bool()
-        .oneOf([true], `${t('validations.required', { ns: 'forms' })}`)
-        .required(`${t('validations.required', { ns: 'forms' })}`),
+        .oneOf([true], `${t('validations.required', { ns: NAMESPACE_KEY })}`)
+        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
       email: yup
         .string()
-        .email(`${t('validations.email.incorrect', { ns: 'forms' })}`)
-        .required(`${t('validations.email.required', { ns: 'forms' })}`),
+        .email(`${t('validations.email.incorrect', { ns: NAMESPACE_KEY })}`)
+        .required(`${t('validations.email.required', { ns: NAMESPACE_KEY })}`),
       password: yup
         .string()
-        .required(`${t('validations.password.required_short', { ns: 'forms' })}`)
-        .min(8, `${t('validations.password.min_8', { ns: 'forms' })}`)
-        .max(16, `${t('validations.password.max_16', { ns: 'forms' })}`)
+        .required(`${t('validations.password.required_short', { ns: NAMESPACE_KEY })}`)
+        .min(8, `${t('validations.password.min_8', { ns: NAMESPACE_KEY })}`)
+        .max(16, `${t('validations.password.max_16', { ns: NAMESPACE_KEY })}`)
         .matches(
           /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
-          `${t('validations.password.regex', { ns: 'forms' })}`
+          `${t('validations.password.regex', { ns: NAMESPACE_KEY })}`
         ),
       confirmPassword: yup
         .string()
-        .oneOf([yup.ref('password'), null], `${t('validations.password.matched', { ns: 'forms' })}`)
-        .required(`${t('validations.required', { ns: 'forms' })}`)
-        .min(8, `${t('validations.password.min_8', { ns: 'forms' })}`)
-        .max(16, `${t('validations.password.max_16', { ns: 'forms' })}`)
+        .oneOf(
+          [yup.ref('password'), null],
+          `${t('validations.password.matched', { ns: NAMESPACE_KEY })}`
+        )
+        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`)
+        .min(8, `${t('validations.password.min_8', { ns: NAMESPACE_KEY })}`)
+        .max(16, `${t('validations.password.max_16', { ns: NAMESPACE_KEY })}`)
     })
   };
 
