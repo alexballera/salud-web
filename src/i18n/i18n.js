@@ -1,31 +1,43 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import esHome from './home/es.json';
-import enHome from './home/en.json';
-import esMenu from './menu/es.json';
-import enMenu from './menu/en.json';
-import esForms from './forms/es.json';
-import enForms from './forms/en.json';
-import esSubscriptions from './subscriptions/es.json';
-import enSubscriptions from './subscriptions/en.json';
+import { enHome } from './home/en';
+import { esHome } from './home/es';
+import { enMenu } from './menu/en';
+import { esMenu } from './menu/es';
+import { enGlobals } from './globals/en';
+import { esGlobals } from './globals/es';
+import { enForms } from './forms/en';
+import { esForms } from './forms/es';
+import { enCode } from './code_validation/en';
+import { esCode } from './code_validation/es';
+import { enSubscriptions } from './subscriptions/en';
+import { esSubscriptions } from './subscriptions/es';
+import { enPreferences } from './preferences/en';
+import { esPreferences } from './preferences/es';
 
 const resources = {
   en: {
+    globals: enGlobals,
     home: enHome,
     menu: enMenu,
     forms: enForms,
-    subscriptions: enSubscriptions
+    code: enCode,
+    subscriptions: enSubscriptions,
+    preferences: enPreferences
   },
   es: {
+    globals: esGlobals,
     home: esHome,
     menu: esMenu,
     forms: esForms,
-    subscriptions: esSubscriptions
+    code: esCode,
+    subscriptions: esSubscriptions,
+    preferences: esPreferences
   }
 };
 
-const namespaces = ['home', 'menu', 'forms', 'subscriptions'];
+const namespaces = ['globals', 'home', 'menu', 'forms', 'code', 'subscriptions', 'preferences'];
 
 const DETECTION_OPTIONS = {
   order: ['localStorage', 'navigator'],
@@ -54,7 +66,6 @@ i18n
     resources,
     lng: navigatorLanguageDetector(),
     fallbackLng: navigatorLanguageDetector(),
-    keySeparator: true,
     interpolation: {
       escapeValue: false
     },

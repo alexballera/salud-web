@@ -4,6 +4,11 @@ import React from 'react';
 import { withAppContext } from '../context';
 /// CONTEXT END
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../i18n/forms/i18n';
+/// i18n END
+
 /// MATERIAL - UI
 import { Chip, Divider, Grid, Theme } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
@@ -44,18 +49,19 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function PreferencesPage(): JSX.Element {
+  const { t } = useTranslation([NAMESPACE_KEY, 'globals']);
   const classes = useStyles();
   return (
     <LayoutLoggedIn>
       <LayoutInner>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <TitleContent title="Preferencias" />
+            <TitleContent title={t('title.preferences', { ns: 'globals' })} />
           </Grid>
           <Grid item xs={12} md={7}>
             <FieldTextData
-              title="Idioma"
-              text="Editar"
+              title={t('label.language.language', { ns: 'globals' })}
+              text={t('label.edit', { ns: 'globals' })}
               titleUppercase
               href="/preferences/language"
             />
@@ -66,19 +72,31 @@ function PreferencesPage(): JSX.Element {
             <Grid item xs={12}>
               <FieldTextData
                 title="Notificaciones"
-                text="Editar"
+                text={t('label.edit', { ns: 'globals' })}
                 titleUppercase
                 href="/preferences/notifications"
               />
             </Grid>
             <Grid item xs={12} className={classes.contentContainer}>
-              <TitleContent title="Publicidad" subTitle />
-              <Chip label="Email" color="secondary" className={classes.chip} />
-              <Chip label="SMS" color="secondary" className={classes.chip} />
+              <TitleContent title={t('title.publicity', { ns: 'globals' })} subTitle />
+              <Chip
+                label={t('label.email.email_en', { ns: 'globals' })}
+                color="secondary"
+                className={classes.chip}
+              />
+              <Chip
+                label={t('label.sms', { ns: 'globals' })}
+                color="secondary"
+                className={classes.chip}
+              />
             </Grid>
             <Grid item xs={12} className={classes.contentContainer}>
-              <TitleContent title="Recordatorios" subTitle />
-              <Chip label="Email" color="secondary" className={classes.chip} />
+              <TitleContent title={t('title.reminder', { ns: 'globals' })} subTitle />
+              <Chip
+                label={t('label.email.email_en', { ns: 'globals' })}
+                color="secondary"
+                className={classes.chip}
+              />
             </Grid>
 
             <Grid item xs={12} className={classes.contentContainer}>

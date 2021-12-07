@@ -81,7 +81,8 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
     '/update/password',
     '/update/email',
     '/preferences/language',
-    '/preferences/notifications'
+    '/preferences/notifications',
+    '/subscriptions/beneficiaries'
   ];
 
   return (

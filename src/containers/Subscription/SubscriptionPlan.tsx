@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const SubscriptionPlan = (): JSX.Element => {
-  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'subscriptions' });
+  const { t } = useTranslation(NAMESPACE_KEY);
   const classes = useStyles();
   const benefits = [
     {

@@ -14,7 +14,7 @@ import { Button } from '@material-ui/core';
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../i18n/forms/i18n';
+import { NAMESPACE_KEY } from '../i18n/globals/i18n';
 /// i18n END
 
 /// OWN COMPONENTS
@@ -31,7 +31,7 @@ import { User } from '../types/auth.types';
 /// FORM STATES & VALIDATIONS END
 
 function LogOut(): JSX.Element {
-  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'forms' });
+  const { t } = useTranslation(NAMESPACE_KEY);
   const classes = LayoutCodeStyles();
   const router = useRouter();
   const [email, setEmail] = useState('');
@@ -48,8 +48,8 @@ function LogOut(): JSX.Element {
 
   return (
     <LayoutCode
-      title={t('logout_title')}
-      description={t('logout_description')}
+      title={t('title.logout')}
+      description={t('description.logout')}
       leftButton={
         <Button
           fullWidth
@@ -58,7 +58,7 @@ function LogOut(): JSX.Element {
           variant="outlined"
           className={classes.button}
         >
-          {t('button_cancel')}
+          {t('button.cancel')}
         </Button>
       }
       rightButton={
@@ -69,7 +69,7 @@ function LogOut(): JSX.Element {
           variant="contained"
           className={classes.button}
         >
-          {t('button_logout')}
+          {t('button.logout_confirm')}
         </Button>
       }
     />

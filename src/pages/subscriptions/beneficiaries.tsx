@@ -2,6 +2,11 @@ import React from 'react';
 import { useRouter } from 'next/router';
 // import { Form } from 'formik';
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../i18n/globals/i18n';
+/// i18n END
+
 /// CONTEXT
 import { withAppContext } from '../../context';
 /// CONTEXT END
@@ -10,11 +15,6 @@ import { withAppContext } from '../../context';
 import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 /// MATERIAL - UI END
-
-/// i18n
-import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../../i18n/preferences/i18n';
-/// i18n END
 
 /// SERVICES
 /// SERVICES END
@@ -58,22 +58,21 @@ const LanguageForm = () => {
   const data = [
     {
       value: 'dispositivo',
-      label: `${t('language.device')}`
+      label: `${t('label.language.device')}`
     },
     {
       value: 'ingles',
-      label: `${t('language.english')}`
+      label: `${t('label.language.english')}`
     },
     {
       value: 'frances',
-      label: `${t('language.french')}`
+      label: `${t('label.language.french')}`
     },
     {
       value: 'mandarin',
-      label: `${t('language.mandarin')}`
+      label: `${t('label.language.mandarin')}`
     }
   ];
-
   return (
     <FormControl component="fieldset">
       <RadioGroup aria-label="gender" defaultValue={data[0].value} name="radio-buttons-group">
@@ -93,8 +92,8 @@ const LanguageForm = () => {
   );
 };
 
-const UpdateLanguage = (): JSX.Element => {
-  const { t } = useTranslation([NAMESPACE_KEY, 'globals']);
+const Beneficiaries = (): JSX.Element => {
+  const { t } = useTranslation(NAMESPACE_KEY);
   const router = useRouter();
 
   const goBack = () => {
@@ -106,8 +105,8 @@ const UpdateLanguage = (): JSX.Element => {
       <LayoutBasic
         header={
           <UpdateHeader
-            title={t('language.title', { ns: NAMESPACE_KEY })}
-            description={t('language.description', { ns: NAMESPACE_KEY })}
+            title={t('title.beneficiaries')}
+            description={t('description.beneficiaries')}
           />
         }
         form={
@@ -115,7 +114,7 @@ const UpdateLanguage = (): JSX.Element => {
             form={<LanguageForm />}
             buttonLeft={
               <Button fullWidth variant="outlined" onClick={goBack}>
-                {t('button.back', { ns: 'globals' })}
+                {t('button.back')}
               </Button>
             }
             buttonRight={
@@ -127,7 +126,7 @@ const UpdateLanguage = (): JSX.Element => {
                 // TODO verificar
                 // disabled={!_.isEmpty(formik.errors) || loading}
               >
-                {t('button.continue', { ns: 'globals' })}
+                {t('button.continue')}
               </Button>
             }
           />
@@ -137,4 +136,4 @@ const UpdateLanguage = (): JSX.Element => {
   );
 };
 
-export default withAppContext(UpdateLanguage);
+export default withAppContext(Beneficiaries);

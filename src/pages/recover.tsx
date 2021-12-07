@@ -16,6 +16,11 @@ import { withAppContext } from '../context';
 import { forgotPasswordChangePassword } from '../services/auth.service';
 /// OWN COMPONENTS END
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../i18n/globals/i18n';
+/// i18n END
+
 /// CONTEXT
 /// CONTEXT END
 
@@ -49,6 +54,7 @@ const initialValues: IFormData = {
 const steps = [EmailDataForm, ValidationDataForm, PasswordDataForm];
 
 function RecoverView(props: IProps): JSX.Element {
+  const { t } = useTranslation([NAMESPACE_KEY, 'forms']);
   const [currentStep, setCurrentState] = useState<number>(0);
 
   const router = useRouter();
@@ -69,21 +75,18 @@ function RecoverView(props: IProps): JSX.Element {
       .then(res => {
         if (res.data.result.passwordChanged === 1) {
           router.replace('/');
-          props.handleError(true, 'La contraseña se ha cambiado correctamente.', 'success');
-        } else {
           props.handleError(
             true,
-            'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.'
+            `${t('message.password.change_success', { ns: 'forms' })}`,
+            'success'
           );
+        } else {
+          props.handleError(true, `${t('message.error.submit', { ns: 'forms' })}`);
         }
       })
       .catch(err => {
         if (err.response) props.handleError(true, err.response.data.error.message);
-        else
-          props.handleError(
-            true,
-            'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.'
-          );
+        else props.handleError(true, `${t('message.error.submit', { ns: 'forms' })}`);
       })
       .finally(() => props.handleLoading(false));
   };
@@ -91,7 +94,7 @@ function RecoverView(props: IProps): JSX.Element {
   return (
     <>
       <Button startIcon={<ArrowBackIcon />} onClick={_handleBack}>
-        Volver
+        {t('button.back', { ns: NAMESPACE_KEY })}
       </Button>
       <section className="container signup-wrapper">
         <Formik
@@ -142,9 +145,9 @@ function RecoverView(props: IProps): JSX.Element {
                       >
                         {
                           {
-                            0: 'Enviar correo',
-                            1: 'Continuar',
-                            2: 'Guardar Cambios'
+                            0: `${t('button.send_email', { ns: NAMESPACE_KEY })}`,
+                            1: `${t('button.continue', { ns: NAMESPACE_KEY })}`,
+                            2: `${t('button.save_changes', { ns: NAMESPACE_KEY })}`
                           }[currentStep]
                         }
                       </Button>

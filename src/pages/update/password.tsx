@@ -4,6 +4,11 @@ import React from 'react';
 import { withAppContext } from '../../context';
 /// CONTEXT END
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../i18n/globals/i18n';
+/// i18n END
+
 /// MATERIAL - UI
 /// MATERIAL - UI END
 
@@ -24,15 +29,11 @@ import UpdateHeader from './components/UpdateHeader';
 /// FORM STATES & VALIDATIONS END
 
 const UpdatePassword = (): JSX.Element => {
+  const { t } = useTranslation(NAMESPACE_KEY);
   return (
     <LayoutBasic
       contentDivider
-      header={
-        <UpdateHeader
-          title="Nueva contraseña"
-          description="Ingresá tu contraseña anterior y la nueva"
-        />
-      }
+      header={<UpdateHeader title={t('password.new')} description={t('change_description')} />}
       content={<UpdateContent />}
       form={<UpdateActions />}
     />

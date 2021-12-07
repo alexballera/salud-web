@@ -62,7 +62,7 @@ function a11yProps(index: number) {
 }
 
 function SubscriptionPage({ user, loggedIn }: AppStates): JSX.Element {
-  const { t } = useTranslation(NAMESPACE_KEY, { keyPrefix: 'subscriptions' });
+  const { t } = useTranslation(NAMESPACE_KEY);
   const router = useRouter();
   const [value, setValue] = useState(0);
 

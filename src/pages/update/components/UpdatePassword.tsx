@@ -10,6 +10,11 @@ import { withAppContext } from '../../../context';
 /// SERVICES
 import { signUp } from '../../../services/auth.service';
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../../i18n/globals/i18n';
+/// i18n END
+
 /// TYPES
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { ICredentialDataProps, IFormData, IProps } from '../../../containers/SignUp/index.types';
@@ -67,6 +72,7 @@ function UpdatePassword({
   handleError,
   handleNotifications
 }: ICredentialDataProps & InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
+  const { t } = useTranslation(NAMESPACE_KEY);
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -129,7 +135,7 @@ function UpdatePassword({
                     id="password"
                     name="password"
                     type="password"
-                    label="Contraseña"
+                    label={t('label.password.password')}
                     value={formik.values.password}
                     error={formik.touched.password && Boolean(formik.errors.password)}
                     onBlur={formik.handleBlur}
@@ -148,7 +154,7 @@ function UpdatePassword({
               }
               buttonLeft={
                 <Button fullWidth variant="outlined" onClick={goBack}>
-                  Volver
+                  {t('button.back')}
                 </Button>
               }
               buttonRight={
@@ -160,7 +166,7 @@ function UpdatePassword({
                   // TODO verificar
                   // disabled={!_.isEmpty(formik.errors) || loading}
                 >
-                  Continuar
+                  {t('button.continue')}
                 </Button>
               }
             />

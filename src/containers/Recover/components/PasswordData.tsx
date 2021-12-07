@@ -9,6 +9,11 @@ import { Box } from '@material-ui/core';
 import TextField from '../../../components/common/TextField';
 import SecurityPasswordIndicator from '../../../components/common/SecurityPasswordIndicator';
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../../i18n/globals/i18n';
+/// i18n END
+
 function PasswordData({
   values,
   errors,
@@ -16,6 +21,7 @@ function PasswordData({
   handleBlur,
   handleChange
 }: FormikProps<IPasswordDataForm>): JSX.Element {
+  const { t } = useTranslation(NAMESPACE_KEY);
   return (
     <Box>
       <TextField
@@ -23,7 +29,7 @@ function PasswordData({
         id="newPassword"
         data-testid="password-input"
         name="newPassword"
-        label="Nueva contraseña"
+        label={t('label.password.new')}
         type="password"
         onBlur={handleBlur}
         value={values.newPassword}
@@ -37,7 +43,7 @@ function PasswordData({
         id="newPasswordConfirm"
         data-testid="password-confirm-input"
         name="newPasswordConfirm"
-        label="Confirmar contraseña"
+        label={t('label.password.confirm')}
         type="password"
         onBlur={handleBlur}
         value={values.newPasswordConfirm}
