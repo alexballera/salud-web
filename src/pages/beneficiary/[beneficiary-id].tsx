@@ -26,6 +26,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { TFunction } from 'i18next';
 import { INotificationProps } from '../../context/types';
+import { Grid } from '@material-ui/core';
 
 type IProps = {
   handleNotifications: (_args: INotificationProps) => void;
@@ -33,6 +34,7 @@ type IProps = {
 } & IAppProps;
 
 type IFormData = {
+  gender: '1' | '2' | '' | null;
   documentType: number | string;
   documentNumber: string;
   birthDate: string;
@@ -92,6 +94,7 @@ export const getServerSideProps: GetStaticProps = async (ctx: NextPageContext) =
   return {
     props: {
       beneficiary: {
+        gender: '',
         documentType: '1',
         documentNumber: '5 0413 0864',
         birthDate: '',
@@ -126,6 +129,7 @@ const mapDocumentTypesOpts = (t: TFunction, val: number) => {
 const buildFormSchema = (t: TFunction) => ({
   schema: yup.object().shape({
     documentType: yup.number().required(`${t('validations_required')}`),
+    gender: yup.string().required(`${t('validations_required')}`),
     documentNumber: yup
       .string()
       .required(`${t('validations_required')}`)
@@ -475,168 +479,194 @@ function SignUpView({ beneficiary, handleNotifications }: IProps): JSX.Element {
         }, [errors]);
 
         return (
-          <Form aria-disabled autoComplete="off">
-            <FormControl fullWidth variant="filled">
-              <FormLabel id="document-type-selector-label" style={{ marginBottom: 10 }}>
-                {t('label_document_type')}
-              </FormLabel>
-              <Select
-                fullWidth
-                id="document-type-selector"
-                labelId="document-type-selector-label"
-                data-testid="document-type-selector"
-                name="documentType"
-                color="secondary"
-                variant="outlined"
-                value={values.documentType}
-                onBlur={handleBlur}
-                error={fieldHasError({ inputKey: 'documentType', formProps })}
-                onChange={evt => handlerChangeDocumentType({ evt, formProps })}
-              >
-                {documentTypeOptions.map((option, i) => (
-                  <MenuItem key={i} value={option.documentTypeId}>
-                    {mapDocumentTypesOpts(t, option.documentTypeId)}
-                  </MenuItem>
-                ))}
-              </Select>
-              {touched.documentType && errors.documentType && (
-                <FormHelperText error>{errors.documentType}</FormHelperText>
-              )}
-            </FormControl>
-            <TextField
-              id="documentNumber"
-              name="documentNumber"
-              type="text"
-              label={t('label_document_number')}
-              loading={false}
-              errorType={typeError}
-              onBlur={handleBlur}
-              inputRef={inputMaskRef}
-              disabled={!values.documentType}
-              value={values.documentNumber}
-              helperText={errors.documentNumber}
-              error={fieldHasError({ inputKey: 'documentNumber', formProps })}
-              onChange={evt => handleDocumentNumberChange({ evt, formProps })}
-              inputProps={getDocumentNumberInputProps(values.documentType)}
-              inputComponent={getDocumentNumberInputComponent(values.documentType)}
-            />
-            {userValuesAlreadyLoaded(values) && (
-              <Paper square elevation={0}>
+          <Grid container>
+            <Grid item md={4} spacing={3}>
+              <Form aria-disabled autoComplete="off">
+                <FormControl fullWidth variant="filled">
+                  <FormLabel id="document-type-selector-label" style={{ marginBottom: 10 }}>
+                    {t('label_document_type')}
+                  </FormLabel>
+                  <Select
+                    fullWidth
+                    id="document-type-selector"
+                    labelId="document-type-selector-label"
+                    data-testid="document-type-selector"
+                    name="documentType"
+                    color="secondary"
+                    variant="outlined"
+                    value={values.documentType}
+                    onBlur={handleBlur}
+                    error={fieldHasError({ inputKey: 'documentType', formProps })}
+                    onChange={evt => handlerChangeDocumentType({ evt, formProps })}
+                  >
+                    {documentTypeOptions.map((option, i) => (
+                      <MenuItem key={i} value={option.documentTypeId}>
+                        {mapDocumentTypesOpts(t, option.documentTypeId)}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {touched.documentType && errors.documentType && (
+                    <FormHelperText error>{errors.documentType}</FormHelperText>
+                  )}
+                </FormControl>
                 <TextField
-                  formControlProps={{ margin: 'normal' }}
-                  id="firstName"
-                  name="firstName"
-                  data-testid="firstName"
-                  label={t('forms_name_label')}
-                  disabled={true}
-                  value={values.firstName}
-                  error={touched.firstName && Boolean(errors.firstName)}
-                  helperText={null}
-                />
-                <TextField
-                  formControlProps={{ margin: 'normal' }}
-                  id="lastName"
-                  name="lastName"
-                  label={t('forms_lastname_label')}
-                  data-testid="lastName"
-                  disabled={true}
-                  helperText={null}
-                  value={values.lastName}
-                />
-                <DatePicker
-                  id="birthDate"
-                  label={t('forms_birthdate')}
-                  value={values.birthDate === '' ? null : values.birthDate}
-                  margin="normal"
-                  format="dd/MM/yyyy"
-                  variant="inline"
-                  inputVariant="outlined"
-                  disabled={true}
+                  id="documentNumber"
+                  name="documentNumber"
+                  type="text"
+                  label={t('label_document_number')}
+                  loading={false}
+                  errorType={typeError}
                   onBlur={handleBlur}
-                  onChange={null}
-                  maxDate={new Date()}
-                  formControlProps={{ margin: 'normal' }}
+                  inputRef={inputMaskRef}
+                  disabled={!values.documentType}
+                  value={values.documentNumber}
+                  helperText={errors.documentNumber}
+                  error={fieldHasError({ inputKey: 'documentNumber', formProps })}
+                  onChange={evt => handleDocumentNumberChange({ evt, formProps })}
+                  inputProps={getDocumentNumberInputProps(values.documentType)}
+                  inputComponent={getDocumentNumberInputComponent(values.documentType)}
                 />
-              </Paper>
-            )}
-            <TextField
-              fullWidth
-              id="email"
-              name="email"
-              type="text"
-              label={t('label_email')}
-              value={values.email}
-              error={fieldHasError({ inputKey: 'email', formProps })}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              helperText={errors.email}
-            />
-            <TextField
-              id="mobilePhone1"
-              name="mobilePhone1"
-              type="text"
-              label={t('label_phone')}
-              value={values.mobilePhone1}
-              error={touched.mobilePhone1 && Boolean(errors.mobilePhone1)}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              helperText={errors.mobilePhone1}
-              inputProps={{
-                mask: PHONE_NUMBER_MASK
-              }}
-              inputComponent={TextMaskCustom as any}
-            />
-            <CustomAutoComplete
-              id="province"
-              label={t('label_province')}
-              value={values.province}
-              error={touched.province && Boolean(errors.province)}
-              onBlur={handleBlur}
-              options={provinceStates.data}
-              loading={provinceStates.fetching}
-              helperText={errors.province}
-              getOptionLabel={option => option.nombre}
-              getOptionSelected={(option, value) => option.nombre === value.nombre}
-              linearProgressProps={{ 'data-testid': 'provinces-loader' }}
-              onChange={(_e, value) =>
-                handleChangeGeoSelect({ value, formProps, fieldName: 'province' })
-              }
-            />
-            <CustomAutoComplete
-              id="canton"
-              label={t('label_canton')}
-              value={values.canton}
-              error={touched.canton && Boolean(errors.canton)}
-              onBlur={handleBlur}
-              options={cantonStates.data}
-              loading={cantonStates.fetching}
-              helperText={errors.canton}
-              getOptionLabel={option => option.nombre}
-              getOptionSelected={(option, value) => option.nombre === value.nombre}
-              onChange={(_e, value) =>
-                handleChangeGeoSelect({ value, formProps, fieldName: 'canton' })
-              }
-            />
+                {userValuesAlreadyLoaded(values) && (
+                  <Paper square elevation={0}>
+                    <TextField
+                      formControlProps={{ margin: 'normal' }}
+                      id="firstName"
+                      name="firstName"
+                      data-testid="firstName"
+                      label={t('forms_name_label')}
+                      disabled={true}
+                      value={values.firstName}
+                      error={touched.firstName && Boolean(errors.firstName)}
+                      helperText={null}
+                    />
+                    <TextField
+                      formControlProps={{ margin: 'normal' }}
+                      id="lastName"
+                      name="lastName"
+                      label={t('forms_lastname_label')}
+                      data-testid="lastName"
+                      disabled={true}
+                      helperText={null}
+                      value={values.lastName}
+                    />
+                    <DatePicker
+                      id="birthDate"
+                      label={t('forms_birthdate')}
+                      value={values.birthDate === '' ? null : values.birthDate}
+                      margin="normal"
+                      format="dd/MM/yyyy"
+                      variant="inline"
+                      inputVariant="outlined"
+                      disabled={true}
+                      onBlur={handleBlur}
+                      onChange={null}
+                      maxDate={new Date()}
+                      formControlProps={{ margin: 'normal' }}
+                    />
+                  </Paper>
+                )}
+                <FormControl fullWidth margin="normal" variant="filled">
+                  <FormLabel id="gender-selector-label" style={{ marginBottom: 10 }}>
+                    {t('label_gender')}
+                  </FormLabel>
+                  <Select
+                    fullWidth
+                    id="gender-selector"
+                    name="gender"
+                    value={values.gender}
+                    color="secondary"
+                    labelId="gender-selector-label"
+                    onBlur={handleBlur}
+                    variant="outlined"
+                    onChange={handleChange}
+                  >
+                    <MenuItem value={'1'}>{t('label_female')}</MenuItem>
+                    <MenuItem value={'2'}>{t('label_male')}</MenuItem>
+                  </Select>
+                  {touched.gender && errors.gender && (
+                    <FormHelperText error>{errors.gender}</FormHelperText>
+                  )}
+                </FormControl>
+                <TextField
+                  fullWidth
+                  id="email"
+                  name="email"
+                  type="text"
+                  label={t('label_email')}
+                  value={values.email}
+                  error={fieldHasError({ inputKey: 'email', formProps })}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  helperText={errors.email}
+                />
+                <TextField
+                  id="mobilePhone1"
+                  name="mobilePhone1"
+                  type="text"
+                  label={t('label_phone')}
+                  value={values.mobilePhone1}
+                  error={touched.mobilePhone1 && Boolean(errors.mobilePhone1)}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  helperText={errors.mobilePhone1}
+                  inputProps={{
+                    mask: PHONE_NUMBER_MASK
+                  }}
+                  inputComponent={TextMaskCustom as any}
+                />
+                <CustomAutoComplete
+                  id="province"
+                  label={t('label_province')}
+                  value={values.province}
+                  error={touched.province && Boolean(errors.province)}
+                  onBlur={handleBlur}
+                  options={provinceStates.data}
+                  loading={provinceStates.fetching}
+                  helperText={errors.province}
+                  getOptionLabel={option => option.nombre}
+                  getOptionSelected={(option, value) => option.nombre === value.nombre}
+                  linearProgressProps={{ 'data-testid': 'provinces-loader' }}
+                  onChange={(_e, value) =>
+                    handleChangeGeoSelect({ value, formProps, fieldName: 'province' })
+                  }
+                />
+                <CustomAutoComplete
+                  id="canton"
+                  label={t('label_canton')}
+                  value={values.canton}
+                  error={touched.canton && Boolean(errors.canton)}
+                  onBlur={handleBlur}
+                  options={cantonStates.data}
+                  loading={cantonStates.fetching}
+                  helperText={errors.canton}
+                  getOptionLabel={option => option.nombre}
+                  getOptionSelected={(option, value) => option.nombre === value.nombre}
+                  onChange={(_e, value) =>
+                    handleChangeGeoSelect({ value, formProps, fieldName: 'canton' })
+                  }
+                />
 
-            <CustomAutoComplete
-              id="district"
-              label={t('label_district')}
-              value={values.district}
-              error={touched.district && Boolean(errors.district)}
-              onBlur={handleBlur}
-              options={districtStates.data}
-              loading={districtStates.fetching}
-              helperText={errors.district}
-              getOptionLabel={option => option.nombre}
-              getOptionSelected={(option, value) => option.nombre === value.nombre}
-              onChange={(_e, value) =>
-                handleChangeGeoSelect({ value, formProps, fieldName: 'district' })
-              }
-            />
-            <button type="submit" disabled={loading}>
-              Submit
-            </button>
-          </Form>
+                <CustomAutoComplete
+                  id="district"
+                  label={t('label_district')}
+                  value={values.district}
+                  error={touched.district && Boolean(errors.district)}
+                  onBlur={handleBlur}
+                  options={districtStates.data}
+                  loading={districtStates.fetching}
+                  helperText={errors.district}
+                  getOptionLabel={option => option.nombre}
+                  getOptionSelected={(option, value) => option.nombre === value.nombre}
+                  onChange={(_e, value) =>
+                    handleChangeGeoSelect({ value, formProps, fieldName: 'district' })
+                  }
+                />
+                <button type="submit" disabled={loading}>
+                  Submit
+                </button>
+              </Form>
+            </Grid>
+          </Grid>
         );
       }}
     </Formik>
