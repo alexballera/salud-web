@@ -58,6 +58,7 @@ export const enGlobals = {
     no_register: '¿Aún no está registrado en OMNiSalud?',
     sms: 'SMS',
     terms: 'Términos y condiciones',
+    language: 'Idioma',
 
     email: {
       actual: 'Correo electrónico actual',
@@ -86,14 +87,6 @@ export const enGlobals = {
       gender: 'Sexo biológico designado al nacer',
       female: 'Femenino',
       male: 'Masculino'
-    },
-
-    language: {
-      device: 'Idioma del dispositivo',
-      english: 'Inglés',
-      french: 'Francés',
-      language: 'Idioma',
-      mandarin: 'Mandarín'
     },
 
     password: {
