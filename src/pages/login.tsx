@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -119,46 +120,50 @@ function LoginPage({
                   ({ errors, handleChange, values, handleSubmit }: any) => (
                     <form onSubmit={handleSubmit}>
                       <Grid container justify="center">
-                        <Grid item xs={12}>
-                          <TextField
-                            inputProps={{
-                              'aria-label': `${t('label.email.email', { ns: NAMESPACE_KEY })}`
-                            }}
-                            label={t('label.email.email')}
-                            name="email"
-                            type="email"
-                            fullWidth={true}
-                            value={values.email}
-                            onChange={handleChange}
-                            error={!!errors.email}
-                            helperText={errors.email || undefined}
-                            data-testid="email-field"
-                          />
+                        <Grid container item xs={12}>
+                          <Grid item xs={12}>
+                            <TextField
+                              inputProps={{
+                                'aria-label': `${t('label.email.email', { ns: NAMESPACE_KEY })}`
+                              }}
+                              label={t('label.email.email')}
+                              name="email"
+                              type="email"
+                              fullWidth={true}
+                              value={values.email}
+                              onChange={handleChange}
+                              error={!!errors.email}
+                              helperText={errors.email || undefined}
+                              data-testid="email-field"
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <TextField
+                              inputProps={{
+                                'aria-label': `${t('label.password.password', {
+                                  ns: NAMESPACE_KEY
+                                })}`
+                              }}
+                              aria-label={t('label.password.password', { ns: NAMESPACE_KEY })}
+                              label={t('label.password.password', { ns: NAMESPACE_KEY })}
+                              name="password"
+                              type="password"
+                              fullWidth={true}
+                              value={values.password}
+                              onChange={handleChange}
+                              error={!!errors.password}
+                              helperText={errors.password || undefined}
+                              data-testid="password-field"
+                            />
+                          </Grid>
+                          <Grid item xs={12} className={classes.recoverContainer}>
+                            <span>¿Olvidaste tu contraseña?</span>
+                            <Link href="/recover" passHref>
+                              <a>{t('button.recover', { ns: NAMESPACE_KEY })}</a>
+                            </Link>
+                          </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                          <TextField
-                            inputProps={{
-                              'aria-label': `${t('label.password.password', {
-                                ns: NAMESPACE_KEY
-                              })}`
-                            }}
-                            aria-label={t('label.password.password', { ns: NAMESPACE_KEY })}
-                            label={t('label.password.password', { ns: NAMESPACE_KEY })}
-                            name="password"
-                            type="password"
-                            fullWidth={true}
-                            value={values.password}
-                            onChange={handleChange}
-                            error={!!errors.password}
-                            helperText={errors.password || undefined}
-                            data-testid="password-field"
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Button onClick={() => router.push('/recover')}>
-                            {t('button.forgot_password', { ns: NAMESPACE_KEY })}
-                          </Button>
-                        </Grid>
+
                         <Grid item xs={12} className={classes.containerButton}>
                           <Box p={3}>
                             <Grid container>
