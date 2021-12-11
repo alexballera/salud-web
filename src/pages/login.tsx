@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Formik } from 'formik';
@@ -12,14 +11,12 @@ import { NAMESPACE_KEY } from '../i18n/globals/i18n';
 /// i18n END
 
 /// MATERIAL UI
-import Typography from '@material-ui/core/Typography';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {
-  Box,
   Button,
   Card,
   Grid,
   TextField,
+  Typography,
   Dialog,
   DialogTitle,
   DialogActions,
@@ -34,7 +31,7 @@ import { loginService, setDataToLocalstorage } from '../services/auth.service';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
-import styles from '../styles/scss/Login.module.scss';
+// import styles from '../styles/scss/Login.module.scss';
 import { IProps } from '../types/login.types';
 /// STYLES & TYPES END
 
@@ -99,133 +96,99 @@ function LoginPage({
 
   return (
     <>
-      <Head>
-        <title>{t('title.login_page')}</title>
-      </Head>
-
-      <Box className={styles.main}>
-        <Button startIcon={<ArrowBackIcon />} onClick={router.back}>
-          {t('button.back')}
-        </Button>
-        <Grid container component="ul" spacing={3} className={styles.mainList}>
-          <Grid item xs={12} md={6} component="li" className={styles.loginForm}>
-            <Card className={styles.card}>
-              <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <Typography variant="h6">
-                    {t('title.login_title', { ns: NAMESPACE_KEY })}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Formik
-                    initialValues={InitialState}
-                    validationSchema={ValidationSchema}
-                    onSubmit={values => _handleSubmit(values.email, values.password)}
-                  >
-                    {
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      ({ errors, handleChange, values, handleSubmit }: any) => (
-                        <form className={styles.formContainer} onSubmit={handleSubmit}>
-                          <Grid
-                            container
-                            component="ul"
-                            justify="center"
-                            spacing={3}
-                            className={styles.form}
-                          >
-                            <Grid item xs={12} component="li">
-                              <TextField
-                                inputProps={{
-                                  'aria-label': `${t('label.email.email', { ns: NAMESPACE_KEY })}`
-                                }}
-                                label={t('label.email.email')}
-                                name="email"
-                                type="email"
-                                fullWidth={true}
-                                value={values.email}
-                                onChange={handleChange}
-                                error={!!errors.email}
-                                helperText={errors.email || undefined}
-                                data-testid="email-field"
-                              />
-                            </Grid>
-                            <Grid item xs={12} component="li">
-                              <TextField
-                                inputProps={{
-                                  'aria-label': `${t('label.password.password', {
-                                    ns: NAMESPACE_KEY
-                                  })}`
-                                }}
-                                aria-label={t('label.password.password', { ns: NAMESPACE_KEY })}
-                                label={t('label.password.password', { ns: NAMESPACE_KEY })}
-                                name="password"
-                                type="password"
-                                fullWidth={true}
-                                value={values.password}
-                                onChange={handleChange}
-                                error={!!errors.password}
-                                helperText={errors.password || undefined}
-                                data-testid="password-field"
-                              />
-                            </Grid>
-                            <Grid
-                              item
-                              xs={12}
-                              component="li"
-                              className="MuiGrid-justify-xs-flex-end"
-                            >
-                              <Button onClick={() => router.push('/recover')}>
-                                {t('button.forgot_password', { ns: NAMESPACE_KEY })}
-                              </Button>
-                            </Grid>
-                            <Grid
-                              item
-                              xs={12}
-                              component="li"
-                              className={`${styles.formButton} MuiGrid-justify-xs-center`}
-                            >
-                              <Button
-                                type="submit"
-                                variant="contained"
-                                fullWidth={true}
-                                color="primary"
-                                disabled={isLoading || Object.keys(errors).length > 0}
-                                data-testid="login-button"
-                              >
-                                {t('button.login', { ns: NAMESPACE_KEY })}
-                              </Button>
-                            </Grid>
-                          </Grid>
-                        </form>
-                      )
-                    }
-                  </Formik>
-                </Grid>
+      <Grid container>
+        <Grid item xs={12}>
+          <Card>
+            <Grid container>
+              <Grid item xs={12}>
+                <Typography variant="h6">
+                  {t('title.login_title', { ns: NAMESPACE_KEY })}
+                </Typography>
               </Grid>
-            </Card>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={3}
-            component="li"
-            className={`${styles.formButton} MuiGrid-justify-xs-center MuiGrid-direction-xs-column`}
-          >
-            <Typography variant="body1" className={styles.registerText}>
-              {t('label.no_register', { ns: NAMESPACE_KEY })}
-            </Typography>
-            <Button
-              variant="contained"
-              fullWidth={true}
-              color="secondary"
-              onClick={() => router.push('/signup')}
-            >
-              {t('button.create_account', { ns: NAMESPACE_KEY })}
-            </Button>
-            <Image src="/images/register.png" width="400" height="290" alt="" />
-          </Grid>
+              <Grid item xs={12}>
+                <Formik
+                  initialValues={InitialState}
+                  validationSchema={ValidationSchema}
+                  onSubmit={values => _handleSubmit(values.email, values.password)}
+                >
+                  {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    ({ errors, handleChange, values, handleSubmit }: any) => (
+                      <form onSubmit={handleSubmit}>
+                        <Grid container justify="center">
+                          <Grid item xs={12}>
+                            <TextField
+                              inputProps={{
+                                'aria-label': `${t('label.email.email', { ns: NAMESPACE_KEY })}`
+                              }}
+                              label={t('label.email.email')}
+                              name="email"
+                              type="email"
+                              fullWidth={true}
+                              value={values.email}
+                              onChange={handleChange}
+                              error={!!errors.email}
+                              helperText={errors.email || undefined}
+                              data-testid="email-field"
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <TextField
+                              inputProps={{
+                                'aria-label': `${t('label.password.password', {
+                                  ns: NAMESPACE_KEY
+                                })}`
+                              }}
+                              aria-label={t('label.password.password', { ns: NAMESPACE_KEY })}
+                              label={t('label.password.password', { ns: NAMESPACE_KEY })}
+                              name="password"
+                              type="password"
+                              fullWidth={true}
+                              value={values.password}
+                              onChange={handleChange}
+                              error={!!errors.password}
+                              helperText={errors.password || undefined}
+                              data-testid="password-field"
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Button onClick={() => router.push('/recover')}>
+                              {t('button.forgot_password', { ns: NAMESPACE_KEY })}
+                            </Button>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Button
+                              type="submit"
+                              variant="contained"
+                              fullWidth={true}
+                              color="primary"
+                              disabled={isLoading || Object.keys(errors).length > 0}
+                              data-testid="login-button"
+                            >
+                              {t('button.login', { ns: NAMESPACE_KEY })}
+                            </Button>
+                          </Grid>
+                        </Grid>
+                      </form>
+                    )
+                  }
+                </Formik>
+              </Grid>
+            </Grid>
+          </Card>
         </Grid>
-      </Box>
+        <Grid item xs={12}>
+          <Typography variant="body1">{t('label.no_register', { ns: NAMESPACE_KEY })}</Typography>
+          <Button
+            variant="contained"
+            fullWidth={true}
+            color="secondary"
+            onClick={() => router.push('/signup')}
+          >
+            {t('button.create_account', { ns: NAMESPACE_KEY })}
+          </Button>
+        </Grid>
+      </Grid>
 
       {/* Unknown email */}
       <Dialog
