@@ -12,13 +12,19 @@ const LoginStyles = makeStyles(() =>
     recoverContainer: {
       marginTop: 8,
       textAlign: 'center',
-      '&>span': {
+      '& span': {
         marginRight: 8
       },
       '& a': {
         color: theme.palette.secondary.main,
         fontWeight: 500
       }
+    },
+    containerTextRegister: {
+      textAlign: 'center'
+    },
+    button: {
+      textTransform: 'inherit'
     }
   })
 );

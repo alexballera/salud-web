@@ -10,7 +10,7 @@ import clsx from 'clsx';
 /// STYLES & TYPES END
 
 type IProps = {
-  title: string;
+  title: JSX.Element;
   subTitle?: boolean;
   paragraph?: boolean;
   titleWithSubtitle?: boolean;

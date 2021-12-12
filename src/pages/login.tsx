@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -11,17 +11,7 @@ import { NAMESPACE_KEY } from '../i18n/globals/i18n';
 /// i18n END
 
 /// MATERIAL UI
-import {
-  Box,
-  Button,
-  Grid,
-  Typography,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  DialogContent,
-  DialogContentText
-} from '@material-ui/core';
+import { Box, Button, Grid } from '@material-ui/core';
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
@@ -56,7 +46,6 @@ function LoginPage({
 }: IProps): JSX.Element {
   const { t } = useTranslation([NAMESPACE_KEY, 'forms']);
   const classes = LoginStyles();
-  const [dialogOpen, setDialogOpen] = useState(false);
   const router = useRouter();
 
   const ValidationSchema = Yup.object().shape({
@@ -80,14 +69,17 @@ function LoginPage({
           const message = err.response.data.error.message;
           switch (err.response.data.error.code) {
             case 'sld-user-3':
-              return setDialogOpen(true);
+              handleError(true, t('message.email.not_register', { ns: 'forms' }));
+              break;
             case 'sld-user-15':
               handleError(true, message);
-            /* FIXME setear el correo cuando falte activación y dirigirlo a validate_code
+              /* FIXME setear el correo cuando falte activación y dirigirlo a validate_code
               setDataToLocalstorage('user', email);
               router.replace('/validate_code'); */
+              break;
+            default:
+              handleError(true, message);
           }
-          handleError(true, message);
         } else {
           handleError(true, `${t('message.error.submit', { ns: 'forms' })}`);
         }
@@ -98,145 +90,120 @@ function LoginPage({
   };
 
   return (
-    <>
-      <Box p={3}>
-        <Grid container>
-          <Grid container item xs={12}>
-            <Grid item xs={12}>
-              <TitleContent
-                titleWithSubtitle
-                title={t('title.login_title', { ns: NAMESPACE_KEY })}
-              />
-              <TitleContent paragraph title={t('description.login', { ns: NAMESPACE_KEY })} />
-            </Grid>
-            <Grid item xs={12}>
-              <Formik
-                initialValues={InitialState}
-                validationSchema={ValidationSchema}
-                onSubmit={values => _handleSubmit(values.email, values.password)}
-              >
-                {
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  ({ errors, handleChange, values, handleSubmit }: any) => (
-                    <form onSubmit={handleSubmit}>
-                      <Grid container justify="center">
-                        <Grid container item xs={12}>
-                          <Grid item xs={12}>
-                            <TextField
-                              inputProps={{
-                                'aria-label': `${t('label.email.email', { ns: NAMESPACE_KEY })}`
-                              }}
-                              label={t('label.email.email')}
-                              name="email"
-                              type="email"
-                              fullWidth={true}
-                              value={values.email}
-                              onChange={handleChange}
-                              error={!!errors.email}
-                              helperText={errors.email || undefined}
-                              data-testid="email-field"
-                            />
-                          </Grid>
-                          <Grid item xs={12}>
-                            <TextField
-                              inputProps={{
-                                'aria-label': `${t('label.password.password', {
-                                  ns: NAMESPACE_KEY
-                                })}`
-                              }}
-                              aria-label={t('label.password.password', { ns: NAMESPACE_KEY })}
-                              label={t('label.password.password', { ns: NAMESPACE_KEY })}
-                              name="password"
-                              type="password"
-                              fullWidth={true}
-                              value={values.password}
-                              onChange={handleChange}
-                              error={!!errors.password}
-                              helperText={errors.password || undefined}
-                              data-testid="password-field"
-                            />
-                          </Grid>
-                          <Grid item xs={12} className={classes.recoverContainer}>
-                            <span>¿Olvidaste tu contraseña?</span>
-                            <Link href="/recover" passHref>
-                              <a>{t('button.recover', { ns: NAMESPACE_KEY })}</a>
-                            </Link>
-                          </Grid>
+    <Box p={3}>
+      <Grid container>
+        <Grid container item xs={12}>
+          <Grid item xs={12}>
+            <TitleContent titleWithSubtitle title={t('title.login_title', { ns: NAMESPACE_KEY })} />
+            <TitleContent paragraph title={t('description.login', { ns: NAMESPACE_KEY })} />
+          </Grid>
+          <Grid item xs={12}>
+            <Formik
+              initialValues={InitialState}
+              validationSchema={ValidationSchema}
+              onSubmit={values => _handleSubmit(values.email, values.password)}
+            >
+              {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                ({ errors, handleChange, values, handleSubmit }: any) => (
+                  <form onSubmit={handleSubmit}>
+                    <Grid container justify="center">
+                      <Grid container item xs={12}>
+                        <Grid item xs={12}>
+                          <TextField
+                            inputProps={{
+                              'aria-label': `${t('label.email.email', { ns: NAMESPACE_KEY })}`
+                            }}
+                            label={t('label.email.email')}
+                            name="email"
+                            type="email"
+                            fullWidth={true}
+                            value={values.email}
+                            onChange={handleChange}
+                            error={!!errors.email}
+                            helperText={errors.email || undefined}
+                            data-testid="email-field"
+                          />
                         </Grid>
-
-                        <Grid item xs={12} className={classes.containerButton}>
-                          <Box p={3}>
-                            <Grid container>
-                              <Grid item xs={12}>
-                                <Button
-                                  type="submit"
-                                  variant="contained"
-                                  fullWidth={true}
-                                  color="primary"
-                                  disabled={isLoading || Object.keys(errors).length > 0}
-                                  data-testid="login-button"
-                                >
-                                  {t('button.login', { ns: NAMESPACE_KEY })}
-                                </Button>
-                              </Grid>
-                              <Grid item xs={12}>
-                                <Typography variant="body1">
-                                  {t('label.no_register', { ns: NAMESPACE_KEY })}
-                                </Typography>
-                                <Button
-                                  variant="outlined"
-                                  fullWidth={true}
-                                  color="primary"
-                                  onClick={() => router.push('/signup')}
-                                >
-                                  {t('button.create_account', { ns: NAMESPACE_KEY })}
-                                </Button>
-                              </Grid>
-                            </Grid>
-                          </Box>
+                        <Grid item xs={12}>
+                          <TextField
+                            inputProps={{
+                              'aria-label': `${t('label.password.password', {
+                                ns: NAMESPACE_KEY
+                              })}`
+                            }}
+                            aria-label={t('label.password.password', { ns: NAMESPACE_KEY })}
+                            label={t('label.password.password', { ns: NAMESPACE_KEY })}
+                            name="password"
+                            type="password"
+                            fullWidth={true}
+                            value={values.password}
+                            onChange={handleChange}
+                            error={!!errors.password}
+                            helperText={errors.password || undefined}
+                            data-testid="password-field"
+                          />
+                        </Grid>
+                        <Grid item xs={12} className={classes.recoverContainer}>
+                          <TitleContent
+                            paragraph
+                            title={
+                              <>
+                                <span>¿Olvidaste tu contraseña?</span>
+                                <Link href="/recover" passHref>
+                                  <a>{t('button.recover', { ns: NAMESPACE_KEY })}</a>
+                                </Link>
+                              </>
+                            }
+                          />
                         </Grid>
                       </Grid>
-                    </form>
-                  )
-                }
-              </Formik>
-            </Grid>
+
+                      <Grid item xs={12} className={classes.containerButton}>
+                        <Box p={3}>
+                          <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                              <Button
+                                type="submit"
+                                variant="contained"
+                                fullWidth={true}
+                                color="primary"
+                                disabled={isLoading || Object.keys(errors).length > 0}
+                                data-testid="login-button"
+                                className={classes.button}
+                              >
+                                {t('button.login', { ns: NAMESPACE_KEY })}
+                              </Button>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Box p={1} className={classes.containerTextRegister}>
+                                <TitleContent
+                                  paragraph
+                                  title={t('label.no_register', { ns: NAMESPACE_KEY })}
+                                />
+                              </Box>
+                              <Button
+                                variant="outlined"
+                                fullWidth={true}
+                                color="primary"
+                                onClick={() => router.push('/signup')}
+                                className={classes.button}
+                              >
+                                {t('button.create_account', { ns: NAMESPACE_KEY })}
+                              </Button>
+                            </Grid>
+                          </Grid>
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </form>
+                )
+              }
+            </Formik>
           </Grid>
         </Grid>
-      </Box>
-      {/* Unknown email */}
-      <Dialog
-        open={dialogOpen}
-        keepMounted
-        onClose={() => setDialogOpen(false)}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-        data-testid="unknown-dialog-test"
-      >
-        <DialogTitle id="alert-dialog-slide-title">
-          {t('message.email.not_found', { ns: 'forms' })}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            {t('message.email.not_register', { ns: 'forms' })}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDialogOpen(false)} color="secondary">
-            {t('button.cancel', { ns: NAMESPACE_KEY })}
-          </Button>
-          <Button
-            onClick={() => {
-              setDialogOpen(false);
-              router.push('/signup');
-            }}
-            color="primary"
-          >
-            {t('button.register', { ns: NAMESPACE_KEY })}
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+      </Grid>
+    </Box>
   );
 }
 
