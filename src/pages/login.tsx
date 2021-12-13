@@ -70,7 +70,6 @@ function LoginPage({
           const message = err.response.data.error.message;
           switch (err.response.data.error.code) {
             case 'sld-user-3':
-              console.log('sld-user-3', email);
               handleError(true, t('message.email.not_register', { ns: 'forms' }));
               break;
             case 'sld-user-15':
