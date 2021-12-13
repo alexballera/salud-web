@@ -28,6 +28,10 @@ export function setDataToLocalstorage(key: string, user: User): void {
   window.localStorage.setItem(key, JSON.stringify(user));
 }
 
+export function setEmailToLocalstorage(key: string, user: string): void {
+  window.localStorage.setItem(key, JSON.stringify(user));
+}
+
 export function getDataFromLocalstorage(str: string): User {
   const user: User = JSON.parse(window.localStorage.getItem(str));
   return user;

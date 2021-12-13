@@ -16,7 +16,11 @@ import { Box, Button, Divider, Hidden, Grid } from '@material-ui/core';
 
 /// OWN COMPONENTS
 import { withAppContext } from '../context';
-import { loginService, setDataToLocalstorage } from '../services/auth.service';
+import {
+  loginService,
+  setDataToLocalstorage,
+  setEmailToLocalstorage
+} from '../services/auth.service';
 import { TitleContent } from '../components/common/TitleContent';
 import TextField from '../components/common/TextField';
 /// OWN COMPONENTS END
@@ -69,13 +73,13 @@ function LoginPage({
           const message = err.response.data.error.message;
           switch (err.response.data.error.code) {
             case 'sld-user-3':
+              console.log('sld-user-3', email);
               handleError(true, t('message.email.not_register', { ns: 'forms' }));
               break;
             case 'sld-user-15':
               handleError(true, message);
-              /* FIXME setear el correo cuando falte activación y dirigirlo a validate_code
-              setDataToLocalstorage('user', email);
-              router.replace('/validate_code'); */
+              setEmailToLocalstorage('user', email);
+              router.replace('/validate_code');
               break;
             default:
               handleError(true, message);
