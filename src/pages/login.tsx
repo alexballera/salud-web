@@ -109,102 +109,104 @@ function LoginPage({
             >
               {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                ({ errors, handleChange, values, handleSubmit }: any) => (
-                  <form onSubmit={handleSubmit}>
-                    <Grid container justify="center">
-                      <Grid container item xs={12}>
-                        <Grid item xs={12}>
-                          <TextField
-                            inputProps={{
-                              'aria-label': `${t('label.email.email', { ns: NAMESPACE_KEY })}`
-                            }}
-                            label={t('label.email.email')}
-                            name="email"
-                            type="email"
-                            fullWidth={true}
-                            value={values.email}
-                            onChange={handleChange}
-                            error={errors.email}
-                            helperText={errors.email}
-                            data-testid="email-field"
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <TextField
-                            inputProps={{
-                              'aria-label': `${t('label.password.password', {
-                                ns: NAMESPACE_KEY
-                              })}`
-                            }}
-                            aria-label={t('label.password.password', { ns: NAMESPACE_KEY })}
-                            label={t('label.password.password', { ns: NAMESPACE_KEY })}
-                            name="password"
-                            type="password"
-                            fullWidth={true}
-                            value={values.password}
-                            onChange={handleChange}
-                            error={errors.password}
-                            helperText={errors.password}
-                            data-testid="password-field"
-                          />
-                        </Grid>
-                        <Grid item xs={12} className={classes.recoverContainer}>
-                          <TitleContent
-                            paragraph
-                            title={
-                              <>
-                                <span>¿Olvidaste tu contraseña?</span>
-                                <Link href="/recover" passHref>
-                                  <a>{t('button.recover', { ns: NAMESPACE_KEY })}</a>
-                                </Link>
-                              </>
-                            }
-                          />
-                        </Grid>
-                      </Grid>
-
-                      <Grid item xs={12} md={5} className={classes.containerButton}>
-                        <Box p={3}>
-                          <Grid container spacing={3}>
-                            <Grid item xs={12}>
-                              <Button
-                                type="submit"
-                                variant="contained"
-                                fullWidth={true}
-                                color="primary"
-                                disabled={isLoading || Object.keys(errors).length > 0}
-                                data-testid="login-button"
-                                className={`${classes.button} ${classes.buttonSubmit}`}
-                              >
-                                {t('button.login', { ns: NAMESPACE_KEY })}
-                              </Button>
-                            </Grid>
-                            <Hidden smDown>
-                              <Divider className={classes.divider} />
-                            </Hidden>
-                            <Grid item xs={12} className={classes.containerButtonSignup}>
-                              <Box p={1} className={classes.containerTextRegister}>
-                                <TitleContent
-                                  paragraph
-                                  title={t('label.no_register', { ns: NAMESPACE_KEY })}
-                                />
-                              </Box>
-                              <Button
-                                variant="outlined"
-                                fullWidth={true}
-                                color="primary"
-                                onClick={() => router.push('/signup')}
-                                className={classes.button}
-                              >
-                                {t('button.create_account', { ns: NAMESPACE_KEY })}
-                              </Button>
-                            </Grid>
+                ({ errors, handleChange, values, handleSubmit, touched }: any) => {
+                  return (
+                    <form onSubmit={handleSubmit}>
+                      <Grid container justify="center">
+                        <Grid container item xs={12}>
+                          <Grid item xs={12}>
+                            <TextField
+                              inputProps={{
+                                'aria-label': `${t('label.email.email', { ns: NAMESPACE_KEY })}`
+                              }}
+                              label={t('label.email.email')}
+                              name="email"
+                              type="email"
+                              fullWidth={true}
+                              value={values.email}
+                              onChange={handleChange}
+                              error={touched.email && Boolean(errors.email)}
+                              helperText={errors.email}
+                              data-testid="email-field"
+                            />
                           </Grid>
-                        </Box>
+                          <Grid item xs={12}>
+                            <TextField
+                              inputProps={{
+                                'aria-label': `${t('label.password.password', {
+                                  ns: NAMESPACE_KEY
+                                })}`
+                              }}
+                              aria-label={t('label.password.password', { ns: NAMESPACE_KEY })}
+                              label={t('label.password.password', { ns: NAMESPACE_KEY })}
+                              name="password"
+                              type="password"
+                              fullWidth={true}
+                              value={values.password}
+                              onChange={handleChange}
+                              error={touched.password && Boolean(errors.password)}
+                              helperText={errors.password}
+                              data-testid="password-field"
+                            />
+                          </Grid>
+                          <Grid item xs={12} className={classes.recoverContainer}>
+                            <TitleContent
+                              paragraph
+                              title={
+                                <>
+                                  <span>¿Olvidaste tu contraseña?</span>
+                                  <Link href="/recover" passHref>
+                                    <a>{t('button.recover', { ns: NAMESPACE_KEY })}</a>
+                                  </Link>
+                                </>
+                              }
+                            />
+                          </Grid>
+                        </Grid>
+
+                        <Grid item xs={12} md={5} className={classes.containerButton}>
+                          <Box p={3}>
+                            <Grid container spacing={3}>
+                              <Grid item xs={12}>
+                                <Button
+                                  type="submit"
+                                  variant="contained"
+                                  fullWidth={true}
+                                  color="primary"
+                                  disabled={isLoading || Object.keys(errors).length > 0}
+                                  data-testid="login-button"
+                                  className={`${classes.button} ${classes.buttonSubmit}`}
+                                >
+                                  {t('button.login', { ns: NAMESPACE_KEY })}
+                                </Button>
+                              </Grid>
+                              <Hidden smDown>
+                                <Divider className={classes.divider} />
+                              </Hidden>
+                              <Grid item xs={12} className={classes.containerButtonSignup}>
+                                <Box p={1} className={classes.containerTextRegister}>
+                                  <TitleContent
+                                    paragraph
+                                    title={t('label.no_register', { ns: NAMESPACE_KEY })}
+                                  />
+                                </Box>
+                                <Button
+                                  variant="outlined"
+                                  fullWidth={true}
+                                  color="primary"
+                                  onClick={() => router.push('/signup')}
+                                  className={classes.button}
+                                >
+                                  {t('button.create_account', { ns: NAMESPACE_KEY })}
+                                </Button>
+                              </Grid>
+                            </Grid>
+                          </Box>
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </form>
-                )
+                    </form>
+                  );
+                }
               }
             </Formik>
           </Grid>

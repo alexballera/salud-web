@@ -15,6 +15,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { FormControlProps, FormLabelProps, OutlinedInputProps } from '@material-ui/core';
 
 /// TYPES END
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../../i18n/forms/i18n';
+/// i18n END
 
 type Props = {
   label: string;
@@ -35,6 +39,7 @@ function CustomTextField({
   errorType,
   ...props
 }: Props): JSX.Element {
+  const { t } = useTranslation(NAMESPACE_KEY);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
@@ -69,7 +74,7 @@ function CustomTextField({
 
   const showErrorTypeMessage = (val: string) => {
     const type = {
-      NotFound: 'Cédula inválida',
+      NotFound: `${t('validations.document.invalid')}`,
       default: ''
     };
     return type[val] || type['default'];
