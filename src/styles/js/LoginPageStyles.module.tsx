@@ -48,6 +48,12 @@ const LoginStyles = makeStyles(() =>
           width: '33%'
         }
       }
+    },
+    divider: {
+      height: '2px !important',
+      marginBottom: 16,
+      marginTop: 16,
+      width: '100%'
     }
   })
 );

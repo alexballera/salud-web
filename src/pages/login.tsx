@@ -11,7 +11,7 @@ import { NAMESPACE_KEY } from '../i18n/globals/i18n';
 /// i18n END
 
 /// MATERIAL UI
-import { Box, Button, Grid } from '@material-ui/core';
+import { Box, Button, Divider, Hidden, Grid } from '@material-ui/core';
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
@@ -175,6 +175,9 @@ function LoginPage({
                                 {t('button.login', { ns: NAMESPACE_KEY })}
                               </Button>
                             </Grid>
+                            <Hidden smDown>
+                              <Divider className={classes.divider} />
+                            </Hidden>
                             <Grid item xs={12} className={classes.containerButtonSignup}>
                               <Box p={1} className={classes.containerTextRegister}>
                                 <TitleContent
