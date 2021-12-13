@@ -65,7 +65,7 @@ function PreferencesPage(): JSX.Element {
               titleUppercase
               href="/preferences/language"
             />
-            <TitleContent title="Español" subTitle />
+            <TitleContent title={<span>Español</span>} subTitle />
             <Divider className={classes.divider} />
           </Grid>
           <Grid container item xs={12} md={7}>

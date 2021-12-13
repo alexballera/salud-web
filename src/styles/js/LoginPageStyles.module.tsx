@@ -4,6 +4,11 @@ import theme from './theme';
 
 const LoginStyles = makeStyles(() =>
   createStyles({
+    container: {
+      [theme.breakpoints.up('md')]: {
+        justifyContent: 'flex-end'
+      }
+    },
     containerButton: {
       bottom: 0,
       position: 'absolute',
@@ -18,13 +23,31 @@ const LoginStyles = makeStyles(() =>
       '& a': {
         color: theme.palette.secondary.main,
         fontWeight: 500
+      },
+      [theme.breakpoints.up('md')]: {
+        textAlign: 'right'
       }
     },
     containerTextRegister: {
       textAlign: 'center'
     },
     button: {
+      height: 40,
       textTransform: 'inherit'
+    },
+    buttonSubmit: {
+      [theme.breakpoints.up('md')]: {
+        width: '33%'
+      }
+    },
+    containerButtonSignup: {
+      [theme.breakpoints.up('md')]: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        '& button': {
+          width: '33%'
+        }
+      }
     }
   })
 );

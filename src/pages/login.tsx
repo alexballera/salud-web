@@ -91,8 +91,8 @@ function LoginPage({
 
   return (
     <Box p={3}>
-      <Grid container>
-        <Grid container item xs={12}>
+      <Grid container className={classes.container}>
+        <Grid container item xs={12} md={5}>
           <Grid item xs={12}>
             <TitleContent titleWithSubtitle title={t('title.login_title', { ns: NAMESPACE_KEY })} />
             <TitleContent paragraph title={t('description.login', { ns: NAMESPACE_KEY })} />
@@ -159,7 +159,7 @@ function LoginPage({
                         </Grid>
                       </Grid>
 
-                      <Grid item xs={12} className={classes.containerButton}>
+                      <Grid item xs={12} md={5} className={classes.containerButton}>
                         <Box p={3}>
                           <Grid container spacing={3}>
                             <Grid item xs={12}>
@@ -170,12 +170,12 @@ function LoginPage({
                                 color="primary"
                                 disabled={isLoading || Object.keys(errors).length > 0}
                                 data-testid="login-button"
-                                className={classes.button}
+                                className={`${classes.button} ${classes.buttonSubmit}`}
                               >
                                 {t('button.login', { ns: NAMESPACE_KEY })}
                               </Button>
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={12} className={classes.containerButtonSignup}>
                               <Box p={1} className={classes.containerTextRegister}>
                                 <TitleContent
                                   paragraph
@@ -202,6 +202,7 @@ function LoginPage({
             </Formik>
           </Grid>
         </Grid>
+        <Grid item md={2}></Grid>
       </Grid>
     </Box>
   );
