@@ -19,7 +19,8 @@ import { withAppContext } from '../context';
 import {
   loginService,
   setDataToLocalstorage,
-  setEmailToLocalstorage
+  setEmailToLocalstorage,
+  getDataFromLocalstorage
 } from '../services/auth.service';
 import { TitleContent } from '../components/common/TitleContent';
 import TextField from '../components/common/TextField';
@@ -29,6 +30,8 @@ import TextField from '../components/common/TextField';
 // import styles from '../styles/scss/Login.module.scss';
 import { IProps } from '../types/login.types';
 import LoginStyles from '../styles/js/LoginPageStyles.module';
+import { User } from '../types/auth.types';
+import { getPersonalData } from '../services/getPersonalData.service';
 /// STYLES & TYPES END
 
 /// SERVICES
@@ -51,6 +54,7 @@ function LoginPage({
   const { t } = useTranslation([NAMESPACE_KEY, 'forms']);
   const classes = LoginStyles();
   const router = useRouter();
+  let user: User;
 
   const ValidationSchema = Yup.object().shape({
     email: Yup.string()
@@ -77,8 +81,12 @@ function LoginPage({
               handleError(true, t('message.email.not_register', { ns: 'forms' }));
               break;
             case 'sld-user-15':
+              getPersonalData(email)
+                .then(res => {
+                  setDataToLocalstorage('user', res.data.result);
+                })
+                .catch(error => handleError(true, error));
               handleError(true, message);
-              setEmailToLocalstorage('user', email);
               router.replace('/validate_code');
               break;
             default:
