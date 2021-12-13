@@ -16,12 +16,7 @@ import { Box, Button, Divider, Hidden, Grid } from '@material-ui/core';
 
 /// OWN COMPONENTS
 import { withAppContext } from '../context';
-import {
-  loginService,
-  setDataToLocalstorage,
-  setEmailToLocalstorage,
-  getDataFromLocalstorage
-} from '../services/auth.service';
+import { loginService, setDataToLocalstorage } from '../services/auth.service';
 import { TitleContent } from '../components/common/TitleContent';
 import TextField from '../components/common/TextField';
 /// OWN COMPONENTS END
@@ -30,7 +25,6 @@ import TextField from '../components/common/TextField';
 // import styles from '../styles/scss/Login.module.scss';
 import { IProps } from '../types/login.types';
 import LoginStyles from '../styles/js/LoginPageStyles.module';
-import { User } from '../types/auth.types';
 import { getPersonalData } from '../services/getPersonalData.service';
 /// STYLES & TYPES END
 
@@ -54,7 +48,6 @@ function LoginPage({
   const { t } = useTranslation([NAMESPACE_KEY, 'forms']);
   const classes = LoginStyles();
   const router = useRouter();
-  let user: User;
 
   const ValidationSchema = Yup.object().shape({
     email: Yup.string()
@@ -132,8 +125,8 @@ function LoginPage({
                             fullWidth={true}
                             value={values.email}
                             onChange={handleChange}
-                            error={!!errors.email}
-                            helperText={errors.email || undefined}
+                            error={errors.email}
+                            helperText={errors.email}
                             data-testid="email-field"
                           />
                         </Grid>
@@ -151,8 +144,8 @@ function LoginPage({
                             fullWidth={true}
                             value={values.password}
                             onChange={handleChange}
-                            error={!!errors.password}
-                            helperText={errors.password || undefined}
+                            error={errors.password}
+                            helperText={errors.password}
                             data-testid="password-field"
                           />
                         </Grid>
