@@ -29,7 +29,10 @@ const LoginStyles = makeStyles(() =>
       }
     },
     containerTextRegister: {
-      textAlign: 'center'
+      textAlign: 'center',
+      [theme.breakpoints.up('md')]: {
+        textAlign: 'left'
+      }
     },
     button: {
       height: 40,
@@ -42,6 +45,7 @@ const LoginStyles = makeStyles(() =>
     },
     containerButtonSignup: {
       [theme.breakpoints.up('md')]: {
+        alignItems: 'center',
         display: 'flex',
         justifyContent: 'space-between',
         '& button': {
