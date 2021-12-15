@@ -173,7 +173,7 @@ function LoginPage({
                                   variant="contained"
                                   fullWidth={true}
                                   color="primary"
-                                  disabled={isLoading || Object.keys(errors).length > 0}
+                                  // disabled={isLoading || Object.keys(errors).length > 0}
                                   data-testid="login-button"
                                   className={`${classes.button} ${classes.buttonSubmit}`}
                                 >
