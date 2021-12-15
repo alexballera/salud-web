@@ -68,12 +68,12 @@ function RecoverView(props: IProps): JSX.Element {
     )
       .then(res => {
         if (res.data.result.passwordChanged === 1) {
-          router.replace('/');
           props.handleError(
             true,
             `${t('message.password.change_success', { ns: 'forms' })}`,
             'success'
           );
+          router.replace('/');
         } else {
           props.handleError(true, `${t('message.error.submit', { ns: 'forms' })}`);
         }
