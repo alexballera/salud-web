@@ -5,7 +5,6 @@ import _ from 'lodash';
 
 /// MATERIAL UI
 import { Button } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
@@ -59,11 +58,6 @@ function RecoverView(props: IProps): JSX.Element {
 
   const router = useRouter();
 
-  const _handleBack = () => {
-    if (currentStep === 0) router.back();
-    else setCurrentState(currentStep - 1);
-  };
-
   const _handleSubmit = (values: IFormData) => {
     props.handleLoading(true);
     forgotPasswordChangePassword(
@@ -93,9 +87,6 @@ function RecoverView(props: IProps): JSX.Element {
 
   return (
     <>
-      <Button startIcon={<ArrowBackIcon />} onClick={_handleBack}>
-        {t('button.back', { ns: NAMESPACE_KEY })}
-      </Button>
       <section className="container signup-wrapper">
         <Formik
           validateOnMount
