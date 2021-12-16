@@ -51,7 +51,7 @@ export default withAppContext(function Layout({
         open={errorState?.open}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         onClose={() => handleError(false, '', errorState.type)}
-        autoHideDuration={20000}
+        autoHideDuration={7000}
       >
         {/* TODO Eliminar texto comentado y el componente Alert
         <Alert variant={errorState.type}>

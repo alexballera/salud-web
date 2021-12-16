@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import Head from 'next/head';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -12,30 +11,21 @@ import { NAMESPACE_KEY } from '../i18n/globals/i18n';
 /// i18n END
 
 /// MATERIAL UI
-import Typography from '@material-ui/core/Typography';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import {
-  Box,
-  Button,
-  Card,
-  Grid,
-  TextField,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  DialogContent,
-  DialogContentText
-} from '@material-ui/core';
+import { Box, Button, Divider, Hidden, Grid } from '@material-ui/core';
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
 import { withAppContext } from '../context';
 import { loginService, setDataToLocalstorage } from '../services/auth.service';
+import { TitleContent } from '../components/common/TitleContent';
+import TextField from '../components/common/TextField';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
-import styles from '../styles/scss/Login.module.scss';
+// import styles from '../styles/scss/Login.module.scss';
 import { IProps } from '../types/login.types';
+import LoginStyles from '../styles/js/LoginPageStyles.module';
+import { getPersonalData } from '../services/getPersonalData.service';
 /// STYLES & TYPES END
 
 /// SERVICES
@@ -56,7 +46,7 @@ function LoginPage({
   handleError
 }: IProps): JSX.Element {
   const { t } = useTranslation([NAMESPACE_KEY, 'forms']);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const classes = LoginStyles();
   const router = useRouter();
 
   const ValidationSchema = Yup.object().shape({
@@ -80,14 +70,20 @@ function LoginPage({
           const message = err.response.data.error.message;
           switch (err.response.data.error.code) {
             case 'sld-user-3':
-              return setDialogOpen(true);
+              handleError(true, t('message.email.not_register', { ns: 'forms' }));
+              break;
             case 'sld-user-15':
+              getPersonalData(email)
+                .then(res => {
+                  setDataToLocalstorage('user', res.data.result);
+                })
+                .catch(error => handleError(true, error));
               handleError(true, message);
-            /* FIXME setear el correo cuando falte activación y dirigirlo a validate_code
-              setDataToLocalstorage('user', email);
-              router.replace('/validate_code'); */
+              router.replace('/validate_code');
+              break;
+            default:
+              handleError(true, message);
           }
-          handleError(true, message);
         } else {
           handleError(true, `${t('message.error.submit', { ns: 'forms' })}`);
         }
@@ -98,168 +94,126 @@ function LoginPage({
   };
 
   return (
-    <>
-      <Head>
-        <title>{t('title.login_page')}</title>
-      </Head>
-
-      <Box className={styles.main}>
-        <Button startIcon={<ArrowBackIcon />} onClick={router.back}>
-          {t('button.back')}
-        </Button>
-        <Grid container component="ul" spacing={3} className={styles.mainList}>
-          <Grid item xs={12} md={6} component="li" className={styles.loginForm}>
-            <Card className={styles.card}>
-              <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <Typography variant="h6">
-                    {t('title.login_title', { ns: NAMESPACE_KEY })}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Formik
-                    initialValues={InitialState}
-                    validationSchema={ValidationSchema}
-                    onSubmit={values => _handleSubmit(values.email, values.password)}
-                  >
-                    {
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      ({ errors, handleChange, values, handleSubmit }: any) => (
-                        <form className={styles.formContainer} onSubmit={handleSubmit}>
-                          <Grid
-                            container
-                            component="ul"
-                            justify="center"
-                            spacing={3}
-                            className={styles.form}
-                          >
-                            <Grid item xs={12} component="li">
-                              <TextField
-                                inputProps={{
-                                  'aria-label': `${t('label.email.email', { ns: NAMESPACE_KEY })}`
-                                }}
-                                label={t('label.email.email')}
-                                name="email"
-                                type="email"
-                                fullWidth={true}
-                                value={values.email}
-                                onChange={handleChange}
-                                error={!!errors.email}
-                                helperText={errors.email || undefined}
-                                data-testid="email-field"
-                              />
-                            </Grid>
-                            <Grid item xs={12} component="li">
-                              <TextField
-                                inputProps={{
-                                  'aria-label': `${t('label.password.password', {
-                                    ns: NAMESPACE_KEY
-                                  })}`
-                                }}
-                                aria-label={t('label.password.password', { ns: NAMESPACE_KEY })}
-                                label={t('label.password.password', { ns: NAMESPACE_KEY })}
-                                name="password"
-                                type="password"
-                                fullWidth={true}
-                                value={values.password}
-                                onChange={handleChange}
-                                error={!!errors.password}
-                                helperText={errors.password || undefined}
-                                data-testid="password-field"
-                              />
-                            </Grid>
-                            <Grid
-                              item
-                              xs={12}
-                              component="li"
-                              className="MuiGrid-justify-xs-flex-end"
-                            >
-                              <Button onClick={() => router.push('/recover')}>
-                                {t('button.forgot_password', { ns: NAMESPACE_KEY })}
-                              </Button>
-                            </Grid>
-                            <Grid
-                              item
-                              xs={12}
-                              component="li"
-                              className={`${styles.formButton} MuiGrid-justify-xs-center`}
-                            >
-                              <Button
-                                type="submit"
-                                variant="contained"
-                                fullWidth={true}
-                                color="primary"
-                                disabled={isLoading || Object.keys(errors).length > 0}
-                                data-testid="login-button"
-                              >
-                                {t('button.login', { ns: NAMESPACE_KEY })}
-                              </Button>
-                            </Grid>
-                          </Grid>
-                        </form>
-                      )
-                    }
-                  </Formik>
-                </Grid>
-              </Grid>
-            </Card>
+    <Box p={3}>
+      <Grid container className={classes.container}>
+        <Grid container item xs={12} md={5}>
+          <Grid item xs={12}>
+            <TitleContent titleWithSubtitle title={t('title.login_title', { ns: NAMESPACE_KEY })} />
+            <TitleContent paragraph title={t('description.login', { ns: NAMESPACE_KEY })} />
           </Grid>
-          <Grid
-            item
-            xs={12}
-            md={3}
-            component="li"
-            className={`${styles.formButton} MuiGrid-justify-xs-center MuiGrid-direction-xs-column`}
-          >
-            <Typography variant="body1" className={styles.registerText}>
-              {t('label.no_register', { ns: NAMESPACE_KEY })}
-            </Typography>
-            <Button
-              variant="contained"
-              fullWidth={true}
-              color="secondary"
-              onClick={() => router.push('/signup')}
+          <Grid item xs={12}>
+            <Formik
+              initialValues={InitialState}
+              validationSchema={ValidationSchema}
+              onSubmit={values => _handleSubmit(values.email, values.password)}
             >
-              {t('button.create_account', { ns: NAMESPACE_KEY })}
-            </Button>
-            <Image src="/images/register.png" width="400" height="290" alt="" />
+              {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                ({ errors, handleChange, values, handleSubmit, touched }: any) => {
+                  return (
+                    <form onSubmit={handleSubmit}>
+                      <Grid container justify="center">
+                        <Grid container item xs={12}>
+                          <Grid item xs={12}>
+                            <TextField
+                              inputProps={{
+                                'aria-label': `${t('label.email.email', { ns: NAMESPACE_KEY })}`
+                              }}
+                              label={t('label.email.email')}
+                              name="email"
+                              type="email"
+                              fullWidth={true}
+                              value={values.email}
+                              onChange={handleChange}
+                              error={touched.email && Boolean(errors.email)}
+                              helperText={errors.email}
+                              data-testid="email-field"
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <TextField
+                              inputProps={{
+                                'aria-label': `${t('label.password.password', {
+                                  ns: NAMESPACE_KEY
+                                })}`
+                              }}
+                              aria-label={t('label.password.password', { ns: NAMESPACE_KEY })}
+                              label={t('label.password.password', { ns: NAMESPACE_KEY })}
+                              name="password"
+                              type="password"
+                              fullWidth={true}
+                              value={values.password}
+                              onChange={handleChange}
+                              error={touched.password && Boolean(errors.password)}
+                              helperText={errors.password}
+                              data-testid="password-field"
+                            />
+                          </Grid>
+                          <Grid item xs={12} className={classes.recoverContainer}>
+                            <TitleContent
+                              paragraph
+                              title={
+                                <>
+                                  <span>¿Olvidaste tu contraseña?</span>
+                                  <Link href="/recover" passHref>
+                                    <a>{t('button.recover', { ns: NAMESPACE_KEY })}</a>
+                                  </Link>
+                                </>
+                              }
+                            />
+                          </Grid>
+                        </Grid>
+
+                        <Grid item xs={12} md={5} className={classes.containerButton}>
+                          <Box p={3}>
+                            <Grid container spacing={3}>
+                              <Grid item xs={12}>
+                                <Button
+                                  type="submit"
+                                  variant="contained"
+                                  fullWidth={true}
+                                  color="primary"
+                                  // disabled={isLoading || Object.keys(errors).length > 0}
+                                  data-testid="login-button"
+                                  className={`${classes.button} ${classes.buttonSubmit}`}
+                                >
+                                  {t('button.login', { ns: NAMESPACE_KEY })}
+                                </Button>
+                              </Grid>
+                              <Hidden smDown>
+                                <Divider className={classes.divider} />
+                              </Hidden>
+                              <Grid item xs={12} className={classes.containerButtonSignup}>
+                                <Box p={1} className={classes.containerTextRegister}>
+                                  <TitleContent
+                                    paragraph
+                                    title={t('label.no_register', { ns: NAMESPACE_KEY })}
+                                  />
+                                </Box>
+                                <Button
+                                  variant="outlined"
+                                  fullWidth={true}
+                                  color="primary"
+                                  onClick={() => router.push('/signup')}
+                                  className={classes.button}
+                                >
+                                  {t('button.create_account', { ns: NAMESPACE_KEY })}
+                                </Button>
+                              </Grid>
+                            </Grid>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </form>
+                  );
+                }
+              }
+            </Formik>
           </Grid>
         </Grid>
-      </Box>
-
-      {/* Unknown email */}
-      <Dialog
-        open={dialogOpen}
-        keepMounted
-        onClose={() => setDialogOpen(false)}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-        data-testid="unknown-dialog-test"
-      >
-        <DialogTitle id="alert-dialog-slide-title">
-          {t('message.email.not_found', { ns: 'forms' })}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            {t('message.email.not_register', { ns: 'forms' })}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDialogOpen(false)} color="secondary">
-            {t('button.cancel', { ns: NAMESPACE_KEY })}
-          </Button>
-          <Button
-            onClick={() => {
-              setDialogOpen(false);
-              router.push('/signup');
-            }}
-            color="primary"
-          >
-            {t('button.register', { ns: NAMESPACE_KEY })}
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+        <Grid item md={2}></Grid>
+      </Grid>
+    </Box>
   );
 }
 

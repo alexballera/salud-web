@@ -40,6 +40,10 @@ export const esForms = {
       required: 'Email requerido.',
       invalid: 'Email inválido.',
       incorrect: 'Formato de correo incorrecto.'
+    },
+
+    document: {
+      invalid: 'Cédula inválida'
     }
   }
 };

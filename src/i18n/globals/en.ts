@@ -7,7 +7,7 @@ export const enGlobals = {
     identify: 'Identifícate',
     legal: 'Legal',
     login_page: 'Login',
-    login_title: 'Inicie sesión',
+    login_title: 'Hola, ingresá a tu portal',
     logout: 'Cerrar sesión',
     personal_data: 'Datos personales',
     preferences: 'Preferencias',
@@ -23,6 +23,7 @@ export const enGlobals = {
       'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma',
     identify: 'Para empezar tu registro bríndanos tu número de identificación',
     logout: '¿Estás seguro que querés cerrar tu sesión en plataforma?',
+    login: 'Coloca tu correo electrónico y contraseña para acceder a tu portal',
     preferences: 'La o las personas que querés que disfruten los beneficios de tu plan'
   },
 
@@ -35,10 +36,10 @@ export const enGlobals = {
     end: 'Finalizar',
     enter: 'Ingresar',
     exit: 'Salir',
-    forgot_password: '¿Olvidó su contraseña?',
     login: 'Iniciar sesión',
     logout: 'Cerrar sesión',
     logout_confirm: 'Si, cerrar sesión',
+    recover: 'Recuperar',
     register: 'Registrarse',
     save: 'Guardar',
     save_changes: 'Guardar cambios',
