@@ -8,6 +8,8 @@ export const enForms = {
       is_register: 'Este correo ya fue registrado previamente'
     },
     error: {
+      general_fetch:
+        'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.',
       submit:
         'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.',
       field_incorrect: 'Campos incorrectos, corregir para continuar.'
