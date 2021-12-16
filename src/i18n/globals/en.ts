@@ -7,7 +7,7 @@ export const enGlobals = {
     identify: 'Identifícate',
     legal: 'Legal',
     login_page: 'Login',
-    login_title: 'Inicie sesión',
+    login_title: 'Hola, ingresá a tu portal',
     logout: 'Cerrar sesión',
     personal_data: 'Datos personales',
     preferences: 'Preferencias',
@@ -25,7 +25,8 @@ export const enGlobals = {
     identify: 'Para empezar tu registro bríndanos tu número de identificación',
     logout: '¿Estás seguro que querés cerrar tu sesión en plataforma?',
     preferences: 'La o las personas que querés que disfruten los beneficios de tu plan',
-    edit_beneficiary: 'Información personal'
+    edit_beneficiary: 'Información personal',
+    login: 'Coloca tu correo electrónico y contraseña para acceder a tu portal'
   },
 
   button: {
@@ -37,10 +38,10 @@ export const enGlobals = {
     end: 'Finalizar',
     enter: 'Ingresar',
     exit: 'Salir',
-    forgot_password: '¿Olvidó su contraseña?',
     login: 'Iniciar sesión',
     logout: 'Cerrar sesión',
     logout_confirm: 'Si, cerrar sesión',
+    recover: 'Recuperar',
     register: 'Registrarse',
     save: 'Guardar',
     save_changes: 'Guardar cambios',
@@ -63,6 +64,7 @@ export const enGlobals = {
     terms: 'Términos y condiciones',
     same_residence: 'Igual que mi domicilio',
     residence: 'Domicilio',
+    language: 'Idioma',
 
     email: {
       actual: 'Correo electrónico actual',
@@ -91,14 +93,6 @@ export const enGlobals = {
       gender: 'Sexo biológico designado al nacer',
       female: 'Femenino',
       male: 'Masculino'
-    },
-
-    language: {
-      device: 'Idioma del dispositivo',
-      english: 'Inglés',
-      french: 'Francés',
-      language: 'Idioma',
-      mandarin: 'Mandarín'
     },
 
     password: {

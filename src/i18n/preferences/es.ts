@@ -1,4 +1,5 @@
 export const esPreferences = {
+  title: 'Tu plan de suscripción',
   language: {
     title: 'Editar idioma',
     description: 'Seleccioná el idioma de tu preferencia para la plataforma',
@@ -9,7 +10,6 @@ export const esPreferences = {
     mandarin: 'Mandarín'
   },
 
-  title: 'Tu plan de suscripción',
   tab_lavel1: 'Mi plan',
   tab_lavel2: 'Configuración',
 

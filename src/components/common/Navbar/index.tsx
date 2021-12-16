@@ -65,16 +65,9 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
     }
   };
 
-  const noActionPathNames = [
-    '/login',
-    '/main',
-    '/profile',
-    '/subscription',
-    '/preferences',
-    '/help'
-  ];
+  const noActionPathNames = ['/main', '/profile', '/subscription', '/preferences', '/help'];
 
-  const exitButtonPathNames = ['/recover', '/signup'];
+  const exitButtonPathNames = ['/login', '/recover', '/signup'];
 
   const backButtonPathNames = [
     '/update/phone',
