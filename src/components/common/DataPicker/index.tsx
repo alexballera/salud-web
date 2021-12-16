@@ -39,11 +39,13 @@ const datepickerTheme = createMuiTheme({
         textTransform: 'capitalize'
       }
     },
+    MuiFormLabel: {
+      root: {
+        color: 'rgba(0, 0, 0, 0.87)'
+      }
+    },
     MuiFormHelperText: {
       root: {
-        '&$error': {
-          textAlign: 'right'
-        },
         '&$contained': {
           margin: 0
         }
