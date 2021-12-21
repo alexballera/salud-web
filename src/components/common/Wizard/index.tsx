@@ -17,13 +17,22 @@ import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY } from '../../../i18n/globals/i18n';
 /// i18n END
 
-function getStepContent(stepIndex: number, dataSource: IWizardDataSourceItem[]) {
+function getStepContent(
+  stepIndex: number,
+  dataSource: IWizardDataSourceItem[],
+  stepIndicator: boolean
+) {
   return (
-    <StepPanel data={dataSource[stepIndex]} index={stepIndex} totalSteps={dataSource.length} />
+    <StepPanel
+      data={dataSource[stepIndex]}
+      index={stepIndex}
+      totalSteps={dataSource.length}
+      stepIndicator={stepIndicator}
+    />
   );
 }
 
-function StepPanel({ data, index, totalSteps }: IStepPanelProps) {
+function StepPanel({ data, index, totalSteps, stepIndicator }: IStepPanelProps) {
   const { t } = useTranslation(NAMESPACE_KEY);
   const classes = wizardStyles();
   const step = index + 1;
@@ -36,9 +45,11 @@ function StepPanel({ data, index, totalSteps }: IStepPanelProps) {
       <Grid container className={classes.container}>
         <Grid item xs={12} md={8} className={classes.containerForm}>
           <Box p={3}>
-            <Typography className={classes.stepIndicator} variant="h5" component="h5">
-              {t('description.steps_header', { step, totalSteps })}
-            </Typography>
+            {stepIndicator && (
+              <Typography className={classes.stepIndicator} variant="h5" component="h5">
+                {t('description.steps_header', { step, totalSteps })}
+              </Typography>
+            )}
             <Typography variant="h5" component="h5" gutterBottom>
               {data.title}
             </Typography>
@@ -57,6 +68,7 @@ function Wizard({
   onChange,
   dataSource,
   disabledButton,
+  stepIndicator,
   ...props
 }: IWizardProps): JSX.Element {
   const { t } = useTranslation(NAMESPACE_KEY);
@@ -91,7 +103,7 @@ function Wizard({
         ))}
       </Stepper>
       <div>
-        {getStepContent(activeStep, dataSource)}
+        {getStepContent(activeStep, dataSource, stepIndicator)}
         {!footer ? (
           <div>
             <Button
