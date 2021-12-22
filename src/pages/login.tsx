@@ -3,7 +3,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Formik } from 'formik';
-import * as Yup from 'yup';
+import * as yup from 'yup';
 
 /// i18n
 import { useTranslation, withTranslation } from 'react-i18next';
@@ -49,11 +49,21 @@ function LoginPage({
   const classes = LoginStyles();
   const router = useRouter();
 
-  const ValidationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email(`${t('validations.email.invalid', { ns: 'forms' })}`)
+  const ValidationSchema = yup.object().shape({
+    email: yup
+      .string()
+      .email(`${t('validations.email.incorrect', { ns: 'forms' })}`)
+      .matches(/(.*\.[a-zA-Z]{2,}){1,}$/, `${t('validations.email.incorrect', { ns: 'forms' })}`)
       .required(`${t('validations.email.required', { ns: 'forms' })}`),
-    password: Yup.string().required(`${t('validations.password.required', { ns: 'forms' })}`)
+    password: yup
+      .string()
+      .required(`${t('validations.password.required_short', { ns: 'forms' })}`)
+      .min(8, `${t('validations.password.min_8', { ns: 'forms' })}`)
+      .max(16, `${t('validations.password.max_16', { ns: 'forms' })}`)
+      .matches(
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
+        `${t('validations.password.regex', { ns: 'forms' })}`
+      )
   });
 
   const _handleSubmit = (email: string, password: string) => {
@@ -133,6 +143,7 @@ function LoginPage({
                           <Grid item xs={12}>
                             <TextField
                               inputProps={{
+                                maxLength: 16,
                                 'aria-label': `${t('label.password.password', {
                                   ns: NAMESPACE_KEY
                                 })}`

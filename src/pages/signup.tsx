@@ -125,14 +125,14 @@ function SignUpView({
         .string()
         .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`)
         .when(['documentType'], {
-          is: documentType => documentType === 1,
+          is: (documentType: number) => documentType === 1,
           then: yup
             .string()
             .transform(value => value.replace(/[^\d]/g, ''))
             .min(9, `${t('validations.min_9', { ns: NAMESPACE_KEY })}`)
         })
         .when(['documentType'], {
-          is: documentType => documentType === 2,
+          is: (documentType: number) => documentType === 2,
           then: yup
             .string()
             .transform(value => value.replace(/[^\d]/g, ''))
@@ -140,7 +140,7 @@ function SignUpView({
             .max(15, `${t('validations.min_10_max_15', { ns: NAMESPACE_KEY })}`)
         })
         .when(['documentType'], {
-          is: documentType => documentType === 6,
+          is: (documentType: number) => documentType === 6,
           then: yup
             .string()
             .min(9, `${t('validations.min_9_max_20', { ns: NAMESPACE_KEY })}`)
