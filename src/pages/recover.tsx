@@ -93,10 +93,10 @@ function RecoverView(props: IProps): JSX.Element {
     schema: yup.object().shape({
       pinCode: yup
         .string()
-        .required('Codigo de verificación requerido')
-        .min(6, 'El pin debe tener 6 caracteres')
-        .matches(/^[0-9]{0,6}$/, 'El código de verificación debe contener números únicamente'),
-      validPin: yup.string().equals(['1'], 'El código de verificación es incorrecto')
+        .required(`${t('validations.code.required', { ns: 'forms' })}`)
+        .min(6, `${t('validations.code.min', { ns: 'forms' })}`)
+        .matches(/^[0-9]{0,6}$/, `${t('validations.code.number', { ns: 'forms' })}`),
+      validPin: yup.string().equals(['1'], `${t('validations.code.incorrect', { ns: 'forms' })}`)
     })
   };
 
@@ -105,15 +105,18 @@ function RecoverView(props: IProps): JSX.Element {
     schema: yup.object().shape({
       newPassword: yup
         .string()
-        .required('Contraseña requerida')
-        .min(8, 'La contraseña debe ser de al menos 8 caracteres')
+        .required(`${t('validations.password.required_short', { ns: 'forms' })}`)
+        .min(8, `${t('validations.password.min_8', { ns: 'forms' })}`)
         .matches(
           /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
-          'La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número'
+          `${t('validations.password.regex', { ns: 'forms' })}`
         ),
       newPasswordConfirm: yup
         .string()
-        .oneOf([yup.ref('newPassword'), null], 'La contraseña no coincide')
+        .oneOf(
+          [yup.ref('newPassword'), null],
+          `${t('validations.password.matched', { ns: 'forms' })}`
+        )
         .required('Campo Requerido')
     })
   };
@@ -194,7 +197,6 @@ function RecoverView(props: IProps): JSX.Element {
                       color="primary"
                       variant="contained"
                       size="medium"
-                      // disabled={!_.isEmpty(formik.errors)}
                     >
                       {
                         {
