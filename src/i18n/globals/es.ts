@@ -14,7 +14,7 @@ export const esGlobals = {
     profile: 'Perfil',
     publicity: 'Publicidad',
     reminder: 'Recordatorios',
-
+    edit_beneficiary_title: 'Editar beneficiario',
     recover: {
       forget: 'Recuperá tu contraseña'
     }
@@ -29,6 +29,7 @@ export const esGlobals = {
     logout: '¿Estás seguro que querés cerrar tu sesión en plataforma?',
     login: 'Coloca tu correo electrónico y contraseña para acceder a tu portal',
     preferences: 'La o las personas que querés que disfruten los beneficios de tu plan',
+    edit_beneficiary: 'Información personal',
     steps_header: 'Paso {{step}} de {{totalSteps}}',
     recover: {
       forget: 'Para recuperar su contraseña requerimos verificar su identidad'
@@ -53,7 +54,8 @@ export const esGlobals = {
     save: 'Guardar',
     save_changes: 'Guardar cambios',
     send: 'Enviar',
-    send_email: 'Enviar correo'
+    send_email: 'Enviar correo',
+    remove_beneficiary: 'Eliminar beneficiario'
   },
 
   label: {
@@ -68,6 +70,8 @@ export const esGlobals = {
     no_register: '¿Aún no está registrado en OMNiSalud?',
     sms: 'SMS',
     terms: 'Términos y condiciones',
+    same_residence: 'Igual que mi domicilio',
+    residence: 'Domicilio',
     language: 'Idioma',
 
     email: {
