@@ -16,7 +16,6 @@ import { Box, Button, Divider, Hidden, Grid } from '@material-ui/core';
 
 /// OWN COMPONENTS
 import { withAppContext } from '../context';
-import { loginService, setDataToLocalstorage } from '../services/auth.service';
 import { TitleContent } from '../components/common/TitleContent';
 import TextField from '../components/common/TextField';
 /// OWN COMPONENTS END
@@ -25,10 +24,11 @@ import TextField from '../components/common/TextField';
 // import styles from '../styles/scss/Login.module.scss';
 import { IProps } from '../types/login.types';
 import LoginStyles from '../styles/js/LoginPageStyles.module';
-import { getPersonalData } from '../services/getPersonalData.service';
 /// STYLES & TYPES END
 
 /// SERVICES
+import { getPersonalData } from '../services/getPersonalData.service';
+import { loginService, setDataToLocalstorage } from '../services/auth.service';
 /// SERVICES END
 
 /// FORM STATES & VALIDATIONS
@@ -154,7 +154,7 @@ function LoginPage({
                               paragraph
                               title={
                                 <>
-                                  <span>¿Olvidaste tu contraseña?</span>
+                                  <span>{t('label.password.forget', { ns: NAMESPACE_KEY })}</span>
                                   <Link href="/recover" passHref>
                                     <a>{t('button.recover', { ns: NAMESPACE_KEY })}</a>
                                   </Link>

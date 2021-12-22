@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { FormikProps } from 'formik';
-import * as yup from 'yup';
 /// TYPES
 import { IValidationDataForm } from '../../../types/recover.types';
 /// MATERIAL-UI
@@ -242,21 +241,5 @@ function ValidationData({
     </>
   );
 }
-
-ValidationData.title = 'Código de verificación';
-ValidationData.description =
-  'Ingrese el código de validación que se le envió al correo electrónico para continuar';
-
-ValidationData.validations = {
-  name: 'ValidationStep',
-  schema: yup.object().shape({
-    pinCode: yup
-      .string()
-      .required('Codigo de verificación requerido')
-      .min(6, 'El pin debe tener 6 caracteres')
-      .matches(/^[0-9]{0,6}$/, 'El código de verificación debe contener números únicamente'),
-    validPin: yup.string().equals(['1'], 'El código de verificación es incorrecto')
-  })
-};
 
 export default ValidationData;
