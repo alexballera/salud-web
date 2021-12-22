@@ -6,6 +6,7 @@ export type IWizardProps = {
   activeStep?: number;
   dataSource: IWizardDataSourceItem[];
   disabledButton?: boolean;
+  stepIndicator?: boolean;
 };
 
 export type IStepPanelProps = {
@@ -13,6 +14,7 @@ export type IStepPanelProps = {
   index: number;
   totalSteps: number;
   data?: IWizardDataSourceItem;
+  stepIndicator?: boolean;
 };
 
 export type IWizardDataSourceItem = {

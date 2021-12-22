@@ -12,14 +12,30 @@ import { Grid } from '@material-ui/core';
 import wizardStyles from './styles.module';
 /// MATERIAL-UI END
 
-function getStepContent(stepIndex: number, dataSource: IWizardDataSourceItem[]) {
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../../i18n/globals/i18n';
+/// i18n END
+
+function getStepContent(
+  stepIndex: number,
+  dataSource: IWizardDataSourceItem[],
+  stepIndicator: boolean
+) {
   return (
-    <StepPanel data={dataSource[stepIndex]} index={stepIndex} totalSteps={dataSource.length} />
+    <StepPanel
+      data={dataSource[stepIndex]}
+      index={stepIndex}
+      totalSteps={dataSource.length}
+      stepIndicator={stepIndicator}
+    />
   );
 }
 
-function StepPanel({ data, index, totalSteps }: IStepPanelProps) {
+function StepPanel({ data, index, totalSteps, stepIndicator }: IStepPanelProps) {
+  const { t } = useTranslation(NAMESPACE_KEY);
   const classes = wizardStyles();
+  const step = index + 1;
   return (
     <div
       id={`full-width-steppanel-${index}`}
@@ -29,9 +45,11 @@ function StepPanel({ data, index, totalSteps }: IStepPanelProps) {
       <Grid container className={classes.container}>
         <Grid item xs={12} md={8} className={classes.containerForm}>
           <Box p={3}>
-            <Typography className={classes.stepIndicator} variant="h5" component="h5">
-              Paso {index + 1} de {totalSteps}
-            </Typography>
+            {stepIndicator && (
+              <Typography className={classes.stepIndicator} variant="h5" component="h5">
+                {t('description.steps_header', { step, totalSteps })}
+              </Typography>
+            )}
             <Typography variant="h5" component="h5" gutterBottom>
               {data.title}
             </Typography>
@@ -50,8 +68,10 @@ function Wizard({
   onChange,
   dataSource,
   disabledButton,
+  stepIndicator,
   ...props
 }: IWizardProps): JSX.Element {
+  const { t } = useTranslation(NAMESPACE_KEY);
   const classes = wizardStyles();
   const [activeStep, setActiveStep] = useState<number>(0);
 
@@ -83,7 +103,7 @@ function Wizard({
         ))}
       </Stepper>
       <div>
-        {getStepContent(activeStep, dataSource)}
+        {getStepContent(activeStep, dataSource, stepIndicator)}
         {!footer ? (
           <div>
             <Button
@@ -94,7 +114,9 @@ function Wizard({
               onClick={handleNext}
               disabled={disabledButton}
             >
-              {activeStep === dataSource.length - 1 ? 'Enviar' : 'Siguiente'}
+              {activeStep === dataSource.length - 1
+                ? `${t('button.send')}`
+                : `${t('button.following')}`}
             </Button>
           </div>
         ) : (

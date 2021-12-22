@@ -1,6 +1,5 @@
 import React from 'react';
 import { FormikProps } from 'formik';
-import * as yup from 'yup';
 /// TYPES
 import { IEmailDataForm } from '../../../types/recover.types';
 /// MATERIAL-UI
@@ -39,19 +38,5 @@ function EmailData({
     </Box>
   );
 }
-
-EmailData.title = 'Recuperar contraseña';
-EmailData.description = 'Para recuperar su contraseña requerimos verificar su identidad';
-
-EmailData.validations = {
-  name: 'EmailStep',
-  schema: yup.object().shape({
-    email: yup
-      .string()
-      .email('Formato de correo incorrecto')
-      .matches(/(.*\.[a-zA-Z]{2,}){1,}$/, 'Formato de correo incorrecto')
-      .required('Email requerido')
-  })
-};
 
 export default EmailData;

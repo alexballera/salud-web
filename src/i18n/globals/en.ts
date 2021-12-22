@@ -1,4 +1,4 @@
-export const enGlobals = {
+export const esGlobals = {
   title: {
     beneficiaries: 'Beneficiarios',
     credential_data: 'Credenciales de ingreso',
@@ -14,7 +14,10 @@ export const enGlobals = {
     profile: 'Perfil',
     publicity: 'Publicidad',
     reminder: 'Recordatorios',
-    edit_beneficiary_title: 'Editar beneficiario'
+    edit_beneficiary_title: 'Editar beneficiario',
+    recover: {
+      forget: 'Recuperá tu contraseña'
+    }
   },
 
   description: {
@@ -24,9 +27,13 @@ export const enGlobals = {
       'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma',
     identify: 'Para empezar tu registro bríndanos tu número de identificación',
     logout: '¿Estás seguro que querés cerrar tu sesión en plataforma?',
+    login: 'Coloca tu correo electrónico y contraseña para acceder a tu portal',
     preferences: 'La o las personas que querés que disfruten los beneficios de tu plan',
     edit_beneficiary: 'Información personal',
-    login: 'Coloca tu correo electrónico y contraseña para acceder a tu portal'
+    steps_header: 'Paso {{step}} de {{totalSteps}}',
+    recover: {
+      forget: 'Para recuperar su contraseña requerimos verificar su identidad'
+    }
   },
 
   button: {
@@ -38,6 +45,7 @@ export const enGlobals = {
     end: 'Finalizar',
     enter: 'Ingresar',
     exit: 'Salir',
+    following: 'Siguiente',
     login: 'Iniciar sesión',
     logout: 'Cerrar sesión',
     logout_confirm: 'Si, cerrar sesión',
@@ -99,7 +107,8 @@ export const enGlobals = {
       confirm: 'Confirmar contraseña',
       password: 'Contraseña',
       new: 'Contraseña nueva',
-      change_description: 'Ingresá tu contraseña anterior y la nueva'
+      change_description: 'Ingresá tu contraseña anterior y la nueva',
+      forget: '¿Olvidaste tu contraseña?'
     },
 
     phone: {

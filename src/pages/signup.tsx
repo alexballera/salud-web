@@ -304,6 +304,7 @@ function SignUpView({
         return (
           <Form autoComplete="off">
             <Wizard
+              stepIndicator
               footer={
                 <Box p={3}>
                   <Grid

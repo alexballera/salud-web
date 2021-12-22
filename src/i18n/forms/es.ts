@@ -46,6 +46,13 @@ export const esForms = {
 
     document: {
       invalid: 'Cédula inválida'
+    },
+
+    code: {
+      required: 'Codigo de verificación requerido',
+      min: 'El pin debe tener 6 caracteres',
+      number: 'El código de verificación debe contener números únicamente',
+      incorrect: 'El código de verificación es incorrecto'
     }
   }
 };
