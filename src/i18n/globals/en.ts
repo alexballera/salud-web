@@ -1,4 +1,4 @@
-export const esGlobals = {
+export const enGlobals = {
   title: {
     beneficiaries: 'Beneficiarios',
     credential_data: 'Credenciales de ingreso',
