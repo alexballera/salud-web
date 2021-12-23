@@ -107,6 +107,7 @@ function RecoverView(props: IProps): JSX.Element {
         .string()
         .required(`${t('validations.password.required_short', { ns: 'forms' })}`)
         .min(8, `${t('validations.password.min_8', { ns: 'forms' })}`)
+        .max(16, `${t('validations.password.max_16', { ns: 'forms' })}`)
         .matches(
           /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
           `${t('validations.password.regex', { ns: 'forms' })}`

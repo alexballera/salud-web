@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+/// i18n
 import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../../../i18n/globals/i18n';
+/// i18n END
 
 /// MATERIAL UI
 import {
@@ -36,7 +39,7 @@ const ActionButtons = ({
   exitButtonPathNames,
   backButtonPathNames
 }: IAction): JSX.Element => {
-  const { t } = useTranslation(['globals', 'menu']);
+  const { t } = useTranslation([NAMESPACE_KEY, 'menu']);
   const classes = navbarStyles();
   const router = useRouter();
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -55,7 +58,7 @@ const ActionButtons = ({
         endIcon={<CloseIcon />}
         className={classes.button}
       >
-        {t('button.exit')}
+        {t('button.exit', { ns: NAMESPACE_KEY })}
       </Button>
     );
   }
@@ -71,7 +74,7 @@ const ActionButtons = ({
           endIcon={<CloseIcon />}
           className={classes.button}
         >
-          {t('button.exit')}
+          {t('button.exit', { ns: NAMESPACE_KEY })}
         </Button>
 
         <Dialog
@@ -95,7 +98,7 @@ const ActionButtons = ({
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setDialogOpen(false)} color="secondary">
-              {t('button.cancel')}
+              {t('button.cancel', { ns: NAMESPACE_KEY })}
             </Button>
             <Button
               onClick={() => {
@@ -104,7 +107,7 @@ const ActionButtons = ({
               }}
               color="primary"
             >
-              {t('button.exit')}
+              {t('button.exit', { ns: NAMESPACE_KEY })}
             </Button>
           </DialogActions>
         </Dialog>
@@ -120,7 +123,7 @@ const ActionButtons = ({
   return (
     <Link href="login" passHref>
       <Button color="inherit" data-testid="login-button">
-        {t('button.enter')}
+        {t('button.enter', { ns: NAMESPACE_KEY })}
       </Button>
     </Link>
   );

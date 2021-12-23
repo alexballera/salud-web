@@ -77,7 +77,7 @@ function CredentialData({
           fullWidth
           id="email"
           name="email"
-          type="text"
+          type="email"
           label={t('label.email.email', { ns: NAMESPACE_KEY })}
           value={values.email}
           error={touched.email && (Boolean(errors.email) || Boolean(inputEmailStates.message))}
