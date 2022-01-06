@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import { useTranslation, TFunction } from 'react-i18next';
 import { NAMESPACE_KEY } from '../../i18n/subscriptions/i18n';
-import { alpha } from '@material-ui/core/styles/colorManipulator';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 type TLink = {
