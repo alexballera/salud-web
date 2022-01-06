@@ -127,10 +127,11 @@ function PersonalData({
   };
 
   const setDataBirth = (date: string): string => {
-    if (date) {
-      const newDate = `${date} `;
-      return newDate;
+    const toDate = new Date(date);
+    if (toDate instanceof Date && !isNaN(toDate.getTime())) {
+      return toDate.toISOString();
     }
+    return '';
   };
 
   const setUserValues = (data: IPaciente = null) => {
