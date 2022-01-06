@@ -5,17 +5,17 @@ import { useRouter } from 'next/router';
 import { Form, Formik } from 'formik';
 import * as yup from 'yup';
 /// CONTEXT
-import { withAppContext } from '../context/index';
+import { withAppContext } from '../../context/index';
 /// SERVICES
-import { signUp, setDataToLocalstorage } from '../services/auth.service';
+import { signUp, setDataToLocalstorage } from '../../services/auth.service';
 /// TYPES
-import { IFormData, IProps } from '../containers/SignUp/index.types';
+import { IFormData, IProps } from '../../containers/SignUp/index.types';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 /// OWN COMPONENTS
-import Wizard from '../components/common/Wizard';
-import ExtraDataForm from '../containers/SignUp/components/ExtraData';
-import PersonalDataForm from '../containers/SignUp/components/PersonalData';
-import CredentialDataForm from '../containers/SignUp/components/CredentialData';
+import Wizard from '../../components/common/Wizard';
+import ExtraDataForm from '../../containers/SignUp/components/ExtraData';
+import PersonalDataForm from '../../containers/SignUp/components/PersonalData';
+import CredentialDataForm from '../../containers/SignUp/components/CredentialData';
 
 /// OWN COMPONENTS END
 /// MATERIAL - UI
@@ -24,12 +24,12 @@ import { Button, Box, Grid } from '@material-ui/core';
 
 /// STYLES
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
-import { ISignUpBody } from '../types/auth.types';
+import { ISignUpBody } from '../../types/auth.types';
 /// STYLES END
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../i18n/forms/i18n';
+import { NAMESPACE_KEY } from '../../i18n/forms/i18n';
 /// i18n END
 
 /// GET SERVICE

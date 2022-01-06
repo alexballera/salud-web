@@ -41,7 +41,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
         return true;
       case '/profile':
         return true;
-      case '/subscription':
+      case '/subscriptions':
         return true;
       case '/preferences':
         return true;
@@ -65,7 +65,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
     }
   };
 
-  const noActionPathNames = ['/main', '/profile', '/subscription', '/preferences', '/help'];
+  const noActionPathNames = ['/main', '/profile', '/subscriptions', '/preferences', '/help'];
 
   const exitButtonPathNames = ['/login', '/recover', '/signup'];
 
