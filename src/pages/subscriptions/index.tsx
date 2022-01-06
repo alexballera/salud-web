@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 /// CONTEXT
-import { withAppContext } from '../context';
+import { withAppContext } from '../../context';
 /// CONTEXT END
 
 /// MATERIAL - UI
@@ -13,20 +13,20 @@ import { Box, Tab, Tabs } from '@material-ui/core';
 /// SERVICES END
 
 /// OWN COMPONENTS
-import LayoutInner from '../layouts/LayoutInner';
-import SubscriptionConfiguration from '../containers/Subscription/SubscriptionConfiguration';
-import SubscriptionPlan from '../containers/Subscription/SubscriptionPlan';
-import { TitleContent } from '../components/common/TitleContent';
-import Redirect from '../components/common/Redirect';
+import LayoutInner from '../../layouts/LayoutInner';
+import SubscriptionConfiguration from '../../containers/Subscription/SubscriptionConfiguration';
+import SubscriptionPlan from '../../containers/Subscription/SubscriptionPlan';
+import { TitleContent } from '../../components/common/TitleContent';
+import Redirect from '../../components/common/Redirect';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
-import { AppStates } from '../context/types';
+import { AppStates } from '../../context/types';
 /// STYLES & TYPES END
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../i18n/subscriptions/i18n';
+import { NAMESPACE_KEY } from '../../i18n/subscriptions/i18n';
 /// i18n END
 
 /// FORM STATES & VALIDATIONS

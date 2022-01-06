@@ -1,7 +1,7 @@
 import React from 'react';
 
 /// CONTEXT
-import { withAppContext } from '../context';
+import { withAppContext } from '../../context';
 /// CONTEXT END
 
 /// MATERIAL - UI
@@ -11,8 +11,8 @@ import { withAppContext } from '../context';
 /// SERVICES END
 
 /// OWN COMPONENTS
-import LayoutInner from '../layouts/LayoutInner';
-import LayoutLoggedIn from '../layouts/LayoutLoggedIn';
+import LayoutInner from '../../layouts/LayoutInner';
+import LayoutLoggedIn from '../../layouts/LayoutLoggedIn';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
@@ -21,13 +21,13 @@ import LayoutLoggedIn from '../layouts/LayoutLoggedIn';
 /// FORM STATES & VALIDATIONS
 /// FORM STATES & VALIDATIONS END
 
-function MainPage(): JSX.Element {
+function HelpPage(): JSX.Element {
   return (
     <LayoutLoggedIn>
       <LayoutInner>
-        <h1>Inicio</h1>
+        <h1>Ayuda</h1>
       </LayoutInner>
     </LayoutLoggedIn>
   );
 }
-export default withAppContext(MainPage);
+export default withAppContext(HelpPage);

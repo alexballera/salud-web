@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../i18n/globals/i18n';
+import { NAMESPACE_KEY } from '../../i18n/globals/i18n';
 /// i18n END
 
 /// MATERIAL - UI
@@ -15,19 +15,19 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 /// SERVICES END
 
 /// OWN COMPONENTS
-import { TitleContent } from '../components/common/TitleContent';
-import { AvatarProfile } from '../containers/Profile/AvatarProfile';
-import { CredentialsProfile } from '../containers/Profile/CredentialsProfile';
-import { LegalProfile } from '../containers/Profile/LegalProfile';
-import { PersonalProfile } from '../containers/Profile/PersonalProfile';
-import { withAppContext } from '../context';
-import LayoutContent from '../layouts/LayoutContent';
-import LayoutLoggedIn from '../layouts/LayoutLoggedIn';
+import { TitleContent } from '../../components/common/TitleContent';
+import { AvatarProfile } from '../../containers/Profile/AvatarProfile';
+import { CredentialsProfile } from '../../containers/Profile/CredentialsProfile';
+import { LegalProfile } from '../../containers/Profile/LegalProfile';
+import { PersonalProfile } from '../../containers/Profile/PersonalProfile';
+import { withAppContext } from '../../context';
+import LayoutContent from '../../layouts/LayoutContent';
+import LayoutLoggedIn from '../../layouts/LayoutLoggedIn';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
-import ProfileStyles from '../containers/Profile/styles.module';
-import { AppStates } from '../context/types';
+import ProfileStyles from '../../containers/Profile/styles.module';
+import { AppStates } from '../../context/types';
 /// STYLES & TYPES END
 
 function ProfilePage({ user }: AppStates): JSX.Element {

@@ -9,16 +9,16 @@ import { Box, Button, Grid } from '@material-ui/core';
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
-import EmailDataForm from '../containers/Recover/components/EmailData';
-import ValidationDataForm from '../containers/Recover/components/ValidationData';
-import PasswordDataForm from '../containers/Recover/components/PasswordData';
-import { withAppContext } from '../context';
-import { forgotPasswordChangePassword } from '../services/auth.service';
+import EmailDataForm from '../../containers/Recover/components/EmailData';
+import ValidationDataForm from '../../containers/Recover/components/ValidationData';
+import PasswordDataForm from '../../containers/Recover/components/PasswordData';
+import { withAppContext } from '../../context';
+import { forgotPasswordChangePassword } from '../../services/auth.service';
 /// OWN COMPONENTS END
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../i18n/globals/i18n';
+import { NAMESPACE_KEY } from '../../i18n/globals/i18n';
 /// i18n END
 
 /// CONTEXT
@@ -35,8 +35,8 @@ import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 /// FORM STATES & VALIDATIONS END
 
 /// TYPES
-import { IFormData } from '../types/recover.types';
-import Wizard, { IWizardDataSourceItem } from '../components/common/Wizard';
+import { IFormData } from '../../types/recover.types';
+import Wizard, { IWizardDataSourceItem } from '../../components/common/Wizard';
 
 type IProps = {
   handleLoading: (loading: boolean) => void;
