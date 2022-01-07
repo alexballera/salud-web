@@ -55,7 +55,7 @@ const MenuItems = ({ type }: IMenu): JSX.Element => {
     {
       title: `${t('items.subscription', { ns: 'menu' })}`,
       icon: <CardMembershipIcon />,
-      action: 'subscription'
+      action: 'subscriptions'
     },
     {
       title: `${t('items.preferences', { ns: 'menu' })}`,

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 /// CONTEXT
-import { withAppContext } from '../context/index';
+import { withAppContext } from '../../context/index';
 /// CONTEXT END
 
 /// MATERIAL - UI
@@ -14,17 +14,17 @@ import { Button } from '@material-ui/core';
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../i18n/globals/i18n';
+import { NAMESPACE_KEY } from '../../i18n/globals/i18n';
 /// i18n END
 
 /// OWN COMPONENTS
-import LayoutCode from '../layouts/LayoutCode';
+import LayoutCode from '../../layouts/LayoutCode';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
-import LayoutCodeStyles from '../layouts/LayoutCode/styles.module';
-import { getDataFromLocalstorage, logoutService } from '../services/auth.service';
-import { User } from '../types/auth.types';
+import LayoutCodeStyles from '../../layouts/LayoutCode/styles.module';
+import { getDataFromLocalstorage, logoutService } from '../../services/auth.service';
+import { User } from '../../types/auth.types';
 /// STYLES & TYPES END
 
 /// FORM STATES & VALIDATIONS

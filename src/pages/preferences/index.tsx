@@ -1,12 +1,12 @@
 import React from 'react';
 
 /// CONTEXT
-import { withAppContext } from '../context';
+import { withAppContext } from '../../context';
 /// CONTEXT END
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../i18n/globals/i18n';
+import { NAMESPACE_KEY } from '../../i18n/globals/i18n';
 /// i18n END
 
 /// MATERIAL - UI
@@ -18,10 +18,10 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 /// SERVICES END
 
 /// OWN COMPONENTS
-import { TitleContent } from '../components/common/TitleContent';
-import { FieldTextData } from '../containers/Profile/components/FieldTextData';
-import LayoutInner from '../layouts/LayoutInner';
-import LayoutLoggedIn from '../layouts/LayoutLoggedIn';
+import { TitleContent } from '../../components/common/TitleContent';
+import { FieldTextData } from '../../containers/Profile/components/FieldTextData';
+import LayoutInner from '../../layouts/LayoutInner';
+import LayoutLoggedIn from '../../layouts/LayoutLoggedIn';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES

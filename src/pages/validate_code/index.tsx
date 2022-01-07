@@ -20,34 +20,34 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../i18n/code_validation/i18n';
+import { NAMESPACE_KEY } from '../../i18n/code_validation/i18n';
 /// i18n END
 
 /// SERVICES
 /// SERVICES END
 
 /// OWN COMPONENTS
-import LayoutCode from '../layouts/LayoutCode';
+import LayoutCode from '../../layouts/LayoutCode';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
 import { ThemeProvider } from '@material-ui/core/styles';
-import theme, { errorColor } from '../styles/js/theme';
+import theme, { errorColor } from '../../styles/js/theme';
 import {
   validateCodeCustomTheme,
   validateCodeStyles
-} from '../containers/ValidateCode/styles.module';
+} from '../../containers/ValidateCode/styles.module';
 import {
   forgotPasswordConfirmCodeService,
   forgotPasswordResendPin,
   getDataFromLocalstorage
-} from '../services/auth.service';
-import { withAppContext } from '../context';
-import { getStaticProps } from './signup';
-import { IProps } from '../containers/SignUp/index.types';
+} from '../../services/auth.service';
+import { withAppContext } from '../../context';
+import { getStaticProps } from '../signup';
+import { IProps } from '../../containers/SignUp/index.types';
 import { InferGetStaticPropsType } from 'next';
-import { IValidateProps } from '../containers/ValidateCode/types';
-import { User } from '../types/auth.types';
+import { IValidateProps } from '../../containers/ValidateCode/types';
+import { User } from '../../types/auth.types';
 /// STYLES & TYPES END
 
 /// FORM STATES & VALIDATIONS
@@ -80,7 +80,7 @@ function ValidateCodePage({
     if (isPinCodeValid) {
       forgotPasswordConfirmCodeService(email, pinCode)
         .then(() => {
-          handleError(true, `${t('message.success', { ns: NAMESPACE_KEY })}`, 'success');
+          handleError(true, `${t('messages.success', { ns: NAMESPACE_KEY })}`, 'success');
           router.replace('/main');
         })
         .catch(err => {

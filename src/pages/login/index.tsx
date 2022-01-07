@@ -7,7 +7,7 @@ import * as yup from 'yup';
 
 /// i18n
 import { useTranslation, withTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../i18n/globals/i18n';
+import { NAMESPACE_KEY } from '../../i18n/globals/i18n';
 /// i18n END
 
 /// MATERIAL UI
@@ -15,20 +15,20 @@ import { Box, Button, Divider, Hidden, Grid } from '@material-ui/core';
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
-import { withAppContext } from '../context';
-import { TitleContent } from '../components/common/TitleContent';
-import TextField from '../components/common/TextField';
+import { withAppContext } from '../../context';
+import { TitleContent } from '../../components/common/TitleContent';
+import TextField from '../../components/common/TextField';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
 // import styles from '../styles/scss/Login.module.scss';
-import { IProps } from '../types/login.types';
-import LoginStyles from '../styles/js/LoginPageStyles.module';
+import { IProps } from '../../types/login.types';
+import LoginStyles from '../../styles/js/LoginPageStyles.module';
 /// STYLES & TYPES END
 
 /// SERVICES
-import { getPersonalData } from '../services/getPersonalData.service';
-import { loginService, setDataToLocalstorage } from '../services/auth.service';
+import { getPersonalData } from '../../services/getPersonalData.service';
+import { loginService, setDataToLocalstorage } from '../../services/auth.service';
 /// SERVICES END
 
 /// FORM STATES & VALIDATIONS
