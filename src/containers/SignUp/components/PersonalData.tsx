@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import _ from 'lodash';
+import { addYears } from 'date-fns';
 import { convertToMask } from '../../../utils/helpers';
 
 /// FORM
@@ -268,7 +269,7 @@ function PersonalData({
             onChange={handleChangePicker}
             disabled={!isNotPhysicalID}
             inputVariant="outlined"
-            maxDate={new Date()}
+            maxDate={addYears(new Date(), -18)}
             error={touched.birthDate && !!errors.birthDate}
             helperText={touched.birthDate && !!errors.birthDate ? errors.birthDate : ''}
             formControlProps={{ margin: 'normal' }}
