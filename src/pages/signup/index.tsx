@@ -116,7 +116,7 @@ function SignUpView({
         .min(3, `${t('validations.min_3', { ns: NAMESPACE_KEY })}`),
       birthDate: yup
         .date()
-        .max(addYears(new Date(), -18), `${t('validations.date_invalid', { ns: NAMESPACE_KEY })}`)
+        .max(addYears(new Date(), -18), `${t('validations.max_18_age', { ns: NAMESPACE_KEY })}`)
         .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
       firstName: yup
         .string()
