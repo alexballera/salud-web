@@ -1,5 +1,5 @@
 import DateFnsUtils from '@date-io/date-fns';
-import { es } from 'date-fns/locale';
+import * as dateFnsLocale from 'date-fns/locale';
 
 /// MATERIAL - UI
 import FormLabel from '@material-ui/core/FormLabel';
@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import { FormControlProps, FormLabelProps, createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import { DatePicker, DatePickerProps, MuiPickersUtilsProvider } from '@material-ui/pickers';
+
 import {
   poppinsFontFamily,
   secondaryContrastTextColor,
@@ -14,6 +15,7 @@ import {
   secondaryLightColor,
   secondaryMainColor
 } from '../../../styles/js/theme';
+import i18next from 'i18next';
 /// MATERIAL - UI
 
 type IProps = {
@@ -55,13 +57,16 @@ const datepickerTheme = createMuiTheme({
 });
 
 function DataPicker({ label, formControlProps, labelProps, ...props }: IProps): JSX.Element {
+  const currentI18nKey = i18next.language || window.localStorage.i18nextLng;
+  const locale = dateFnsLocale[currentI18nKey || 'enUS'];
+
   return (
     <ThemeProvider theme={datepickerTheme}>
       <FormControl fullWidth {...formControlProps}>
         <FormLabel style={{ marginBottom: 10 }} {...labelProps}>
           {label}
         </FormLabel>
-        <MuiPickersUtilsProvider utils={DateFnsUtils} locale={es}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils} locale={locale}>
           <DatePicker {...props} margin="none" color="secondary" />
         </MuiPickersUtilsProvider>
       </FormControl>
