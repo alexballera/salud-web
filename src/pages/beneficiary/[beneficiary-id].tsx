@@ -741,7 +741,7 @@ function EditBeneficiary({ beneficiary, handleNotifications }: TProps): JSX.Elem
                       />
                       <CustomAutoComplete
                         id="canton"
-                        label={t('label.addess.canton', { ns: i18Global })}
+                        label={t('label.address.canton', { ns: i18Global })}
                         value={values.canton}
                         error={touched.canton && Boolean(errors.canton)}
                         onBlur={handleBlur}
