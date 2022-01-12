@@ -264,7 +264,6 @@ function PersonalData({
             margin="normal"
             format="dd/MM/yyyy"
             onBlur={handleBlur}
-            // variant="inline"
             onChange={handleChangePicker}
             disabled={!isNotPhysicalID}
             inputVariant="outlined"
