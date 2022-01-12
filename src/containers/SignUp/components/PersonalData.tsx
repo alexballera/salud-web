@@ -61,6 +61,7 @@ function PersonalData({
     touched.firstName = false;
     touched.lastName = false;
     setData(null);
+    setTypeError('');
     setFieldValue('firstName', '');
     setFieldValue('lastName', '');
     setFieldValue('birthDate', '');
