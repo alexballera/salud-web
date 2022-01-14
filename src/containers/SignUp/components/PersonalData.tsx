@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import _ from 'lodash';
+import { addYears } from 'date-fns';
 import { convertToMask } from '../../../utils/helpers';
 
 /// FORM
@@ -62,6 +63,7 @@ function PersonalData({
     touched.firstName = false;
     touched.lastName = false;
     setData(null);
+    setTypeError('');
     setFieldValue('firstName', '');
     setFieldValue('lastName', '');
     setFieldValue('birthDate', '');
@@ -272,9 +274,9 @@ function PersonalData({
             onChange={handleChangePicker}
             disabled={!isNotPhysicalID}
             inputVariant="outlined"
-            maxDate={new Date()}
             error={datePickerIsClosed && Boolean(errors.birthDate)}
             helperText={datePickerIsClosed && errors.birthDate}
+            maxDate={addYears(new Date(), -18)}
             formControlProps={{ margin: 'normal' }}
           />
         </Paper>
