@@ -39,6 +39,10 @@ export const enForms = {
       matched: 'La contraseña no coincide'
     },
 
+    document: {
+      invalid: 'Cédula inválida'
+    },
+
     email: {
       required: 'Email requerido.',
       invalid: 'Email inválido.',
