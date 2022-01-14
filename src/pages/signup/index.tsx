@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+// import date-fns
+import { addYears } from 'date-fns';
 // import _ from 'lodash';
 import axios from 'axios';
 import { useRouter } from 'next/router';
@@ -114,7 +116,7 @@ function SignUpView({
         .min(3, `${t('validations.min_3', { ns: NAMESPACE_KEY })}`),
       birthDate: yup
         .date()
-        .max(new Date(), `${t('validations.date_invalid', { ns: NAMESPACE_KEY })}`)
+        .max(addYears(new Date(), -18), `${t('validations.max_18_age', { ns: NAMESPACE_KEY })}`)
         .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
       firstName: yup
         .string()
