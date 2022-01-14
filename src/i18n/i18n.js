@@ -17,7 +17,7 @@ import { enPreferences } from './preferences/en';
 import { esPreferences } from './preferences/es';
 
 const resources = {
-  en: {
+  enUS: {
     globals: enGlobals,
     home: enHome,
     menu: enMenu,
@@ -48,8 +48,8 @@ function navigatorLanguageDetector() {
   if (typeof window !== 'undefined') {
     const ln = window.navigator.language;
     const lang = {
-      en: 'en',
-      'en-US': 'en',
+      en: 'enUS',
+      'en-US': 'enUS',
       es: 'es',
       'es-CR': 'es',
       default: 'es'

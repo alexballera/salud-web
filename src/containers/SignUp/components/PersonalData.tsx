@@ -46,6 +46,7 @@ function PersonalData({
   const [data, setData] = useState<IPaciente>(null);
   const [typeError, setTypeError] = useState<string>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [datePickerIsClosed, setDatePickerIsClosed] = useState(false);
   const isNotPhysicalID = !!(values.documentType !== 1 && values.documentType);
   const currentDocumentType = documentTypesOptions.find(
     data => data.documentTypeId === values.documentType
@@ -266,12 +267,16 @@ function PersonalData({
             margin="normal"
             format="dd/MM/yyyy"
             onBlur={handleBlur}
+            variant="inline"
+            onClose={() => {
+              setDatePickerIsClosed(true);
+            }}
             onChange={handleChangePicker}
             disabled={!isNotPhysicalID}
             inputVariant="outlined"
+            error={datePickerIsClosed && Boolean(errors.birthDate)}
+            helperText={datePickerIsClosed && errors.birthDate}
             maxDate={addYears(new Date(), -18)}
-            error={touched.birthDate && !!errors.birthDate}
-            helperText={touched.birthDate && !!errors.birthDate ? errors.birthDate : ''}
             formControlProps={{ margin: 'normal' }}
           />
         </Paper>
