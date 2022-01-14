@@ -22,6 +22,7 @@ export const enForms = {
   validations: {
     required: 'Campo requerido',
     date_invalid: 'Fecha inválida',
+    max_18_age: 'Para afiliarse a Ospi debe de ser mayor de edad.',
     min_3: 'Número de caracteres minimos 3',
     min_8: 'Número de caracteres minimos 8',
     min_9: 'Número de caracteres minimos 9',
@@ -36,6 +37,10 @@ export const enForms = {
       regex:
         'La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número',
       matched: 'La contraseña no coincide'
+    },
+
+    document: {
+      invalid: 'Cédula inválida'
     },
 
     email: {

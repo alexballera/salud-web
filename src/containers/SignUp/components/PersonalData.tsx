@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import _ from 'lodash';
+import { addYears } from 'date-fns';
 import { convertToMask } from '../../../utils/helpers';
 
 /// FORM
@@ -45,6 +46,7 @@ function PersonalData({
   const [data, setData] = useState<IPaciente>(null);
   const [typeError, setTypeError] = useState<string>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [datePickerIsClosed, setDatePickerIsClosed] = useState(false);
   const isNotPhysicalID = !!(values.documentType !== 1 && values.documentType);
   const currentDocumentType = documentTypesOptions.find(
     data => data.documentTypeId === values.documentType
@@ -61,6 +63,7 @@ function PersonalData({
     touched.firstName = false;
     touched.lastName = false;
     setData(null);
+    setTypeError('');
     setFieldValue('firstName', '');
     setFieldValue('lastName', '');
     setFieldValue('birthDate', '');
@@ -265,12 +268,15 @@ function PersonalData({
             format="dd/MM/yyyy"
             onBlur={handleBlur}
             variant="inline"
+            onClose={() => {
+              setDatePickerIsClosed(true);
+            }}
             onChange={handleChangePicker}
             disabled={!isNotPhysicalID}
             inputVariant="outlined"
-            maxDate={new Date()}
-            error={touched.birthDate && !!errors.birthDate}
-            helperText={touched.birthDate && !!errors.birthDate ? errors.birthDate : ''}
+            error={datePickerIsClosed && Boolean(errors.birthDate)}
+            helperText={datePickerIsClosed && errors.birthDate}
+            maxDate={addYears(new Date(), -18)}
             formControlProps={{ margin: 'normal' }}
           />
         </Paper>
