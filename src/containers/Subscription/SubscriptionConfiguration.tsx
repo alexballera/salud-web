@@ -31,10 +31,8 @@ const useStyles = makeStyles((theme: Theme) =>
       fontFamily: 'Poppins-Regular',
       width: '100%',
       '&:hover': {
-        color: theme.palette.action.hover,
-        '& svg': {
-          color: theme.palette.action.hover
-        }
+        opacity: '0.6',
+        color: theme.palette.primary.dark
       }
     },
     divider: {
