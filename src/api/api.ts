@@ -40,7 +40,7 @@ const api = {
     return api.provider().account.get();
   },
 
-  createSession: (email, password) => {
+  createSession: (email: string, password: string): Promise<Models.Session> => {
     return api.provider().account.createSession(email, password);
   },
 

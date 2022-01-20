@@ -27,6 +27,7 @@ type Props = {
   helperText: string;
   labelProps?: FormLabelProps;
   errorType?: string;
+  handleLblError?: boolean;
   formControlProps?: { 'data-testid'?: string } & FormControlProps;
 } & OutlinedInputProps;
 
@@ -37,6 +38,7 @@ function CustomTextField({
   helperText,
   formControlProps,
   errorType,
+  handleLblError,
   ...props
 }: Props): JSX.Element {
   const { t } = useTranslation(NAMESPACE_KEY);
@@ -79,9 +81,15 @@ function CustomTextField({
     };
     return type[val] || type['default'];
   };
+
   return (
     <FormControl fullWidth {...formControlProps}>
-      <FormLabel htmlFor={props.id} style={{ marginBottom: 10 }} {...labelProps}>
+      <FormLabel
+        htmlFor={props.id}
+        error={(props.error || errorType) && handleLblError}
+        style={{ marginBottom: 10 }}
+        {...labelProps}
+      >
         {label}
       </FormLabel>
       <OutlinedInput {...props} type={handlerType()} endAdornment={_renderEndAdornment()} />

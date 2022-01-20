@@ -67,7 +67,7 @@ export const esGlobals = {
     go_help: 'Ir a ayuda',
     lastname: 'Apellidos',
     name: 'Nombre',
-    no_register: '¿Aún no está registrado en OMNiSalud?',
+    no_register: '¿Aún no estás registrado en Ospi?',
     sms: 'SMS',
     terms: 'Términos y condiciones',
     same_residence: 'Igual que mi domicilio',
@@ -117,6 +117,13 @@ export const esGlobals = {
       change_description: 'Ingresá tu nuevo número de teléfono para actualizarlo en la plataforma',
       actual: 'Número de teléfono actual',
       phone: 'Número de teléfono'
+    }
+  },
+
+  responses: {
+    signin: {
+      error_400: 'Este usuario no existe',
+      error_401: 'Los datos brindados no coinciden'
     }
   }
 };
