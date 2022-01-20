@@ -27,6 +27,7 @@ import LoginStyles from '../../styles/js/LoginPageStyles.module';
 /// STYLES & TYPES END
 
 /// SERVICES
+import api from '../../api/api';
 import { getPersonalData } from '../../services/getPersonalData.service';
 import { loginService, setDataToLocalstorage } from '../../services/auth.service';
 /// SERVICES END
@@ -66,7 +67,21 @@ function LoginPage({
       )
   });
 
-  const _handleSubmit = (email: string, password: string) => {
+  const _handleSubmit = async (email: string, password: string) => {
+    try {
+      await api.createSession(email, password);
+      const data = await api.getAccount();
+      // TODO: Change all this arguments types, we need remove all [as any]
+      handleLogin(data as any);
+      setDataToLocalstorage('user', data as any);
+      handleError(false);
+      router.replace('/main');
+    } catch (e) {
+      handleError(true, `${t('message.error.submit', { ns: 'forms' })}`);
+    }
+  };
+
+  const _oldHandleSubmit = (email: string, password: string) => {
     handleLoading(true);
     loginService(email, password)
       .then(response => {

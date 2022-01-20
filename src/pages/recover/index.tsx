@@ -25,6 +25,7 @@ import { NAMESPACE_KEY } from '../../i18n/globals/i18n';
 /// CONTEXT END
 
 /// SERVICES
+import api from '../../api/api';
 /// SERVICES END
 
 /// STYLES & TYPES
@@ -122,9 +123,17 @@ function RecoverView(props: IProps): JSX.Element {
     })
   };
 
-  const validationSchema = [EmailData.schema, ValidationData.schema, PasswordData.schema];
+  const validationSchema = [EmailData.schema, PasswordData.schema];
 
-  const _handleSubmit = (values: IFormData) => {
+  const _handleSubmit = async ({ email }: IFormData) => {
+    try {
+      await api.restorePassword(email);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const _oldHandleSubmit = (values: IFormData) => {
     props.handleLoading(true);
     forgotPasswordChangePassword(
       values.email,
@@ -157,7 +166,7 @@ function RecoverView(props: IProps): JSX.Element {
       initialValues={initialValues}
       validationSchema={validationSchema[currentStep]}
       onSubmit={(values: IFormData) => {
-        if (currentStep === 2) _handleSubmit(values);
+        if (currentStep === 1) _handleSubmit(values);
         else setCurrentState(currentStep + 1);
       }}
     >
@@ -168,17 +177,17 @@ function RecoverView(props: IProps): JSX.Element {
             description: `${t('description.recover.forget', { ns: NAMESPACE_KEY })}`,
             component: <EmailDataForm {...formik} />
           },
-          {
-            title: `${t('title.recover.forget', { ns: NAMESPACE_KEY })}`,
-            description: `${t('description.recover.forget', { ns: NAMESPACE_KEY })}`,
-            component: (
-              <ValidationDataForm
-                {...formik}
-                handleLoading={props.handleLoading}
-                handleError={props.handleError}
-              />
-            )
-          },
+          // {
+          //   title: `${t('title.recover.forget', { ns: NAMESPACE_KEY })}`,
+          //   description: `${t('description.recover.forget', { ns: NAMESPACE_KEY })}`,
+          //   component: (
+          //     <ValidationDataForm
+          //       {...formik}
+          //       handleLoading={props.handleLoading}
+          //       handleError={props.handleError}
+          //     />
+          //   )
+          // },
           {
             title: `${t('title.recover.forget', { ns: NAMESPACE_KEY })}`,
             description: `${t('description.recover.forget', { ns: NAMESPACE_KEY })}`,
@@ -202,8 +211,8 @@ function RecoverView(props: IProps): JSX.Element {
                       {
                         {
                           0: `${t('button.send_email', { ns: NAMESPACE_KEY })}`,
-                          1: `${t('button.continue', { ns: NAMESPACE_KEY })}`,
-                          2: `${t('button.save_changes', { ns: NAMESPACE_KEY })}`
+                          // 1: `${t('button.continue', { ns: NAMESPACE_KEY })}`,
+                          1: `${t('button.save_changes', { ns: NAMESPACE_KEY })}`
                         }[currentStep]
                       }
                     </Button>

@@ -9,6 +9,7 @@ import * as yup from 'yup';
 /// CONTEXT
 import { withAppContext } from '../../context/index';
 /// SERVICES
+import api from '../../api/api';
 import { signUp, setDataToLocalstorage } from '../../services/auth.service';
 /// TYPES
 import { IFormData, IProps } from '../../containers/SignUp/index.types';
@@ -228,7 +229,48 @@ function SignUpView({
     CredentialDataValidations.schema
   ];
 
-  const onSubmit = (values: IFormData) => {
+  const onSubmit = async (values: IFormData) => {
+    const { email, password, firstName, lastName } = values;
+    if (currentStep === 2) {
+      setLoading(true);
+      try {
+        alert();
+        // TODO: Send object as argument to createAccount
+        const user = await api.createAccount(
+          'unique()',
+          email,
+          password,
+          `${firstName} ${lastName}`
+        );
+
+        await api.createSession(email, password);
+
+        await api.createPatient({
+          documentType: values.documentType.toString(),
+          documentNumber: values.documentNumber,
+          birthDate: values.birthDate,
+          gender: values.gender,
+          phoneNumbers: [values.mobilePhone1],
+          province: values.province.codigo.toString(),
+          canton: values.canton.codigo.toString(),
+          district: values.district.codigo.toString(),
+          userId: user.$id
+        });
+
+        setLoading(false);
+        handleLogin(user as any);
+        setDataToLocalstorage('user', user as any);
+        router.replace('/validate_code');
+      } catch (e) {
+        console.log(e);
+        setLoading(false);
+      }
+      return;
+    }
+    setCurrentState(currentStep + 1);
+  };
+
+  const oldOnSubmit = (values: IFormData) => {
     if (currentStep === 2) {
       setLoading(true);
       const body: ISignUpBody = {
