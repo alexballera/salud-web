@@ -122,7 +122,7 @@ export const esGlobals = {
 
   responses: {
     signin: {
-      error_400: 'Este usuario no existe',
+      error_400: 'Los datos brindados no coinciden',
       error_401: 'Los datos brindados no coinciden'
     }
   }

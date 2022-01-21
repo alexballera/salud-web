@@ -1,7 +1,7 @@
 /// BASE IMPORTS
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikErrors, FormikProps } from 'formik';
 import Link from 'next/link';
 import * as yup from 'yup';
 /// BASE IMPORTS
@@ -30,7 +30,7 @@ import LoginStyles from '../../styles/js/LoginPageStyles.module';
 
 /// SERVICES
 import api from '../../api/api';
-import { loginService, setDataToLocalstorage } from '../../services/auth.service';
+import { setDataToLocalstorage } from '../../services/auth.service';
 /// SERVICES END
 
 /// LAYOUT
@@ -41,7 +41,7 @@ import Layout from '../../layouts/LayoutFormBasic';
 const INITIAL_STATE: TLoginData = { email: '', password: '' };
 /// FORM STATES & VALIDATIONS END
 
-function LoginPage({ handleLogin, handleLoading }: TProps): JSX.Element {
+function LoginPage({ fetching, handleLogin, handleLoading }: TProps): JSX.Element {
   const { t } = useTranslation([i18Global, i18Forms]);
   const [error, setError] = useState<string | null>(null);
   const classes = LoginStyles();
@@ -52,31 +52,26 @@ function LoginPage({ handleLogin, handleLoading }: TProps): JSX.Element {
       .string()
       .required(`${t('validations.email.required', { ns: i18Forms })}`)
       .email(`${t('validations.email.incorrect', { ns: i18Forms })}`),
-    password: yup
-      .string()
-      .required(`${t('validations.password.required_short', { ns: i18Forms })}`)
-      .min(8, `${t('validations.password.min_8', { ns: i18Forms })}`)
+    password: yup.string().required(`${t('validations.password.required', { ns: i18Forms })}`)
   });
 
   const handleSubmit = async ({ email, password }: TLoginData) => {
     try {
-      setError(null);
       handleLoading(true);
       const session = await api.createSession(email, password);
-      console.log('session', session);
       // TODO: Change all this arguments types, we need remove all [as any]
       handleLogin(session as any);
       setDataToLocalstorage('user', session as any);
-      router.replace('/main');
       handleLoading(false);
+      router.replace('/main');
     } catch (e) {
-      setError(mapErrors(e.code));
+      setError(mapFetchErrors(e.code));
     } finally {
       handleLoading && handleLoading(false);
     }
   };
 
-  const mapErrors = (code: -1) => {
+  const mapFetchErrors = (code: -1) => {
     const i18nKey = `responses.signin.error_${code}`;
     if (i18n.exists(i18nKey, { ns: i18Global })) {
       return t(i18nKey, { ns: i18Global });
@@ -84,16 +79,39 @@ function LoginPage({ handleLogin, handleLoading }: TProps): JSX.Element {
     return t('message.error.submit', { ns: i18Forms });
   };
 
+  const mapPopUpErrors = (values: TLoginData, errors: FormikErrors<TLoginData>) => {
+    const { email, password } = values;
+    if (!email.length && !password.length && Object.values(errors).length) {
+      setError(t('message.error.fields_required', { ns: i18Forms }));
+      return;
+    }
+    if (!email.length && password.length) {
+      setError(t('validations.email.required', { ns: i18Forms }));
+      return;
+    }
+    if (email.length && !password.length) {
+      setError(t('validations.password.required', { ns: i18Forms }));
+      return;
+    }
+    if (errors.email === t('validations.email.incorrect', { ns: i18Forms })) {
+      setError(t('validations.email.incorrect', { ns: i18Forms }));
+    }
+  };
+
   return (
     <Layout
       form={
         <Box className={classes.mainContainer}>
-          <SnackbarAlert
-            message={error}
-            severity="error"
-            duration={20000}
-            removeMessage={setError}
-          />
+          <Hidden only={['md', 'lg', 'xl']}>
+            <Box mb={2}>
+              <SnackbarAlert
+                message={error}
+                severity="error"
+                duration={20000}
+                removeMessage={setError}
+              />
+            </Box>
+          </Hidden>
           <TitleContent titleWithSubtitle title={t('title.login_title', { ns: i18Global })} />
           <TitleContent paragraph title={t('description.login', { ns: i18Global })} />
           <Formik
@@ -112,15 +130,21 @@ function LoginPage({ handleLogin, handleLoading }: TProps): JSX.Element {
             }: FormikProps<TLoginData>) => {
               useEffect(() => {
                 validateForm();
-                const { email, password } = values;
-                if (!email.length && !password.length && Object.values(errors).length) {
-                  setError('campo requierido');
-                }
-                console.log('erros', errors);
+                mapPopUpErrors(values, errors);
               }, [submitCount]);
 
               return (
-                <form onSubmit={formikSubmit}>
+                <form onSubmit={formikSubmit} noValidate={true}>
+                  <Hidden only={['xs', 'sm']}>
+                    <SnackbarAlert
+                      mb={2}
+                      mt={2}
+                      message={error}
+                      severity="error"
+                      duration={20000}
+                      removeMessage={setError}
+                    />
+                  </Hidden>
                   <Box>
                     <TextField
                       inputProps={{
@@ -141,7 +165,6 @@ function LoginPage({ handleLogin, handleLoading }: TProps): JSX.Element {
                   <Box>
                     <TextField
                       inputProps={{
-                        maxLength: 16,
                         'aria-label': `${t('label.password.password', {
                           ns: i18Global
                         })}`
@@ -178,7 +201,7 @@ function LoginPage({ handleLogin, handleLoading }: TProps): JSX.Element {
                       variant="contained"
                       fullWidth={true}
                       color="primary"
-                      // disabled={isLoading || Object.keys(errors).length > 0}
+                      disabled={fetching}
                       data-testid="login-button"
                       className={`${classes.button} ${classes.buttonSubmit}`}
                     >

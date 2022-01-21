@@ -122,7 +122,7 @@ export const enGlobals = {
 
   responses: {
     signin: {
-      error_400: "User doesn't exist",
+      error_400: 'The data provided does not match',
       error_401: 'The data provided does not match'
     }
   }

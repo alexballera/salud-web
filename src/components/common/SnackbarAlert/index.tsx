@@ -14,9 +14,12 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(() => ({
   snackbar: {
     zIndex: 1,
+    bottom: 0,
     width: '100%',
     position: 'relative',
-    display: 'block'
+    display: 'block',
+    left: 0,
+    transform: 'none'
   }
 }));
 
@@ -25,13 +28,17 @@ type TProps = {
   message?: string;
   severity: AlertProps['severity'];
   removeMessage: Dispatch<SetStateAction<string>>;
+  mt?: number;
+  mb?: number;
 };
 
 export default function SnackbarAlert({
   severity,
   message,
   duration,
-  removeMessage
+  removeMessage,
+  mt = 0,
+  mb = 0
 }: TProps): JSX.Element {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -49,7 +56,7 @@ export default function SnackbarAlert({
   };
 
   return (
-    <Box>
+    <Box mb={open ? mb : 0} mt={open ? mt : 0}>
       <Snackbar
         className={classes.snackbar}
         open={open}
