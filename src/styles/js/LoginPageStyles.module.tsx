@@ -4,19 +4,17 @@ import theme from './theme';
 
 const LoginStyles = makeStyles(() =>
   createStyles({
-    container: {
+    mainContainer: {
+      width: '100%',
+      padding: 24,
       [theme.breakpoints.up('md')]: {
-        justifyContent: 'flex-end'
+        padding: 0,
+        width: 461
       }
     },
-    containerButton: {
-      bottom: 0,
-      position: 'absolute',
-      width: '100%'
-    },
     recoverContainer: {
-      marginTop: 8,
-      textAlign: 'center',
+      marginTop: 0,
+      textAlign: 'right',
       '& span': {
         marginRight: 8
       },
@@ -28,12 +26,6 @@ const LoginStyles = makeStyles(() =>
         textAlign: 'right'
       }
     },
-    containerTextRegister: {
-      textAlign: 'center',
-      [theme.breakpoints.up('md')]: {
-        textAlign: 'left'
-      }
-    },
     button: {
       height: 40,
       textTransform: 'inherit'
@@ -43,20 +35,11 @@ const LoginStyles = makeStyles(() =>
         width: '33%'
       }
     },
-    containerButtonSignup: {
-      [theme.breakpoints.up('md')]: {
-        alignItems: 'center',
-        display: 'flex',
-        justifyContent: 'space-between',
-        '& button': {
-          width: '33%'
-        }
-      }
-    },
     divider: {
       height: '2px !important',
-      marginBottom: 16,
-      marginTop: 16,
+      background: '#979797',
+      marginBottom: 32,
+      marginTop: 32,
       width: '100%'
     }
   })

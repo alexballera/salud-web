@@ -8,6 +8,7 @@ export const enForms = {
       is_register: 'Este correo ya fue registrado previamente'
     },
     error: {
+      fields_required: 'Mandatory fields, you must fill them in to continue',
       general_fetch:
         'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.',
       submit:
@@ -22,7 +23,7 @@ export const enForms = {
   validations: {
     required: 'Campo requerido',
     date_invalid: 'Fecha inválida',
-    max_18_age: 'Para afiliarse a Ospi debe de ser mayor de edad.',
+    max_18_age: 'Para afiliarse a Ospi debe de ser mayor de edad',
     min_3: 'Número de caracteres minimos 3',
     min_8: 'Número de caracteres minimos 8',
     min_9: 'Número de caracteres minimos 9',
@@ -30,8 +31,8 @@ export const enForms = {
     min_9_max_20: 'Número de caracteres mínimos para Pasaporte 9, máx 20',
 
     password: {
-      required: 'Debes especificar una contraseña.',
-      required_short: 'Contraseña requerida.',
+      required: 'Password required',
+      required_short: 'Contraseña requerida',
       min_8: 'La contraseña debe ser de al menos 8 caracteres',
       max_16: 'La contraseña debe ser máximo de 16 caracteres',
       regex:
@@ -44,9 +45,9 @@ export const enForms = {
     },
 
     email: {
-      required: 'Email requerido.',
-      invalid: 'Email inválido.',
-      incorrect: 'Formato de correo incorrecto.'
+      required: 'Email required',
+      invalid: 'Email inválido',
+      incorrect: 'Invalid email format'
     }
   }
 };
