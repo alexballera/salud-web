@@ -13,12 +13,14 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 /// TYPES
 import { FormControlProps, FormLabelProps, OutlinedInputProps } from '@material-ui/core';
-
 /// TYPES END
-/// i18n
-import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../../../i18n/forms/i18n';
-/// i18n END
+
+// STYLES
+/// STYLES END
+
+// STYLES
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+/// STYLES END
 
 type Props = {
   label: string;
@@ -31,6 +33,14 @@ type Props = {
   formControlProps?: { 'data-testid'?: string } & FormControlProps;
 } & OutlinedInputProps;
 
+const useStyles = makeStyles(() =>
+  createStyles({
+    label: {
+      marginBottom: 10
+    }
+  })
+);
+
 function CustomTextField({
   label,
   loading,
@@ -41,9 +51,8 @@ function CustomTextField({
   handleLblError,
   ...props
 }: Props): JSX.Element {
-  const { t } = useTranslation(NAMESPACE_KEY);
+  const classes = useStyles();
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handlerType = () => {
     switch (props.type) {
@@ -74,28 +83,20 @@ function CustomTextField({
     }
   };
 
-  const showErrorTypeMessage = (val: string) => {
-    const type = {
-      NotFound: `${t('validations.document.invalid')}`,
-      default: ''
-    };
-    return type[val] || type['default'];
-  };
-
   return (
     <FormControl fullWidth {...formControlProps}>
       <FormLabel
         htmlFor={props.id}
         error={(props.error || errorType) && handleLblError}
-        style={{ marginBottom: 10 }}
+        className={classes.label}
         {...labelProps}
       >
         {label}
       </FormLabel>
       <OutlinedInput {...props} type={handlerType()} endAdornment={_renderEndAdornment()} />
-      {(props.error || errorType) && (
+      {props.error && (
         <FormHelperText error component="div">
-          {helperText || showErrorTypeMessage(errorType)}
+          {helperText}
         </FormHelperText>
       )}
     </FormControl>

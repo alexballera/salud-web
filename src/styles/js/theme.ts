@@ -71,6 +71,16 @@ const defaultTheme: ThemeOptions = {
         color: secondaryMainColor,
         backgroundColor: secondaryBackgroundLightColor
       }
+    },
+    MuiButton: {
+      label: {
+        textTransform: 'initial'
+      }
+    },
+    MuiOutlinedInput: {
+      notchedOutline: {
+        top: 0
+      }
     }
   }
 };

@@ -5,15 +5,12 @@ import { useRouter } from 'next/router';
 import _ from 'lodash';
 
 /// MATERIAL UI
-import { Box, Button, Grid } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
-import EmailDataForm from '../../containers/Recover/components/EmailData';
-import ValidationDataForm from '../../containers/Recover/components/ValidationData';
 import PasswordDataForm from '../../containers/Recover/components/PasswordData';
 import { withAppContext } from '../../context';
-import { forgotPasswordChangePassword } from '../../services/auth.service';
 /// OWN COMPONENTS END
 
 /// i18n
@@ -72,10 +69,8 @@ const initialValues: any = {
   newPasswordConfirm: ''
 };
 
-function RecoverView(props: IProps): JSX.Element {
-  const classes = useStyles();
+function RecoverView(): JSX.Element {
   const { t } = useTranslation([NAMESPACE_KEY, 'forms']);
-  const [currentStep, setCurrentState] = useState<number>(0);
 
   const router = useRouter();
 

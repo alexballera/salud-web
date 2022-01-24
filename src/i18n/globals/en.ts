@@ -16,7 +16,7 @@ export const enGlobals = {
     reminder: 'Recordatorios',
     edit_beneficiary_title: 'Editar beneficiario',
     recover: {
-      forget: 'Recuperá tu contraseña'
+      forget: 'Recover your password'
     }
   },
 
@@ -32,12 +32,12 @@ export const enGlobals = {
     edit_beneficiary: 'Información personal',
     steps_header: 'Paso {{step}} de {{totalSteps}}',
     recover: {
-      forget: 'Para recuperar su contraseña requerimos verificar su identidad'
+      forget: 'To recover your password we need to verify your identity.'
     }
   },
 
   button: {
-    back: 'Volver',
+    back: 'Go back',
     cancel: 'Cancelar',
     continue: 'Continuar',
     create_account: 'Crear cuenta',
@@ -46,6 +46,7 @@ export const enGlobals = {
     enter: 'Ingresar',
     exit: 'Salir',
     following: 'Siguiente',
+    goto_login: 'Go to login',
     login: 'Iniciar sesión',
     logout: 'Cerrar sesión',
     logout_confirm: 'Si, cerrar sesión',
@@ -54,7 +55,7 @@ export const enGlobals = {
     save: 'Guardar',
     save_changes: 'Guardar cambios',
     send: 'Enviar',
-    send_email: 'Enviar correo',
+    send_email: 'Send email',
     remove_beneficiary: 'Eliminar beneficiario'
   },
 
@@ -77,7 +78,7 @@ export const enGlobals = {
     email: {
       actual: 'Correo electrónico actual',
       change_description: 'Ingresá tu nuevo correo electrónico para actualizarlo en la plataforma',
-      email: 'Correo electrónico',
+      email: 'Email',
       email_en: 'Email',
       new: 'Cambiar correo electrónico'
     },

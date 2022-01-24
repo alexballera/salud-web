@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 /// MATERIAL - UI
-import { Box, IconButton, Snackbar } from '@material-ui/core';
+import { Box, Hidden, IconButton, Snackbar } from '@material-ui/core';
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 /// MATERIAL - UI END
@@ -39,10 +39,12 @@ export default withAppContext(function Layout({
   return (
     <>
       <Navbar />
-      <Notifications
-        {...notificationState}
-        onClose={() => handleNotifications({ ...notificationState, open: false })}
-      />
+      <Hidden only={['md', 'lg', 'xl']}>
+        <Notifications
+          {...notificationState}
+          onClose={() => handleNotifications({ ...notificationState, open: false })}
+        />
+      </Hidden>
       <Box component="main" data-testid="main" className={classes.root}>
         {children}
       </Box>
@@ -53,13 +55,6 @@ export default withAppContext(function Layout({
         onClose={() => handleError(false, '', errorState.type)}
         autoHideDuration={7000}
       >
-        {/* TODO Eliminar texto comentado y el componente Alert
-        <Alert variant={errorState.type}>
-          {errorState.type === 'error' ? <ErrorOutlineIcon /> : <CheckCircleOutlineIcon />}
-          <Typography variant="body1" aria-live="assertive" className={classes.alertText}>
-            {errorState?.message}
-          </Typography>
-        </Alert> */}
         <Alert
           severity={errorState.type}
           action={

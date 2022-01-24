@@ -3296,6 +3296,14 @@
     "normalize-path" "^3.0.0"
     "picomatch" "^2.0.4"
 
+"appwrite@^6.0.1":
+  "integrity" "sha512-6FNaQvbtzn7rabo5LSrcKt/flRoG7Fezdzis1ToMGFI9E4zMpLvAXI0AQry4oFpCJpN2gHajYOktoRLOJGU4bQ=="
+  "resolved" "https://registry.npmjs.org/appwrite/-/appwrite-6.0.1.tgz"
+  "version" "6.0.1"
+  dependencies:
+    "cross-fetch" "3.1.4"
+    "isomorphic-form-data" "2.0.0"
+
 "aproba@^1.0.3":
   "integrity" "sha512-Y9J6ZjXtoYh8RnXVCMOU/ttDmk1aBjunq9vO0ta5x85WDQiQfUF9sIPBITdbiiIVcBo03Hi3jMxigBtsddlXRw=="
   "resolved" "https://registry.npmjs.org/aproba/-/aproba-1.2.0.tgz"
@@ -4321,7 +4329,7 @@
   "resolved" "https://registry.npmjs.org/colorette/-/colorette-1.4.0.tgz"
   "version" "1.4.0"
 
-"combined-stream@^1.0.8":
+"combined-stream@^1.0.6", "combined-stream@^1.0.8":
   "integrity" "sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg=="
   "resolved" "https://registry.npmjs.org/combined-stream/-/combined-stream-1.0.8.tgz"
   "version" "1.0.8"
@@ -4522,7 +4530,7 @@
     "safe-buffer" "^5.0.1"
     "sha.js" "^2.4.8"
 
-"cross-fetch@^3.1.4":
+"cross-fetch@^3.1.4", "cross-fetch@3.1.4":
   "integrity" "sha512-1eAtFWdIubi6T4XPy6ei9iUFoKpUkIF971QLN8lIvvvwueI65+Nw5haMNKUwfJxabqlIIDODJKGrQ66gxC0PbQ=="
   "resolved" "https://registry.npmjs.org/cross-fetch/-/cross-fetch-3.1.4.tgz"
   "version" "3.1.4"
@@ -5704,6 +5712,15 @@
   "resolved" "https://registry.npmjs.org/foreach/-/foreach-2.0.5.tgz"
   "version" "2.0.5"
 
+"form-data@^2.3.2":
+  "integrity" "sha512-m21N3WOmEEURgk6B9GLOE4RuWOFf28Lhh9qGYeNlGq4VDXUlJy2th2slBNU8Gp8EzloYZOibZJ7t5ecIrFSjVA=="
+  "resolved" "https://registry.npmjs.org/form-data/-/form-data-2.5.1.tgz"
+  "version" "2.5.1"
+  dependencies:
+    "asynckit" "^0.4.0"
+    "combined-stream" "^1.0.6"
+    "mime-types" "^2.1.12"
+
 "form-data@^3.0.0":
   "integrity" "sha512-RHkBKtLWUVwd7SqRIvCZMEvAMoGUp0XU+seQiZejj0COz3RI3hWP4sCv3gZWWLjJTd7rGwcsF5eKZGii0r/hbg=="
   "resolved" "https://registry.npmjs.org/form-data/-/form-data-3.0.1.tgz"
@@ -6790,6 +6807,13 @@
   "integrity" "sha1-TkMekrEalzFjaqH5yNHMvP2reN8="
   "resolved" "https://registry.npmjs.org/isobject/-/isobject-3.0.1.tgz"
   "version" "3.0.1"
+
+"isomorphic-form-data@2.0.0":
+  "integrity" "sha512-TYgVnXWeESVmQSg4GLVbalmQ+B4NPi/H4eWxqALKj63KsUrcu301YDjBqaOw3h+cbak7Na4Xyps3BiptHtxTfg=="
+  "resolved" "https://registry.npmjs.org/isomorphic-form-data/-/isomorphic-form-data-2.0.0.tgz"
+  "version" "2.0.0"
+  dependencies:
+    "form-data" "^2.3.2"
 
 "istanbul-lib-coverage@^3.0.0":
   "integrity" "sha512-UiUIqxMgRDET6eR+o5HbfRYP1l0hqkWOs7vNxC/mggutCMUIhWMm8gAHb8tHlyfD3/l6rlgNA5cKdDzEAf6hEg=="

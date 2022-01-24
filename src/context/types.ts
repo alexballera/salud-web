@@ -14,6 +14,7 @@ export type INotificationProps = {
   open: boolean;
   message: string;
   severity: INotificationTypes;
+  duration?: number;
 };
 
 export type INotificationTypes = 'success' | 'error' | 'info' | 'warning';

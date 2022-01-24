@@ -32,7 +32,7 @@ export const esGlobals = {
     edit_beneficiary: 'Información personal',
     steps_header: 'Paso {{step}} de {{totalSteps}}',
     recover: {
-      forget: 'Para recuperar su contraseña requerimos verificar su identidad'
+      forget: 'Para recuperar tu contraseña requerimos verificar tu identidad.'
     }
   },
 
@@ -46,6 +46,7 @@ export const esGlobals = {
     enter: 'Ingresar',
     exit: 'Salir',
     following: 'Siguiente',
+    goto_login: 'Ir a inicio de sesión',
     login: 'Iniciar sesión',
     logout: 'Cerrar sesión',
     logout_confirm: 'Si, cerrar sesión',

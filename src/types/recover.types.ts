@@ -1,14 +1,10 @@
-/// TYPES
-export type IFormData = {
-  email: string;
-  pinCode: string;
-  validPin: string;
-  newPassword: string;
-  newPasswordConfirm: string;
-};
+import { INotificationProps } from '../context/types';
 
-export type IEmailDataForm = {
-  email: string;
+/// TYPES
+export type IProps = {
+  email?: string;
+  handleLoading?: (loading: boolean) => void;
+  handleNotifications?: (props: INotificationProps) => void;
 };
 
 export type IValidationDataForm = {

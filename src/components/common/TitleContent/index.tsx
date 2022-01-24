@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     subTitle: {
       color: 'rgba(0, 0, 0, 0.87)',
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: 'normal',
       marginBottom: 8,
       marginTop: 8

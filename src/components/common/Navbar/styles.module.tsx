@@ -7,9 +7,6 @@ const navbarStyles = makeStyles({
   buttonAction: {
     textAlign: 'right'
   },
-  toolbarDesktop: {
-    backgroundColor: 'rgb(250, 250, 250)'
-  },
   name: {
     color: 'rgba(0, 0, 0, 0.87)',
     fontSize: 16,

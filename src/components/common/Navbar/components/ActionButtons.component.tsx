@@ -58,7 +58,7 @@ const ActionButtons = ({
         endIcon={<CloseIcon />}
         className={classes.button}
       >
-        {t('button.exit', { ns: NAMESPACE_KEY })}
+        {t('button.back', { ns: NAMESPACE_KEY })}
       </Button>
     );
   }

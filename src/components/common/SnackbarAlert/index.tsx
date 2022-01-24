@@ -63,7 +63,7 @@ export default function SnackbarAlert({
         autoHideDuration={duration}
         onClose={handleClose}
       >
-        <Alert onClose={handleClose} severity={severity}>
+        <Alert onClose={handleClose} severity={severity} action={false}>
           {message}
         </Alert>
       </Snackbar>

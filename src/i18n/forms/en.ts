@@ -2,10 +2,12 @@ export const enForms = {
   message: {
     email: {
       required: 'Debes especificar un email.',
-      not_found: 'Correo electrónico no encontrado',
+      not_found: 'No user has been found that matches the email provided',
+      email_not_found: 'Email not found',
       not_received: '¿No recibiste el correo?',
       not_register: 'El correo indicado no está registrado, ¿desea registrarse?',
-      is_register: 'Este correo ya fue registrado previamente'
+      is_register: 'Este correo ya fue registrado previamente',
+      too_many_request: 'You have exceeded the limit, please try again later'
     },
     error: {
       fields_required: 'Mandatory fields, you must fill them in to continue',
@@ -46,7 +48,7 @@ export const enForms = {
 
     email: {
       required: 'Email required',
-      invalid: 'Email inválido',
+      invalid: 'Invalid email',
       incorrect: 'Invalid email format'
     }
   }

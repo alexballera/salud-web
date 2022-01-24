@@ -2,10 +2,12 @@ export const esForms = {
   message: {
     email: {
       required: 'Debes especificar un email.',
-      not_found: 'Correo electrónico no encontrado',
+      not_found: 'No se ha encontrado ningún usuario que coincida con el correo brindado',
+      email_not_found: 'Correo electrónico no encontrado',
       not_received: '¿No recibiste el correo?',
       not_register: 'El correo indicado no está registrado, ¿desea registrarse?',
-      is_register: 'Este correo ya fue registrado previamente'
+      is_register: 'Este correo ya fue registrado previamente',
+      too_many_request: 'Has superado el límite, por favor inténtalo más tarde.'
     },
     error: {
       fields_required: 'Campos obligatorios, debés de rellenarlos para continuar',

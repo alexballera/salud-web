@@ -1,231 +1,159 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Form, Formik } from 'formik';
 import * as yup from 'yup';
-import { useRouter } from 'next/router';
-import _ from 'lodash';
 
 /// MATERIAL UI
-import { Box, Button, Grid } from '@material-ui/core';
+import { Box, Button, Collapse, Grid } from '@material-ui/core';
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
-import EmailDataForm from '../../containers/Recover/components/EmailData';
-import ValidationDataForm from '../../containers/Recover/components/ValidationData';
-import PasswordDataForm from '../../containers/Recover/components/PasswordData';
-import { withAppContext } from '../../context';
-import { forgotPasswordChangePassword } from '../../services/auth.service';
+import TextField from '../../components/common/TextField';
+import Layout from '../../layouts/LayoutFormBasic';
+import { TitleContent } from '../../components/common/TitleContent';
 /// OWN COMPONENTS END
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../../i18n/globals/i18n';
+import { NAMESPACE_KEY as i18Global } from '../../i18n/globals/i18n';
+import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
 /// i18n END
 
 /// CONTEXT
+import { withAppContext } from '../../context';
 /// CONTEXT END
 
 /// SERVICES
 import api from '../../api/api';
 /// SERVICES END
 
-/// STYLES & TYPES
-import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
-/// STYLES & TYPES END
-
-/// FORM STATES & VALIDATIONS
-/// FORM STATES & VALIDATIONS END
-
 /// TYPES
-import { IFormData } from '../../types/recover.types';
-import Wizard, { IWizardDataSourceItem } from '../../components/common/Wizard';
-
-type IProps = {
-  handleLoading: (loading: boolean) => void;
-  handleError: (open: boolean, message?: string, type?: 'success' | 'error' | 'warning') => void;
-};
+import { IProps } from '../../types/recover.types';
 /// TYPES END
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    containerButton: {
-      backgroundColor: 'white',
-      bottom: 6,
-      left: 4,
-      padding: 36,
-      position: 'fixed',
-      zIndex: 1000,
-      width: '100%',
-      [theme.breakpoints.up('md')]: {
-        paddingLeft: 'calc(20% + 24px)',
-        paddingRight: 'calc(20% + 24px)'
-      }
-    }
-  })
-);
+/// STYLES
+import recoverStyles from '../../styles/js/RecoverPageStyles.module';
+/// STYLES END
 
-const initialValues: IFormData = {
-  email: '',
-  pinCode: '',
-  validPin: '0',
-  newPassword: '',
-  newPasswordConfirm: ''
+/// FORM STATES & VALIDATIONS
+const initialValues: IProps = {
+  email: ''
 };
+/// FORM STATES & VALIDATIONS END
 
-function RecoverView(props: IProps): JSX.Element {
-  const classes = useStyles();
-  const { t } = useTranslation([NAMESPACE_KEY, 'forms']);
-  const [currentStep, setCurrentState] = useState<number>(0);
-
+function RecoverView({ handleLoading, handleNotifications }: IProps): JSX.Element {
+  const classes = recoverStyles();
+  const { t } = useTranslation([i18Global, i18Forms]);
+  const [msgError, setMsgError] = useState<string>();
+  const [codeError, setCodeError] = useState<number>();
   const router = useRouter();
 
-  const EmailData = {
-    name: 'EmailStep',
+  const VALIDATIONS = {
     schema: yup.object().shape({
-      email: yup
-        .string()
-        .email(`${t('validations.email.incorrect', { ns: 'forms' })}`)
-        .matches(/(.*\.[a-zA-Z]{2,}){1,}$/, `${t('validations.email.incorrect', { ns: 'forms' })}`)
-        .required(`${t('validations.email.required', { ns: 'forms' })}`)
+      email: yup.string().email(`${t('validations.email.incorrect', { ns: i18Forms })}`)
     })
   };
 
-  const ValidationData = {
-    name: 'ValidationStep',
-    schema: yup.object().shape({
-      pinCode: yup
-        .string()
-        .required(`${t('validations.code.required', { ns: 'forms' })}`)
-        .min(6, `${t('validations.code.min', { ns: 'forms' })}`)
-        .matches(/^[0-9]{0,6}$/, `${t('validations.code.number', { ns: 'forms' })}`),
-      validPin: yup.string().equals(['1'], `${t('validations.code.incorrect', { ns: 'forms' })}`)
-    })
+  const getErrorMessage = (code: number): string => {
+    const message = {
+      400: t('validations.email.invalid', { ns: i18Forms }),
+      404: t('message.email.not_found', { ns: i18Forms }),
+      429: t('message.email.too_many_request', { ns: i18Forms })
+    };
+    setCodeError(code);
+    return message[code];
   };
 
-  const PasswordData = {
-    name: 'PasswordStep',
-    schema: yup.object().shape({
-      newPassword: yup
-        .string()
-        .required(`${t('validations.password.required_short', { ns: 'forms' })}`)
-        .min(8, `${t('validations.password.min_8', { ns: 'forms' })}`)
-        .max(16, `${t('validations.password.max_16', { ns: 'forms' })}`)
-        .matches(
-          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
-          `${t('validations.password.regex', { ns: 'forms' })}`
-        ),
-      newPasswordConfirm: yup
-        .string()
-        .oneOf(
-          [yup.ref('newPassword'), null],
-          `${t('validations.password.matched', { ns: 'forms' })}`
-        )
-        .required('Campo Requerido')
-    })
-  };
+  const setErrorMessage = (code: number): void => {
+    switch (code) {
+      case 404:
+        setMsgError(t('message.email.email_not_found', { ns: i18Forms }));
+        break;
 
-  const validationSchema = [EmailData.schema, PasswordData.schema];
-
-  const _handleSubmit = async ({ email }: IFormData) => {
-    try {
-      await api.restorePassword(email);
-    } catch (error) {
-      console.error(error);
+      default:
+        break;
     }
   };
 
-  const _oldHandleSubmit = (values: IFormData) => {
-    props.handleLoading(true);
-    forgotPasswordChangePassword(
-      values.email,
-      values.pinCode,
-      values.newPassword,
-      values.newPasswordConfirm
-    )
-      .then(res => {
-        if (res.data.result.passwordChanged === 1) {
-          props.handleError(
-            true,
-            `${t('message.password.change_success', { ns: 'forms' })}`,
-            'success'
-          );
-          router.replace('/');
-        } else {
-          props.handleError(true, `${t('message.error.submit', { ns: 'forms' })}`);
-        }
+  const handleSubmit = ({ email }: IProps) => {
+    handleLoading(true);
+    api
+      .restorePassword(email)
+      .then(() => {
+        // TODO agregar el path a la vista de feedback al usuario
+        router.replace('validate_code');
       })
       .catch(err => {
-        if (err.response) props.handleError(true, err.response.data.error.message);
-        else props.handleError(true, `${t('message.error.submit', { ns: 'forms' })}`);
+        setErrorMessage(err.code);
+        handleNotifications({
+          open: true,
+          message: getErrorMessage(err.code),
+          severity: 'error'
+        });
       })
-      .finally(() => props.handleLoading(false));
+      .finally(() => handleLoading && handleLoading(false));
   };
 
   return (
-    <Formik
-      validateOnMount
-      initialValues={initialValues}
-      validationSchema={validationSchema[currentStep]}
-      onSubmit={(values: IFormData) => {
-        if (currentStep === 1) _handleSubmit(values);
-        else setCurrentState(currentStep + 1);
-      }}
-    >
-      {formik => {
-        const dataSource: IWizardDataSourceItem[] = [
-          {
-            title: `${t('title.recover.forget', { ns: NAMESPACE_KEY })}`,
-            description: `${t('description.recover.forget', { ns: NAMESPACE_KEY })}`,
-            component: <EmailDataForm {...formik} />
-          },
-          // {
-          //   title: `${t('title.recover.forget', { ns: NAMESPACE_KEY })}`,
-          //   description: `${t('description.recover.forget', { ns: NAMESPACE_KEY })}`,
-          //   component: (
-          //     <ValidationDataForm
-          //       {...formik}
-          //       handleLoading={props.handleLoading}
-          //       handleError={props.handleError}
-          //     />
-          //   )
-          // },
-          {
-            title: `${t('title.recover.forget', { ns: NAMESPACE_KEY })}`,
-            description: `${t('description.recover.forget', { ns: NAMESPACE_KEY })}`,
-            component: <PasswordDataForm {...formik} />
-          }
-        ];
-
-        return (
-          <Form autoComplete="off">
-            <Wizard
-              footer={
+    <Layout
+      header={
+        <Box p={3}>
+          <TitleContent titleWithSubtitle title={t('title.recover.forget', { ns: i18Global })} />
+          <TitleContent paragraph title={t('description.recover.forget', { ns: i18Global })} />
+        </Box>
+      }
+      form={
+        <Formik
+          validateOnMount
+          initialValues={initialValues}
+          validationSchema={VALIDATIONS.schema}
+          onSubmit={handleSubmit}
+        >
+          {formik => {
+            return (
+              <Form autoComplete="off" className={classes.containerForm}>
+                <Box p={3}>
+                  <TextField
+                    fullWidth
+                    id="email"
+                    name="email"
+                    formControlProps={{
+                      'data-testid': 'email-input'
+                    }}
+                    label={t('label.email.email')}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.email}
+                    error={Boolean(codeError)}
+                    onChange={formik.handleChange}
+                    helperText={msgError}
+                    handleLblError
+                  />
+                </Box>
                 <Box p={3} className={classes.containerButton}>
-                  <Grid container item xs={12} md={8}>
+                  <Grid container item sm={12} md={4}>
                     <Button
                       fullWidth
                       type="submit"
                       color="primary"
                       variant="contained"
-                      size="medium"
+                      size="large"
                     >
-                      {
-                        {
-                          0: `${t('button.send_email', { ns: NAMESPACE_KEY })}`,
-                          // 1: `${t('button.continue', { ns: NAMESPACE_KEY })}`,
-                          1: `${t('button.save_changes', { ns: NAMESPACE_KEY })}`
-                        }[currentStep]
-                      }
+                      {t('button.send_email', { ns: i18Global })}
                     </Button>
+                    <Collapse in={Boolean(codeError)} className={classes.containerLink}>
+                      <Link href="/login" passHref>
+                        <a>{t('button.goto_login', { ns: i18Global })}</a>
+                      </Link>
+                    </Collapse>
                   </Grid>
                 </Box>
-              }
-              activeStep={currentStep}
-              dataSource={dataSource}
-            />
-          </Form>
-        );
-      }}
-    </Formik>
+              </Form>
+            );
+          }}
+        </Formik>
+      }
+    />
   );
 }
 

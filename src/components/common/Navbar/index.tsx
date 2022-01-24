@@ -67,7 +67,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
 
   const noActionPathNames = ['/main', '/profile', '/subscriptions', '/preferences', '/help'];
 
-  const exitButtonPathNames = ['/login', '/recover', '/signup'];
+  const exitButtonPathNames = ['/login', '/signup'];
 
   const backButtonPathNames = [
     '/update/phone',
@@ -75,7 +75,8 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
     '/update/email',
     '/preferences/language',
     '/preferences/notifications',
-    '/subscriptions/beneficiaries'
+    '/subscriptions/beneficiaries',
+    '/recover'
   ];
 
   return (
@@ -83,7 +84,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
       {showMenu() && (
         <>
           <Hidden mdUp>
-            <AppBar position="static" color="inherit" elevation={0}>
+            <AppBar position="sticky" color="inherit" elevation={0}>
               <Toolbar>
                 <Grid container justify="center">
                   <Grid container>
@@ -110,8 +111,8 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
             </AppBar>
           </Hidden>
           <Hidden smDown>
-            <AppBar color="inherit" elevation={1}>
-              <Toolbar className={classes.toolbarDesktop}>
+            <AppBar position="sticky" color="inherit" elevation={0}>
+              <Toolbar>
                 <Grid container justify="center">
                   <Grid container>
                     <Grid item xs={6} md={6} container alignItems="center">

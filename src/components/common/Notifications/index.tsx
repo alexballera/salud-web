@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 /// MATERIAL - UI
 import Alert from '@material-ui/lab/Alert';
-import Collapse from '@material-ui/core/Collapse';
-import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { Box, Collapse } from '@material-ui/core';
 /// MATERIAL - UI END
 
 /// TYPES
@@ -14,12 +12,15 @@ type IProps = {
   message: string;
   onClose?: () => void;
   severity: IAlertSeverity;
+  duration?: number;
 };
 /// TYPES END
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      paddingLeft: 24,
+      paddingRight: 24,
       width: '100%',
       '& > * + *': {
         marginTop: theme.spacing(2)
@@ -28,33 +29,24 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function Notifications({ message, ...props }: IProps): JSX.Element {
+function Notifications({ message, severity, onClose, open, duration }: IProps): JSX.Element {
   const classes = useStyles();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (props.open) props?.onClose();
-    }, 10000);
+      if (open) onClose();
+    }, duration);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [props.open]);
+  }, [open]);
   return (
-    <div className={classes.root}>
-      <Collapse in={props.open}>
-        <Alert
-          {...props}
-          action={
-            <IconButton size="small" color="inherit" onClick={props.onClose} aria-label="close">
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          }
-        >
-          {message}
-        </Alert>
+    <Box className={classes.root}>
+      <Collapse in={open}>
+        <Alert severity={severity}>{message} </Alert>
       </Collapse>
-    </div>
+    </Box>
   );
 }
 

@@ -10,8 +10,16 @@ import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 import SvgSideForm from '../../components/common/Svg/SvgSideForm.component';
 /// LOGO END
 
+import { INotificationProps } from '../../context/types';
+import Notifications from '../../components/common/Notifications';
+import { withAppContext } from '../../context';
+
 type TProps = {
+  header?: JSX.Element;
   form: JSX.Element;
+  handleLoading?: (loading: boolean) => void;
+  notificationState?: INotificationProps;
+  handleNotifications?: (props: INotificationProps) => void;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -42,7 +50,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 /// FORM STATES & VALIDATIONS END
-const LayoutForm = ({ form }: TProps): JSX.Element => {
+const LayoutForm = ({
+  form,
+  header,
+  notificationState,
+  handleNotifications
+}: TProps): JSX.Element => {
   const classes = useStyles();
   return (
     <Grid container item xs={12} sm={12} md={12} lg={12} xl={12} className={classes.mainContainer}>
@@ -54,10 +67,17 @@ const LayoutForm = ({ form }: TProps): JSX.Element => {
         </Grid>
       </Hidden>
       <Grid item xs={12} sm={12} md={6} lg={5} xl={4} className={classes.formContainer}>
+        {header}
+        <Hidden only={['xs', 'sm']}>
+          <Notifications
+            {...notificationState}
+            onClose={() => handleNotifications({ ...notificationState, open: false })}
+          />
+        </Hidden>
         {form}
       </Grid>
     </Grid>
   );
 };
 
-export default LayoutForm;
+export default withAppContext(LayoutForm);

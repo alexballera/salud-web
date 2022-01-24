@@ -20,7 +20,8 @@ export default function AppProvider({ children }: Props): JSX.Element {
   const [notificationState, setNofiticationState] = useState<INotificationProps>({
     open: false,
     message: '',
-    severity: 'success'
+    severity: 'success',
+    duration: 20000
   });
 
   const handleNotifications = (props: INotificationProps) => {
