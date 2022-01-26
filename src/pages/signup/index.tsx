@@ -10,7 +10,7 @@ import * as yup from 'yup';
 import { withAppContext } from '../../context/index';
 /// SERVICES
 import api from '../../api/api';
-import { signUp, setDataToLocalstorage } from '../../services/auth.service';
+import { signUp } from '../../services/auth.service';
 /// TYPES
 import { IFormData, IProps } from '../../containers/SignUp/index.types';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
@@ -33,6 +33,7 @@ import { ISignUpBody } from '../../types/auth.types';
 /// i18n
 import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY } from '../../i18n/forms/i18n';
+import { setUserToLocalStorage } from '../../services/localStorage.service';
 /// i18n END
 
 /// GET SERVICE
@@ -259,7 +260,7 @@ function SignUpView({
 
         setLoading(false);
         handleLogin(user as any);
-        setDataToLocalstorage('user', user as any);
+        setUserToLocalStorage('user', user as any);
         router.replace('/validate_code');
       } catch (e) {
         console.log(e);
@@ -295,7 +296,7 @@ function SignUpView({
       signUp(body)
         .then(res => {
           handleLogin(res.data.result);
-          setDataToLocalstorage('user', res.data.result);
+          setUserToLocalStorage('user', res.data.result);
           router.replace('/validate_code');
         })
         .catch(err => {

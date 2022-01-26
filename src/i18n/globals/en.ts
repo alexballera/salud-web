@@ -17,7 +17,8 @@ export const enGlobals = {
     edit_beneficiary_title: 'Editar beneficiario',
     recover: {
       forget: 'Recover your password'
-    }
+    },
+    feedback: 'Check your email'
   },
 
   description: {
@@ -33,7 +34,9 @@ export const enGlobals = {
     steps_header: 'Paso {{step}} de {{totalSteps}}',
     recover: {
       forget: 'To recover your password we need to verify your identity.'
-    }
+    },
+    feedback:
+      'A link to change your password was sent to your email and will be active for 24 hours.'
   },
 
   button: {
@@ -41,7 +44,7 @@ export const enGlobals = {
     cancel: 'Cancelar',
     continue: 'Continuar',
     create_account: 'Crear cuenta',
-    close: 'Cerrar',
+    close: 'Close',
     end: 'Finalizar',
     enter: 'Ingresar',
     exit: 'Salir',
@@ -126,5 +129,19 @@ export const enGlobals = {
       error_400: 'The data provided does not match',
       error_401: 'The data provided does not match'
     }
+  },
+
+  forward_email: {
+    messages: {
+      dont_recive: 'Didn`t you get the mail?',
+      resend_email: 'Resend e-mail',
+      resend_label: 'Waiting'
+    }
+  },
+
+  contact: {
+    title: 'Need help?',
+    label: 'Contact us at our ',
+    ospi_center: 'Ospi Center at {{telephone}}'
   }
 };

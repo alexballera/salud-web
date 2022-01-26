@@ -34,6 +34,7 @@ import { IProps } from '../../types/recover.types';
 
 /// STYLES
 import recoverStyles from '../../styles/js/RecoverPageStyles.module';
+import { setDataToLocalStorage } from '../../services/localStorage.service';
 /// STYLES END
 
 /// FORM STATES & VALIDATIONS
@@ -42,7 +43,7 @@ const initialValues: IProps = {
 };
 /// FORM STATES & VALIDATIONS END
 
-function RecoverView({ handleLoading, handleNotifications }: IProps): JSX.Element {
+function RecoverPasswordPage({ handleLoading, handleNotifications }: IProps): JSX.Element {
   const classes = recoverStyles();
   const { t } = useTranslation([i18Global, i18Forms]);
   const [msgError, setMsgError] = useState<string>();
@@ -81,8 +82,8 @@ function RecoverView({ handleLoading, handleNotifications }: IProps): JSX.Elemen
     api
       .restorePassword(email)
       .then(() => {
-        // TODO agregar el path a la vista de feedback al usuario
-        router.replace('validate_code');
+        setDataToLocalStorage('email', email);
+        router.push('/recover_password/forward_email');
       })
       .catch(err => {
         setErrorMessage(err.code);
@@ -157,4 +158,4 @@ function RecoverView({ handleLoading, handleNotifications }: IProps): JSX.Elemen
   );
 }
 
-export default withAppContext(RecoverView);
+export default withAppContext(RecoverPasswordPage);

@@ -17,7 +17,8 @@ export const esGlobals = {
     edit_beneficiary_title: 'Editar beneficiario',
     recover: {
       forget: 'Recuperá tu contraseña'
-    }
+    },
+    forward_email: 'Revisá tu correo'
   },
 
   description: {
@@ -33,7 +34,9 @@ export const esGlobals = {
     steps_header: 'Paso {{step}} de {{totalSteps}}',
     recover: {
       forget: 'Para recuperar tu contraseña requerimos verificar tu identidad.'
-    }
+    },
+    forward_email:
+      'Se envío a tu correo un link de cambio de contraseña que estará activo por 24 horas.'
   },
 
   button: {
@@ -126,5 +129,19 @@ export const esGlobals = {
       error_400: 'Los datos brindados no coinciden',
       error_401: 'Los datos brindados no coinciden'
     }
+  },
+
+  forward_email: {
+    messages: {
+      dont_recive: '¿No te llegó el correo?',
+      resend_email: 'Reenviar correo',
+      resend_label: 'Espera'
+    }
+  },
+
+  contact: {
+    title: '¿Necesitás ayuda?',
+    label: 'Contactanos a nuestro ',
+    ospi_center: 'Ospi Center al {{telephone}}'
   }
 };

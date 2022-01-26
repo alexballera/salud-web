@@ -17,8 +17,8 @@ import SvgLogo from '../Svg/SvgLogo.component';
 import ActionButtons from './components/ActionButtons.component';
 import DropDownButton from './components/DropDownButton';
 import Menu from '../Menu';
-import { getDataFromLocalstorage } from '../../../services/auth.service';
 import { User } from '../../../types/auth.types';
+import { getUserFromLocalStorage } from '../../../services/localStorage.service';
 /// OWN COMPONENTS END
 
 function Navbar({ loggedIn }: IProps): JSX.Element {
@@ -29,7 +29,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
 
   useEffect(() => {
     if (loggedIn) {
-      const user: User = getDataFromLocalstorage('user');
+      const user: User = getUserFromLocalStorage('user');
       setFirstName(user.firstName);
       setDocumentNumber(user.documentNumber);
     }
@@ -67,7 +67,9 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
 
   const noActionPathNames = ['/main', '/profile', '/subscriptions', '/preferences', '/help'];
 
-  const exitButtonPathNames = ['/login', '/signup'];
+  const exitButtonPathNames = ['/signup', '/recover_password/forward_email'];
+
+  const closeButtonPathNames = ['/login'];
 
   const backButtonPathNames = [
     '/update/phone',
@@ -76,7 +78,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
     '/preferences/language',
     '/preferences/notifications',
     '/subscriptions/beneficiaries',
-    '/recover'
+    '/recover_password'
   ];
 
   return (
@@ -102,6 +104,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                           noActionPathNames={noActionPathNames}
                           exitButtonPathNames={exitButtonPathNames}
                           backButtonPathNames={backButtonPathNames}
+                          closeButtonPathNames={closeButtonPathNames}
                         />
                       )}
                     </Grid>
@@ -125,6 +128,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                         noActionPathNames={noActionPathNames}
                         exitButtonPathNames={exitButtonPathNames}
                         backButtonPathNames={backButtonPathNames}
+                        closeButtonPathNames={closeButtonPathNames}
                       />
                       {/* TODO corregir mostrar solo para cuando esté logueado: usar "loggedIn" */}
                       {showMenuMobile() && loggedIn && (

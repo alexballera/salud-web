@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { User, ISignUpBody } from '../types/auth.types';
+import { ISignUpBody } from '../types/auth.types';
 
 /// LOGIN
 export function loginService(email: string, password: string): Promise<AxiosResponse<any>> {
@@ -22,19 +22,6 @@ export function forgotPasswordSendEmailService(email: string): Promise<AxiosResp
   return axios.post(`${process.env.NEXT_PUBLIC_API_URL}user/password-reset`, {
     userEmail: email
   });
-}
-
-export function setDataToLocalstorage(key: string, user: User): void {
-  window.localStorage.setItem(key, JSON.stringify(user));
-}
-
-export function getDataFromLocalstorage(str: string): User {
-  const user: User = JSON.parse(window.localStorage.getItem(str));
-  return user;
-}
-
-export function removeDataFromLocalstorage(key: string): void {
-  window.localStorage.removeItem(key);
 }
 
 export function forgotPasswordConfirmCodeService(

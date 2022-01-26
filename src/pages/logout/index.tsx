@@ -23,8 +23,9 @@ import LayoutCode from '../../layouts/LayoutCode';
 
 /// STYLES & TYPES
 import LayoutCodeStyles from '../../layouts/LayoutCode/styles.module';
-import { getDataFromLocalstorage, logoutService } from '../../services/auth.service';
+import { logoutService } from '../../services/auth.service';
 import { User } from '../../types/auth.types';
+import { getUserFromLocalStorage } from '../../services/localStorage.service';
 /// STYLES & TYPES END
 
 /// FORM STATES & VALIDATIONS
@@ -37,7 +38,7 @@ function LogOut(): JSX.Element {
   const [email, setEmail] = useState('');
 
   useEffect(() => {
-    const user: User = getDataFromLocalstorage('user');
+    const user: User = getUserFromLocalStorage('user');
     setEmail(user.email);
   });
 

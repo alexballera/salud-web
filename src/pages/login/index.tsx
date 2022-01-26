@@ -30,11 +30,11 @@ import LoginStyles from '../../styles/js/LoginPageStyles.module';
 
 /// SERVICES
 import api from '../../api/api';
-import { setDataToLocalstorage } from '../../services/auth.service';
 /// SERVICES END
 
 /// LAYOUT
 import Layout from '../../layouts/LayoutFormBasic';
+import { setUserToLocalStorage } from '../../services/localStorage.service';
 /// LAYOUT END
 
 /// FORM STATES & VALIDATIONS
@@ -61,7 +61,7 @@ function LoginPage({ fetching, handleLogin, handleLoading }: TProps): JSX.Elemen
       const session = await api.createSession(email, password);
       // TODO: Change all this arguments types, we need remove all [as any]
       handleLogin(session as any);
-      setDataToLocalstorage('user', session as any);
+      setUserToLocalStorage('user', session as any);
       handleLoading(false);
       router.replace('/main');
     } catch (e) {
@@ -188,7 +188,7 @@ function LoginPage({ fetching, handleLogin, handleLoading }: TProps): JSX.Elemen
                       title={
                         <>
                           <span>{t('label.password.forget', { ns: i18Global })}</span>
-                          <Link href="/recover" passHref>
+                          <Link href="/recover_password" passHref>
                             <a>{t('button.recover', { ns: i18Global })}</a>
                           </Link>
                         </>
