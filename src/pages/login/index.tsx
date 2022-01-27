@@ -1,5 +1,5 @@
 /// BASE IMPORTS
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Formik, FormikErrors, FormikProps } from 'formik';
 import Link from 'next/link';
@@ -20,7 +20,6 @@ import { Box, Button, Divider, Hidden } from '@material-ui/core';
 import { withAppContext } from '../../context';
 import { TitleContent } from '../../components/common/TitleContent';
 import TextField from '../../components/common/TextField';
-import SnackbarAlert from '../../components/common/SnackbarAlert';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
@@ -41,9 +40,13 @@ import { setUserToLocalStorage } from '../../services/localStorage.service';
 const INITIAL_STATE: TLoginData = { email: '', password: '' };
 /// FORM STATES & VALIDATIONS END
 
-function LoginPage({ fetching, handleLogin, handleLoading }: TProps): JSX.Element {
+function LoginPage({
+  fetching,
+  handleLogin,
+  handleLoading,
+  handleNotifications
+}: TProps): JSX.Element {
   const { t } = useTranslation([i18Global, i18Forms]);
-  const [error, setError] = useState<string | null>(null);
   const classes = LoginStyles();
   const router = useRouter();
 
@@ -65,7 +68,12 @@ function LoginPage({ fetching, handleLogin, handleLoading }: TProps): JSX.Elemen
       handleLoading(false);
       router.replace('/main');
     } catch (e) {
-      setError(mapFetchErrors(e.code));
+      handleNotifications({
+        message: mapFetchErrors(e.code),
+        severity: 'error',
+        open: true,
+        duration: 20000
+      });
     } finally {
       handleLoading && handleLoading(false);
     }
@@ -79,163 +87,155 @@ function LoginPage({ fetching, handleLogin, handleLoading }: TProps): JSX.Elemen
     return t('message.error.submit', { ns: i18Forms });
   };
 
-  const mapPopUpErrors = (values: TLoginData, errors: FormikErrors<TLoginData>) => {
+  const getGlobalFormErrors = (values: TLoginData, errors: FormikErrors<TLoginData>) => {
     const { email, password } = values;
     if (!email.length && !password.length && Object.values(errors).length) {
-      setError(t('message.error.fields_required', { ns: i18Forms }));
-      return;
+      return 'message.error.fields_required';
     }
     if (!email.length && password.length) {
-      setError(t('validations.email.required', { ns: i18Forms }));
-      return;
+      return 'validations.email.required';
     }
     if (email.length && !password.length) {
-      setError(t('validations.password.required', { ns: i18Forms }));
-      return;
+      return 'validations.password.required';
     }
     if (errors.email === t('validations.email.incorrect', { ns: i18Forms })) {
-      setError(t('validations.email.incorrect', { ns: i18Forms }));
+      return 'validations.email.incorrect';
+    }
+    return null;
+  };
+
+  const handleGlobalFormErrors = (values: TLoginData, errors: FormikErrors<TLoginData>) => {
+    const i18Key = getGlobalFormErrors(values, errors);
+    if (i18Key) {
+      handleNotifications({
+        message: t(i18Key, { ns: i18Forms }),
+        severity: 'error',
+        open: true,
+        duration: 20000
+      });
     }
   };
 
   return (
     <Layout
-      form={
-        <Box className={classes.mainContainer}>
-          <Hidden only={['md', 'lg', 'xl']}>
-            <Box mb={2}>
-              <SnackbarAlert
-                message={error}
-                severity="error"
-                duration={20000}
-                removeMessage={setError}
-              />
-            </Box>
-          </Hidden>
+      header={
+        <>
           <TitleContent titleWithSubtitle title={t('title.login_title', { ns: i18Global })} />
           <TitleContent paragraph title={t('description.login', { ns: i18Global })} />
-          <Formik
-            initialValues={INITIAL_STATE}
-            validationSchema={ValidationSchema}
-            onSubmit={handleSubmit}
-          >
-            {({
-              errors,
-              handleChange,
-              values,
-              handleSubmit: formikSubmit,
-              touched,
-              submitCount,
-              validateForm
-            }: FormikProps<TLoginData>) => {
-              useEffect(() => {
-                validateForm();
-                mapPopUpErrors(values, errors);
-              }, [submitCount]);
+        </>
+      }
+      form={
+        <Formik
+          initialValues={INITIAL_STATE}
+          validationSchema={ValidationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({
+            errors,
+            handleChange,
+            values,
+            handleSubmit: formikSubmit,
+            touched,
+            submitCount,
+            validateForm
+          }: FormikProps<TLoginData>) => {
+            useEffect(() => {
+              validateForm();
+              handleGlobalFormErrors(values, errors);
+            }, [submitCount]);
 
-              return (
-                <form onSubmit={formikSubmit} noValidate={true}>
-                  <Hidden only={['xs', 'sm']}>
-                    <SnackbarAlert
-                      mb={2}
-                      mt={2}
-                      message={error}
-                      severity="error"
-                      duration={20000}
-                      removeMessage={setError}
-                    />
-                  </Hidden>
-                  <Box>
-                    <TextField
-                      inputProps={{
-                        'aria-label': `${t('label.email.email', { ns: i18Global })}`
-                      }}
-                      label={t('label.email.email')}
-                      name="email"
-                      type="email"
-                      fullWidth={true}
-                      onChange={handleChange}
-                      value={values.email}
-                      error={touched.email && Boolean(errors.email)}
-                      data-testid="email-field"
-                      helperText={errors.email}
-                      handleLblError
-                    />
+            return (
+              <form onSubmit={formikSubmit} noValidate={true}>
+                <Box>
+                  <TextField
+                    inputProps={{
+                      'aria-label': `${t('label.email.email', { ns: i18Global })}`
+                    }}
+                    label={t('label.email.email')}
+                    name="email"
+                    type="email"
+                    fullWidth={true}
+                    onChange={handleChange}
+                    value={values.email}
+                    error={touched.email && Boolean(errors.email)}
+                    data-testid="email-field"
+                    helperText={errors.email}
+                    handleLblError
+                  />
+                </Box>
+                <Box>
+                  <TextField
+                    inputProps={{
+                      'aria-label': `${t('label.password.password', {
+                        ns: i18Global
+                      })}`
+                    }}
+                    aria-label={t('label.password.password', { ns: i18Global })}
+                    label={t('label.password.password', { ns: i18Global })}
+                    name="password"
+                    type="password"
+                    fullWidth={true}
+                    onChange={handleChange}
+                    value={values.password}
+                    error={touched.password && Boolean(errors.password)}
+                    data-testid="password-field"
+                    helperText={errors.password}
+                    handleLblError
+                  />
+                </Box>
+                <Box className={classes.recoverContainer}>
+                  <TitleContent
+                    paragraph
+                    title={
+                      <>
+                        <span>{t('label.password.forget', { ns: i18Global })}</span>
+                        <Link href="/recover" passHref>
+                          <a>{t('button.recover', { ns: i18Global })}</a>
+                        </Link>
+                      </>
+                    }
+                  />
+                </Box>
+                <Box width={{ xs: '100%' }} mt={6}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    fullWidth={true}
+                    color="primary"
+                    disabled={fetching}
+                    data-testid="login-button"
+                    className={`${classes.button} ${classes.buttonSubmit}`}
+                  >
+                    {t('button.login', { ns: i18Global })}
+                  </Button>
+                </Box>
+                <Hidden only={['xs', 'sm']}>
+                  <Divider className={classes.divider} />
+                </Hidden>
+                <Box
+                  display={{ xs: 'block', md: 'flex' }}
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Box mt={{ xs: 3, md: 0 }}>
+                    <TitleContent paragraph title={t('label.no_register', { ns: i18Global })} />
                   </Box>
-                  <Box>
-                    <TextField
-                      inputProps={{
-                        'aria-label': `${t('label.password.password', {
-                          ns: i18Global
-                        })}`
-                      }}
-                      aria-label={t('label.password.password', { ns: i18Global })}
-                      label={t('label.password.password', { ns: i18Global })}
-                      name="password"
-                      type="password"
-                      fullWidth={true}
-                      onChange={handleChange}
-                      value={values.password}
-                      error={touched.password && Boolean(errors.password)}
-                      data-testid="password-field"
-                      helperText={errors.password}
-                      handleLblError
-                    />
-                  </Box>
-                  <Box className={classes.recoverContainer}>
-                    <TitleContent
-                      paragraph
-                      title={
-                        <>
-                          <span>{t('label.password.forget', { ns: i18Global })}</span>
-                          <Link href="/recover_password" passHref>
-                            <a>{t('button.recover', { ns: i18Global })}</a>
-                          </Link>
-                        </>
-                      }
-                    />
-                  </Box>
-                  <Box width={{ xs: '100%' }} mt={6}>
+                  <Box mt={{ xs: 2, md: 0 }}>
                     <Button
-                      type="submit"
-                      variant="contained"
+                      variant="outlined"
                       fullWidth={true}
                       color="primary"
-                      disabled={fetching}
-                      data-testid="login-button"
-                      className={`${classes.button} ${classes.buttonSubmit}`}
+                      onClick={() => router.push('/signup')}
+                      className={classes.button}
                     >
-                      {t('button.login', { ns: i18Global })}
+                      {t('button.create_account', { ns: i18Global })}
                     </Button>
                   </Box>
-                  <Hidden only={['xs', 'sm']}>
-                    <Divider className={classes.divider} />
-                  </Hidden>
-                  <Box
-                    display={{ xs: 'block', md: 'flex' }}
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Box mt={{ xs: 3, md: 0 }}>
-                      <TitleContent paragraph title={t('label.no_register', { ns: i18Global })} />
-                    </Box>
-                    <Box mt={{ xs: 2, md: 0 }}>
-                      <Button
-                        variant="outlined"
-                        fullWidth={true}
-                        color="primary"
-                        onClick={() => router.push('/signup')}
-                        className={classes.button}
-                      >
-                        {t('button.create_account', { ns: i18Global })}
-                      </Button>
-                    </Box>
-                  </Box>
-                </form>
-              );
-            }}
-          </Formik>
-        </Box>
+                </Box>
+              </form>
+            );
+          }}
+        </Formik>
       }
     />
   );

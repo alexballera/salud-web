@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from 'react';
+/// IMPORTS
+import { useState, useEffect } from 'react';
+/// IMPORTS END
+
 /// FORM
 import { FormikProps } from 'formik';
+/// FORM END
 
 /// TYPES
-import { ICredentialDataForm, ICredentialDataProps, IEmailStates } from '../index.types';
+import { TCredentialDataProps, IEmailStates, TCredentialDataForm, TFormData } from '../index.types';
+/// TYPES END
 
 /// SERVICES
 import { getPersonalData } from '../../../services/getPersonalData.service';
+/// SERVICES END
 
 /// OWN COMPONENTS
 import Input from '../../../components/common/TextField';
@@ -43,7 +49,7 @@ function CredentialData({
   handleChange,
   updatePassword,
   updateEmail
-}: ICredentialDataProps & FormikProps<ICredentialDataForm>): JSX.Element {
+}: TCredentialDataProps & FormikProps<TCredentialDataForm | TFormData>): JSX.Element {
   const { t } = useTranslation([NAMESPACE_KEY, 'forms']);
   const [inputEmailStates, setInputEmailStates] = useState(initialEmailStates);
   const [termsAndConditionOpen, setTermsAndConditionOpen] = useState(false);

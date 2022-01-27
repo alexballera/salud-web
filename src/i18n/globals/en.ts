@@ -78,6 +78,11 @@ export const enGlobals = {
     residence: 'Domicilio',
     language: 'Idioma',
 
+    country: {
+      country: 'Country',
+      placeholder: 'Select country of residence'
+    },
+
     email: {
       actual: 'Correo electrónico actual',
       change_description: 'Ingresá tu nuevo correo electrónico para actualizarlo en la plataforma',
@@ -98,7 +103,10 @@ export const enGlobals = {
       number: 'Número de identificación',
       passport: 'Pasaporte',
       physical: 'Cédula Física',
-      residence: 'Cédula de Residencia'
+      residence: 'Cédula de Residencia',
+      placeholder: 'Select document',
+      unique: 'Unique Population Registry Code (CURP)',
+      elector: 'Voter Credential (INE)'
     },
 
     gender: {
@@ -121,6 +129,10 @@ export const enGlobals = {
       change_description: 'Ingresá tu nuevo número de teléfono para actualizarlo en la plataforma',
       actual: 'Número de teléfono actual',
       phone: 'Número de teléfono'
+    },
+
+    pronoun: {
+      pronoun: 'Pronoun with which he identifies'
     }
   },
 
@@ -129,6 +141,11 @@ export const enGlobals = {
       error_400: 'The data provided does not match',
       error_401: 'The data provided does not match'
     }
+  },
+
+  countries: {
+    mx: 'Mexico',
+    crc: 'Costa Rica'
   },
 
   forward_email: {

@@ -1,16 +1,27 @@
+/// IMPORTS
 import React, { useEffect, useState } from 'react';
+import { PHONE_NUMBER_MASK } from '../../../utils/constants';
 import _ from 'lodash';
+/// IMPORTS END
+
 /// FORM
 import { FormikProps } from 'formik';
-import { PHONE_NUMBER_MASK } from '../../../utils/constants';
+/// FORM END
+
 /// SERVICES
 import { getProvinces, getCanton, getDistrict } from '../../../services/address.service';
+/// SERVICES END
+
 /// TYPES
-import { IExtraDataForm, IExtraDataProps, IGeneralAdressState } from '../index.types';
+import { TExtraDataProps, IGeneralAdressState, TFormData } from '../index.types';
+/// TYPES END
+
 /// OWN COMPONENTS
 import TextMaskCustom from '../../../components/common/InputTextMask';
 import CustomTextField from '../../../components/common/TextField';
 import CustomAutoComplete from '../../../components/common/Select';
+/// OWN COMPONENTS END
+
 /// MATERIAL-UI
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -40,7 +51,6 @@ const initialCantonStates: IGeneralAdressState = {
   data: [],
   fetching: false
 };
-
 /// INITIAL STATES END
 
 function ExtraData({
@@ -52,13 +62,12 @@ function ExtraData({
   setFieldValue,
   updatePersonalData,
   updatePhone
-}: IExtraDataProps & FormikProps<IExtraDataForm>): JSX.Element {
+}: TExtraDataProps & FormikProps<TFormData>): JSX.Element {
   const { t } = useTranslation(['globals', 'forms']);
   const classes = SignUpStyles();
   const [cantonStates, setCantonStates] = useState(initialCantonStates);
   const [provinceStates, setProvinceStates] = useState(initialProvinceStates);
   const [districtStates, setDistrictStates] = useState(initialDistrictStates);
-  /// USE EFFECTS
 
   const onChangeSelect = (value: any, fieldName: string) => {
     setFieldValue(fieldName, value);
@@ -81,6 +90,7 @@ function ExtraData({
     }
   };
 
+  /// USE EFFECTS
   /* PRVINCES FETCHER */
   useEffect(() => {
     getProvinces().then(res => {
@@ -119,31 +129,56 @@ function ExtraData({
     }
   }, [values.canton]);
   /// USE EFFECTS END
+
   return (
     <div>
       {!updatePhone && (
-        <FormControl fullWidth margin="normal" variant="filled">
-          <FormLabel id="gender-selector-label" style={{ marginBottom: 10 }}>
-            {t('label.gender.gender', { ns: 'globals' })}
-          </FormLabel>
-          <Select
-            fullWidth
-            id="gender-selector"
-            name="gender"
-            value={values.gender}
-            color="secondary"
-            labelId="gender-selector-label"
-            onBlur={handleBlur}
-            variant="outlined"
-            onChange={handleChange}
-          >
-            <MenuItem value={'1'}>{t('label.gender.female', { ns: 'globals' })}</MenuItem>
-            <MenuItem value={'2'}>{t('label.gender.male', { ns: 'globals' })}</MenuItem>
-          </Select>
-          {touched.gender && errors.gender && (
-            <FormHelperText error>{errors.gender}</FormHelperText>
-          )}
-        </FormControl>
+        <>
+          <FormControl fullWidth margin="normal" variant="filled">
+            <FormLabel id="gender-selector-label" style={{ marginBottom: 10 }}>
+              {t('label.gender.gender', { ns: 'globals' })}
+            </FormLabel>
+            <Select
+              fullWidth
+              id="gender-selector"
+              name="gender"
+              value={values.gender}
+              color="secondary"
+              labelId="gender-selector-label"
+              onBlur={handleBlur}
+              variant="outlined"
+              onChange={handleChange}
+            >
+              <MenuItem value={'1'}>{t('label.gender.female', { ns: 'globals' })}</MenuItem>
+              <MenuItem value={'2'}>{t('label.gender.male', { ns: 'globals' })}</MenuItem>
+            </Select>
+            {touched.gender && errors.gender && (
+              <FormHelperText error>{errors.gender}</FormHelperText>
+            )}
+          </FormControl>
+          <FormControl fullWidth margin="normal" variant="filled">
+            <FormLabel id="pronoun-selector-label" style={{ marginBottom: 10 }}>
+              {t('label.pronoun.pronoun', { ns: 'globals' })}
+            </FormLabel>
+            <Select
+              fullWidth
+              id="gender-selector"
+              name="gender"
+              value={values.pronoun}
+              color="secondary"
+              labelId="pronoun-selector-label"
+              onBlur={handleBlur}
+              variant="outlined"
+              onChange={handleChange}
+            >
+              <MenuItem value={'1'}>{t('label.gender.female', { ns: 'globals' })}</MenuItem>
+              <MenuItem value={'2'}>{t('label.gender.male', { ns: 'globals' })}</MenuItem>
+            </Select>
+            {touched.gender && errors.gender && (
+              <FormHelperText error>{errors.gender}</FormHelperText>
+            )}
+          </FormControl>
+        </>
       )}
       {!updatePersonalData && (
         <CustomTextField

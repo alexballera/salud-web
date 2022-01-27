@@ -78,6 +78,11 @@ export const esGlobals = {
     residence: 'Domicilio',
     language: 'Idioma',
 
+    country: {
+      country: 'País de residencia',
+      placeholder: 'Seleccionar país de residencia'
+    },
+
     email: {
       actual: 'Correo electrónico actual',
       change_description: 'Ingresá tu nuevo correo electrónico para actualizarlo en la plataforma',
@@ -98,7 +103,10 @@ export const esGlobals = {
       number: 'Número de identificación',
       passport: 'Pasaporte',
       physical: 'Cédula Física',
-      residence: 'Cédula de Residencia'
+      residence: 'Cédula de Residencia',
+      placeholder: 'Seleccionar documento',
+      unique: 'Clave Única de Registro Poblacional (CURP)',
+      elector: 'Credencial de Elector (INE)'
     },
 
     gender: {
@@ -121,6 +129,10 @@ export const esGlobals = {
       change_description: 'Ingresá tu nuevo número de teléfono para actualizarlo en la plataforma',
       actual: 'Número de teléfono actual',
       phone: 'Número de teléfono'
+    },
+
+    pronoun: {
+      pronoun: 'Pronombre con el que se identifica'
     }
   },
 
@@ -129,6 +141,11 @@ export const esGlobals = {
       error_400: 'Los datos brindados no coinciden',
       error_401: 'Los datos brindados no coinciden'
     }
+  },
+
+  countries: {
+    mx: 'México',
+    crc: 'Costa Rica'
   },
 
   forward_email: {

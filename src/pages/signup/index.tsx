@@ -1,395 +1,350 @@
-import React, { useState } from 'react';
-// import date-fns
+/// BASE IMPORTS
+import { useState, useEffect } from 'react';
 import { addYears } from 'date-fns';
-// import _ from 'lodash';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import { Form, Formik } from 'formik';
 import * as yup from 'yup';
+/// BASE IMPORTS END
+
+/// FORM
+import { Formik, FormikErrors, FormikProps } from 'formik';
+/// FORM END
+
 /// CONTEXT
 import { withAppContext } from '../../context/index';
-/// SERVICES
-import api from '../../api/api';
-import { signUp } from '../../services/auth.service';
+/// CONTEXT END
+
 /// TYPES
-import { IFormData, IProps } from '../../containers/SignUp/index.types';
-import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import { TProps, TFormData } from '../../containers/SignUp/index.types';
+/// TYPES END
+
 /// OWN COMPONENTS
-import Wizard from '../../components/common/Wizard';
+import { TitleContent } from '../../components/common/TitleContent';
 import ExtraDataForm from '../../containers/SignUp/components/ExtraData';
 import PersonalDataForm from '../../containers/SignUp/components/PersonalData';
 import CredentialDataForm from '../../containers/SignUp/components/CredentialData';
-
 /// OWN COMPONENTS END
+
 /// MATERIAL - UI
-import { Button, Box, Grid } from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 /// MATERIAL - UI END
 
 /// STYLES
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
-import { ISignUpBody } from '../../types/auth.types';
 /// STYLES END
+
+/// LAYOUT
+import Layout from '../../layouts/LayoutFormBasic';
+/// LAYOUT END
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../../i18n/forms/i18n';
-import { setUserToLocalStorage } from '../../services/localStorage.service';
+import { NAMESPACE_KEY as i18Global } from '../../i18n/globals/i18n';
+import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
 /// i18n END
 
-/// GET SERVICE
-export const getStaticProps: GetStaticProps = async () => {
-  const res = await axios.get(`${process.env.apiUrl}general/document-types`);
-  const data = await res.data.result;
-
-  return {
-    props: { documentTypeOptions: data } // will be passed to the page component as props
+type TSteper = {
+  [key: number]: {
+    Component: (formik: FormikProps<TFormData>) => JSX.Element;
+    title: string;
+    description: string;
+    yupSchema: any;
   };
 };
-/// GET SERVICE END
 
-/// FORM STATES & VALIDATIONS
-const initialValues: IFormData = {
-  email: '',
-  terms: false,
-  gender: '',
-  canton: null,
-  country: 'CR',
-  password: '',
-  province: null,
-  district: null,
-  lastName: '',
-  services: false,
-  firstName: '',
-  birthDate: '',
-  superappUser: false,
+const INIT_FORM_STATE: TFormData = {
+  country: '',
   documentType: '',
-  mobilePhone1: '',
   documentNumber: '',
-  confirmPassword: ''
+  fullName: '',
+  birthDate: '',
+  gender: '',
+  canton: '',
+  district: '',
+  province: '',
+  mobilePhone1: '',
+  pronoun: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+  services: false,
+  superappUser: false,
+  terms: false
 };
-
-/// FORM STATES & VALIDATIONS END
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    containerButton: {
-      backgroundColor: 'white',
-      bottom: 6,
-      left: 4,
-      padding: 36,
-      position: 'fixed',
-      zIndex: 1000,
+    formContainer: {
+      width: '100%',
+      padding: 24,
+      paddingTop: 0,
       [theme.breakpoints.up('md')]: {
-        borderTop: '1px solid rgba(0, 0, 0, 0.12)',
-        paddingRight: '15%'
+        padding: 0,
+        width: 461
       }
     },
-    buttonLeftContainer: {
-      paddingLeft: '0px !important'
+    stepIndicator: {
+      color: 'rgba(0, 0, 0, 0.87)',
+      fontSize: 12,
+      letterSpacing: 1,
+      marginBottom: 8,
+      textTransform: 'uppercase'
     },
-    buttonRightContainer: {
-      paddingRight: '0px !important'
+    button: {
+      paddingLeft: 49,
+      paddingRight: 49
     }
   })
 );
 
-function SignUpView({
-  handleLogin,
-  handleError,
-  documentTypeOptions,
-  handleNotifications
-}: InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
-  const { t } = useTranslation(['global', NAMESPACE_KEY]);
+function SignUpView(props: TProps): JSX.Element {
   const classes = useStyles();
-  const router = useRouter();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [currentStep, setCurrentState] = useState<number>(0);
-  const goBack = () => {
-    if (currentStep > 0) setCurrentState(currentStep - 1);
-    else router.back();
-  };
+  const { handleNotifications } = props;
+  const { t } = useTranslation(i18Global);
+  const [data, setData] = useState(INIT_FORM_STATE);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [currDocTypeArgs, setCurrDocTypeArgs] = useState<any>(null);
 
-  const PersonalDataValidations = {
+  const yupPersonalData = {
     name: 'PersonalData',
     schema: yup.object().shape({
-      lastName: yup
-        .string()
-        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`)
-        .min(3, `${t('validations.min_3', { ns: NAMESPACE_KEY })}`),
-      birthDate: yup
-        .date()
-        .max(addYears(new Date(), -18), `${t('validations.max_18_age', { ns: NAMESPACE_KEY })}`)
-        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
-      firstName: yup
-        .string()
-        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`)
-        .min(3, `${t('validations.min_3', { ns: NAMESPACE_KEY })}`),
-      documentType: yup.number().required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
+      country: yup.string().required(`${t('validations.required', { ns: i18Forms })}`),
+      documentType: yup.number().required(`${t('validations.required', { ns: i18Forms })}`),
       documentNumber: yup
         .string()
-        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`)
-        .when(['documentType'], {
-          is: (documentType: number) => documentType === 1,
-          then: yup
-            .string()
-            .transform(value => value.replace(/[^\d]/g, ''))
-            .min(9, `${t('validations.min_9', { ns: NAMESPACE_KEY })}`)
-        })
-        .when(['documentType'], {
-          is: (documentType: number) => documentType === 2,
-          then: yup
-            .string()
-            .transform(value => value.replace(/[^\d]/g, ''))
-            .min(10, `${t('validations.min_10_max_15', { ns: NAMESPACE_KEY })}`)
-            .max(15, `${t('validations.min_10_max_15', { ns: NAMESPACE_KEY })}`)
-        })
-        .when(['documentType'], {
-          is: (documentType: number) => documentType === 6,
-          then: yup
-            .string()
-            .min(9, `${t('validations.min_9_max_20', { ns: NAMESPACE_KEY })}`)
-            .max(20, `${t('validations.min_9_max_20', { ns: NAMESPACE_KEY })}`)
-        })
+        .transform(value => value.replaceAll(' ', ''))
+        .required(`${t('validations.required', { ns: i18Forms })}`)
+        .matches(
+          currDocTypeArgs?.validation || /^\s*$/,
+          t(`validations.document.${currDocTypeArgs?.i18n || ''}`, { ns: i18Forms })
+        ),
+      fullName: yup
+        .string()
+        .required(`${t('validations.required', { ns: i18Forms })}`)
+        .min(3, `${t('validations.min_3', { ns: i18Forms })}`),
+      birthDate: yup
+        .date()
+        .required(`${t('validations.required', { ns: i18Forms })}`)
+        .max(addYears(new Date(), -18), `${t('validations.max_18_age', { ns: i18Forms })}`)
     })
   };
-  const ExtraDataValidations = {
+
+  const yupExtraData = {
     name: 'ExtraData',
     schema: yup.object().shape({
-      gender: yup.string().required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
+      gender: yup.string().required(`${t('validations.required', { ns: i18Forms })}`),
       canton: yup
         .object()
         .shape({
-          codigo: yup.string().required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
-          nombre: yup.string().required(`${t('validations.required', { ns: NAMESPACE_KEY })}`)
+          codigo: yup.string().required(`${t('validations.required', { ns: i18Forms })}`),
+          nombre: yup.string().required(`${t('validations.required', { ns: i18Forms })}`)
         })
         .nullable()
-        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
+        .required(`${t('validations.required', { ns: i18Forms })}`),
       district: yup
         .object()
         .shape({
-          codigo: yup.string().required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
-          nombre: yup.string().required(`${t('validations.required', { ns: NAMESPACE_KEY })}`)
+          codigo: yup.string().required(`${t('validations.required', { ns: i18Forms })}`),
+          nombre: yup.string().required(`${t('validations.required', { ns: i18Forms })}`)
         })
         .nullable()
-        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
+        .required(`${t('validations.required', { ns: i18Forms })}`),
       province: yup
         .object()
         .shape({
-          codigo: yup.string().required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
-          nombre: yup.string().required(`${t('validations.required', { ns: NAMESPACE_KEY })}`)
+          codigo: yup.string().required(`${t('validations.required', { ns: i18Forms })}`),
+          nombre: yup.string().required(`${t('validations.required', { ns: i18Forms })}`)
         })
         .nullable()
-        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
+        .required(`${t('validations.required', { ns: i18Forms })}`),
       mobilePhone1: yup
         .string()
-        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`)
+        .required(`${t('validations.required', { ns: i18Forms })}`)
         .transform(value => value.replace(/[^\d]/g, ''))
-        .min(8, `${t('validations.min_8', { ns: NAMESPACE_KEY })}`)
+        .min(8, `${t('validations.min_8', { ns: i18Forms })}`)
     })
   };
 
-  const CredentialDataValidations = {
+  const yupCredentialData = {
     name: 'CredentialStep',
     schema: yup.object().shape({
       terms: yup
         .bool()
-        .oneOf([true], `${t('validations.required', { ns: NAMESPACE_KEY })}`)
-        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
+        .oneOf([true], `${t('validations.required', { ns: i18Forms })}`)
+        .required(`${t('validations.required', { ns: i18Forms })}`),
       services: yup
         .bool()
-        .oneOf([true], `${t('validations.required', { ns: NAMESPACE_KEY })}`)
-        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`),
+        .oneOf([true], `${t('validations.required', { ns: i18Forms })}`)
+        .required(`${t('validations.required', { ns: i18Forms })}`),
       email: yup
         .string()
-        .email(`${t('validations.email.incorrect', { ns: NAMESPACE_KEY })}`)
-        .required(`${t('validations.email.required', { ns: NAMESPACE_KEY })}`),
+        .email(`${t('validations.email.incorrect', { ns: i18Forms })}`)
+        .required(`${t('validations.email.required', { ns: i18Forms })}`),
       password: yup
         .string()
-        .required(`${t('validations.password.required_short', { ns: NAMESPACE_KEY })}`)
-        .min(8, `${t('validations.password.min_8', { ns: NAMESPACE_KEY })}`)
-        .max(16, `${t('validations.password.max_16', { ns: NAMESPACE_KEY })}`)
+        .required(`${t('validations.password.required_short', { ns: i18Forms })}`)
+        .min(8, `${t('validations.password.min_8', { ns: i18Forms })}`)
+        .max(16, `${t('validations.password.max_16', { ns: i18Forms })}`)
         .matches(
           /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
-          `${t('validations.password.regex', { ns: NAMESPACE_KEY })}`
+          `${t('validations.password.regex', { ns: i18Forms })}`
         ),
       confirmPassword: yup
         .string()
         .oneOf(
           [yup.ref('password'), null],
-          `${t('validations.password.matched', { ns: NAMESPACE_KEY })}`
+          `${t('validations.password.matched', { ns: i18Forms })}`
         )
-        .required(`${t('validations.required', { ns: NAMESPACE_KEY })}`)
-        .min(8, `${t('validations.password.min_8', { ns: NAMESPACE_KEY })}`)
-        .max(16, `${t('validations.password.max_16', { ns: NAMESPACE_KEY })}`)
+        .required(`${t('validations.required', { ns: i18Forms })}`)
+        .min(8, `${t('validations.password.min_8', { ns: i18Forms })}`)
+        .max(16, `${t('validations.password.max_16', { ns: i18Forms })}`)
     })
   };
 
-  const stepValidations = [
-    PersonalDataValidations.schema,
-    ExtraDataValidations.schema,
-    CredentialDataValidations.schema
-  ];
-
-  const onSubmit = async (values: IFormData) => {
-    const { email, password, firstName, lastName } = values;
-    if (currentStep === 2) {
-      setLoading(true);
-      try {
-        alert();
-        // TODO: Send object as argument to createAccount
-        const user = await api.createAccount(
-          'unique()',
-          email,
-          password,
-          `${firstName} ${lastName}`
+  const MAP_STEPS: TSteper = {
+    0: {
+      title: 'title.identify',
+      description: 'description.identify',
+      yupSchema: yupPersonalData,
+      Component: function FormStep(formik: FormikProps<TFormData>) {
+        return (
+          <PersonalDataForm
+            setCurrDocTypeArgs={setCurrDocTypeArgs}
+            currDocTypeArgs={currDocTypeArgs}
+            handleNotifications={handleNotifications}
+            documentTypesOptions={[]}
+            {...formik}
+          />
         );
-
-        await api.createSession(email, password);
-
-        await api.createPatient({
-          documentType: values.documentType.toString(),
-          documentNumber: values.documentNumber,
-          birthDate: values.birthDate,
-          gender: values.gender,
-          phoneNumbers: [values.mobilePhone1],
-          province: values.province.codigo.toString(),
-          canton: values.canton.codigo.toString(),
-          district: values.district.codigo.toString(),
-          userId: user.$id
-        });
-
-        setLoading(false);
-        handleLogin(user as any);
-        setUserToLocalStorage('user', user as any);
-        router.replace('/validate_code');
-      } catch (e) {
-        console.log(e);
-        setLoading(false);
       }
-      return;
+    },
+    1: {
+      yupSchema: yupExtraData,
+      title: 'title.extra_data',
+      description: 'description.extra_data',
+      Component: function FormStep(formik: FormikProps<TFormData>) {
+        return <ExtraDataForm {...formik} />;
+      }
+    },
+    2: {
+      yupSchema: yupCredentialData,
+      title: 'title.credential_data',
+      description: 'description.credential_data',
+      Component: function FormStep(formik: FormikProps<TFormData>) {
+        return <CredentialDataForm handleNotifications={handleNotifications} {...formik} />;
+      }
     }
-    setCurrentState(currentStep + 1);
   };
 
-  const oldOnSubmit = (values: IFormData) => {
-    if (currentStep === 2) {
-      setLoading(true);
-      const body: ISignUpBody = {
-        email: values.email,
-        terms: values.terms,
-        gender: values.gender,
-        canton: values.canton.codigo,
-        country: values.country,
-        province: values.province.codigo,
-        password: values.password,
-        lastName: values.lastName,
-        district: values.district.codigo,
-        services: values.services,
-        firstName: values.firstName,
-        birthDate: values.birthDate,
-        superappUser: values.superappUser,
-        mobilePhone1: values.mobilePhone1,
-        documentType: values.documentType,
-        documentNumber: values.documentNumber
-      };
+  const StepForm = MAP_STEPS[currentStep];
 
-      signUp(body)
-        .then(res => {
-          handleLogin(res.data.result);
-          setUserToLocalStorage('user', res.data.result);
-          router.replace('/validate_code');
-        })
-        .catch(err => {
-          handleError(true, err.response.data.error.message);
-        })
-        .finally(() => {
-          setTimeout(() => {
-            setLoading(false);
-          }, 500);
-        });
-    } else {
-      setCurrentState(currentStep + 1);
+  const handleGlobalFormErrors = (errors: FormikErrors<any>) => {
+    const flatErrors = Object.values(errors);
+    if (flatErrors.includes(t('validations.required', { ns: i18Forms }))) {
+      handleNotifications({
+        open: true,
+        severity: 'error',
+        message: t('message.error.fields_required', { ns: i18Forms })
+      });
+      return;
+    }
+    if (flatErrors.length) {
+      handleNotifications({
+        open: true,
+        severity: 'error',
+        message: t('message.error.field_incorrect', { ns: i18Forms })
+      });
+    }
+  };
+
+  const storeUser = () => {
+    console.log('storeee');
+  };
+
+  const handleNext = () => {
+    if (MAP_STEPS[currentStep + 1]) {
+      setCurrentStep(currentStep + 1);
+      return;
+    }
+    storeUser();
+  };
+
+  const handlePrev = () => {
+    if (MAP_STEPS[currentStep - 1]) {
+      setCurrentStep(currentStep - 1);
     }
   };
 
   return (
-    <Formik
-      validateOnMount
-      onSubmit={(values, formik) => {
-        formik.setTouched({});
-        onSubmit(values);
-      }}
-      initialValues={initialValues}
-      validationSchema={stepValidations[currentStep]}
-    >
-      {formik => {
-        const dataSource = [
-          {
-            title: `${t('title.identify', { ns: 'globals' })}`,
-            description: `${t('description.identify', { ns: 'globals' })}`,
-            component: (
-              <PersonalDataForm
-                handleNotifications={handleNotifications}
-                documentTypesOptions={documentTypeOptions}
-                {...formik}
-              />
-            )
-          },
-          {
-            title: `${t('title.extra_data', { ns: 'globals' })}`,
-            description: `${t('description.extra_data', { ns: 'globals' })}`,
-            component: <ExtraDataForm {...formik} />
-          },
-          {
-            title: `${t('title.credential_data', { ns: 'globals' })}`,
-            description: `${t('description.credential_data', { ns: 'globals' })}`,
-            component: <CredentialDataForm handleNotifications={handleNotifications} {...formik} />
-          }
-        ];
-        return (
-          <Form autoComplete="off">
-            <Wizard
-              stepIndicator
-              footer={
-                <Box p={3}>
-                  <Grid
-                    container
-                    item
-                    xs={12}
-                    spacing={1}
-                    justify="flex-end"
-                    className={classes.containerButton}
+    <Layout
+      header={
+        StepForm && (
+          <>
+            <Typography className={classes.stepIndicator} variant="h5" component="h5">
+              {t('description.steps_header', {
+                step: currentStep + 1,
+                totalSteps: Object.keys(MAP_STEPS).length
+              })}
+            </Typography>
+            <TitleContent titleWithSubtitle title={t(StepForm.title, { ns: i18Global })} />
+            <TitleContent paragraph title={t(StepForm.description, { ns: i18Global })} />
+          </>
+        )
+      }
+      form={
+        StepForm && (
+          <Formik
+            initialValues={data}
+            validationSchema={StepForm.yupSchema.schema}
+            onSubmit={handleNext}
+          >
+            {(formik: FormikProps<TFormData>) => {
+              useEffect(() => {
+                formik.validateForm();
+                handleGlobalFormErrors(formik.errors);
+              }, [formik.submitCount]);
+
+              return (
+                <form onSubmit={formik.handleSubmit} noValidate={true}>
+                  {StepForm.Component(formik)}
+                  <Box
+                    display={{ xs: 'block', md: 'flex' }}
+                    mt={5}
+                    alignItems="center"
+                    flexDirection="row-reverse"
+                    justifyContent="flex-end"
                   >
-                    <Grid item xs={6} md={2} className={classes.buttonLeftContainer}>
-                      <Button fullWidth onClick={goBack} variant="outlined">
-                        {t('button.back', { ns: 'globals' })}
-                      </Button>
-                    </Grid>
-                    <Grid item xs={6} md={2} className={classes.buttonRightContainer}>
+                    <Box>
                       <Button
                         fullWidth
+                        variant="contained"
                         type="submit"
                         color="primary"
-                        variant="contained"
-                        disabled={loading}
-                        // TODO verificar
-                        // disabled={!_.isEmpty(formik.errors) || loading}
+                        data-testid="login-button"
+                        className={classes.button}
                       >
-                        {currentStep === dataSource.length
-                          ? `${t('button.send', { ns: 'globals' })}`
-                          : `${t('button.continue', { ns: 'globals' })}`}
+                        {t('button.continue')}
                       </Button>
-                    </Grid>
-                  </Grid>
-                </Box>
-              }
-              activeStep={currentStep}
-              dataSource={dataSource}
-            />
-          </Form>
-        );
-      }}
-    </Formik>
+                    </Box>
+                    <Box mt={{ xs: 2, md: 0 }} mr={{ md: 2 }}>
+                      <Button
+                        fullWidth
+                        type="button"
+                        variant="outlined"
+                        data-testid="login-button"
+                        onClick={handlePrev}
+                        className={classes.button}
+                      >
+                        {t('button.back')}
+                      </Button>
+                    </Box>
+                  </Box>
+                </form>
+              );
+            }}
+          </Formik>
+        )
+      }
+    />
   );
 }
 

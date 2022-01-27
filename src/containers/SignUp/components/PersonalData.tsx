@@ -1,25 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
-import _ from 'lodash';
+// BASE IMPORTS
+import { useState, useEffect, useRef } from 'react';
 import { addYears } from 'date-fns';
 import { convertToMask } from '../../../utils/helpers';
+/// BASE IMPORTS END
 
 /// FORM
 import { FormikProps } from 'formik';
+/// FORM END
+
 /// SERVICE
 import { personVerifier } from '../../../services/personVerifier.service';
-/// TYPES
-import {
-  IPersonalDataForm,
-  IPersonalDataProps,
-  IPaciente,
-  ResponseDataError
-} from '../index.types';
+import countryDocTypes from '../countryDocTypes';
+/// SERVICE END
+
 /// OWN COMPONENTS
 import TextField from '../../../components/common/TextField';
 import DatePicker from '../../../components/common/DataPicker';
 import TextMaskCustom from '../../../components/common/InputTextMask';
+/// OWN COMPONENTS END
+
 /// MATERIAL-UI
-import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -28,8 +28,63 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 /// MATERIAL-UI END
 
 /// i18n
-import { useTranslation } from 'react-i18next';
+import { TFunction, useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY as i18Global } from '../../../i18n/globals/i18n';
+import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
 /// i18n END
+
+/// TYPES
+import { TPersonalDataProps, TFormData, TPaciente, TCountryDocTypes } from '../index.types';
+/// TYPES END
+
+/// STYLES
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+/// STYLES END
+
+type THandleDocNumberChange = {
+  docType: string;
+  docNumber: string;
+};
+
+type TFetchUserDateState = {
+  isLoading: boolean;
+  error: null | string;
+};
+/// STYLES END
+
+const FETCH_USER_DATA_STATE: TFetchUserDateState = {
+  isLoading: false,
+  error: null
+};
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    selectPlaceholder: {
+      display: 'none'
+    }
+  })
+);
+
+const buildCountryDocTypeOptions = (countryCode = '', t: TFunction) => {
+  const mapDoctypes = countryDocTypes.find(item => item.code === countryCode);
+  const options = mapDoctypes?.items || [];
+  if (!options.length) {
+    return null;
+  }
+  return options.map((option, i) => (
+    <MenuItem key={`${countryCode}-${i}`} value={option.id}>
+      {t(`label.document.${option.name}`)}
+    </MenuItem>
+  ));
+};
+
+const setDataBirth = (date: string): string => {
+  const toDate = new Date(date);
+  if (toDate instanceof Date && !isNaN(toDate.getTime())) {
+    return toDate.toISOString();
+  }
+  return '';
+};
 
 function PersonalData({
   values,
@@ -37,249 +92,214 @@ function PersonalData({
   touched,
   handleBlur,
   handleChange,
+  setFieldError,
+  setFieldTouched,
   setFieldValue,
   handleNotifications,
-  documentTypesOptions
-}: IPersonalDataProps & FormikProps<IPersonalDataForm>): JSX.Element {
-  const { t } = useTranslation(['globals', 'forms']);
+  setCurrDocTypeArgs,
+  currDocTypeArgs
+}: TPersonalDataProps & FormikProps<TFormData>): JSX.Element {
+  const classes = useStyles();
+  const { t } = useTranslation([i18Global, i18Forms]);
   const inputMaskRef = useRef(null);
-  const [data, setData] = useState<IPaciente>(null);
-  const [typeError, setTypeError] = useState<string>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [datePickerIsClosed, setDatePickerIsClosed] = useState(false);
-  const isNotPhysicalID = !!(values.documentType !== 1 && values.documentType);
-  const currentDocumentType = documentTypesOptions.find(
-    data => data.documentTypeId === values.documentType
-  );
-  const documentNumberSanitized = values.documentNumber.replace(/\D+/g, '');
+  const [fetchUserDataState, setFetchUserDateState] = useState(FETCH_USER_DATA_STATE);
 
-  /// HANDLERS
+  const handleCurrDocTypeChange = ({ documentType, country }: TFormData) => {
+    const countryTypes = countryDocTypes.find(item => item.code === country)?.items || [];
+    const docType = countryTypes.find(item => item.id === documentType);
+    setFetchUserDateState(FETCH_USER_DATA_STATE);
+    setCurrDocTypeArgs(docType);
+  };
 
-  const handlerChangeSelector = (e: React.ChangeEvent<{ name?: string; value: unknown }>): void => {
-    handleChange(e);
-    touched.documentType = false;
-    touched.documentNumber = false;
-    touched.birthDate = false;
-    touched.firstName = false;
-    touched.lastName = false;
-    setData(null);
-    setTypeError('');
-    setFieldValue('firstName', '');
-    setFieldValue('lastName', '');
-    setFieldValue('birthDate', '');
-    setFieldValue('documentNumber', '');
+  const handlerDocNumberChange = ({ docType, docNumber }: THandleDocNumberChange) => {
+    const docNumberSanitized = docNumber.replace(/\D+/g, '');
+    const docNumberIsValid = currDocTypeArgs.validation.test(docNumberSanitized);
+    if (fetchUserDataState.isLoading || !docNumberIsValid || !currDocTypeArgs.reqFetchPerInf) {
+      return;
+    }
+    setFetchUserDateState({ isLoading: true, error: '' });
+    personVerifier(docType, docNumberSanitized)
+      .then(res => {
+        const data = res.data.result.paciente;
+        setUserValues(data);
+      })
+      .catch(() => {
+        const i18Error = t('validations.document.invalid', { ns: i18Forms });
+        setUserValues(null); // Reset user info inputs
+        setFetchUserDateState(prevState => ({ ...prevState, error: i18Error }));
+        handleNotifications({ open: true, message: i18Error, severity: 'error' });
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setFetchUserDateState(prevState => ({ ...prevState, isLoading: false }));
+        }, 300);
+      });
+  };
+
+  const cleanFormInputs = (inputs: string[]) => {
+    inputs.forEach(value => {
+      setFieldValue(value, '');
+      setFieldError(value, '');
+      setFieldTouched(value, false);
+    });
     setTimeout(() => {
       inputMaskRef.current.focus();
       inputMaskRef.current.setSelectionRange(0, 0);
     }, 100);
   };
 
-  const handlerChangeDocument = (e: React.ChangeEvent<{ name?: string; value: string }>): void => {
-    const regexAlphanumeric = /^[a-zA-Z0-9]*$/;
-    const regexNumeric = /^[0-9]*$/;
-    const value = e.target.value;
-    if (currentDocumentType.documentTypeId === 1) {
-      handleChange(e);
-    } else if (currentDocumentType.documentTypeId === 2) {
-      if (value.length <= 15 && regexNumeric.test(value)) {
-        handleChange(e);
-      }
-    } else {
-      if ((regexAlphanumeric.test(value) && value.length <= 20) || value === '') {
-        handleChange(e);
-      }
-    }
+  const setUserValues = (data: TPaciente) => {
+    const name = data ? `${data.name} ${data.surname} ${data?.lastSurname ?? ''}` : '';
+    const birthDate = data ? setDataBirth(data.dateOfBirth) : '';
+    setFieldValue('fullName', name);
+    setFieldValue('birthDate', birthDate);
   };
 
-  const handleChangePicker = (date: Date): void => {
-    setFieldValue('birthDate', date);
-  };
-
-  const handleChangeCustom = (e: React.ChangeEvent<{ name?: string; value: string }>): void => {
-    const regex =
-      /[^a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$ /g;
-    const value = e.target.value;
-
-    if (!regex.test(value) || value === '') {
-      handleChange(e);
-    }
-  };
-
-  const handleChangeLabel = (val: number) => {
-    const label = {
-      1: `${t('label.document.physical', { ns: 'globals' })}`,
-      2: `${t('label.document.residence', { ns: 'globals' })}`,
-      6: `${t('label.document.passport', { ns: 'globals' })}`
-    };
-    return label[val];
-  };
-
-  const handleChangeError = (err: string) => {
-    return err;
-  };
-
-  const userValuesAlreadyExist = (): boolean => {
-    const stepValues = {
-      lastName: values.lastName,
-      firstName: values.firstName,
-      birthDate: values.birthDate,
-      documentType: values.documentType,
-      documentNumber: values.documentNumber
-    };
-    return !Object.values(stepValues).some(value => _.isEmpty(value));
-  };
-
-  const setDataBirth = (date: string): string => {
-    const toDate = new Date(date);
-    if (toDate instanceof Date && !isNaN(toDate.getTime())) {
-      return toDate.toISOString();
-    }
-    return '';
-  };
-
-  const setUserValues = (data: IPaciente = null) => {
-    setData(data);
-    setFieldValue('firstName', data ? data.name : '');
-    setFieldValue('lastName', data ? `${data.surname} ${data?.lastSurname ?? ''}` : '');
-    setFieldValue('birthDate', data ? setDataBirth(data.dateOfBirth) : '');
-  };
-
-  const getResponseDataError = (responseDataError: ResponseDataError, currentDocumentType) => {
-    if (currentDocumentType.documentTypeId === 1) {
-      setTypeError(responseDataError.type);
-    }
-  };
-
-  const showMessageDataError = (message: string) => {
-    const type = {
-      'Usuario no encontrado': `${t('message.error.field_incorrect', { ns: 'forms' })}`,
-      default: message
-    };
-    return type[message] || type.default;
-  };
-  /// HANDLERS END
-
-  /// USE EFFECTS
   useEffect(() => {
-    if (currentDocumentType && !isNotPhysicalID) {
-      if (documentNumberSanitized.length === currentDocumentType.length) {
-        setLoading(true);
-        personVerifier(values.documentType, documentNumberSanitized)
-          .then(res => {
-            const data = res.data.result.paciente;
-            setTypeError('');
-            setUserValues(data);
-          })
-          .catch(err => {
-            const message = showMessageDataError(err.response.data.error.message);
-            handleNotifications({ open: true, message, severity: 'error' });
-            getResponseDataError(err.response.data.error, currentDocumentType);
-            setUserValues();
-          })
-          .finally(() => setLoading(false));
-      }
-    }
-  }, [values.documentNumber]);
-  /// USE EFFECTS END
+    handleCurrDocTypeChange(values);
+  }, [values.documentType]);
+
   return (
     <div>
-      <FormControl fullWidth variant="filled">
-        <FormLabel id="document-type-selector-label" style={{ marginBottom: 10 }}>
-          {t('label.document.type', { ns: 'globals' })}
+      <FormControl fullWidth margin="normal" variant="filled">
+        <FormLabel
+          id="country-selector-label"
+          style={{ marginBottom: 10 }}
+          error={touched.country && !!errors.country}
+        >
+          {t('label.country.country', { ns: i18Global })}
         </FormLabel>
         <Select
           fullWidth
-          id="document-type-selector"
-          name="documentType"
-          value={values.documentType}
-          error={touched.documentType && Boolean(errors.documentType)}
+          displayEmpty
+          defaultValue=""
+          id="country-selector"
+          name="country"
           color="secondary"
-          onBlur={handleBlur}
-          labelId="document-type-selector-label"
+          labelId="country-selector-label"
           variant="outlined"
-          onChange={handlerChangeSelector}
-          data-testid="document-type-selector"
+          error={touched.country && !!errors.country}
+          value={values.country}
+          onBlur={handleBlur}
+          onChange={e => {
+            cleanFormInputs(['documentType', 'documentNumber', 'fullName', 'birthDate']);
+            handleChange(e);
+          }}
         >
-          {documentTypesOptions.map((option, i) => (
-            <MenuItem key={i} value={option.documentTypeId}>
-              {handleChangeLabel(option.documentTypeId)}
+          <MenuItem value="" disabled className={classes.selectPlaceholder}>
+            {t('label.country.placeholder', { ns: i18Global })}
+          </MenuItem>
+          {countryDocTypes.map(({ code }: TCountryDocTypes, i) => (
+            <MenuItem key={`${code}-${i}`} value={code}>
+              {t(`countries.${code}`, { ns: i18Global })}
             </MenuItem>
           ))}
+        </Select>
+        {touched.country && errors.country && (
+          <FormHelperText error>{errors.country}</FormHelperText>
+        )}
+      </FormControl>
+      <FormControl fullWidth variant="filled">
+        <FormLabel
+          id="document-type-selector-label"
+          style={{ marginBottom: 10 }}
+          error={touched.documentType && !!errors.documentType}
+        >
+          {t('label.document.type', { ns: i18Global })}
+        </FormLabel>
+        <Select
+          fullWidth
+          displayEmpty
+          defaultValue=""
+          id="document-type-selector"
+          name="documentType"
+          color="secondary"
+          labelId="document-type-selector-label"
+          variant="outlined"
+          data-testid="document-type-selector"
+          disabled={!values.country}
+          value={values.documentType}
+          error={touched.documentType && Boolean(errors.documentType)}
+          onBlur={handleBlur}
+          onChange={e => {
+            cleanFormInputs(['documentNumber', 'fullName', 'birthDate']);
+            handleChange(e);
+          }}
+        >
+          <MenuItem value="" disabled className={classes.selectPlaceholder}>
+            {t('label.document.placeholder', { ns: i18Global })}
+          </MenuItem>
+          {buildCountryDocTypeOptions(values.country, t)}
         </Select>
         {touched.documentType && errors.documentType && (
           <FormHelperText error>{errors.documentType}</FormHelperText>
         )}
       </FormControl>
       <TextField
+        handleLblError
+        type="text"
         id="documentNumber"
         name="documentNumber"
-        type="text"
-        label={t('label.document.number')}
-        value={values.documentNumber}
-        error={(touched.documentNumber && Boolean(errors.documentNumber)) || Boolean(typeError)}
-        errorType={typeError}
+        label={t('label.document.number', { ns: i18Global })}
         onBlur={handleBlur}
-        loading={loading}
         inputRef={inputMaskRef}
+        loading={fetchUserDataState.isLoading}
         disabled={!values.documentType}
-        onChange={handlerChangeDocument}
-        helperText={handleChangeError(errors.documentNumber)}
+        helperText={fetchUserDataState.error || errors.documentNumber}
+        value={values.documentNumber}
+        error={(touched.documentNumber && !!errors.documentNumber) || !!fetchUserDataState.error}
+        onChange={e => {
+          handleChange(e);
+          handlerDocNumberChange({
+            docNumber: e.target.value,
+            docType: values.documentType
+          });
+        }}
+        inputComponent={convertToMask(currDocTypeArgs?.mask) ? (TextMaskCustom as any) : 'input'}
         inputProps={{
-          mask: convertToMask(currentDocumentType?.mask),
+          mask: convertToMask(currDocTypeArgs?.mask),
           'data-testid': 'documentNumber'
         }}
-        inputComponent={
-          convertToMask(currentDocumentType?.mask) ? (TextMaskCustom as any) : 'input'
-        }
       />
-      {(data || userValuesAlreadyExist() || isNotPhysicalID) && (
-        <Paper square elevation={0}>
+      {values.documentType && currDocTypeArgs && (
+        <>
           <TextField
-            id="firstName"
-            name="firstName"
-            label={t('label.name', { ns: 'globals' })}
-            value={values.firstName}
-            error={touched.firstName && Boolean(errors.firstName)}
+            handleLblError
+            id="fullName"
+            name="fullName"
+            data-testid="fullName"
+            label={t('label.name', { ns: i18Global })}
+            value={values.fullName}
+            helperText={errors.fullName}
+            disabled={currDocTypeArgs.reqFetchPerInf}
+            error={touched.fullName && !currDocTypeArgs.reqFetchPerInf && !!errors.fullName}
             onBlur={handleBlur}
-            disabled={!isNotPhysicalID}
-            onChange={handleChangeCustom}
-            helperText={errors.firstName}
-            data-testid="firstName"
-            formControlProps={{ margin: 'normal' }}
-          />
-          <TextField
-            id="lastName"
-            name="lastName"
-            label={t('label.lastname', { ns: 'globals' })}
-            value={values.lastName}
-            error={touched.lastName && Boolean(errors.lastName)}
-            onBlur={handleBlur}
-            disabled={!isNotPhysicalID}
-            onChange={handleChangeCustom}
-            helperText={errors.lastName}
-            data-testid="lastName"
+            onChange={handleChange}
             formControlProps={{ margin: 'normal' }}
           />
           <DatePicker
+            openTo="year"
             id="birthDate"
-            label={t('label.birthdate', { ns: 'globals' })}
-            value={values.birthDate === '' ? null : values.birthDate}
+            views={['year', 'month', 'date']}
+            label={t('label.birthdate', { ns: i18Global })}
             margin="normal"
             format="dd/MM/yyyy"
-            onBlur={handleBlur}
             variant="inline"
-            onClose={() => {
-              setDatePickerIsClosed(true);
-            }}
-            onChange={handleChangePicker}
-            disabled={!isNotPhysicalID}
             inputVariant="outlined"
-            error={datePickerIsClosed && Boolean(errors.birthDate)}
-            helperText={datePickerIsClosed && errors.birthDate}
-            maxDate={addYears(new Date(), -18)}
+            autoOk={true}
+            value={values.birthDate === '' ? null : values.birthDate}
+            disabled={currDocTypeArgs.reqFetchPerInf}
+            onChange={value => setFieldValue('birthDate', value)}
             formControlProps={{ margin: 'normal' }}
+            onBlur={handleBlur}
+            maxDate={addYears(new Date(), -18)}
+            error={touched.birthDate && !currDocTypeArgs.reqFetchPerInf && !!errors.birthDate}
+            helperText={touched.birthDate && !currDocTypeArgs.reqFetchPerInf && errors.birthDate}
+            labelProps={{
+              error: touched.birthDate && !currDocTypeArgs.reqFetchPerInf && !!errors.birthDate
+            }}
           />
-        </Paper>
+        </>
       )}
     </div>
   );

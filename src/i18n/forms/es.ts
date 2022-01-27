@@ -12,10 +12,9 @@ export const esForms = {
     error: {
       fields_required: 'Campos obligatorios, debés de rellenarlos para continuar',
       general_fetch:
-        'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.',
-      submit:
-        'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.',
-      field_incorrect: 'Campos incorrectos, corregir para continuar.'
+        'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador',
+      submit: 'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador',
+      field_incorrect: 'Campos incorrectos, debés corregirlos para continuar'
     },
     password: {
       change_success: 'La contraseña se ha cambiado correctamente.'
@@ -49,7 +48,14 @@ export const esForms = {
     },
 
     document: {
-      invalid: 'Cédula inválida'
+      invalid: 'Cédula inválida',
+      crc_physical_document_number: 'Número de identificación no corresponde a 9 dígitos',
+      crc_residence_document_number:
+        'Número de identificación no corresponde de 10 a 15 caracteres',
+      crc_passport_document_number: 'Número de identificación no corresponde de 3 a 20 caracteres',
+      mx_elector_document_number: 'Número de identificación no corresponde de 10 a 18 caracteres',
+      mx_unique_document_number: 'Número de identificación no corresponde de 10 a 18 caracteres',
+      mx_passport_document_number: 'Número de identificación no corresponde de 8 a 10 caracteres'
     },
 
     code: {

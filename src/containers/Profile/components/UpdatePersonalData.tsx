@@ -25,7 +25,7 @@ import { Button, Box, Grid } from '@material-ui/core';
 /// MATERIAL - UI END
 
 /// STYLES & PROPS
-import { IFormData, IProps } from '../../SignUp/index.types';
+import { TFormData, TProps } from '../../SignUp/index.types';
 import ProfileStyles from '../styles.module';
 import { ISignUpBody } from '../../../types/auth.types';
 
@@ -41,7 +41,7 @@ export const getStaticProps: GetStaticProps = async () => {
 /// GET SERVICE END
 
 /// FORM STATES & VALIDATIONS
-const initialValues: IFormData = {
+const initialValues: TFormData = {
   email: '',
   terms: false,
   gender: '',
@@ -50,14 +50,14 @@ const initialValues: IFormData = {
   password: '',
   province: null,
   district: null,
-  lastName: '',
   services: false,
-  firstName: '',
+  fullName: '',
   birthDate: '',
   superappUser: false,
   documentType: '',
   mobilePhone1: '',
   documentNumber: '',
+  pronoun: '',
   confirmPassword: ''
 };
 
@@ -66,12 +66,12 @@ function UpdatePersonalData({
   handleLogin,
   handleError,
   onClickLink
-}: InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
+}: InferGetStaticPropsType<typeof getStaticProps> & TProps): JSX.Element {
   const { t } = useTranslation(NAMESPACE_KEY);
   const classes = ProfileStyles();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const onSubmit = (values: IFormData) => {
+  const onSubmit = (values: TFormData) => {
     setLoading(true);
     const body: ISignUpBody = {
       email: values.email,
@@ -81,10 +81,10 @@ function UpdatePersonalData({
       country: values.country,
       province: values.province.codigo,
       password: values.password,
-      lastName: values.lastName,
+      firstName: values.fullName,
+      lastName: '',
       district: values.district.codigo,
       services: values.services,
-      firstName: values.firstName,
       birthDate: values.birthDate,
       superappUser: values.superappUser,
       mobilePhone1: values.mobilePhone1,

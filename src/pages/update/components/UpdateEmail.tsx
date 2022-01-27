@@ -17,7 +17,7 @@ import { NAMESPACE_KEY } from '../../../i18n/globals/i18n';
 
 /// TYPES
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
-import { ICredentialDataProps, IFormData, IProps } from '../../../containers/SignUp/index.types';
+import { TCredentialDataProps, TFormData, TProps } from '../../../containers/SignUp/index.types';
 /// TYPES END
 
 /// OWN COMPONENTS
@@ -45,7 +45,7 @@ export const getStaticProps: GetStaticProps = async () => {
 /// GET SERVICE END
 
 /// FORM STATES & VALIDATIONS
-const initialValues: IFormData = {
+const initialValues: TFormData = {
   email: '',
   terms: false,
   gender: '',
@@ -54,10 +54,10 @@ const initialValues: IFormData = {
   password: '',
   province: null,
   district: null,
-  lastName: '',
+  fullName: '',
   services: false,
-  firstName: '',
   birthDate: '',
+  pronoun: '',
   superappUser: false,
   documentType: '',
   mobilePhone1: '',
@@ -70,7 +70,7 @@ function UpdateEmail({
   handleLogin,
   handleError,
   handleNotifications
-}: ICredentialDataProps & InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
+}: TCredentialDataProps & InferGetStaticPropsType<typeof getStaticProps> & TProps): JSX.Element {
   const { t } = useTranslation(NAMESPACE_KEY);
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
@@ -79,7 +79,7 @@ function UpdateEmail({
     router.back();
   };
 
-  const onSubmit = (values: IFormData) => {
+  const onSubmit = (values: TFormData) => {
     setLoading(true);
     const body: ISignUpBody = {
       email: values.email,
@@ -89,10 +89,10 @@ function UpdateEmail({
       country: values.country,
       province: values.province.codigo,
       password: values.password,
-      lastName: values.lastName,
+      lastName: '',
       district: values.district.codigo,
       services: values.services,
-      firstName: values.firstName,
+      firstName: '',
       birthDate: values.birthDate,
       superappUser: values.superappUser,
       mobilePhone1: values.mobilePhone1,

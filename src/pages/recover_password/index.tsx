@@ -99,10 +99,10 @@ function RecoverPasswordPage({ handleLoading, handleNotifications }: IProps): JS
   return (
     <Layout
       header={
-        <Box p={3}>
+        <>
           <TitleContent titleWithSubtitle title={t('title.recover.forget', { ns: i18Global })} />
           <TitleContent paragraph title={t('description.recover.forget', { ns: i18Global })} />
-        </Box>
+        </>
       }
       form={
         <Formik
@@ -114,7 +114,7 @@ function RecoverPasswordPage({ handleLoading, handleNotifications }: IProps): JS
           {formik => {
             return (
               <Form autoComplete="off" className={classes.containerForm}>
-                <Box p={3}>
+                <Box pb={3} pt={3}>
                   <TextField
                     fullWidth
                     id="email"
@@ -131,7 +131,7 @@ function RecoverPasswordPage({ handleLoading, handleNotifications }: IProps): JS
                     handleLblError
                   />
                 </Box>
-                <Box p={3} className={classes.containerButton}>
+                <Box pb={3} className={classes.containerButton}>
                   <Grid container item sm={12} md={4}>
                     <Button
                       fullWidth

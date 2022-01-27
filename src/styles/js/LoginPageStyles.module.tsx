@@ -4,14 +4,6 @@ import theme from './theme';
 
 const LoginStyles = makeStyles(() =>
   createStyles({
-    mainContainer: {
-      width: '100%',
-      padding: 24,
-      [theme.breakpoints.up('md')]: {
-        padding: 0,
-        width: 461
-      }
-    },
     recoverContainer: {
       marginTop: 0,
       textAlign: 'right',

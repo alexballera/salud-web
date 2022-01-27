@@ -17,7 +17,7 @@ import { NAMESPACE_KEY } from '../../../i18n/globals/i18n';
 
 /// TYPES
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
-import { IFormData, IProps } from '../../../containers/SignUp/index.types';
+import { TFormData, TProps } from '../../../containers/SignUp/index.types';
 /// TYPES END
 
 /// OWN COMPONENTS
@@ -45,7 +45,7 @@ export const getStaticProps: GetStaticProps = async () => {
 /// GET SERVICE END
 
 /// FORM STATES & VALIDATIONS
-const initialValues: IFormData = {
+const initialValues: TFormData = {
   email: '',
   terms: false,
   gender: '',
@@ -54,9 +54,9 @@ const initialValues: IFormData = {
   password: '',
   province: null,
   district: null,
-  lastName: '',
+  fullName: '',
+  pronoun: '',
   services: false,
-  firstName: '',
   birthDate: '',
   superappUser: false,
   documentType: '',
@@ -69,7 +69,7 @@ const initialValues: IFormData = {
 function UpdatePhone({
   handleLogin,
   handleError
-}: InferGetStaticPropsType<typeof getStaticProps> & IProps): JSX.Element {
+}: InferGetStaticPropsType<typeof getStaticProps> & TProps): JSX.Element {
   const { t } = useTranslation(NAMESPACE_KEY);
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
@@ -78,7 +78,7 @@ function UpdatePhone({
     router.back();
   };
 
-  const onSubmit = (values: IFormData) => {
+  const onSubmit = (values: TFormData) => {
     setLoading(true);
     const body: ISignUpBody = {
       email: values.email,
@@ -88,10 +88,10 @@ function UpdatePhone({
       country: values.country,
       province: values.province.codigo,
       password: values.password,
-      lastName: values.lastName,
+      lastName: '',
       district: values.district.codigo,
       services: values.services,
-      firstName: values.firstName,
+      firstName: '',
       birthDate: values.birthDate,
       superappUser: values.superappUser,
       mobilePhone1: values.mobilePhone1,

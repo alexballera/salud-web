@@ -15,7 +15,7 @@ export const enForms = {
         'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.',
       submit:
         'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.',
-      field_incorrect: 'Campos incorrectos, corregir para continuar.'
+      field_incorrect: 'Incorrect fields, you must correct them to continue'
     },
     password: {
       change_success: 'La contraseña se ha cambiado correctamente.'
@@ -43,7 +43,13 @@ export const enForms = {
     },
 
     document: {
-      invalid: 'Cédula inválida'
+      invalid: 'Cédula inválida',
+      crc_physical_document_number: 'Identification number does not correspond to 9 digits',
+      crc_residence_document_number: 'Identification number does not apply 10 to 15 characters',
+      crc_passport_document_number: 'Identification number does not apply from 3 to 20 characters',
+      mx_elector_document_number: 'Identification number does not apply from 10 to 18 characters',
+      mx_unique_document_number: 'Identification number does not apply from 10 to 18 characters',
+      mx_passport_document_number: 'ID number does not apply 8 to 10 characters'
     },
 
     email: {

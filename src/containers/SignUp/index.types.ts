@@ -2,31 +2,13 @@ import { IAppProps } from '../../context/index';
 import { INotificationProps } from '../../context/types';
 
 /// TYPES
-export type IProps = {
+export type TProps = {
+  handleNotifications?: (props: INotificationProps) => void;
   handleLogin: (user: any) => void;
   handleError: (open: boolean, message: string, type?: string) => void;
   onClickLink?;
+  notificationState?: INotificationProps;
 } & IAppProps;
-
-export type IFormData = {
-  email: string;
-  terms: boolean;
-  gender: GenderEnum | null;
-  canton: { codigo: string; nombre: string } | null;
-  country: string;
-  province: { codigo: string; nombre: string } | null;
-  password: string;
-  lastName: string;
-  district: { codigo: string; nombre: string } | null;
-  services: boolean;
-  firstName: string;
-  birthDate: string;
-  superappUser: boolean;
-  documentType: documentType;
-  mobilePhone1: string;
-  documentNumber: string;
-  confirmPassword?: string;
-};
 
 type documentType = number | string;
 
@@ -37,11 +19,11 @@ export type IEmailStates = {
 
 export type IPersonalVerificatorResponse = {
   result: {
-    paciente: IPaciente;
+    paciente: TPaciente;
   };
 };
 
-export type IPaciente = {
+export type TPaciente = {
   name: string;
   gender: 'F' | 'M';
   surname: string;
@@ -81,44 +63,50 @@ export type IGeneralAdressOption = {
   nombre: string;
 };
 
-export type IPersonalDataForm = {
-  lastName: string;
-  birthDate: string;
-  firstName: string;
-  documentType: documentType;
+export type TPersonalDataForm = {
+  country: string;
+  documentType: string;
   documentNumber: string;
+  fullName: string;
+  birthDate: string;
 };
 
-export type IPersonalDataProps = {
-  documentTypesOptions: IDocumentTypes[];
-  handleNotifications: (props: INotificationProps) => void;
-};
-
-export type IExtraDataForm = {
+export type TExtraDataForm = {
   gender: GenderEnum;
   canton: any;
   district: any;
   province: any;
   mobilePhone1: string;
-};
-export type IExtraDataProps = {
-  updatePersonalData?: boolean;
-  updatePhone?: boolean;
+  pronoun: string;
 };
 
-export type ICredentialDataProps = {
-  handleNotifications: (props: INotificationProps) => void;
-  updatePassword?: boolean;
-  updateEmail?: boolean;
-};
-
-export type ICredentialDataForm = {
+export type TCredentialDataForm = {
   email: string;
   terms: boolean;
   password: string;
   services: boolean;
   superappUser: boolean;
   confirmPassword?: string;
+};
+
+export type TFormData = TExtraDataForm & TPersonalDataForm & TCredentialDataForm;
+
+export type TPersonalDataProps = {
+  documentTypesOptions: IDocumentTypes[];
+  handleNotifications: (props: INotificationProps) => void;
+  setCurrDocTypeArgs?: React.Dispatch<React.SetStateAction<TCountryDocTypesItem>>;
+  currDocTypeArgs?: TCountryDocTypesItem;
+};
+
+export type TExtraDataProps = {
+  updatePersonalData?: boolean;
+  updatePhone?: boolean;
+};
+
+export type TCredentialDataProps = {
+  handleNotifications: (props: INotificationProps) => void;
+  updatePassword?: boolean;
+  updateEmail?: boolean;
 };
 
 export type GenderEnum = '1' | '2' | '';
@@ -138,5 +126,20 @@ export type ResponseDataError = {
   name: string;
   stack: string;
   type: string;
+};
+
+export type TCountryDocTypesItem = {
+  id: string;
+  name: string;
+  mask: string | null;
+  length: number;
+  validation: RegExp;
+  reqFetchPerInf: boolean;
+  i18n: string;
+};
+
+export type TCountryDocTypes = {
+  code: string;
+  items: TCountryDocTypesItem[];
 };
 /// TYPES END

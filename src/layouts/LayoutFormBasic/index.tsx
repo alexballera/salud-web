@@ -2,23 +2,31 @@
 import { Box, Grid, Hidden } from '@material-ui/core';
 /// MATERIAL - UI END
 
+/// CONTEXT
+import { withAppContext } from '../../context';
+/// CONTEXT END
+
 /// STYLES
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 /// STYLES END
+
+/// OWN COMPONENTS
+import Notifications from '../../components/common/Notifications';
+/// OWN COMPONETNS END
 
 /// LOGO
 import SvgSideForm from '../../components/common/Svg/SvgSideForm.component';
 /// LOGO END
 
+/// TYPES
 import { INotificationProps } from '../../context/types';
-import Notifications from '../../components/common/Notifications';
-import { withAppContext } from '../../context';
+/// TYPES END
 
 type TProps = {
   header?: JSX.Element;
   form: JSX.Element;
-  handleLoading?: (loading: boolean) => void;
   notificationState?: INotificationProps;
+  handleLoading?: (loading: boolean) => void;
   handleNotifications?: (props: INotificationProps) => void;
 };
 
@@ -31,19 +39,24 @@ const useStyles = makeStyles((theme: Theme) =>
         // TODO: Check if we need to remove the layot padding and then add this => paddingTop: 64
       }
     },
-    formContainer: {
+    formParentContainer: {
       justifyContent: 'flex-start',
       [theme.breakpoints.up('md')]: {
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
         alignItems: 'flex-start'
+      }
+    },
+    formChildContainer: {
+      padding: 24,
+      [theme.breakpoints.up('md')]: {
+        width: 509
       }
     },
     svgContainer: {
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       alignItems: 'flex-start'
     }
   })
@@ -66,15 +79,17 @@ const LayoutForm = ({
           </Box>
         </Grid>
       </Hidden>
-      <Grid item xs={12} sm={12} md={6} lg={5} xl={4} className={classes.formContainer}>
-        {header}
-        <Hidden only={['xs', 'sm']}>
-          <Notifications
-            {...notificationState}
-            onClose={() => handleNotifications({ ...notificationState, open: false })}
-          />
-        </Hidden>
-        {form}
+      <Grid item xs={12} sm={12} md={6} lg={5} xl={4} className={classes.formParentContainer}>
+        <Box className={classes.formChildContainer}>
+          {header}
+          <Hidden only={['xs', 'sm']}>
+            <Notifications
+              {...notificationState}
+              onClose={() => handleNotifications({ ...notificationState, open: false })}
+            />
+          </Hidden>
+          {form}
+        </Box>
       </Grid>
     </Grid>
   );
