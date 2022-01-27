@@ -63,6 +63,8 @@ const defaultTheme: ThemeOptions = {
     },
     MuiFormLabel: {
       root: {
+        fontSize: '14px',
+        lineHeight: '12px',
         color: 'rgba(0, 0, 0, 0.87)'
       }
     },
@@ -74,7 +76,9 @@ const defaultTheme: ThemeOptions = {
     },
     MuiButton: {
       label: {
-        textTransform: 'initial'
+        textTransform: 'initial',
+        fontSize: '15px',
+        lineHeight: '26px'
       }
     },
     MuiOutlinedInput: {

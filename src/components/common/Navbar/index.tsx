@@ -91,8 +91,12 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                 <Grid container justify="center">
                   <Grid container>
                     <Grid item xs={6} md={6}>
-                      <Grid container alignItems="center">
-                        {showMenuMobile() && <Menu type="mobile" />}
+                      <Grid
+                        container
+                        alignItems="center"
+                        justify="flex-start"
+                        style={{ height: '100%' }}
+                      >
                         <SvgContainer title="Logo Icon" width={54} height={28}>
                           <SvgLogo />
                         </SvgContainer>
