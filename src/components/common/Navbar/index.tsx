@@ -97,6 +97,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                         justify="flex-start"
                         style={{ height: '100%' }}
                       >
+                        {showMenuMobile() && <Menu type="mobile" />}
                         <SvgContainer title="Logo Icon" width={54} height={28}>
                           <SvgLogo />
                         </SvgContainer>

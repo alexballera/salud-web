@@ -189,7 +189,7 @@ function LoginPage({
                     title={
                       <>
                         <span>{t('label.password.forget', { ns: i18Global })}</span>
-                        <Link href="/recover" passHref>
+                        <Link href="/recover_password" passHref>
                           <a>{t('button.recover', { ns: i18Global })}</a>
                         </Link>
                       </>
