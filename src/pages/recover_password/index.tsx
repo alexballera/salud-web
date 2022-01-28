@@ -131,7 +131,7 @@ function RecoverPasswordPage({ handleLoading, handleNotifications }: IProps): JS
                     handleLblError
                   />
                 </Box>
-                <Box pb={3} className={classes.containerButton}>
+                <Box p={3} className={classes.containerButton}>
                   <Grid container item sm={12} md={4}>
                     <Button
                       fullWidth

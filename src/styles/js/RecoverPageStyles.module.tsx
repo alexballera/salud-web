@@ -7,6 +7,7 @@ const recoverStyles = makeStyles((theme: Theme) =>
       backgroundColor: 'white',
       bottom: 0,
       position: 'fixed',
+      left: 0,
       zIndex: 1000,
       width: '100%',
       [theme.breakpoints.up('md')]: {
