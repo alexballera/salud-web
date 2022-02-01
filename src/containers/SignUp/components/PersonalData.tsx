@@ -9,7 +9,7 @@ import { FormikProps } from 'formik';
 /// FORM END
 
 /// SERVICE
-import countryDocTypes from '../../../services/countryDocTypes';
+import countriesConfig from '../../../services/countriesConfig';
 /// SERVICE END
 
 /// OWN COMPONENTS
@@ -33,7 +33,7 @@ import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
 /// i18n END
 
 /// TYPES
-import { TPersonalDataProps, TFormData, TAutocompleteUser, TCountryDocTypes } from '../index.types';
+import { TPersonalDataProps, TFormData, TAutocompleteUser, TCountryConfig } from '../index.types';
 /// TYPES END
 
 /// STYLES
@@ -65,8 +65,8 @@ const useStyles = makeStyles(() =>
 );
 
 const buildCountryDocTypeOptions = (countryCode = '', t: TFunction) => {
-  const mapDoctypes = countryDocTypes.find(item => item.code === countryCode);
-  const options = mapDoctypes?.items || [];
+  const mapDoctypes = countriesConfig.find(item => item.code === countryCode);
+  const options = mapDoctypes?.documentTypes || [];
   if (!options.length) {
     return null;
   }
@@ -97,7 +97,7 @@ function PersonalData({
   const [fetchUserDataState, setFetchUserDateState] = useState(FETCH_USER_DATA_STATE);
 
   const handleCurrDocTypeChange = ({ documentType, country }: TFormData) => {
-    const countryTypes = countryDocTypes.find(item => item.code === country)?.items || [];
+    const countryTypes = countriesConfig.find(item => item.code === country)?.documentTypes || [];
     const docType = countryTypes.find(item => item.id === documentType);
     setFetchUserDateState(FETCH_USER_DATA_STATE);
     setCurrDocTypeArgs(docType);
@@ -188,7 +188,7 @@ function PersonalData({
           <MenuItem value="" disabled className={classes.selectPlaceholder}>
             {t('label.country.placeholder', { ns: i18Global })}
           </MenuItem>
-          {countryDocTypes.map(({ code }: TCountryDocTypes, i) => (
+          {countriesConfig.map(({ code }: TCountryConfig, i) => (
             <MenuItem key={`${code}-${i}`} value={code}>
               {t(`countries.${code}`, { ns: i18Global })}
             </MenuItem>

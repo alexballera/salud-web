@@ -1,12 +1,13 @@
 /// TYPES
-import { TCountryDocTypes } from '../containers/SignUp/index.types';
+import { TCountryConfig } from '../containers/SignUp/index.types';
 import { personVerifier } from './personVerifier.service';
 /// TYPES END
 
-const countryDocTypes: TCountryDocTypes[] = [
+const countryConfig: TCountryConfig[] = [
   {
     code: 'crc',
-    items: [
+    phoneMask: '',
+    documentTypes: [
       {
         id: '1',
         name: 'physical',
@@ -39,7 +40,8 @@ const countryDocTypes: TCountryDocTypes[] = [
   },
   {
     code: 'mx',
-    items: [
+    phoneMask: '',
+    documentTypes: [
       {
         id: '2',
         name: 'elector',
@@ -71,4 +73,4 @@ const countryDocTypes: TCountryDocTypes[] = [
   }
 ];
 
-export default countryDocTypes;
+export default countryConfig;
