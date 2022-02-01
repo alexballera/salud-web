@@ -13,7 +13,7 @@ import { withAppContext } from '../../context/index';
 /// CONTEXT END
 
 /// TYPES
-import { TProps, TFormData } from '../../containers/SignUp/index.types';
+import { TProps, TFormData, TCountryDocTypesItem } from '../../containers/SignUp/index.types';
 /// TYPES END
 
 /// OWN COMPONENTS
@@ -101,8 +101,9 @@ function SignUpView(props: TProps): JSX.Element {
   const { handleNotifications } = props;
   const { t } = useTranslation(i18Global);
   const [data, setData] = useState(INIT_FORM_STATE);
+  const [customPopUpError, setCustomPopUpError] = useState<null | string>(null);
   const [currentStep, setCurrentStep] = useState(0);
-  const [currDocTypeArgs, setCurrDocTypeArgs] = useState<any>(null);
+  const [currDocTypeArgs, setCurrDocTypeArgs] = useState<TCountryDocTypesItem | null>(null);
 
   const yupPersonalData = {
     name: 'PersonalData',
@@ -211,6 +212,7 @@ function SignUpView(props: TProps): JSX.Element {
             setCurrDocTypeArgs={setCurrDocTypeArgs}
             currDocTypeArgs={currDocTypeArgs}
             handleNotifications={handleNotifications}
+            setCustomPopUpError={setCustomPopUpError}
             documentTypesOptions={[]}
             {...formik}
           />
@@ -237,21 +239,26 @@ function SignUpView(props: TProps): JSX.Element {
 
   const StepForm = MAP_STEPS[currentStep];
 
-  const handleGlobalFormErrors = (errors: FormikErrors<any>) => {
+  const mapAndGetFormErrors = (errors: FormikErrors<TFormData>) => {
     const flatErrors = Object.values(errors);
+    if (customPopUpError) {
+      return customPopUpError;
+    }
     if (flatErrors.includes(t('validations.required', { ns: i18Forms }))) {
-      handleNotifications({
-        open: true,
-        severity: 'error',
-        message: t('message.error.fields_required', { ns: i18Forms })
-      });
-      return;
+      return t('message.error.fields_required', { ns: i18Forms });
     }
     if (flatErrors.length) {
+      return t('message.error.field_incorrect', { ns: i18Forms });
+    }
+  };
+
+  const handleGlobalFormErrors = (errors: FormikErrors<TFormData>) => {
+    const formError = mapAndGetFormErrors(errors);
+    if (formError) {
       handleNotifications({
         open: true,
         severity: 'error',
-        message: t('message.error.field_incorrect', { ns: i18Forms })
+        message: formError
       });
     }
   };
@@ -262,6 +269,7 @@ function SignUpView(props: TProps): JSX.Element {
 
   const handleNext = () => {
     if (MAP_STEPS[currentStep + 1]) {
+      setCustomPopUpError(null);
       setCurrentStep(currentStep + 1);
       return;
     }

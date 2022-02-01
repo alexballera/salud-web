@@ -94,6 +94,8 @@ export type TFormData = TExtraDataForm & TPersonalDataForm & TCredentialDataForm
 export type TPersonalDataProps = {
   documentTypesOptions: IDocumentTypes[];
   handleNotifications: (props: INotificationProps) => void;
+  setCustomPopUpError?: React.Dispatch<React.SetStateAction<null | string>>;
+  customPopUpError?: string | null;
   setCurrDocTypeArgs?: React.Dispatch<React.SetStateAction<TCountryDocTypesItem>>;
   currDocTypeArgs?: TCountryDocTypesItem;
 };
@@ -128,6 +130,16 @@ export type ResponseDataError = {
   type: string;
 };
 
+export type TAutocompleteUser = {
+  fullName: string;
+  birthDate: string;
+};
+
+export type TAutocompleteArgs = {
+  docType: string;
+  docNumber: string;
+};
+
 export type TCountryDocTypesItem = {
   id: string;
   name: string;
@@ -136,6 +148,7 @@ export type TCountryDocTypesItem = {
   validation: RegExp;
   reqFetchPerInf: boolean;
   i18n: string;
+  autocompleteUserDataFn?: (args: TAutocompleteArgs) => Promise<TAutocompleteUser>;
 };
 
 export type TCountryDocTypes = {

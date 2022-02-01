@@ -43,7 +43,8 @@ export const enForms = {
     },
 
     document: {
-      invalid: 'Cédula inválida',
+      invalid: 'Wrong identification number',
+      invalid_pop_up: 'Incorrect fields, you must correct them to continue',
       crc_physical_document_number: 'Identification number does not correspond to 9 digits',
       crc_residence_document_number: 'Identification number does not apply 10 to 15 characters',
       crc_passport_document_number: 'Identification number does not apply from 3 to 20 characters',

@@ -1,4 +1,7 @@
-import { TCountryDocTypes } from './index.types';
+/// TYPES
+import { TCountryDocTypes } from '../containers/SignUp/index.types';
+import { personVerifier } from './personVerifier.service';
+/// TYPES END
 
 const countryDocTypes: TCountryDocTypes[] = [
   {
@@ -11,7 +14,8 @@ const countryDocTypes: TCountryDocTypes[] = [
         length: 9,
         validation: /^([0-9]){9,9}$/,
         reqFetchPerInf: true,
-        i18n: 'crc_physical_document_number'
+        i18n: 'crc_physical_document_number',
+        autocompleteUserDataFn: personVerifier
       },
       {
         id: '2',

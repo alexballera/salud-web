@@ -70,7 +70,7 @@ export const enGlobals = {
     edit: 'Editar',
     go_help: 'Ir a ayuda',
     lastname: 'Apellidos',
-    name: 'Nombre',
+    name: 'Full name',
     no_register: "Aren't you registered in Ospi yet?",
     sms: 'SMS',
     terms: 'Términos y condiciones',

@@ -9,8 +9,7 @@ import { FormikProps } from 'formik';
 /// FORM END
 
 /// SERVICE
-import { personVerifier } from '../../../services/personVerifier.service';
-import countryDocTypes from '../countryDocTypes';
+import countryDocTypes from '../../../services/countryDocTypes';
 /// SERVICE END
 
 /// OWN COMPONENTS
@@ -34,7 +33,7 @@ import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
 /// i18n END
 
 /// TYPES
-import { TPersonalDataProps, TFormData, TPaciente, TCountryDocTypes } from '../index.types';
+import { TPersonalDataProps, TFormData, TAutocompleteUser, TCountryDocTypes } from '../index.types';
 /// TYPES END
 
 /// STYLES
@@ -78,14 +77,6 @@ const buildCountryDocTypeOptions = (countryCode = '', t: TFunction) => {
   ));
 };
 
-const setDataBirth = (date: string): string => {
-  const toDate = new Date(date);
-  if (toDate instanceof Date && !isNaN(toDate.getTime())) {
-    return toDate.toISOString();
-  }
-  return '';
-};
-
 function PersonalData({
   values,
   errors,
@@ -95,6 +86,7 @@ function PersonalData({
   setFieldError,
   setFieldTouched,
   setFieldValue,
+  setCustomPopUpError,
   handleNotifications,
   setCurrDocTypeArgs,
   currDocTypeArgs
@@ -112,22 +104,31 @@ function PersonalData({
   };
 
   const handlerDocNumberChange = ({ docType, docNumber }: THandleDocNumberChange) => {
+    const { validation, autocompleteUserDataFn } = currDocTypeArgs;
     const docNumberSanitized = docNumber.replace(/\D+/g, '');
-    const docNumberIsValid = currDocTypeArgs.validation.test(docNumberSanitized);
+    const docNumberIsValid = validation.test(docNumberSanitized);
+
+    if (typeof autocompleteUserDataFn !== 'function') {
+      return;
+    }
+
     if (fetchUserDataState.isLoading || !docNumberIsValid || !currDocTypeArgs.reqFetchPerInf) {
       return;
     }
+
     setFetchUserDateState({ isLoading: true, error: '' });
-    personVerifier(docType, docNumberSanitized)
-      .then(res => {
-        const data = res.data.result.paciente;
-        setUserValues(data);
-      })
+    autocompleteUserDataFn({ docType, docNumber: docNumberSanitized })
+      .then(setUserValues)
       .catch(() => {
-        const i18Error = t('validations.document.invalid', { ns: i18Forms });
+        const i18nPopUpError = t('validations.document.invalid_pop_up', { ns: i18Forms });
         setUserValues(null); // Reset user info inputs
-        setFetchUserDateState(prevState => ({ ...prevState, error: i18Error }));
-        handleNotifications({ open: true, message: i18Error, severity: 'error' });
+        setCustomPopUpError(i18nPopUpError); // Save this error on form state, it should be appear if continue button is clicked
+        handleNotifications({ open: true, message: i18nPopUpError, severity: 'error' }); /// Handle Form pop up error
+        // Handle input error
+        setFetchUserDateState(prevState => ({
+          ...prevState,
+          error: t('validations.document.invalid', { ns: i18Forms })
+        }));
       })
       .finally(() => {
         setTimeout(() => {
@@ -145,14 +146,12 @@ function PersonalData({
     setTimeout(() => {
       inputMaskRef.current.focus();
       inputMaskRef.current.setSelectionRange(0, 0);
-    }, 100);
+    }, 200);
   };
 
-  const setUserValues = (data: TPaciente) => {
-    const name = data ? `${data.name} ${data.surname} ${data?.lastSurname ?? ''}` : '';
-    const birthDate = data ? setDataBirth(data.dateOfBirth) : '';
-    setFieldValue('fullName', name);
-    setFieldValue('birthDate', birthDate);
+  const setUserValues = (data: TAutocompleteUser | null) => {
+    setFieldValue('fullName', data ? data.fullName : '');
+    setFieldValue('birthDate', data ? data.birthDate : '');
   };
 
   useEffect(() => {

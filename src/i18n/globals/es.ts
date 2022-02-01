@@ -70,7 +70,7 @@ export const esGlobals = {
     edit: 'Editar',
     go_help: 'Ir a ayuda',
     lastname: 'Apellidos',
-    name: 'Nombre',
+    name: 'Nombre completo',
     no_register: '¿Aún no estás registrado en Ospi?',
     sms: 'SMS',
     terms: 'Términos y condiciones',

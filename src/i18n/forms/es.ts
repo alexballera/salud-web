@@ -48,7 +48,8 @@ export const esForms = {
     },
 
     document: {
-      invalid: 'Cédula inválida',
+      invalid: 'Número de identificación incorrecto',
+      invalid_pop_up: 'Campos incorrectos, debés corregirlos para continuar',
       crc_physical_document_number: 'Número de identificación no corresponde a 9 dígitos',
       crc_residence_document_number:
         'Número de identificación no corresponde de 10 a 15 caracteres',
