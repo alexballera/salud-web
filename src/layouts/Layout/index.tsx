@@ -1,4 +1,8 @@
-import React, { PropsWithChildren } from 'react';
+/// BASE IMPORTS
+import React, { PropsWithChildren, useEffect } from 'react';
+import { useRouter } from 'next/router';
+/// BASE IMPORTS END
+
 /// MATERIAL - UI
 import { Box, Hidden, IconButton, Snackbar } from '@material-ui/core';
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
@@ -9,11 +13,12 @@ import CloseIcon from '@material-ui/icons/Close';
 import { withAppContext } from '../../context';
 import Notifications from '../../components/common/Notifications';
 import Navbar from '../../components/common/Navbar';
-// import Alert from '../../components/common/Alert';
+import { Alert } from '@material-ui/lab';
 /// OWN COMPONENTS END
 
+/// TYPES
 import { IProps } from './types';
-import { Alert } from '@material-ui/lab';
+/// TYPES END
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,6 +40,12 @@ export default withAppContext(function Layout({
   notificationState,
   handleNotifications
 }: PropsWithChildren<IProps>): JSX.Element {
+  const router = useRouter();
+
+  useEffect(() => {
+    handleNotifications({ ...notificationState, open: false });
+  }, [router.pathname]);
+
   const classes = useStyles();
   return (
     <>
