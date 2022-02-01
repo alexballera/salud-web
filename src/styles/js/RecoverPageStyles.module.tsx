@@ -6,12 +6,19 @@ const recoverStyles = makeStyles((theme: Theme) =>
     containerButton: {
       backgroundColor: 'white',
       bottom: 0,
-      position: 'fixed',
       left: 0,
+      padding: '0 24px',
+      position: 'fixed',
       zIndex: 1000,
       width: '100%',
       [theme.breakpoints.up('md')]: {
-        position: 'static'
+        padding: 0,
+        position: 'static !important'
+      }
+    },
+    leftButton: {
+      [theme.breakpoints.up('md')]: {
+        marginRight: 16
       }
     },
     containerLink: {

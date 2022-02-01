@@ -1,11 +1,18 @@
 import React from 'react';
 /// MATERIAL-UI
-import Paper from '@material-ui/core/Paper';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
-import Typography from '@material-ui/core/Typography';
+import LensIcon from '@material-ui/icons/Lens';
+import { Box } from '@material-ui/core';
 /// MATERIAL-UI END
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY as i18nForms } from '../../../i18n/forms/i18n';
+/// i18n END
+
+import { useIndicatorsStyles as useStyles } from './styles.module';
+import { t } from 'i18next';
 /// TYPES
 type IProps = {
   value: string;
@@ -13,32 +20,50 @@ type IProps = {
 /// TYPES END
 
 const PasswordValidator = ({ value }: IProps): JSX.Element => {
+  const { t } = useTranslation(i18nForms);
+  const classes = useStyles();
   const getValidityIcon = (check: (value: string) => boolean) => {
     if (check(value)) {
-      return <CheckIcon style={{ marginRight: 10 }} color="secondary" />;
+      return <CheckIcon fontSize="small" className={classes.icons} color="secondary" />;
     } else {
-      return <CloseIcon style={{ marginRight: 10 }} />;
+      return <CloseIcon fontSize="small" className={classes.icons} color="error" />;
     }
   };
   return (
-    <Paper square elevation={0} style={{ padding: '15px 0' }}>
-      <div style={{ display: 'flex' }}>
-        {getValidityIcon((val: string) => /[A-Z]/.test(val))}
-        <Typography>Usar mayúsculas</Typography>
+    <Box mt={2}>
+      <div className={classes.containerIndicators}>
+        {value ? (
+          getValidityIcon((val: string) => /[A-Z]/.test(val))
+        ) : (
+          <LensIcon fontSize="small" className={`${classes.icons} ${classes.iconBullets}`} />
+        )}
+        <span className={classes.label}>{t('validations.password.capitalize')}</span>
       </div>
-      <div style={{ display: 'flex' }}>
-        {getValidityIcon((val: string) => /[a-z]/.test(val))}
-        <Typography>Usar minúsculas</Typography>
+      <div className={classes.containerIndicators}>
+        {value ? (
+          getValidityIcon((val: string) => /[a-z]/.test(val))
+        ) : (
+          <LensIcon fontSize="small" className={`${classes.icons} ${classes.iconBullets}`} />
+        )}
+        <span className={classes.label}>{t('validations.password.lowercase')}</span>
       </div>
-      <div style={{ display: 'flex' }}>
-        {getValidityIcon((val: string) => /[0-9]/.test(val))}
-        <Typography>Usar números</Typography>
+      <div className={classes.containerIndicators}>
+        {value ? (
+          getValidityIcon((val: string) => /[0-9]/.test(val))
+        ) : (
+          <LensIcon fontSize="small" className={`${classes.icons} ${classes.iconBullets}`} />
+        )}
+        <span className={classes.label}>{t('validations.password.numbers')}</span>
       </div>
-      <div style={{ display: 'flex' }}>
-        {getValidityIcon((val: string) => val.length >= 8 && val.length <= 16)}
-        <Typography>Tener entre 8 y 16 caracteres</Typography>
+      <div className={classes.containerIndicators}>
+        {value ? (
+          getValidityIcon((val: string) => val.length >= 8 && val.length <= 16)
+        ) : (
+          <LensIcon fontSize="small" className={`${classes.icons} ${classes.iconBullets}`} />
+        )}
+        <span className={classes.label}>{t('validations.password.characters')}</span>
       </div>
-    </Paper>
+    </Box>
   );
 };
 

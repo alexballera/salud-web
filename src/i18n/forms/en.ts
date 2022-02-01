@@ -12,13 +12,13 @@ export const enForms = {
     error: {
       fields_required: 'Mandatory fields, you must fill them in to continue',
       general_fetch:
-        'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.',
-      submit:
-        'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador.',
+        'An unknown error has occurred. Please try again later or contact an administrator.',
+      submit: 'An unknown error has occurred. Please try again later or contact an administrator.',
       field_incorrect: 'Incorrect fields, you must correct them to continue'
     },
     password: {
-      change_success: 'La contraseña se ha cambiado correctamente.'
+      change_success: 'La contraseña se ha cambiado correctamente.',
+      updated: 'Updated password'
     }
   },
 
@@ -39,7 +39,11 @@ export const enForms = {
       max_16: 'La contraseña debe ser máximo de 16 caracteres',
       regex:
         'La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número',
-      matched: 'La contraseña no coincide'
+      matched: 'Passwords do not match',
+      capitalize: 'Use lowercase',
+      lowercase: 'Usar minúsculas',
+      numbers: 'Use numbers',
+      characters: 'Be between 8 and 16 characters'
     },
 
     document: {

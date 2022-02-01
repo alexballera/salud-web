@@ -12,12 +12,14 @@ export const esForms = {
     error: {
       fields_required: 'Campos obligatorios, debés de rellenarlos para continuar',
       general_fetch:
-        'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador',
-      submit: 'Ha ocurrido un error desconocido. Vuelve a intentarlo o contacta a un administrador',
+        'Ha ocurrido un error desconocido. Vuelve a intentarlo más tarde o contacta a un administrador',
+      submit:
+        'Ha ocurrido un error desconocido. Vuelve a intentarlo más tarde o contacta a un administrador',
       field_incorrect: 'Campos incorrectos, debés corregirlos para continuar'
     },
     password: {
-      change_success: 'La contraseña se ha cambiado correctamente.'
+      change_success: 'La contraseña se ha cambiado correctamente.',
+      updated: 'Contraseña actualizada'
     }
   },
 
@@ -38,7 +40,11 @@ export const esForms = {
       max_16: 'La contraseña debe ser máximo de 16 caracteres',
       regex:
         'La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número',
-      matched: 'La contraseña no coincide'
+      matched: 'Contraseñas no coinciden',
+      capitalize: 'Usar mayúsculas',
+      lowercase: 'Usar minúsculas',
+      numbers: 'Usar números',
+      characters: 'Tener entre 8 y 16 caracteres'
     },
 
     email: {

@@ -18,7 +18,8 @@ export const esGlobals = {
     recover: {
       forget: 'Recuperá tu contraseña'
     },
-    forward_email: 'Revisá tu correo'
+    forward_email: 'Revisá tu correo',
+    new_password: 'Nueva contraseña'
   },
 
   description: {
@@ -36,7 +37,8 @@ export const esGlobals = {
       forget: 'Para recuperar tu contraseña requerimos verificar tu identidad.'
     },
     forward_email:
-      'Se envío a tu correo un link de cambio de contraseña que estará activo por 24 horas.'
+      'Se envío a tu correo un link de cambio de contraseña que estará activo por 24 horas.',
+    new_password: 'Ingresá tu contraseña nueva'
   },
 
   button: {
@@ -116,7 +118,7 @@ export const esGlobals = {
     },
 
     password: {
-      confirm: 'Confirmar contraseña',
+      confirm: 'Confirmación de nueva contraseña',
       password: 'Contraseña',
       new: 'Contraseña nueva',
       change_description: 'Ingresá tu contraseña anterior y la nueva',

@@ -41,7 +41,7 @@ const LayoutCode = ({
             </Hidden>
             <Hidden smDown>
               <SvgContainer title="Banner Svg" width={326} height={261}>
-                <SvgBanner width="326" height="261" text={false} />
+                <SvgBanner device="desktop" />
               </SvgContainer>
             </Hidden>
           </Grid>

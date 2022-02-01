@@ -1,17 +1,29 @@
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
-const forwardEmailStyles = makeStyles(() =>
+const forwardEmailStyles = makeStyles((theme: Theme) =>
   createStyles({
+    container: {
+      [theme.breakpoints.up('md')]: {
+        height: 'calc(100vh - 128px)'
+      }
+    },
     imgContainer: {
       alignItems: 'center',
       display: 'flex',
       justifyContent: 'center'
     },
     contentContainer: {
-      position: 'fixed',
       bottom: 0,
-      left: 0,
-      width: '100%'
+      right: 0,
+      paddingLeft: 24,
+      paddingRight: 24,
+      width: '100%',
+      position: 'fixed',
+      [theme.breakpoints.up('md')]: {
+        paddingLeft: 0,
+        paddingRight: 0,
+        position: 'static'
+      }
     },
     timerContainer: {
       width: '100%'

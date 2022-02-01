@@ -18,7 +18,8 @@ export const enGlobals = {
     recover: {
       forget: 'Recover your password'
     },
-    feedback: 'Check your email'
+    forward_email: 'Check your email',
+    new_password: 'New password'
   },
 
   description: {
@@ -35,13 +36,14 @@ export const enGlobals = {
     recover: {
       forget: 'To recover your password we need to verify your identity.'
     },
-    feedback:
-      'A link to change your password was sent to your email and will be active for 24 hours.'
+    forward_email:
+      'A link to change your password was sent to your email and will be active for 24 hours.',
+    new_password: 'Enter your new password'
   },
 
   button: {
     back: 'Go back',
-    cancel: 'Cancelar',
+    cancel: 'Cancel',
     continue: 'Continuar',
     create_account: 'Crear cuenta',
     close: 'Close',
@@ -55,7 +57,7 @@ export const enGlobals = {
     logout_confirm: 'Si, cerrar sesión',
     recover: 'Recuperar',
     register: 'Registrarse',
-    save: 'Guardar',
+    save: 'Save',
     save_changes: 'Guardar cambios',
     send: 'Enviar',
     send_email: 'Send email',
@@ -116,9 +118,9 @@ export const enGlobals = {
     },
 
     password: {
-      confirm: 'Confirmar contraseña',
+      confirm: 'Confirmation of new password',
       password: 'Contraseña',
-      new: 'Contraseña nueva',
+      new: 'new password',
       change_description: 'Ingresá tu contraseña anterior y la nueva',
       forget: '¿Olvidaste tu contraseña?'
     },

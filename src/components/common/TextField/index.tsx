@@ -26,7 +26,7 @@ type Props = {
   label: string;
   loading?: boolean;
   touched?: boolean;
-  helperText: string;
+  helperText?: string;
   labelProps?: FormLabelProps;
   errorType?: string;
   handleLblError?: boolean;

@@ -15,7 +15,6 @@ export type IValidationDataForm = {
 
 export type IPasswordDataForm = {
   email: string;
-  pinCode: string;
   newPassword: string;
   newPasswordConfirm: string;
 };

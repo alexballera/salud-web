@@ -67,7 +67,11 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
 
   const noActionPathNames = ['/main', '/profile', '/subscriptions', '/preferences', '/help'];
 
-  const exitButtonPathNames = ['/signup', '/recover_password/forward_email'];
+  const exitButtonPathNames = [
+    '/signup',
+    '/recover_password/forward_email',
+    '/recover_password/change_password'
+  ];
 
   const closeButtonPathNames = ['/login'];
 

@@ -67,7 +67,7 @@ const api = {
   restorePassword: (email: string): Promise<Models.Preferences> => {
     return api
       .provider()
-      .account.createRecovery(email, `${window.location.origin}/recover_password/confirmation`);
+      .account.createRecovery(email, `${window.location.origin}/recover_password/change_password`);
   },
 
   restorePasswordConfirmation: (

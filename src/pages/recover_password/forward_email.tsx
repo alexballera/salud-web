@@ -26,9 +26,6 @@ import ForwardEmailComponent from '../../components/common/ForwardEmailComponent
 import { IProps } from '../../types/recover.types';
 /// STYLES & TYPES END
 
-/// FORM STATES & VALIDATIONS
-/// FORM STATES & VALIDATIONS END
-
 function ForwardEmailPage({ handleLoading }: IProps): JSX.Element {
   const { t } = useTranslation(i18nGlobals);
   const [email, setEmail] = useState('');
@@ -51,7 +48,8 @@ function ForwardEmailPage({ handleLoading }: IProps): JSX.Element {
     <ForwardEmailComponent
       title={t('title.forward_email', { ns: i18nGlobals })}
       description={t('description.forward_email', { ns: i18nGlobals })}
-      image={<SvgBanner />}
+      imageMobile={<SvgBanner />}
+      imageDesktop={<SvgBanner device="desktop" />}
       timerTitle={t('forward_email.messages.dont_recive', { ns: i18nGlobals })}
       timerLabel={t('forward_email.messages.resend_label', { ns: i18nGlobals })}
       handleClickForwardEmail={forwardEmail}

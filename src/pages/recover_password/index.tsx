@@ -60,10 +60,11 @@ function RecoverPasswordPage({ handleLoading, handleNotifications }: IProps): JS
     const message = {
       400: t('validations.email.invalid', { ns: i18Forms }),
       404: t('message.email.not_found', { ns: i18Forms }),
-      429: t('message.email.too_many_request', { ns: i18Forms })
+      429: t('message.email.too_many_request', { ns: i18Forms }),
+      default: t('message.email.general_fetch', { ns: i18Forms })
     };
     setCodeError(code);
-    return message[code];
+    return message[code] || message['default'];
   };
 
   const setErrorMessage = (code: number): void => {
@@ -131,7 +132,7 @@ function RecoverPasswordPage({ handleLoading, handleNotifications }: IProps): JS
                     handleLblError
                   />
                 </Box>
-                <Box p={3} className={classes.containerButton}>
+                <Box className={classes.containerButton}>
                   <Grid container item sm={12} md={4}>
                     <Button
                       fullWidth

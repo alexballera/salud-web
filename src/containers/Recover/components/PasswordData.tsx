@@ -10,17 +10,20 @@ import SecurityPasswordIndicator from '../../../components/common/SecurityPasswo
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../../../i18n/globals/i18n';
+import { NAMESPACE_KEY as i18nGlobals } from '../../../i18n/globals/i18n';
 /// i18n END
+
+export type TPass = {
+  passwordConfirmError: string;
+};
 
 function PasswordData({
   values,
-  errors,
-  touched,
   handleBlur,
-  handleChange
-}: FormikProps<IPasswordDataForm>): JSX.Element {
-  const { t } = useTranslation(NAMESPACE_KEY);
+  handleChange,
+  passwordConfirmError
+}: FormikProps<IPasswordDataForm> & TPass): JSX.Element {
+  const { t } = useTranslation(i18nGlobals);
   return (
     <Box>
       <TextField
@@ -32,9 +35,7 @@ function PasswordData({
         type="password"
         onBlur={handleBlur}
         value={values.newPassword}
-        error={touched.newPassword && Boolean(errors.newPassword)}
         onChange={handleChange}
-        helperText={touched.newPassword && errors.newPassword}
       />
       <SecurityPasswordIndicator value={values.newPassword} />
       <TextField
@@ -46,9 +47,10 @@ function PasswordData({
         type="password"
         onBlur={handleBlur}
         value={values.newPasswordConfirm}
-        error={touched.newPasswordConfirm && Boolean(errors.newPasswordConfirm)}
         onChange={handleChange}
-        helperText={touched.newPasswordConfirm && errors.newPasswordConfirm}
+        error={Boolean(passwordConfirmError)}
+        helperText={passwordConfirmError}
+        handleLblError
       />
     </Box>
   );
