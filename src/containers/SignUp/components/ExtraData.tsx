@@ -1,6 +1,5 @@
 /// IMPORTS
 import React, { useEffect, useState } from 'react';
-import { PHONE_NUMBER_MASK } from '../../../utils/constants';
 import _ from 'lodash';
 /// IMPORTS END
 
@@ -18,9 +17,8 @@ import { TExtraDataProps, IGeneralAdressState, TFormData, TCountryConfig } from 
 /// TYPES END
 
 /// OWN COMPONENTS
-import TextMaskCustom from '../../../components/common/InputTextMask';
-import CustomTextField from '../../../components/common/TextField';
 import CustomAutoComplete from '../../../components/common/Select';
+import PhoneNumberInputText from '../../../components/common/PhoneNumberInputText';
 /// OWN COMPONENTS END
 
 /// MATERIAL-UI
@@ -33,8 +31,6 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import SignUpStyles from '../styles.module';
-import Button from '@material-ui/core/Button';
-import MenuIcon from '@material-ui/icons/Menu';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 /// MATERIAL-UI END
 
@@ -45,12 +41,6 @@ import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
 /// i18n END
 
 /// INITIAL STATES
-const COUNTRIES: TCountryConfig = countryConfig.map(item => ({
-  phoneMask: item.phoneMask,
-  country: item.code,
-  documentTypes: []
-}));
-
 const GENDERS = [
   { label: 'label.gender.female', value: 1 },
   { label: 'label.gender.male', value: 2 }
@@ -84,6 +74,7 @@ function ExtraData({
   handleBlur,
   handleChange,
   setFieldValue,
+  setFieldTouched,
   updatePersonalData,
   updatePhone
 }: TExtraDataProps & FormikProps<TFormData>): JSX.Element {
@@ -230,27 +221,26 @@ function ExtraData({
         </>
       )}
       {!updatePersonalData && (
-        <Box>
-          <CustomTextField
-            id="mobilePhone1"
-            name="mobilePhone1"
-            type="text"
-            label={
-              updatePhone
-                ? `${t('label.phone.new', { ns: 'globals' })}`
-                : `${t('label.phone.phone', { ne: 'globals' })}`
+        <PhoneNumberInputText
+          id="mobilePhone1"
+          name="mobilePhone1"
+          type="text"
+          onResetValue={value => {
+            setFieldValue('mobilePhone1', value);
+            setFieldTouched('mobilePhone1', false);
+          }}
+          label={`${t(`label.phone.${updatePhone ? 'new' : 'phone'}`, { ns: i18Global })}`}
+          value={values.mobilePhone1}
+          error={touched.mobilePhone1 && Boolean(errors.mobilePhone1)}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          helperText={errors.mobilePhone1}
+          formControlProps={{
+            style: {
+              marginTop: 0
             }
-            value={values.mobilePhone1}
-            error={touched.mobilePhone1 && Boolean(errors.mobilePhone1)}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            helperText={errors.mobilePhone1}
-            inputProps={{
-              mask: PHONE_NUMBER_MASK
-            }}
-            inputComponent={TextMaskCustom as any}
-          />
-        </Box>
+          }}
+        />
       )}
       {!updatePhone && (
         <>
