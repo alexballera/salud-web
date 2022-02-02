@@ -153,7 +153,7 @@ export type TCountryDocumentType = {
 
 export type TCountryConfig = {
   code: string;
-  phoneMask: string;
+  phoneMask: (string | RegExp)[];
   documentTypes: TCountryDocumentType[];
 };
 /// TYPES END

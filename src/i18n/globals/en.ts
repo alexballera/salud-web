@@ -114,7 +114,10 @@ export const enGlobals = {
     gender: {
       gender: 'Sexo biológico designado al nacer',
       female: 'Femenino',
-      male: 'Masculino'
+      male: 'Masculino',
+      tooltip:
+        'This information is for purposes related to health issues and conditions related to biological sex. It has nothing to do with the person is identity.',
+      placeholder: 'Select gender'
     },
 
     password: {
@@ -134,7 +137,11 @@ export const enGlobals = {
     },
 
     pronoun: {
-      pronoun: 'Pronoun with which he identifies'
+      pronoun: 'Pronoun with which he identifies',
+      placeholder: 'Select pronoun',
+      elle: 'She',
+      el: 'He',
+      ella: 'She'
     }
   },
 

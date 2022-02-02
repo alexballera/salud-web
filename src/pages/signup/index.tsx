@@ -102,7 +102,7 @@ function SignUpView(props: TProps): JSX.Element {
   const { t } = useTranslation(i18Global);
   const [data, setData] = useState(INIT_FORM_STATE);
   const [customPopUpError, setCustomPopUpError] = useState<null | string>(null);
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(1);
   const [currDocTypeArgs, setCurrDocTypeArgs] = useState<TCountryDocumentType | null>(null);
 
   const yupPersonalData = {
