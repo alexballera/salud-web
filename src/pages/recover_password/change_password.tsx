@@ -70,6 +70,20 @@ function ChangePassword({ handleNotifications, handleLoading }: IFormData): JSX.
     })
   };
 
+  const getErrorMessage = (code: number): string => {
+    const message = {
+      401: actionsToError401(),
+      default: t('message.email.general_fetch', { ns: i18nForms })
+    };
+    return message[code] || message['default'];
+  };
+
+  const actionsToError401 = () => {
+    // TODO por verificar e flujo con UX
+    // router.push('/recover_password/forward_email');
+    return t('responses.recover.error_401', { ns: i18nGlobal });
+  };
+
   const handleSubmit = ({ newPassword, newPasswordConfirm }: IFormData) => {
     const { secret, userId } = router.query;
     if (newPassword && newPasswordConfirm) {
@@ -98,7 +112,11 @@ function ChangePassword({ handleNotifications, handleLoading }: IFormData): JSX.
           });
         })
         .catch(err => {
-          console.error(err);
+          handleNotifications({
+            open: true,
+            message: getErrorMessage(err.code),
+            severity: 'error'
+          });
         })
         .finally(() => handleLoading && handleLoading(false));
     } else {

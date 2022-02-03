@@ -37,7 +37,7 @@ export const esGlobals = {
       forget: 'Para recuperar tu contraseña requerimos verificar tu identidad.'
     },
     forward_email:
-      'Se envío a tu correo un link de cambio de contraseña que estará activo por 24 horas.',
+      'Se envío a tu correo un link de cambio de contraseña que estará activo por 1 hora.',
     new_password: 'Ingresá tu contraseña nueva'
   },
 
@@ -142,6 +142,9 @@ export const esGlobals = {
     signin: {
       error_400: 'Los datos brindados no coinciden',
       error_401: 'Los datos brindados no coinciden'
+    },
+    recover: {
+      error_401: 'Token inválido, solicítalo nuevamente'
     }
   },
 
