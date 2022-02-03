@@ -64,7 +64,6 @@ i18n
   .init({
     detection: DETECTION_OPTIONS,
     resources,
-    lng: navigatorLanguageDetector(),
     fallbackLng: navigatorLanguageDetector(),
     interpolation: {
       escapeValue: false
