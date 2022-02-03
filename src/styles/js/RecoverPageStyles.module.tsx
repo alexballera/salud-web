@@ -7,12 +7,11 @@ const recoverStyles = makeStyles((theme: Theme) =>
       backgroundColor: 'white',
       bottom: 0,
       left: 0,
-      padding: '0 24px',
       position: 'fixed',
       zIndex: 1000,
       width: '100%',
       [theme.breakpoints.up('md')]: {
-        padding: 0,
+        padding: '24px 0',
         position: 'static !important'
       }
     },

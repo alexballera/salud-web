@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import * as yup from 'yup';
 
 /// MATERIAL UI
-import { Box, Button } from '@material-ui/core';
+import { Box, Button, Grid } from '@material-ui/core';
 /// MATERIAL UI END
 
 /// OWN COMPONENTS
@@ -32,9 +32,6 @@ import api from '../../api/api';
 import recoverStyles from '../../styles/js/RecoverPageStyles.module';
 import { INotificationProps } from '../../context/types';
 /// STYLES & TYPES END
-
-/// FORM STATES & VALIDATIONS
-/// FORM STATES & VALIDATIONS END
 
 /// TYPES
 
@@ -148,30 +145,36 @@ function ChangePassword({ handleNotifications, handleLoading }: IFormData): JSX.
               <Form autoComplete="off" className={classes.containerForm}>
                 <PasswordData passwordConfirmError={notMatchMsg} {...formik} />
                 <Box p={3} className={classes.containerButton}>
-                  <Box mb={2}>
-                    <Button
-                      fullWidth
-                      type="submit"
-                      color="primary"
-                      variant="contained"
-                      size="large"
-                    >
-                      {t('button.save', { ns: i18nGlobal })}
-                    </Button>
-                  </Box>
-                  <Box>
-                    <Link href="/login" passHref>
-                      <Button
-                        fullWidth
-                        type="button"
-                        color="primary"
-                        variant="outlined"
-                        size="large"
-                      >
-                        {t('button.cancel', { ns: i18nGlobal })}
-                      </Button>
-                    </Link>
-                  </Box>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={5}>
+                      <Box mb={2}>
+                        <Button
+                          fullWidth
+                          type="submit"
+                          color="primary"
+                          variant="contained"
+                          size="large"
+                        >
+                          {t('button.save', { ns: i18nGlobal })}
+                        </Button>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} md={5}>
+                      <Box>
+                        <Link href="/login" passHref>
+                          <Button
+                            fullWidth
+                            type="button"
+                            color="primary"
+                            variant="outlined"
+                            size="large"
+                          >
+                            {t('button.cancel', { ns: i18nGlobal })}
+                          </Button>
+                        </Link>
+                      </Box>
+                    </Grid>
+                  </Grid>
                 </Box>
               </Form>
             );
