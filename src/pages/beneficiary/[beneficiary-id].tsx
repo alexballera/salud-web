@@ -428,11 +428,10 @@ function EditBeneficiary({ beneficiary, handleNotifications }: TProps): JSX.Elem
 
     setLoading('verify-user');
     setTypeError('');
-    personVerifier(documentType, documentNumberSanitized)
+    personVerifier({ docType: String(documentType), docNumber: documentNumberSanitized })
       .then(result => {
-        const { paciente } = result.data.result;
         setLoading('');
-        setUserValues({ paciente, formProps });
+        setUserValues({ paciente: result as any, formProps });
       })
       .catch(err => {
         setLoading('');
