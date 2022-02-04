@@ -61,7 +61,6 @@ function CustomSelect({
         {label}
       </FormLabel>
       <Autocomplete
-        placeholder="asdfas"
         renderInput={params => (
           <TextField
             {...params}

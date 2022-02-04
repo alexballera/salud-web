@@ -145,7 +145,7 @@ function SignUpView(props: TProps): JSX.Element {
       mobilePhone1: yup
         .string()
         .required(t('validations.required', { ns: i18Forms }))
-        .test(t('validations.phone.invalid', { ns: i18Forms }), (value = '') => {
+        .test('custom-mp1', t('validations.phone.invalid', { ns: i18Forms }), (value = '') => {
           const splitValue = value.replace(/[+]/g, '').split(' ');
           const [countryCode, ...rest] = splitValue;
 
