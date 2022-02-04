@@ -59,8 +59,8 @@ export type IGetDistricts = {
 };
 
 export type IGeneralAdressOption = {
-  codigo: string;
-  nombre: string;
+  code: string;
+  label: string;
 };
 
 export type TPersonalDataForm = {
@@ -73,9 +73,9 @@ export type TPersonalDataForm = {
 
 export type TExtraDataForm = {
   gender: GenderEnum;
-  canton: any;
-  district: any;
-  province: any;
+  thirdLevel: string;
+  firstLevel: string;
+  secondLevel: string;
   mobilePhone1: string;
   pronoun: string;
 };
@@ -96,11 +96,12 @@ export type TPersonalDataProps = {
   handleNotifications: (props: INotificationProps) => void;
   setCustomPopUpError?: React.Dispatch<React.SetStateAction<null | string>>;
   customPopUpError?: string | null;
-  setCurrDocTypeArgs?: React.Dispatch<React.SetStateAction<TCountryDocTypesItem>>;
-  currDocTypeArgs?: TCountryDocTypesItem;
+  setCurrDocTypeArgs?: React.Dispatch<React.SetStateAction<TCountryDocumentTypeItem>>;
+  currDocTypeArgs?: TCountryDocumentTypeItem;
 };
 
 export type TExtraDataProps = {
+  currDocTypeArgs?: TCountryDocumentTypeItem;
   updatePersonalData?: boolean;
   updatePhone?: boolean;
 };
@@ -140,7 +141,7 @@ export type TAutocompleteArgs = {
   docNumber: string;
 };
 
-export type TCountryDocTypesItem = {
+export type TCountryDocumentTypeItem = {
   id: string;
   name: string;
   mask: string | null;
@@ -151,8 +152,9 @@ export type TCountryDocTypesItem = {
   autocompleteUserDataFn?: (args: TAutocompleteArgs) => Promise<TAutocompleteUser>;
 };
 
-export type TCountryDocTypes = {
+export type TCountryDocumentType = {
   code: string;
-  items: TCountryDocTypesItem[];
+  sacCode: string; // this field ref SAC country code
+  items: TCountryDocumentTypeItem[];
 };
 /// TYPES END

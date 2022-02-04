@@ -70,6 +70,10 @@ export const esForms = {
       min: 'El pin debe tener 6 caracteres',
       number: 'El código de verificación debe contener números únicamente',
       incorrect: 'El código de verificación es incorrecto'
+    },
+
+    phone: {
+      invalid: 'Formato incorrecto de número de teléfono'
     }
   }
 };

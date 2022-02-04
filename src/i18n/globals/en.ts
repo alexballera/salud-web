@@ -95,9 +95,17 @@ export const enGlobals = {
 
     address: {
       address: 'Domicilio',
-      canton: 'Cantón',
-      district: 'Distrito',
-      province: 'Provincia'
+      placeholder: 'Select {{child}}',
+      crc: {
+        firstLevel: 'Province',
+        secondLevel: 'Canton',
+        thirdLevel: 'District'
+      },
+      mx: {
+        firstLevel: 'State',
+        secondLevel: 'Municipality / Mayor',
+        thirdLevel: 'Colony'
+      }
     },
 
     document: {
@@ -114,7 +122,10 @@ export const enGlobals = {
     gender: {
       gender: 'Sexo biológico designado al nacer',
       female: 'Femenino',
-      male: 'Masculino'
+      male: 'Masculino',
+      tooltip:
+        'This information is for purposes related to health issues and conditions related to biological sex. It has nothing to do with the person is identity.',
+      placeholder: 'Select gender'
     },
 
     password: {
@@ -134,7 +145,11 @@ export const enGlobals = {
     },
 
     pronoun: {
-      pronoun: 'Pronoun with which he identifies'
+      pronoun: 'Pronoun with which he identifies',
+      placeholder: 'Select pronoun',
+      she: 'She',
+      he: 'He',
+      they: 'They'
     }
   },
 

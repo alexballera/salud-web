@@ -23,7 +23,7 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 /// STYLES END
 
 type Props = {
-  label: string;
+  label?: string;
   loading?: boolean;
   touched?: boolean;
   helperText?: string;
@@ -85,14 +85,16 @@ function CustomTextField({
 
   return (
     <FormControl fullWidth {...formControlProps}>
-      <FormLabel
-        htmlFor={props.id}
-        error={(props.error || errorType) && handleLblError}
-        className={classes.label}
-        {...labelProps}
-      >
-        {label}
-      </FormLabel>
+      {label && (
+        <FormLabel
+          htmlFor={props.id}
+          error={(props.error || errorType) && handleLblError}
+          className={classes.label}
+          {...labelProps}
+        >
+          {label}
+        </FormLabel>
+      )}
       <OutlinedInput {...props} type={handlerType()} endAdornment={_renderEndAdornment()} />
       {props.error && (
         <FormHelperText error component="div">

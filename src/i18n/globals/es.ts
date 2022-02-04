@@ -95,9 +95,17 @@ export const esGlobals = {
 
     address: {
       address: 'Domicilio',
-      canton: 'Cantón',
-      district: 'Distrito',
-      province: 'Provincia'
+      placeholder: 'Seleccione',
+      crc: {
+        firstLevel: 'Provincia',
+        secondLevel: 'Cantón',
+        thirdLevel: 'Distrito'
+      },
+      mx: {
+        firstLevel: 'Estado',
+        secondLevel: 'Municipio / Alcaldía',
+        thirdLevel: 'Colonia'
+      }
     },
 
     document: {
@@ -114,7 +122,10 @@ export const esGlobals = {
     gender: {
       gender: 'Sexo biológico designado al nacer',
       female: 'Femenino',
-      male: 'Masculino'
+      male: 'Masculino',
+      tooltip:
+        'Esta información tiene propósitos relacionados a temas de salud y las condiciones relacionadas al sexo biológico. No tiene relación con la identidad de la persona.',
+      placeholder: 'Seleccione sexo'
     },
 
     password: {
@@ -134,7 +145,11 @@ export const esGlobals = {
     },
 
     pronoun: {
-      pronoun: 'Pronombre con el que se identifica'
+      pronoun: 'Pronombre con el que se identifica',
+      placeholder: 'Seleccione pronombre',
+      she: 'Ella',
+      he: 'El',
+      they: 'Elle'
     }
   },
 

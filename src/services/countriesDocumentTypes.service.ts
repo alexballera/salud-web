@@ -1,11 +1,12 @@
 /// TYPES
-import { TCountryDocTypes } from '../containers/SignUp/index.types';
+import { TCountryDocumentType } from '../containers/SignUp/index.types';
 import { personVerifier } from './personVerifier.service';
 /// TYPES END
 
-const countryDocTypes: TCountryDocTypes[] = [
+const countryConfig: TCountryDocumentType[] = [
   {
     code: 'crc',
+    sacCode: '1',
     items: [
       {
         id: '1',
@@ -39,6 +40,7 @@ const countryDocTypes: TCountryDocTypes[] = [
   },
   {
     code: 'mx',
+    sacCode: '6',
     items: [
       {
         id: '2',
@@ -71,4 +73,4 @@ const countryDocTypes: TCountryDocTypes[] = [
   }
 ];
 
-export default countryDocTypes;
+export default countryConfig;

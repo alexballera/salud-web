@@ -1,49 +1,67 @@
 import axios, { AxiosResponse } from 'axios';
 
 /// TYPES
-export type IGeneralAdressOption = {
+type TGeneralAdressOption = {
   codigo: string;
   nombre: string;
 };
 
-export type IGeneralAdressState = {
-  data: IGeneralAdressOption[];
-  fetching: boolean;
-};
-
-export type IGetProvinces = {
+type TGetProvinces = {
   result: {
     error: boolean;
-    primerNivel: IGeneralAdressOption[];
+    primerNivel: TGeneralAdressOption[];
   };
 };
 
-export type IGetCantones = {
+type TGetCantones = {
   result: {
     error: boolean;
-    segundoNivel: IGeneralAdressOption[];
+    segundoNivel: TGeneralAdressOption[];
   };
 };
 
-export type IGetDistricts = {
+type TGetDistricts = {
   result: {
     error: boolean;
-    catalogo: IGeneralAdressOption[];
+    catalogo: TGeneralAdressOption[];
   };
 };
 /// TYPES END
 
-export const getProvinces = (): Promise<AxiosResponse<IGetProvinces>> => {
-  return axios.get(`${process.env.apiUrl}sac-general/provinces-api?countryCode=1`);
+export const getFirstLevel = (countryCode: string): Promise<AxiosResponse<TGetProvinces>> => {
+  return axios.get(`${process.env.apiUrl}sac-general/provinces-api?countryCode=${countryCode}`);
 };
 
-export const getCanton = (provinceId: string | number): Promise<AxiosResponse<IGetCantones>> => {
+export const getSecondLevel = (
+  country: string,
+  firstLevel: string | number
+): Promise<AxiosResponse<TGetCantones>> => {
+  return axios.get(
+    `${process.env.apiUrl}sac-general/cantons-api?countryCode=${country}&level1Code=${firstLevel}`
+  );
+};
+
+export const getThirdLevel = (
+  country: string,
+  secondLevel: string | number
+): Promise<AxiosResponse<TGetDistricts>> => {
+  return axios.get(
+    `${process.env.apiUrl}sac-general/districts-api?countryCode=${country}&level2Code=${secondLevel}`
+  );
+};
+
+// TODO: Delete this functions once beneficiary page will be changed
+export const getProvinces = (): Promise<AxiosResponse<TGetProvinces>> => {
+  return axios.get(`${process.env.apiUrl}sac-general/provinces-api?countryCode=6`);
+};
+
+export const getCanton = (provinceId: string | number): Promise<AxiosResponse<TGetCantones>> => {
   return axios.get(
     `${process.env.apiUrl}sac-general/cantons-api?countryCode=1&level1Code=${provinceId}`
   );
 };
 
-export const getDistrict = (cantonId: string | number): Promise<AxiosResponse<IGetDistricts>> => {
+export const getDistrict = (cantonId: string | number): Promise<AxiosResponse<TGetDistricts>> => {
   return axios.get(
     `${process.env.apiUrl}sac-general/districts-api?countryCode=1&level2Code=${cantonId}`
   );

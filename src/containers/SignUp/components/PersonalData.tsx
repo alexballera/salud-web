@@ -9,7 +9,7 @@ import { FormikProps } from 'formik';
 /// FORM END
 
 /// SERVICE
-import countryDocTypes from '../../../services/countryDocTypes';
+import countriesDocumentTypes from '../../../services/countriesDocumentTypes.service';
 /// SERVICE END
 
 /// OWN COMPONENTS
@@ -33,7 +33,12 @@ import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
 /// i18n END
 
 /// TYPES
-import { TPersonalDataProps, TFormData, TAutocompleteUser, TCountryDocTypes } from '../index.types';
+import {
+  TPersonalDataProps,
+  TFormData,
+  TAutocompleteUser,
+  TCountryDocumentType
+} from '../index.types';
 /// TYPES END
 
 /// STYLES
@@ -65,7 +70,7 @@ const useStyles = makeStyles(() =>
 );
 
 const buildCountryDocTypeOptions = (countryCode = '', t: TFunction) => {
-  const mapDoctypes = countryDocTypes.find(item => item.code === countryCode);
+  const mapDoctypes = countriesDocumentTypes.find(item => item.code === countryCode);
   const options = mapDoctypes?.items || [];
   if (!options.length) {
     return null;
@@ -97,10 +102,10 @@ function PersonalData({
   const [fetchUserDataState, setFetchUserDateState] = useState(FETCH_USER_DATA_STATE);
 
   const handleCurrDocTypeChange = ({ documentType, country }: TFormData) => {
-    const countryTypes = countryDocTypes.find(item => item.code === country)?.items || [];
-    const docType = countryTypes.find(item => item.id === documentType);
+    const documentTypes = countriesDocumentTypes.find(item => item.code === country)?.items || [];
+    const findDocumentType = documentTypes.find(item => item.id === documentType);
     setFetchUserDateState(FETCH_USER_DATA_STATE);
-    setCurrDocTypeArgs(docType);
+    setCurrDocTypeArgs(findDocumentType);
   };
 
   const handlerDocNumberChange = ({ docType, docNumber }: THandleDocNumberChange) => {
@@ -188,7 +193,7 @@ function PersonalData({
           <MenuItem value="" disabled className={classes.selectPlaceholder}>
             {t('label.country.placeholder', { ns: i18Global })}
           </MenuItem>
-          {countryDocTypes.map(({ code }: TCountryDocTypes, i) => (
+          {countriesDocumentTypes.map(({ code }: TCountryDocumentType, i) => (
             <MenuItem key={`${code}-${i}`} value={code}>
               {t(`countries.${code}`, { ns: i18Global })}
             </MenuItem>
