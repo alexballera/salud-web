@@ -45,11 +45,11 @@ const initialValues: TFormData = {
   email: '',
   terms: false,
   gender: '',
-  canton: null,
+  firstLevel: '',
   country: 'CR',
   password: '',
-  province: null,
-  district: null,
+  secondLevel: '',
+  thirdLevel: '',
   services: false,
   fullName: '',
   birthDate: '',
@@ -73,26 +73,8 @@ function UpdatePersonalData({
 
   const onSubmit = (values: TFormData) => {
     setLoading(true);
-    const body: ISignUpBody = {
-      email: values.email,
-      terms: values.terms,
-      gender: values.gender,
-      canton: values.canton.codigo,
-      country: values.country,
-      province: values.province.codigo,
-      password: values.password,
-      firstName: values.fullName,
-      lastName: '',
-      district: values.district.codigo,
-      services: values.services,
-      birthDate: values.birthDate,
-      superappUser: values.superappUser,
-      mobilePhone1: values.mobilePhone1,
-      documentType: values.documentType,
-      documentNumber: values.documentNumber
-    };
-
-    signUp(body)
+    // TODO: this function will be changed for appwrite
+    signUp(values as any)
       .then(res => {
         handleLogin(res.data.result);
       })

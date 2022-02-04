@@ -49,11 +49,11 @@ const initialValues: TFormData = {
   email: '',
   terms: false,
   gender: '',
-  canton: null,
+  firstLevel: '',
+  secondLevel: '',
   country: 'CR',
   password: '',
-  province: null,
-  district: null,
+  thirdLevel: '',
   fullName: '',
   services: false,
   birthDate: '',
@@ -81,26 +81,9 @@ function UpdateEmail({
 
   const onSubmit = (values: TFormData) => {
     setLoading(true);
-    const body: ISignUpBody = {
-      email: values.email,
-      terms: values.terms,
-      gender: values.gender,
-      canton: values.canton.codigo,
-      country: values.country,
-      province: values.province.codigo,
-      password: values.password,
-      lastName: '',
-      district: values.district.codigo,
-      services: values.services,
-      firstName: '',
-      birthDate: values.birthDate,
-      superappUser: values.superappUser,
-      mobilePhone1: values.mobilePhone1,
-      documentType: values.documentType,
-      documentNumber: values.documentNumber
-    };
 
-    signUp(body)
+    // TODO: this function will be changed for appwrite
+    signUp(values as any)
       .then(res => {
         handleLogin(res.data.result);
       })
