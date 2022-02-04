@@ -61,6 +61,10 @@ export const enForms = {
       required: 'Email required',
       invalid: 'Invalid email',
       incorrect: 'Invalid email format'
+    },
+
+    phone: {
+      invalid: 'Incorrect phone number format'
     }
   }
 };

@@ -95,9 +95,17 @@ export const esGlobals = {
 
     address: {
       address: 'Domicilio',
-      canton: 'Cantón',
-      district: 'Distrito',
-      province: 'Provincia'
+      placeholder: 'Seleccione',
+      crc: {
+        firstLevel: 'Provincia',
+        secondLevel: 'Cantón',
+        thirdLevel: 'Distrito'
+      },
+      mx: {
+        firstLevel: 'Estado',
+        secondLevel: 'Municipio / Alcaldía',
+        thirdLevel: 'Colonia'
+      }
     },
 
     document: {
@@ -139,9 +147,9 @@ export const esGlobals = {
     pronoun: {
       pronoun: 'Pronombre con el que se identifica',
       placeholder: 'Seleccione pronombre',
-      elle: 'Elle',
-      el: 'El',
-      ella: 'Ella'
+      she: 'Ella',
+      he: 'El',
+      they: 'Elle'
     }
   },
 

@@ -6,7 +6,7 @@ import { personVerifier } from './personVerifier.service';
 const countryConfig: TCountryConfig[] = [
   {
     code: 'crc',
-    phoneMask: ['+', '5', '0', '6', '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+    sacCode: '1',
     documentTypes: [
       {
         id: '1',
@@ -40,7 +40,7 @@ const countryConfig: TCountryConfig[] = [
   },
   {
     code: 'mx',
-    phoneMask: ['+', '5', '0', '6', '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+    sacCode: '6',
     documentTypes: [
       {
         id: '2',

@@ -8,12 +8,12 @@ import { FormikProps } from 'formik';
 /// FORM END
 
 /// SERVICES
-import { getProvinces, getCanton, getDistrict } from '../../../services/address.service';
 import countryConfig from '../../../services/countriesConfig';
+import { getFirstLevel, getSecondLevel, getThirdLevel } from '../../../services/address.service';
 /// SERVICES END
 
 /// TYPES
-import { TExtraDataProps, IGeneralAdressState, TFormData, TCountryConfig } from '../index.types';
+import { TExtraDataProps, IGeneralAdressState, TFormData } from '../index.types';
 /// TYPES END
 
 /// OWN COMPONENTS
@@ -36,36 +36,26 @@ import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY as i18Global } from '../../../i18n/globals/i18n';
-import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
+import { NAMESPACE_KEY as i18nGlobal } from '../../../i18n/globals/i18n';
 /// i18n END
 
-/// INITIAL STATES
+type TLevelKey = 'firstLevel' | 'secondLevel' | 'thirdLevel';
+
 const GENDERS = [
-  { label: 'label.gender.female', value: 1 },
-  { label: 'label.gender.male', value: 2 }
+  { label: 'female', value: 1 },
+  { label: 'male', value: 2 }
 ];
 
 const PRONOUNS = [
-  { label: '', value: '' },
-  { label: '', value: '' }
+  { label: 'she', value: 1 },
+  { label: 'he', value: 2 },
+  { label: 'they', value: 3 }
 ];
 
-const initialProvinceStates: IGeneralAdressState = {
+const INITIAL_LEVEL_STATUS: IGeneralAdressState = {
   data: [],
   fetching: true
 };
-
-const initialDistrictStates: IGeneralAdressState = {
-  data: [],
-  fetching: false
-};
-
-const initialCantonStates: IGeneralAdressState = {
-  data: [],
-  fetching: false
-};
-/// INITIAL STATES END
 
 function ExtraData({
   values,
@@ -78,26 +68,27 @@ function ExtraData({
   updatePersonalData,
   updatePhone
 }: TExtraDataProps & FormikProps<TFormData>): JSX.Element {
-  const { t } = useTranslation(['globals', 'forms']);
+  const { t } = useTranslation([i18nGlobal]);
   const classes = SignUpStyles();
-  const [cantonStates, setCantonStates] = useState(initialCantonStates);
-  const [provinceStates, setProvinceStates] = useState(initialProvinceStates);
-  const [districtStates, setDistrictStates] = useState(initialDistrictStates);
+  const [firstLevel, setFirstLevel] = useState(INITIAL_LEVEL_STATUS);
+  const [secondLevel, setSecondLevel] = useState({ ...INITIAL_LEVEL_STATUS, fetching: false });
+  const [thirdLevel, setThirdLevel] = useState({ ...INITIAL_LEVEL_STATUS, fetching: false });
 
-  const onChangeSelect = (value: any, fieldName: string) => {
-    setFieldValue(fieldName, value);
+  const selectedCountry = _.find(countryConfig, { code: values.country }) || countryConfig[0];
 
+  const onChangeSelect = (value: string, fieldName: TLevelKey) => {
+    setFieldValue(fieldName, _.get(value, 'code', ''));
     switch (fieldName) {
-      case 'province':
-        setFieldValue('canton', null);
-        setFieldValue('district', null);
+      case 'firstLevel':
+        setFieldValue('secondLevel', '');
+        setFieldValue('thirdLevel', '');
 
-        setCantonStates({ ...cantonStates, data: [] });
-        setDistrictStates({ ...districtStates, data: [] });
+        setSecondLevel({ ...secondLevel, data: [] });
+        setThirdLevel({ ...thirdLevel, data: [] });
         break;
-      case 'canton':
-        setFieldValue('district', null);
-        setDistrictStates({ ...districtStates, data: [] });
+      case 'secondLevel':
+        setFieldValue('district', '');
+        setThirdLevel({ ...thirdLevel, data: [] });
         break;
 
       default:
@@ -105,44 +96,78 @@ function ExtraData({
     }
   };
 
+  const getLevelValueByKey = (stateKey: TLevelKey) => {
+    switch (stateKey) {
+      case 'firstLevel':
+        if (!firstLevel.data.length) {
+          return null;
+        }
+        return _.find(firstLevel.data, { code: values.firstLevel }) || '';
+      case 'secondLevel':
+        if (!secondLevel.data.length) {
+          return null;
+        }
+        return _.find(secondLevel.data, { code: values.secondLevel }) || '';
+      case 'thirdLevel':
+        if (!thirdLevel.data.length) {
+          return null;
+        }
+        return _.find(thirdLevel.data, { code: values.thirdLevel }) || '';
+      default:
+        break;
+    }
+  };
+
+  const getLabelOrPlaceholderText = (labelKey: string, hasPlaceholder?: boolean) => {
+    const text = t(`label.address.${selectedCountry.code}.${labelKey}`, { ns: i18nGlobal });
+    if (hasPlaceholder) {
+      return `${t('label.address.placeholder', { ns: i18nGlobal })} ${text.toLowerCase()}`;
+    }
+    return text;
+  };
+
   /// USE EFFECTS
   /* PRVINCES FETCHER */
   useEffect(() => {
-    getProvinces().then(res => {
-      setProvinceStates({
-        data: res.data.result.primerNivel,
-        fetching: false
+    getFirstLevel(selectedCountry.sacCode || '1').then(res => {
+      const firstLevel = res.data.result.primerNivel;
+      const data = firstLevel.map(item => ({ code: item.codigo, label: item.nombre }));
+      setFirstLevel({
+        fetching: false,
+        data
       });
     });
   }, []);
 
-  /* CANTON FETCHER */
+  /* SECOND LEVEL FETCHER */
   useEffect(() => {
-    if (!_.isEmpty(values.province)) {
-      setCantonStates({ ...cantonStates, fetching: true });
-
-      getCanton(values.province.codigo).then(res => {
-        setCantonStates({
-          data: res.data.result.segundoNivel,
-          fetching: false
+    if (!_.isEmpty(values.firstLevel)) {
+      setSecondLevel({ ...secondLevel, fetching: true });
+      getSecondLevel(selectedCountry.sacCode || '1', values.firstLevel).then(res => {
+        const secondLevel = res.data.result.segundoNivel;
+        const data = secondLevel.map(item => ({ code: item.codigo, label: item.nombre }));
+        setSecondLevel({
+          fetching: false,
+          data
         });
       });
     }
-  }, [values.province]);
+  }, [values.firstLevel]);
 
   /* DISTRICT FETCHER */
   useEffect(() => {
-    if (!_.isEmpty(values.canton)) {
-      setDistrictStates({ ...districtStates, fetching: true });
-
-      getDistrict(values.canton.codigo).then(res => {
-        setDistrictStates({
-          data: res.data.result.catalogo,
-          fetching: false
+    if (!_.isEmpty(values.secondLevel)) {
+      setThirdLevel({ ...thirdLevel, fetching: true });
+      getThirdLevel(selectedCountry.sacCode || '1', values.secondLevel).then(res => {
+        const thirdLevel = res.data.result.catalogo;
+        const data = thirdLevel.map(item => ({ code: item.codigo, label: item.nombre }));
+        setThirdLevel({
+          fetching: false,
+          data
         });
       });
     }
-  }, [values.canton]);
+  }, [values.secondLevel]);
   /// USE EFFECTS END
 
   return (
@@ -151,11 +176,16 @@ function ExtraData({
         <>
           <Box display="flex" justifyContent="center" alignItems="center">
             <FormControl fullWidth margin="normal" variant="filled">
-              <FormLabel id="gender-selector-label" style={{ marginBottom: 10 }}>
-                {t('label.gender.gender', { ns: 'globals' })}
+              <FormLabel
+                id="gender-selector-label"
+                error={touched.gender && !!errors.gender}
+                style={{ marginBottom: 10 }}
+              >
+                {t('label.gender.gender', { ns: i18nGlobal })}
               </FormLabel>
               <Select
                 fullWidth
+                displayEmpty
                 defaultValue=""
                 id="gender-selector"
                 name="gender"
@@ -167,10 +197,13 @@ function ExtraData({
                 onChange={handleChange}
               >
                 <MenuItem value="" disabled className={classes.selectPlaceholder}>
-                  {t('label.gender.placeholder', { ns: i18Global })}
+                  {t('label.gender.placeholder', { ns: i18nGlobal })}
                 </MenuItem>
-                <MenuItem value={'1'}>{t('label.gender.female', { ns: 'globals' })}</MenuItem>
-                <MenuItem value={'2'}>{t('label.gender.male', { ns: 'globals' })}</MenuItem>
+                {GENDERS.map((item, idx) => (
+                  <MenuItem key={idx} value={item.value}>
+                    {t(`label.gender.${item.label}`, { ns: i18nGlobal })}
+                  </MenuItem>
+                ))}
               </Select>
               {touched.gender && errors.gender && (
                 <FormHelperText error>{errors.gender}</FormHelperText>
@@ -181,7 +214,7 @@ function ExtraData({
               leaveTouchDelay={3000}
               enterTouchDelay={50}
               placement="left"
-              title={t('label.gender.tooltip', { ns: i18Global })}
+              title={t('label.gender.tooltip', { ns: i18nGlobal })}
               classes={{ tooltip: classes.tooltip }}
             >
               <Box marginTop="30px" marginLeft="10px">
@@ -190,14 +223,19 @@ function ExtraData({
             </Tooltip>
           </Box>
           <FormControl fullWidth margin="normal" variant="filled">
-            <FormLabel id="pronoun-selector-label" style={{ marginBottom: 10 }}>
-              {t('label.pronoun.pronoun', { ns: 'globals' })}
+            <FormLabel
+              id="pronoun-selector-label"
+              error={touched.pronoun && !!errors.pronoun}
+              style={{ marginBottom: 10 }}
+            >
+              {t('label.pronoun.pronoun', { ns: i18nGlobal })}
             </FormLabel>
             <Select
               fullWidth
+              displayEmpty
               defaultValue=""
-              id="gender-selector"
-              name="gender"
+              id="pronoun-selector"
+              name="pronoun"
               value={values.pronoun}
               color="secondary"
               labelId="pronoun-selector-label"
@@ -206,16 +244,16 @@ function ExtraData({
               onChange={handleChange}
             >
               <MenuItem value="" disabled className={classes.selectPlaceholder}>
-                {t('label.pronoun.placeholder', { ns: i18Global })}
+                {t('label.pronoun.placeholder', { ns: i18nGlobal })}
               </MenuItem>
-              {GENDERS.map((item, idx) => (
+              {PRONOUNS.map((item, idx) => (
                 <MenuItem key={idx} value={item.value}>
-                  {t(item.label, { ns: 'globals' })}
+                  {t(`label.pronoun.${item.label}`, { ns: i18nGlobal })}
                 </MenuItem>
               ))}
             </Select>
-            {touched.gender && errors.gender && (
-              <FormHelperText error>{errors.gender}</FormHelperText>
+            {touched.pronoun && errors.pronoun && (
+              <FormHelperText error>{errors.pronoun}</FormHelperText>
             )}
           </FormControl>
         </>
@@ -225,16 +263,16 @@ function ExtraData({
           id="mobilePhone1"
           name="mobilePhone1"
           type="text"
+          label={`${t(`label.phone.${updatePhone ? 'new' : 'phone'}`, { ns: i18nGlobal })}`}
+          value={values.mobilePhone1}
+          error={touched.mobilePhone1 && Boolean(errors.mobilePhone1)}
+          helperText={errors.mobilePhone1}
+          onBlur={handleBlur}
+          onChange={handleChange}
           onResetValue={value => {
             setFieldValue('mobilePhone1', value);
             setFieldTouched('mobilePhone1', false);
           }}
-          label={`${t(`label.phone.${updatePhone ? 'new' : 'phone'}`, { ns: i18Global })}`}
-          value={values.mobilePhone1}
-          error={touched.mobilePhone1 && Boolean(errors.mobilePhone1)}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          helperText={errors.mobilePhone1}
           formControlProps={{
             style: {
               marginTop: 0
@@ -245,49 +283,52 @@ function ExtraData({
       {!updatePhone && (
         <>
           <Typography variant="h5" component="h5" className={classes.titleSection}>
-            {t('label.address.address', { ns: 'globals' })}
+            {t('label.address.address', { ns: i18nGlobal })}
           </Typography>
           <CustomAutoComplete
-            id="province"
-            label={t('label.address.province', { ns: 'globals' })}
-            value={values.province}
-            error={touched.province && Boolean(errors.province)}
+            id="firstLevel"
+            placeholder={getLabelOrPlaceholderText('firstLevel', true)}
+            label={getLabelOrPlaceholderText('firstLevel')}
+            linearProgressProps={{ 'data-testid': 'firstLevel-loader' }}
+            error={touched.firstLevel && Boolean(errors.firstLevel)}
             onBlur={handleBlur}
-            options={provinceStates.data}
-            loading={provinceStates.fetching}
-            onChange={(_e, value) => onChangeSelect(value, 'province')}
-            helperText={errors.province}
-            getOptionLabel={option => option.nombre}
-            getOptionSelected={(option, value) => option.nombre === value.nombre}
-            linearProgressProps={{ 'data-testid': 'provinces-loader' }}
+            options={firstLevel.data}
+            loading={firstLevel.fetching}
+            helperText={errors.firstLevel}
+            onChange={(_e, value) => onChangeSelect(value, 'firstLevel')}
+            getOptionSelected={option => option.code}
+            getOptionLabel={option => option.label || ''}
+            value={getLevelValueByKey('firstLevel')}
           />
-
           <CustomAutoComplete
-            id="canton"
-            label={t('label.address.canton', { ns: 'globals' })}
-            value={values.canton}
-            error={touched.canton && Boolean(errors.canton)}
+            id="secondLevel"
+            label={getLabelOrPlaceholderText('secondLevel')}
+            placeholder={getLabelOrPlaceholderText('secondLevel', true)}
+            linearProgressProps={{ 'data-testid': 'secondLevel-loader' }}
+            error={touched.secondLevel && Boolean(errors.secondLevel)}
             onBlur={handleBlur}
-            options={cantonStates.data}
-            loading={cantonStates.fetching}
-            onChange={(_e, value) => onChangeSelect(value, 'canton')}
-            helperText={errors.canton}
-            getOptionLabel={option => option.nombre}
-            getOptionSelected={(option, value) => option.nombre === value.nombre}
+            options={secondLevel.data}
+            loading={secondLevel.fetching}
+            onChange={(_e, value) => onChangeSelect(value, 'secondLevel')}
+            helperText={errors.secondLevel}
+            getOptionSelected={option => option.code}
+            getOptionLabel={option => option.label || ''}
+            value={getLevelValueByKey('secondLevel')}
           />
-
           <CustomAutoComplete
-            id="district"
-            label={t('label.address.district', { ns: 'globals' })}
-            value={values.district}
-            error={touched.district && Boolean(errors.district)}
+            id="thirdLevel"
+            label={getLabelOrPlaceholderText('thirdLevel')}
+            placeholder={getLabelOrPlaceholderText('thirdLevel', true)}
+            linearProgressProps={{ 'data-testid': 'thirdLevel-loader' }}
+            error={touched.thirdLevel && Boolean(errors.thirdLevel)}
             onBlur={handleBlur}
-            options={districtStates.data}
-            loading={districtStates.fetching}
-            onChange={(_e, value) => onChangeSelect(value, 'district')}
-            helperText={errors.district}
-            getOptionLabel={option => option.nombre}
-            getOptionSelected={(option, value) => option.nombre === value.nombre}
+            options={thirdLevel.data}
+            loading={thirdLevel.fetching}
+            onChange={(_e, value) => onChangeSelect(value, 'thirdLevel')}
+            helperText={errors.thirdLevel}
+            getOptionSelected={option => option.code}
+            getOptionLabel={option => option.label || ''}
+            value={getLevelValueByKey('thirdLevel')}
           />
         </>
       )}

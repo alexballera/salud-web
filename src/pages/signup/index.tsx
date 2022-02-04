@@ -1,6 +1,7 @@
 /// BASE IMPORTS
 import { useState, useEffect } from 'react';
 import { addYears } from 'date-fns';
+import _ from 'lodash';
 import * as yup from 'yup';
 /// BASE IMPORTS END
 
@@ -36,6 +37,10 @@ import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 import Layout from '../../layouts/LayoutFormBasic';
 /// LAYOUT END
 
+/// SERVICES
+import countriesPhoneNumbers from '../../services/countriesPhoneNumbers.service';
+/// SERVICES END
+
 /// i18n
 import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18Global } from '../../i18n/globals/i18n';
@@ -58,9 +63,9 @@ const INIT_FORM_STATE: TFormData = {
   fullName: '',
   birthDate: '',
   gender: '',
-  canton: '',
-  district: '',
-  province: '',
+  firstLevel: '',
+  secondLevel: '',
+  thirdLevel: '',
   mobilePhone1: '',
   pronoun: '',
   email: '',
@@ -132,36 +137,25 @@ function SignUpView(props: TProps): JSX.Element {
   const yupExtraData = {
     name: 'ExtraData',
     schema: yup.object().shape({
-      gender: yup.string().required(`${t('validations.required', { ns: i18Forms })}`),
-      canton: yup
-        .object()
-        .shape({
-          codigo: yup.string().required(`${t('validations.required', { ns: i18Forms })}`),
-          nombre: yup.string().required(`${t('validations.required', { ns: i18Forms })}`)
-        })
-        .nullable()
-        .required(`${t('validations.required', { ns: i18Forms })}`),
-      district: yup
-        .object()
-        .shape({
-          codigo: yup.string().required(`${t('validations.required', { ns: i18Forms })}`),
-          nombre: yup.string().required(`${t('validations.required', { ns: i18Forms })}`)
-        })
-        .nullable()
-        .required(`${t('validations.required', { ns: i18Forms })}`),
-      province: yup
-        .object()
-        .shape({
-          codigo: yup.string().required(`${t('validations.required', { ns: i18Forms })}`),
-          nombre: yup.string().required(`${t('validations.required', { ns: i18Forms })}`)
-        })
-        .nullable()
-        .required(`${t('validations.required', { ns: i18Forms })}`),
+      gender: yup.string().required(t('validations.required', { ns: i18Forms })),
+      pronoun: yup.string().required(t('validations.required', { ns: i18Forms })),
+      firstLevel: yup.string().required(t('validations.required', { ns: i18Forms })),
+      secondLevel: yup.string().required(t('validations.required', { ns: i18Forms })),
+      thirdLevel: yup.string().required(t('validations.required', { ns: i18Forms })),
       mobilePhone1: yup
         .string()
-        .required(`${t('validations.required', { ns: i18Forms })}`)
-        .transform(value => value.replace(/[^\d]/g, ''))
-        .min(8, `${t('validations.min_8', { ns: i18Forms })}`)
+        .required(t('validations.required', { ns: i18Forms }))
+        .test(t('validations.phone.invalid', { ns: i18Forms }), (value = '') => {
+          const splitValue = value.replace(/[+]/g, '').split(' ');
+          const [countryCode, ...rest] = splitValue;
+
+          if (!countryCode) return false;
+
+          const { validation } = _.find(countriesPhoneNumbers, { countryCode });
+          if (!validation) return false;
+
+          return validation.test(rest.join(''));
+        })
     })
   };
 
@@ -224,7 +218,7 @@ function SignUpView(props: TProps): JSX.Element {
       title: 'title.extra_data',
       description: 'description.extra_data',
       Component: function FormStep(formik: FormikProps<TFormData>) {
-        return <ExtraDataForm {...formik} />;
+        return <ExtraDataForm {...formik} currDocTypeArgs={currDocTypeArgs} />;
       }
     },
     2: {
@@ -357,3 +351,5 @@ function SignUpView(props: TProps): JSX.Element {
 }
 
 export default withAppContext(SignUpView);
+
+// Crear la validacion del numero y test y fixear el mounted

@@ -6,7 +6,9 @@ const SignUpStyles = makeStyles((theme: Theme) =>
     titleSection: {
       fontSize: 16,
       fontWeight: 'normal',
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
+      marginTop: 24,
+      marginBottom: 16
     },
     tooltip: {
       marginRight: 10,

@@ -95,9 +95,17 @@ export const enGlobals = {
 
     address: {
       address: 'Domicilio',
-      canton: 'Cantón',
-      district: 'Distrito',
-      province: 'Provincia'
+      placeholder: 'Select {{child}}',
+      crc: {
+        firstLevel: 'Province',
+        secondLevel: 'Canton',
+        thirdLevel: 'District'
+      },
+      mx: {
+        firstLevel: 'State',
+        secondLevel: 'Municipality / Mayor',
+        thirdLevel: 'Colony'
+      }
     },
 
     document: {
@@ -139,9 +147,9 @@ export const enGlobals = {
     pronoun: {
       pronoun: 'Pronoun with which he identifies',
       placeholder: 'Select pronoun',
-      elle: 'She',
-      el: 'He',
-      ella: 'She'
+      she: 'She',
+      he: 'He',
+      they: 'They'
     }
   },
 

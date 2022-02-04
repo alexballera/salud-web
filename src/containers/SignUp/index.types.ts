@@ -59,8 +59,8 @@ export type IGetDistricts = {
 };
 
 export type IGeneralAdressOption = {
-  codigo: string;
-  nombre: string;
+  code: string;
+  label: string;
 };
 
 export type TPersonalDataForm = {
@@ -73,9 +73,9 @@ export type TPersonalDataForm = {
 
 export type TExtraDataForm = {
   gender: GenderEnum;
-  canton: any;
-  district: any;
-  province: any;
+  thirdLevel: string;
+  firstLevel: string;
+  secondLevel: string;
   mobilePhone1: string;
   pronoun: string;
 };
@@ -101,6 +101,7 @@ export type TPersonalDataProps = {
 };
 
 export type TExtraDataProps = {
+  currDocTypeArgs?: TCountryDocumentType;
   updatePersonalData?: boolean;
   updatePhone?: boolean;
 };
@@ -153,7 +154,7 @@ export type TCountryDocumentType = {
 
 export type TCountryConfig = {
   code: string;
-  phoneMask: (string | RegExp)[];
+  sacCode: string; // this field ref SAC country code
   documentTypes: TCountryDocumentType[];
 };
 /// TYPES END
