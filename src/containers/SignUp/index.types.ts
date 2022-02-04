@@ -96,12 +96,12 @@ export type TPersonalDataProps = {
   handleNotifications: (props: INotificationProps) => void;
   setCustomPopUpError?: React.Dispatch<React.SetStateAction<null | string>>;
   customPopUpError?: string | null;
-  setCurrDocTypeArgs?: React.Dispatch<React.SetStateAction<TCountryDocumentType>>;
-  currDocTypeArgs?: TCountryDocumentType;
+  setCurrDocTypeArgs?: React.Dispatch<React.SetStateAction<TCountryDocumentTypeItem>>;
+  currDocTypeArgs?: TCountryDocumentTypeItem;
 };
 
 export type TExtraDataProps = {
-  currDocTypeArgs?: TCountryDocumentType;
+  currDocTypeArgs?: TCountryDocumentTypeItem;
   updatePersonalData?: boolean;
   updatePhone?: boolean;
 };
@@ -141,7 +141,7 @@ export type TAutocompleteArgs = {
   docNumber: string;
 };
 
-export type TCountryDocumentType = {
+export type TCountryDocumentTypeItem = {
   id: string;
   name: string;
   mask: string | null;
@@ -152,9 +152,9 @@ export type TCountryDocumentType = {
   autocompleteUserDataFn?: (args: TAutocompleteArgs) => Promise<TAutocompleteUser>;
 };
 
-export type TCountryConfig = {
+export type TCountryDocumentType = {
   code: string;
   sacCode: string; // this field ref SAC country code
-  documentTypes: TCountryDocumentType[];
+  items: TCountryDocumentTypeItem[];
 };
 /// TYPES END

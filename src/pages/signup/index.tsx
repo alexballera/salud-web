@@ -14,7 +14,7 @@ import { withAppContext } from '../../context/index';
 /// CONTEXT END
 
 /// TYPES
-import { TProps, TFormData, TCountryDocumentType } from '../../containers/SignUp/index.types';
+import { TProps, TFormData, TCountryDocumentTypeItem } from '../../containers/SignUp/index.types';
 /// TYPES END
 
 /// OWN COMPONENTS
@@ -108,7 +108,7 @@ function SignUpView(props: TProps): JSX.Element {
   const [data, setData] = useState(INIT_FORM_STATE);
   const [customPopUpError, setCustomPopUpError] = useState<null | string>(null);
   const [currentStep, setCurrentStep] = useState(1);
-  const [currDocTypeArgs, setCurrDocTypeArgs] = useState<TCountryDocumentType | null>(null);
+  const [currDocTypeArgs, setCurrDocTypeArgs] = useState<TCountryDocumentTypeItem | null>(null);
 
   const yupPersonalData = {
     name: 'PersonalData',
