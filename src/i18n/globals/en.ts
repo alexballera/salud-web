@@ -37,7 +37,7 @@ export const enGlobals = {
       forget: 'To recover your password we need to verify your identity.'
     },
     forward_email:
-      'A link to change your password was sent to your email and will be active for 24 hours.',
+      'A link to change your password was sent to your email and will be active for 1 hour.',
     new_password: 'Enter your new password'
   },
 
@@ -157,6 +157,9 @@ export const enGlobals = {
     signin: {
       error_400: 'The data provided does not match',
       error_401: 'The data provided does not match'
+    },
+    recover: {
+      error_401: 'Invalid token, request it again'
     }
   },
 
