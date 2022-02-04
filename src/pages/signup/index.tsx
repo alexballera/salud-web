@@ -351,5 +351,3 @@ function SignUpView(props: TProps): JSX.Element {
 }
 
 export default withAppContext(SignUpView);
-
-// Crear la validacion del numero y test y fixear el mounted

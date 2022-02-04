@@ -63,7 +63,7 @@ const getCurrentPhoneConfig = (value = '') => {
   return _.find(countriesPhoneNumbers, { countryCode }) || countriesPhoneNumbers[0];
 };
 
-function Notifications(props: TProps): JSX.Element {
+function PhoneNumberInputText(props: TProps): JSX.Element {
   const classes = useStyles();
   const isMounted = useIsMounted();
   const { t } = useTranslation(i18nGlobal);
@@ -135,4 +135,4 @@ function Notifications(props: TProps): JSX.Element {
   );
 }
 
-export default Notifications;
+export default PhoneNumberInputText;

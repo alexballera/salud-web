@@ -8,7 +8,7 @@ import { FormikProps } from 'formik';
 /// FORM END
 
 /// SERVICES
-import countryConfig from '../../../services/countriesConfig';
+import countryDocumentTypes from '../../../services/countriesDocumentTypes.service';
 import { getFirstLevel, getSecondLevel, getThirdLevel } from '../../../services/address.service';
 /// SERVICES END
 
@@ -74,7 +74,8 @@ function ExtraData({
   const [secondLevel, setSecondLevel] = useState({ ...INITIAL_LEVEL_STATUS, fetching: false });
   const [thirdLevel, setThirdLevel] = useState({ ...INITIAL_LEVEL_STATUS, fetching: false });
 
-  const selectedCountry = _.find(countryConfig, { code: values.country }) || countryConfig[0];
+  const selectedCountry =
+    _.find(countryDocumentTypes, { code: values.country }) || countryDocumentTypes[0];
 
   const onChangeSelect = (value: string, fieldName: TLevelKey) => {
     setFieldValue(fieldName, _.get(value, 'code', ''));

@@ -9,7 +9,7 @@ import { FormikProps } from 'formik';
 /// FORM END
 
 /// SERVICE
-import countriesConfig from '../../../services/countriesConfig';
+import countriesDocumentTypes from '../../../services/countriesDocumentTypes.service';
 /// SERVICE END
 
 /// OWN COMPONENTS
@@ -70,7 +70,7 @@ const useStyles = makeStyles(() =>
 );
 
 const buildCountryDocTypeOptions = (countryCode = '', t: TFunction) => {
-  const mapDoctypes = countriesConfig.find(item => item.code === countryCode);
+  const mapDoctypes = countriesDocumentTypes.find(item => item.code === countryCode);
   const options = mapDoctypes?.items || [];
   if (!options.length) {
     return null;
@@ -102,10 +102,10 @@ function PersonalData({
   const [fetchUserDataState, setFetchUserDateState] = useState(FETCH_USER_DATA_STATE);
 
   const handleCurrDocTypeChange = ({ documentType, country }: TFormData) => {
-    const countryTypes = countriesConfig.find(item => item.code === country)?.items || [];
-    const docType = countryTypes.find(item => item.id === documentType);
+    const documentTypes = countriesDocumentTypes.find(item => item.code === country)?.items || [];
+    const findDocumentType = documentTypes.find(item => item.id === documentType);
     setFetchUserDateState(FETCH_USER_DATA_STATE);
-    setCurrDocTypeArgs(docType);
+    setCurrDocTypeArgs(findDocumentType);
   };
 
   const handlerDocNumberChange = ({ docType, docNumber }: THandleDocNumberChange) => {
@@ -193,7 +193,7 @@ function PersonalData({
           <MenuItem value="" disabled className={classes.selectPlaceholder}>
             {t('label.country.placeholder', { ns: i18Global })}
           </MenuItem>
-          {countriesConfig.map(({ code }: TCountryDocumentType, i) => (
+          {countriesDocumentTypes.map(({ code }: TCountryDocumentType, i) => (
             <MenuItem key={`${code}-${i}`} value={code}>
               {t(`countries.${code}`, { ns: i18Global })}
             </MenuItem>

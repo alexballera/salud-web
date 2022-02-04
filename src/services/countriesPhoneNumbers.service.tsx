@@ -1,6 +1,6 @@
 import SvgContainer from '../components/common/SvgContainer';
 
-const COUNTRIES = [
+const PHONE_LIST = [
   {
     validation: /^([0-9]){8,8}$/,
     value: 'crc',
@@ -126,4 +126,4 @@ const COUNTRIES = [
   }
 ];
 
-export default COUNTRIES;
+export default PHONE_LIST;
