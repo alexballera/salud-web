@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: 20,
       fontWeight: 500,
       marginBottom: 16,
+      lineHeight: '32px',
       [theme.breakpoints.up('md')]: {
         fontSize: 42,
         fontWeight: 400,
@@ -48,8 +49,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     paragraph: {
       color: 'rgba(0, 0, 0, 0.6)',
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: 'normal',
+      lineHeight: '20px',
       marginBottom: 8,
       marginTop: 8
     }

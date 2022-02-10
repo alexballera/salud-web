@@ -79,6 +79,10 @@ const defaultTheme: ThemeOptions = {
         textTransform: 'initial',
         fontSize: '15px',
         lineHeight: '26px'
+      },
+      outlined: {
+        color: primaryMainColor,
+        border: `1px solid ${primaryMainColor}`
       }
     },
     MuiOutlinedInput: {

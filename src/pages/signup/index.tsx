@@ -92,6 +92,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: 12,
       letterSpacing: 1,
       marginBottom: 8,
+      lineHeight: '32px',
       textTransform: 'uppercase'
     },
     button: {
