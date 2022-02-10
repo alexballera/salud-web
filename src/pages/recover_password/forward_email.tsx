@@ -10,7 +10,7 @@ import { NAMESPACE_KEY as i18nGlobals } from '../../i18n/globals/i18n';
 /// i18n END
 
 /// SERVICES
-import { getDataFromLocalStorage } from '../../services/localStorage.service';
+import { getDataFromSessionStorage } from '../../services/localStorage.service';
 import api from '../../api/api';
 /// SERVICES END
 
@@ -28,7 +28,7 @@ function ForwardEmailPage({ handleLoading }: IProps): JSX.Element {
   const [email, setEmail] = useState('');
 
   useEffect(() => {
-    const userEmail = getDataFromLocalStorage('email');
+    const userEmail = getDataFromSessionStorage('email');
     setEmail(userEmail);
   }, []);
 

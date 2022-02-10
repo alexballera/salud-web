@@ -44,7 +44,13 @@ const useStyles = makeStyles((theme: Theme) =>
       letterSpacing: 0.15
     },
     paragraph: {
-      color: 'rgba(0, 0, 0, 0.6)'
+      color: 'rgba(0, 0, 0, 0.6)',
+      fontSize: 14,
+      fontWeight: 'normal',
+      lineHeight: '20px',
+      marginBottom: 8,
+      marginTop: 8,
+      letterSpacing: 0.15
     }
   })
 );

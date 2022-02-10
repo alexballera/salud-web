@@ -134,7 +134,7 @@ export const esGlobals = {
     },
 
     password: {
-      confirm: 'Confirmación de nueva contraseña',
+      confirm: 'Confirmación de la contraseña nueva',
       password: 'Contraseña',
       new: 'Contraseña nueva',
       change_description: 'Ingresá tu contraseña anterior y la nueva',

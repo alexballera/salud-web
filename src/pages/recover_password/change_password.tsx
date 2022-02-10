@@ -31,6 +31,7 @@ import api from '../../api/api';
 /// STYLES & TYPES
 import recoverStyles from '../../styles/js/RecoverPageStyles.module';
 import { INotificationProps } from '../../context/types';
+import { setDataToSessionStorage } from '../../services/localStorage.service';
 /// STYLES & TYPES END
 
 /// TYPES
@@ -101,12 +102,8 @@ function ChangePassword({ handleNotifications, handleLoading }: IFormData): JSX.
           newPasswordConfirm
         )
         .then(() => {
+          setDataToSessionStorage('updated_password', 'updated');
           router.push('/login');
-          handleNotifications({
-            open: true,
-            message: `${t('message.password.updated', { ns: i18nForms })}`,
-            severity: 'success'
-          });
         })
         .catch(err => {
           handleNotifications({
@@ -144,10 +141,10 @@ function ChangePassword({ handleNotifications, handleLoading }: IFormData): JSX.
             return (
               <Form autoComplete="off" className={classes.containerForm}>
                 <PasswordData passwordConfirmError={notMatchMsg} {...formik} />
-                <Box p={3} className={classes.containerButton}>
+                <Box mt={5}>
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={5}>
-                      <Box mb={2}>
+                      <Box>
                         <Button
                           fullWidth
                           type="submit"

@@ -1,5 +1,5 @@
 /// BASE IMPORTS
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Formik, FormikErrors, FormikProps } from 'formik';
 import Link from 'next/link';
@@ -29,11 +29,15 @@ import LoginStyles from '../../styles/js/LoginPageStyles.module';
 
 /// SERVICES
 import api from '../../api/api';
+import {
+  getDataFromSessionStorage,
+  removeDataFromSessionStorage,
+  setUserToLocalStorage
+} from '../../services/localStorage.service';
 /// SERVICES END
 
 /// LAYOUT
 import Layout from '../../layouts/LayoutFormBasic';
-import { setUserToLocalStorage } from '../../services/localStorage.service';
 /// LAYOUT END
 
 /// FORM STATES & VALIDATIONS
@@ -47,8 +51,25 @@ function LoginPage({
   handleNotifications
 }: TProps): JSX.Element {
   const { t } = useTranslation([i18Global, i18Forms]);
+  const [updatedPassword, setUpdatedPassword] = useState<string>();
   const classes = LoginStyles();
   const router = useRouter();
+
+  useEffect(() => {
+    updatedPasswordNotification();
+  }, [updatedPassword]);
+
+  const updatedPasswordNotification = () => {
+    setUpdatedPassword(getDataFromSessionStorage('updated_password'));
+    if (updatedPassword) {
+      handleNotifications({
+        open: true,
+        message: `${t('message.password.updated', { ns: i18Forms })}`,
+        severity: 'success'
+      });
+      removeDataFromSessionStorage('updated_password');
+    }
+  };
 
   const ValidationSchema = yup.object().shape({
     email: yup

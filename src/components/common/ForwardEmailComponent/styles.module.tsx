@@ -12,19 +12,6 @@ const forwardEmailStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'center'
     },
-    contentContainer: {
-      bottom: 0,
-      right: 0,
-      paddingLeft: 24,
-      paddingRight: 24,
-      width: '100%',
-      position: 'fixed',
-      [theme.breakpoints.up('md')]: {
-        paddingLeft: 0,
-        paddingRight: 0,
-        position: 'static'
-      }
-    },
     timerContainer: {
       width: '100%'
     },

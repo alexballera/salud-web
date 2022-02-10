@@ -24,7 +24,7 @@ const recoverStyles = makeStyles((theme: Theme) =>
       marginTop: 24,
       textAlign: 'center',
       width: '100%',
-      '&>a': {
+      '& a': {
         color: secondaryMainColor
       },
       [theme.breakpoints.up('md')]: {

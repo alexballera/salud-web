@@ -21,3 +21,16 @@ export function getDataFromLocalStorage(key: string): string {
 export function removeDataFromLocalStorage(key: string): void {
   window.localStorage.removeItem(key);
 }
+
+export function setDataToSessionStorage(key: string, data: string): void {
+  window.sessionStorage.setItem(key, JSON.stringify(data));
+}
+
+export function getDataFromSessionStorage(key: string): string {
+  const data: 'string' = JSON.parse(window.sessionStorage.getItem(key));
+  return data;
+}
+
+export function removeDataFromSessionStorage(key: string): void {
+  window.sessionStorage.removeItem(key);
+}

@@ -109,7 +109,7 @@ function ForwardEmailComponent({
               )}
             </Box>
           </Grid>
-          <Grid item xs={12} className={classes.contentContainer}>
+          <Grid item xs={12}>
             <Box mb={3} mt={3}>
               <Grid container>
                 {showTimer && (

@@ -34,7 +34,7 @@ import { IProps } from '../../types/recover.types';
 
 /// STYLES
 import recoverStyles from '../../styles/js/RecoverPageStyles.module';
-import { setDataToLocalStorage } from '../../services/localStorage.service';
+import { setDataToSessionStorage } from '../../services/localStorage.service';
 /// STYLES END
 
 /// FORM STATES & VALIDATIONS
@@ -61,7 +61,7 @@ function RecoverPasswordPage({ handleLoading, handleNotifications }: IProps): JS
       400: t('validations.email.invalid', { ns: i18Forms }),
       404: t('message.email.not_found', { ns: i18Forms }),
       429: t('message.email.too_many_request', { ns: i18Forms }),
-      default: t('message.email.general_fetch', { ns: i18Forms })
+      default: t('message.error.general_fetch', { ns: i18Forms })
     };
     setCodeError(code);
     return message[code] || message['default'];
@@ -83,7 +83,7 @@ function RecoverPasswordPage({ handleLoading, handleNotifications }: IProps): JS
     api
       .restorePassword(email)
       .then(() => {
-        setDataToLocalStorage('email', email);
+        setDataToSessionStorage('email', email);
         router.push('/recover_password/forward_email');
       })
       .catch(err => {
@@ -102,11 +102,7 @@ function RecoverPasswordPage({ handleLoading, handleNotifications }: IProps): JS
       header={
         <>
           <TitleContent titleWithSubtitle title={t('title.recover.forget', { ns: i18Global })} />
-          <TitleContent
-            paragraph
-            subTitle
-            title={t('description.recover.forget', { ns: i18Global })}
-          />
+          <TitleContent paragraph title={t('description.recover.forget', { ns: i18Global })} />
         </>
       }
       form={
@@ -136,7 +132,7 @@ function RecoverPasswordPage({ handleLoading, handleNotifications }: IProps): JS
                     handleLblError
                   />
                 </Box>
-                <Box pl={3} pr={3} className={classes.containerButton}>
+                <Box p={3} className={classes.containerButton}>
                   <Grid container item sm={12} md={4}>
                     <Button
                       fullWidth
