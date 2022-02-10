@@ -70,6 +70,14 @@ const api = {
       .account.createRecovery(email, `${window.location.origin}/recover_password/change_password`);
   },
 
+  emailVerification: (): Promise<Models.Preferences> => {
+    return api.provider().account.createVerification(`${window.location.origin}`);
+  },
+
+  emailUpdateVerification: (userId: string, secret: string): Promise<Models.Preferences> => {
+    return api.provider().account.updateVerification(userId, secret);
+  },
+
   restorePasswordConfirmation: (
     userId: string,
     secret: string,

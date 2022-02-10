@@ -30,7 +30,7 @@ function ForwardEmailPage({ handleLoading }: IProps): JSX.Element {
   useEffect(() => {
     const userEmail = getDataFromLocalStorage('email');
     setEmail(userEmail);
-  }, []);
+  });
 
   const forwardEmail = () => {
     handleLoading(true);
@@ -43,14 +43,17 @@ function ForwardEmailPage({ handleLoading }: IProps): JSX.Element {
 
   return (
     <ForwardEmailComponent
-      title={t('title.forward_email', { ns: i18nGlobals })}
-      description={t('description.forward_email', { ns: i18nGlobals })}
+      title={t('title.registered_patient', { ns: i18nGlobals })}
+      description={t('description.registered_patient_1', { ns: i18nGlobals })}
+      description2={t('description.registered_patient_2', {
+        ns: i18nGlobals,
+        email: 'cor****@correo.com'
+      })}
       imageMobile={<SvgBanner />}
       imageDesktop={<SvgBanner device="desktop" />}
       timerTitle={t('forward_email.messages.dont_recive', { ns: i18nGlobals })}
       timerLabel={t('forward_email.messages.resend_label', { ns: i18nGlobals })}
       handleClickForwardEmail={forwardEmail}
-      showTimer
     />
   );
 }

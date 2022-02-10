@@ -45,6 +45,7 @@ import countriesPhoneNumbers from '../../services/countriesPhoneNumbers.service'
 import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18Global } from '../../i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
+import { useRouter } from 'next/router';
 /// i18n END
 
 type TSteper = {
@@ -104,6 +105,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function SignUpView(props: TProps): JSX.Element {
   const classes = useStyles();
+  const router = useRouter();
   const { handleNotifications } = props;
   const { t } = useTranslation(i18Global);
   const [data, setData] = useState(INIT_FORM_STATE);

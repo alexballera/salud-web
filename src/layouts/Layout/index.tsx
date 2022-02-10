@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 /// MATERIAL - UI
 import { Box, Hidden, IconButton, Snackbar } from '@material-ui/core';
-import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 /// MATERIAL - UI END
 
@@ -20,13 +20,8 @@ import { Alert } from '@material-ui/lab';
 import { IProps } from './types';
 /// TYPES END
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
-    root: {
-      [theme.breakpoints.up('md')]: {
-        paddingTop: 64
-      }
-    },
     alertText: {
       marginLeft: 10
     }
@@ -56,7 +51,7 @@ export default withAppContext(function Layout({
           onClose={() => handleNotifications({ ...notificationState, open: false })}
         />
       </Hidden>
-      <Box component="main" data-testid="main" className={classes.root}>
+      <Box component="main" data-testid="main">
         {children}
       </Box>
 

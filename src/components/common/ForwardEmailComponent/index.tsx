@@ -25,24 +25,28 @@ import { forwardEmailStyles as useStyle } from './styles.module';
 export type IProps = {
   title: JSX.Element;
   description: JSX.Element;
+  description2?: JSX.Element;
   imageMobile: JSX.Element;
   imageDesktop: JSX.Element;
   duration?: number;
   timerTitle: JSX.Element;
   timerLabel: JSX.Element;
   buttonText?: JSX.Element;
+  showTimer?: boolean;
   handleClickForwardEmail: () => void;
 };
 
 function ForwardEmailComponent({
   title,
   description,
+  description2,
   imageMobile,
   imageDesktop,
   duration,
   timerTitle,
   timerLabel,
   buttonText,
+  showTimer,
   handleClickForwardEmail
 }: IProps): JSX.Element {
   const { t } = useTranslation(i18nGlobals);
@@ -96,30 +100,53 @@ function ForwardEmailComponent({
         <Grid container item xs={12} md={6}>
           <Grid item xs={12}>
             <Box mt={3}>
-              <TitleContent titleWithSubtitle title={title} />
+              <TitleContent title={title} />
               <TitleContent paragraph title={description} />
+              {description2 && (
+                <Box mt={3}>
+                  <TitleContent paragraph title={description2} />
+                </Box>
+              )}
             </Box>
           </Grid>
           <Grid item xs={12} className={classes.contentContainer}>
             <Box mb={3} mt={3}>
               <Grid container>
-                <Box mb={2} className={classes.timerContainer}>
-                  <Grid container item xs={12}>
-                    <Grid item xs={7}>
-                      <Typography className={classes.timerTitle}>{timerTitle}</Typography>
-                    </Grid>
-                    {!showButton && (
-                      <Grid item xs={5} className={classes.timerLabel}>
-                        <span>
-                          {timerLabel}
-                          {seconds === 60 ? ' 1:00 min' : ` ${seconds}s`}
-                        </span>
+                {showTimer && (
+                  <>
+                    <Box mb={2} className={classes.timerContainer}>
+                      <Grid container item xs={12}>
+                        <Grid item xs={7}>
+                          <Typography className={classes.timerTitle}>{timerTitle}</Typography>
+                        </Grid>
+                        {!showButton && (
+                          <Grid item xs={5} className={classes.timerLabel}>
+                            <span>
+                              {timerLabel}
+                              {seconds === 60 ? ' 1:00 min' : ` ${seconds}s`}
+                            </span>
+                          </Grid>
+                        )}
                       </Grid>
-                    )}
-                  </Grid>
-                </Box>
-                <Grid item xs={12}>
-                  <Collapse in={showButton}>
+                    </Box>
+                    <Grid item xs={12}>
+                      <Collapse in={showButton}>
+                        <Button
+                          fullWidth
+                          onClick={() => handleClick()}
+                          color="primary"
+                          variant="contained"
+                          size="large"
+                        >
+                          {buttonText ||
+                            t('forward_email.messages.resend_email', { ns: i18nGlobals })}
+                        </Button>
+                      </Collapse>
+                    </Grid>
+                  </>
+                )}
+                {!showTimer && (
+                  <Grid item xs={12}>
                     <Button
                       fullWidth
                       onClick={() => handleClick()}
@@ -129,8 +156,8 @@ function ForwardEmailComponent({
                     >
                       {buttonText || t('forward_email.messages.resend_email', { ns: i18nGlobals })}
                     </Button>
-                  </Collapse>
-                </Grid>
+                  </Grid>
+                )}
               </Grid>
               <Box mt={2} mb={2}>
                 <Divider />
@@ -162,7 +189,8 @@ function ForwardEmailComponent({
 
 /// DEFAULT PROPS
 ForwardEmailComponent.defaultProps = {
-  duration: 60
+  duration: 60,
+  showTimer: false
 };
 /// DEFAULT PROPS END
 

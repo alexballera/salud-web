@@ -19,7 +19,8 @@ export const esGlobals = {
       forget: 'Recuperá tu contraseña'
     },
     forward_email: 'Revisá tu correo',
-    new_password: 'Nueva contraseña'
+    new_password: 'Nueva contraseña',
+    registered_patient: 'Paciente ya registrado'
   },
 
   description: {
@@ -38,7 +39,11 @@ export const esGlobals = {
     },
     forward_email:
       'Se envío a tu correo un link de cambio de contraseña que estará activo por 1 hora.',
-    new_password: 'Ingresá tu contraseña nueva'
+    new_password: 'Ingresá tu contraseña nueva',
+    registered_patient_1: 'Ya existe un paciente con ese número de identidad registrado en Ospi.',
+    registered_patient_2: 'Podemos enviarte más información a tu correo: {{email}}',
+    email_verification:
+      'Se envío a tu correo un link para validar tu cuenta que estará activo por 24 horas.'
   },
 
   button: {

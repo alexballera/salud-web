@@ -17,6 +17,9 @@ export const esForms = {
         'Ha ocurrido un error desconocido. Vuelve a intentarlo más tarde o contacta a un administrador',
       field_incorrect: 'Campos incorrectos, debés corregirlos para continuar'
     },
+    success: {
+      generated_user: 'Usuario generado con éxito. ¡Bienvenido a Ospi!'
+    },
     password: {
       change_success: 'La contraseña se ha cambiado correctamente.',
       updated: 'Contraseña actualizada'

@@ -19,7 +19,8 @@ export const enGlobals = {
       forget: 'Recover your password'
     },
     forward_email: 'Check your email',
-    new_password: 'New password'
+    new_password: 'New password',
+    registered_patient: 'Patient already registered'
   },
 
   description: {
@@ -38,7 +39,11 @@ export const enGlobals = {
     },
     forward_email:
       'A link to change your password was sent to your email and will be active for 1 hour.',
-    new_password: 'Enter your new password'
+    new_password: 'Enter your new password',
+    registered_patient: 'There is already a patient with that identity number registered in Ospi.',
+    registered_patient_2: 'We can send you more information to your email: {{email}}',
+    email_verification:
+      'A link to validate your account was sent to your email and will be active for 24 hours.'
   },
 
   button: {

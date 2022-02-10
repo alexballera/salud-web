@@ -62,11 +62,17 @@ function LoginPage({
     try {
       handleLoading(true);
       const session = await api.createSession(email, password);
+      const account = await api.getAccount();
       // TODO: Change all this arguments types, we need remove all [as any]
       handleLogin(session as any);
       setUserToLocalStorage('user', session as any);
       handleLoading(false);
-      router.replace('/main');
+      if (account.emailVerification) {
+        router.push('/main');
+      } else {
+        api.emailVerification();
+        router.push('/signup/email_verification');
+      }
     } catch (e) {
       handleNotifications({
         message: mapFetchErrors(e.code),

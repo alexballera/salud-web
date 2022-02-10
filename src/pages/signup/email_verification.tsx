@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 /// CONTEXT
 import { withAppContext } from '../../context';
@@ -10,7 +10,6 @@ import { NAMESPACE_KEY as i18nGlobals } from '../../i18n/globals/i18n';
 /// i18n END
 
 /// SERVICES
-import { getDataFromLocalStorage } from '../../services/localStorage.service';
 import api from '../../api/api';
 /// SERVICES END
 
@@ -23,19 +22,13 @@ import ForwardEmailComponent from '../../components/common/ForwardEmailComponent
 import { IProps } from '../../types/recover.types';
 /// STYLES & TYPES END
 
-function ForwardEmailPage({ handleLoading }: IProps): JSX.Element {
+function EmailVaidationPage({ handleLoading }: IProps): JSX.Element {
   const { t } = useTranslation(i18nGlobals);
-  const [email, setEmail] = useState('');
-
-  useEffect(() => {
-    const userEmail = getDataFromLocalStorage('email');
-    setEmail(userEmail);
-  }, []);
 
   const forwardEmail = () => {
     handleLoading(true);
     api
-      .restorePassword(email)
+      .emailVerification()
       .then()
       .catch(err => console.log(err))
       .finally(() => handleLoading && handleLoading(false));
@@ -44,7 +37,7 @@ function ForwardEmailPage({ handleLoading }: IProps): JSX.Element {
   return (
     <ForwardEmailComponent
       title={t('title.forward_email', { ns: i18nGlobals })}
-      description={t('description.forward_email', { ns: i18nGlobals })}
+      description={t('description.email_verification', { ns: i18nGlobals })}
       imageMobile={<SvgBanner />}
       imageDesktop={<SvgBanner device="desktop" />}
       timerTitle={t('forward_email.messages.dont_recive', { ns: i18nGlobals })}
@@ -55,4 +48,4 @@ function ForwardEmailPage({ handleLoading }: IProps): JSX.Element {
   );
 }
 
-export default withAppContext(ForwardEmailPage);
+export default withAppContext(EmailVaidationPage);

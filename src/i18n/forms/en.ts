@@ -16,6 +16,9 @@ export const enForms = {
       submit: 'An unknown error has occurred. Please try again later or contact an administrator.',
       field_incorrect: 'Incorrect fields, you must correct them to continue'
     },
+    success: {
+      generated_user: 'Successfully generated user. Welcome to Ospi!'
+    },
     password: {
       change_success: 'La contraseña se ha cambiado correctamente.',
       updated: 'Updated password'
