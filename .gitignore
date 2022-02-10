@@ -23,6 +23,7 @@
 public/workbox*
 public/fallback*
 public/sw*
+public/sw.js
 
 # debug
 npm-debug.log*

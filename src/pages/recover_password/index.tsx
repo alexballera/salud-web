@@ -102,7 +102,11 @@ function RecoverPasswordPage({ handleLoading, handleNotifications }: IProps): JS
       header={
         <>
           <TitleContent titleWithSubtitle title={t('title.recover.forget', { ns: i18Global })} />
-          <TitleContent paragraph title={t('description.recover.forget', { ns: i18Global })} />
+          <TitleContent
+            paragraph
+            subTitle
+            title={t('description.recover.forget', { ns: i18Global })}
+          />
         </>
       }
       form={
@@ -132,7 +136,7 @@ function RecoverPasswordPage({ handleLoading, handleNotifications }: IProps): JS
                     handleLblError
                   />
                 </Box>
-                <Box className={classes.containerButton}>
+                <Box pl={3} pr={3} className={classes.containerButton}>
                   <Grid container item sm={12} md={4}>
                     <Button
                       fullWidth
