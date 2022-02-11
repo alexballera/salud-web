@@ -261,9 +261,6 @@ function SignUpView(props: TProps): JSX.Element {
       if (errors.services) {
         return t('validations.services', { ns: i18Forms });
       }
-      if (errors) {
-        return t('message.error.fields_required', { ns: i18Forms });
-      }
     }
     if (flatErrors.includes(t('validations.required', { ns: i18Forms }))) {
       return t('message.error.fields_required', { ns: i18Forms });
@@ -312,8 +309,9 @@ function SignUpView(props: TProps): JSX.Element {
 
       await api.createPatient(setPatient(values, user));
 
-      // TODO feedback to user
-      router.replace('/validate_code');
+      await api.emailVerification();
+
+      router.push('/signup/email_verification');
     } catch (e) {
       console.log(e);
       handleNotifications({
