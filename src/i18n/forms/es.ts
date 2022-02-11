@@ -27,7 +27,7 @@ export const esForms = {
   },
 
   validations: {
-    required: 'Campo requerido',
+    required: 'Campo obligatorio',
     date_invalid: 'Fecha inválida',
     max_18_age: 'Para afiliarse a Ospi debe de ser mayor de edad.',
     min_3: 'Número de caracteres minimos 3',
