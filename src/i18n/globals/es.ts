@@ -26,8 +26,7 @@ export const esGlobals = {
   description: {
     beneficiaries: 'La o las personas que querés que disfruten los beneficios de tu plan',
     extra_data: 'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma',
-    credential_data:
-      'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma',
+    credential_data: 'Definí las credenciales que querés utilizar para ingresar a la plataforma',
     identify: 'Para empezar tu registro bríndanos tu número de identificación',
     logout: '¿Estás seguro que querés cerrar tu sesión en plataforma?',
     login: 'Coloca tu correo electrónico y contraseña para acceder a tu portal.',
@@ -135,6 +134,7 @@ export const esGlobals = {
 
     password: {
       confirm: 'Confirmación de la contraseña nueva',
+      confirm_password: 'Confirmar contraseña',
       password: 'Contraseña',
       new: 'Contraseña nueva',
       change_description: 'Ingresá tu contraseña anterior y la nueva',

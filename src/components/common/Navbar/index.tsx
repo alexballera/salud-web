@@ -72,7 +72,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
     '/recover_password/change_password'
   ];
 
-  const closeButtonPathNames = ['/login', '/signup/email_verification'];
+  const closeButtonPathNames = ['/login', '/signup', '/signup/email_verification'];
 
   const backButtonPathNames = [
     '/update/phone',

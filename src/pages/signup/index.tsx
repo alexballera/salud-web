@@ -46,6 +46,7 @@ import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18Global } from '../../i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
 import { useRouter } from 'next/router';
+import api, { TPatient } from '../../api/api';
 /// i18n END
 
 type TSteper = {
@@ -111,6 +112,7 @@ function SignUpView(props: TProps): JSX.Element {
   const [data, setData] = useState(INIT_FORM_STATE);
   const [customPopUpError, setCustomPopUpError] = useState<null | string>(null);
   const [currentStep, setCurrentStep] = useState(0);
+  const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
   const [currDocTypeArgs, setCurrDocTypeArgs] = useState<TCountryDocumentTypeItem | null>(null);
 
   const yupPersonalData = {
@@ -167,19 +169,19 @@ function SignUpView(props: TProps): JSX.Element {
     schema: yup.object().shape({
       terms: yup
         .bool()
-        .oneOf([true], `${t('validations.required', { ns: i18Forms })}`)
-        .required(`${t('validations.required', { ns: i18Forms })}`),
+        .oneOf([true])
+        .required(t('validations.required', { ns: i18Forms })),
       services: yup
         .bool()
-        .oneOf([true], `${t('validations.required', { ns: i18Forms })}`)
-        .required(`${t('validations.required', { ns: i18Forms })}`),
+        .oneOf([true])
+        .required(t('validations.required', { ns: i18Forms })),
       email: yup
         .string()
-        .email(`${t('validations.email.incorrect', { ns: i18Forms })}`)
-        .required(`${t('validations.email.required', { ns: i18Forms })}`),
+        .email(t('validations.email.incorrect', { ns: i18Forms }))
+        .required(t('validations.required', { ns: i18Forms })),
       password: yup
         .string()
-        .required(`${t('validations.password.required_short', { ns: i18Forms })}`)
+        .required(t('validations.required', { ns: i18Forms }))
         .min(8, `${t('validations.password.min_8', { ns: i18Forms })}`)
         .max(16, `${t('validations.password.max_16', { ns: i18Forms })}`)
         .matches(
@@ -229,17 +231,39 @@ function SignUpView(props: TProps): JSX.Element {
       title: 'title.credential_data',
       description: 'description.credential_data',
       Component: function FormStep(formik: FormikProps<TFormData>) {
-        return <CredentialDataForm handleNotifications={handleNotifications} {...formik} />;
+        return (
+          <CredentialDataForm
+            errorConfirmPassword={errorConfirmPassword}
+            handleNotifications={handleNotifications}
+            {...formik}
+          />
+        );
       }
     }
   };
 
   const StepForm = MAP_STEPS[currentStep];
 
-  const mapAndGetFormErrors = (errors: FormikErrors<TFormData>) => {
+  const mapAndGetFormErrors = (errors: FormikErrors<TFormData>, values: TFormData) => {
     const flatErrors = Object.values(errors);
     if (customPopUpError) {
       return customPopUpError;
+    }
+    if (currentStep === 2) {
+      setErrorConfirmPassword(false);
+      if (errors.confirmPassword) {
+        setErrorConfirmPassword(true);
+        return t('validations.password.matched', { ns: i18Forms });
+      }
+      if (errors.terms) {
+        return t('validations.terms', { ns: i18Forms });
+      }
+      if (errors.services) {
+        return t('validations.services', { ns: i18Forms });
+      }
+      if (errors) {
+        return t('message.error.fields_required', { ns: i18Forms });
+      }
     }
     if (flatErrors.includes(t('validations.required', { ns: i18Forms }))) {
       return t('message.error.fields_required', { ns: i18Forms });
@@ -249,8 +273,8 @@ function SignUpView(props: TProps): JSX.Element {
     }
   };
 
-  const handleGlobalFormErrors = (errors: FormikErrors<TFormData>) => {
-    const formError = mapAndGetFormErrors(errors);
+  const handleGlobalFormErrors = (errors: FormikErrors<TFormData>, values: TFormData) => {
+    const formError = mapAndGetFormErrors(errors, values);
     if (formError) {
       handleNotifications({
         open: true,
@@ -260,17 +284,53 @@ function SignUpView(props: TProps): JSX.Element {
     }
   };
 
-  const storeUser = () => {
-    console.log('storeee');
+  const setPatient = (
+    values: TFormData,
+    user: { $id: string; email: string; password: string; fullName: string }
+  ): TPatient => {
+    const patient: TPatient = {
+      documentType: values.documentType.toString(),
+      documentNumber: values.documentNumber,
+      birthDate: values.birthDate,
+      gender: values.gender.toString(),
+      phoneNumbers: [values.mobilePhone1],
+      province: values.firstLevel.toString(),
+      canton: values.secondLevel.toString(),
+      district: values.thirdLevel.toString(),
+      userId: user.$id,
+      country: values.country
+    };
+    return patient;
   };
 
-  const handleNext = () => {
+  const storeUser = async (values: TFormData) => {
+    const { email, password, fullName } = values;
+    try {
+      const user = await api.createAccount('unique()', email, password, fullName);
+
+      await api.createSession(email, password);
+
+      await api.createPatient(setPatient(values, user));
+
+      // TODO feedback to user
+      router.replace('/validate_code');
+    } catch (e) {
+      console.log(e);
+      handleNotifications({
+        open: true,
+        severity: 'error',
+        message: t('message.error.general_fetch', { ns: i18Forms })
+      });
+    }
+  };
+
+  const handleNext = (values: TFormData) => {
     if (MAP_STEPS[currentStep + 1]) {
       setCustomPopUpError(null);
       setCurrentStep(currentStep + 1);
       return;
     }
-    storeUser();
+    storeUser(values);
   };
 
   const handlePrev = () => {
@@ -300,12 +360,15 @@ function SignUpView(props: TProps): JSX.Element {
           <Formik
             initialValues={data}
             validationSchema={StepForm.yupSchema.schema}
-            onSubmit={handleNext}
+            onSubmit={(values, formik) => {
+              formik.setTouched({});
+              handleNext(values);
+            }}
           >
             {(formik: FormikProps<TFormData>) => {
               useEffect(() => {
                 formik.validateForm();
-                handleGlobalFormErrors(formik.errors);
+                handleGlobalFormErrors(formik.errors, formik.values);
               }, [formik.submitCount]);
 
               return (

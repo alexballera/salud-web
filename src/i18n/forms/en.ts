@@ -34,6 +34,8 @@ export const enForms = {
     min_9: 'Número de caracteres minimos 9',
     min_10_max_15: 'Caracteres mínimos para Residencia 10, máx 15',
     min_9_max_20: 'Número de caracteres mínimos para Pasaporte 9, máx 20',
+    terms: 'You must accept the Terms and Conditions to continue',
+    services: 'You must accept the Informed Consent to continue',
 
     password: {
       required: 'Password required',

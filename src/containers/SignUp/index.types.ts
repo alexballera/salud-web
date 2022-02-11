@@ -110,6 +110,7 @@ export type TCredentialDataProps = {
   handleNotifications: (props: INotificationProps) => void;
   updatePassword?: boolean;
   updateEmail?: boolean;
+  errorConfirmPassword?: boolean;
 };
 
 export type GenderEnum = '1' | '2' | '';

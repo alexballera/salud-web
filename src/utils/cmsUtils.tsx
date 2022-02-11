@@ -1,5 +1,5 @@
-import { Typography, Divider } from '@material-ui/core';
 import React from 'react';
+import { Typography, Divider } from '@material-ui/core';
 
 enum TypeRichContent {
   Header = 'header',
@@ -27,13 +27,33 @@ export function RichTextTranslate(contents: RichContent[]): () => JSX.Element {
         switch (content.type) {
           case TypeRichContent.Header:
             return (
-              <Typography key={index} variant="h6">
+              <Typography
+                key={index}
+                variant="h6"
+                style={{
+                  fontWeight: 500,
+                  fontSize: 20,
+                  lineHeight: '32px',
+                  marginBottom: 16,
+                  color: 'rgba(0, 0, 0, 0.87)'
+                }}
+              >
                 {content.data.text}
               </Typography>
             );
           case TypeRichContent.Paragraph:
             return (
-              <Typography key={index} variant="body1">
+              <Typography
+                key={index}
+                variant="body1"
+                style={{
+                  fontWeight: 400,
+                  fontSize: 16,
+                  lineHeight: '24px',
+                  marginBottom: 16,
+                  color: 'rgba(0, 0, 0, 0.87)'
+                }}
+              >
                 {content.data.text}
               </Typography>
             );
@@ -41,7 +61,17 @@ export function RichTextTranslate(contents: RichContent[]): () => JSX.Element {
             return <Divider key={index} />;
           default:
             return (
-              <Typography key={index} variant="body1">
+              <Typography
+                key={index}
+                variant="body1"
+                style={{
+                  fontWeight: 400,
+                  fontSize: 16,
+                  lineHeight: '24px',
+                  marginBottom: 16,
+                  color: 'rgba(0, 0, 0, 0.87)'
+                }}
+              >
                 {content.data.text}
               </Typography>
             );
