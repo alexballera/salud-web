@@ -127,11 +127,7 @@ function UpdatePassword({
                       maxLength: 16
                     }}
                   />
-                  <CredentialData
-                    handleNotifications={handleNotifications}
-                    updatePassword
-                    {...formik}
-                  />
+                  <CredentialData updatePassword {...formik} />
                 </>
               }
               buttonLeft={

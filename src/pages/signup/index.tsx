@@ -112,7 +112,6 @@ function SignUpView(props: TProps): JSX.Element {
   const [customPopUpError, setCustomPopUpError] = useState<null | string>(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [stepIsMounted, setStepIsMounted] = useState(false);
-  const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
   const [currDocTypeArgs, setCurrDocTypeArgs] = useState<TCountryDocumentTypeItem | null>(null);
 
   const yupPersonalData = {
@@ -169,11 +168,11 @@ function SignUpView(props: TProps): JSX.Element {
     schema: yup.object().shape({
       terms: yup
         .bool()
-        .oneOf([true])
+        .oneOf([true], t('validations.required', { ns: i18Forms }))
         .required(t('validations.required', { ns: i18Forms })),
       services: yup
         .bool()
-        .oneOf([true])
+        .oneOf([true], t('validations.required', { ns: i18Forms }))
         .required(t('validations.required', { ns: i18Forms })),
       email: yup
         .string()
@@ -182,21 +181,18 @@ function SignUpView(props: TProps): JSX.Element {
       password: yup
         .string()
         .required(t('validations.required', { ns: i18Forms }))
-        .min(8, `${t('validations.password.min_8', { ns: i18Forms })}`)
-        .max(16, `${t('validations.password.max_16', { ns: i18Forms })}`)
+        .min(8, t('validations.required', { ns: i18Forms }))
+        .max(16, t('validations.required', { ns: i18Forms }))
         .matches(
           /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
-          `${t('validations.password.regex', { ns: i18Forms })}`
+          t('validations.password.regex', { ns: i18Forms })
         ),
       confirmPassword: yup
         .string()
-        .oneOf(
-          [yup.ref('password'), null],
-          `${t('validations.password.matched', { ns: i18Forms })}`
-        )
-        .required(`${t('validations.required', { ns: i18Forms })}`)
-        .min(8, `${t('validations.password.min_8', { ns: i18Forms })}`)
-        .max(16, `${t('validations.password.max_16', { ns: i18Forms })}`)
+        .oneOf([yup.ref('password'), null], t('validations.password.matched', { ns: i18Forms }))
+        .required(t('validations.required', { ns: i18Forms }))
+        .min(8, t('validations.required', { ns: i18Forms }))
+        .max(16, t('validations.required', { ns: i18Forms }))
     })
   };
 
@@ -231,13 +227,7 @@ function SignUpView(props: TProps): JSX.Element {
       title: 'title.credential_data',
       description: 'description.credential_data',
       Component: function FormStep(formik: FormikProps<TFormData>) {
-        return (
-          <CredentialDataForm
-            errorConfirmPassword={errorConfirmPassword}
-            handleNotifications={handleNotifications}
-            {...formik}
-          />
-        );
+        return <CredentialDataForm {...formik} />;
       }
     }
   };
@@ -250,16 +240,17 @@ function SignUpView(props: TProps): JSX.Element {
       return customPopUpError;
     }
     if (currentStep === 2) {
-      setErrorConfirmPassword(false);
-      if (errors.confirmPassword) {
-        setErrorConfirmPassword(true);
-        return t('validations.password.matched', { ns: i18Forms });
+      if (flatErrors.length > 1) {
+        return t('message.error.field_incorrect', { ns: i18Forms });
       }
       if (errors.terms) {
         return t('validations.terms', { ns: i18Forms });
       }
       if (errors.services) {
         return t('validations.services', { ns: i18Forms });
+      }
+      if (errors.confirmPassword) {
+        return t('validations.password.matched', { ns: i18Forms });
       }
     }
     if (flatErrors.includes(t('validations.required', { ns: i18Forms }))) {

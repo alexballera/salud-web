@@ -25,7 +25,7 @@ import InformedConsent from '../../../components/InformedConsent';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { FormControl, Link, Typography } from '@material-ui/core';
+import { FormControl, FormHelperText, Link, Typography } from '@material-ui/core';
 /// MATERIAL-UI END
 
 /// i18n
@@ -47,24 +47,12 @@ function CredentialData({
   errors,
   handleBlur,
   handleChange,
-  errorConfirmPassword
+  touched
 }: TCredentialDataProps & FormikProps<TCredentialDataForm | TFormData>): JSX.Element {
   const { t } = useTranslation([i18nGlobal, i18Forms]);
   const [inputEmailStates, setInputEmailStates] = useState(initialEmailStates);
   const [termsAndConditionOpen, setTermsAndConditionOpen] = useState(false);
   const [informedConsentOpen, setInformedConsentOpen] = useState(false);
-
-  const setErrorMsgConfirmPassword = (): string => {
-    if (errorConfirmPassword) {
-      return t('validations.password.matched', { ns: i18Forms });
-    }
-  };
-
-  const setErrorInputConfirmPassword = (): boolean => {
-    if (errorConfirmPassword) {
-      return true;
-    }
-  };
 
   return (
     <>
@@ -75,8 +63,11 @@ function CredentialData({
         type="email"
         label={t('label.email.email', { ns: i18nGlobal })}
         value={values.email}
+        error={errors.email && touched.email}
+        helperText={errors.email}
         onBlur={handleBlur}
         loading={inputEmailStates.fetching}
+        handleLblError
         onChange={handleChange}
       />
       <Input
@@ -86,8 +77,11 @@ function CredentialData({
         type="password"
         label={t('label.password.password', { ns: i18nGlobal })}
         value={values.password}
+        error={errors.password && touched.password}
+        helperText={errors.password}
         onBlur={handleBlur}
         onChange={handleChange}
+        handleLblError
         inputProps={{
           maxLength: 16
         }}
@@ -100,10 +94,10 @@ function CredentialData({
         type="password"
         label={t('label.password.confirm_password', { ns: i18nGlobal })}
         value={values.confirmPassword}
-        error={setErrorInputConfirmPassword()}
+        error={errors.confirmPassword && touched.confirmPassword}
         onBlur={handleBlur}
         onChange={handleChange}
-        helperText={setErrorMsgConfirmPassword()}
+        helperText={errors.confirmPassword}
         handleLblError
         inputProps={{
           maxLength: 16
@@ -137,6 +131,7 @@ function CredentialData({
               </Typography>
             }
           />
+          {touched.terms && !values.terms && <FormHelperText error>{errors.terms}</FormHelperText>}
 
           <FormControlLabel
             control={
@@ -163,6 +158,9 @@ function CredentialData({
               </Typography>
             }
           />
+          {touched.services && !values.services && (
+            <FormHelperText error>{errors.services}</FormHelperText>
+          )}
         </FormGroup>
       </FormControl>
 
