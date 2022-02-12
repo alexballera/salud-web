@@ -33,7 +33,12 @@ const api = {
     return appwrite;
   },
 
-  createAccount: (unique: string, email: string, password: string, name: string): Promise<any> => {
+  createAccount: (
+    unique: string,
+    email: string,
+    password: string,
+    name: string
+  ): Promise<Models.User<Models.Preferences>> => {
     return api.provider().account.create(unique, email, password, name);
   },
 

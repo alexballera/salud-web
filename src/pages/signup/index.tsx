@@ -109,9 +109,9 @@ function SignUpView(props: TProps): JSX.Element {
   const router = useRouter();
   const { handleNotifications } = props;
   const { t } = useTranslation(i18Global);
-  const [data, setData] = useState(INIT_FORM_STATE);
   const [customPopUpError, setCustomPopUpError] = useState<null | string>(null);
   const [currentStep, setCurrentStep] = useState(0);
+  const [stepIsMounted, setStepIsMounted] = useState(false);
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
   const [currDocTypeArgs, setCurrDocTypeArgs] = useState<TCountryDocumentTypeItem | null>(null);
 
@@ -244,7 +244,7 @@ function SignUpView(props: TProps): JSX.Element {
 
   const StepForm = MAP_STEPS[currentStep];
 
-  const mapAndGetFormErrors = (errors: FormikErrors<TFormData>, values: TFormData) => {
+  const mapAndGetFormErrors = (errors: FormikErrors<TFormData>) => {
     const flatErrors = Object.values(errors);
     if (customPopUpError) {
       return customPopUpError;
@@ -270,8 +270,10 @@ function SignUpView(props: TProps): JSX.Element {
     }
   };
 
-  const handleGlobalFormErrors = (errors: FormikErrors<TFormData>, values: TFormData) => {
-    const formError = mapAndGetFormErrors(errors, values);
+  const handleGlobalFormErrors = (errors: FormikErrors<TFormData>) => {
+    if (!stepIsMounted) return; // Remove the form automatic validation once the step is loaded
+
+    const formError = mapAndGetFormErrors(errors);
     if (formError) {
       handleNotifications({
         open: true,
@@ -281,11 +283,8 @@ function SignUpView(props: TProps): JSX.Element {
     }
   };
 
-  const setPatient = (
-    values: TFormData,
-    user: { $id: string; email: string; password: string; fullName: string }
-  ): TPatient => {
-    const patient: TPatient = {
+  const setPatient = (values: TFormData, appWriteUserId: string): TPatient => {
+    return {
       documentType: values.documentType.toString(),
       documentNumber: values.documentNumber,
       birthDate: values.birthDate,
@@ -294,10 +293,9 @@ function SignUpView(props: TProps): JSX.Element {
       province: values.firstLevel.toString(),
       canton: values.secondLevel.toString(),
       district: values.thirdLevel.toString(),
-      userId: user.$id,
+      userId: appWriteUserId,
       country: values.country
     };
-    return patient;
   };
 
   const storeUser = async (values: TFormData) => {
@@ -307,7 +305,7 @@ function SignUpView(props: TProps): JSX.Element {
 
       await api.createSession(email, password);
 
-      await api.createPatient(setPatient(values, user));
+      await api.createPatient(setPatient(values, user.$id));
 
       await api.emailVerification();
 
@@ -324,6 +322,7 @@ function SignUpView(props: TProps): JSX.Element {
 
   const handleNext = (values: TFormData) => {
     if (MAP_STEPS[currentStep + 1]) {
+      setStepIsMounted(false);
       setCustomPopUpError(null);
       setCurrentStep(currentStep + 1);
       return;
@@ -333,6 +332,7 @@ function SignUpView(props: TProps): JSX.Element {
 
   const handlePrev = () => {
     if (MAP_STEPS[currentStep - 1]) {
+      setStepIsMounted(false);
       setCurrentStep(currentStep - 1);
     }
   };
@@ -356,7 +356,7 @@ function SignUpView(props: TProps): JSX.Element {
       form={
         StepForm && (
           <Formik
-            initialValues={data}
+            initialValues={INIT_FORM_STATE}
             validationSchema={StepForm.yupSchema.schema}
             onSubmit={(values, formik) => {
               formik.setTouched({});
@@ -366,7 +366,8 @@ function SignUpView(props: TProps): JSX.Element {
             {(formik: FormikProps<TFormData>) => {
               useEffect(() => {
                 formik.validateForm();
-                handleGlobalFormErrors(formik.errors, formik.values);
+                handleGlobalFormErrors(formik.errors);
+                setStepIsMounted(true);
               }, [formik.submitCount]);
 
               return (
