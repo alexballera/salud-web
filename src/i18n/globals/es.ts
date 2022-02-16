@@ -124,7 +124,7 @@ export const esGlobals = {
     },
 
     gender: {
-      gender: 'Sexo biológico designado al nacer',
+      gender: 'Sexo biológico al nacer',
       female: 'Femenino',
       male: 'Masculino',
       tooltip:

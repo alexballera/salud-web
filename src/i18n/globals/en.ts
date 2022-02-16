@@ -124,9 +124,9 @@ export const enGlobals = {
     },
 
     gender: {
-      gender: 'Sexo biológico designado al nacer',
-      female: 'Femenino',
-      male: 'Masculino',
+      gender: 'Biological sex at birth',
+      female: 'Female',
+      male: 'Male',
       tooltip:
         'This information is for purposes related to health issues and conditions related to biological sex. It has nothing to do with the person is identity.',
       placeholder: 'Select gender'
