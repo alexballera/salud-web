@@ -325,7 +325,9 @@ function SignUpView(props: TProps): JSX.Element {
     if (MAP_STEPS[currentStep - 1]) {
       setStepIsMounted(false);
       setCurrentStep(currentStep - 1);
+      return;
     }
+    router.back();
   };
 
   return (
