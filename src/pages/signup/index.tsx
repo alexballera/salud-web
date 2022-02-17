@@ -107,11 +107,11 @@ const useStyles = makeStyles((theme: Theme) =>
 function SignUpView(props: TProps): JSX.Element {
   const classes = useStyles();
   const router = useRouter();
-  const { handleNotifications } = props;
+  const { handleNotifications, notificationState } = props;
   const { t } = useTranslation(i18Global);
   const [customPopUpError, setCustomPopUpError] = useState<null | string>(null);
   const [currentStep, setCurrentStep] = useState(0);
-  const [stepIsMounted, setStepIsMounted] = useState(false);
+  const [customSubmitCount, setCustomSubmitCount] = useState(0);
   const [currDocTypeArgs, setCurrDocTypeArgs] = useState<TCountryDocumentTypeItem | null>(null);
 
   const yupPersonalData = {
@@ -248,8 +248,6 @@ function SignUpView(props: TProps): JSX.Element {
   };
 
   const handleGlobalFormErrors = (errors: FormikErrors<TFormData>) => {
-    if (!stepIsMounted) return; // Remove the form automatic validation once the step is loaded
-
     const formError = mapAndGetFormErrors(errors);
     if (formError) {
       handleNotifications({
@@ -304,7 +302,7 @@ function SignUpView(props: TProps): JSX.Element {
 
   const handleNext = (values: TFormData) => {
     if (MAP_STEPS[currentStep + 1]) {
-      setStepIsMounted(false);
+      handleNotifications({ ...notificationState, open: false });
       setCustomPopUpError(null);
       setCurrentStep(currentStep + 1);
       return;
@@ -314,7 +312,8 @@ function SignUpView(props: TProps): JSX.Element {
 
   const handlePrev = () => {
     if (MAP_STEPS[currentStep - 1]) {
-      setStepIsMounted(false);
+      handleNotifications({ ...notificationState, open: false });
+      setCustomPopUpError(null);
       setCurrentStep(currentStep - 1);
       return;
     }
@@ -344,18 +343,25 @@ function SignUpView(props: TProps): JSX.Element {
             validationSchema={StepForm.yupSchema.schema}
             onSubmit={(values, formik) => {
               formik.setTouched({});
+              formik.setErrors({});
               handleNext(values);
             }}
           >
             {(formik: FormikProps<TFormData>) => {
               useEffect(() => {
-                formik.validateForm();
                 handleGlobalFormErrors(formik.errors);
-                setStepIsMounted(true);
-              }, [formik.submitCount]);
+              }, [customSubmitCount]);
 
               return (
-                <form onSubmit={formik.handleSubmit} noValidate={true}>
+                <form
+                  noValidate={true}
+                  onSubmit={e => {
+                    formik.handleSubmit(e);
+                    setTimeout(() => {
+                      setCustomSubmitCount(prevState => prevState + 1);
+                    }, 100);
+                  }}
+                >
                   {StepForm.Component(formik)}
                   <Box
                     display={{ xs: 'block', md: 'flex' }}
@@ -382,8 +388,8 @@ function SignUpView(props: TProps): JSX.Element {
                         type="button"
                         variant="outlined"
                         data-testid="login-button"
-                        onClick={handlePrev}
                         className={classes.button}
+                        onClick={handlePrev}
                       >
                         {t('button.back')}
                       </Button>
