@@ -1,5 +1,5 @@
 /// BASE IMPORTS
-import React, { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 /// BASE IMPORTS END
@@ -9,7 +9,6 @@ import { withAppContext } from '../context';
 /// CONTEXT END
 
 /// SERVICES
-import api from '../api/api';
 /// SERVICES END
 
 /// MATERIAL UI
@@ -29,6 +28,7 @@ import { NAMESPACE_KEY as i18nForms } from '../i18n/forms/i18n';
 
 /// TYPES
 import { INotificationProps } from '../context/types';
+import { UserContext } from '../context/UserContext';
 type IFormData = {
   handleLoading?: (loading: boolean) => void;
   handleNotifications: (props: INotificationProps) => void;
@@ -42,6 +42,7 @@ const HomePage = ({
   notificationState
 }: IFormData): JSX.Element => {
   const { t, i18n } = useTranslation([home, i18nGlobal, i18nForms]);
+  const { verifyEmail } = useContext(UserContext);
   const router = useRouter();
   const { userId, secret } = router.query;
 
@@ -51,9 +52,7 @@ const HomePage = ({
 
   const updateVerification = async () => {
     if (userId) {
-      handleLoading(true);
-      await api
-        .emailUpdateVerification(userId as string, secret as string)
+      verifyEmail(userId as string, secret as string)
         .then(() =>
           handleNotifications({
             open: true,

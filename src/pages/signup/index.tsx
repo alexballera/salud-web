@@ -280,15 +280,12 @@ function SignUpView(props: TProps): JSX.Element {
     try {
       const user = await api.createAccount('unique()', email, password, fullName);
 
-      await api.createSession(email, password);
-
-      await api.createPatient(setPatient(values, user.$id));
+      await api.createPatient(setPatient(values, user));
 
       await api.emailVerification();
 
       router.push('/signup/email_verification');
     } catch (e) {
-      console.log(e);
       handleNotifications({
         open: true,
         severity: 'error',

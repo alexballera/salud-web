@@ -12,7 +12,6 @@ import { withAppContext } from '../../context';
 
 /// OWN COMPONENTS
 import LayoutInner from '../../layouts/LayoutInner';
-import LayoutLoggedIn from '../../layouts/LayoutLoggedIn';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
@@ -23,11 +22,9 @@ import LayoutLoggedIn from '../../layouts/LayoutLoggedIn';
 
 function MainPage(): JSX.Element {
   return (
-    <LayoutLoggedIn>
-      <LayoutInner>
-        <h1>Inicio</h1>
-      </LayoutInner>
-    </LayoutLoggedIn>
+    <LayoutInner>
+      <h1>Inicio</h1>
+    </LayoutInner>
   );
 }
 export default withAppContext(MainPage);

@@ -42,7 +42,7 @@ const api = {
     return api.provider().account.create(unique, email, password, name);
   },
 
-  getAccount: () => {
+  getAccount: (): Promise<Models.User<Models.Preferences>> => {
     return api.provider().account.get();
   },
 
@@ -96,6 +96,14 @@ const api = {
   createPatient: (patient: TPatient): Promise<Models.Document> => {
     const { patientCollectionID } = SERVER;
     return api.provider().database.createDocument(patientCollectionID, 'unique()', patient);
+  },
+
+  getUserSession: (sessionID: string): Promise<Models.Session> => {
+    return api.provider().account.getSession(sessionID);
+  },
+
+  userLogOut: (sessionID: string): Promise<any> => {
+    return api.provider().account.deleteSession(sessionID);
   }
 };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import { withAppContext } from '../../../context';
 
@@ -7,7 +7,6 @@ import { AppBar, Toolbar, Hidden, Grid, Avatar, Typography } from '@material-ui/
 /// MATERIAL UI END
 
 /// STYLES & TYPES
-import { IProps } from './types';
 import navbarStyles from './styles.module';
 /// STYLES & TYPES END
 
@@ -17,23 +16,13 @@ import SvgLogo from '../Svg/SvgLogo.component';
 import ActionButtons from './components/ActionButtons.component';
 import DropDownButton from './components/DropDownButton';
 import Menu from '../Menu';
-import { User } from '../../../types/auth.types';
-import { getUserFromLocalStorage } from '../../../services/localStorage.service';
+import { UserContext } from '../../../context/UserContext';
 /// OWN COMPONENTS END
 
-function Navbar({ loggedIn }: IProps): JSX.Element {
+function Navbar(): JSX.Element {
   const classes = navbarStyles();
   const router = useRouter();
-  const [firstName, setFirstName] = useState('');
-  const [documentNumber, setDocumentNumber] = useState('');
-
-  useEffect(() => {
-    if (loggedIn) {
-      const user: User = getUserFromLocalStorage('user');
-      setFirstName(user.firstName);
-      setDocumentNumber(user.documentNumber);
-    }
-  });
+  const { userLogState, account } = useContext(UserContext);
 
   const showMenuMobile = () => {
     switch (router.pathname) {
@@ -108,7 +97,7 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                       </Grid>
                     </Grid>
                     <Grid item xs={6} md={6} className={classes.buttonAction}>
-                      {!loggedIn && (
+                      {userLogState !== 'LOGGEDIN' && (
                         <ActionButtons
                           noActionPathNames={noActionPathNames}
                           exitButtonPathNames={exitButtonPathNames}
@@ -133,17 +122,19 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                       </SvgContainer>
                     </Grid>
                     <Grid item xs={6} md={6} className={classes.buttonAction}>
-                      <ActionButtons
-                        noActionPathNames={noActionPathNames}
-                        exitButtonPathNames={exitButtonPathNames}
-                        backButtonPathNames={backButtonPathNames}
-                        closeButtonPathNames={closeButtonPathNames}
-                      />
+                      {userLogState !== 'LOGGEDIN' && (
+                        <ActionButtons
+                          noActionPathNames={noActionPathNames}
+                          exitButtonPathNames={exitButtonPathNames}
+                          backButtonPathNames={backButtonPathNames}
+                          closeButtonPathNames={closeButtonPathNames}
+                        />
+                      )}
                       {/* TODO corregir mostrar solo para cuando esté logueado: usar "loggedIn" */}
-                      {showMenuMobile() && loggedIn && (
+                      {showMenuMobile() && userLogState === 'LOGGEDIN' && (
                         <Grid container justify="flex-end" alignItems="center" spacing={2}>
                           <Grid item>
-                            <Avatar variant="square">{firstName?.charAt(0)}</Avatar>
+                            <Avatar variant="square">{account?.name?.charAt(0)}</Avatar>
                           </Grid>
                           <Grid
                             container
@@ -153,9 +144,11 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                             xs={4}
                             md={3}
                           >
-                            <Typography className={classes.name}>{firstName}</Typography>
+                            <Typography className={classes.name}>
+                              {account?.name.split(' ')[1]}
+                            </Typography>
                             <Typography className={classes.documentNumber}>
-                              {documentNumber}
+                              {account?.$id}
                             </Typography>
                           </Grid>
                           <Grid item xs={2} md={1} className={classes.dropDownContainer}>
@@ -169,7 +162,9 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
               </Toolbar>
             </AppBar>
           </Hidden>
-          <Hidden smDown>{showMenuMobile() && loggedIn && <Menu type="desktop" />}</Hidden>
+          <Hidden smDown>
+            {showMenuMobile() && userLogState === 'LOGGEDIN' && <Menu type="desktop" />}
+          </Hidden>
         </>
       )}
     </>

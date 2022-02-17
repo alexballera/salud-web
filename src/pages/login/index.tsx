@@ -1,5 +1,5 @@
 /// BASE IMPORTS
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Formik, FormikErrors, FormikProps } from 'formik';
 import Link from 'next/link';
@@ -31,26 +31,22 @@ import LoginStyles from '../../styles/js/LoginPageStyles.module';
 import api from '../../api/api';
 import {
   getDataFromSessionStorage,
-  removeDataFromSessionStorage,
-  setUserToLocalStorage
+  removeDataFromSessionStorage
 } from '../../services/localStorage.service';
 /// SERVICES END
 
 /// LAYOUT
 import Layout from '../../layouts/LayoutFormBasic';
+import { UserContext } from '../../context/UserContext';
 /// LAYOUT END
 
 /// FORM STATES & VALIDATIONS
 const INITIAL_STATE: TLoginData = { email: '', password: '' };
 /// FORM STATES & VALIDATIONS END
 
-function LoginPage({
-  fetching,
-  handleLogin,
-  handleLoading,
-  handleNotifications
-}: TProps): JSX.Element {
+function LoginPage({ fetching, handleLoading, handleNotifications }: TProps): JSX.Element {
   const { t } = useTranslation([i18Global, i18Forms]);
+  const { handleUserSignIn, initializeSession, initializeGuestSession } = useContext(UserContext);
   const [updatedPassword, setUpdatedPassword] = useState<string>();
   const classes = LoginStyles();
   const router = useRouter();
@@ -82,16 +78,15 @@ function LoginPage({
   const handleSubmit = async ({ email, password }: TLoginData) => {
     try {
       handleLoading(true);
-      const session = await api.createSession(email, password);
-      const account = await api.getAccount();
-      // TODO: Change all this arguments types, we need remove all [as any]
-      handleLogin(session as any);
-      setUserToLocalStorage('user', session as any);
-      handleLoading(false);
+      const { session, account } = await handleUserSignIn(email, password);
       if (account.emailVerification) {
+        initializeSession(session, account);
+        handleLoading(false);
         router.push('/main');
       } else {
         api.emailVerification();
+        initializeGuestSession(session);
+        handleLoading(false);
         router.push('/signup/email_verification');
       }
     } catch (e) {
