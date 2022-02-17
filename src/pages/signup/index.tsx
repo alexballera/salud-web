@@ -43,7 +43,7 @@ import countriesPhoneNumbers from '../../services/countriesPhoneNumbers.service'
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY as i18Global } from '../../i18n/globals/i18n';
+import { NAMESPACE_KEY as i18Global, i18n } from '../../i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
 import { useRouter } from 'next/router';
 import api, { TPatient } from '../../api/api';
@@ -168,12 +168,12 @@ function SignUpView(props: TProps): JSX.Element {
     schema: yup.object().shape({
       terms: yup
         .bool()
-        .oneOf([true], t('validations.required', { ns: i18Forms }))
-        .required(t('validations.required', { ns: i18Forms })),
+        .required(t('validations.required', { ns: i18Forms }).concat(' ')) // Adding the empty space to avoid required message
+        .oneOf([true], t('validations.required', { ns: i18Forms }).concat(' ')),
       services: yup
         .bool()
-        .oneOf([true], t('validations.required', { ns: i18Forms }))
-        .required(t('validations.required', { ns: i18Forms })),
+        .required(t('validations.required', { ns: i18Forms }).concat(' '))
+        .oneOf([true], t('validations.required', { ns: i18Forms }).concat(' ')),
       email: yup
         .string()
         .email(t('validations.email.incorrect', { ns: i18Forms }))
@@ -227,7 +227,7 @@ function SignUpView(props: TProps): JSX.Element {
       title: 'title.credential_data',
       description: 'description.credential_data',
       Component: function FormStep(formik: FormikProps<TFormData>) {
-        return <CredentialDataForm {...formik} />;
+        return <CredentialDataForm {...formik} setCustomPopUpError={setCustomPopUpError} />;
       }
     }
   };
@@ -238,20 +238,6 @@ function SignUpView(props: TProps): JSX.Element {
     const flatErrors = Object.values(errors);
     if (customPopUpError) {
       return customPopUpError;
-    }
-    if (currentStep === 2) {
-      if (flatErrors.length > 1) {
-        return t('message.error.field_incorrect', { ns: i18Forms });
-      }
-      if (errors.terms) {
-        return t('validations.terms', { ns: i18Forms });
-      }
-      if (errors.services) {
-        return t('validations.services', { ns: i18Forms });
-      }
-      if (errors.confirmPassword) {
-        return t('validations.password.matched', { ns: i18Forms });
-      }
     }
     if (flatErrors.includes(t('validations.required', { ns: i18Forms }))) {
       return t('message.error.fields_required', { ns: i18Forms });
@@ -306,9 +292,17 @@ function SignUpView(props: TProps): JSX.Element {
       handleNotifications({
         open: true,
         severity: 'error',
-        message: t('message.error.general_fetch', { ns: i18Forms })
+        message: mapFetchErrors(e.code)
       });
     }
+  };
+
+  const mapFetchErrors = (code: -1) => {
+    const i18nKey = `responses.signup.error_${code}`;
+    if (i18n.exists(i18nKey, { ns: i18Global })) {
+      return t(i18nKey, { ns: i18Global });
+    }
+    return t('message.error.general_fetch', { ns: i18Forms });
   };
 
   const handleNext = (values: TFormData) => {

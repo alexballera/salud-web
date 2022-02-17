@@ -111,6 +111,7 @@ export type TCredentialDataProps = {
   updateEmail?: boolean;
   errorConfirmPassword?: boolean;
   clickToSubmit?: boolean;
+  setCustomPopUpError?: React.Dispatch<React.SetStateAction<null | string>>;
 };
 
 export type GenderEnum = '1' | '2' | '';

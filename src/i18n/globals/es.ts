@@ -165,6 +165,9 @@ export const esGlobals = {
     },
     recover: {
       error_401: 'Token inválido, solicítalo nuevamente'
+    },
+    signup: {
+      error_409: 'Ya existe un paciente con ese número de identidad registrado en Ospi'
     }
   },
 

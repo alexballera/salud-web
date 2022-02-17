@@ -1,5 +1,5 @@
 /// IMPORTS
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 /// IMPORTS END
 
 /// FORM
@@ -47,12 +47,36 @@ function CredentialData({
   errors,
   handleBlur,
   handleChange,
-  touched
+  touched,
+  setCustomPopUpError
 }: TCredentialDataProps & FormikProps<TCredentialDataForm | TFormData>): JSX.Element {
   const { t } = useTranslation([i18nGlobal, i18Forms]);
   const [inputEmailStates, setInputEmailStates] = useState(initialEmailStates);
   const [termsAndConditionOpen, setTermsAndConditionOpen] = useState(false);
   const [informedConsentOpen, setInformedConsentOpen] = useState(false);
+
+  const handleGlobalFormErrors = () => {
+    if (errors.confirmPassword) {
+      setCustomPopUpError(t('validations.password.matched', { ns: i18Forms }));
+      return;
+    }
+    if (errors.terms) {
+      setCustomPopUpError(t('validations.terms', { ns: i18Forms }));
+      return;
+    }
+    if (errors.services) {
+      setCustomPopUpError(t('validations.services', { ns: i18Forms }));
+    }
+  };
+
+  useEffect(() => {
+    const flatErrors = Object.values(errors);
+    if (flatErrors.includes(t('validations.required', { ns: i18Forms }))) {
+      setCustomPopUpError(null);
+      return;
+    }
+    handleGlobalFormErrors();
+  }, [errors.terms, errors.services, errors.confirmPassword]);
 
   return (
     <>
@@ -117,14 +141,20 @@ function CredentialData({
               />
             }
             label={
-              <Typography component="label" variant="body1">
+              <Typography
+                component="label"
+                variant="body1"
+                style={{
+                  fontSize: '14px'
+                }}
+              >
                 {t('label.accept', { ns: i18nGlobal })}{' '}
                 <Link
                   underline="always"
                   component="span"
                   variant="body1"
                   onClick={() => setTermsAndConditionOpen(true)}
-                  style={{ cursor: 'pointer', color: '#FF4003' }}
+                  style={{ cursor: 'pointer', color: '#FF4003', fontSize: '14px' }}
                 >
                   {t('label.terms', { ns: i18nGlobal })}
                 </Link>
@@ -144,14 +174,20 @@ function CredentialData({
               />
             }
             label={
-              <Typography component="label" variant="body1">
+              <Typography
+                component="label"
+                variant="body1"
+                style={{
+                  fontSize: '14px'
+                }}
+              >
                 {t('label.accept', { ns: i18nGlobal })}{' '}
                 <Link
                   underline="always"
                   component="span"
                   variant="body1"
                   onClick={() => setInformedConsentOpen(true)}
-                  style={{ cursor: 'pointer', color: '#FF4003' }}
+                  style={{ cursor: 'pointer', color: '#FF4003', fontSize: '14px' }}
                 >
                   {t('label.consent', { ns: i18nGlobal })}
                 </Link>
