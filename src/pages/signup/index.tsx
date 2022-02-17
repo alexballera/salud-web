@@ -280,7 +280,7 @@ function SignUpView(props: TProps): JSX.Element {
     try {
       const user = await api.createAccount('unique()', email, password, fullName);
 
-      await api.createPatient(setPatient(values, user));
+      await api.createPatient(setPatient(values, user.$id));
 
       await api.emailVerification();
 
