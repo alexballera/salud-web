@@ -56,8 +56,12 @@ function CredentialData({
   const [informedConsentOpen, setInformedConsentOpen] = useState(false);
 
   const handleGlobalFormErrors = () => {
-    if (errors.confirmPassword) {
+    if (errors.confirmPassword === t('validations.password.matched', { ns: i18Forms })) {
       setCustomPopUpError(t('validations.password.matched', { ns: i18Forms }));
+      return;
+    }
+    if (errors.confirmPassword === t('validations.password.regex', { ns: i18Forms })) {
+      setCustomPopUpError(t('message.error.fields_required', { ns: i18Forms }));
       return;
     }
     if (errors.terms) {
