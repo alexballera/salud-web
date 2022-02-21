@@ -48,6 +48,7 @@ function LoginPage({ fetching, handleLoading, handleNotifications }: TProps): JS
   const { t } = useTranslation([i18Global, i18Forms]);
   const { handleUserSignIn, initializeSession, initializeGuestSession } = useContext(UserContext);
   const [updatedPassword, setUpdatedPassword] = useState<string>();
+  const [fetchHasError, setFetchHasError] = useState(false);
   const classes = LoginStyles();
   const router = useRouter();
 
@@ -77,6 +78,7 @@ function LoginPage({ fetching, handleLoading, handleNotifications }: TProps): JS
 
   const handleSubmit = async ({ email, password }: TLoginData) => {
     try {
+      setFetchHasError(false);
       handleLoading(true);
       const { session, account } = await handleUserSignIn(email, password);
       if (account.emailVerification) {
@@ -90,6 +92,7 @@ function LoginPage({ fetching, handleLoading, handleNotifications }: TProps): JS
         router.push('/signup/email_verification');
       }
     } catch (e) {
+      setFetchHasError(true);
       handleNotifications({
         message: mapFetchErrors(e.code),
         severity: 'error',
@@ -166,6 +169,12 @@ function LoginPage({ fetching, handleLoading, handleNotifications }: TProps): JS
               handleGlobalFormErrors(values, errors);
             }, [submitCount]);
 
+            useEffect(() => {
+              if (fetchHasError === true) {
+                setFetchHasError(false);
+              }
+            }, [values]);
+
             return (
               <form onSubmit={formikSubmit} noValidate={true}>
                 <Box>
@@ -179,7 +188,7 @@ function LoginPage({ fetching, handleLoading, handleNotifications }: TProps): JS
                     fullWidth={true}
                     onChange={handleChange}
                     value={values.email}
-                    error={touched.email && Boolean(errors.email)}
+                    error={(touched.email && Boolean(errors.email)) || fetchHasError}
                     data-testid="email-field"
                     helperText={errors.email}
                     handleLblError
@@ -199,7 +208,7 @@ function LoginPage({ fetching, handleLoading, handleNotifications }: TProps): JS
                     fullWidth={true}
                     onChange={handleChange}
                     value={values.password}
-                    error={touched.password && Boolean(errors.password)}
+                    error={(touched.password && Boolean(errors.password)) || fetchHasError}
                     data-testid="password-field"
                     helperText={errors.password}
                     handleLblError

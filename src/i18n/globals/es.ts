@@ -161,7 +161,8 @@ export const esGlobals = {
   responses: {
     signin: {
       error_400: 'Los datos brindados no coinciden',
-      error_401: 'Los datos brindados no coinciden'
+      error_401: 'Los datos brindados no coinciden',
+      error_429: 'Has realizo muchas solicitudes al mismo tiempo'
     },
     recover: {
       error_401: 'Token inválido, solicítalo nuevamente'

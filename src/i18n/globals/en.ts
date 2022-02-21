@@ -161,7 +161,8 @@ export const enGlobals = {
   responses: {
     signin: {
       error_400: 'The data provided does not match',
-      error_401: 'The data provided does not match'
+      error_401: 'The data provided does not match',
+      error_429: 'You have made many requests at the same time'
     },
     recover: {
       error_401: 'Invalid token, request it again'
