@@ -15,6 +15,8 @@ import { enSubscriptions } from './subscriptions/en';
 import { esSubscriptions } from './subscriptions/es';
 import { enPreferences } from './preferences/en';
 import { esPreferences } from './preferences/es';
+import { enProfile } from './profile/en';
+import { esProfile } from './profile/es';
 
 const resources = {
   enUS: {
@@ -24,7 +26,8 @@ const resources = {
     forms: enForms,
     code: enCode,
     subscriptions: enSubscriptions,
-    preferences: enPreferences
+    preferences: enPreferences,
+    profile: enProfile
   },
   es: {
     globals: esGlobals,
@@ -33,11 +36,21 @@ const resources = {
     forms: esForms,
     code: esCode,
     subscriptions: esSubscriptions,
-    preferences: esPreferences
+    preferences: esPreferences,
+    profile: esProfile
   }
 };
 
-const namespaces = ['globals', 'home', 'menu', 'forms', 'code', 'subscriptions', 'preferences'];
+const namespaces = [
+  'globals',
+  'home',
+  'menu',
+  'forms',
+  'code',
+  'subscriptions',
+  'preferences',
+  'profile'
+];
 
 const DETECTION_OPTIONS = {
   order: ['localStorage', 'navigator'],

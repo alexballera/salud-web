@@ -10,6 +10,7 @@ export const esMenu = {
     main: 'Inicio',
     profile: 'Perfil',
     subscription: 'Tu suscripción',
-    preferences: 'Preferencias'
+    preferences: 'Preferencias',
+    generalData: 'Datos generales'
   }
 };

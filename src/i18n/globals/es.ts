@@ -189,5 +189,16 @@ export const esGlobals = {
     title: '¿Necesitás ayuda?',
     label: 'Contactanos a nuestro ',
     ospi_center: 'Ospi Center al {{telephone}}'
+  },
+
+  profile: {
+    height: 'Altura',
+    weight: 'Peso',
+    biologicSex: 'Sexo biológico',
+    pronoun: 'Pronombre',
+    civilStatus: 'Estado civil',
+    ocupation: 'Profesión',
+    address: 'Dirección',
+    age: 'Edad'
   }
 };

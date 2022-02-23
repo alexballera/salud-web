@@ -189,5 +189,16 @@ export const enGlobals = {
     title: 'Need help?',
     label: 'Contact us at our ',
     ospi_center: 'Ospi Center at {{telephone}}'
+  },
+
+  profile: {
+    height: 'Height',
+    weight: 'Weight',
+    biologicSex: 'Biologic Sex',
+    pronoun: 'Pronoun',
+    civilStatus: 'Civil status',
+    ocupation: 'Ocupation',
+    address: 'Address',
+    age: 'Age'
   }
 };

@@ -3,12 +3,19 @@ import { useRouter } from 'next/router';
 import { withAppContext } from '../../../context';
 
 /// MATERIAL UI
-import { AppBar, Toolbar, Hidden, Grid, Avatar, Typography } from '@material-ui/core';
+import { AppBar, Toolbar, Hidden, Grid, Avatar, Typography, IconButton } from '@material-ui/core';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 /// MATERIAL UI END
 
 /// STYLES & TYPES
 import navbarStyles from './styles.module';
 /// STYLES & TYPES END
+
+/// i18n
+import { useTranslation, withTranslation } from 'react-i18next';
+import { NAMESPACE_KEY as i18Global, i18n } from '../../../i18n/globals/i18n';
+import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
+/// i18n END
 
 /// OWN COMPONENTS
 import SvgContainer from '../SvgContainer';
@@ -23,6 +30,7 @@ function Navbar(): JSX.Element {
   const classes = navbarStyles();
   const router = useRouter();
   const { userLogState, account } = useContext(UserContext);
+  const { t } = useTranslation([i18Global, i18Forms]);
 
   const showMenuMobile = () => {
     switch (router.pathname) {
@@ -54,7 +62,32 @@ function Navbar(): JSX.Element {
     }
   };
 
-  const noActionPathNames = ['/main', '/profile', '/subscriptions', '/preferences', '/help'];
+  const showBackButton = () => {
+    switch (router.pathname) {
+      case '/medicalData':
+        return true;
+      default:
+        return false;
+    }
+  };
+
+  const showPageTitle = () => {
+    switch (router.pathname) {
+      case '/medicalData':
+        return t('items.generalData', { ns: 'menu' });
+      default:
+        return false;
+    }
+  };
+
+  const noActionPathNames = [
+    '/main',
+    '/profile',
+    '/subscriptions',
+    '/preferences',
+    '/help',
+    '/medicalData'
+  ];
 
   const exitButtonPathNames = [
     '/recover_password/forward_email',
@@ -82,6 +115,21 @@ function Navbar(): JSX.Element {
             <AppBar position="sticky" color="inherit" elevation={0}>
               <Toolbar>
                 <Grid container justify="center">
+                  {showBackButton() && (
+                    <Grid container justify="flex-start" alignItems="center">
+                      <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="arrow-back"
+                        onClick={() => router.back()}
+                      >
+                        <ArrowBackIcon />
+                      </IconButton>
+                      <Typography variant="body1" className={classes.title}>
+                        {showPageTitle()}
+                      </Typography>
+                    </Grid>
+                  )}
                   <Grid container>
                     <Grid item xs={6} md={6}>
                       <Grid
@@ -91,9 +139,11 @@ function Navbar(): JSX.Element {
                         style={{ height: '100%' }}
                       >
                         {showMenuMobile() && <Menu type="mobile" />}
-                        <SvgContainer title="Logo Icon" width={54} height={28}>
-                          <SvgLogo />
-                        </SvgContainer>
+                        {!showBackButton() && (
+                          <SvgContainer title="Logo Icon" width={54} height={28}>
+                            <SvgLogo />
+                          </SvgContainer>
+                        )}
                       </Grid>
                     </Grid>
                     <Grid item xs={6} md={6} className={classes.buttonAction}>
@@ -116,10 +166,27 @@ function Navbar(): JSX.Element {
               <Toolbar>
                 <Grid container justify="center">
                   <Grid container>
+                    {showBackButton() && (
+                      <Grid container justify="flex-start" alignItems="center">
+                        <IconButton
+                          edge="start"
+                          color="inherit"
+                          aria-label="arrow-back"
+                          onClick={() => router.back()}
+                        >
+                          <ArrowBackIcon />
+                        </IconButton>
+                        <Typography variant="body1" className={classes.title}>
+                          {showPageTitle()}
+                        </Typography>
+                      </Grid>
+                    )}
                     <Grid item xs={6} md={6} container alignItems="center">
-                      <SvgContainer title="Logo Icon" width={54} height={28}>
-                        <SvgLogo />
-                      </SvgContainer>
+                      {!showBackButton() && (
+                        <SvgContainer title="Logo Icon" width={54} height={28}>
+                          <SvgLogo />
+                        </SvgContainer>
+                      )}
                     </Grid>
                     <Grid item xs={6} md={6} className={classes.buttonAction}>
                       {userLogState !== 'LOGGEDIN' && (
@@ -171,4 +238,4 @@ function Navbar(): JSX.Element {
   );
 }
 
-export default withAppContext(Navbar);
+export default withTranslation([i18Global, i18Forms])(withAppContext(Navbar));

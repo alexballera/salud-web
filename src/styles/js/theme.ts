@@ -14,6 +14,7 @@ export const secondaryContrastTextColor = '#ffffff';
 export const activeActionColor = 'rgba(0, 0, 0, 0.54)';
 export const hoverActionColor = 'rgba(0, 0, 0, 0.04)';
 export const poppinsFontFamily = 'Poppins, Roboto, sans-serif';
+export const tertiaryLightColor = '#E9F7FC';
 
 const defaultTheme: ThemeOptions = {
   palette: {
