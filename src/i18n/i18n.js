@@ -15,6 +15,8 @@ import { enSubscriptions } from './subscriptions/en';
 import { esSubscriptions } from './subscriptions/es';
 import { enPreferences } from './preferences/en';
 import { esPreferences } from './preferences/es';
+import { esRecipesAndPrescriptions } from './recipes_and_prescriptions/es';
+import { enRecipesAndPrescriptions } from './recipes_and_prescriptions/en';
 
 const resources = {
   enUS: {
@@ -24,7 +26,8 @@ const resources = {
     forms: enForms,
     code: enCode,
     subscriptions: enSubscriptions,
-    preferences: enPreferences
+    preferences: enPreferences,
+    recipesAndPrescriptions: enRecipesAndPrescriptions
   },
   es: {
     globals: esGlobals,
@@ -33,11 +36,21 @@ const resources = {
     forms: esForms,
     code: esCode,
     subscriptions: esSubscriptions,
-    preferences: esPreferences
+    preferences: esPreferences,
+    recipesAndPrescriptions: esRecipesAndPrescriptions
   }
 };
 
-const namespaces = ['globals', 'home', 'menu', 'forms', 'code', 'subscriptions', 'preferences'];
+const namespaces = [
+  'globals',
+  'home',
+  'menu',
+  'forms',
+  'code',
+  'subscriptions',
+  'preferences',
+  'recipes-and-prescriptions'
+];
 
 const DETECTION_OPTIONS = {
   order: ['localStorage', 'navigator'],
