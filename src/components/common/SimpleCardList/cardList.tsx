@@ -23,7 +23,7 @@ import type { TListItem } from './types';
 /// TYPES END
 
 export type TProps = {
-  items: TListItem[];
+  items: TListItem[] | string[];
   itemClick: (values: unknown) => void;
 };
 
@@ -49,11 +49,13 @@ function SimpleCardList({ items, itemClick }: TProps): JSX.Element {
           <>
             <ListItem button onClick={() => itemClick(item)} key={idx}>
               <Grid container direction="column" justify="space-between">
-                <ListItemText>
-                  <Typographyl className={classes.itemFont} style={{ color: '#A1ADB0' }}>
-                    {item.title}
-                  </Typographyl>
-                </ListItemText>
+                {item.title && (
+                  <ListItemText>
+                    <Typographyl className={classes.itemFont} style={{ color: '#A1ADB0' }}>
+                      {item.title}
+                    </Typographyl>
+                  </ListItemText>
+                )}
                 <ListItemText>
                   <Typographyl className={classes.itemFont} style={{ color: '#4D5759' }}>
                     {item.value}

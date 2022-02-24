@@ -1,4 +1,4 @@
 export type TListItem = {
-  title: string;
+  title?: string;
   value: string;
 };

@@ -66,6 +66,8 @@ function Navbar(): JSX.Element {
     switch (router.pathname) {
       case '/medicalData':
         return true;
+      case '/recipes_and_prescriptions/[item_id]':
+        return true;
       default:
         return false;
     }
@@ -75,6 +77,8 @@ function Navbar(): JSX.Element {
     switch (router.pathname) {
       case '/medicalData':
         return t('items.generalData', { ns: 'menu' });
+      case '/recipes_and_prescriptions/[item_id]':
+        return t('items.recipes_and_prescriptions', { ns: 'menu' });
       default:
         return false;
     }
@@ -86,7 +90,8 @@ function Navbar(): JSX.Element {
     '/subscriptions',
     '/preferences',
     '/help',
-    '/medicalData'
+    '/medicalData',
+    '/recipes_and_prescriptions/[item_id]'
   ];
 
   const exitButtonPathNames = [

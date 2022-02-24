@@ -81,6 +81,7 @@ function RecipeAndPrescriptionPage({ items }: TProps): JSX.Element {
   const [itemDetails, setItemDetails] = useState<string | null>('');
 
   const handleSimpleListClick = (values: TListItem) => {
+    console.log('values', values);
     if (values && values.title) {
       setItemDetails(values.title);
     }
@@ -109,6 +110,15 @@ function RecipeAndPrescriptionPage({ items }: TProps): JSX.Element {
 
           <Box className={classes.boxSpacing}>
             <CardCollapse title="Loratadina" items={items} itemClick={handleSimpleListClick} />
+          </Box>
+
+          <Box className={classes.boxSpacing}>
+            <CardCollapse
+              isExpanded
+              title="Loratadina"
+              items={[{ value: 'asdfas' }]}
+              itemClick={handleSimpleListClick}
+            />
           </Box>
 
           {itemDetails && (

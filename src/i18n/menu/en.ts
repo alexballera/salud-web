@@ -11,6 +11,7 @@ export const enMenu = {
     profile: 'Perfil',
     subscription: 'Tu suscripción',
     preferences: 'Preferencias',
-    generalData: 'Datos generales'
+    generalData: 'Datos generales',
+    recipes_and_prescriptions: 'Details'
   }
 };

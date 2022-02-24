@@ -30,6 +30,7 @@ type TProps = {
   title: string;
   cardProps?: CardProps;
   items: TListItem[];
+  isExpanded?: boolean;
   itemClick: (values: TListItem) => void;
 };
 
@@ -41,8 +42,14 @@ const ArrowUp = styled(KeyboardArrowUp)({
   color: secondaryMainColor
 });
 
-function CardCollapse({ title, items, itemClick, cardProps = {} }: TProps): JSX.Element {
-  const [expand, setExpand] = useState(false);
+function CardCollapse({
+  title,
+  items,
+  itemClick,
+  cardProps = {},
+  isExpanded = false
+}: TProps): JSX.Element {
+  const [expand, setExpand] = useState(isExpanded);
   const useStyles = makeStyles({
     card: {
       boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.5)',
