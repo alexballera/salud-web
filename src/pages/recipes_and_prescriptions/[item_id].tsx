@@ -43,7 +43,11 @@ const useStyles = makeStyles(() =>
       lineHeight: '150%',
       letterSpacing: '0.15px',
       fontSize: 16,
-      marginBottom: 16
+      marginBottom: 16,
+      margin: 0
+    },
+    boxSpacing: {
+      marginTop: 24
     },
     footerCard: {
       borderRadius: 8,
@@ -65,7 +69,8 @@ const useStyles = makeStyles(() =>
       fontSize: 14,
       lineHeight: '143%',
       letterSpacing: '0.15px',
-      color: '#4D5759'
+      color: '#4D5759',
+      marginTop: 8
     }
   })
 );
@@ -81,6 +86,10 @@ function RecipeAndPrescriptionPage({ items }: TProps): JSX.Element {
     }
   };
 
+  const formatMainCardData = () => {
+    return [];
+  };
+
   return (
     <Grid container item xs={12}>
       <Grid item xs={12}>
@@ -89,26 +98,27 @@ function RecipeAndPrescriptionPage({ items }: TProps): JSX.Element {
             {t('title')}
           </Typography>
 
-          <SimpleCardList
-            title="asdf"
-            titleStyles={{ backgroundColor: 'red', color: 'blue' }}
-            itemClick={handleSimpleListClick}
-            items={items}
-          />
+          <Box className={classes.boxSpacing}>
+            <SimpleCardList
+              title="asdf"
+              titleStyles={{ backgroundColor: 'red', color: 'blue' }}
+              itemClick={handleSimpleListClick}
+              items={items}
+            />
+          </Box>
 
-          <CardCollapse
-            title="Loratadina"
-            items={items}
-            itemClick={handleSimpleListClick}
-            cardProps={{ style: { marginTop: 10 } }}
-          />
+          <Box className={classes.boxSpacing}>
+            <CardCollapse title="Loratadina" items={items} itemClick={handleSimpleListClick} />
+          </Box>
 
           {itemDetails && (
-            <Box mt={6}>
+            <Box className={classes.boxSpacing}>
               <Card className={classes.footerCard}>
                 <CardContent>
-                  <Typography className={classes.footerCardTitle}>{t('sub_title')}</Typography>
-                  <Typography className={classes.footerCardDescription}>
+                  <Typography className={classes.footerCardTitle} variant="h2">
+                    {t('sub_title')}
+                  </Typography>
+                  <Typography className={classes.footerCardDescription} variant="body1">
                     Consumir en ayunas. Suspender consumo de alcohol durante el tratamiento
                   </Typography>
                 </CardContent>
@@ -126,11 +136,10 @@ RecipeAndPrescriptionPage.getInitialProps = async ({ query }: NextPageContext) =
   const { item_id } = query;
   console.log('itemid', item_id);
   const items: TListItem[] = [
-    {
-      title: 'uno',
-      value: '2'
-    },
-    { title: 'dops', value: '2' }
+    { title: 'tag', value: 'uno' },
+    { title: 'date', value: 'tres' },
+    { title: 'reportBy', value: 'cuatro' },
+    { title: 'specialty', value: 'cinco' }
   ];
   return {
     items

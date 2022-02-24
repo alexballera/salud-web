@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles, CardProps } from '@material-ui/core';
+import { styled } from '@material-ui/styles';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
 /// MATERIAL UI END
 
@@ -32,9 +33,16 @@ type TProps = {
   itemClick: (values: TListItem) => void;
 };
 
+const ArrowDown = styled(KeyboardArrowDown)({
+  color: secondaryMainColor
+});
+
+const ArrowUp = styled(KeyboardArrowUp)({
+  color: secondaryMainColor
+});
+
 function CardCollapse({ title, items, itemClick, cardProps = {} }: TProps): JSX.Element {
   const [expand, setExpand] = useState(false);
-
   const useStyles = makeStyles({
     card: {
       boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.5)',
@@ -53,6 +61,9 @@ function CardCollapse({ title, items, itemClick, cardProps = {} }: TProps): JSX.
     },
     divider: {
       backgroundColor: '#E4EBED'
+    },
+    arrow: {
+      color: secondaryMainColor
     }
   });
 
@@ -63,7 +74,7 @@ function CardCollapse({ title, items, itemClick, cardProps = {} }: TProps): JSX.
         title={<Typography className={classes.title}>{title}</Typography>}
         action={
           <IconButton onClick={() => setExpand(!expand)}>
-            {!expand ? <KeyboardArrowDown /> : <KeyboardArrowUp />}
+            {!expand ? <ArrowDown /> : <ArrowUp />}
           </IconButton>
         }
       />

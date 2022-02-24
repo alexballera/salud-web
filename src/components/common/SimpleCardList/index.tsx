@@ -1,22 +1,16 @@
 /// MATERIAL UI
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Box, { BoxProps } from '@material-ui/core/Box';
 /// MATERIAL UI END
 
 /// STYLES
-import { makeStyles, createStyles, StyleRules } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { poppinsFontFamily } from '../../../styles/js/theme';
 /// STYLES END
 
 /// OWN COMPONENTS
-import { TitleContent } from '../../../components/common/TitleContent';
 import CardList from './cardList';
 /// OWN COMPONENTS END
 
@@ -51,7 +45,9 @@ const useStyles = makeStyles(() =>
     },
     card: {
       boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.5)',
-      borderRadius: 16,
+      borderRadius: 16
+    },
+    cardHeader: {
       paddingBottom: 0
     },
     itemFont: {
@@ -70,6 +66,7 @@ function SimpleCardList({ title, titleStyles, items, itemClick }: TProps): JSX.E
   return (
     <Card className={classes.card}>
       <CardHeader
+        className={classes.cardHeader}
         title={
           <Box className={classes.tag} style={titleStyles}>
             <Typography className={classes.tagFont}>{title}</Typography>
