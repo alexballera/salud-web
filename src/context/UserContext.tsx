@@ -16,7 +16,8 @@ import useIsMounted from '../hooks/useIsMounted';
 /// HOOK END
 
 const STORANGE_KEY = 'SESSIONID';
-const LOGGEDIN_ROUTES = ['/main', '/profile', '/logout', '/medicalData'];
+
+const LOGGEDIN_ROUTES = ['/main', '/profile', '/logout', '/medicalData', '/proceedings'];
 
 const UserContext = createContext({} as TUserContent);
 

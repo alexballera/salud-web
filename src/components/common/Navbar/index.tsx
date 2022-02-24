@@ -66,6 +66,8 @@ function Navbar(): JSX.Element {
     switch (router.pathname) {
       case '/medicalData':
         return true;
+      case '/proceedings':
+        return true;
       default:
         return false;
     }
@@ -75,6 +77,8 @@ function Navbar(): JSX.Element {
     switch (router.pathname) {
       case '/medicalData':
         return t('items.generalData', { ns: 'menu' });
+      case '/proceedings':
+        return t('items.proceedings', { ns: 'menu' });
       default:
         return false;
     }
@@ -86,6 +90,8 @@ function Navbar(): JSX.Element {
     '/subscriptions',
     '/preferences',
     '/help',
+    '/medicalData',
+    '/proceedings'
     '/medicalData'
   ];
 
