@@ -161,7 +161,8 @@ export const enGlobals = {
   responses: {
     signin: {
       error_400: 'The data provided does not match',
-      error_401: 'The data provided does not match'
+      error_401: 'The data provided does not match',
+      error_429: 'You have made many requests at the same time'
     },
     recover: {
       error_401: 'Invalid token, request it again'
@@ -188,5 +189,16 @@ export const enGlobals = {
     title: 'Need help?',
     label: 'Contact us at our ',
     ospi_center: 'Ospi Center at {{telephone}}'
+  },
+
+  profile: {
+    height: 'Height',
+    weight: 'Weight',
+    biologicSex: 'Biologic Sex',
+    pronoun: 'Pronoun',
+    civilStatus: 'Civil status',
+    ocupation: 'Ocupation',
+    address: 'Address',
+    age: 'Age'
   }
 };

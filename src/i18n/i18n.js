@@ -17,6 +17,8 @@ import { enPreferences } from './preferences/en';
 import { esPreferences } from './preferences/es';
 import { esRecipesAndPrescriptions } from './recipes_and_prescriptions/es';
 import { enRecipesAndPrescriptions } from './recipes_and_prescriptions/en';
+import { enProfile } from './profile/en';
+import { esProfile } from './profile/es';
 
 const resources = {
   enUS: {
@@ -27,7 +29,8 @@ const resources = {
     code: enCode,
     subscriptions: enSubscriptions,
     preferences: enPreferences,
-    recipesAndPrescriptions: enRecipesAndPrescriptions
+    recipesAndPrescriptions: enRecipesAndPrescriptions,
+    profile: enProfile
   },
   es: {
     globals: esGlobals,
@@ -37,7 +40,8 @@ const resources = {
     code: esCode,
     subscriptions: esSubscriptions,
     preferences: esPreferences,
-    recipesAndPrescriptions: esRecipesAndPrescriptions
+    recipesAndPrescriptions: esRecipesAndPrescriptions,
+    profile: esProfile
   }
 };
 
@@ -49,7 +53,8 @@ const namespaces = [
   'code',
   'subscriptions',
   'preferences',
-  'recipes-and-prescriptions'
+  'recipes-and-prescriptions',
+  'profile'
 ];
 
 const DETECTION_OPTIONS = {

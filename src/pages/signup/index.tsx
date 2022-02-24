@@ -58,6 +58,7 @@ type TSteper = {
   };
 };
 
+const PASS_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 const INIT_FORM_STATE: TFormData = {
   country: '',
   documentType: '',
@@ -181,18 +182,26 @@ function SignUpView(props: TProps): JSX.Element {
       password: yup
         .string()
         .required(t('validations.required', { ns: i18Forms }))
-        .min(8, t('validations.required', { ns: i18Forms }))
-        .max(16, t('validations.required', { ns: i18Forms }))
         .matches(
           /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
           t('validations.password.regex', { ns: i18Forms })
         ),
       confirmPassword: yup
         .string()
-        .oneOf([yup.ref('password'), null], t('validations.password.matched', { ns: i18Forms }))
         .required(t('validations.required', { ns: i18Forms }))
-        .min(8, t('validations.required', { ns: i18Forms }))
-        .max(16, t('validations.required', { ns: i18Forms }))
+        .matches(PASS_REGEX, t('validations.password.regex', { ns: i18Forms }))
+        .test(
+          'confirm_pass',
+          t('validations.password.matched', { ns: i18Forms }),
+          function (value = '') {
+            const regex = PASS_REGEX;
+            const password = this.parent?.password || '';
+            if (!regex.test(value)) {
+              return false;
+            }
+            return password === value;
+          }
+        )
     })
   };
 
@@ -301,9 +310,9 @@ function SignUpView(props: TProps): JSX.Element {
   };
 
   const handleNext = (values: TFormData) => {
+    handleNotifications({ ...notificationState, open: false });
+    setCustomPopUpError(null);
     if (MAP_STEPS[currentStep + 1]) {
-      handleNotifications({ ...notificationState, open: false });
-      setCustomPopUpError(null);
       setCurrentStep(currentStep + 1);
       return;
     }
