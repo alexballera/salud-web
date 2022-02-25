@@ -92,7 +92,6 @@ function Navbar(): JSX.Element {
     '/help',
     '/medicalData',
     '/proceedings'
-    '/medicalData'
   ];
 
   const exitButtonPathNames = [

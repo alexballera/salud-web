@@ -18,14 +18,7 @@ const useStyles = makeStyles({
     minWidth: 124,
     minHeight: 160,
     borderRadius: 16,
-    boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.5)',
-    marginLeft: 8,
-    marginRight: 8
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)'
+    boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.5)'
   },
   title: {
     fontFamily: poppinsFontFamily,

@@ -19,6 +19,8 @@ export const textSmallCardColor = 'A4B6BA';
 export const titleCardColor = '#616161';
 export const titlePageColor = '#455255';
 export const tertiaryLightColor = '#E9F7FC';
+export const title2Color = '#4D5759';
+export const background2Color = '#F8F8F8';
 
 const defaultTheme: ThemeOptions = {
   palette: {
