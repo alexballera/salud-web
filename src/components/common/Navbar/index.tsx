@@ -76,6 +76,8 @@ function Navbar(): JSX.Element {
         return true;
       case '/proceedings':
         return true;
+      case '/clinicHistory':
+        return true;
       default:
         return false;
     }
@@ -93,6 +95,8 @@ function Navbar(): JSX.Element {
         return t('proceedings.generalData', { ns: i18nProceedings });
       case '/proceedings':
         return t('items.proceedings', { ns: 'menu' });
+      case '/clinicHistory':
+        return t('items.clinicHistory', { ns: 'menu' });
       default:
         return false;
     }
