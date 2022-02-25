@@ -32,6 +32,7 @@ import type { NextPageContext } from 'next/';
 
 type TProps = {
   items: TListItem[];
+  items2: TListItem[];
 };
 
 const useStyles = makeStyles(() =>
@@ -75,7 +76,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-function RecipeAndPrescriptionPage({ items }: TProps): JSX.Element {
+function RecipeAndPrescriptionPage({ items, items2 }: TProps): JSX.Element {
   const classes = useStyles();
   const { t } = useTranslation(NAMESPACE_KEY);
   const [itemDetails, setItemDetails] = useState<string | null>('');
@@ -101,10 +102,10 @@ function RecipeAndPrescriptionPage({ items }: TProps): JSX.Element {
 
           <Box className={classes.boxSpacing}>
             <SimpleCardList
-              title="asdf"
-              titleStyles={{ backgroundColor: 'red', color: 'blue' }}
+              title="Preescripción"
+              titleStyles={{ backgroundColor: 'rgba(187, 154, 253, 0.1)', color: '#AB82FF' }}
               itemClick={handleSimpleListClick}
-              items={items}
+              items={items2}
             />
           </Box>
 
@@ -112,29 +113,27 @@ function RecipeAndPrescriptionPage({ items }: TProps): JSX.Element {
             <CardCollapse title="Loratadina" items={items} itemClick={handleSimpleListClick} />
           </Box>
 
-          <Box className={classes.boxSpacing}>
+          {/* <Box className={classes.boxSpacing}>
             <CardCollapse
               isExpanded
               title="Loratadina"
               items={[{ value: 'asdfas' }]}
               itemClick={handleSimpleListClick}
             />
-          </Box>
+          </Box> */}
 
-          {itemDetails && (
-            <Box className={classes.boxSpacing}>
-              <Card className={classes.footerCard}>
-                <CardContent>
-                  <Typography className={classes.footerCardTitle} variant="h2">
-                    {t('sub_title')}
-                  </Typography>
-                  <Typography className={classes.footerCardDescription} variant="body1">
-                    Consumir en ayunas. Suspender consumo de alcohol durante el tratamiento
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Box>
-          )}
+          <Box className={classes.boxSpacing}>
+            <Card className={classes.footerCard}>
+              <CardContent>
+                <Typography className={classes.footerCardTitle} variant="h2">
+                  {t('sub_title')}
+                </Typography>
+                <Typography className={classes.footerCardDescription} variant="body1">
+                  Consumir en ayunas. Suspender consumo de alcohol durante el tratamiento
+                </Typography>
+              </CardContent>
+            </Card>
+          </Box>
         </Box>
       </Grid>
     </Grid>
@@ -146,13 +145,21 @@ RecipeAndPrescriptionPage.getInitialProps = async ({ query }: NextPageContext) =
   const { item_id } = query;
   console.log('itemid', item_id);
   const items: TListItem[] = [
-    { title: 'tag', value: 'uno' },
-    { title: 'date', value: 'tres' },
-    { title: 'reportBy', value: 'cuatro' },
-    { title: 'specialty', value: 'cinco' }
+    { title: 'Vía', value: 'Oral' },
+    { title: 'Tomar', value: '2 unidades' },
+    { title: 'Frecuencia', value: '8 horas' },
+    { title: 'Cantidad', value: '18' },
+    { title: 'Días', value: '3' },
+    { title: 'Potencia', value: '10g' }
+  ];
+  const items2: TListItem[] = [
+    { title: 'Fecha  ', value: '24 de febrero, 2022' },
+    { title: 'Reportado por:', value: 'Dr. Manuel Rodriguez Mora' },
+    { title: 'Especialidad', value: 'Ginecología' }
   ];
   return {
-    items
+    items,
+    items2
   };
 };
 

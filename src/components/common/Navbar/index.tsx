@@ -68,6 +68,8 @@ function Navbar(): JSX.Element {
         return true;
       case '/recipes_and_prescriptions/[item_id]':
         return true;
+      case '/recipes_and_prescriptions/preview/[item_id]':
+        return true;
       case '/proceedings':
         return true;
       default:
@@ -81,6 +83,8 @@ function Navbar(): JSX.Element {
         return t('items.generalData', { ns: 'menu' });
       case '/recipes_and_prescriptions/[item_id]':
         return t('items.recipes_and_prescriptions', { ns: 'menu' });
+      case '/recipes_and_prescriptions/preview/[item_id]':
+        return t('items.recipes_and_prescriptions_preview', { ns: 'menu' });
       case '/proceedings':
         return t('items.proceedings', { ns: 'menu' });
       default:
@@ -96,6 +100,7 @@ function Navbar(): JSX.Element {
     '/help',
     '/medicalData',
     '/recipes_and_prescriptions/[item_id]',
+    '/recipes_and_prescriptions/preview/[item_id]',
     '/proceedings',
     '/medicalData'
   ];

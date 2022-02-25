@@ -12,7 +12,8 @@ export const enMenu = {
     subscription: 'Tu suscripción',
     preferences: 'Preferencias',
     generalData: 'Datos generales',
-    recipes_and_prescriptions: 'Details',
+    recipes_and_prescriptions: 'Recipes and prescriptions',
+    recipes_and_prescriptions_preview: 'Details',
     proceedings: 'Expediente médico'
   }
 };

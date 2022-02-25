@@ -200,5 +200,12 @@ export const enGlobals = {
     ocupation: 'Ocupation',
     address: 'Address',
     age: 'Age'
+  },
+
+  months: {
+    january: 'January',
+    march: 'March',
+    september: 'September',
+    december: 'December'
   }
 };
