@@ -201,5 +201,12 @@ export const esGlobals = {
     ocupation: 'Profesión',
     address: 'Dirección',
     age: 'Edad'
+  },
+
+  months: {
+    january: 'Enero',
+    march: 'Marzo',
+    september: 'Septiembre',
+    december: 'Diciembre'
   }
 };
