@@ -15,6 +15,8 @@ import navbarStyles from './styles.module';
 import { useTranslation, withTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18Global, i18n } from '../../../i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
+import { NAMESPACE_KEY as i18nProceedings } from '../../../i18n/proceedings/i18n';
+
 /// i18n END
 
 /// OWN COMPONENTS
@@ -65,7 +67,7 @@ function Navbar(): JSX.Element {
   const showBackButton = () => {
     switch (router.pathname) {
       case '/medicalData':
-        return true;
+      case '/generalData':
       case '/proceedings':
         return true;
       default:
@@ -77,6 +79,8 @@ function Navbar(): JSX.Element {
     switch (router.pathname) {
       case '/medicalData':
         return t('items.generalData', { ns: 'menu' });
+      case '/generalData':
+        return t('proceedings.generalData', { ns: i18nProceedings });
       case '/proceedings':
         return t('items.proceedings', { ns: 'menu' });
       default:
@@ -91,7 +95,8 @@ function Navbar(): JSX.Element {
     '/preferences',
     '/help',
     '/medicalData',
-    '/proceedings'
+    '/generalData',
+    '/proceedings',
   ];
 
   const exitButtonPathNames = [

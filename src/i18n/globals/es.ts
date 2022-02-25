@@ -83,6 +83,7 @@ export const esGlobals = {
     same_residence: 'Igual que mi domicilio',
     residence: 'Domicilio',
     language: 'Idioma',
+    for: 'Por',
 
     country: {
       country: 'País de residencia',

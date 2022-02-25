@@ -96,6 +96,17 @@ const defaultTheme: ThemeOptions = {
       notchedOutline: {
         top: 0
       }
+    },
+    MuiTab: {
+      root: {
+        textTransform:'none',
+        fontFamily: poppinsFontFamily,
+        fontStyle: 'normal',
+        fontWeight: 500,
+        fontSize: 14,
+        letterSpacing: 0.4,
+        color: textValueCardColor
+      }
     }
   }
 };

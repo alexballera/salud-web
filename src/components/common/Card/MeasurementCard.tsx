@@ -50,10 +50,23 @@ const useStyles = makeStyles({
     fontStyle: 'normal',
     fontSize: 10,
     color: textSmallCardColor
+  },
+  mediumText: {
+    marginTop: 0,
+    fontFamily: poppinsFontFamily,
+    fontStyle: 'normal',
+    fontSize: 12,
+    color: textValueCardColor
   }
 });
+type IProps = {
+  title?: string
+  value: string
+  type?: string
+  noSVG?: boolean
+}
 
-export default function MeasurementCard({ title, value, type }) {
+export default function MeasurementCard({ title, value, type, noSVG = false}: IProps) {
   const classes = useStyles();
 
   const getSvg = type => {
@@ -73,12 +86,12 @@ export default function MeasurementCard({ title, value, type }) {
     <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          {getSvg(type)}
+          {!noSVG && getSvg(type)}
           {title}
         </Typography>
         <Typography className={classes.textValue}>{value}</Typography>
-        <Typography className={classes.smallText}>
-          Última medición:
+        <Typography className={!noSVG ? classes.smallText : classes.mediumText}>
+          {!noSVG && 'Última medición:'}
           <br />
           01 feb, 2022
           <br />

@@ -17,6 +17,8 @@ import { enPreferences } from './preferences/en';
 import { esPreferences } from './preferences/es';
 import { enProfile } from './profile/en';
 import { esProfile } from './profile/es';
+import { enGeneralData } from './generalData/en';
+import { esGeneralData } from './generalData/es';
 
 const resources = {
   enUS: {
@@ -27,7 +29,8 @@ const resources = {
     code: enCode,
     subscriptions: enSubscriptions,
     preferences: enPreferences,
-    profile: enProfile
+    profile: enProfile,
+    generalData: enGeneralData
   },
   es: {
     globals: esGlobals,
@@ -37,7 +40,8 @@ const resources = {
     code: esCode,
     subscriptions: esSubscriptions,
     preferences: esPreferences,
-    profile: esProfile
+    profile: esProfile,
+    generalData: esGeneralData
   }
 };
 
@@ -49,7 +53,8 @@ const namespaces = [
   'code',
   'subscriptions',
   'preferences',
-  'profile'
+  'profile',
+  'generalData'
 ];
 
 const DETECTION_OPTIONS = {
