@@ -15,6 +15,8 @@ import { enSubscriptions } from './subscriptions/en';
 import { esSubscriptions } from './subscriptions/es';
 import { enPreferences } from './preferences/en';
 import { esPreferences } from './preferences/es';
+import { esRecipesAndPrescriptions } from './recipes_and_prescriptions/es';
+import { enRecipesAndPrescriptions } from './recipes_and_prescriptions/en';
 import { enProfile } from './profile/en';
 import { esProfile } from './profile/es';
 import { enGeneralData } from './generalData/en';
@@ -29,6 +31,7 @@ const resources = {
     code: enCode,
     subscriptions: enSubscriptions,
     preferences: enPreferences,
+    recipesAndPrescriptions: enRecipesAndPrescriptions,
     profile: enProfile,
     generalData: enGeneralData
   },
@@ -40,6 +43,7 @@ const resources = {
     code: esCode,
     subscriptions: esSubscriptions,
     preferences: esPreferences,
+    recipesAndPrescriptions: esRecipesAndPrescriptions,
     profile: esProfile,
     generalData: esGeneralData
   }
@@ -53,6 +57,7 @@ const namespaces = [
   'code',
   'subscriptions',
   'preferences',
+  'recipes-and-prescriptions',
   'profile',
   'generalData'
 ];

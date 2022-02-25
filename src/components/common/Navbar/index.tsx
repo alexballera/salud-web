@@ -67,7 +67,13 @@ function Navbar(): JSX.Element {
   const showBackButton = () => {
     switch (router.pathname) {
       case '/medicalData':
+        return true;
+      case '/recipes_and_prescriptions/[item_id]':
+        return true;
+      case '/recipes_and_prescriptions/preview/[item_id]':
+        return true;
       case '/generalData':
+        return true;
       case '/proceedings':
         return true;
       default:
@@ -79,6 +85,10 @@ function Navbar(): JSX.Element {
     switch (router.pathname) {
       case '/medicalData':
         return t('items.generalData', { ns: 'menu' });
+      case '/recipes_and_prescriptions/[item_id]':
+        return t('items.recipes_and_prescriptions', { ns: 'menu' });
+      case '/recipes_and_prescriptions/preview/[item_id]':
+        return t('items.recipes_and_prescriptions_preview', { ns: 'menu' });
       case '/generalData':
         return t('proceedings.generalData', { ns: i18nProceedings });
       case '/proceedings':
@@ -95,8 +105,10 @@ function Navbar(): JSX.Element {
     '/preferences',
     '/help',
     '/medicalData',
-    '/generalData',
+    '/recipes_and_prescriptions/[item_id]',
+    '/recipes_and_prescriptions/preview/[item_id]',
     '/proceedings',
+    '/generalData'
   ];
 
   const exitButtonPathNames = [
