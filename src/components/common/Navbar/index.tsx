@@ -15,6 +15,8 @@ import navbarStyles from './styles.module';
 import { useTranslation, withTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18Global, i18n } from '../../../i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
+import { NAMESPACE_KEY as i18nProceedings } from '../../../i18n/proceedings/i18n';
+
 /// i18n END
 
 /// OWN COMPONENTS
@@ -70,6 +72,8 @@ function Navbar(): JSX.Element {
         return true;
       case '/recipes_and_prescriptions/preview/[item_id]':
         return true;
+      case '/generalData':
+        return true;
       case '/proceedings':
         return true;
       default:
@@ -85,6 +89,8 @@ function Navbar(): JSX.Element {
         return t('items.recipes_and_prescriptions', { ns: 'menu' });
       case '/recipes_and_prescriptions/preview/[item_id]':
         return t('items.recipes_and_prescriptions_preview', { ns: 'menu' });
+      case '/generalData':
+        return t('proceedings.generalData', { ns: i18nProceedings });
       case '/proceedings':
         return t('items.proceedings', { ns: 'menu' });
       default:
@@ -102,7 +108,7 @@ function Navbar(): JSX.Element {
     '/recipes_and_prescriptions/[item_id]',
     '/recipes_and_prescriptions/preview/[item_id]',
     '/proceedings',
-    '/medicalData'
+    '/generalData'
   ];
 
   const exitButtonPathNames = [

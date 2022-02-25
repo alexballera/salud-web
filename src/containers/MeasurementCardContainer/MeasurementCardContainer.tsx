@@ -1,3 +1,4 @@
+import { makeStyles } from '@material-ui/core';
 import React from 'react';
 
 /// MATERIAL UI
@@ -13,7 +14,20 @@ type IProps = {
   generalData: IMeasurementsData;
 };
 
+const useStyles = makeStyles({
+  root: {
+    paddingBottom: 20,
+    paddingLeft: 20,
+    paddingRight: 20
+  },
+  separator: {
+    margin: 10
+  }
+});
+
 export const MeasurementCardContainer = ({ generalData }: IProps): JSX.Element => {
+  const classes = useStyles();
+
   const { records } = generalData;
   const arterialPressure = records.find(x => x.type === 'arterialPressure');
   const arterialPressureValue =
@@ -29,7 +43,7 @@ export const MeasurementCardContainer = ({ generalData }: IProps): JSX.Element =
       ? weight.measurements[0].value + ' ' + weight.unit
       : '-';
   return (
-    <ScrollMenu>
+    <ScrollMenu scrollContainerClassName={classes.root} separatorClassName={classes.separator}>
       <MeasurementCard
         title={arterialPressure?.name}
         value={arterialPressureValue}

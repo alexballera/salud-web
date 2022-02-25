@@ -27,23 +27,70 @@ import {
   IMeasurementsData,
   mockData
 } from '../../services/getMeasurementsData.service';
-import { makeStyles, Typography } from '@material-ui/core';
-import { poppinsFontFamily } from '../../styles/js/theme';
+import {
+  Container,
+  Divider,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  makeStyles,
+  Typography
+} from '@material-ui/core';
+import {
+  background2Color,
+  poppinsFontFamily,
+  secondaryMainColor,
+  title2Color,
+  titlePageColor
+} from '../../styles/js/theme';
+import ProceedingsCard from '../../components/common/Card/ProceedingsCard';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 const useStyles = makeStyles({
   root: {
     minWidth: 164,
-    minHeight: 28
+    minHeight: 28,
+    flexGrow: 1
   },
   title: {
     fontFamily: poppinsFontFamily,
     fontStyle: 'normal',
     fontWeight: 'normal',
-    fontSize: 20,
+    fontSize: 16,
     letterSpacing: '0.15px',
-    color: '#455255',
-    paddingLeft: 24,
-    paddingBottom: 20
+    color: titlePageColor,
+    paddingLeft: 24
+  },
+  cardContainer: {
+    background: background2Color,
+    padding: 20
+  },
+  title2: {
+    fontFamily: poppinsFontFamily,
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 12,
+    letterSpacing: '0.15px',
+    color: title2Color,
+    paddingBottom: 15,
+    textTransform: 'uppercase'
+  },
+  cardContainer2: {
+    padding: 20
+  },
+  textMenuItem: {
+    fontFamily: poppinsFontFamily,
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 14,
+    letterSpacing: '0.15px',
+    color: title2Color
+  },
+  alignRight: {
+    marginRight: 0
   }
 });
 
@@ -54,6 +101,7 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
   const { t } = useTranslation([i18Global, i18Forms, i18nProceedings]);
   const [measurementData, setMeasurementData] = useState<IMeasurementsData>(mockData);
   const i18nPopUpError = t('message.error.general_fetch', { ns: i18Forms });
+  const router = useRouter();
 
   const fetchMeasurementsData = () => {
     getMeasurementsData()
@@ -72,10 +120,78 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
 
   return (
     <>
-      <Typography variant="body2" className={classes.title}>
-        {t('proceedings.generalData', { ns: i18nProceedings })}
-      </Typography>
+      <Container maxWidth="sm" className={classes.cardContainer2}>
+        <List component="nav" className={classes.root} aria-label="menubox proceedings">
+          <ListItem button divider>
+            <ListItemText
+              className={classes.textMenuItem}
+              primary={t('proceedings.generalData', { ns: i18nProceedings })}
+            />
+            <ListItemSecondaryAction>
+              <IconButton edge="end" aria-label="arrow">
+                <ArrowForwardIosIcon fontSize="small" htmlColor={secondaryMainColor} />
+              </IconButton>
+            </ListItemSecondaryAction>
+          </ListItem>
+        </List>
+      </Container>
       <MeasurementCardContainer generalData={measurementData} />
+      <Divider />
+      <Container maxWidth="sm" className={classes.cardContainer}>
+        <Typography variant="body2" className={classes.title2}>
+          {t('proceedings.title2', { ns: i18nProceedings })}
+        </Typography>
+        <Grid container alignItems="center" justify="center" spacing={3}>
+          <Grid item xs={6}>
+            <ProceedingsCard title={t('proceedings.prescriptions', { ns: i18nProceedings })} />
+          </Grid>
+          <Grid item xs={6}>
+            <ProceedingsCard title={t('proceedings.examResults', { ns: i18nProceedings })} />
+          </Grid>
+        </Grid>
+      </Container>
+      <Divider />
+      <Container maxWidth="sm" className={classes.cardContainer2}>
+        <Typography variant="body2" className={classes.title2}>
+          {t('proceedings.title3', { ns: i18nProceedings })}
+        </Typography>
+        <List component="nav" className={classes.root} aria-label="menubox proceedings">
+          <ListItem button divider>
+            <ListItemText
+              className={classes.textMenuItem}
+              primary={t('proceedings.generalMedicalData', { ns: i18nProceedings })}
+            />
+            <ListItemSecondaryAction>
+              <IconButton edge="end" aria-label="arrow">
+                <ArrowForwardIosIcon fontSize="small" htmlColor={secondaryMainColor} />
+              </IconButton>
+            </ListItemSecondaryAction>
+          </ListItem>
+          <Divider />
+          <ListItem button divider>
+            <ListItemText
+              className={classes.textMenuItem}
+              primary={t('proceedings.clinicHistory', { ns: i18nProceedings })}
+            />
+            <ListItemSecondaryAction>
+              <IconButton edge="end" aria-label="arrow">
+                <ArrowForwardIosIcon fontSize="small" htmlColor={secondaryMainColor} />
+              </IconButton>
+            </ListItemSecondaryAction>
+          </ListItem>
+          <ListItem button onClick={() => router.replace('/clinicHistory')}>
+            <ListItemText
+              className={classes.textMenuItem}
+              primary={t('proceedings.history', { ns: i18nProceedings })}
+            />
+            <ListItemSecondaryAction>
+              <IconButton edge="end" aria-label="arrow">
+                <ArrowForwardIosIcon fontSize="small" htmlColor={secondaryMainColor} />
+              </IconButton>
+            </ListItemSecondaryAction>
+          </ListItem>
+        </List>
+      </Container>
     </>
   );
 }

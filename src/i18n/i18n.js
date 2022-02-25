@@ -19,6 +19,8 @@ import { esRecipesAndPrescriptions } from './recipes_and_prescriptions/es';
 import { enRecipesAndPrescriptions } from './recipes_and_prescriptions/en';
 import { enProfile } from './profile/en';
 import { esProfile } from './profile/es';
+import { enGeneralData } from './generalData/en';
+import { esGeneralData } from './generalData/es';
 
 const resources = {
   enUS: {
@@ -30,7 +32,8 @@ const resources = {
     subscriptions: enSubscriptions,
     preferences: enPreferences,
     recipesAndPrescriptions: enRecipesAndPrescriptions,
-    profile: enProfile
+    profile: enProfile,
+    generalData: enGeneralData
   },
   es: {
     globals: esGlobals,
@@ -41,7 +44,8 @@ const resources = {
     subscriptions: esSubscriptions,
     preferences: esPreferences,
     recipesAndPrescriptions: esRecipesAndPrescriptions,
-    profile: esProfile
+    profile: esProfile,
+    generalData: esGeneralData
   }
 };
 
@@ -54,7 +58,8 @@ const namespaces = [
   'subscriptions',
   'preferences',
   'recipes-and-prescriptions',
-  'profile'
+  'profile',
+  'generalData'
 ];
 
 const DETECTION_OPTIONS = {
