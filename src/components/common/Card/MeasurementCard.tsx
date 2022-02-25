@@ -12,6 +12,7 @@ import {
   textValueCardColor,
   titleCardColor
 } from '../../../styles/js/theme';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles({
   root: {
@@ -64,10 +65,12 @@ type IProps = {
   value: string
   type?: string
   noSVG?: boolean
+  route?: string
 }
 
-export default function MeasurementCard({ title, value, type, noSVG = false}: IProps) {
+export default function MeasurementCard({ title, value, type, noSVG = false, route}: IProps) {
   const classes = useStyles();
+  const router = useRouter();
 
   const getSvg = type => {
     switch (type) {
@@ -82,8 +85,11 @@ export default function MeasurementCard({ title, value, type, noSVG = false}: IP
     }
   };
 
+  const redirectTo = () => {
+    route && router.push(route)
+  }
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} onClick={redirectTo}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           {!noSVG && getSvg(type)}
