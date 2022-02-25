@@ -122,7 +122,7 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
     <>
       <Container maxWidth="sm" className={classes.cardContainer2}>
         <List component="nav" className={classes.root} aria-label="menubox proceedings">
-          <ListItem button divider>
+          <ListItem button divider onClick={() => router.push('/generalData')}>
             <ListItemText
               className={classes.textMenuItem}
               primary={t('proceedings.generalData', { ns: i18nProceedings })}
@@ -143,10 +143,10 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
         </Typography>
         <Grid container alignItems="center" justify="center" spacing={3}>
           <Grid item xs={6}>
-            <ProceedingsCard title={t('proceedings.prescriptions', { ns: i18nProceedings })} />
+            <ProceedingsCard title={t('proceedings.prescriptions', { ns: i18nProceedings })} route="/recipes_and_prescriptions/2022"/>
           </Grid>
           <Grid item xs={6}>
-            <ProceedingsCard title={t('proceedings.examResults', { ns: i18nProceedings })} />
+            <ProceedingsCard title={t('proceedings.examResults', { ns: i18nProceedings })} route="/proceedings" />
           </Grid>
         </Grid>
       </Container>
@@ -156,7 +156,7 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
           {t('proceedings.title3', { ns: i18nProceedings })}
         </Typography>
         <List component="nav" className={classes.root} aria-label="menubox proceedings">
-          <ListItem button divider>
+        <ListItem button divider onClick={() => router.push('/medicalData')}>
             <ListItemText
               className={classes.textMenuItem}
               primary={t('proceedings.generalMedicalData', { ns: i18nProceedings })}
@@ -168,7 +168,7 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
             </ListItemSecondaryAction>
           </ListItem>
           <Divider />
-          <ListItem button divider>
+          <ListItem button divider onClick={() => router.push('/clinicHistory')}>
             <ListItemText
               className={classes.textMenuItem}
               primary={t('proceedings.clinicHistory', { ns: i18nProceedings })}
@@ -179,7 +179,7 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
-          <ListItem button onClick={() => router.replace('/clinicHistory')}>
+          <ListItem button onClick={() => router.push('/proceedings')}>
             <ListItemText
               className={classes.textMenuItem}
               primary={t('proceedings.history', { ns: i18nProceedings })}

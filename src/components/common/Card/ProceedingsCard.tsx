@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { secondaryMainColor } from '../../../styles/js/theme';
 import { CardActionArea } from '@material-ui/core';
 import FolderOpenOutlinedIcon from '@material-ui/icons/FolderOpenOutlined';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles({
   textCard2: {
@@ -31,12 +32,13 @@ const useStyles = makeStyles({
   }
 });
 
-export default function ProceedingsCard({ title }) {
+export default function ProceedingsCard({ title, route }) {
   const classes = useStyles();
+  const router = useRouter();
 
   return (
     <CardActionArea>
-      <Card className={classes.root}>
+      <Card className={classes.root} onClick={()=> router.push(route)}>
         <CardContent>
           <div className={classes.alignCenter}>
             <FolderOpenOutlinedIcon htmlColor={secondaryMainColor} />
