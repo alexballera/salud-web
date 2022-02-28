@@ -143,10 +143,16 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
         </Typography>
         <Grid container alignItems="center" justify="center" spacing={3}>
           <Grid item xs={6}>
-            <ProceedingsCard title={t('proceedings.prescriptions', { ns: i18nProceedings })} route="/recipes_and_prescriptions/2022"/>
+            <ProceedingsCard
+              title={t('proceedings.prescriptions', { ns: i18nProceedings })}
+              route="/recipes_and_prescriptions/2022"
+            />
           </Grid>
           <Grid item xs={6}>
-            <ProceedingsCard title={t('proceedings.examResults', { ns: i18nProceedings })} route="/proceedings" />
+            <ProceedingsCard
+              title={t('proceedings.examResults', { ns: i18nProceedings })}
+              route="/examResults"
+            />
           </Grid>
         </Grid>
       </Container>
@@ -156,7 +162,7 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
           {t('proceedings.title3', { ns: i18nProceedings })}
         </Typography>
         <List component="nav" className={classes.root} aria-label="menubox proceedings">
-        <ListItem button divider onClick={() => router.push('/medicalData')}>
+          <ListItem button divider onClick={() => router.push('/medicalData')}>
             <ListItemText
               className={classes.textMenuItem}
               primary={t('proceedings.generalMedicalData', { ns: i18nProceedings })}
@@ -179,10 +185,10 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
-          <ListItem button onClick={() => router.push('/proceedings')}>
+          <ListItem button onClick={() => router.push('/historyOfConsultations')}>
             <ListItemText
               className={classes.textMenuItem}
-              primary={t('proceedings.history', { ns: i18nProceedings })}
+              primary={t('proceedings.historyOfConsultations', { ns: i18nProceedings })}
             />
             <ListItemSecondaryAction>
               <IconButton edge="end" aria-label="arrow">
