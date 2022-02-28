@@ -1,6 +1,5 @@
 /// BASE IMPORTS
 import React from 'react';
-import Link from 'next/link';
 import clsx from 'clsx';
 /// BASE IMPORTS
 
@@ -35,6 +34,7 @@ import SvgFamilyIllnesses from '@/src/components/common/Svg/SvgFamilyIllnesses.c
 /// STYLES
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import SvgInjuries from '@/src/components/common/Svg/SvgInjuries.component';
+import { useRouter } from 'next/router';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -53,58 +53,65 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const clinicHistory = (): JSX.Element => {
   const classes = useStyles();
+  const router = useRouter();
   const { t } = useTranslation(i18ClinicHistory);
   const items = [
     {
       name: t('items.diseases', { ns: i18ClinicHistory }),
       icon: <SvgDiseases />,
-      action: '/clinicHistory/diseases'
+      action: '/clinic_history/diseases'
     },
     {
       name: t('items.allergies', { ns: i18ClinicHistory }),
       icon: <SvgAllergies />,
-      action: '/clinicHistory/allergies'
+      action: '/clinic_history/allergies'
     },
     {
       name: t('items.habits', { ns: i18ClinicHistory }),
       icon: <SvgHabits />,
-      action: '/clinicHistory/habits'
+      action: '/clinic_history/habits'
     },
     {
       name: t('items.injuries', { ns: i18ClinicHistory }),
       icon: <SvgInjuries />,
-      action: '/clinicHistory/injuries'
+      action: '/clinic_history/injuries'
     },
     {
       name: t('items.vaccines', { ns: i18ClinicHistory }),
       icon: <SvgVaccines />,
-      action: '/clinicHistory/vaccines'
+      action: '/clinic_history/vaccines'
     },
     {
       name: t('items.familyIllnesses', { ns: i18ClinicHistory }),
       icon: <SvgFamilyIllnesses />,
-      action: '/clinicHistory/familyIllnesses'
+      action: '/clinic_history/familyIllnesses'
     }
   ];
 
+  const handleClick = (path: string): void => {
+    router.push(path);
+  };
+
   return (
     <Box p={3}>
-      <List className={classes.root} aria-label="mailbox folders">
+      <List className={classes.root} aria-label="clinic history folders">
         {items.map((item, i) => (
           <React.Fragment key={item.name}>
-            <Link href={item.action} passHref>
-              <ListItem button>
-                <SvgContainer title={item.name} width={30} height={30}>
-                  {item.icon}
-                </SvgContainer>
-                <ListItemText primary={item.name} className={classes.text} />
-                <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="delete">
-                    <ChevronRightIcon color="secondary" />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-            </Link>
+            <ListItem button onClick={() => handleClick(item.action)}>
+              <SvgContainer title={item.name} width={30} height={30}>
+                {item.icon}
+              </SvgContainer>
+              <ListItemText primary={item.name} className={classes.text} />
+              <ListItemSecondaryAction>
+                <IconButton
+                  edge="end"
+                  aria-label={item.name}
+                  onClick={() => handleClick(item.action)}
+                >
+                  <ChevronRightIcon color="secondary" />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
             <Divider
               className={clsx({
                 [classes.hidden]: i === items.length - 1

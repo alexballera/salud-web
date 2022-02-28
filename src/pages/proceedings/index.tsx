@@ -174,7 +174,7 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
             </ListItemSecondaryAction>
           </ListItem>
           <Divider />
-          <ListItem button divider onClick={() => router.push('/clinicHistory')}>
+          <ListItem button divider onClick={() => router.push('/clinic_history')}>
             <ListItemText
               className={classes.textMenuItem}
               primary={t('proceedings.clinicHistory', { ns: i18nProceedings })}
