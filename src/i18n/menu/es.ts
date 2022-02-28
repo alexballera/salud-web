@@ -13,7 +13,7 @@ export const esMenu = {
     preferences: 'Preferencias',
     generalData: 'Datos generales',
     proceedings: 'Expediente médico',
-    clinicHistory: 'Historia clínica',
+    clinic_history: 'Historia clínica',
     recipes_and_prescriptions: 'Recetas y prescripciones',
     recipes_and_prescriptions_preview: 'Detalle'
   }
