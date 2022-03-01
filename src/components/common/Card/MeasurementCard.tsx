@@ -57,18 +57,18 @@ const useStyles = makeStyles({
     fontFamily: poppinsFontFamily,
     fontStyle: 'normal',
     fontSize: 12,
-    color: textValueCardColor
+    color: textSmallCardColor
   }
 });
 type IProps = {
-  title?: string
-  value: string
-  type?: string
-  noSVG?: boolean
-  route?: string
-}
+  title?: string;
+  value: string;
+  type?: string;
+  noSVG?: boolean;
+  route?: string;
+};
 
-export default function MeasurementCard({ title, value, type, noSVG = false, route}: IProps) {
+export default function MeasurementCard({ title, value, type, noSVG = false, route }: IProps) {
   const classes = useStyles();
   const router = useRouter();
 
@@ -86,8 +86,8 @@ export default function MeasurementCard({ title, value, type, noSVG = false, rou
   };
 
   const redirectTo = () => {
-    route && router.push(route)
-  }
+    route && router.push(route);
+  };
   return (
     <Card className={classes.root} onClick={redirectTo}>
       <CardContent>
