@@ -1,13 +1,13 @@
 /// MATERIAL UI
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import Typography from '@material-ui/core/Typography';
+import MuiTypography from '@material-ui/core/Typography';
 import Box, { BoxProps } from '@material-ui/core/Box';
 /// MATERIAL UI END
 
 /// STYLES
-import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { poppinsFontFamily } from '../../../styles/js/theme';
+import { makeStyles, createStyles, styled } from '@material-ui/core/styles';
+import { poppinsFontFamily } from '../../../../styles/js/theme';
 /// STYLES END
 
 /// OWN COMPONENTS
@@ -17,6 +17,12 @@ import CardList from './cardList';
 /// TYPES
 import type { TListItem } from './types';
 /// TYPES END
+
+const Typography = styled(MuiTypography)({
+  fontFamily: poppinsFontFamily,
+  fontStyle: 'normal',
+  fontWeight: 'normal'
+});
 
 export type TProps = {
   items: TListItem[];
@@ -31,32 +37,26 @@ const useStyles = makeStyles(() =>
     tag: {
       display: 'inline-block',
       borderRadius: 64,
+      marginTop: 0,
       padding: 2,
       paddingLeft: 6,
       paddingRight: 6
     },
-    tagFont: {
-      fontFamily: poppinsFontFamily,
-      fontStyle: 'normal',
+    tagText: {
       fontWeight: 500,
-      fontSize: '12px',
+      fontSize: 12,
       lineHeight: '20px',
       letterSpacing: '0.14px'
     },
     card: {
       boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.5)',
-      borderRadius: 16
+      borderRadius: 10
     },
     cardHeader: {
-      paddingBottom: 0
-    },
-    itemFont: {
-      fontFamily: poppinsFontFamily,
-      fontStyle: 'normal',
-      fontWeight: 'normal',
-      fontSize: 14,
-      lineHeight: '143%',
-      letterSpacing: '0.15px'
+      paddingBottom: 0,
+      '& span': {
+        lineHeight: 0
+      }
     }
   })
 );
@@ -69,7 +69,7 @@ function SimpleCardList({ title, titleStyles, items, itemClick }: TProps): JSX.E
         className={classes.cardHeader}
         title={
           <Box className={classes.tag} style={titleStyles}>
-            <Typography className={classes.tagFont}>{title}</Typography>
+            <Typography className={classes.tagText}>{title}</Typography>
           </Box>
         }
       />

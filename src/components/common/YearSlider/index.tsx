@@ -1,132 +1,89 @@
 ///  BASE IMPORTS
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 /// BASE IMPORTS END
 
 /// MATERIAL UI
 import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 /// MATERIAL UI END
-
-import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
-import { styled } from '@material-ui/core';
 
 /// STYLES
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { poppinsFontFamily, secondaryMainColor } from '../../../styles/js/theme';
 /// STYLES END
 
-const YEARS_BLOCK_SIZE = 5;
+const YEARS_BLOCK_SIZE = 30;
 const CURRENT_YEAR = new Date().getFullYear();
 
 type TProps = {
   itemClick: (item: number) => void;
+  disabled: boolean;
 };
 
 const prevBlock = (year: number) =>
   Array.from(Array(YEARS_BLOCK_SIZE).keys()).map((_, idx) => year - (idx + 1));
 
-const ArrowLeft = styled(ArrowBackIos)({
-  color: secondaryMainColor,
-  width: 'auto',
-  height: 20
-});
-
-const ArrowRight = styled(ArrowForwardIos)({
-  color: secondaryMainColor,
-  width: 'auto',
-  height: 20
-});
-
-const CustomCard = styled(Card)({
-  border: 'none',
-  boxShadow: 'none',
-  width: '85.33px;',
-  height: 50,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  borderRadius: 0,
-  fontFamily: poppinsFontFamily,
-  fontStyle: 'normal',
-  fontWeight: 500,
-  fontSize: '14px',
-  lineHeight: '24px',
-  letterSpacing: '0.4px',
-  color: secondaryMainColor
-});
-
-function LeftArrow() {
-  const { isFirstItemVisible, scrollPrev } = useContext(VisibilityContext);
-
-  return (
-    <IconButton disabled={isFirstItemVisible} onClick={() => scrollPrev()}>
-      <ArrowLeft />
-    </IconButton>
-  );
-}
-
-function RightArrow() {
-  const { isLastItemVisible, scrollNext } = useContext(VisibilityContext);
-
-  return (
-    <IconButton disabled={isLastItemVisible} onClick={() => scrollNext()}>
-      <ArrowRight />
-    </IconButton>
-  );
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`
+  };
 }
 
 const useStyles = makeStyles(() => {
   return createStyles({
-    main: {
-      paddingBottom: 10
-    },
-    boxItemDisable: {},
-    boxItemEnable: {
-      borderBottom: `2px solid ${secondaryMainColor}`
+    root: {
+      '& span': {
+        font: poppinsFontFamily,
+        fontStyle: 'normal',
+        fontWeight: 500,
+        color: secondaryMainColor,
+        fontSize: 14,
+        letterSpacing: '0.4px',
+        lineHeight: '24px'
+      }
     }
   });
 });
 
-function YearSlider({ itemClick }: TProps): JSX.Element {
+function YearSlider({ itemClick, disabled }: TProps): JSX.Element {
   const classes = useStyles();
-  const [years, setYears] = useState([CURRENT_YEAR, ...prevBlock(CURRENT_YEAR)]);
-  const [selected, setSelected] = useState<number>(CURRENT_YEAR);
+  const [years] = useState([CURRENT_YEAR, ...prevBlock(CURRENT_YEAR)]); // TODO: Make this length dynamic
 
   useEffect(() => {
     itemClick(CURRENT_YEAR);
   }, []);
 
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    if (disabled) return;
+    const value = event.target as HTMLElement;
+    const toNumber = Number(value.innerHTML);
+    if (typeof toNumber === 'number') {
+      setValue(newValue);
+      itemClick(toNumber);
+    }
+  };
+
   return (
-    <Box className={classes.main}>
-      <ScrollMenu
-        scrollContainerClassName={classes.main}
-        LeftArrow={LeftArrow}
-        RightArrow={RightArrow}
-        onUpdate={e => {
-          if (e.isLastItemVisible) {
-            setYears(prevState => [...prevState, ...prevBlock(prevState[prevState.length - 1])]);
-          }
-        }}
-      >
-        {years.map(item => (
-          <CustomCard
-            {...({ itemID: item } as any)}
-            itemId={item} // NOTE: itemId is required for track items
-            key={item}
-            className={selected === item ? classes.boxItemEnable : classes.boxItemDisable}
-            onClick={() => {
-              setSelected(item);
-              itemClick(item);
-            }}
-          >
-            <Typography variant="body1">{item}</Typography>
-          </CustomCard>
-        ))}
-      </ScrollMenu>
-    </Box>
+    <Tabs
+      disabled={disabled}
+      value={value}
+      onChange={handleChange}
+      variant="scrollable"
+      scrollButtons="on"
+      textColor="secondary"
+      indicatorColor="secondary"
+      TabScrollButtonProps={{ style: { color: secondaryMainColor } }}
+      TabIndicatorProps={{ color: 'secondary' }}
+      className={classes.root}
+    >
+      {years.map(tab => (
+        <Tab key={tab} label={tab} {...a11yProps(tab)} />
+      ))}
+    </Tabs>
   );
 }
 

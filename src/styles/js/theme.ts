@@ -21,6 +21,11 @@ export const titlePageColor = '#455255';
 export const tertiaryLightColor = '#E9F7FC';
 export const title2Color = '#4D5759';
 export const background2Color = '#F8F8F8';
+export const titleCardTagColor = '#AB82FF';
+export const titleCardTagBg = '#bb9afd1a';
+export const textValueCardColor2 = '#A4B6BA';
+export const title3Color = '#A1ADB0';
+export const cardDividerColor = '#E4EBED';
 
 const defaultTheme: ThemeOptions = {
   palette: {
@@ -99,7 +104,7 @@ const defaultTheme: ThemeOptions = {
     },
     MuiTab: {
       root: {
-        textTransform:'none',
+        textTransform: 'none',
         fontFamily: poppinsFontFamily,
         fontStyle: 'normal',
         fontWeight: 500,

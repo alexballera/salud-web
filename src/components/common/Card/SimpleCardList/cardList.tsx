@@ -1,22 +1,17 @@
 /// MATERIAL UI
-import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-import Typographyl from '@material-ui/core/Typography';
-import Box, { BoxProps } from '@material-ui/core/Box';
+import MuiTypography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 /// MATERIAL UI END
 
 /// STYLES
-import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { poppinsFontFamily } from '../../../styles/js/theme';
+import { makeStyles, createStyles, styled } from '@material-ui/core/styles';
+import { poppinsFontFamily, title2Color, title3Color } from '../../../../styles/js/theme';
 /// STYLES END
-
-/// OWN COMPONENTS
-import { TitleContent } from '../TitleContent';
-/// OWN COMPONENTS END
 
 /// TYPES
 import type { TListItem } from './types';
@@ -27,15 +22,22 @@ export type TProps = {
   itemClick: (values: unknown) => void;
 };
 
+const Typography = styled(MuiTypography)({
+  fontFamily: poppinsFontFamily,
+  fontStyle: 'normal',
+  fontWeight: 'normal',
+  fontSize: 14,
+  lineHeight: '143%',
+  letterSpacing: '0.15px'
+});
+
 const useStyles = makeStyles(() =>
   createStyles({
-    itemFont: {
-      fontFamily: poppinsFontFamily,
-      fontStyle: 'normal',
-      fontWeight: 'normal',
-      fontSize: 14,
-      lineHeight: '143%',
-      letterSpacing: '0.15px'
+    itemTitle: {
+      color: title3Color
+    },
+    itemValue: {
+      color: title2Color
     }
   })
 );
@@ -46,20 +48,16 @@ function SimpleCardList({ items, itemClick }: TProps): JSX.Element {
     <List>
       {items.map((item, idx) => {
         return (
-          <>
-            <ListItem button onClick={() => itemClick(item)} key={idx}>
+          <Box key={idx}>
+            <ListItem button onClick={() => itemClick(item)}>
               <Grid container direction="column" justify="space-between">
                 {item.title && (
                   <ListItemText>
-                    <Typographyl className={classes.itemFont} style={{ color: '#A1ADB0' }}>
-                      {item.title}
-                    </Typographyl>
+                    <Typography className={classes.itemTitle}>{item.title}</Typography>
                   </ListItemText>
                 )}
                 <ListItemText>
-                  <Typographyl className={classes.itemFont} style={{ color: '#4D5759' }}>
-                    {item.value}
-                  </Typographyl>
+                  <Typography className={classes.itemValue}>{item.value}</Typography>
                 </ListItemText>
               </Grid>
             </ListItem>
@@ -68,7 +66,7 @@ function SimpleCardList({ items, itemClick }: TProps): JSX.Element {
                 <Divider />
               </Box>
             )}
-          </>
+          </Box>
         );
       })}
     </List>
