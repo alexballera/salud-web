@@ -1,1 +1,3 @@
-export const enHabits = {};
+export const enHabits = {
+    not_assigned: "Not assigned"
+};
