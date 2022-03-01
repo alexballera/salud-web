@@ -8,23 +8,17 @@ import type { NextPageContext } from 'next/';
 
 /// i18n
 import { useTranslation, withTranslation } from 'react-i18next';
-import { NAMESPACE_KEY as i18Global } from '../../i18n/globals/i18n';
-import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
+import { NAMESPACE_KEY as i18Diseases} from '@/src/i18n/diseases/i18n';
 /// i18n END
 
 /// MATERIAL UI
 import { Box, makeStyles, Tab, Tabs, Typography, Card, CardContent, Divider, Grid, Chip } from '@material-ui/core';
-import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons';
 /// MATERIAL UI END
 
 type TDiseases = {
-    id: number;
     name: string;
     status: boolean;
-    demographic2: number
-};
-type TProps = {
-    diseases: [] | string[];
+    demographic: number
 };
 
 
@@ -33,12 +27,18 @@ const useStyles = makeStyles({
         borderRadius: 16,
         boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.5)'
     },
+    typography14:{
+        fontSize: "14px"
+    },
+    typography16:{
+        fontSize: "14px"
+    }
 });
 
-const Diseases = ({ diseases }: TProps): JSX.Element => {
+const Diseases = ({ diseases }): JSX.Element => {
 
     const classes = useStyles();
-    const { t } = useTranslation([i18Global, i18Forms]);
+    const { t } = useTranslation(i18Diseases);
 
     const [demographic, setDemographic] = useState(0);
 
@@ -49,55 +49,66 @@ const Diseases = ({ diseases }: TProps): JSX.Element => {
     return (
         <>
             <Box>
-                <Tabs variant="fullWidth" value={demographic} onChange={handleChange} >
-                    <Tab label="Adultez" />
-                    <Tab label="Niñez" />
+                <Tabs variant="fullWidth" textColor="secondary" value={demographic} onChange={handleChange} >
+                    <Tab label={t('tabs.adulthood', { ns: i18Diseases })} className={classes.typography14} />
+                    <Tab label={t('tabs.childhood', { ns: i18Diseases })} className={classes.typography14} />
                 </Tabs>
 
-
-                <Box role="tabpanel" hidden={demographic !== 0} m={3}>
-                    {demographic === 0 && (
-                        <Box>
-                            <Typography paragraph>Adultez iniciando desde los 18 años en adelante.</Typography>
-                            <Card className={classes.cardDiseases}>
-                                <Box mt={2} ml={2}>
-                                    <Typography paragraph style={{ fontSize: "16px" }} >Enfermedades</Typography>
-                                </Box>
-                                <Divider />
-
-                                {diseases.map((disease) => (
-                                    <Box my={3} ml={2}>
-                                        <Grid container key={disease.id}>
-                                            <Grid item xs={8}>
-                                                <Typography paragraph style={{ fontSize: "16px" }} >{disease.name}</Typography>
-                                            </Grid>
-                                        </Grid>
-                                    </Box>
-                                ))}
-                            </Card>
+                <Box role="tabpanel" m={3}>
+                    <Typography paragraph className={classes.typography14}>
+                        {demographic == 0 ? t('content.adulthood_description', { ns: i18Diseases }) : t('content.childhood_description', { ns: i18Diseases })}
+                    </Typography>
+                    <Card className={classes.cardDiseases}>
+                        <Box mt={2} ml={2}>
+                            <Typography paragraph color="secondary" className={classes.typography16} >{t('content.diseases', { ns: i18Diseases })}</Typography>
                         </Box>
-                    )}
+                        <Divider />
+                        {!diseases.filter((filter) => filter.demographic == demographic).length && (
+                            <Box my={3} ml={2}>
+                                <Typography paragraph className={classes.typography14}>
+                                    {t('content.unregistered', { ns: i18Diseases })}
+                                </Typography>
+                            </Box>
+                        )}
+                        {diseases.filter((filter) => filter.demographic == demographic).map((disease, index) => (
+                            <Box my={2.5} ml={2} key={index}>
+                                <Grid container>
+                                    <Grid item xs={8}>
+                                        <Typography paragraph className={classes.typography16} >{disease.name}</Typography>
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                        ))}
+                    </Card>
                 </Box>
             </Box>
         </>
     )
-}
-
-
+};
 
 Diseases.getInitialProps = async ({ query }: NextPageContext) => {
 
     const diseases: TDiseases[] = [
         {
-            id: 1,
             name: 'Asma intrínseca',
             status: true,
-            demographic2: 0
+            demographic: 0
         }, {
-            id: 2,
             name: 'Diabetes',
-            status: false,
-            demographic2: 1
+            status: true,
+            demographic: 0
+        }, {
+            name: 'Asma intrínseca',
+            status: true,
+            demographic: 1
+        }, {
+            name: 'Varicela',
+            status: true,
+            demographic: 1
+        }, {
+            name: 'Sarampión',
+            status: true,
+            demographic: 1
         }
     ];
     return {
