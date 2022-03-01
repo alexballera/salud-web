@@ -15,7 +15,7 @@ export const activeActionColor = 'rgba(0, 0, 0, 0.54)';
 export const hoverActionColor = 'rgba(0, 0, 0, 0.04)';
 export const poppinsFontFamily = 'Poppins, Roboto, sans-serif';
 export const textValueCardColor = '#67777A';
-export const textSmallCardColor = 'A4B6BA';
+export const textSmallCardColor = '#A4B6BA';
 export const titleCardColor = '#616161';
 export const titlePageColor = '#455255';
 export const tertiaryLightColor = '#E9F7FC';
@@ -99,7 +99,7 @@ const defaultTheme: ThemeOptions = {
     },
     MuiTab: {
       root: {
-        textTransform:'none',
+        textTransform: 'none',
         fontFamily: poppinsFontFamily,
         fontStyle: 'normal',
         fontWeight: 500,
