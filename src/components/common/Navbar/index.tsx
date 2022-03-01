@@ -78,6 +78,8 @@ function Navbar(): JSX.Element {
         return true;
       case '/clinic_history':
         return true;
+      case '/clinic_history/habits':
+        return true;
       default:
         return false;
     }
@@ -97,6 +99,8 @@ function Navbar(): JSX.Element {
         return t('items.proceedings', { ns: 'menu' });
       case '/clinic_history':
         return t('items.clinic_history', { ns: 'menu' });
+      case '/clinic_history/habits':
+        return t('items.clinic_history_habits', { ns: 'menu' });
       default:
         return false;
     }
