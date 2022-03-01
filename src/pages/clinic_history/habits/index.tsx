@@ -72,7 +72,12 @@ const Habits = ({ habits }): JSX.Element => {
                             }
                             <Divider />
                             <Box mt={2}>
-                                <Typography variant='body2' className={classes.typography14}> {habit.frequency_of_consumption ? habit.frequency_of_consumption : t('not_assigned', { ns: i18Habits })} </Typography>
+                                {habit.name == "Drogas" && habit.frequency_of_consumption == ""
+                                    ?
+                                    <Typography variant='body2' className={classes.typography14}> {habit.frequency_of_consumption ? habit.frequency_of_consumption : t('without_consumption', { ns: i18Habits })} </Typography>
+                                    :
+                                    <Typography variant='body2' className={classes.typography14}> {habit.frequency_of_consumption ? habit.frequency_of_consumption : t('not_assigned', { ns: i18Habits })} </Typography>
+                                }
                             </Box>
                         </Card>
                     </Box>
@@ -100,7 +105,7 @@ Habits.getInitialProps = async ({ query }: NextPageContext) => {
         }, {
             id: 4,
             name: "Drogas",
-            frequency_of_consumption: "Consumo activo"
+            frequency_of_consumption: ""
         }
     ];
     return {
