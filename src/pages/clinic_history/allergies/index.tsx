@@ -18,9 +18,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 /// MATERIAL UI END
 
 type TAllergies = {
-    id: number;
-    name: string;
-    status: number;
+    description: string;
+    isActive: boolean;
 };
 
 
@@ -75,12 +74,12 @@ const Allergies = ({ allergies }): JSX.Element => {
                     <Divider variant="fullWidth" />
                     <Box mx={2}>
                         {
-                            allergies.sort((a, b) => a.name.localeCompare(b.name)).map((allergie, index) => (
+                            allergies.sort((a, b) => a.description.localeCompare(b.description)).map((allergie, index) => (
                                 <Box key={index}>
-                                    <Link href={`/clinic_history/allergies/${allergie.id}`}>
+                                    <Link href={`/clinic_history/allergies/${allergie.description}`}>
                                         <Box component="span" className={classes.contentButton}>
-                                            <Typography variant='body2' color="primary" className={classes.buttonText}> {allergie.name} </Typography>
-                                            <Chip label={allergie.status ? t('active',{ ns: i18Allergies }) : t('inactive',{ ns: i18Allergies }) } className={[classes.chipStatus, allergie.status ? classes.chipActive : classes.chipInative].join(' ')} />
+                                            <Typography variant='body2' color="primary" className={classes.buttonText}> {allergie.description} </Typography>
+                                            <Chip label={allergie.isActive ? t('active',{ ns: i18Allergies }) : t('inactive',{ ns: i18Allergies }) } className={[classes.chipStatus, allergie.isActive ? classes.chipActive : classes.chipInative].join(' ')} />
                                             <ChevronRightIcon color="secondary" />
                                         </Box>
                                     </Link>
@@ -103,19 +102,17 @@ Allergies.getInitialProps = async ({ query }: NextPageContext) => {
 
     const allergies: TAllergies[] = [
         {
-            id: 1,
-            name: "Celiaquía",
-            status: 0
+            description: "Celiaquía",
+            isActive: false
         }, {
-            id: 2,
-            name: "Penicilina",
-            status: 1
+            description: "Penicilina",
+            isActive: true
         }, {
-            id: 3,
-            name: "Aleve",
-            status: 1
+            description: "Aleve",
+            isActive: true
         }
     ];
+
     return {
         allergies
     };
