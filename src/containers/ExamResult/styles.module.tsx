@@ -1,17 +1,18 @@
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-const examResultStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '100%',
-      backgroundColor: theme.palette.background.paper
-    },
-    text: {
-      marginLeft: 28
-    },
-    hidden: {
-      display: 'none'
-    }
-  })
-);
+import { createTheme } from '@mui/material/styles';
+import {
+  secondaryContrastTextColor,
+  secondaryDarkColor,
+  secondaryLightColor,
+  secondaryMainColor
+} from '@/src/styles/js/theme';
 
-export default examResultStyles;
+export const outerTheme = createTheme({
+  palette: {
+    secondary: {
+      light: secondaryLightColor,
+      main: secondaryMainColor,
+      dark: secondaryDarkColor,
+      contrastText: secondaryContrastTextColor
+    }
+  }
+});
