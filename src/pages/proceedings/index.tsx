@@ -1,6 +1,7 @@
 /// BASE IMPORTS
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import clsx from 'clsx';
 /// BASE IMPORTS
 
 /// i18n
@@ -91,6 +92,9 @@ const useStyles = makeStyles({
   },
   alignRight: {
     marginRight: 0
+  },
+  hidden: {
+    display: 'none'
   }
 });
 
@@ -118,17 +122,43 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
     /* fetchGeneralData() */
   }, []);
 
+  const items = [
+    {
+      title: t('proceedings.generalMedicalData', { ns: i18nProceedings }),
+      action: '/medicalData'
+    },
+    {
+      title: t('proceedings.clinicHistory', { ns: i18nProceedings }),
+      action: '/clinic_history'
+    },
+    {
+      title: t('proceedings.historyOfConsultations', { ns: i18nProceedings }),
+      action: '/historyOfConsultations'
+    }
+  ];
+
+  const itemsCard = [
+    {
+      title: t('proceedings.prescriptions', { ns: i18nProceedings }),
+      action: '/recipes_and_prescriptions/2022'
+    },
+    {
+      title: t('proceedings.examResults', { ns: i18nProceedings }),
+      action: '/examResults'
+    }
+  ];
+
   return (
     <>
       <Container maxWidth="sm" className={classes.cardContainer2}>
         <List component="nav" className={classes.root} aria-label="menubox proceedings">
-          <ListItem button divider onClick={() => router.push('/generalData')}>
+          <ListItem button onClick={() => router.push('/generalData')}>
             <ListItemText
               className={classes.textMenuItem}
               primary={t('proceedings.generalData', { ns: i18nProceedings })}
             />
             <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="arrow">
+              <IconButton edge="end" aria-label="arrow" onClick={() => router.push('/generalData')}>
                 <ArrowForwardIosIcon fontSize="small" htmlColor={secondaryMainColor} />
               </IconButton>
             </ListItemSecondaryAction>
@@ -142,18 +172,13 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
           {t('proceedings.title2', { ns: i18nProceedings })}
         </Typography>
         <Grid container alignItems="center" justify="center" spacing={3}>
-          <Grid item xs={6}>
-            <ProceedingsCard
-              title={t('proceedings.prescriptions', { ns: i18nProceedings })}
-              route="/recipes_and_prescriptions/2022"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <ProceedingsCard
-              title={t('proceedings.examResults', { ns: i18nProceedings })}
-              route="/examResults"
-            />
-          </Grid>
+          {itemsCard.map(item => (
+            <React.Fragment key={item.title}>
+              <Grid item xs={6}>
+                <ProceedingsCard title={item.title} route={item.action} />
+              </Grid>
+            </React.Fragment>
+          ))}
         </Grid>
       </Container>
       <Divider />
@@ -162,40 +187,27 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
           {t('proceedings.title3', { ns: i18nProceedings })}
         </Typography>
         <List component="nav" className={classes.root} aria-label="menubox proceedings">
-          <ListItem button divider onClick={() => router.push('/medicalData')}>
-            <ListItemText
-              className={classes.textMenuItem}
-              primary={t('proceedings.generalMedicalData', { ns: i18nProceedings })}
-            />
-            <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="arrow">
-                <ArrowForwardIosIcon fontSize="small" htmlColor={secondaryMainColor} />
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
-          <Divider />
-          <ListItem button divider onClick={() => router.push('/clinic_history')}>
-            <ListItemText
-              className={classes.textMenuItem}
-              primary={t('proceedings.clinicHistory', { ns: i18nProceedings })}
-            />
-            <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="arrow">
-                <ArrowForwardIosIcon fontSize="small" htmlColor={secondaryMainColor} />
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
-          <ListItem button onClick={() => router.push('/historyOfConsultations')}>
-            <ListItemText
-              className={classes.textMenuItem}
-              primary={t('proceedings.historyOfConsultations', { ns: i18nProceedings })}
-            />
-            <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="arrow">
-                <ArrowForwardIosIcon fontSize="small" htmlColor={secondaryMainColor} />
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
+          {items.map((item, i) => (
+            <React.Fragment key={item.title}>
+              <ListItem button onClick={() => router.push(item.action)}>
+                <ListItemText className={classes.textMenuItem} primary={item.title} />
+                <ListItemSecondaryAction>
+                  <IconButton
+                    edge="end"
+                    aria-label="arrow"
+                    onClick={() => router.push(item.action)}
+                  >
+                    <ArrowForwardIosIcon fontSize="small" htmlColor={secondaryMainColor} />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+              <Divider
+                className={clsx({
+                  [classes.hidden]: i === items.length - 1
+                })}
+              />
+            </React.Fragment>
+          ))}
         </List>
       </Container>
     </>
