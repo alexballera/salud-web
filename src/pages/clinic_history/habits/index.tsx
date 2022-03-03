@@ -36,7 +36,7 @@ const Habits = ({ habits }: TProps): JSX.Element => {
           <Box my={2} key={index}>
             <Card className={classes.cardHabits}>
               {habit.frequencyOfConsumption ? (
-                <Link href={`/clinic_history/habits/${habit.name}`}>
+                <Link href={`/clinic_history/habits/${habit.name}`} passHref>
                   <Box component="span" className={classes.cardContentLink}>
                     <Typography paragraph color="secondary" className={classes.typography16}>
                       {habit.name}
