@@ -6,7 +6,7 @@ import {
   secondaryMainColor
 } from '@/src/styles/js/theme';
 
-export const outerTheme = createTheme({
+export const tabTheme = createTheme({
   palette: {
     secondary: {
       light: secondaryLightColor,

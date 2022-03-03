@@ -18,7 +18,7 @@ import { withAppContext } from '@/src/context';
 
 /// STYLES
 import { useTheme, ThemeProvider } from '@mui/material/styles';
-import { outerTheme } from '@/src/containers/ExamResult/styles.module';
+import { tabTheme } from '@/src/containers/ExamResult/styles.module';
 import { secondaryMainColor } from '@/src/styles/js/theme';
 /// STYLES END
 
@@ -31,7 +31,7 @@ type TabPanelProps = {
 };
 /// TYPES END
 
-const data = [
+const tabContent = [
   {
     label: '2022',
     content: <h2>Contenido 2022</h2>
@@ -98,8 +98,8 @@ const ExamResult = (): JSX.Element => {
   };
 
   return (
-    <Box p={3}>
-      <ThemeProvider theme={outerTheme}>
+    <ThemeProvider theme={tabTheme}>
+      <Box p={3}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -111,7 +111,7 @@ const ExamResult = (): JSX.Element => {
           indicatorColor="secondary"
           sx={{ color: secondaryMainColor }}
         >
-          {data.map((tab, i) => (
+          {tabContent.map((tab, i) => (
             <Tab key={tab.label} label={tab.label} {...a11yProps(i)} />
           ))}
         </Tabs>
@@ -120,14 +120,14 @@ const ExamResult = (): JSX.Element => {
           index={value}
           onChangeIndex={handleChangeIndex}
         >
-          {data.map((tab, i) => (
+          {tabContent.map((tab, i) => (
             <TabPanel key={tab.label} value={value} index={i} dir={theme.direction}>
               {tab.content}
             </TabPanel>
           ))}
         </SwipeableViews>
-      </ThemeProvider>
-    </Box>
+      </Box>
+    </ThemeProvider>
   );
 };
 
