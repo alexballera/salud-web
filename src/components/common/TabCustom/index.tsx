@@ -9,8 +9,8 @@ import { Box, Tab, Tabs, Typography } from '@mui/material';
 
 /// STYLES
 import { useTheme, ThemeProvider } from '@mui/material/styles';
-import { tabTheme } from '@/src/containers/ExamResult/styles.module';
 import { secondaryMainColor } from '@/src/styles/js/theme';
+import { tabTheme, tabStyles } from './styles.module';
 /// STYLES END
 
 /// TYPES
@@ -29,7 +29,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ pl: 5, pr: 5, pt: 3, pb: 3 }}>
+        <Box sx={{ px: 5, py: 3 }}>
           <Typography component="div">{children}</Typography>
         </Box>
       )}
@@ -47,6 +47,7 @@ function a11yProps(index: number) {
 const TabCustom = (props: TabProps): JSX.Element => {
   const { content } = props;
   const theme = useTheme();
+  const classes = tabStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -59,7 +60,7 @@ const TabCustom = (props: TabProps): JSX.Element => {
 
   return (
     <ThemeProvider theme={tabTheme}>
-      <Box p={1}>
+      <Box>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -70,6 +71,7 @@ const TabCustom = (props: TabProps): JSX.Element => {
           textColor="secondary"
           indicatorColor="secondary"
           sx={{ color: secondaryMainColor }}
+          className={classes.root}
         >
           {content.map((tab, i) => (
             <Tab key={tab.label} label={tab.label} {...a11yProps(i)} />

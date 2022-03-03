@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles';
+import { createStyles, makeStyles } from '@mui/styles';
 import {
   secondaryContrastTextColor,
   secondaryDarkColor,
@@ -16,3 +17,11 @@ export const tabTheme = createTheme({
     }
   }
 });
+
+export const tabStyles = makeStyles(() =>
+  createStyles({
+    root: {
+      boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.25)'
+    }
+  })
+);
