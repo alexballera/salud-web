@@ -4,8 +4,7 @@ import React from 'react';
 import { Container } from '@material-ui/core';
 /// MUI COMPONENTS END
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const HabitsDetail = () => {
+const HabitsDetail = (): JSX.Element => {
   return (
     <Container>
       <h3>Control de hábitos detalle</h3>
