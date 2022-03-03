@@ -1,30 +1,19 @@
 import React from 'react';
 
-/// TYPES
-import type { NextPageContext } from 'next/';
-/// / TYPES END
-
 /// MUI COMPONENTS
-import {
-    Container
-} from '@material-ui/core';
+import { Container } from '@material-ui/core';
 /// MUI COMPONENTS END
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const HabitsDetail = () => {
-    return (
-        <>    
-            <Container>
-                <h3>Control de hábitos detalle</h3>
-            </Container>
-        </>
-    )
+  return (
+    <Container>
+      <h3>Control de hábitos detalle</h3>
+    </Container>
+  );
 };
 
-HabitsDetail.getInitialProps = async ({ query }: NextPageContext) => {
-
-    const { habits_id } = query;
-    console.log("id", habits_id);
-
-    return [];
+HabitsDetail.getInitialProps = async () => {
+  return [];
 };
 export default HabitsDetail;
