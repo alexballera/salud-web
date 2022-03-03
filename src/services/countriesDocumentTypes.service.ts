@@ -21,7 +21,7 @@ const countryConfig: TCountryDocumentType[] = [
       {
         id: '2',
         name: 'residence',
-        mask: '000000000000000',
+        mask: '0'.repeat(60),
         length: 15,
         validation: /^([0-9]){10,15}$/,
         reqFetchPerInf: false,
