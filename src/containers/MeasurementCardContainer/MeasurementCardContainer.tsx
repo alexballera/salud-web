@@ -45,15 +45,22 @@ export const MeasurementCardContainer = ({ generalData }: IProps): JSX.Element =
   return (
     <ScrollMenu scrollContainerClassName={classes.root} separatorClassName={classes.separator}>
       <MeasurementCard
+        route="/generalData"
         title={arterialPressure?.name}
         value={arterialPressureValue}
         type={arterialPressure.type}
       />
-      <MeasurementCard title={weight?.name} value={weightValue} type={weight.type} />
+      <MeasurementCard
+        title={weight?.name}
+        value={weightValue}
+        type={weight.type}
+        route="/generalData"
+      />
       <MeasurementCard
         title={bloodGlocuse?.name}
         value={bloodGlocuseValue}
         type={bloodGlocuse.type}
+        route="/generalData"
       />
     </ScrollMenu>
   );

@@ -14,6 +14,8 @@ export const enMenu = {
     generalData: 'Datos generales',
     recipes_and_prescriptions: 'Recipes and prescriptions',
     recipes_and_prescriptions_preview: 'Details',
-    proceedings: 'Expediente médico'
+    proceedings: 'Expediente médico',
+    clinic_history: 'Historia clínica',
+    diseases: 'Mis enfermedades'
   }
 };

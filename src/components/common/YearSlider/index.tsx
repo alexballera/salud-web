@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 /// BASE IMPORTS END
 
 /// MATERIAL UI
-import Box from '@material-ui/core/Box';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 /// MATERIAL UI END

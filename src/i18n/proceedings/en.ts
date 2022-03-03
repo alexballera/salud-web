@@ -7,6 +7,6 @@ export const enProceedings = {
     title3: 'Accede a',
     generalMedicalData: 'Datos médicos generales',
     clinicHistory: 'Historia clínica',
-    history: 'Historial de consulta'
+    historyOfConsultations: 'Historial de consultas'
   }
 };
