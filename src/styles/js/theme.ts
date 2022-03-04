@@ -21,6 +21,11 @@ export const titlePageColor = '#455255';
 export const tertiaryLightColor = '#E9F7FC';
 export const title2Color = '#4D5759';
 export const background2Color = '#F8F8F8';
+export const chipActiveBackground = '#BB9AFD1A';
+export const chipActiveTextColor = '#AB82FF';
+export const chipInactiveBackground = '#E4EBED';
+export const chipInactiveTextColor = '#829296';
+export const shadowCardColor = 'rgba(207, 225, 227, 0.5)';
 
 const defaultTheme: ThemeOptions = {
   palette: {
