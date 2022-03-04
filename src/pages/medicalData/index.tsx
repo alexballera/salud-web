@@ -37,12 +37,10 @@ function MedicalDataPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
         const { result } = response.data;
         setMedicalData(result);
       })
-      .catch(err =>
-        handleNotifications({ open: true, message: i18nPopUpError, severity: 'error' })
-      );
+      .catch(() => handleNotifications({ open: true, message: i18nPopUpError, severity: 'error' }));
   };
   useEffect(() => {
-    //TODO CONECTAR CON API REAL
+    // TODO CONECTAR CON API REAL
     /* fetchGeneralData() */
   }, []);
 

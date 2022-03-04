@@ -1,10 +1,11 @@
 /// BASE IMPORTS
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 /// BASE IMPORTS
 
 /// i18n
-import { withTranslation } from 'react-i18next';
+import { useTranslation, withTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18ExamResult } from '@/src/i18n/clinic_history/i18n';
+import { NAMESPACE_KEY as i18Forms } from '@/src/i18n/forms/i18n';
 /// i18n END
 
 /// MUI COMPONENTS
@@ -13,6 +14,12 @@ import { NAMESPACE_KEY as i18ExamResult } from '@/src/i18n/clinic_history/i18n';
 /// OWN COMPONENTS
 import { withAppContext } from '@/src/context';
 import TabCustom from '@/src/components/common/TabCustom';
+import {
+  getPatientExamsData,
+  mockData,
+  TGeneralData
+} from '@/src/services/getPatientsData.service';
+import { TPersonalDataProps } from '@/src/containers/SignUp/index.types';
 /// OWN COMPONENTS END
 
 /// STYLES
@@ -45,7 +52,27 @@ const tabContentData = [
   }
 ];
 
-const ExamResult = (): JSX.Element => {
+const ExamResult = ({ handleNotifications }: TPersonalDataProps): JSX.Element => {
+  const { t } = useTranslation([i18ExamResult, i18Forms]);
+  const [patientData, setPatientData] = useState<TGeneralData>(mockData);
+  const i18nPopUpError = t('message.error.general_fetch', { ns: i18Forms });
+
+  const fetchPatientData = () => {
+    getPatientExamsData()
+      .then(response => {
+        const { result } = response.data;
+        setPatientData(result);
+      })
+      .catch(err => {
+        console.log(err);
+        handleNotifications({ open: true, message: i18nPopUpError, severity: 'error' });
+      });
+  };
+  useEffect(() => {
+    // TODO CONECTAR CON API REAL
+    // fetchPatientData();
+    console.log(patientData);
+  }, []);
   return <TabCustom content={tabContentData} />;
 };
 
