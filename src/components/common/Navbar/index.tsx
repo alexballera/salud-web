@@ -80,6 +80,8 @@ function Navbar(): JSX.Element {
         return true;
       case '/clinic_history/diseases':
         return true;
+      case '/clinic_history/allergies/[allergie_id]':
+        return true;
       case '/exam_results':
         return true;
       case '/clinic_history/allergies':
@@ -107,6 +109,8 @@ function Navbar(): JSX.Element {
         return t('items.clinic_history', { ns: 'menu' });
       case '/clinic_history/diseases':
         return t('items.diseases', { ns: 'menu' });
+      case '/clinic_history/allergies/[allergie_id]':
+        return t('items.allergies', { ns: 'menu' });
       case '/exam_results':
         return t('proceedings.examResults', { ns: i18nProceedings });
       case '/clinic_history/allergies':
