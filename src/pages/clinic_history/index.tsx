@@ -1,5 +1,6 @@
 /// BASE IMPORTS
 import React from 'react';
+import { useRouter } from 'next/router';
 import clsx from 'clsx';
 /// BASE IMPORTS
 
@@ -29,12 +30,11 @@ import SvgAllergies from '@/src/components/common/Svg/SvgAllergies.component';
 import SvgHabits from '@/src/components/common/Svg/SvgHabits.component';
 import SvgVaccines from '@/src/components/common/Svg/SvgVaccines.component';
 import SvgFamilyIllnesses from '@/src/components/common/Svg/SvgFamilyIllnesses.component';
+import SvgInjuries from '@/src/components/common/Svg/SvgInjuries.component';
 /// OWN COMPONENTS END
 
 /// STYLES
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import SvgInjuries from '@/src/components/common/Svg/SvgInjuries.component';
-import { useRouter } from 'next/router';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
