@@ -155,7 +155,7 @@ function PersonalData({
   };
 
   const setUserValues = (data: TAutocompleteUser | null) => {
-    setFieldValue('fullName', data ? data.fullName : '');
+    setFieldValue('fullName', data ? upperCamelCase(data.fullName) : '');
     setFieldValue('birthDate', data ? data.birthDate : '');
   };
 
