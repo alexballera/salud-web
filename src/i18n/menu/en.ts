@@ -17,6 +17,7 @@ export const enMenu = {
     recipes_and_prescriptions: 'Recipes and prescriptions',
     recipes_and_prescriptions_preview: 'Details',
     diseases: 'My diseases',
-    allergies: 'My allergies'
+    allergies: 'My allergies',
+    clinic_history_habits: 'Control de hábitos'
   }
 };
