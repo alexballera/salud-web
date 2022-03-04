@@ -28,7 +28,7 @@ type TAllergie = {
 type TProps = {
   allergie: TAllergie;
 };
-/// / TYPES END
+/// TYPES END
 
 const AllergieDetail = ({ allergie }: TProps): JSX.Element => {
   const classes = allergieStyles();

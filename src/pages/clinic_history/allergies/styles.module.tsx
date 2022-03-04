@@ -1,9 +1,17 @@
 import { makeStyles } from '@material-ui/core/styles';
+import {
+  chipActiveBackground,
+  chipActiveTextColor,
+  chipInactiveBackground,
+  chipInactiveTextColor,
+  title2Color,
+  shadowCardColor
+} from '../../../styles/js/theme';
 
 const allergieStyles = makeStyles({
   cardAllergie: {
     borderRadius: 16,
-    boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.5)'
+    boxShadow: `0px 4px 8px ${shadowCardColor}`
   },
   contentButton: {
     display: 'flex',
@@ -17,7 +25,7 @@ const allergieStyles = makeStyles({
     fontSize: '16px'
   },
   colorTitle: {
-    color: '#A1ADB0',
+    color: title2Color,
     marginBottom: '4px'
   },
   spacingRow: {
@@ -28,12 +36,12 @@ const allergieStyles = makeStyles({
     height: '20px'
   },
   chipActive: {
-    backgroundColor: '#BB9AFD1A',
-    color: '#AB82FF'
+    backgroundColor: chipActiveBackground,
+    color: chipActiveTextColor
   },
   chipInative: {
-    backgroundColor: '#E4EBED',
-    color: '#829296'
+    backgroundColor: chipInactiveBackground,
+    color: chipInactiveTextColor
   },
   typography14: {
     fontSize: '14px'
