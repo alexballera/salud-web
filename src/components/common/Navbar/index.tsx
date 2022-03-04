@@ -68,7 +68,7 @@ function Navbar(): JSX.Element {
     switch (router.pathname) {
       case '/medicalData':
         return true;
-      case '/recipes_and_prescriptions/[item_id]':
+      case '/recipes_and_prescriptions':
         return true;
       case '/recipes_and_prescriptions/preview/[item_id]':
         return true;
@@ -79,6 +79,10 @@ function Navbar(): JSX.Element {
       case '/clinic_history':
         return true;
       case '/clinic_history/diseases':
+        return true;
+      case '/clinic_history/allergies/[allergie_id]':
+        return true;
+      case '/exam_results':
         return true;
       case '/clinic_history/allergies':
         return true;
@@ -93,7 +97,7 @@ function Navbar(): JSX.Element {
     switch (router.pathname) {
       case '/medicalData':
         return t('items.generalData', { ns: 'menu' });
-      case '/recipes_and_prescriptions/[item_id]':
+      case '/recipes_and_prescriptions':
         return t('items.recipes_and_prescriptions', { ns: 'menu' });
       case '/recipes_and_prescriptions/preview/[item_id]':
         return t('items.recipes_and_prescriptions_preview', { ns: 'menu' });
@@ -105,6 +109,10 @@ function Navbar(): JSX.Element {
         return t('items.clinic_history', { ns: 'menu' });
       case '/clinic_history/diseases':
         return t('items.diseases', { ns: 'menu' });
+      case '/clinic_history/allergies/[allergie_id]':
+        return t('items.allergies', { ns: 'menu' });
+      case '/exam_results':
+        return t('proceedings.examResults', { ns: i18nProceedings });
       case '/clinic_history/allergies':
         return t('items.allergies', { ns: 'menu' });
       case '/clinic_history/habits':
@@ -121,7 +129,7 @@ function Navbar(): JSX.Element {
     '/preferences',
     '/help',
     '/medicalData',
-    '/recipes_and_prescriptions/[item_id]',
+    '/recipes_and_prescriptions',
     '/recipes_and_prescriptions/preview/[item_id]',
     '/proceedings',
     '/generalData'

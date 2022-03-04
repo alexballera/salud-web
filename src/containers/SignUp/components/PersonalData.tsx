@@ -1,7 +1,7 @@
 // BASE IMPORTS
 import { useState, useEffect, useRef } from 'react';
 import { addYears } from 'date-fns';
-import { convertToMask } from '../../../utils/helpers';
+import { convertToMask, upperCamelCase } from '../../../utils/helpers';
 /// BASE IMPORTS END
 
 /// FORM
@@ -155,8 +155,12 @@ function PersonalData({
   };
 
   const setUserValues = (data: TAutocompleteUser | null) => {
-    setFieldValue('fullName', data ? data.fullName : '');
+    setFieldValue('fullName', data ? upperCamelCase(data.fullName) : '');
     setFieldValue('birthDate', data ? data.birthDate : '');
+  };
+
+  const setTransformUpperCalmelCase = (s: string): void => {
+    setFieldValue('fullName', upperCamelCase(s));
   };
 
   useEffect(() => {
@@ -206,7 +210,7 @@ function PersonalData({
       <FormControl fullWidth variant="filled">
         <FormLabel
           id="document-type-selector-label"
-          style={{ marginBottom: 10 }}
+          style={{ marginBottom: 10, marginTop: 10 }}
           error={touched.documentType && !!errors.documentType}
         >
           {t('label.document.type', { ns: i18Global })}
@@ -283,7 +287,10 @@ function PersonalData({
             disabled={currDocTypeArgs.reqFetchPerInf}
             error={touched.fullName && !currDocTypeArgs.reqFetchPerInf && !!errors.fullName}
             onBlur={handleBlur}
-            onChange={handleChange}
+            onChange={e => {
+              handleChange(e);
+              setTransformUpperCalmelCase(e.target.value);
+            }}
             formControlProps={{ margin: 'normal' }}
           />
           <DatePicker

@@ -12,11 +12,11 @@ export const enMenu = {
     subscription: 'Tu suscripción',
     preferences: 'Preferencias',
     generalData: 'Datos generales',
-    proceedings: 'Expediente médico',
-    clinic_history: 'Historia clínica',
     recipes_and_prescriptions: 'Recipes and prescriptions',
     recipes_and_prescriptions_preview: 'Details',
-    diseases: 'My diseases',
+    proceedings: 'Expediente médico',
+    clinic_history: 'Historia clínica',
+    diseases: 'Mis enfermedades',
     allergies: 'My allergies',
     clinic_history_habits: 'Control de hábitos'
   }
