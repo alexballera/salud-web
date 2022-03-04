@@ -46,7 +46,7 @@ const Allergies = ({ allergies }: TProps): JSX.Element => {
               .sort((a, b) => a.name.localeCompare(b.name))
               .map((allergie, index) => (
                 <Box key={index}>
-                  <Link href={`/clinic_history/allergies/${allergie.name}`}>
+                  <Link href={`/clinic_history/allergies/${allergie.name}`} passHref>
                     <Box component="span" className={classes.contentButton}>
                       <Typography variant="body2" color="primary" className={classes.buttonText}>
                         {allergie.name}
