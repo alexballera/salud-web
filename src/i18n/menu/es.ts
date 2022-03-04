@@ -16,7 +16,8 @@ export const esMenu = {
     clinic_history: 'Historia clínica',
     recipes_and_prescriptions: 'Recetas y prescripciones',
     recipes_and_prescriptions_preview: 'Detalle',
-    clinic_history_habits: 'Control de hábitos',
-    diseases: 'Mis enfermedades'
+    diseases: 'Mis enfermedades',
+    allergies: 'Mis alergias',
+    clinic_history_habits: 'Control de hábitos'
   }
 };
