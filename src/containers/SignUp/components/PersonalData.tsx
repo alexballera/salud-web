@@ -159,6 +159,13 @@ function PersonalData({
     setFieldValue('birthDate', data ? data.birthDate : '');
   };
 
+  const upperCamelCase = (s: string): void => {
+    const transformString = s.toLowerCase().replace(/(^|\s)([A-zÀ-ú])/g, a => {
+      return a.toUpperCase();
+    });
+    setFieldValue('fullName', transformString);
+  };
+
   useEffect(() => {
     handleCurrDocTypeChange(values);
   }, [values.documentType]);
@@ -278,7 +285,10 @@ function PersonalData({
             disabled={currDocTypeArgs.reqFetchPerInf}
             error={touched.fullName && !currDocTypeArgs.reqFetchPerInf && !!errors.fullName}
             onBlur={handleBlur}
-            onChange={handleChange}
+            onChange={e => {
+              handleChange(e);
+              upperCamelCase(e.target.value);
+            }}
             formControlProps={{ margin: 'normal' }}
           />
           <DatePicker
