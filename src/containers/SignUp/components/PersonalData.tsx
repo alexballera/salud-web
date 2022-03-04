@@ -206,7 +206,7 @@ function PersonalData({
       <FormControl fullWidth variant="filled">
         <FormLabel
           id="document-type-selector-label"
-          style={{ marginBottom: 10 }}
+          style={{ marginBottom: 10, marginTop: 10 }}
           error={touched.documentType && !!errors.documentType}
         >
           {t('label.document.type', { ns: i18Global })}
