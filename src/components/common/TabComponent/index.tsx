@@ -44,7 +44,7 @@ function a11yProps(index: number) {
   };
 }
 
-const TabCustom = (props: TabProps): JSX.Element => {
+const TabComponent = (props: TabProps): JSX.Element => {
   const { content } = props;
   const theme = useTheme();
   const classes = tabStyles();
@@ -93,4 +93,4 @@ const TabCustom = (props: TabProps): JSX.Element => {
   );
 };
 
-export default TabCustom;
+export default TabComponent;

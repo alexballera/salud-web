@@ -12,7 +12,7 @@ import { NAMESPACE_KEY as i18ExamResult } from '@/src/i18n/clinic_history/i18n';
 
 /// OWN COMPONENTS
 import { withAppContext } from '@/src/context';
-import TabCustom from '@/src/components/common/TabCustom';
+import TabComponent from '@/src/components/common/TabComponent';
 /// OWN COMPONENTS END
 
 /// STYLES
@@ -46,7 +46,7 @@ const tabContentData = [
 ];
 
 const ExamResult = (): JSX.Element => {
-  return <TabCustom content={tabContentData} />;
+  return <TabComponent content={tabContentData} />;
 };
 
 export default withTranslation(i18ExamResult)(withAppContext(ExamResult));
