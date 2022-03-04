@@ -16,6 +16,8 @@ export const enMenu = {
     recipes_and_prescriptions_preview: 'Details',
     proceedings: 'Expediente médico',
     clinic_history: 'Historia clínica',
-    diseases: 'Mis enfermedades'
+    diseases: 'Mis enfermedades',
+    allergies: 'My allergies',
+    clinic_history_habits: 'Control de hábitos'
   }
 };

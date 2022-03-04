@@ -13,7 +13,7 @@ import navbarStyles from './styles.module';
 
 /// i18n
 import { useTranslation, withTranslation } from 'react-i18next';
-import { NAMESPACE_KEY as i18Global, i18n } from '../../../i18n/globals/i18n';
+import { NAMESPACE_KEY as i18Global } from '../../../i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
 import { NAMESPACE_KEY as i18nProceedings } from '../../../i18n/proceedings/i18n';
 
@@ -80,6 +80,14 @@ function Navbar(): JSX.Element {
         return true;
       case '/clinic_history/diseases':
         return true;
+      case '/clinic_history/allergies/[allergie_id]':
+        return true;
+      case '/exam_results':
+        return true;
+      case '/clinic_history/allergies':
+        return true;
+      case '/clinic_history/habits':
+        return true;
       default:
         return false;
     }
@@ -101,6 +109,14 @@ function Navbar(): JSX.Element {
         return t('items.clinic_history', { ns: 'menu' });
       case '/clinic_history/diseases':
         return t('items.diseases', { ns: 'menu' });
+      case '/clinic_history/allergies/[allergie_id]':
+        return t('items.allergies', { ns: 'menu' });
+      case '/exam_results':
+        return t('proceedings.examResults', { ns: i18nProceedings });
+      case '/clinic_history/allergies':
+        return t('items.allergies', { ns: 'menu' });
+      case '/clinic_history/habits':
+        return t('items.clinic_history_habits', { ns: 'menu' });
       default:
         return false;
     }

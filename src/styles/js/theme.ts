@@ -26,6 +26,11 @@ export const titleCardTagBg = '#bb9afd1a';
 export const textValueCardColor2 = '#A4B6BA';
 export const title3Color = '#A1ADB0';
 export const cardDividerColor = '#E4EBED';
+export const chipActiveBackground = '#BB9AFD1A';
+export const chipActiveTextColor = '#AB82FF';
+export const chipInactiveBackground = '#E4EBED';
+export const chipInactiveTextColor = '#829296';
+export const shadowCardColor = 'rgba(207, 225, 227, 0.5)';
 
 const defaultTheme: ThemeOptions = {
   palette: {

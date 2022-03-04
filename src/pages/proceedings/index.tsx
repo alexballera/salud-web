@@ -144,7 +144,7 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
     },
     {
       title: t('proceedings.examResults', { ns: i18nProceedings }),
-      action: '/examResults'
+      action: '/exam_results'
     }
   ];
 
