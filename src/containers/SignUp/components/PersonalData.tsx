@@ -1,7 +1,7 @@
 // BASE IMPORTS
 import { useState, useEffect, useRef } from 'react';
 import { addYears } from 'date-fns';
-import { convertToMask } from '../../../utils/helpers';
+import { convertToMask, upperCamelCase } from '../../../utils/helpers';
 /// BASE IMPORTS END
 
 /// FORM
@@ -159,11 +159,8 @@ function PersonalData({
     setFieldValue('birthDate', data ? data.birthDate : '');
   };
 
-  const upperCamelCase = (s: string): void => {
-    const transformString = s.toLowerCase().replace(/(^|\s)([A-zÀ-ú])/g, a => {
-      return a.toUpperCase();
-    });
-    setFieldValue('fullName', transformString);
+  const setTransformUpperCalmelCase = (s: string): void => {
+    setFieldValue('fullName', upperCamelCase(s));
   };
 
   useEffect(() => {
@@ -287,7 +284,7 @@ function PersonalData({
             onBlur={handleBlur}
             onChange={e => {
               handleChange(e);
-              upperCamelCase(e.target.value);
+              setTransformUpperCalmelCase(e.target.value);
             }}
             formControlProps={{ margin: 'normal' }}
           />
