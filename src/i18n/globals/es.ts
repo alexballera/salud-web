@@ -65,7 +65,8 @@ export const esGlobals = {
     save_changes: 'Guardar cambios',
     send: 'Enviar',
     send_email: 'Enviar correo',
-    remove_beneficiary: 'Eliminar beneficiario'
+    remove_beneficiary: 'Eliminar beneficiario',
+    see_more: 'Ver más'
   },
 
   label: {

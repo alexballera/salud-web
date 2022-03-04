@@ -38,23 +38,23 @@ const ExamResult = ({ handleNotifications }: TPersonalDataProps): JSX.Element =>
     },
     {
       label: '2021',
-      content: <h2>Contenido 2021</h2>
+      content: <CardComponent />
     },
     {
       label: '2020',
-      content: <h2>Contenido 2020</h2>
+      content: <CardComponent />
     },
     {
       label: '2019',
-      content: <h2>Contenido 2019</h2>
+      content: <CardComponent />
     },
     {
       label: '2018',
-      content: <h2>Contenido 2016</h2>
+      content: <CardComponent />
     },
     {
       label: '2017',
-      content: <h2>Contenido 2017</h2>
+      content: <CardComponent />
     }
   ];
 

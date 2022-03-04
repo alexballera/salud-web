@@ -2,13 +2,14 @@ import { createTheme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 import {
   boxShadow,
+  poppinsFontFamily,
   secondaryContrastTextColor,
   secondaryDarkColor,
   secondaryLightColor,
   secondaryMainColor
 } from '@/src/styles/js/theme';
 
-export const tabTheme = createTheme({
+export const cardTheme = createTheme({
   palette: {
     secondary: {
       light: secondaryLightColor,
@@ -19,10 +20,14 @@ export const tabTheme = createTheme({
   }
 });
 
-export const tabStyles = makeStyles(() =>
+export const cardStyles = makeStyles(() =>
   createStyles({
-    root: {
-      boxShadow: boxShadow
+    performer: {
+      color: '#455255',
+      fontSize: '14px !important',
+      display: 'flex',
+      alignItems: 'center',
+      fontFamily: `${poppinsFontFamily} !important`
     }
   })
 );

@@ -1,6 +1,7 @@
 /// BASE IMPORTS
 import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
+import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 /// BASE IMPORTS
 
 /// MUI COMPONENTS
@@ -29,7 +30,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ px: 5, py: 3 }}>
+        <Box sx={{ p: 3 }}>
           <Typography component="div">{children}</Typography>
         </Box>
       )}
@@ -44,7 +45,7 @@ function a11yProps(index: number) {
   };
 }
 
-const TabComponent = (props: TabProps): JSX.Element => {
+const TabComponent = (props: TabProps): ReactJSXElement => {
   const { content } = props;
   const theme = useTheme();
   const classes = tabStyles();
