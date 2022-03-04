@@ -2,13 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { createStyles, makeStyles, styled } from '@mui/styles';
 import { poppinsFontFamily } from '../../../styles/js/theme';
-import { Box, CardContent, CardHeader, Grid, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardHeader, Grid, Typography } from '@mui/material';
 import { ArrowRight } from '@mui/icons-material';
-
-const CustomCard = styled(Card)({
-  boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.5)',
-  borderRadius: '16px'
-});
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -106,8 +101,13 @@ const useStyles = makeStyles(() =>
     }
   })
 );
-const CardComponent = (): JSX.Element => {
+const CustomCard = styled(Card)({
+  boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.5)',
+  borderRadius: 16
+});
+const CardComponent = () => {
   const classes = useStyles();
+
   return (
     <Box mb={2}>
       <CustomCard>

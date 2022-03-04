@@ -14,6 +14,7 @@ import { NAMESPACE_KEY as i18Forms } from '@/src/i18n/forms/i18n';
 /// OWN COMPONENTS
 import { withAppContext } from '@/src/context';
 import TabComponent from '@/src/components/common/TabComponent';
+import CardComponent from '@/src/components/common/CardComponent';
 import {
   getPatientExamsData,
   mockData,
@@ -25,37 +26,37 @@ import { TPersonalDataProps } from '@/src/containers/SignUp/index.types';
 /// STYLES
 /// STYLES END
 
-const tabContentData = [
-  {
-    label: '2022',
-    content: <h2>Contenido 2022</h2>
-  },
-  {
-    label: '2021',
-    content: <h2>Contenido 2021</h2>
-  },
-  {
-    label: '2020',
-    content: <h2>Contenido 2020</h2>
-  },
-  {
-    label: '2019',
-    content: <h2>Contenido 2019</h2>
-  },
-  {
-    label: '2018',
-    content: <h2>Contenido 2016</h2>
-  },
-  {
-    label: '2017',
-    content: <h2>Contenido 2017</h2>
-  }
-];
-
 const ExamResult = ({ handleNotifications }: TPersonalDataProps): JSX.Element => {
   const { t } = useTranslation([i18ExamResult, i18Forms]);
   const [patientData, setPatientData] = useState<TGeneralData>(mockData);
   const i18nPopUpError = t('message.error.general_fetch', { ns: i18Forms });
+
+  const tabContentData = [
+    {
+      label: '2022',
+      content: <CardComponent />
+    },
+    {
+      label: '2021',
+      content: <h2>Contenido 2021</h2>
+    },
+    {
+      label: '2020',
+      content: <h2>Contenido 2020</h2>
+    },
+    {
+      label: '2019',
+      content: <h2>Contenido 2019</h2>
+    },
+    {
+      label: '2018',
+      content: <h2>Contenido 2016</h2>
+    },
+    {
+      label: '2017',
+      content: <h2>Contenido 2017</h2>
+    }
+  ];
 
   const fetchPatientData = () => {
     getPatientExamsData()
