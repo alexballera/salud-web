@@ -13,7 +13,7 @@ import { NAMESPACE_KEY as i18Forms } from '@/src/i18n/forms/i18n';
 
 /// OWN COMPONENTS
 import { withAppContext } from '@/src/context';
-import TabCustom from '@/src/components/common/TabCustom';
+import TabComponent from '@/src/components/common/TabComponent';
 import {
   getPatientExamsData,
   mockData,
@@ -73,7 +73,7 @@ const ExamResult = ({ handleNotifications }: TPersonalDataProps): JSX.Element =>
     // fetchPatientData();
     console.log(patientData);
   }, []);
-  return <TabCustom content={tabContentData} />;
+  return <TabComponent content={tabContentData} />;
 };
 
 export default withTranslation(i18ExamResult)(withAppContext(ExamResult));
