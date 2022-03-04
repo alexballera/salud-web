@@ -1,7 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 import { createStyles, makeStyles } from '@mui/styles';
 import {
-  boxShadow,
   poppinsFontFamily,
   secondaryContrastTextColor,
   secondaryDarkColor,

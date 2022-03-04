@@ -31,30 +31,82 @@ const ExamResult = ({ handleNotifications }: TPersonalDataProps): JSX.Element =>
   const [patientData, setPatientData] = useState<TGeneralData>(mockData);
   const i18nPopUpError = t('message.error.general_fetch', { ns: i18Forms });
 
+  const handleClick = () => {
+    console.log('Click en el padre');
+  };
+
   const tabContentData = [
     {
       label: '2022',
-      content: <CardComponent />
+      content: (
+        <CardComponent
+          type="Type"
+          name="Name"
+          date="20feb"
+          performer="Performer"
+          callToAction={handleClick}
+        />
+      )
     },
     {
       label: '2021',
-      content: <CardComponent />
+      content: (
+        <CardComponent
+          type="Type"
+          name="Name"
+          date="20feb"
+          performer="Performer"
+          callToAction={handleClick}
+        />
+      )
     },
     {
       label: '2020',
-      content: <CardComponent />
+      content: (
+        <CardComponent
+          type="Type"
+          name="Name"
+          date="20feb"
+          performer="Performer"
+          callToAction={handleClick}
+        />
+      )
     },
     {
       label: '2019',
-      content: <CardComponent />
+      content: (
+        <CardComponent
+          type="Type"
+          name="Name"
+          date="20feb"
+          performer="Performer"
+          callToAction={handleClick}
+        />
+      )
     },
     {
       label: '2018',
-      content: <CardComponent />
+      content: (
+        <CardComponent
+          type="Type"
+          name="Name"
+          date="20feb"
+          performer="Performer"
+          callToAction={handleClick}
+        />
+      )
     },
     {
       label: '2017',
-      content: <CardComponent />
+      content: (
+        <CardComponent
+          type="Type"
+          name="Name"
+          date="20feb"
+          performer="Performer"
+          callToAction={handleClick}
+        />
+      )
     }
   ];
 
