@@ -23,6 +23,16 @@ export const title2Color = '#4D5759';
 export const background2Color = '#F8F8F8';
 export const boxShadow = '0px 4px 8px rgba(207, 225, 227, 0.5)';
 export const purpleLight = '#AB82FF';
+export const titleCardTagColor = '#AB82FF';
+export const titleCardTagBg = '#bb9afd1a';
+export const textValueCardColor2 = '#A4B6BA';
+export const title3Color = '#A1ADB0';
+export const cardDividerColor = '#E4EBED';
+export const chipActiveBackground = '#BB9AFD1A';
+export const chipActiveTextColor = '#AB82FF';
+export const chipInactiveBackground = '#E4EBED';
+export const chipInactiveTextColor = '#829296';
+export const shadowCardColor = 'rgba(207, 225, 227, 0.5)';
 
 const defaultTheme: ThemeOptions = {
   palette: {

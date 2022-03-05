@@ -66,7 +66,7 @@ export const esGlobals = {
     send: 'Enviar',
     send_email: 'Enviar correo',
     remove_beneficiary: 'Eliminar beneficiario',
-    see_more: 'Ver más'
+    show_more: 'Ver más'
   },
 
   label: {
@@ -205,9 +205,24 @@ export const esGlobals = {
   },
 
   months: {
-    january: 'Enero',
-    march: 'Marzo',
-    september: 'Septiembre',
-    december: 'Diciembre'
+    0: 'Enero',
+    1: 'Febrero',
+    2: 'Marzo',
+    3: 'Abril',
+    4: 'Mayo',
+    5: 'Junio',
+    6: 'Julio',
+    7: 'Agosto',
+    8: 'Septiembre',
+    9: 'Octubre',
+    10: 'Noviembre',
+    11: 'Diciembre'
+  },
+
+  config: {
+    simple_hour: '{{hour}} hora',
+    many_hour: '{{hour}} horas',
+    simple_unit: '{{unit}} unidad',
+    many_unit: '{{unit}} unidades'
   }
 };

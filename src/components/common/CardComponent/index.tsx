@@ -17,7 +17,6 @@ import { boxShadow, purpleLight } from '@/src/styles/js/theme';
 /// i18n
 import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18Globals } from '@/src/i18n/globals/i18n';
-import { type } from 'os';
 /// i18n END
 
 /// TYPES
@@ -68,7 +67,7 @@ const CardComponent = (props: TCard): ReactJSXElement => {
               endIcon={<ArrowForwardIcon />}
               onClick={() => handleClick()}
             >
-              {t('button.see_more', { ns: i18Globals })}
+              {t('button.show_more', { ns: i18Globals })}
             </Button>
           </Stack>
         </CardActions>

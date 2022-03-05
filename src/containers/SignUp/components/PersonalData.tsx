@@ -121,7 +121,7 @@ function PersonalData({
       return;
     }
 
-    setFetchUserDateState({ isLoading: true, error: '' });
+    setFetchUserDateState({ isLoading: true, error: null });
     autocompleteUserDataFn({ docType, docNumber: docNumberSanitized })
       .then(setUserValues)
       .catch(() => {
@@ -206,7 +206,7 @@ function PersonalData({
       <FormControl fullWidth variant="filled">
         <FormLabel
           id="document-type-selector-label"
-          style={{ marginBottom: 10 }}
+          style={{ marginBottom: 10, marginTop: 10 }}
           error={touched.documentType && !!errors.documentType}
         >
           {t('label.document.type', { ns: i18Global })}
@@ -258,6 +258,11 @@ function PersonalData({
             docNumber: e.target.value,
             docType: values.documentType
           });
+
+          // Reset fetch message
+          if (fetchUserDataState.error) {
+            setFetchUserDateState(prevState => ({ ...prevState, error: null }));
+          }
         }}
         inputComponent={convertToMask(currDocTypeArgs?.mask) ? (TextMaskCustom as any) : 'input'}
         inputProps={{
