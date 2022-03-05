@@ -164,8 +164,8 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
             </ListItemSecondaryAction>
           </ListItem>
         </List>
+        <MeasurementCardContainer generalData={measurementData} />
       </Container>
-      <MeasurementCardContainer generalData={measurementData} />
       <Divider />
       <Container maxWidth="sm" className={classes.cardContainer}>
         <Typography variant="body2" className={classes.title2}>

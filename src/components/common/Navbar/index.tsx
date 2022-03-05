@@ -88,6 +88,8 @@ function Navbar(): JSX.Element {
         return true;
       case '/clinic_history/habits':
         return true;
+      case '/exam_results/preview/[item_id]':
+        return true;
       default:
         return false;
     }
