@@ -10,8 +10,9 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 /// STYLES
 import { ThemeProvider } from '@mui/material/styles';
-import { cardStyles, cardTheme } from './styles.module';
+import { cardStyles } from './styles.module';
 import { boxShadow, purpleLight } from '@/src/styles/js/theme';
+import muiTheme from '@/src/styles/js/muiTheme';
 /// STYLES END
 
 /// i18n
@@ -33,7 +34,7 @@ const CardComponent = (props: TCard): ReactJSXElement => {
   };
 
   return (
-    <ThemeProvider theme={cardTheme}>
+    <ThemeProvider theme={muiTheme}>
       <Card sx={{ borderRadius: 4, boxShadow: boxShadow, height: 155, p: 1.75, width: 312 }}>
         <CardContent sx={{ padding: 0 }}>
           <Chip

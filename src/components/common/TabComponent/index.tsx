@@ -11,7 +11,8 @@ import { Box, Tab, Tabs, Typography } from '@mui/material';
 /// STYLES
 import { useTheme, ThemeProvider } from '@mui/material/styles';
 import { secondaryMainColor } from '@/src/styles/js/theme';
-import { tabTheme, tabStyles } from './styles.module';
+import { tabStyles } from './styles.module';
+import muiTheme from '@/src/styles/js/muiTheme';
 /// STYLES END
 
 /// TYPES
@@ -60,7 +61,7 @@ const TabComponent = (props: TabProps): ReactJSXElement => {
   };
 
   return (
-    <ThemeProvider theme={tabTheme}>
+    <ThemeProvider theme={muiTheme}>
       <Box>
         <Tabs
           value={value}
