@@ -24,3 +24,9 @@ export const calculate_age = dateString => {
 
   return Math.abs(age_dt.getUTCFullYear() - 1970);
 };
+
+export const upperCamelCase = (s: string): string => {
+  return s.toLowerCase().replace(/(^|\s)([A-zÀ-ú])/g, a => {
+    return a.toUpperCase();
+  });
+};

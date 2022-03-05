@@ -264,6 +264,7 @@ function ExtraData({
           id="mobilePhone1"
           name="mobilePhone1"
           type="text"
+          country={selectedCountry.code}
           label={`${t(`label.phone.${updatePhone ? 'new' : 'phone'}`, { ns: i18nGlobal })}`}
           value={values.mobilePhone1}
           error={touched.mobilePhone1 && Boolean(errors.mobilePhone1)}
