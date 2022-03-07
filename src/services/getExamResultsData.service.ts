@@ -31,7 +31,7 @@ export const mockData: TExamResults[] = [
     id: '1',
     type: 'laboratory',
     name: 'Perfil Lipidico',
-    date: '2022-01-25T00:00:00.000Z',
+    date: '2021-10-26T00:55:19.596Z',
     performer: 'Dra. Clotilde Miraflores',
     result: [
       {
@@ -124,7 +124,7 @@ export const mockData: TExamResults[] = [
     id: '2',
     type: 'procedure',
     name: 'Rayos X',
-    date: '2022-01-24T00:00:00.000Z',
+    date: '2021-10-26T00:55:19.596Z',
     performer: 'Dra. Clotilde Miraflores',
     result: 'Alterado',
     procedureZone: 'Torax',

@@ -140,7 +140,7 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
   const itemsCard = [
     {
       title: t('proceedings.prescriptions', { ns: i18nProceedings }),
-      action: '/recipes_and_prescriptions/2022'
+      action: '/recipes_and_prescriptions'
     },
     {
       title: t('proceedings.examResults', { ns: i18nProceedings }),

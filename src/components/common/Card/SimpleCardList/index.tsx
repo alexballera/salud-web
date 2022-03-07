@@ -30,6 +30,7 @@ export type TProps = {
   title: string;
   titleStyles: BoxProps['style'];
   itemClick: (values: TListItem) => void;
+  showHeader?: boolean;
 };
 
 const useStyles = makeStyles(() =>
@@ -61,18 +62,28 @@ const useStyles = makeStyles(() =>
   })
 );
 
-function SimpleCardList({ title, titleStyles, items, itemClick }: TProps): JSX.Element {
+function SimpleCardList({
+  title,
+  titleStyles,
+  items,
+  itemClick,
+  showHeader = true
+}: TProps): JSX.Element {
   const classes = useStyles();
   return (
     <Card className={classes.card}>
-      <CardHeader
-        className={classes.cardHeader}
-        title={
-          <Box className={classes.tag} style={titleStyles}>
-            <Typography className={classes.tagText}>{title}</Typography>
-          </Box>
-        }
-      />
+      {showHeader ? (
+        <CardHeader
+          className={classes.cardHeader}
+          title={
+            <Box className={classes.tag} style={titleStyles}>
+              <Typography className={classes.tagText}>{title}</Typography>
+            </Box>
+          }
+        />
+      ) : (
+        <></>
+      )}
       <CardList items={items} itemClick={itemClick} />
     </Card>
   );
