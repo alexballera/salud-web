@@ -39,7 +39,7 @@ export type TGeneralData = {
   interpretation?: string;
 }[];
 
-export const mockData = [
+export const mockData: TGeneralData = [
   {
     userId: 'ee957013-b02f-45b2-b837-092b490242ea',
     type: 'laboratory',
