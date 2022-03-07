@@ -60,13 +60,14 @@ const HomePage = ({
             severity: 'success'
           })
         )
-        .catch(() =>
+        .catch(e => {
+          console.error(e);
           handleNotifications({
             open: true,
             message: `${t('message.error.general_fetch', { ns: i18nForms })}`,
             severity: 'error'
-          })
-        )
+          });
+        })
         .finally(() => handleLoading(false));
     }
   };
