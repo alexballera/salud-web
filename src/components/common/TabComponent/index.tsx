@@ -1,6 +1,7 @@
 /// BASE IMPORTS
 import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
+import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 /// BASE IMPORTS
 
 /// MUI COMPONENTS
@@ -10,7 +11,8 @@ import { Box, Tab, Tabs, Typography } from '@mui/material';
 /// STYLES
 import { useTheme, ThemeProvider } from '@mui/material/styles';
 import { secondaryMainColor } from '@/src/styles/js/theme';
-import { tabTheme, tabStyles } from './styles.module';
+import { tabStyles } from './styles.module';
+import muiTheme from '@/src/styles/js/muiTheme';
 /// STYLES END
 
 /// TYPES
@@ -29,7 +31,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ px: 5, py: 3 }}>
+        <Box sx={{ p: 3 }}>
           <Typography component="div">{children}</Typography>
         </Box>
       )}
@@ -44,7 +46,7 @@ function a11yProps(index: number) {
   };
 }
 
-const TabComponent = (props: TabProps): JSX.Element => {
+const TabComponent = (props: TabProps): ReactJSXElement => {
   const { content } = props;
   const theme = useTheme();
   const classes = tabStyles();
@@ -59,7 +61,7 @@ const TabComponent = (props: TabProps): JSX.Element => {
   };
 
   return (
-    <ThemeProvider theme={tabTheme}>
+    <ThemeProvider theme={muiTheme}>
       <Box>
         <Tabs
           value={value}
