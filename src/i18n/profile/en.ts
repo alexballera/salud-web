@@ -5,6 +5,7 @@ export const enProfile = {
     biologicSex: 'Biologic Sex',
     pronoun: 'Pronoun',
     civilStatus: 'Civil status',
+    sons: 'Sons',
     ocupation: 'Ocupation',
     address: 'Address',
     age: 'Age'
