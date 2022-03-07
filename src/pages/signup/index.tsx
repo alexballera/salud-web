@@ -1,6 +1,7 @@
 /// BASE IMPORTS
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { addYears } from 'date-fns';
+import { useRouter } from 'next/router';
 import _ from 'lodash';
 import * as yup from 'yup';
 /// BASE IMPORTS END
@@ -14,7 +15,11 @@ import { withAppContext } from '../../context/index';
 /// CONTEXT END
 
 /// TYPES
-import { TProps, TFormData, TCountryDocumentTypeItem } from '../../containers/SignUp/index.types';
+import type {
+  TProps,
+  TFormData,
+  TCountryDocumentTypeItem
+} from '../../containers/SignUp/index.types';
 /// TYPES END
 
 /// OWN COMPONENTS
@@ -39,14 +44,17 @@ import Layout from '../../layouts/LayoutFormBasic';
 
 /// SERVICES
 import countriesPhoneNumbers from '../../services/countriesPhoneNumbers.service';
+import api, { TPatient } from '../../api/api';
 /// SERVICES END
+
+/// CONTEXT
+import { UserContext } from '@/src/context/UserContext';
+/// CONTEXT END
 
 /// i18n
 import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18Global, i18n } from '../../i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
-import { useRouter } from 'next/router';
-import api, { TPatient } from '../../api/api';
 /// i18n END
 
 type TSteper = {
@@ -110,6 +118,7 @@ function SignUpView(props: TProps): JSX.Element {
   const router = useRouter();
   const { handleNotifications, notificationState } = props;
   const { t } = useTranslation(i18Global);
+  const { initializeGuestSession } = useContext(UserContext);
   const [customPopUpError, setCustomPopUpError] = useState<null | string>(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [customSubmitCount, setCustomSubmitCount] = useState(0);
@@ -287,9 +296,13 @@ function SignUpView(props: TProps): JSX.Element {
     try {
       const user = await api.createAccount('unique()', email, password, fullName);
 
+      const session = await api.createSession(email, password);
+
       await api.createPatient(setPatient(values, user.$id));
 
       await api.emailVerification();
+
+      initializeGuestSession(session);
 
       router.push('/signup/email_verification');
     } catch (e) {
