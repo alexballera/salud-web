@@ -26,6 +26,7 @@ import ActionButtons from './components/ActionButtons.component';
 import DropDownButton from './components/DropDownButton';
 import Menu from '../Menu';
 import { UserContext } from '../../../context/UserContext';
+import { getDataFromLocalStorage } from '@/src/services/localStorage.service';
 /// OWN COMPONENTS END
 
 function Navbar(): JSX.Element {
@@ -119,6 +120,8 @@ function Navbar(): JSX.Element {
         return t('items.allergies', { ns: 'menu' });
       case '/clinic_history/habits':
         return t('items.clinic_history_habits', { ns: 'menu' });
+      case '/exam_results/preview/[item_id]':
+        return getDataFromLocalStorage('titleExamResultDetail');
       default:
         return false;
     }

@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 /// OWN COMPONENTS
 import SimpleCardList from '../../../components/common/Card/SimpleCardList';
 /// OWN COMPONENTS END
@@ -38,7 +39,7 @@ import {
   TExamResults,
   TResultLaboratory
 } from '@/src/services/getExamResultsData.service';
-import React from 'react';
+import { setDataToLocalStorage } from '@/src/services/localStorage.service';
 /// SERVICES END
 
 type TProps = {
@@ -91,6 +92,12 @@ const useStyles = makeStyles(() =>
 function ExamResultsDetailPage({ examResult }: TProps): JSX.Element {
   const classes = useStyles();
   const { t } = useTranslation([i18nGlobal, i18nExamResults]);
+
+  useEffect(() => {
+    if (examResult) {
+      setDataToLocalStorage('titleExamResultDetail', examResult.name);
+    }
+  }, [examResult]);
 
   const getExamDate = (date: string) => {
     const toDate = new Date(date);
