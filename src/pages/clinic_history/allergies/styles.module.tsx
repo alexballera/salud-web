@@ -25,23 +25,23 @@ const allergieStyles = makeStyles({
     fontSize: '16px'
   },
   colorTitle: {
-    color: title2Color,
+    color: `${title2Color} !important`,
     marginBottom: '4px'
   },
   spacingRow: {
     padding: '16px 0px'
   },
   chipStatus: {
-    fontSize: '12px',
-    height: '20px'
+    fontSize: '12px !important',
+    height: '20px !important'
   },
   chipActive: {
-    backgroundColor: chipActiveBackground,
-    color: chipActiveTextColor
+    backgroundColor: `${chipActiveBackground} !important`,
+    color: `${chipActiveTextColor} !important`
   },
   chipInative: {
-    backgroundColor: chipInactiveBackground,
-    color: chipInactiveTextColor
+    backgroundColor: `${chipInactiveBackground} !important`,
+    color: `${chipInactiveTextColor} !important`
   },
   typography14: {
     fontSize: '14px'
