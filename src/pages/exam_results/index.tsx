@@ -200,10 +200,10 @@ const ExamResult = ({ handleNotifications }: TPersonalDataProps): JSX.Element =>
                   return (
                     <Box mb={2} key={`${item.userId}-${i}`}>
                       <CardComponent
-                        type="Type"
-                        name="Name"
-                        date="2021-01-24T00:00:00.000Z"
-                        performer="Performer"
+                        type={item.type}
+                        name={item.name}
+                        date={item.date}
+                        performer={item.performer}
                         callToAction={handleClick}
                       />
                     </Box>

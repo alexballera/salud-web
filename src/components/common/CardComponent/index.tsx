@@ -36,7 +36,7 @@ const CardComponent = (props: TCard): JSX.Element => {
     const toDate = new Date(date);
     const year = toDate.getFullYear();
     const day = toDate.getDay();
-    const month = toDate.getMonth().toLocaleString();
+    const month = toDate.getMonth();
     if (!month || !year || !day) {
       return t('invalid_date_format');
     }
