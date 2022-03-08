@@ -193,14 +193,12 @@ function Navbar(): JSX.Element {
                       </Grid>
                     </Grid>
                     <Grid item xs={6} md={6} className={classes.buttonAction}>
-                      {userLogState !== 'LOGGEDIN' && (
-                        <ActionButtons
-                          noActionPathNames={noActionPathNames}
-                          exitButtonPathNames={exitButtonPathNames}
-                          backButtonPathNames={backButtonPathNames}
-                          closeButtonPathNames={closeButtonPathNames}
-                        />
-                      )}
+                      <ActionButtons
+                        noActionPathNames={noActionPathNames}
+                        exitButtonPathNames={exitButtonPathNames}
+                        backButtonPathNames={backButtonPathNames}
+                        closeButtonPathNames={closeButtonPathNames}
+                      />
                     </Grid>
                   </Grid>
                 </Grid>
@@ -235,14 +233,12 @@ function Navbar(): JSX.Element {
                       )}
                     </Grid>
                     <Grid item xs={6} md={6} className={classes.buttonAction}>
-                      {userLogState !== 'LOGGEDIN' && (
-                        <ActionButtons
-                          noActionPathNames={noActionPathNames}
-                          exitButtonPathNames={exitButtonPathNames}
-                          backButtonPathNames={backButtonPathNames}
-                          closeButtonPathNames={closeButtonPathNames}
-                        />
-                      )}
+                      <ActionButtons
+                        noActionPathNames={noActionPathNames}
+                        exitButtonPathNames={exitButtonPathNames}
+                        backButtonPathNames={backButtonPathNames}
+                        closeButtonPathNames={closeButtonPathNames}
+                      />
                       {/* TODO corregir mostrar solo para cuando esté logueado: usar "loggedIn" */}
                       {showMenuMobile() && userLogState === 'LOGGEDIN' && (
                         <Grid container justify="flex-end" alignItems="center" spacing={2}>
