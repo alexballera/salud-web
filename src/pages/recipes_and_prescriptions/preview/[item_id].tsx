@@ -1,3 +1,8 @@
+/// BASE IMPORTS
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+/// BASE IMPORTS END
+
 /// OWN COMPONENTS
 import SimpleCardList from '../../../components/common/Card/SimpleCardList';
 import CardCollapse from '../../../components/common/Card/CardCollapse';
@@ -12,7 +17,8 @@ import {
   title3Color,
   titleCardTagBg,
   titleCardTagColor,
-  titlePageColor
+  titlePageColor,
+  secondaryMainColor
 } from '../../../styles/js/theme';
 /// STYLES END
 
@@ -22,6 +28,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
 import MuiTypography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import MuiCircularProgress from '@material-ui/core/CircularProgress';
 /// MATERIAL UI END
 
 /// i18n
@@ -31,7 +38,6 @@ import { NAMESPACE_KEY as i18nGlobal } from '../../../i18n/globals/i18n';
 /// i18n END
 
 /// TYPES
-import type { NextPageContext } from 'next/';
 import type { TListItem } from '../../../components/common/Card/SimpleCardList/types';
 import type {
   TPatientRecipiesAndPrescriptionList,
@@ -44,14 +50,18 @@ import type {
 import { getRecipiesAndPrescriptionsById } from '../../../services/getRecipiesAndPrescriptionData.service';
 /// SERVICES END
 
-type TProps = {
-  recipeOrPrescription: TPatientRecipiesAndPrescriptionList[0];
-};
+/// DATE-FNS
+import { isValid, parseISO } from 'date-fns';
+/// DATE-FNS END
 
 const Typography = styled(MuiTypography)({
   fontFamily: poppinsFontFamily,
   fontStyle: 'normal',
   fontWeight: 'normal'
+});
+
+const CircularProgress = styled(MuiCircularProgress)({
+  color: secondaryMainColor
 });
 
 const useStyles = makeStyles(() =>
@@ -90,21 +100,26 @@ const useStyles = makeStyles(() =>
   })
 );
 
-function RecipeAndPrescriptionPage({ recipeOrPrescription }: TProps): JSX.Element {
+function RecipeAndPrescriptionPage(): JSX.Element {
   const classes = useStyles();
+  const router = useRouter();
   const { t } = useTranslation([i18nGlobal, i18nRecipes]);
+  const [loading, setLoading] = useState(true);
+  const [recipeOrPrescription, setRecipeOrPrescription] = useState<
+    TPatientRecipiesAndPrescriptionList[0] | null
+  >(null);
 
   const getRecipeOrPrescriptionDate = (date: string) => {
-    const toDate = new Date(date);
-    const year = toDate.getFullYear();
-    const day = toDate.getDay();
-    const month = toDate.getMonth();
-    if (!month || !year || !day) {
-      return t('invalid_date_format', { ns: i18nRecipes });
+    const toDate = parseISO(date);
+
+    if (!isValid(toDate)) {
+      return t('invalid_date_format', { ns: i18nGlobal });
     }
-    return `${day.toString().padStart(2, '0')} de ${t(`months.${month}`, {
-      ns: i18nGlobal
-    })}, ${year}`;
+
+    const year = toDate.getFullYear();
+    const day = toDate.getDate().toString();
+    const month = toDate.getMonth();
+    return `${day.padStart(2, '0')} de ${t(`months.${month}`, { ns: i18nGlobal })}, ${year}`;
   };
 
   const getReportInformation = ({
@@ -195,6 +210,31 @@ function RecipeAndPrescriptionPage({ recipeOrPrescription }: TProps): JSX.Elemen
       : getPrescriptionInformation(recipeOrPrescription.details);
   };
 
+  useEffect(() => {
+    const { item_id: id } = router.query;
+    getRecipiesAndPrescriptionsById(id as string)
+      .then(result => {
+        setRecipeOrPrescription(result);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [router.query]);
+
+  if (loading) {
+    return (
+      <Grid container className={classes.mainGrid}>
+        <Grid item xs={12}>
+          <Box px={3} py={3}>
+            <Grid container direction="column" justify="center" alignItems="center">
+              <CircularProgress color="inherit" />
+            </Grid>
+          </Box>
+        </Grid>
+      </Grid>
+    );
+  }
+
   return (
     <Grid container className={classes.mainGrid}>
       <Grid item xs={12}>
@@ -250,12 +290,4 @@ function RecipeAndPrescriptionPage({ recipeOrPrescription }: TProps): JSX.Elemen
   );
 }
 
-RecipeAndPrescriptionPage.getInitialProps = async ({ query }: NextPageContext) => {
-  // eslint-disable-next-line camelcase
-  const { item_id: id } = query;
-  const recipeOrPrescription = await getRecipiesAndPrescriptionsById(id as string);
-  return {
-    recipeOrPrescription
-  };
-};
 export default RecipeAndPrescriptionPage;

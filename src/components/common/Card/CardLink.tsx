@@ -1,7 +1,3 @@
-/// BASE IMPORTS
-import Link from 'next/link';
-/// BASE IMPORTS END
-
 /// MATERIAL UI
 import MuiCard from '@material-ui/core/Card';
 import MuiCardHeader from '@material-ui/core/CardHeader';
@@ -31,6 +27,10 @@ import {
 import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY } from '../../../i18n/globals/i18n';
 /// i18n END
+
+/// DATE-FNS
+import { isValid, parseISO } from 'date-fns';
+/// DATE-FNS END
 
 const Card = styled(MuiCard)({
   boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.5)',
@@ -77,7 +77,7 @@ type TProps = {
   text1: string;
   text2: string;
   reportedBy: string;
-  redirectTo: string;
+  action: () => void;
 };
 
 const useStyles = makeStyles({
@@ -125,19 +125,21 @@ const useStyles = makeStyles({
   }
 });
 
-function CardLink({ title, text1, text2, reportedBy, redirectTo }: TProps): JSX.Element {
+function CardLink({ title, text1, text2, reportedBy, action }: TProps): JSX.Element {
   const { t } = useTranslation(NAMESPACE_KEY);
   const classes = useStyles();
 
   const getCardDate = (date: string) => {
-    const toDate = new Date(date);
-    const year = toDate.getFullYear();
-    const day = toDate.getDay();
-    const month = toDate.getMonth();
-    if (!month || !year || !day) {
+    const toDate = parseISO(date);
+
+    if (!isValid(toDate)) {
       return t('invalid_date_format');
     }
-    return `${day.toString().padStart(2, '0')} ${t(`months.${month}`).substring(0, 3)} ${year}`;
+
+    const year = toDate.getFullYear();
+    const day = toDate.getDate().toString();
+    const month = toDate.getMonth();
+    return `${day.padStart(2, '0')} ${t(`months.${month}`).substring(0, 3)} ${year}`;
   };
 
   return (
@@ -158,12 +160,12 @@ function CardLink({ title, text1, text2, reportedBy, redirectTo }: TProps): JSX.
               <Typography className={classes.cardDoctor}>{reportedBy}</Typography>
             </Grid>
             <Grid item>
-              <Link href={redirectTo} passHref>
-                <Grid container direction="row" className={classes.redirectLink}>
-                  <CustomMuiLink underline="none">{t('button.show_more')}</CustomMuiLink>
-                  <ArrowRight />
-                </Grid>
-              </Link>
+              <Grid container direction="row" className={classes.redirectLink}>
+                <CustomMuiLink underline="none" onClick={action}>
+                  {t('button.show_more')}
+                </CustomMuiLink>
+                <ArrowRight />
+              </Grid>
             </Grid>
           </Grid>
         </Box>

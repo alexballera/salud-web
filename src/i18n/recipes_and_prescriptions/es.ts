@@ -2,7 +2,6 @@ export const esRecipesAndPrescriptions = {
   details_title: 'Información General',
   details_sub_title: 'Indicaciones',
   no_records: 'No se han registrado datos',
-  invalid_date_format: 'Formato de fecha inválido',
   recipe_or_prescription_not_found: 'Receta o prescripción no encontrada',
   card: {
     date: 'Fecha ',

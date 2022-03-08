@@ -122,6 +122,20 @@ function Navbar(): JSX.Element {
     }
   };
 
+  const customRedirectList = {
+    '/recipes_and_prescriptions': '/main'
+  };
+
+  const customRedirectBackButton = () => {
+    // Use custom redirect to avoid router history
+    const redirectTo = customRedirectList[router.pathname];
+    if (redirectTo) {
+      router.push(redirectTo);
+      return;
+    }
+    router.back();
+  };
+
   const noActionPathNames = [
     '/main',
     '/profile',
@@ -167,7 +181,7 @@ function Navbar(): JSX.Element {
                         edge="start"
                         color="inherit"
                         aria-label="arrow-back"
-                        onClick={() => router.back()}
+                        onClick={() => customRedirectBackButton()}
                       >
                         <ArrowBackIcon />
                       </IconButton>
