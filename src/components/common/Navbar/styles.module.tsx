@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { shadowCardColor } from '../../../styles/js/theme';
 
 const navbarStyles = makeStyles({
   button: {
@@ -25,6 +26,9 @@ const navbarStyles = makeStyles({
   },
   dropDownContainer: {
     textAlign: 'center'
+  },
+  shadow: {
+    boxShadow: `0px 4px 8px ${shadowCardColor}`
   }
 });
 

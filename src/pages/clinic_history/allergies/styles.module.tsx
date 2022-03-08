@@ -10,6 +10,7 @@ import {
 
 const allergieStyles = makeStyles({
   cardAllergie: {
+    marginTop: '24px',
     borderRadius: 16,
     boxShadow: `0px 4px 8px ${shadowCardColor}`
   },
