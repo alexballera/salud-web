@@ -37,6 +37,8 @@ export const esForms = {
     min_9_max_20: 'Número de caracteres mínimos para Pasaporte 9, máx 20',
     terms: 'Debés aceptar los Términos y Condiciones para continuar',
     services: 'Debés aceptar el Consentimiento informado para continuar',
+    userExists: 'Ya existe un paciente con ese número de identidad registrado en Ospi',
+    userNotFound: 'Usuario no encontrado',
 
     password: {
       required: 'Contraseña requerida',

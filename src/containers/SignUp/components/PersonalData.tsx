@@ -101,6 +101,19 @@ function PersonalData({
   const inputMaskRef = useRef(null);
   const [fetchUserDataState, setFetchUserDateState] = useState(FETCH_USER_DATA_STATE);
 
+  const handlerError = error => {
+    if (error.response) {
+      switch (error.response.data.error.code) {
+        case 'sld-user-1':
+          return t('validations.userNotFound', { ns: i18Forms });
+        case 'sld-user-2':
+          return t('validations.userExists', { ns: i18Forms });
+        default:
+          return t('validations.document.invalid', { ns: i18Forms });
+      }
+    }
+  };
+
   const handleCurrDocTypeChange = ({ documentType, country }: TFormData) => {
     const documentTypes = countriesDocumentTypes.find(item => item.code === country)?.items || [];
     const findDocumentType = documentTypes.find(item => item.id === documentType);
@@ -124,7 +137,8 @@ function PersonalData({
     setFetchUserDateState({ isLoading: true, error: null });
     autocompleteUserDataFn({ docType, docNumber: docNumberSanitized })
       .then(setUserValues)
-      .catch(() => {
+      .catch(error => {
+        const searchError = handlerError(error);
         const i18nPopUpError = t('validations.document.invalid_pop_up', { ns: i18Forms });
         setUserValues(null); // Reset user info inputs
         setCustomPopUpError(i18nPopUpError); // Save this error on form state, it should be appear if continue button is clicked
@@ -132,7 +146,7 @@ function PersonalData({
         // Handle input error
         setFetchUserDateState(prevState => ({
           ...prevState,
-          error: t('validations.document.invalid', { ns: i18Forms })
+          error: searchError
         }));
       })
       .finally(() => {
