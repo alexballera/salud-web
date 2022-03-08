@@ -36,7 +36,7 @@ export const enForms = {
     min_9_max_20: 'Número de caracteres mínimos para Pasaporte 9, máx 20',
     terms: 'You must accept the Terms and Conditions to continue',
     services: 'You must accept the Informed Consent to continue',
-    userExists: 'Ya existe un paciente con ese número de identidad registrado en Ospi',
+    userExists: 'There is already a patient with that identity number registered in Ospi',
     userNotFound: 'User not found',
 
     password: {
