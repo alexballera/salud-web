@@ -101,7 +101,7 @@ export default function MeasurementCard({ title, value, type, noSVG = false, rou
           <br />
           01 feb, 2022
           <br />
-          1:32 pm.
+          1:32 p.m.
         </Typography>
       </CardContent>
     </Card>
