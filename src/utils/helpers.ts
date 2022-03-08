@@ -17,12 +17,12 @@ export const convertToMask = (value: string): number | (RegExp | string)[] => {
   return mask;
 };
 
-export const calculate_age = dateString => {
+export const calculateAge = (dateString: string): number => {
   const ds = new Date(dateString);
-  const diff_ms = Date.now() - ds.getTime();
-  const age_dt = new Date(diff_ms);
+  const diffMs = Date.now() - ds.getTime();
+  const ageDt = new Date(diffMs);
 
-  return Math.abs(age_dt.getUTCFullYear() - 1970);
+  return Math.abs(ageDt.getUTCFullYear() - 1970);
 };
 
 export const upperCamelCase = (s: string): string => {

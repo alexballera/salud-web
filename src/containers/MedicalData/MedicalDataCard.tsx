@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 /// MATERIAL UI
 import { Card, Box, Typography, Grid } from '@material-ui/core';
@@ -9,7 +9,7 @@ import MedicalStyles from './styles.module';
 import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18nProfile } from '../../i18n/profile/i18n';
 import { IMedicalData } from '../../services/getMedicalData.service';
-import { calculate_age } from '../../utils/helpers';
+import { calculateAge } from '../../utils/helpers';
 /// i18n END
 
 type IProps = {
@@ -30,7 +30,7 @@ export const MedicalDataCard = ({ generalData }: IProps): JSX.Element => {
             {t('medicalData.age', { ns: i18nProfile })}
           </Typography>
           <Typography variant="body2" className={classes.textValue}>
-            {calculate_age(birthDate)}
+            {calculateAge(birthDate)}
           </Typography>
         </Grid>
         <Grid container justify="space-between" className={classes.containerData}>

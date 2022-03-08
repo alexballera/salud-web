@@ -162,7 +162,8 @@ function LoginPage({ fetching, handleLoading, handleNotifications }: TProps): JS
             handleSubmit: formikSubmit,
             touched,
             submitCount,
-            validateForm
+            validateForm,
+            handleBlur
           }: FormikProps<TLoginData>) => {
             useEffect(() => {
               validateForm();
@@ -187,6 +188,7 @@ function LoginPage({ fetching, handleLoading, handleNotifications }: TProps): JS
                     type="email"
                     fullWidth={true}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     value={values.email}
                     error={(touched.email && Boolean(errors.email)) || fetchHasError}
                     data-testid="email-field"
@@ -207,6 +209,7 @@ function LoginPage({ fetching, handleLoading, handleNotifications }: TProps): JS
                     type="password"
                     fullWidth={true}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     value={values.password}
                     error={(touched.password && Boolean(errors.password)) || fetchHasError}
                     data-testid="password-field"
