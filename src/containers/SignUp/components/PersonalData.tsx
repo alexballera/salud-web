@@ -101,16 +101,14 @@ function PersonalData({
   const inputMaskRef = useRef(null);
   const [fetchUserDataState, setFetchUserDateState] = useState(FETCH_USER_DATA_STATE);
 
-  const handlerError = error => {
-    if (error.response) {
-      switch (error.response.data.error.code) {
-        case 'sld-user-1':
-          return t('validations.userNotFound', { ns: i18Forms });
-        case 'sld-user-2':
-          return t('validations.userExists', { ns: i18Forms });
-        default:
-          return t('validations.document.invalid', { ns: i18Forms });
-      }
+  const handlerError = (code = '') => {
+    switch (code) {
+      case 'sld-user-1':
+        return t('validations.userNotFound', { ns: i18Forms });
+      case 'sld-user-2':
+        return t('validations.userExists', { ns: i18Forms });
+      default:
+        return t('validations.document.invalid', { ns: i18Forms });
     }
   };
 
@@ -138,7 +136,7 @@ function PersonalData({
     autocompleteUserDataFn({ docType, docNumber: docNumberSanitized })
       .then(setUserValues)
       .catch(error => {
-        const searchError = handlerError(error);
+        const searchError = handlerError(error.response.data.error.code);
         const i18nPopUpError = t('validations.document.invalid_pop_up', { ns: i18Forms });
         setUserValues(null); // Reset user info inputs
         setCustomPopUpError(i18nPopUpError); // Save this error on form state, it should be appear if continue button is clicked
