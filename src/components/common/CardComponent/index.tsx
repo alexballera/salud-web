@@ -1,6 +1,5 @@
 /// BASE IMPORTS
 import React from 'react';
-import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 /// BASE IMPORTS
 
 /// MUI COMPONENTS
@@ -24,7 +23,7 @@ import { NAMESPACE_KEY as i18Globals } from '@/src/i18n/globals/i18n';
 import { TCard } from './card.types';
 /// TYPES END
 
-const CardComponent = (props: TCard): ReactJSXElement => {
+const CardComponent = (props: TCard): JSX.Element => {
   const { type, name, date, performer, callToAction } = props;
   const classes = cardStyles();
   const { t } = useTranslation(i18Globals);
@@ -33,9 +32,23 @@ const CardComponent = (props: TCard): ReactJSXElement => {
     callToAction();
   };
 
+  const getCardDate = (date: string) => {
+    const toDate = new Date(date);
+    const year = toDate.getFullYear();
+    const day = toDate.getDay();
+    const month = toDate.getMonth().toLocaleString();
+    if (!month || !year || !day) {
+      return t('invalid_date_format');
+    }
+    return `${day.toString().padStart(2, '0')} ${t(`months.${month}`).substring(0, 3)} ${year}`;
+  };
+
   return (
     <ThemeProvider theme={muiTheme}>
-      <Card sx={{ borderRadius: 4, boxShadow: boxShadow, height: 155, p: 1.75, width: 312 }}>
+      <Card
+        sx={{ borderRadius: 4, boxShadow: boxShadow, height: 155, p: 1.75 }}
+        className={classes.card}
+      >
         <CardContent sx={{ padding: 0 }}>
           <Chip
             label={type}
@@ -54,7 +67,7 @@ const CardComponent = (props: TCard): ReactJSXElement => {
             component="div"
             sx={{ fontSize: 12, color: '#A4B6BA', mb: 2.75 }}
           >
-            Fecha: {date}
+            {t('label.date', { ns: i18Globals })}: {getCardDate(date)}
           </Typography>
         </CardContent>
         <CardActions sx={{ padding: 0 }}>

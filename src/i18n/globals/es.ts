@@ -72,6 +72,7 @@ export const esGlobals = {
   label: {
     accept: 'Acepto',
     birthdate: 'Fecha de nacimiento',
+    date: 'Fecha',
     change: 'Cambiar',
     consent: 'Consentimiento informado',
     edit: 'Editar',
