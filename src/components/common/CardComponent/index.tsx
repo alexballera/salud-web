@@ -1,5 +1,6 @@
 /// BASE IMPORTS
 import React from 'react';
+import Link from 'next/link';
 /// BASE IMPORTS
 
 /// MUI COMPONENTS
@@ -10,13 +11,19 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 /// STYLES
 import { ThemeProvider } from '@mui/material/styles';
 import { cardStyles } from './styles.module';
-import { boxShadow, purpleLight } from '@/src/styles/js/theme';
+import {
+  boxShadow,
+  purpleLight,
+  textValueCardColor,
+  textValueCardColor2
+} from '@/src/styles/js/theme';
 import muiTheme from '@/src/styles/js/muiTheme';
 /// STYLES END
 
 /// i18n
 import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18Globals } from '@/src/i18n/globals/i18n';
+import { NAMESPACE_KEY as i18nRecipes } from '@/src/i18n/recipes_and_prescriptions/i18n';
 /// i18n END
 
 /// TYPES
@@ -24,13 +31,9 @@ import { TCard } from './card.types';
 /// TYPES END
 
 const CardComponent = (props: TCard): JSX.Element => {
-  const { type, name, date, performer, callToAction } = props;
+  const { type, name, date, performer, redirectTo } = props;
   const classes = cardStyles();
-  const { t } = useTranslation(i18Globals);
-
-  const handleClick = () => {
-    callToAction();
-  };
+  const { t } = useTranslation([i18Globals, i18nRecipes]);
 
   const getCardDate = (date: string) => {
     const toDate = new Date(date);
@@ -58,14 +61,14 @@ const CardComponent = (props: TCard): JSX.Element => {
           <Typography
             variant="h2"
             component="div"
-            sx={{ fontSize: 14, color: '#67777A', mt: 2, mb: 0.5 }}
+            sx={{ fontSize: 14, color: textValueCardColor, mt: 2, mb: 0.5 }}
           >
             {name}
           </Typography>
           <Typography
             variant="body1"
             component="div"
-            sx={{ fontSize: 12, color: '#A4B6BA', mb: 2.75 }}
+            sx={{ fontSize: 12, color: textValueCardColor2, mb: 2.75 }}
           >
             {t('label.date', { ns: i18Globals })}: {getCardDate(date)}
           </Typography>
@@ -75,14 +78,11 @@ const CardComponent = (props: TCard): JSX.Element => {
             <Typography variant="body1" component="div" className={classes.performer}>
               {performer}
             </Typography>
-            <Button
-              size="small"
-              color="secondary"
-              endIcon={<ArrowForwardIcon />}
-              onClick={() => handleClick()}
-            >
-              {t('button.show_more', { ns: i18Globals })}
-            </Button>
+            <Link href={redirectTo} passHref>
+              <Button size="small" color="secondary" endIcon={<ArrowForwardIcon />}>
+                {t('button.show_more', { ns: i18Globals })}
+              </Button>
+            </Link>
           </Stack>
         </CardActions>
       </Card>

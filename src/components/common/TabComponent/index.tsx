@@ -1,7 +1,6 @@
 /// BASE IMPORTS
 import React, { useEffect, useState } from 'react';
 import SwipeableViews from 'react-swipeable-views';
-import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 /// BASE IMPORTS
 
 /// MUI COMPONENTS
@@ -52,7 +51,7 @@ function a11yProps(index: number) {
   };
 }
 
-const TabComponent = (props: TabContentProps): ReactJSXElement => {
+const TabComponent = (props: TabContentProps): JSX.Element => {
   const { itemClick, content } = props;
   const theme = useTheme();
   const classes = tabStyles();

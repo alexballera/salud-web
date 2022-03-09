@@ -3,135 +3,35 @@ import React, { useEffect, useState } from 'react';
 /// BASE IMPORTS
 
 /// i18n
-import { useTranslation, withTranslation } from 'react-i18next';
-import { NAMESPACE_KEY as i18ExamResult } from '@/src/i18n/clinic_history/i18n';
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY as i18Recipes } from '@/src/i18n/recipes_and_prescriptions/i18n';
 import { NAMESPACE_KEY as i18Forms } from '@/src/i18n/forms/i18n';
 import { NAMESPACE_KEY as i18nGlobal } from '@/src/i18n/globals/i18n';
-
 /// i18n END
 
 /// MUI COMPONENTS
+import { Box, CircularProgress, Grid, Typography } from '@mui/material';
 /// MUI COMPONENTS END
 
 /// OWN COMPONENTS
-import { withAppContext } from '@/src/context';
-import TabComponent from '@/src/components/common/TabComponent';
 import CardComponent from '@/src/components/common/CardComponent';
-import {
-  getExamResultsByYear,
-  mockData,
-  TExamResultsGroup,
-  TGeneralData
-} from '@/src/services/getExamResultsData.service';
-import { TPersonalDataProps } from '@/src/containers/SignUp/index.types';
+import { getExamResultsByYear, TExamResultsGroup } from '@/src/services/getExamResultsData.service';
 import YearSlider from '@/src/components/common/YearSlider';
-import { Box, CircularProgress, Grid, Typography } from '@mui/material';
 /// OWN COMPONENTS END
 
 /// STYLES
+import { examStyles } from '@/src/containers/ExamResult/styles.module';
+import { title2Color } from '@/src/styles/js/theme';
+import { ThemeProvider } from '@mui/material/styles';
+import muiTheme from '@/src/styles/js/muiTheme';
 /// STYLES END
 
-const ExamResult = ({ handleNotifications }: TPersonalDataProps): JSX.Element => {
-  const { t } = useTranslation([i18ExamResult, i18Forms, i18nGlobal]);
-  const [patientData, setPatientData] = useState<TGeneralData | TExamResultsGroup>(mockData);
-  const i18nPopUpError = t('message.error.general_fetch', { ns: i18Forms });
+const ExamResult = (): JSX.Element => {
+  const { t } = useTranslation([i18Recipes, i18Forms, i18nGlobal]);
+  const classes = examStyles();
   const [loading, setLoading] = useState(false);
   const [selectedYear, setSelectedYear] = useState<null | number>(null);
   const [examResultsGroups, setExamResultsGroups] = useState<TExamResultsGroup>([]);
-
-  const handleClick = () => {
-    console.log('Click en el padre');
-  };
-
-  /*   const tabContentData = [
-    {
-      label: '2022',
-      content: (
-        <CardComponent
-          type="Type"
-          name="Name"
-          date="2021-01-24T00:00:00.000Z"
-          performer="Performer"
-          callToAction={handleClick}
-        />
-      )
-    },
-    {
-      label: '2021',
-      content: (
-        <CardComponent
-          type="Type"
-          name="Name"
-          date="2021-02-24T00:00:00.000Z"
-          performer="Performer"
-          callToAction={handleClick}
-        />
-      )
-    },
-    {
-      label: '2020',
-      content: (
-        <CardComponent
-          type="Type"
-          name="Name"
-          date="2021-01-24T00:00:00.000Z"
-          performer="Performer"
-          callToAction={handleClick}
-        />
-      )
-    },
-    {
-      label: '2019',
-      content: (
-        <CardComponent
-          type="Type"
-          name="Name"
-          date="2021-01-24T00:00:00.000Z"
-          performer="Performer"
-          callToAction={handleClick}
-        />
-      )
-    },
-    {
-      label: '2018',
-      content: (
-        <CardComponent
-          type="Type"
-          name="Name"
-          date="2021-01-24T00:00:00.000Z"
-          performer="Performer"
-          callToAction={handleClick}
-        />
-      )
-    },
-    {
-      label: '2017',
-      content: (
-        <CardComponent
-          type="Type"
-          name="Name"
-          date="2021-01-24T00:00:00.000Z"
-          performer="Performer"
-          callToAction={handleClick}
-        />
-      )
-    }
-  ]; */
-
-  /* const fetchPatientData = () => {
-    // TODO CONECTAR CON API REAL
-    getExamResultsByYear(2021)
-      .then(res => {
-        setPatientData(res);
-      })
-      .catch(err => {
-        console.log(err);
-        handleNotifications({ open: true, message: i18nPopUpError, severity: 'error' });
-      });
-  };
-  useEffect(() => {
-    fetchPatientData();
-  }, []); */
 
   useEffect(() => {
     if (selectedYear) {
@@ -146,20 +46,26 @@ const ExamResult = ({ handleNotifications }: TPersonalDataProps): JSX.Element =>
     }
   }, [selectedYear]);
 
+  const getExamTitle = (type: string): string => {
+    const title = {
+      laboratory: `${t('card.laboratory', { ns: i18Recipes })}`,
+      procedure: `${t('card.procedure', { ns: i18Recipes })}`
+    };
+    return title[type];
+  };
+
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        <Box>
+    <ThemeProvider theme={muiTheme}>
+      <Grid container>
+        <Grid item xs={12}>
           <YearSlider
             disabled={loading}
             itemClick={item => {
               setSelectedYear(item);
             }}
           />
-        </Box>
-        <Box>
-          {loading && (
-            <Box mt={6}>
+          <Box px={3}>
+            {loading && (
               <Grid
                 container
                 item
@@ -167,54 +73,59 @@ const ExamResult = ({ handleNotifications }: TPersonalDataProps): JSX.Element =>
                 direction="column"
                 justifyContent="center"
                 alignItems="center"
+                sx={{ height: 'calc(100vh - 104px)' }}
               >
-                <CircularProgress color="inherit" />
+                <CircularProgress color="secondary" />
               </Grid>
-            </Box>
-          )}
+            )}
 
-          {/* <SwipeableViews
-            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-            index={value}
-            onChangeIndex={handleChangeIndex}
-          >
-            {years.map((tab, i) => (
-              <TabPanel key={tab} value={value} index={i} dir={theme.direction}>
-                {tab}
-              </TabPanel>
-            ))}
-          </SwipeableViews> */}
-
-          {!loading && !examResultsGroups.length && (
-            <Box mt={4}>
-              <Typography>No se encuentra</Typography>
-            </Box>
-          )}
-
-          {!loading &&
-            examResultsGroups.map((group, i) => (
-              // Group items by month
-              <Box key={i}>
-                <Typography>{t(`months.${group.month}`, { ns: i18nGlobal })}</Typography>
-                {group.items.map((item, i) => {
-                  return (
-                    <Box mb={2} key={`${item.userId}-${i}`}>
-                      <CardComponent
-                        type={item.type}
-                        name={item.name}
-                        date={item.date}
-                        performer={item.performer}
-                        callToAction={handleClick}
-                      />
-                    </Box>
-                  );
-                })}
+            {!loading && !examResultsGroups.length && (
+              <Box mt={4}>
+                <Typography className={classes.noRecords}>
+                  {t('no_records', { ns: i18Recipes })}
+                </Typography>
               </Box>
-            ))}
-        </Box>
+            )}
+
+            {!loading &&
+              examResultsGroups.map((group, i) => (
+                // Group items by month
+                <Box key={i}>
+                  <Typography
+                    variant="body1"
+                    component="div"
+                    sx={{
+                      fontSize: 12,
+                      letterSpacing: 1,
+                      textTransform: 'uppercase',
+                      color: title2Color,
+                      lineHeight: '31.92px',
+                      mt: 16 / 8,
+                      mb: 8 / 8
+                    }}
+                  >
+                    {t(`months.${group.month}`, { ns: i18nGlobal })}
+                  </Typography>
+                  {group.items.map((item, i) => {
+                    return (
+                      <Box mb={2} key={`${item.userId}-${i}`}>
+                        <CardComponent
+                          type={getExamTitle(item.type)}
+                          name={item.name}
+                          date={item.date}
+                          performer={item.performer}
+                          redirectTo={item.userId}
+                        />
+                      </Box>
+                    );
+                  })}
+                </Box>
+              ))}
+          </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </ThemeProvider>
   );
 };
 
-export default withTranslation(i18ExamResult)(withAppContext(ExamResult));
+export default ExamResult;
