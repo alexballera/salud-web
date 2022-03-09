@@ -8,8 +8,12 @@ import { NAMESPACE_KEY as i18Diseases } from '@/src/i18n/diseases/i18n';
 /// i18n END
 
 /// MATERIAL UI
-import { Box, makeStyles, Tab, Tabs, Typography, Card, Divider, Grid } from '@material-ui/core';
+import { Box, Tab, Tabs, Typography, Card, Divider, Grid } from '@material-ui/core';
 /// MATERIAL UI END
+
+/// STYLES
+import diseasesStyles from './styles.module';
+/// STYLES END
 
 type TDiseases = {
   name: string;
@@ -21,21 +25,8 @@ type TProps = {
   diseases: TDiseases[];
 };
 
-const useStyles = makeStyles({
-  cardDiseases: {
-    borderRadius: 16,
-    boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.5)'
-  },
-  typography14: {
-    fontSize: '14px'
-  },
-  typography16: {
-    fontSize: '16px'
-  }
-});
-
 const Diseases = ({ diseases }: TProps): JSX.Element => {
-  const classes = useStyles();
+  const classes = diseasesStyles();
   const { t } = useTranslation(i18Diseases);
 
   const [demographic, setDemographic] = useState(0);
@@ -47,7 +38,13 @@ const Diseases = ({ diseases }: TProps): JSX.Element => {
   return (
     <>
       <Box>
-        <Tabs variant="fullWidth" textColor="secondary" value={demographic} onChange={handleChange}>
+        <Tabs
+          variant="fullWidth"
+          textColor="secondary"
+          value={demographic}
+          onChange={handleChange}
+          className={classes.shadow}
+        >
           <Tab label={t('tabs.adulthood', { ns: i18Diseases })} className={classes.typography14} />
           <Tab label={t('tabs.childhood', { ns: i18Diseases })} className={classes.typography14} />
         </Tabs>

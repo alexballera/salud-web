@@ -158,12 +158,24 @@ function Navbar(): JSX.Element {
     '/signup/registered_patient'
   ];
 
+  const activeShadowPathNames = [
+    '/clinic_history/allergies',
+    '/clinic_history/allergies/[allergie_id]',
+    '/clinic_history/habits',
+    '/medicalData'
+  ];
+
   return (
     <>
       {showMenu() && (
         <>
           <Hidden mdUp>
-            <AppBar position="sticky" color="inherit" elevation={0}>
+            <AppBar
+              position="sticky"
+              color="inherit"
+              elevation={0}
+              className={activeShadowPathNames.includes(router.pathname) && classes.shadow}
+            >
               <Toolbar>
                 <Grid container justify="center">
                   {showBackButton() && (

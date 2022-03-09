@@ -9,7 +9,7 @@ import Tabs from '@material-ui/core/Tabs';
 
 /// STYLES
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { poppinsFontFamily, secondaryMainColor } from '../../../styles/js/theme';
+import { boxShadow, poppinsFontFamily, secondaryMainColor } from '../../../styles/js/theme';
 /// STYLES END
 
 const YEARS_BLOCK_SIZE = 30;
@@ -33,6 +33,7 @@ function a11yProps(index: number) {
 const useStyles = makeStyles(() => {
   return createStyles({
     root: {
+      boxShadow: boxShadow,
       '& span': {
         font: poppinsFontFamily,
         fontStyle: 'normal',
