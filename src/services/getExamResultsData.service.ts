@@ -1,25 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 /// TYPES
-export type TLaboratory = {
-  userId: string;
-  type: string;
-  name: string;
-  date: string;
-  performer: string;
-  result: TResult[];
-};
-
-export type TProcedure = {
-  userId: string;
-  type: string;
-  name: string;
-  date: string;
-  performer: string;
-  result: string;
-  procedureZone?: string;
-  diagnostic?: string;
-  interpretation?: string;
-};
 
 export type TResult = {
   name: string;
@@ -39,12 +19,14 @@ export type TGeneralData = {
   interpretation?: string;
 }[];
 
-export const mockData = [
+export type TExamResultsGroup = { month: string; items: TGeneralData }[];
+
+export const mockData: TGeneralData = [
   {
     userId: 'ee957013-b02f-45b2-b837-092b490242ea',
     type: 'laboratory',
     name: 'Perfil Lipidico',
-    date: '2022-01-25T00:00:00.000Z',
+    date: '2022-02-26T00:55:19.596Z',
     performer: 'Dra. Clotilde Miraflores',
     result: [
       {
@@ -113,7 +95,7 @@ export const mockData = [
     userId: 'ee957013-b02f-45b2-b837-092b490242ea',
     type: 'procedure',
     name: 'Rayos X',
-    date: '2022-01-24T00:00:00.000Z',
+    date: '2022-02-26T00:55:19.596Z',
     performer: 'Dra. Clotilde Miraflores',
     result: 'Alterado',
     procedureZone: 'Torax',
@@ -122,7 +104,44 @@ export const mockData = [
   }
 ];
 
-export const getPatientExamsData = (): Promise<AxiosResponse<any>> => {
+const groupResultsByMonth = (data: TGeneralData) => {
+  const groups = data.reduce((groups, curr) => {
+    const month = new Date(curr.date).getMonth().toLocaleString();
+    if (!groups[month]) {
+      groups[month] = [];
+    }
+    groups[month].push(curr);
+    return groups;
+  }, {});
+  return Object.keys(groups).map(month => {
+    return {
+      month: month.toString(),
+      items: groups[month]
+    };
+  });
+};
+
+const filterResultsByYear = (data: TGeneralData, year: number) => {
+  const currentDate = new Date(year, 0, 1);
+  const firstDay = new Date(currentDate.getFullYear(), 0, 1);
+  const lastDay = new Date(currentDate.getFullYear(), 11, 31);
+  return data.filter(item => {
+    const itemDateParsed = new Date(item.date);
+    return itemDateParsed >= firstDay && itemDateParsed <= lastDay;
+  });
+};
+
+export const getExamResultsByYear = (year: number): Promise<TExamResultsGroup> => {
+  return new Promise(resolve => {
+    const filterResults = filterResultsByYear(mockData, year);
+    const groupByMonth = groupResultsByMonth(filterResults);
+    setTimeout(() => {
+      resolve(groupByMonth);
+    }, 4000);
+  });
+};
+
+export const getExamResultsData = (): Promise<AxiosResponse<any>> => {
   // TODO GET DATA FROM API
   return axios.get(
     `https://bff-dev.omnisaludhub.net/api/patients/ee957013-b02f-45b2-b837-092b490242ea/exams`

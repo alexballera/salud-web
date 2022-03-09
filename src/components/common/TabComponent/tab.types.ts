@@ -8,7 +8,7 @@ export type TabPanelProps = {
 };
 
 export type TabContentProps = {
-  label: string;
+  itemClick: (item: number) => void;
   content: React.ReactNode;
 };
 

@@ -1,7 +1,6 @@
 /// BASE IMPORTS
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SwipeableViews from 'react-swipeable-views';
-import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 /// BASE IMPORTS
 
 /// MUI COMPONENTS
@@ -16,8 +15,14 @@ import muiTheme from '@/src/styles/js/muiTheme';
 /// STYLES END
 
 /// TYPES
-import { TabPanelProps, TabProps } from './tab.types';
+import { TabContentProps, TabPanelProps } from './tab.types';
 /// TYPES END
+
+const YEARS_BLOCK_SIZE = 10;
+const CURRENT_YEAR = new Date().getFullYear();
+
+const prevBlock = (year: number) =>
+  Array.from(Array(YEARS_BLOCK_SIZE).keys()).map((_, idx) => year - (idx + 1));
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
@@ -46,14 +51,29 @@ function a11yProps(index: number) {
   };
 }
 
-const TabComponent = (props: TabProps): ReactJSXElement => {
-  const { content } = props;
+const TabComponent = (props: TabContentProps): JSX.Element => {
+  const { itemClick, content } = props;
   const theme = useTheme();
   const classes = tabStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [years] = useState([CURRENT_YEAR, ...prevBlock(CURRENT_YEAR)]);
+
+  useEffect(() => {
+    itemClick(CURRENT_YEAR);
+  }, []);
+
+  useEffect(() => {
+    console.log('content', content);
+  }, []);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+    // if (disabled) return;
+    const value = event.target as HTMLElement;
+    const toNumber = Number(value.innerHTML);
+    if (typeof toNumber === 'number') {
+      setValue(newValue);
+      itemClick(toNumber);
+    }
   };
 
   const handleChangeIndex = (index: number) => {
@@ -75,8 +95,8 @@ const TabComponent = (props: TabProps): ReactJSXElement => {
           sx={{ color: secondaryMainColor }}
           className={classes.root}
         >
-          {content.map((tab, i) => (
-            <Tab key={tab.label} label={tab.label} {...a11yProps(i)} />
+          {years.map((tab, i) => (
+            <Tab key={tab} label={tab} {...a11yProps(i)} />
           ))}
         </Tabs>
         <SwipeableViews
@@ -84,9 +104,9 @@ const TabComponent = (props: TabProps): ReactJSXElement => {
           index={value}
           onChangeIndex={handleChangeIndex}
         >
-          {content.map((tab, i) => (
-            <TabPanel key={tab.label} value={value} index={i} dir={theme.direction}>
-              {tab.content}
+          {years.map((tab, i) => (
+            <TabPanel key={tab} value={value} index={i} dir={theme.direction}>
+              {tab}
             </TabPanel>
           ))}
         </SwipeableViews>

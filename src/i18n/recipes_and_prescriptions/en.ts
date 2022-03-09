@@ -20,6 +20,8 @@ export const enRecipesAndPrescriptions = {
     description: 'Description',
     details: 'Details',
     specialty: 'Specialty',
-    frequency: 'Frequency'
+    frequency: 'Frequency',
+    laboratory: 'Laboratory',
+    procedure: 'Procedure'
   }
 };
