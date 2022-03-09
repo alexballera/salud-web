@@ -5,10 +5,13 @@ export type TResult = {
   name: string;
   value: string;
   unit: string;
+  referenceRange: string;
+  comments?: string;
 };
 
 export type TGeneralData = {
   userId: string;
+  id: string;
   type: string;
   name: string;
   date: string;
@@ -24,6 +27,7 @@ export type TExamResultsGroup = { month: string; items: TGeneralData }[];
 export const mockData: TGeneralData = [
   {
     userId: 'ee957013-b02f-45b2-b837-092b490242ea',
+    id: '1',
     type: 'laboratory',
     name: 'Perfil Lipidico',
     date: '2022-02-26T00:55:19.596Z',
@@ -32,67 +36,92 @@ export const mockData: TGeneralData = [
       {
         name: 'apariencia del suero',
         value: '23',
-        unit: 'n/a'
+        unit: 'n/a',
+        referenceRange: '30-150',
+        comments: 'Ninguno'
       },
       {
         name: 'colesterol total',
         value: '231',
-        unit: 'mg/dl'
+        unit: 'mg/dl',
+        referenceRange: '30-150',
+        comments: 'Ninguno'
       },
       {
         name: 'colesterol hdl',
         value: '213',
-        unit: 'mg/dl'
+        unit: 'mg/dl',
+        referenceRange: '30-150',
+        comments: 'Ninguno'
       },
       {
         name: 'colesterol ldl',
         value: '123',
-        unit: 'mg/dl'
+        unit: 'mg/dl',
+        referenceRange: '30-150',
+        comments: 'Ninguno'
       },
       {
         name: 'colesterol no hdl',
         value: '123',
-        unit: 'mg/dl'
+        unit: 'mg/dl',
+        referenceRange: '30-150',
+        comments: 'Ninguno'
       },
       {
         name: 'trigliceridos',
         value: '213',
-        unit: 'mg/dl'
+        unit: 'mg/dl',
+        referenceRange: '30-150',
+        comments: 'Ninguno'
       },
       {
         name: 'colesterol vldl',
         value: '22',
-        unit: 'n/a'
+        unit: 'n/a',
+        referenceRange: '30-150',
+        comments: 'Ninguno'
       },
       {
         name: 'col/hdl',
         value: '22',
-        unit: 'n/a'
+        unit: 'n/a',
+        referenceRange: '30-150',
+        comments: 'Ninguno'
       },
       {
         name: 'hdl/col',
         value: '33',
-        unit: 'n/a'
+        unit: 'n/a',
+        referenceRange: '30-150',
+        comments: 'Ninguno'
       },
       {
         name: 'ldl/hdl',
         value: '33',
-        unit: 'n/a'
+        unit: 'n/a',
+        referenceRange: '30-150',
+        comments: 'Ninguno'
       },
       {
         name: 'a/g',
         value: '33',
-        unit: 'n/a'
+        unit: 'n/a',
+        referenceRange: '30-150',
+        comments: 'Ninguno'
       },
       {
         name: 'quilomicrones',
         value: '4',
-        unit: 'mg/dl'
+        unit: 'mg/dl',
+        referenceRange: '30-150',
+        comments: 'Ninguno'
       }
     ]
   },
   {
     userId: 'ee957013-b02f-45b2-b837-092b490242ea',
+    id: '2',
     type: 'procedure',
     name: 'Rayos X',
     date: '2022-02-26T00:55:19.596Z',
@@ -146,4 +175,13 @@ export const getExamResultsData = (): Promise<AxiosResponse<any>> => {
   return axios.get(
     `https://bff-dev.omnisaludhub.net/api/patients/ee957013-b02f-45b2-b837-092b490242ea/exams`
   );
+};
+
+export const getExamResultsById = (id: string): Promise<TGeneralData[0] | null> => {
+  return new Promise(resolve => {
+    const findItem = mockData.find(item => item.id === id);
+    setTimeout(() => {
+      resolve(findItem);
+    }, 4000);
+  });
 };

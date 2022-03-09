@@ -140,7 +140,7 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
   const itemsCard = [
     {
       title: t('proceedings.prescriptions', { ns: i18nProceedings }),
-      action: '/recipes_and_prescriptions/2022'
+      action: '/recipes_and_prescriptions'
     },
     {
       title: t('proceedings.examResults', { ns: i18nProceedings }),
@@ -164,8 +164,8 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
             </ListItemSecondaryAction>
           </ListItem>
         </List>
+        <MeasurementCardContainer generalData={measurementData} />
       </Container>
-      <MeasurementCardContainer generalData={measurementData} />
       <Divider />
       <Container maxWidth="sm" className={classes.cardContainer}>
         <Typography variant="body2" className={classes.title2}>
