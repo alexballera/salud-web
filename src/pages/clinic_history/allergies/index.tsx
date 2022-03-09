@@ -3,6 +3,10 @@ import React from 'react';
 import Link from 'next/link';
 /// BASE IMPORTS
 
+/// SLICE SERVICE
+import { useGetAllergiesQuery } from '../../../store/slices/allergie.slice';
+/// SLICE SERVICE END
+
 /// STYLES
 import allergieStyles from './styles.module';
 /// STYLES END
@@ -30,6 +34,9 @@ type TProps = {
 const Allergies = ({ allergies }: TProps): JSX.Element => {
   const classes = allergieStyles();
   const { t } = useTranslation(i18Allergies);
+
+  const { data } = useGetAllergiesQuery();
+  console.log(data);
 
   return (
     <Container>

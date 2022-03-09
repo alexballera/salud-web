@@ -4,6 +4,11 @@ import { useEffect } from 'react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
 
+/// REDUX TOOLKIT
+import { Provider } from 'react-redux';
+import { store } from '../store';
+/// REDUX TOOLKIT END
+
 /// CONTEXT
 import AppProvider from '../context/AppProvider';
 import { UserProvider } from '../context/UserContext';
@@ -48,25 +53,27 @@ const MyApp = ({ Component, pageProps }: IProps): JSX.Element => {
 
   return (
     <>
-      <UserProvider>
-        <Head>
-          <title>My App</title>
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
-          />
-        </Head>
-        <ThemeProvider theme={theme}>
-          <I18nextProvider i18n={i18next}>
-            <AppProvider>
-              <CssBaseline />
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            </AppProvider>
-          </I18nextProvider>
-        </ThemeProvider>
-      </UserProvider>
+      <Provider store={store}>
+        <UserProvider>
+          <Head>
+            <title>My App</title>
+            <meta
+              name="viewport"
+              content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
+            />
+          </Head>
+          <ThemeProvider theme={theme}>
+            <I18nextProvider i18n={i18next}>
+              <AppProvider>
+                <CssBaseline />
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </AppProvider>
+            </I18nextProvider>
+          </ThemeProvider>
+        </UserProvider>
+      </Provider>
     </>
   );
 };
