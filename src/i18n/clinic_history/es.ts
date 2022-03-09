@@ -3,7 +3,7 @@ export const esClinicHistory = {
     diseases: 'Mis enfermedades',
     allergies: 'Mis alergias',
     habits: 'Control de hábitos',
-    injuries: 'Mis Cirugías y lesiones',
+    injuries: 'Mis cirugías y lesiones',
     vaccines: 'Vacunas',
     familyIllnesses: 'Enfermedades familiares'
   }

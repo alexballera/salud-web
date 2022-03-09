@@ -11,6 +11,7 @@ export type IMedicalData = {
   biologicSex: string;
   pronoun: string;
   civilStatus: string;
+  sons: string;
   ocupation: string;
   address: string;
 };
@@ -26,11 +27,11 @@ export const mockData = {
   biologicSex: 'Femenino',
   pronoun: 'Ella',
   civilStatus: 'Soltera',
+  sons: 'No',
   ocupation: 'Agente de Ventas',
   address: 'Montes de Oca'
 };
 
-export const getMedicalData = (): Promise<AxiosResponse<any>> => {
-  //TODO GET DATA FROM API
+export const getMedicalData = (): Promise<AxiosResponse> => {
   return axios.get(`${process.env.NEXT_PUBLIC_API_URL}general/medical`);
 };
