@@ -89,7 +89,7 @@ function Navbar(): JSX.Element {
         return true;
       case '/clinic_history/habits':
         return true;
-      case '/exam_results/preview/[item_id]':
+      case '/exam_results/detail/[item_id]':
         return true;
       default:
         return false;
@@ -120,7 +120,7 @@ function Navbar(): JSX.Element {
         return t('items.allergies', { ns: 'menu' });
       case '/clinic_history/habits':
         return t('items.clinic_history_habits', { ns: 'menu' });
-      case '/exam_results/preview/[item_id]':
+      case '/exam_results/detail/[item_id]':
         return getDataFromLocalStorage('titleExamResultDetail');
       default:
         return false;

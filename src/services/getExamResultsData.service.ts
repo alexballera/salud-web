@@ -38,84 +38,84 @@ export const mockData: TGeneralData = [
         value: '23',
         unit: 'n/a',
         referenceRange: '30-150',
-        comments: 'bajo'
+        comments: 'Ninguno'
       },
       {
         name: 'colesterol total',
         value: '231',
         unit: 'mg/dl',
         referenceRange: '30-150',
-        comments: 'bajo'
+        comments: 'Ninguno'
       },
       {
         name: 'colesterol hdl',
         value: '213',
         unit: 'mg/dl',
         referenceRange: '30-150',
-        comments: 'bajo'
+        comments: 'Ninguno'
       },
       {
         name: 'colesterol ldl',
         value: '123',
         unit: 'mg/dl',
         referenceRange: '30-150',
-        comments: 'bajo'
+        comments: 'Ninguno'
       },
       {
         name: 'colesterol no hdl',
         value: '123',
         unit: 'mg/dl',
         referenceRange: '30-150',
-        comments: 'bajo'
+        comments: 'Ninguno'
       },
       {
         name: 'trigliceridos',
         value: '213',
         unit: 'mg/dl',
         referenceRange: '30-150',
-        comments: 'bajo'
+        comments: 'Ninguno'
       },
       {
         name: 'colesterol vldl',
         value: '22',
         unit: 'n/a',
         referenceRange: '30-150',
-        comments: 'bajo'
+        comments: 'Ninguno'
       },
       {
         name: 'col/hdl',
         value: '22',
         unit: 'n/a',
         referenceRange: '30-150',
-        comments: 'bajo'
+        comments: 'Ninguno'
       },
       {
         name: 'hdl/col',
         value: '33',
         unit: 'n/a',
         referenceRange: '30-150',
-        comments: 'bajo'
+        comments: 'Ninguno'
       },
       {
         name: 'ldl/hdl',
         value: '33',
         unit: 'n/a',
         referenceRange: '30-150',
-        comments: 'bajo'
+        comments: 'Ninguno'
       },
       {
         name: 'a/g',
         value: '33',
         unit: 'n/a',
         referenceRange: '30-150',
-        comments: 'bajo'
+        comments: 'Ninguno'
       },
       {
         name: 'quilomicrones',
         value: '4',
         unit: 'mg/dl',
         referenceRange: '30-150',
-        comments: 'bajo'
+        comments: 'Ninguno'
       }
     ]
   },
@@ -177,11 +177,11 @@ export const getExamResultsData = (): Promise<AxiosResponse<any>> => {
   );
 };
 
-export const getExamResultsById = (id: string): Promise<TGeneralData | null> => {
+export const getExamResultsById = (id: string): Promise<TGeneralData[0] | null> => {
   return new Promise(resolve => {
     const findItem = mockData.find(item => item.id === id);
     setTimeout(() => {
-      resolve(findItem[0]);
+      resolve(findItem);
     }, 4000);
   });
 };
