@@ -42,6 +42,7 @@ export const MeasurementCardContainer = ({ generalData }: IProps): JSX.Element =
     weight && weight.measurements.length > 0
       ? weight.measurements[0].value + ' ' + weight.unit
       : '-';
+
   return (
     <ScrollMenu scrollContainerClassName={classes.root} separatorClassName={classes.separator}>
       <MeasurementCard
@@ -49,18 +50,21 @@ export const MeasurementCardContainer = ({ generalData }: IProps): JSX.Element =
         title={arterialPressure?.name}
         value={arterialPressureValue}
         type={arterialPressure.type}
+        tab={1}
       />
       <MeasurementCard
         title={weight?.name}
         value={weightValue}
         type={weight.type}
         route="/generalData"
+        tab={2}
       />
       <MeasurementCard
         title={bloodGlocuse?.name}
         value={bloodGlocuseValue}
         type={bloodGlocuse.type}
         route="/generalData"
+        tab={0}
       />
     </ScrollMenu>
   );
