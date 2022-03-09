@@ -1,5 +1,5 @@
-import React from 'react';
 import Link from 'next/link';
+import { useContext } from 'react';
 import { useRouter } from 'next/router';
 
 /// i18n
@@ -11,6 +11,10 @@ import { NAMESPACE_KEY as i18nGlobals } from '../../../../i18n/globals/i18n';
 import { Button } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 /// MATERIAL UI END
+
+/// CONTEXT
+import { UserContext } from '@/src/context/UserContext';
+/// CONTEXT END
 
 import navbarStyles from '../styles.module';
 
@@ -27,6 +31,7 @@ const ActionButtons = ({
   closeButtonPathNames,
   backButtonPathNames
 }: IAction): JSX.Element => {
+  const { userLogState } = useContext(UserContext);
   const { t } = useTranslation(i18nGlobals);
   const classes = navbarStyles();
   const router = useRouter();
@@ -80,6 +85,10 @@ const ActionButtons = ({
 
   // No buttons
   if (noActionPathNames.includes(router.pathname)) {
+    return <></>;
+  }
+
+  if (userLogState === 'LOGGEDIN') {
     return <></>;
   }
 
