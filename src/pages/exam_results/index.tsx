@@ -114,7 +114,7 @@ const ExamResult = (): JSX.Element => {
                           name={item.name}
                           date={item.date}
                           performer={item.performer}
-                          redirectTo={item.userId}
+                          redirectTo={`/exam_results/detail/${item.userId}`}
                         />
                       </Box>
                     );

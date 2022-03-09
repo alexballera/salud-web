@@ -35,7 +35,7 @@ const CardComponent = (props: TCard): JSX.Element => {
   const classes = cardStyles();
   const { t } = useTranslation([i18Globals, i18nRecipes]);
 
-  const getCardDate = (date: string) => {
+  const getCardDate = (date: string): string => {
     const toDate = new Date(date);
     const year = toDate.getFullYear();
     const day = toDate.getDay();
@@ -43,7 +43,7 @@ const CardComponent = (props: TCard): JSX.Element => {
     if (!month || !year || !day) {
       return `${t('invalid_date_format', { ns: i18nRecipes })}`;
     }
-    return `${day.toString().padStart(2, '0')} ${t(`months.${month}`).substring(0, 3)} ${year}`;
+    return `${day.toString().padStart(2, '0')} ${t(`months.${month}`).substring(0, 3)}, ${year}`;
   };
 
   return (
@@ -53,33 +53,44 @@ const CardComponent = (props: TCard): JSX.Element => {
         className={classes.card}
       >
         <CardContent sx={{ padding: 0 }}>
-          <Chip
-            label={type}
-            size="small"
-            sx={{ backgroundColor: 'rgba(187, 154, 253, 0.1)', color: purpleLight }}
-          />
+          <Chip label={type} size="small" className={classes.chip} />
           <Typography
-            variant="h2"
+            variant="body2"
             component="div"
-            sx={{ fontSize: 14, color: textValueCardColor, mt: 2, mb: 0.5 }}
+            sx={{ fontSize: 14, color: textValueCardColor, mt: 2, mb: 0.5, lineHeight: '143%' }}
           >
             {name}
           </Typography>
           <Typography
-            variant="body1"
+            variant="caption"
             component="div"
-            sx={{ fontSize: 12, color: textValueCardColor2, mb: 2.75 }}
+            sx={{
+              fontSize: 12,
+              color: textValueCardColor2,
+              mb: 2.75,
+              fontWeight: 'normal',
+              lineHeight: '166%',
+
+              letterSpacing: 0.4
+            }}
           >
-            {t('label.date', { ns: i18Globals })}: {getCardDate(date)}
+            {t('label.date', { ns: i18Globals })}:{' '}
+            <span className={classes.date}>{getCardDate(date)}</span>
           </Typography>
         </CardContent>
         <CardActions sx={{ padding: 0 }}>
           <Stack direction="row" justifyContent="space-between" sx={{ width: '100%' }}>
-            <Typography variant="body1" component="div" className={classes.performer}>
+            <Typography variant="body2" component="div" className={classes.performer}>
               {performer}
             </Typography>
             <Link href={redirectTo} passHref>
-              <Button size="small" color="secondary" endIcon={<ArrowForwardIcon />}>
+              <Button
+                className={classes.link}
+                size="small"
+                color="secondary"
+                endIcon={<ArrowForwardIcon />}
+                sx={{ textTransform: 'inherit' }}
+              >
                 {t('button.show_more', { ns: i18Globals })}
               </Button>
             </Link>
