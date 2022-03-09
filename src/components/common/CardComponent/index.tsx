@@ -41,7 +41,7 @@ const CardComponent = (props: TCard): JSX.Element => {
     const day = toDate.getDay();
     const month = toDate.getMonth();
     if (!month || !year || !day) {
-      return t('invalid_date_format');
+      return `${t('invalid_date_format', { ns: i18nRecipes })}`;
     }
     return `${day.toString().padStart(2, '0')} ${t(`months.${month}`).substring(0, 3)} ${year}`;
   };

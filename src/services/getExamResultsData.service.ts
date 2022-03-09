@@ -26,7 +26,7 @@ export const mockData: TGeneralData = [
     userId: 'ee957013-b02f-45b2-b837-092b490242ea',
     type: 'laboratory',
     name: 'Perfil Lipidico',
-    date: '2022-01-25T00:00:00.000Z',
+    date: '2022-02-26T00:55:19.596Z',
     performer: 'Dra. Clotilde Miraflores',
     result: [
       {
@@ -95,7 +95,7 @@ export const mockData: TGeneralData = [
     userId: 'ee957013-b02f-45b2-b837-092b490242ea',
     type: 'procedure',
     name: 'Rayos X',
-    date: '2022-01-24T00:00:00.000Z',
+    date: '2022-02-26T00:55:19.596Z',
     performer: 'Dra. Clotilde Miraflores',
     result: 'Alterado',
     procedureZone: 'Torax',
@@ -106,7 +106,7 @@ export const mockData: TGeneralData = [
 
 const groupResultsByMonth = (data: TGeneralData) => {
   const groups = data.reduce((groups, curr) => {
-    const month = new Date(curr.date).getMonth();
+    const month = new Date(curr.date).getMonth().toLocaleString();
     if (!groups[month]) {
       groups[month] = [];
     }
