@@ -171,7 +171,8 @@ export const esGlobals = {
       error_401: 'Token inválido, solicítalo nuevamente'
     },
     signup: {
-      error_409: 'Ya existe un paciente con ese número de identidad registrado en Ospi'
+      error_409:
+        'El correo electrónico ya está registrado en el sistema. Por favor indique otro o contáctenos al OspiCenter para más información'
     }
   },
 
