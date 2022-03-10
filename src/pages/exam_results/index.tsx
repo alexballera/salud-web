@@ -15,7 +15,11 @@ import { Box, CircularProgress, Grid, Typography } from '@mui/material';
 
 /// OWN COMPONENTS
 import CardComponent from '@/src/components/common/CardComponent';
-import { getExamResultsByYear, TExamResultsGroup } from '@/src/services/getExamResultsData.service';
+import {
+  getExamResultsByYear,
+  getExamResultsData,
+  TExamResultsGroup
+} from '@/src/services/getExamResultsData.service';
 import YearSlider from '@/src/components/common/YearSlider';
 /// OWN COMPONENTS END
 
@@ -34,15 +38,14 @@ const ExamResult = (): JSX.Element => {
   const [examResultsGroups, setExamResultsGroups] = useState<TExamResultsGroup>([]);
 
   useEffect(() => {
+    setLoading(true);
     if (selectedYear) {
-      setLoading(true);
-      getExamResultsByYear(selectedYear)
-        .then(result => {
-          setExamResultsGroups(result);
+      getExamResultsData()
+        .then(res => {
+          setExamResultsGroups(getExamResultsByYear(res.data, selectedYear));
         })
-        .finally(() => {
-          setLoading(false);
-        });
+        .catch(err => console.error(err))
+        .finally(() => setLoading(false));
     }
   }, [selectedYear]);
 

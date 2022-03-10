@@ -11,12 +11,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 /// STYLES
 import { ThemeProvider } from '@mui/material/styles';
 import { cardStyles } from './styles.module';
-import {
-  boxShadow,
-  purpleLight,
-  textValueCardColor,
-  textValueCardColor2
-} from '@/src/styles/js/theme';
+import { boxShadow, textValueCardColor, textValueCardColor2 } from '@/src/styles/js/theme';
 import muiTheme from '@/src/styles/js/muiTheme';
 /// STYLES END
 
@@ -41,8 +36,6 @@ const CardComponent = (props: TCard): JSX.Element => {
     const year = toDate.getFullYear();
     const day = toDate.getUTCDate();
     const month = toDate.getMonth();
-    console.log('toDate', toDate);
-    console.log('day', day);
     if (!month || !year || !day) {
       return `${t('invalid_date_format', { ns: i18nRecipes })}`;
     }

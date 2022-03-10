@@ -30,7 +30,7 @@ export const mockData: TGeneralData = [
     id: '1',
     type: 'laboratory',
     name: 'Perfil Lipidico',
-    date: '2022-02-01T00:55:19.596Z', // 2022-01-25T00:00:00.000Z
+    date: '2022-02-28T00:55:19.596Z', // 2022-01-25T00:00:00.000Z
     performer: 'Dra. Clotilde Miraflores',
     result: [
       {
@@ -160,18 +160,13 @@ const filterResultsByYear = (data: TGeneralData, year: number) => {
   });
 };
 
-export const getExamResultsByYear = (year: number): Promise<TExamResultsGroup> => {
-  return new Promise(resolve => {
-    const filterResults = filterResultsByYear(mockData, year);
-    const groupByMonth = groupResultsByMonth(filterResults);
-    setTimeout(() => {
-      resolve(groupByMonth);
-    }, 4000);
-  });
+export const getExamResultsByYear = (data: TGeneralData, year: number): TExamResultsGroup => {
+  const filterResults = filterResultsByYear(data, year);
+  const groupByMonth = groupResultsByMonth(filterResults);
+  return groupByMonth;
 };
 
-export const getExamResultsData = (): Promise<AxiosResponse<any>> => {
-  // TODO GET DATA FROM API
+export const getExamResultsData = (): Promise<AxiosResponse<TGeneralData>> => {
   return axios.get(
     `https://bff-dev.omnisaludhub.net/api/patients/ee957013-b02f-45b2-b837-092b490242ea/exams`
   );
