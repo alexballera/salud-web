@@ -5,6 +5,9 @@ const baseUrl = process.env.NEXT_PUBLIC_API_URL_BFF;
 type TAllergies = {
   description: string;
   isActive: boolean;
+  comments: string;
+  performer: string;
+  specialization: string;
 };
 
 type AllergieResponse = {
@@ -24,7 +27,7 @@ const baseQuery = fetchBaseQuery({
   }
 });
 
-export const allergieSlice = createApi({
+export const apiBFF = createApi({
   baseQuery: baseQuery,
   endpoints: builder => ({
     getAllergies: builder.query<AllergieResponse, void>({
@@ -33,4 +36,4 @@ export const allergieSlice = createApi({
   })
 });
 
-export const { useGetAllergiesQuery } = allergieSlice;
+export const { useGetAllergiesQuery } = apiBFF;

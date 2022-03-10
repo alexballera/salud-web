@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { allergieSlice } from './slices/allergie.slice';
+import { apiBFF } from '../services/apiBFF';
 
 export const store = configureStore({
   reducer: {
-    [allergieSlice.reducerPath]: allergieSlice.reducer
+    [apiBFF.reducerPath]: apiBFF.reducer
   }
 });

@@ -4,7 +4,7 @@ import Link from 'next/link';
 /// BASE IMPORTS
 
 /// SLICE SERVICE
-import { useGetAllergiesQuery } from '../../../store/slices/allergie.slice';
+import { useGetAllergiesQuery } from '../../../services/apiBFF';
 /// SLICE SERVICE END
 
 /// STYLES
@@ -25,63 +25,57 @@ const Allergies = (): JSX.Element => {
   const classes = allergieStyles();
   const { t } = useTranslation(i18Allergies);
 
-  const { data, isLoading, isError } = useGetAllergiesQuery();
-
-  if (isLoading) {
-    return <div>Esperando</div>;
-  }
-
-  if (isError || !data) {
-    return <div>Something went wrong</div>;
-  }
-
-  console.log(data.allergies);
+  const { data } = useGetAllergiesQuery();
 
   return (
-    <Container>
-      <Box>
-        <Card className={classes.cardAllergie}>
-          <Box mt={2} mx={2}>
-            <Typography paragraph color="secondary" className={classes.typography16}>
-              {t('allergies', { ns: i18Allergies })}
-            </Typography>
-          </Box>
-          <Divider variant="fullWidth" />
-          <Box mx={2}>
-            {data.allergies.map((allergie, index) => (
-              <Box key={index}>
-                <Link href={`/clinic_history/allergies/${allergie.description}`} passHref>
-                  <Box component="span" className={classes.contentButton}>
-                    <Typography variant="body2" color="primary" className={classes.buttonText}>
-                      {allergie.description}
-                    </Typography>
-                    <Chip
-                      label={
-                        allergie.isActive
-                          ? t('active', { ns: i18Allergies })
-                          : t('inactive', { ns: i18Allergies })
-                      }
-                      className={[
-                        classes.chipStatus,
-                        allergie.isActive ? classes.chipActive : classes.chipInative
-                      ].join(' ')}
-                    />
-                    <ChevronRightIcon color="secondary" />
-                  </Box>
-                </Link>
-              </Box>
-            ))}
-            {data.allergies.length === 0 && (
-              <Box component="span" className={classes.contentButton}>
-                <Typography variant="body2" color="primary" className={classes.buttonText}>
-                  {t('unregistered', { ns: i18Allergies })}
+    <>
+      {data && (
+        <Container>
+          <Box>
+            <Card className={classes.cardAllergie}>
+              <Box mt={2} mx={2}>
+                <Typography paragraph color="secondary" className={classes.typography16}>
+                  {t('allergies', { ns: i18Allergies })}
                 </Typography>
               </Box>
-            )}
+              <Divider variant="fullWidth" />
+              <Box mx={2}>
+                {data.allergies.map((allergie, index) => (
+                  <Box key={index}>
+                    <Link href={`/clinic_history/allergies/${allergie.description}`} passHref>
+                      <Box component="span" className={classes.contentButton}>
+                        <Typography variant="body2" color="primary" className={classes.buttonText}>
+                          {allergie.description}
+                        </Typography>
+                        <Chip
+                          label={
+                            allergie.isActive
+                              ? t('active', { ns: i18Allergies })
+                              : t('inactive', { ns: i18Allergies })
+                          }
+                          className={[
+                            classes.chipStatus,
+                            allergie.isActive ? classes.chipActive : classes.chipInative
+                          ].join(' ')}
+                        />
+                        <ChevronRightIcon color="secondary" />
+                      </Box>
+                    </Link>
+                  </Box>
+                ))}
+                {data.allergies.length === 0 && (
+                  <Box component="span" className={classes.contentButton}>
+                    <Typography variant="body2" color="primary" className={classes.buttonText}>
+                      {t('unregistered', { ns: i18Allergies })}
+                    </Typography>
+                  </Box>
+                )}
+              </Box>
+            </Card>
           </Box>
-        </Card>
-      </Box>
-    </Container>
+        </Container>
+      )}
+    </>
   );
 };
 
