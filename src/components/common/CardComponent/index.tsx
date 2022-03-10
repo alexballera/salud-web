@@ -1,6 +1,7 @@
 /// BASE IMPORTS
 import React from 'react';
 import Link from 'next/link';
+import moment from 'moment';
 /// BASE IMPORTS
 
 /// MUI COMPONENTS
@@ -31,12 +32,16 @@ const CardComponent = (props: TCard): JSX.Element => {
   const { t } = useTranslation([i18Globals, i18nRecipes]);
 
   const getCardDate = (date: string): string => {
-    let toDate = new Date(date);
-    toDate = new Date(toDate.getTime() + toDate.getTimezoneOffset() * 60000);
-    const year = toDate.getFullYear();
-    const day = toDate.getUTCDate();
-    const month = toDate.getMonth();
-    if (!month || !year || !day) {
+    let newDate = new Date(date);
+    newDate = new Date(newDate.getTime() + newDate.getTimezoneOffset() * 60000);
+    const toDate = moment(newDate);
+    const year = toDate.year();
+    const month = toDate.month();
+    const day = toDate.date();
+
+    const isValidDate = toDate.isValid();
+
+    if (!isValidDate) {
       return `${t('invalid_date_format', { ns: i18nRecipes })}`;
     }
     return `${day.toString()} ${t(`months.${month}`).substring(0, 3)}, ${year}`;
