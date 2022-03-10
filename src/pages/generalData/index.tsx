@@ -25,6 +25,18 @@ function GeneralDataPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
     setTab(newValue);
   };
 
+  const items = [
+    {
+      label: t('tabs.pressure', { ns: i18nGeneralData })
+    },
+    {
+      label: t('tabs.weight', { ns: i18nGeneralData })
+    },
+    {
+      label: t('tabs.bloodGlucose', { ns: i18nGeneralData })
+    }
+  ];
+
   return (
     <>
       <Tabs
@@ -35,9 +47,11 @@ function GeneralDataPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
         onChange={handleChange}
         aria-label="tabs-general-data"
       >
-        <Tab label={t('tabs.bloodGlucose', { ns: i18nGeneralData })} />
-        <Tab label={t('tabs.pressure', { ns: i18nGeneralData })} />
-        <Tab label={t('tabs.weight', { ns: i18nGeneralData })} />
+        {items.map((item, i) => (
+          <React.Fragment key={i}>
+            <Tab label={item.label} />
+          </React.Fragment>
+        ))}
       </Tabs>
       <TabContent tab={tab} />
     </>
