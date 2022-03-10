@@ -58,17 +58,16 @@ export const getExamResultsByYear = (data: TGeneralData, year: number): TExamRes
   return groupByMonth;
 };
 
-export const getExamResultsData = (): Promise<AxiosResponse<TGeneralData>> => {
-  return axios.get(
-    `https://bff-dev.omnisaludhub.net/api/patients/ee957013-b02f-45b2-b837-092b490242ea/exams`
-  );
+export const getExamResultsData = (id: string): Promise<AxiosResponse<TGeneralData>> => {
+  return axios.get(`${process.env.NEXT_PUBLIC_API_URL_BFF}patients/${id}/exams`);
 };
 
 export const getExamResultsById = (id: string): Promise<TGeneralData[0] | null> => {
   return new Promise(resolve => {
-    const findItem = mockData.find(item => item.id === id);
+    /* const findItem = mockData.find(item => item.id === id);
     setTimeout(() => {
       resolve(findItem);
-    }, 4000);
+    }, 4000); */
+    console.log(resolve);
   });
 };

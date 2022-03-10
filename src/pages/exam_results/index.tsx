@@ -40,7 +40,8 @@ const ExamResult = (): JSX.Element => {
   useEffect(() => {
     setLoading(true);
     if (selectedYear) {
-      getExamResultsData()
+      const id = 'ee957013-b02f-45b2-b837-092b490242ea';
+      getExamResultsData(id)
         .then(res => {
           setExamResultsGroups(getExamResultsByYear(res.data, selectedYear));
         })
