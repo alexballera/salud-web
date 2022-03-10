@@ -30,7 +30,7 @@ export const mockData: TGeneralData = [
     id: '1',
     type: 'laboratory',
     name: 'Perfil Lipidico',
-    date: '2022-02-26T00:55:19.596Z',
+    date: '2022-02-01T00:55:19.596Z', // 2022-01-25T00:00:00.000Z
     performer: 'Dra. Clotilde Miraflores',
     result: [
       {

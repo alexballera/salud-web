@@ -36,14 +36,17 @@ const CardComponent = (props: TCard): JSX.Element => {
   const { t } = useTranslation([i18Globals, i18nRecipes]);
 
   const getCardDate = (date: string): string => {
-    const toDate = new Date(date);
+    let toDate = new Date(date);
+    toDate = new Date(toDate.getTime() + toDate.getTimezoneOffset() * 60000);
     const year = toDate.getFullYear();
-    const day = toDate.getDay();
+    const day = toDate.getUTCDate();
     const month = toDate.getMonth();
+    console.log('toDate', toDate);
+    console.log('day', day);
     if (!month || !year || !day) {
       return `${t('invalid_date_format', { ns: i18nRecipes })}`;
     }
-    return `${day.toString().padStart(2, '0')} ${t(`months.${month}`).substring(0, 3)}, ${year}`;
+    return `${day.toString()} ${t(`months.${month}`).substring(0, 3)}, ${year}`;
   };
 
   return (
