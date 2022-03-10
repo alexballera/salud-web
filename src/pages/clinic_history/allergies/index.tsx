@@ -21,22 +21,19 @@ import { Box, Typography, Card, Divider, Chip, Container } from '@material-ui/co
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 /// MATERIAL UI END
 
-/// / TYPES
-type TAllergies = {
-  name: string;
-  isActive: boolean;
-};
-type TProps = {
-  allergies: TAllergies[];
-};
-/// / TYPES END
-
-const Allergies = ({ allergies }: TProps): JSX.Element => {
+const Allergies = (): JSX.Element => {
   const classes = allergieStyles();
   const { t } = useTranslation(i18Allergies);
 
-  const { data } = useGetAllergiesQuery();
-  console.log(data);
+  const { data, isLoading, isError } = useGetAllergiesQuery();
+
+  if (isLoading) {
+    return <div>Esperando</div>;
+  }
+
+  if (isError || !data) {
+    return <div>Something went wrong</div>;
+  }
 
   return (
     <Container>
@@ -49,14 +46,14 @@ const Allergies = ({ allergies }: TProps): JSX.Element => {
           </Box>
           <Divider variant="fullWidth" />
           <Box mx={2}>
-            {allergies
-              .sort((a, b) => a.name.localeCompare(b.name))
+            {data.allergies
+              .sort((a, b) => a.description.localeCompare(b.description))
               .map((allergie, index) => (
                 <Box key={index}>
-                  <Link href={`/clinic_history/allergies/${allergie.name}`} passHref>
+                  <Link href={`/clinic_history/allergies/${allergie.description}`} passHref>
                     <Box component="span" className={classes.contentButton}>
                       <Typography variant="body2" color="primary" className={classes.buttonText}>
-                        {allergie.name}
+                        {allergie.description}
                       </Typography>
                       <Chip
                         label={
@@ -74,7 +71,7 @@ const Allergies = ({ allergies }: TProps): JSX.Element => {
                   </Link>
                 </Box>
               ))}
-            {allergies.length === 0 && (
+            {data.allergies.length === 0 && (
               <Box component="span" className={classes.contentButton}>
                 <Typography variant="body2" color="primary" className={classes.buttonText}>
                   {t('unregistered', { ns: i18Allergies })}
@@ -86,27 +83,6 @@ const Allergies = ({ allergies }: TProps): JSX.Element => {
       </Box>
     </Container>
   );
-};
-
-Allergies.getInitialProps = async () => {
-  const allergies: TAllergies[] = [
-    {
-      name: 'Celiaquía',
-      isActive: false
-    },
-    {
-      name: 'Penicilina',
-      isActive: true
-    },
-    {
-      name: 'Aleve',
-      isActive: true
-    }
-  ];
-
-  return {
-    allergies
-  };
 };
 
 export default Allergies;
