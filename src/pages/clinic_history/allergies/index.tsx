@@ -35,6 +35,8 @@ const Allergies = (): JSX.Element => {
     return <div>Something went wrong</div>;
   }
 
+  console.log(data.allergies);
+
   return (
     <Container>
       <Box>
@@ -46,31 +48,29 @@ const Allergies = (): JSX.Element => {
           </Box>
           <Divider variant="fullWidth" />
           <Box mx={2}>
-            {data.allergies
-              .sort((a, b) => a.description.localeCompare(b.description))
-              .map((allergie, index) => (
-                <Box key={index}>
-                  <Link href={`/clinic_history/allergies/${allergie.description}`} passHref>
-                    <Box component="span" className={classes.contentButton}>
-                      <Typography variant="body2" color="primary" className={classes.buttonText}>
-                        {allergie.description}
-                      </Typography>
-                      <Chip
-                        label={
-                          allergie.isActive
-                            ? t('active', { ns: i18Allergies })
-                            : t('inactive', { ns: i18Allergies })
-                        }
-                        className={[
-                          classes.chipStatus,
-                          allergie.isActive ? classes.chipActive : classes.chipInative
-                        ].join(' ')}
-                      />
-                      <ChevronRightIcon color="secondary" />
-                    </Box>
-                  </Link>
-                </Box>
-              ))}
+            {data.allergies.map((allergie, index) => (
+              <Box key={index}>
+                <Link href={`/clinic_history/allergies/${allergie.description}`} passHref>
+                  <Box component="span" className={classes.contentButton}>
+                    <Typography variant="body2" color="primary" className={classes.buttonText}>
+                      {allergie.description}
+                    </Typography>
+                    <Chip
+                      label={
+                        allergie.isActive
+                          ? t('active', { ns: i18Allergies })
+                          : t('inactive', { ns: i18Allergies })
+                      }
+                      className={[
+                        classes.chipStatus,
+                        allergie.isActive ? classes.chipActive : classes.chipInative
+                      ].join(' ')}
+                    />
+                    <ChevronRightIcon color="secondary" />
+                  </Box>
+                </Link>
+              </Box>
+            ))}
             {data.allergies.length === 0 && (
               <Box component="span" className={classes.contentButton}>
                 <Typography variant="body2" color="primary" className={classes.buttonText}>
