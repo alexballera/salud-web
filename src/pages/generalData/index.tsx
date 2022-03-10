@@ -15,11 +15,15 @@ import TabContent from '../../containers/GeneralData/TabContent';
 /// STYLES & TYPES
 import { TPersonalDataProps } from '../../containers/SignUp/index.types';
 import { Tab, Tabs } from '@material-ui/core';
-import { getDataFromLocalStorage } from '@/src/services/localStorage.service';
+import {
+  getDataFromLocalStorage,
+  removeDataFromLocalStorage
+} from '@/src/services/localStorage.service';
 
 function GeneralDataPage({ handleNotifications }: TPersonalDataProps): JSX.Element {
   const { t } = useTranslation([i18nGeneralData, i18Forms]);
-  const [tab, setTab] = useState<number>(parseInt(getDataFromLocalStorage('cardSelected')));
+  const [tab, setTab] = useState<number>(parseInt(getDataFromLocalStorage('cardSelected')) || 0);
+  removeDataFromLocalStorage('cardSelected');
 
   const handleChange = (event, newValue) => {
     setTab(newValue);
