@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { getDate, getMonth, getYear, isValid } from 'date-fns';
 /// OWN COMPONENTS
 import SimpleCardList from '../../../components/common/Card/SimpleCardList';
 /// OWN COMPONENTS END
@@ -102,16 +103,17 @@ function ExamResultsDetailPage({ examResult }: TProps): JSX.Element {
   }, [examResult]);
 
   const getExamDate = (date: string) => {
-    const toDate = new Date(date);
-    const year = toDate.getFullYear();
-    const day = toDate.getDay();
-    const month = toDate.getMonth();
-    if (!month || !year || !day) {
-      return t('invalid_date_format', { ns: i18nExamResults });
+    let newDate = new Date(date);
+    newDate = new Date(newDate.getTime() + newDate.getTimezoneOffset() * 60000);
+    const year = getYear(newDate);
+    const month = getMonth(newDate);
+    const day = getDate(newDate);
+    const isValidDate = isValid(newDate);
+
+    if (!isValidDate) {
+      return `${t('invalid_date_format', { ns: i18nExamResults })}`;
     }
-    return `${day.toString().padStart(2, '0')} de ${t(`months.${month}`, {
-      ns: i18nGlobal
-    })}, ${year}`;
+    return `${day.toString().padStart(2, '0')} ${t(`months.${month}`)}, ${year}`;
   };
 
   const getCardLaboratoryInformation = (result: TResult, date: string): TListItem[] => {
