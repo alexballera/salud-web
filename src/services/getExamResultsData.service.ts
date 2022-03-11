@@ -62,12 +62,14 @@ export const getExamResultsData = (id: string): Promise<AxiosResponse<TGeneralDa
   return axios.get(`${process.env.NEXT_PUBLIC_API_URL_BFF}patients/${id}/exams`);
 };
 
-export const getExamResultsById = (id: string): Promise<TGeneralData[0] | null> => {
+export const getExamResultsById = (userId: string, id: string): Promise<TGeneralData[0]> => {
+  let findItem;
   return new Promise(resolve => {
-    /* const findItem = mockData.find(item => item.id === id);
-    setTimeout(() => {
-      resolve(findItem);
-    }, 4000); */
-    console.log(resolve);
+    getExamResultsData(userId)
+      .then(res => {
+        findItem = res.data.find(item => item.id === id);
+      })
+      .catch(err => console.error(err))
+      .finally(() => resolve(findItem));
   });
 };

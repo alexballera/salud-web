@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 /// OWN COMPONENTS
 import SimpleCardList from '../../../components/common/Card/SimpleCardList';
 /// OWN COMPONENTS END
@@ -26,6 +26,7 @@ import Grid from '@material-ui/core/Grid';
 import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18nExamResults } from '../../../i18n/exam_result/i18n';
 import { NAMESPACE_KEY as i18nGlobal } from '../../../i18n/globals/i18n';
+import { NAMESPACE_KEY as i18Recipes } from '../../../i18n/recipes_and_prescriptions/i18n';
 /// i18n END
 
 /// TYPES
@@ -37,7 +38,8 @@ import type { TListItem } from '../../../components/common/Card/SimpleCardList/t
 import {
   TGeneralData,
   TResult,
-  getExamResultsById
+  getExamResultsById,
+  getExamResultsData
 } from '../../../services/getExamResultsData.service';
 import { setDataToLocalStorage } from '../../../services/localStorage.service';
 /// SERVICES END
@@ -91,7 +93,7 @@ const useStyles = makeStyles(() =>
 
 function ExamResultsDetailPage({ examResult }: TProps): JSX.Element {
   const classes = useStyles();
-  const { t } = useTranslation([i18nGlobal, i18nExamResults]);
+  const { t } = useTranslation([i18nGlobal, i18nExamResults, i18Recipes]);
 
   useEffect(() => {
     if (examResult) {
@@ -174,7 +176,7 @@ function ExamResultsDetailPage({ examResult }: TProps): JSX.Element {
         <Box px={3} py={3}>
           {!examResult ? (
             <Typography variant="h1" className={classes.title}>
-              {t('recipe_or_prescription_not_found', { ns: i18nExamResults })}
+              {t('no_records', { ns: i18Recipes })}
             </Typography>
           ) : (
             <>
@@ -223,8 +225,9 @@ function ExamResultsDetailPage({ examResult }: TProps): JSX.Element {
 
 ExamResultsDetailPage.getInitialProps = async ({ query }: NextPageContext) => {
   // eslint-disable-next-line camelcase
+  const userId = 'ee957013-b02f-45b2-b837-092b490242ea';
   const { item_id: id } = query;
-  const examResult = await getExamResultsById(id as string);
+  const examResult = await getExamResultsById(userId, id as string);
   return {
     examResult
   };
