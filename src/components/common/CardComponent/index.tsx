@@ -1,7 +1,7 @@
 /// BASE IMPORTS
 import React from 'react';
 import Link from 'next/link';
-import moment from 'moment';
+import { getDate, getMonth, getYear, isValid } from 'date-fns';
 /// BASE IMPORTS
 
 /// MUI COMPONENTS
@@ -34,12 +34,10 @@ const CardComponent = (props: TCard): JSX.Element => {
   const getCardDate = (date: string): string => {
     let newDate = new Date(date);
     newDate = new Date(newDate.getTime() + newDate.getTimezoneOffset() * 60000);
-    const toDate = moment(newDate);
-    const year = toDate.year();
-    const month = toDate.month();
-    const day = toDate.date();
-
-    const isValidDate = toDate.isValid();
+    const year = getYear(newDate);
+    const month = getMonth(newDate);
+    const day = getDate(newDate);
+    const isValidDate = isValid(newDate);
 
     if (!isValidDate) {
       return `${t('invalid_date_format', { ns: i18nRecipes })}`;
