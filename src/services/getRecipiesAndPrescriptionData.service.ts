@@ -1,6 +1,8 @@
 /// BASE IMPORTS
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 /// BASE IMPORTS
+
+const BFF_URL = 'https://bff-dev.omnisaludhub.net/api/'; // TODO: Get env variable for this value
 
 /// TYPES
 export type TPatientRecipiesAndPrescription<T extends string, U> = {
@@ -43,110 +45,6 @@ export type TPatientRecipiesAndPrescriptionGroups = {
 }[];
 /// TYPES END
 
-export const mockData: TPatientRecipiesAndPrescriptionList = [
-  /// 2022 ITEMS
-  {
-    id: '1',
-    reportDate: '2022-02-26T00:55:19.596Z',
-    reporter: {
-      name: 'Dr. Manuel Rodriguez Mora',
-      speciality: 'Ginecología'
-    },
-    type: 'prescription',
-    details: {
-      via: 'Oral',
-      take: 2,
-      frequency: 1,
-      quantity: 1,
-      days: 3,
-      power: 10,
-      drug: 'Loratadina',
-      indications: 'Consumir en ayunas. Suspender consumo de alcohol durante el tratamiento',
-      status: '',
-      statusDate: ''
-    }
-  },
-  {
-    id: '2',
-    reportDate: '2022-02-25T00:55:19.596Z',
-    reporter: {
-      name: 'Dr. Carlos Smith Doe',
-      speciality: 'Dermatología'
-    },
-    type: 'prescription',
-    details: {
-      via: 'Oral',
-      take: 2,
-      frequency: 1,
-      quantity: 5,
-      days: 2,
-      power: 2,
-      drug: 'Simvastatina',
-      indications: 'Consumir en ayunas. Suspender consumo de alcohol durante el tratamiento',
-      status: '',
-      statusDate: ''
-    }
-  },
-  {
-    id: '3',
-    reportDate: '2022-02-24T00:55:19.596Z',
-    reporter: {
-      name: 'Dr. Paula Barrantes Mena',
-      speciality: 'Neurología'
-    },
-    type: 'prescription',
-    details: {
-      via: 'Oral',
-      take: 3,
-      frequency: 5,
-      quantity: 3,
-      days: 3,
-      power: 6,
-      drug: 'Omeprazol',
-      indications: 'Consumir en ayunas. Suspender consumo de alcohol durante el tratamiento',
-      status: '',
-      statusDate: ''
-    }
-  },
-  {
-    id: '4',
-    reportDate: '2022-03-24T00:55:19.596Z',
-    reporter: {
-      name: 'Dr. John Mills',
-      speciality: 'Oftalmología'
-    },
-    type: 'recipe',
-    details: {
-      description: 'Ibuprofeno',
-      indications: 'Consumir en ayunas. Suspender consumo de alcohol durante el tratamiento'
-    }
-  },
-  /// 2022 ITEMS END
-  /// 2021 ITEMS
-  {
-    id: '5',
-    reportDate: '2021-10-26T00:55:19.596Z',
-    reporter: {
-      name: 'Dr. Carlos Vargas Blanco',
-      speciality: 'Radiología'
-    },
-    type: 'prescription',
-    details: {
-      via: 'Oral',
-      take: 2, // unit
-      frequency: 8,
-      quantity: 18,
-      days: 3,
-      power: 10,
-      drug: 'Aspirina',
-      indications: 'Consumir en ayunas. Suspender consumo de alcohol durante el tratamiento',
-      status: '',
-      statusDate: ''
-    }
-  }
-  /// 2021 ITEMS END
-];
-
 const groupResultsByMonth = (recipiesAndPrescriptions: TPatientRecipiesAndPrescriptionList) => {
   const groups = recipiesAndPrescriptions.reduce((groups, curr) => {
     const month = new Date(curr.reportDate).getMonth();
@@ -174,25 +72,20 @@ const filterResultsByYear = (data: TPatientRecipiesAndPrescriptionList, year: nu
   });
 };
 
-export const getRecipiesAndPrescriptionsByYear = (
-  year: number
-): Promise<TPatientRecipiesAndPrescriptionGroups> => {
-  return new Promise(resolve => {
-    const filterResults = filterResultsByYear(mockData, year);
-    const groupByMonth = groupResultsByMonth(filterResults);
-    setTimeout(() => {
-      resolve(groupByMonth);
-    }, 4000);
-  });
+export const getRecipiesAndPrescriptionsById = async (
+  id: string,
+  userId = ''
+): Promise<TPatientRecipiesAndPrescriptionList[0] | null> => {
+  const { data } = await axios.get(`${BFF_URL}patients/${userId}/recipies-prescriptions`);
+  return data.find(item => item.id === id) as TPatientRecipiesAndPrescriptionList[0] | null;
 };
 
-export const getRecipiesAndPrescriptionsById = (
-  id: string
-): Promise<TPatientRecipiesAndPrescriptionList[0] | null> => {
-  return new Promise(resolve => {
-    const findItem = mockData.find(item => item.id === id);
-    setTimeout(() => {
-      resolve(findItem);
-    }, 4000);
-  });
+export const getRecipiesAndPrescriptionsByYear = async (
+  year: number,
+  userId = 1
+): Promise<TPatientRecipiesAndPrescriptionGroups> => {
+  const { data } = await axios.get(`${BFF_URL}patients/${userId}/recipies-prescriptions`);
+  console.table(data);
+  const filterResults = filterResultsByYear(data, year);
+  return groupResultsByMonth(filterResults);
 };

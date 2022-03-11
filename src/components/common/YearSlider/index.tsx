@@ -16,6 +16,7 @@ const YEARS_BLOCK_SIZE = 30;
 const CURRENT_YEAR = new Date().getFullYear();
 
 type TProps = {
+  selectedYear?: number;
   itemClick: (item: number) => void;
   disabled: boolean;
 };
@@ -47,15 +48,17 @@ const useStyles = makeStyles(() => {
   });
 });
 
-function YearSlider({ itemClick, disabled }: TProps): JSX.Element {
+function YearSlider({ itemClick, disabled, selectedYear }: TProps): JSX.Element {
   const classes = useStyles();
+  const [value, setValue] = useState(0);
   const [years] = useState([CURRENT_YEAR, ...prevBlock(CURRENT_YEAR)]); // TODO: Make this length dynamic
 
   useEffect(() => {
-    itemClick(CURRENT_YEAR);
+    const year = selectedYear || CURRENT_YEAR;
+    const findIndex = years.findIndex(item => item === Number(selectedYear || CURRENT_YEAR));
+    setValue(findIndex);
+    itemClick(year);
   }, []);
-
-  const [value, setValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     if (disabled) return;

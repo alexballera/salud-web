@@ -1,5 +1,6 @@
 /// BASE IMPORTS
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createRef } from 'react';
+import { useRouter } from 'next/router';
 /// BASE IMPORTS END
 
 /// OWN COMPONENTS
@@ -48,6 +49,8 @@ const CircularProgress = styled(MuiCircularProgress)({
   color: secondaryMainColor
 });
 
+const PAGE_PATHNAME = '/recipes_and_prescriptions';
+
 const useStyles = makeStyles(() =>
   createStyles({
     month: {
@@ -75,34 +78,66 @@ const useStyles = makeStyles(() =>
 
 function RecipeAndPrescriptionPage(): JSX.Element {
   const classes = useStyles();
+  const router = useRouter();
+  const listContainerRef = createRef();
+  const renderCompleteVerifyRef = createRef();
   const { t } = useTranslation([i18nRecipes, i18nGlobal]);
-  const [selectedYear, setSelectedYear] = useState<null | number>(null);
+  const { 'selected-year': selectedYear, 'selected-item': selectedItem } = router.query;
+  const [sliderYear, setSliderYear] = useState<null | number>(null);
   const [loading, setLoading] = useState(false);
   const [recipiesAndPrescriptionGroups, setRecipiesAndPrescriptionGroups] =
     useState<TPatientRecipiesAndPrescriptionGroups>([]);
 
+  // TODO: replace this route state using the redux or context
+  const pushRouteItem = (itemIdx?: string) => {
+    router.push({
+      pathname: PAGE_PATHNAME,
+      query: {
+        'selected-year': sliderYear,
+        'selected-item': itemIdx || selectedItem || '-1'
+      }
+    });
+  };
+
   useEffect(() => {
-    if (selectedYear) {
+    if (sliderYear) {
       setLoading(true);
-      getRecipiesAndPrescriptionsByYear(selectedYear)
+      getRecipiesAndPrescriptionsByYear(sliderYear)
         .then(result => {
           setRecipiesAndPrescriptionGroups(result);
         })
         .finally(() => {
           setLoading(false);
+          if (sliderYear && selectedYear) {
+            router.replace(PAGE_PATHNAME);
+          }
         });
     }
-  }, [selectedYear]);
+  }, [sliderYear]);
+
+  useEffect(() => {
+    if (selectedItem && renderCompleteVerifyRef.current) {
+      const containerEl = listContainerRef.current as HTMLElement;
+      const selectedCard = containerEl.querySelector(`[data-id="${selectedItem}"]`) as HTMLElement;
+      if (selectedCard) {
+        const topOfElement = selectedCard.offsetTop - 100;
+        window.scroll({ top: topOfElement, behavior: 'smooth' });
+      }
+    }
+  }, [renderCompleteVerifyRef]);
 
   return (
     <Grid container>
       <Grid item xs={12}>
-        <YearSlider
-          disabled={loading}
-          itemClick={item => {
-            setSelectedYear(item);
-          }}
-        />
+        <Box>
+          <YearSlider
+            selectedYear={Number(selectedYear)}
+            disabled={loading}
+            itemClick={item => {
+              setSliderYear(item);
+            }}
+          />
+        </Box>
         <Box className={classes.listContent}>
           {loading && (
             <Box mt={6}>
@@ -120,16 +155,16 @@ function RecipeAndPrescriptionPage(): JSX.Element {
             </Box>
           )}
 
-          {!loading &&
-            recipiesAndPrescriptionGroups.map((group, i) => (
-              // Group items by month
-              <Box key={i}>
-                <Typography className={classes.month}>
-                  {t(`months.${group.month}`, { ns: i18nGlobal })}
-                </Typography>
-                {group.items.map((item, idx) => {
-                  return (
-                    <Box mb={2} key={`${item.id}-${idx}`}>
+          <Box {...{ ref: listContainerRef }}>
+            {!loading &&
+              recipiesAndPrescriptionGroups.map((group, i) => (
+                // Group items by month
+                <Box key={i}>
+                  <Typography className={classes.month}>
+                    {t(`months.${group.month}`, { ns: i18nGlobal })}
+                  </Typography>
+                  {group.items.map((item, idx) => (
+                    <Box mb={2} key={`${item.id}-${idx}`} {...{ 'data-id': item.id }}>
                       <CardLink
                         title={t(`card.${item.type}`)}
                         text1={
@@ -139,13 +174,17 @@ function RecipeAndPrescriptionPage(): JSX.Element {
                         }
                         text2={item.reportDate}
                         reportedBy={item.reporter.name}
-                        redirectTo={`/recipes_and_prescriptions/preview/${item.id}`}
+                        action={() => {
+                          pushRouteItem(item.id);
+                          router.push(`${PAGE_PATHNAME}/preview/${item.id}`);
+                        }}
                       />
                     </Box>
-                  );
-                })}
-              </Box>
-            ))}
+                  ))}
+                </Box>
+              ))}
+          </Box>
+          <Box {...({ ref: renderCompleteVerifyRef } as any)} />
         </Box>
       </Grid>
     </Grid>

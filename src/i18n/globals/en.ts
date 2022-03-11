@@ -86,6 +86,7 @@ export const enGlobals = {
     residence: 'Domicilio',
     language: 'Idioma',
     for: 'For',
+    invalid_date_format: 'invalid date format',
 
     country: {
       country: 'Country',
