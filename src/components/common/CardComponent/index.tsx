@@ -1,7 +1,6 @@
 /// BASE IMPORTS
 import React from 'react';
 import Link from 'next/link';
-import { getDate, getMonth, getYear, isValid } from 'date-fns';
 /// BASE IMPORTS
 
 /// MUI COMPONENTS
@@ -24,26 +23,13 @@ import { NAMESPACE_KEY as i18nRecipes } from '@/src/i18n/recipes_and_prescriptio
 
 /// TYPES
 import { TCard } from './card.types';
+import { getCardDate } from '@/src/utils/helpers';
 /// TYPES END
 
 const CardComponent = (props: TCard): JSX.Element => {
   const { type, name, date, performer, redirectTo } = props;
   const classes = cardStyles();
   const { t } = useTranslation([i18Globals, i18nRecipes]);
-
-  const getCardDate = (date: string): string => {
-    let newDate = new Date(date);
-    newDate = new Date(newDate.getTime() + newDate.getTimezoneOffset() * 60000);
-    const year = getYear(newDate);
-    const month = getMonth(newDate);
-    const day = getDate(newDate);
-    const isValidDate = isValid(newDate);
-
-    if (!isValidDate) {
-      return `${t('invalid_date_format', { ns: i18nRecipes })}`;
-    }
-    return `${day.toString()} ${t(`months.${month}`).substring(0, 3)}, ${year}`;
-  };
 
   return (
     <ThemeProvider theme={muiTheme}>
@@ -74,7 +60,7 @@ const CardComponent = (props: TCard): JSX.Element => {
             }}
           >
             {t('label.date', { ns: i18Globals })}:{' '}
-            <span className={classes.date}>{getCardDate(date)}</span>
+            <span className={classes.date}>{getCardDate(date, t)}</span>
           </Typography>
         </CardContent>
         <CardActions sx={{ padding: 0 }}>
