@@ -11,12 +11,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 /// STYLES
 import { ThemeProvider } from '@mui/material/styles';
 import { cardStyles } from './styles.module';
-import {
-  boxShadow,
-  purpleLight,
-  textValueCardColor,
-  textValueCardColor2
-} from '@/src/styles/js/theme';
+import { boxShadow, textValueCardColor, textValueCardColor2 } from '@/src/styles/js/theme';
 import muiTheme from '@/src/styles/js/muiTheme';
 /// STYLES END
 
@@ -28,23 +23,13 @@ import { NAMESPACE_KEY as i18nRecipes } from '@/src/i18n/recipes_and_prescriptio
 
 /// TYPES
 import { TCard } from './card.types';
+import { getCardDate } from '@/src/utils/helpers';
 /// TYPES END
 
 const CardComponent = (props: TCard): JSX.Element => {
   const { type, name, date, performer, redirectTo } = props;
   const classes = cardStyles();
   const { t } = useTranslation([i18Globals, i18nRecipes]);
-
-  const getCardDate = (date: string): string => {
-    const toDate = new Date(date);
-    const year = toDate.getFullYear();
-    const day = toDate.getDay();
-    const month = toDate.getMonth();
-    if (!month || !year || !day) {
-      return `${t('invalid_date_format', { ns: i18nRecipes })}`;
-    }
-    return `${day.toString().padStart(2, '0')} ${t(`months.${month}`).substring(0, 3)}, ${year}`;
-  };
 
   return (
     <ThemeProvider theme={muiTheme}>
@@ -75,7 +60,7 @@ const CardComponent = (props: TCard): JSX.Element => {
             }}
           >
             {t('label.date', { ns: i18Globals })}:{' '}
-            <span className={classes.date}>{getCardDate(date)}</span>
+            <span className={classes.date}>{getCardDate(date, t)}</span>
           </Typography>
         </CardContent>
         <CardActions sx={{ padding: 0 }}>
