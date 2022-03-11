@@ -38,7 +38,7 @@ export default function ProceedingsCard({ title, route }) {
 
   return (
     <CardActionArea>
-      <Card className={classes.root} onClick={()=> router.push(route)}>
+      <Card className={classes.root} onClick={() => router.push(route)}>
         <CardContent>
           <div className={classes.alignCenter}>
             <FolderOpenOutlinedIcon htmlColor={secondaryMainColor} />

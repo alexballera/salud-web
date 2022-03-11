@@ -59,7 +59,7 @@ export const getExamResultsByYear = (data: TGeneralData, year: number): TExamRes
 };
 
 export const getExamResultsData = (id: string): Promise<AxiosResponse<TGeneralData>> => {
-  return axios.get(`${process.env.NEXT_PUBLIC_API_URL_BFF}patients/${id}/exams`);
+  return axios.get(`${process.env.NEXT_PUBLIC_API_URL_BFF}/patients/${id}/exams`);
 };
 
 export const getExamResultsById = (id: string): Promise<TGeneralData[0] | null> => {

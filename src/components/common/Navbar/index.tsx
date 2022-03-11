@@ -174,7 +174,7 @@ function Navbar(): JSX.Element {
               position="sticky"
               color="inherit"
               elevation={0}
-              className={activeShadowPathNames.includes(router.pathname) && classes.shadow}
+              className={activeShadowPathNames.includes(router.pathname) ? classes.shadow : ''}
             >
               <Toolbar>
                 <Grid container justify="center">
