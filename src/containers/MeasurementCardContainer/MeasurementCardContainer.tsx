@@ -42,26 +42,41 @@ export const MeasurementCardContainer = ({ generalData }: IProps): JSX.Element =
     weight && weight.measurements.length > 0
       ? weight.measurements[0].value + ' ' + weight.unit
       : '-';
+
+  const items = [
+    {
+      route: '/generalData',
+      title: arterialPressure?.name,
+      value: arterialPressureValue,
+      type: arterialPressure?.type
+    },
+    {
+      route: '/generalData',
+      title: weight?.name,
+      value: weightValue,
+      type: weight?.type
+    },
+    {
+      route: '/generalData',
+      title: bloodGlocuse?.name,
+      value: bloodGlocuseValue,
+      type: bloodGlocuse?.type
+    }
+  ];
+
   return (
     <ScrollMenu scrollContainerClassName={classes.root} separatorClassName={classes.separator}>
-      <MeasurementCard
-        route="/generalData"
-        title={arterialPressure?.name}
-        value={arterialPressureValue}
-        type={arterialPressure.type}
-      />
-      <MeasurementCard
-        title={weight?.name}
-        value={weightValue}
-        type={weight.type}
-        route="/generalData"
-      />
-      <MeasurementCard
-        title={bloodGlocuse?.name}
-        value={bloodGlocuseValue}
-        type={bloodGlocuse.type}
-        route="/generalData"
-      />
+      {items.map((item, i) => (
+        <React.Fragment key={i}>
+          <MeasurementCard
+            route={item.route}
+            title={item.title}
+            value={item.value}
+            type={item.type}
+            tab={i}
+          />
+        </React.Fragment>
+      ))}
     </ScrollMenu>
   );
 };

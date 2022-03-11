@@ -13,6 +13,7 @@ import {
   titleCardColor
 } from '../../../styles/js/theme';
 import { useRouter } from 'next/router';
+import { setDataToLocalStorage } from '@/src/services/localStorage.service';
 
 const useStyles = makeStyles({
   root: {
@@ -66,9 +67,10 @@ type IProps = {
   type?: string;
   noSVG?: boolean;
   route?: string;
+  tab?: number;
 };
 
-export default function MeasurementCard({ title, value, type, noSVG = false, route }: IProps) {
+export default function MeasurementCard({ title, value, type, noSVG = false, route, tab }: IProps) {
   const classes = useStyles();
   const router = useRouter();
 
@@ -86,6 +88,7 @@ export default function MeasurementCard({ title, value, type, noSVG = false, rou
   };
 
   const redirectTo = () => {
+    setDataToLocalStorage('cardSelected', tab.toString());
     route && router.push(route);
   };
   return (
@@ -101,7 +104,7 @@ export default function MeasurementCard({ title, value, type, noSVG = false, rou
           <br />
           01 feb, 2022
           <br />
-          1:32 pm.
+          1:32 p.m.
         </Typography>
       </CardContent>
     </Card>

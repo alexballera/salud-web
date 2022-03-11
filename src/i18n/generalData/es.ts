@@ -5,7 +5,7 @@ export const esGeneralData = {
     bloodGlucose: 'Glucemia'
   },
   content: {
-    lastMeasurement: 'Última medición',
+    lastMeasurement: 'Medición realizada por',
     noRegistry: 'Sin registro'
   }
 };

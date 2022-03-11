@@ -15,17 +15,34 @@ import TabContent from '../../containers/GeneralData/TabContent';
 /// STYLES & TYPES
 import { TPersonalDataProps } from '../../containers/SignUp/index.types';
 import { Tab, Tabs } from '@material-ui/core';
-
+import {
+  getDataFromLocalStorage,
+  removeDataFromLocalStorage
+} from '@/src/services/localStorage.service';
 
 function GeneralDataPage({ handleNotifications }: TPersonalDataProps): JSX.Element {
   const { t } = useTranslation([i18nGeneralData, i18Forms]);
-  const [tab, setTab] = useState<number>(0);
+  const [tab, setTab] = useState<number>(parseInt(getDataFromLocalStorage('cardSelected')) || 0);
+  removeDataFromLocalStorage('cardSelected');
 
   const handleChange = (event, newValue) => {
     setTab(newValue);
   };
 
-  return <>
+  const items = [
+    {
+      label: t('tabs.pressure', { ns: i18nGeneralData })
+    },
+    {
+      label: t('tabs.weight', { ns: i18nGeneralData })
+    },
+    {
+      label: t('tabs.bloodGlucose', { ns: i18nGeneralData })
+    }
+  ];
+
+  return (
+    <>
       <Tabs
         value={tab}
         indicatorColor="secondary"
@@ -34,12 +51,15 @@ function GeneralDataPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
         onChange={handleChange}
         aria-label="tabs-general-data"
       >
-        <Tab label={t('tabs.bloodGlucose', { ns: i18nGeneralData })}/>
-        <Tab label={t('tabs.pressure', { ns: i18nGeneralData })}/>
-        <Tab label={t('tabs.weight', { ns: i18nGeneralData })}/>
+        {items.map((item, i) => (
+          <React.Fragment key={i}>
+            <Tab label={item.label} />
+          </React.Fragment>
+        ))}
       </Tabs>
       <TabContent tab={tab} />
-  </>;
+    </>
+  );
 }
 
 export default withTranslation([i18nGeneralData, i18Forms])(withAppContext(GeneralDataPage));

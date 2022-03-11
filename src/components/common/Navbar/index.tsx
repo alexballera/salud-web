@@ -26,6 +26,7 @@ import ActionButtons from './components/ActionButtons.component';
 import DropDownButton from './components/DropDownButton';
 import Menu from '../Menu';
 import { UserContext } from '../../../context/UserContext';
+import { getDataFromLocalStorage } from '@/src/services/localStorage.service';
 /// OWN COMPONENTS END
 
 function Navbar(): JSX.Element {
@@ -88,6 +89,8 @@ function Navbar(): JSX.Element {
         return true;
       case '/clinic_history/habits':
         return true;
+      case '/exam_results/detail/[item_id]':
+        return true;
       default:
         return false;
     }
@@ -117,6 +120,8 @@ function Navbar(): JSX.Element {
         return t('items.allergies', { ns: 'menu' });
       case '/clinic_history/habits':
         return t('items.clinic_history_habits', { ns: 'menu' });
+      case '/exam_results/detail/[item_id]':
+        return getDataFromLocalStorage('titleExamResultDetail');
       default:
         return false;
     }
@@ -167,12 +172,24 @@ function Navbar(): JSX.Element {
     '/signup/registered_patient'
   ];
 
+  const activeShadowPathNames = [
+    '/clinic_history/allergies',
+    '/clinic_history/allergies/[allergie_id]',
+    '/clinic_history/habits',
+    '/medicalData'
+  ];
+
   return (
     <>
       {showMenu() && (
         <>
           <Hidden mdUp>
-            <AppBar position="sticky" color="inherit" elevation={0}>
+            <AppBar
+              position="sticky"
+              color="inherit"
+              elevation={0}
+              className={activeShadowPathNames.includes(router.pathname) && classes.shadow}
+            >
               <Toolbar>
                 <Grid container justify="center">
                   {showBackButton() && (
@@ -207,14 +224,12 @@ function Navbar(): JSX.Element {
                       </Grid>
                     </Grid>
                     <Grid item xs={6} md={6} className={classes.buttonAction}>
-                      {userLogState !== 'LOGGEDIN' && (
-                        <ActionButtons
-                          noActionPathNames={noActionPathNames}
-                          exitButtonPathNames={exitButtonPathNames}
-                          backButtonPathNames={backButtonPathNames}
-                          closeButtonPathNames={closeButtonPathNames}
-                        />
-                      )}
+                      <ActionButtons
+                        noActionPathNames={noActionPathNames}
+                        exitButtonPathNames={exitButtonPathNames}
+                        backButtonPathNames={backButtonPathNames}
+                        closeButtonPathNames={closeButtonPathNames}
+                      />
                     </Grid>
                   </Grid>
                 </Grid>
@@ -249,14 +264,12 @@ function Navbar(): JSX.Element {
                       )}
                     </Grid>
                     <Grid item xs={6} md={6} className={classes.buttonAction}>
-                      {userLogState !== 'LOGGEDIN' && (
-                        <ActionButtons
-                          noActionPathNames={noActionPathNames}
-                          exitButtonPathNames={exitButtonPathNames}
-                          backButtonPathNames={backButtonPathNames}
-                          closeButtonPathNames={closeButtonPathNames}
-                        />
-                      )}
+                      <ActionButtons
+                        noActionPathNames={noActionPathNames}
+                        exitButtonPathNames={exitButtonPathNames}
+                        backButtonPathNames={backButtonPathNames}
+                        closeButtonPathNames={closeButtonPathNames}
+                      />
                       {/* TODO corregir mostrar solo para cuando esté logueado: usar "loggedIn" */}
                       {showMenuMobile() && userLogState === 'LOGGEDIN' && (
                         <Grid container justify="flex-end" alignItems="center" spacing={2}>

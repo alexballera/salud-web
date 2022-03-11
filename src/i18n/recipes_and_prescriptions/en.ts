@@ -1,6 +1,7 @@
 export const enRecipesAndPrescriptions = {
   details_title: 'General information',
-  details_sub_title: 'Indications',
+  details_indications_text: 'Indications',
+  details_comments_text: 'Comments',
   no_records: 'No data recorded',
   recipe_or_prescription_not_found: 'Recipe or prescription not found',
   card: {
@@ -19,6 +20,8 @@ export const enRecipesAndPrescriptions = {
     description: 'Description',
     details: 'Details',
     specialty: 'Specialty',
-    frequency: 'Frequency'
+    frequency: 'Frequency',
+    laboratory: 'Laboratory',
+    procedure: 'Procedure'
   }
 };

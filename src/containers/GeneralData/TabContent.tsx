@@ -1,5 +1,4 @@
-import React, {useState}  from 'react';
-
+import React, { useState } from 'react';
 
 /// MATERIAL UI
 import { Grid, makeStyles, Typography } from '@material-ui/core';
@@ -15,18 +14,18 @@ import { mockData } from '../../services/getGeneralData.service';
 /// i18n END
 
 type IProps = {
-  tab: number
+  tab: number;
 };
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   paper: {
-    backgroundColor:'red',
+    backgroundColor: 'red',
     flex: 1
   },
   control: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(2)
   },
   smallText: {
     marginTop: 15,
@@ -37,72 +36,89 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: 40
   },
   paddingContainer: {
-    padding:20
+    padding: 20
   }
 }));
 
-
-const TabContent = ({tab}: IProps): JSX.Element => {
+const TabContent = ({ tab }: IProps): JSX.Element => {
   const classes = useStyles();
   const { t } = useTranslation([i18nGeneralData]);
-  const [data, setData] = useState(mockData)
+  const [data, setData] = useState(mockData);
 
   const renderDoctor = () => {
-    let dr = []
+    let dr = [];
     switch (tab) {
       case 1:
-        if(data.arterialPressure.generalData.performer){
-          dr = data.arterialPressure.generalData.performer.split(' ')
+        if (data.weight.generalData.performer) {
+          dr = data.weight.generalData.performer.split(' ');
         }
         break;
       case 2:
-        if(data.weight.generalData.performer) {
-          dr = data.weight.generalData.performer.split(' ')
+        if (data.bloodGlocuse.generalData.performer) {
+          dr = data.bloodGlocuse.generalData.performer.split(' ');
         }
         break;
-        default:
-          if(data.bloodGlocuse.generalData.performer) {
-            dr = data.bloodGlocuse.generalData.performer.split(' ')
-          }
+      default:
+        if (data.arterialPressure.generalData.performer) {
+          dr = data.arterialPressure.generalData.performer.split(' ');
+        }
         break;
     }
-    return <Typography className={classes.smallText}>
-    {t('content.lastMeasurement', { ns: i18nGeneralData })}
-    <br />
-    <br />
-    {t('label.for', { ns: i18nGlobalsData })} {dr.length > 0 && dr[0]}
-    <br />
-    {dr.length > 0 ? dr[1] : t('content.noRegistry', { ns: i18nGeneralData })}
-  </Typography>
-  }
+    return (
+      <Typography className={classes.smallText}>
+        {t('content.lastMeasurement', { ns: i18nGeneralData })}
+        <br />
+        <br />
+        <br />
+        {dr.length > 0 && dr[0]}{' '}
+        {dr.length > 0 ? dr[1] : t('content.noRegistry', { ns: i18nGeneralData })}
+      </Typography>
+    );
+  };
   return (
     <>
-    <Grid container className={classes.paddingContainer} justify='space-around'>
-      <Grid item xs={5}>
-        {tab === 0 && <MeasurementCard
-          title={t('tabs.bloodGlucose', { ns: i18nGeneralData })}
-          noSVG
-          value={data.bloodGlocuse.generalData.value > 0 ? data.bloodGlocuse.generalData.value.toString() : '-'}
-        />}
-        {tab === 1 && <MeasurementCard
-          title={t('tabs.pressure', { ns: i18nGeneralData })}
-          noSVG
-          value={`${data.arterialPressure.generalData.systolic > 0 ? data.arterialPressure.generalData.systolic.toString(): '-'}/${data.arterialPressure.generalData.diastolic > 0 ? data.arterialPressure.generalData.diastolic.toString() : '-'}`}
-          />}
-        {tab === 2 && <MeasurementCard
-          title={t('tabs.weight', { ns: i18nGeneralData })}
-          noSVG
-          value={data.weight.generalData.value.toString()}
-        />}
+      <Grid container className={classes.paddingContainer} justify="space-around">
+        <Grid item xs={5}>
+          {tab === 0 && (
+            <MeasurementCard
+              title={t('tabs.pressure', { ns: i18nGeneralData })}
+              noSVG
+              value={`${
+                data.arterialPressure.generalData.systolic > 0
+                  ? data.arterialPressure.generalData.systolic.toString()
+                  : '-'
+              }/${
+                data.arterialPressure.generalData.diastolic > 0
+                  ? data.arterialPressure.generalData.diastolic.toString()
+                  : '-'
+              }`}
+            />
+          )}
+          {tab === 1 && (
+            <MeasurementCard
+              title={t('tabs.weight', { ns: i18nGeneralData })}
+              noSVG
+              value={data.weight.generalData.value.toString()}
+            />
+          )}
+          {tab === 2 && (
+            <MeasurementCard
+              title={t('tabs.bloodGlucose', { ns: i18nGeneralData })}
+              noSVG
+              value={
+                data.bloodGlocuse.generalData.value > 0
+                  ? data.bloodGlocuse.generalData.value.toString()
+                  : '-'
+              }
+            />
+          )}
+        </Grid>
+        <Grid item xs={5}>
+          {renderDoctor()}
+        </Grid>
       </Grid>
-      <Grid item xs={5}>
-        {renderDoctor()}
-      </Grid>
-    </Grid>
     </>
   );
 };
-
-
 
 export default withTranslation([i18nGeneralData, i18nGlobalsData])(TabContent);

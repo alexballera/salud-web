@@ -72,6 +72,7 @@ export const enGlobals = {
   label: {
     accept: 'Acepto',
     birthdate: 'Fecha de nacimiento',
+    date: 'Date',
     change: 'Cambiar',
     consent: 'Consentimiento informado',
     edit: 'Editar',
@@ -171,7 +172,8 @@ export const enGlobals = {
       error_401: 'Invalid token, request it again'
     },
     signup: {
-      error_409: 'There is already a patient with that identity number registered in Ospi'
+      error_409:
+        'The email is already registered in the system. Please indicate another or contact us at OspiCenter for more information'
     }
   },
 

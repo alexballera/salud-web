@@ -63,9 +63,6 @@ const useStyles = makeStyles(() =>
       marginTop: 16,
       margin: 0
     },
-    sliderContent: {
-      boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.25)'
-    },
     listContent: {
       padding: 24,
       paddingTop: 0
@@ -132,7 +129,7 @@ function RecipeAndPrescriptionPage(): JSX.Element {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Box className={classes.sliderContent}>
+        <Box>
           <YearSlider
             selectedYear={Number(selectedYear)}
             disabled={loading}

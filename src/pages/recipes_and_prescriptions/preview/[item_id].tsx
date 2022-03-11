@@ -274,7 +274,9 @@ function RecipeAndPrescriptionPage(): JSX.Element {
                 <Card className={classes.footerCard}>
                   <CardContent>
                     <Typography className={classes.footerCardTitle} variant="h2">
-                      {t('details_sub_title', { ns: i18nRecipes })}
+                      {recipeOrPrescription.type === 'prescription'
+                        ? t('details_indications_text', { ns: i18nRecipes })
+                        : t('details_comments_text', { ns: i18nRecipes })}
                     </Typography>
                     <Typography className={classes.footerCardDescription} variant="body1">
                       {recipeOrPrescription.details.indications}

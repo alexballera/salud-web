@@ -1,11 +1,12 @@
 export const esRecipesAndPrescriptions = {
   details_title: 'Información General',
-  details_sub_title: 'Indicaciones',
+  details_indications_text: 'Indicaciones',
+  details_comments_text: 'Comentarios',
   no_records: 'No se han registrado datos',
   recipe_or_prescription_not_found: 'Receta o prescripción no encontrada',
   card: {
     date: 'Fecha ',
-    prescription: 'Preescripción',
+    prescription: 'Prescripción',
     recipe: 'Receta',
     reporter_by: 'Reportado por: ',
     via: 'Vía',
@@ -19,6 +20,8 @@ export const esRecipesAndPrescriptions = {
     description: 'Descripción',
     details: 'Detalles',
     specialty: 'Especialidad',
-    frequency: 'Frecuencia'
+    frequency: 'Frecuencia',
+    laboratory: 'Laboratorio',
+    procedure: 'Procedimiento'
   }
 };
