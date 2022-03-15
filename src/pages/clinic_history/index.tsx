@@ -18,8 +18,8 @@ import {
   ListItem,
   ListItemSecondaryAction,
   ListItemText
-} from '@material-ui/core';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+} from '@mui/material';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 /// MUI COMPONENTS END
 
 /// OWN COMPONENTS
@@ -34,25 +34,11 @@ import SvgInjuries from '@/src/components/common/Svg/SvgInjuries.component';
 /// OWN COMPONENTS END
 
 /// STYLES
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '100%',
-      backgroundColor: theme.palette.background.paper
-    },
-    text: {
-      marginLeft: 28
-    },
-    hidden: {
-      display: 'none'
-    }
-  })
-);
+import { examStyles } from '@/src/containers/ExamResult/styles.module';
 /// STYLES END
 
 const clinicHistory = (): JSX.Element => {
-  const classes = useStyles();
+  const classes = examStyles();
   const router = useRouter();
   const { t } = useTranslation(i18ClinicHistory);
   const items = [

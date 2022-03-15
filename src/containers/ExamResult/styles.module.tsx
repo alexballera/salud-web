@@ -1,16 +1,20 @@
-import { createTheme } from '@mui/material/styles';
-import {
-  secondaryContrastTextColor,
-  secondaryDarkColor,
-  secondaryLightColor,
-  secondaryMainColor,
-  title3Color
-} from '@/src/styles/js/theme';
+import muiTheme from '@/src/styles/js/muiTheme';
+import { title3Color } from '@/src/styles/js/theme';
 
 import { createStyles, makeStyles } from '@mui/styles';
 
 export const examStyles = makeStyles(() =>
   createStyles({
+    root: {
+      width: '100%',
+      backgroundColor: muiTheme.palette.background.paper
+    },
+    text: {
+      marginLeft: 28
+    },
+    hidden: {
+      display: 'none'
+    },
     noRecords: {
       fontSize: '12px !important',
       lineHeight: '19.92px !important',
@@ -19,14 +23,3 @@ export const examStyles = makeStyles(() =>
     }
   })
 );
-
-export const tabTheme = createTheme({
-  palette: {
-    secondary: {
-      light: secondaryLightColor,
-      main: secondaryMainColor,
-      dark: secondaryDarkColor,
-      contrastText: secondaryContrastTextColor
-    }
-  }
-});
