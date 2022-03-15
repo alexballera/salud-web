@@ -327,6 +327,7 @@ function SignUpView(props: TProps): JSX.Element {
     setCustomPopUpError(null);
     if (MAP_STEPS[currentStep + 1]) {
       setCurrentStep(currentStep + 1);
+      window.scrollTo(0, 0);
       return;
     }
     storeUser(values);
@@ -337,6 +338,7 @@ function SignUpView(props: TProps): JSX.Element {
       handleNotifications({ ...notificationState, open: false });
       setCustomPopUpError(null);
       setCurrentStep(currentStep - 1);
+      window.scrollTo(0, 0);
       return;
     }
     router.back();
