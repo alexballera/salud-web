@@ -13,8 +13,7 @@ import { withAppContext } from '../../context';
 /// OWN COMPONENTS END
 
 /// MATERIAL UI
-import { Avatar, Grid, Typography, Box } from '@material-ui/core';
-import PersonIcon from '@material-ui/icons/Person';
+import { Grid, Typography, Box } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import MedicalStyles from './style.module';
 /// MATERIAL UI END
@@ -26,6 +25,8 @@ import { MedicalDataCard } from '../../containers/MedicalData/MedicalDataCard';
 /// SERVICES
 import { IMedicalData, mockData } from '../../services/getMedicalData.service';
 /// SERVICES END
+
+import AvatarLetter from '@/src/components/common/AvatarLetter';
 
 function MedicalDataPage(): JSX.Element {
   const { t } = useTranslation([i18Global, i18Forms]);
@@ -47,9 +48,7 @@ function MedicalDataPage(): JSX.Element {
           </Typography>
         </Grid>
         <Grid item xs={3} className={classes.contentAvatar}>
-          <Avatar className={classes.avatar}>
-            <PersonIcon fontSize="large" />
-          </Avatar>
+          <AvatarLetter name={`${medicalData.firstName} ${medicalData.firstLastName}`} size="72" />
         </Grid>
       </Grid>
       <MedicalDataCard generalData={medicalData} />
