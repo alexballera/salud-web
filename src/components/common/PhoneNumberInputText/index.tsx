@@ -123,6 +123,7 @@ function PhoneNumberInputText(props: TProps): JSX.Element {
           <TextField
             {..._.omit(props, ['helperText', 'label', 'onResetValue', 'error'])}
             inputComponent={TextMaskCustom as any}
+            error={error}
             inputProps={{
               mask: phoneConfig.mask,
               'data-testid': 'documentNumber'

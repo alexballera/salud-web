@@ -103,8 +103,6 @@ function PersonalData({
 
   const handlerError = (code = '') => {
     switch (code) {
-      case 'sld-user-1':
-        return t('validations.userNotFound', { ns: i18Forms });
       case 'sld-user-2':
         return t('validations.userExists', { ns: i18Forms });
       default:
@@ -146,6 +144,11 @@ function PersonalData({
           ...prevState,
           error: searchError
         }));
+        // Focus the input
+        setTimeout(() => {
+          inputMaskRef.current.focus();
+          inputMaskRef.current.setSelectionRange(0, 0);
+        }, 200);
       })
       .finally(() => {
         setTimeout(() => {
@@ -160,10 +163,6 @@ function PersonalData({
       setFieldError(value, '');
       setFieldTouched(value, false);
     });
-    setTimeout(() => {
-      inputMaskRef.current.focus();
-      inputMaskRef.current.setSelectionRange(0, 0);
-    }, 200);
   };
 
   const setUserValues = (data: TAutocompleteUser | null) => {
@@ -202,7 +201,15 @@ function PersonalData({
           value={values.country}
           onBlur={handleBlur}
           onChange={e => {
-            cleanFormInputs(['documentType', 'documentNumber', 'fullName', 'birthDate']);
+            cleanFormInputs([
+              'documentType',
+              'documentNumber',
+              'fullName',
+              'birthDate',
+              'firstLevel',
+              'secondLevel',
+              'thirdLevel'
+            ]);
             handleChange(e);
           }}
         >
