@@ -52,9 +52,8 @@ function GeneralDataPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
         aria-label="tabs-general-data"
       >
         {items.map((item, i) => (
-          <React.Fragment key={i}>
-            <Tab label={item.label} />
-          </React.Fragment>
+          // eslint-disable-next-line react/jsx-key
+          <Tab label={item.label} onClick={() => setTab(i)} />
         ))}
       </Tabs>
       <TabContent tab={tab} />
