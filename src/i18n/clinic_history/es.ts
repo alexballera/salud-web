@@ -8,6 +8,7 @@ export const esClinicHistory = {
     familyIllnesses: 'Enfermedades familiares'
   },
   vaccines: {
-    title: 'Llevá el registro de tus vacunas y las dósis que llevas'
+    title: 'Llevá el registro de tus vacunas y las dósis que llevas',
+    dose: 'dosis'
   }
 };
