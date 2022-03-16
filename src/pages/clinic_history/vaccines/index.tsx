@@ -1,21 +1,22 @@
 /// BASE IMPORTS
 import React from 'react';
-import muiTheme from '@/src/styles/js/muiTheme';
-import { ThemeProvider } from '@mui/styles';
 /// BASE IMPORTS
 
 /// i18n
 /// i18n END
 
 /// MUI COMPONENTS
-import { Box } from '@material-ui/core';
+import { Box } from '@mui/material';
 /// MUI COMPONENTS END
 
 /// OWN COMPONENTS
 /// OWN COMPONENTS END
 
 /// STYLES
+import muiTheme from '@/src/styles/js/muiTheme';
+import { ThemeProvider } from '@mui/styles';
 /// STYLES END
+
 const Vaccines = (): JSX.Element => {
   return (
     <ThemeProvider theme={muiTheme}>
