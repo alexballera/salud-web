@@ -144,6 +144,11 @@ function PersonalData({
           ...prevState,
           error: searchError
         }));
+        // Focus the input
+        setTimeout(() => {
+          inputMaskRef.current.focus();
+          inputMaskRef.current.setSelectionRange(0, 0);
+        }, 200);
       })
       .finally(() => {
         setTimeout(() => {
@@ -158,10 +163,6 @@ function PersonalData({
       setFieldError(value, '');
       setFieldTouched(value, false);
     });
-    setTimeout(() => {
-      inputMaskRef.current.focus();
-      inputMaskRef.current.setSelectionRange(0, 0);
-    }, 200);
   };
 
   const setUserValues = (data: TAutocompleteUser | null) => {
