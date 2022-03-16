@@ -1,5 +1,5 @@
 import muiTheme from '@/src/styles/js/muiTheme';
-import { title3Color } from '@/src/styles/js/theme';
+import { poppinsFontFamily, title3Color } from '@/src/styles/js/theme';
 
 import { createStyles, makeStyles } from '@mui/styles';
 
@@ -20,6 +20,11 @@ export const examStyles = makeStyles(() =>
       lineHeight: '19.92px !important',
       letterSpacing: '0.4px',
       color: title3Color
+    },
+    vaccineTitle: {
+      fontFamily: `${poppinsFontFamily} !important`,
+      fontSize: '16px !important',
+      lineHeight: '24px !important'
     }
   })
 );
