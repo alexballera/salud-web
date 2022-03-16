@@ -14,6 +14,18 @@ type AllergieResponse = {
   allergies: TAllergies[];
 };
 
+type THabits = {
+  description: string;
+  isActive: boolean;
+  comments: string;
+  performer: string;
+  specialization: string;
+};
+
+type HabitsResponse = {
+  allergies: THabits[];
+};
+
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
   baseUrl: baseUrl,
@@ -32,8 +44,11 @@ export const apiBFF = createApi({
   endpoints: builder => ({
     getAllergies: builder.query<AllergieResponse, void>({
       query: () => ({ url: '/patients/1/allergies', method: 'get' })
+    }),
+    getHabits: builder.query<HabitsResponse, void>({
+      query: () => ({ url: '/patients/1/habits', method: 'get' })
     })
   })
 });
 
-export const { useGetAllergiesQuery } = apiBFF;
+export const { useGetAllergiesQuery, useGetHabitsQuery } = apiBFF;

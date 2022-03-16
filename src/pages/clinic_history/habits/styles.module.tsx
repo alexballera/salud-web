@@ -1,9 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { shadowCardColor } from '../../../styles/js/theme';
+import { shadowCardColor, background2Color } from '../../../styles/js/theme';
 
 const habitStyles = makeStyles({
   cardHabits: {
-    borderRadius: 16,
+    borderRadius: 8,
     boxShadow: `0px 4px 8px ${shadowCardColor}`,
     padding: '16px'
   },
@@ -16,6 +16,10 @@ const habitStyles = makeStyles({
   },
   typography16: {
     fontSize: '16px'
+  },
+  mainGrid: {
+    backgroundColor: background2Color,
+    height: '100%'
   }
 });
 
