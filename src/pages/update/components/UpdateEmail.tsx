@@ -110,9 +110,7 @@ function UpdateEmail({
         return (
           <Form autoComplete="off">
             <LayoutForm
-              form={
-                <CredentialData handleNotifications={handleNotifications} updateEmail {...formik} />
-              }
+              form={<CredentialData updateEmail {...formik} />}
               buttonLeft={
                 <Button fullWidth variant="outlined" onClick={goBack}>
                   {t('button.back')}

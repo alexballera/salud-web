@@ -1,6 +1,7 @@
 /// BASE IMPORTS
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { addYears } from 'date-fns';
+import { useRouter } from 'next/router';
 import _ from 'lodash';
 import * as yup from 'yup';
 /// BASE IMPORTS END
@@ -14,7 +15,11 @@ import { withAppContext } from '../../context/index';
 /// CONTEXT END
 
 /// TYPES
-import { TProps, TFormData, TCountryDocumentTypeItem } from '../../containers/SignUp/index.types';
+import type {
+  TProps,
+  TFormData,
+  TCountryDocumentTypeItem
+} from '../../containers/SignUp/index.types';
 /// TYPES END
 
 /// OWN COMPONENTS
@@ -39,13 +44,17 @@ import Layout from '../../layouts/LayoutFormBasic';
 
 /// SERVICES
 import countriesPhoneNumbers from '../../services/countriesPhoneNumbers.service';
+import api, { TPatient } from '../../api/api';
 /// SERVICES END
+
+/// CONTEXT
+import { UserContext } from '@/src/context/UserContext';
+/// CONTEXT END
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY as i18Global } from '../../i18n/globals/i18n';
+import { NAMESPACE_KEY as i18Global, i18n } from '../../i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
-import { useRouter } from 'next/router';
 /// i18n END
 
 type TSteper = {
@@ -57,6 +66,7 @@ type TSteper = {
   };
 };
 
+const PASS_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 const INIT_FORM_STATE: TFormData = {
   country: '',
   documentType: '',
@@ -106,11 +116,12 @@ const useStyles = makeStyles((theme: Theme) =>
 function SignUpView(props: TProps): JSX.Element {
   const classes = useStyles();
   const router = useRouter();
-  const { handleNotifications } = props;
+  const { handleNotifications, notificationState } = props;
   const { t } = useTranslation(i18Global);
-  const [data, setData] = useState(INIT_FORM_STATE);
+  const { initializeGuestSession } = useContext(UserContext);
   const [customPopUpError, setCustomPopUpError] = useState<null | string>(null);
   const [currentStep, setCurrentStep] = useState(0);
+  const [customSubmitCount, setCustomSubmitCount] = useState(0);
   const [currDocTypeArgs, setCurrDocTypeArgs] = useState<TCountryDocumentTypeItem | null>(null);
 
   const yupPersonalData = {
@@ -167,34 +178,39 @@ function SignUpView(props: TProps): JSX.Element {
     schema: yup.object().shape({
       terms: yup
         .bool()
-        .oneOf([true], `${t('validations.required', { ns: i18Forms })}`)
-        .required(`${t('validations.required', { ns: i18Forms })}`),
+        .required(t('validations.required', { ns: i18Forms }).concat(' ')) // Adding the empty space to avoid required message
+        .oneOf([true], t('validations.required', { ns: i18Forms }).concat(' ')),
       services: yup
         .bool()
-        .oneOf([true], `${t('validations.required', { ns: i18Forms })}`)
-        .required(`${t('validations.required', { ns: i18Forms })}`),
+        .required(t('validations.required', { ns: i18Forms }).concat(' '))
+        .oneOf([true], t('validations.required', { ns: i18Forms }).concat(' ')),
       email: yup
         .string()
-        .email(`${t('validations.email.incorrect', { ns: i18Forms })}`)
-        .required(`${t('validations.email.required', { ns: i18Forms })}`),
+        .email(t('validations.email.incorrect', { ns: i18Forms }))
+        .required(t('validations.required', { ns: i18Forms })),
       password: yup
         .string()
-        .required(`${t('validations.password.required_short', { ns: i18Forms })}`)
-        .min(8, `${t('validations.password.min_8', { ns: i18Forms })}`)
-        .max(16, `${t('validations.password.max_16', { ns: i18Forms })}`)
+        .required(t('validations.required', { ns: i18Forms }))
         .matches(
           /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
-          `${t('validations.password.regex', { ns: i18Forms })}`
+          t('validations.password.regex', { ns: i18Forms })
         ),
       confirmPassword: yup
         .string()
-        .oneOf(
-          [yup.ref('password'), null],
-          `${t('validations.password.matched', { ns: i18Forms })}`
+        .required(t('validations.required', { ns: i18Forms }))
+        .matches(PASS_REGEX, t('validations.password.regex', { ns: i18Forms }))
+        .test(
+          'confirm_pass',
+          t('validations.password.matched', { ns: i18Forms }),
+          function (value = '') {
+            const regex = PASS_REGEX;
+            const password = this.parent?.password || '';
+            if (!regex.test(value)) {
+              return false;
+            }
+            return password === value;
+          }
         )
-        .required(`${t('validations.required', { ns: i18Forms })}`)
-        .min(8, `${t('validations.password.min_8', { ns: i18Forms })}`)
-        .max(16, `${t('validations.password.max_16', { ns: i18Forms })}`)
     })
   };
 
@@ -229,7 +245,7 @@ function SignUpView(props: TProps): JSX.Element {
       title: 'title.credential_data',
       description: 'description.credential_data',
       Component: function FormStep(formik: FormikProps<TFormData>) {
-        return <CredentialDataForm handleNotifications={handleNotifications} {...formik} />;
+        return <CredentialDataForm {...formik} setCustomPopUpError={setCustomPopUpError} />;
       }
     }
   };
@@ -260,23 +276,70 @@ function SignUpView(props: TProps): JSX.Element {
     }
   };
 
-  const storeUser = () => {
-    console.log('storeee');
+  const setPatient = (values: TFormData, appWriteUserId: string): TPatient => {
+    return {
+      documentType: values.documentType.toString(),
+      documentNumber: values.documentNumber,
+      birthDate: values.birthDate,
+      gender: values.gender.toString(),
+      phoneNumbers: [values.mobilePhone1],
+      province: values.firstLevel.toString(),
+      canton: values.secondLevel.toString(),
+      district: values.thirdLevel.toString(),
+      userId: appWriteUserId,
+      country: values.country
+    };
   };
 
-  const handleNext = () => {
+  const storeUser = async (values: TFormData) => {
+    const { email, password, fullName } = values;
+    try {
+      const user = await api.createAccount('unique()', email, password, fullName);
+
+      const session = await api.createSession(email, password);
+
+      await api.createPatient(setPatient(values, user.$id));
+
+      await api.emailVerification();
+
+      initializeGuestSession(session);
+
+      router.push('/signup/email_verification');
+    } catch (e) {
+      handleNotifications({
+        open: true,
+        severity: 'error',
+        message: mapFetchErrors(e.code)
+      });
+    }
+  };
+
+  const mapFetchErrors = (code: -1) => {
+    const i18nKey = `responses.signup.error_${code}`;
+    if (i18n.exists(i18nKey, { ns: i18Global })) {
+      return t(i18nKey, { ns: i18Global });
+    }
+    return t('message.error.general_fetch', { ns: i18Forms });
+  };
+
+  const handleNext = (values: TFormData) => {
+    handleNotifications({ ...notificationState, open: false });
+    setCustomPopUpError(null);
     if (MAP_STEPS[currentStep + 1]) {
-      setCustomPopUpError(null);
       setCurrentStep(currentStep + 1);
       return;
     }
-    storeUser();
+    storeUser(values);
   };
 
   const handlePrev = () => {
     if (MAP_STEPS[currentStep - 1]) {
+      handleNotifications({ ...notificationState, open: false });
+      setCustomPopUpError(null);
       setCurrentStep(currentStep - 1);
+      return;
     }
+    router.back();
   };
 
   return (
@@ -298,18 +361,29 @@ function SignUpView(props: TProps): JSX.Element {
       form={
         StepForm && (
           <Formik
-            initialValues={data}
+            initialValues={INIT_FORM_STATE}
             validationSchema={StepForm.yupSchema.schema}
-            onSubmit={handleNext}
+            onSubmit={(values, formik) => {
+              formik.setTouched({});
+              formik.setErrors({});
+              handleNext(values);
+            }}
           >
             {(formik: FormikProps<TFormData>) => {
               useEffect(() => {
-                formik.validateForm();
                 handleGlobalFormErrors(formik.errors);
-              }, [formik.submitCount]);
+              }, [customSubmitCount]);
 
               return (
-                <form onSubmit={formik.handleSubmit} noValidate={true}>
+                <form
+                  noValidate={true}
+                  onSubmit={e => {
+                    formik.handleSubmit(e);
+                    setTimeout(() => {
+                      setCustomSubmitCount(prevState => prevState + 1);
+                    }, 100);
+                  }}
+                >
                   {StepForm.Component(formik)}
                   <Box
                     display={{ xs: 'block', md: 'flex' }}
@@ -336,8 +410,8 @@ function SignUpView(props: TProps): JSX.Element {
                         type="button"
                         variant="outlined"
                         data-testid="login-button"
-                        onClick={handlePrev}
                         className={classes.button}
+                        onClick={handlePrev}
                       >
                         {t('button.back')}
                       </Button>

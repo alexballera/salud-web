@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AppContext } from './index';
 // TYPES
-import { AppStates, INotificationProps, Props } from './types';
+import type { AppStates, INotificationProps, TProps } from './types';
 // APOLLO
 import Client from '../config/apollo';
 import { ApolloProvider } from '@apollo/client';
@@ -15,7 +15,7 @@ export const initialStates: AppStates = {
   errorState: { open: false, message: '', type: 'error' }
 };
 
-export default function AppProvider({ children }: Props): JSX.Element {
+export default function AppProvider({ children }: TProps): JSX.Element {
   const [state, setState] = useState(initialStates);
   const [notificationState, setNofiticationState] = useState<INotificationProps>({
     open: false,

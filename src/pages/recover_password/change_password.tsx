@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Form, Formik } from 'formik';
+import { Formik, FormikErrors, FormikProps } from 'formik';
 import { useRouter } from 'next/router';
 import * as yup from 'yup';
 
@@ -11,7 +11,6 @@ import { Box, Button, Grid } from '@material-ui/core';
 /// OWN COMPONENTS
 import LayoutFormBasic from '../../layouts/LayoutFormBasic';
 import { TitleContent } from '../../components/common/TitleContent';
-import PasswordData from '../../containers/Recover/components/PasswordData';
 /// OWN COMPONENTS END
 
 /// i18n
@@ -32,94 +31,127 @@ import api from '../../api/api';
 import recoverStyles from '../../styles/js/RecoverPageStyles.module';
 import { INotificationProps } from '../../context/types';
 import { setDataToSessionStorage } from '../../services/localStorage.service';
+import TextField from '../../components/common/TextField';
+import SecurityPasswordIndicator from '../../components/common/SecurityPasswordIndicator';
 /// STYLES & TYPES END
 
 /// TYPES
 
-type IFormData = {
-  newPassword: string;
-  newPasswordConfirm: string;
-  handleLoading?: (loading: boolean) => void;
-  handleNotifications: (props: INotificationProps) => void;
+type TRecoverData = {
+  password: string;
+  passwordConfirm: string;
+};
+
+type TProps = {
+  handleLogin: (user: any) => void;
+  handleLoading: (isLoading: boolean) => void;
+  handleError: (open: boolean, message?: string) => void;
+  notificationState?: INotificationProps;
+  handleNotifications?: (props: INotificationProps) => void;
+  fetching: boolean;
 };
 
 /// TYPES END
-
 const initialValues: any = {
-  newPassword: '',
-  newPasswordConfirm: ''
+  password: '',
+  passwordConfirm: ''
 };
 
-function ChangePassword({ handleNotifications, handleLoading }: IFormData): JSX.Element {
+const PASS_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+
+function ChangePassword({ handleNotifications, handleLoading }: TProps): JSX.Element {
   const { t } = useTranslation([i18nGlobal, i18nForms]);
-  const [notMatchMsg, setNotMatchMsg] = useState<string>();
   const classes = recoverStyles();
   const router = useRouter();
+  const [fetchHasError, setFetchHasError] = useState(false);
 
   const VALIDATIONS = {
     name: 'ChangePassword',
     schema: yup.object().shape({
-      newPassword: yup
+      password: yup
         .string()
-        .min(8)
-        .max(16)
-        .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/),
-      newPasswordConfirm: yup.string()
+        .required(t('validations.required', { ns: i18nForms }))
+        .matches(PASS_REGEX, t('validations.password.regex', { ns: i18nForms })),
+      passwordConfirm: yup
+        .string()
+        .required(t('validations.required', { ns: i18nForms }))
+        .matches(PASS_REGEX, t('validations.password.regex', { ns: i18nForms }))
+        .test(
+          'confirm_pass',
+          t('validations.password.matched', { ns: i18nForms }),
+          function (value = '') {
+            const regex = PASS_REGEX;
+            const password = this.parent?.password || '';
+            if (!regex.test(value)) {
+              return false;
+            }
+            return password === value;
+          }
+        )
     })
   };
 
   const getErrorMessage = (code: number): string => {
     const message = {
       401: actionsToError401(),
-      default: t('message.email.general_fetch', { ns: i18nForms })
+      default: t('message.error.general_fetch', { ns: i18nForms })
     };
     return message[code] || message['default'];
   };
 
   const actionsToError401 = () => {
-    // TODO por verificar e flujo con UX
+    // TODO por verificar flujo con UX
     // router.push('/recover_password/forward_email');
     return t('responses.recover.error_401', { ns: i18nGlobal });
   };
 
-  const handleSubmit = ({ newPassword, newPasswordConfirm }: IFormData) => {
-    const { secret, userId } = router.query;
-    if (newPassword && newPasswordConfirm) {
-      if (newPassword !== newPasswordConfirm) {
-        setNotMatchMsg(`${t('validations.password.matched', { ns: i18nForms })}`);
-        handleNotifications({
-          open: true,
-          message: `${t('message.error.field_incorrect', { ns: i18nForms })}`,
-          severity: 'error'
-        });
-        return;
-      }
-      api
-        .restorePasswordConfirmation(
-          userId as string,
-          secret as string,
-          newPassword,
-          newPasswordConfirm
-        )
-        .then(() => {
-          setDataToSessionStorage('updated_password', 'updated');
-          router.push('/login');
-        })
-        .catch(err => {
-          handleNotifications({
-            open: true,
-            message: getErrorMessage(err.code),
-            severity: 'error'
-          });
-        })
-        .finally(() => handleLoading && handleLoading(false));
-    } else {
+  const getGlobalFormErrors = (values: TRecoverData, errors: FormikErrors<TRecoverData>) => {
+    const { password, passwordConfirm } = values;
+    if (!password.length && !passwordConfirm.length && Object.values(errors).length) {
+      return 'message.error.fields_required';
+    }
+    if (
+      (!password.length && passwordConfirm.length) ||
+      (password.length && !passwordConfirm.length)
+    ) {
+      return 'message.error.fields_required';
+    }
+    if (password !== passwordConfirm) {
+      return 'message.error.field_incorrect';
+    }
+    return null;
+  };
+
+  const handleGlobalFormErrors = (values: TRecoverData, errors: FormikErrors<TRecoverData>) => {
+    const i18Key = getGlobalFormErrors(values, errors);
+    if (i18Key) {
       handleNotifications({
+        message: t(i18Key, { ns: i18nForms }),
+        severity: 'error',
         open: true,
-        message: `${t('message.error.field_incorrect', { ns: i18nForms })}`,
-        severity: 'error'
+        duration: 20000
       });
     }
+  };
+
+  const handleSubmit = ({ password, passwordConfirm }: TRecoverData) => {
+    const { secret, userId } = router.query;
+    api
+      .restorePasswordConfirmation(userId as string, secret as string, password, passwordConfirm)
+      .then(() => {
+        setFetchHasError(false);
+        setDataToSessionStorage('updated_password', 'updated');
+        router.push('/login');
+      })
+      .catch(err => {
+        setFetchHasError(true);
+        handleNotifications({
+          open: true,
+          message: getErrorMessage(err.code),
+          severity: 'error'
+        });
+      })
+      .finally(() => handleLoading && handleLoading(false));
   };
 
   return (
@@ -137,10 +169,63 @@ function ChangePassword({ handleNotifications, handleLoading }: IFormData): JSX.
           validationSchema={VALIDATIONS.schema}
           onSubmit={handleSubmit}
         >
-          {formik => {
+          {({
+            errors,
+            handleChange,
+            handleBlur,
+            values,
+            handleSubmit: formikSubmit,
+            touched,
+            submitCount,
+            validateForm
+          }: FormikProps<TRecoverData>) => {
+            useEffect(() => {
+              handleGlobalFormErrors(values, errors);
+              validateForm();
+            }, [submitCount]);
+
+            useEffect(() => {
+              if (fetchHasError === true) {
+                setFetchHasError(false);
+              }
+            }, [values]);
             return (
-              <Form autoComplete="off" className={classes.containerForm}>
-                <PasswordData passwordConfirmError={notMatchMsg} {...formik} />
+              <form onSubmit={formikSubmit} noValidate={true} className={classes.containerForm}>
+                <TextField
+                  fullWidth
+                  id="password"
+                  data-testid="password-input"
+                  name="password"
+                  label={t('label.password.new')}
+                  type="password"
+                  onBlur={handleBlur}
+                  value={values.password}
+                  onChange={handleChange}
+                  error={(errors.password && touched.password) || fetchHasError}
+                  helperText={errors.password}
+                  handleLblError
+                  inputProps={{
+                    maxLength: 16
+                  }}
+                />
+                <SecurityPasswordIndicator value={values.password} />
+                <TextField
+                  fullWidth
+                  id="passwordConfirm"
+                  data-testid="password-confirm-input"
+                  name="passwordConfirm"
+                  label={t('label.password.confirm')}
+                  type="password"
+                  onBlur={handleBlur}
+                  value={values.passwordConfirm}
+                  onChange={handleChange}
+                  error={(errors.passwordConfirm && touched.passwordConfirm) || fetchHasError}
+                  helperText={errors.passwordConfirm}
+                  handleLblError
+                  inputProps={{
+                    maxLength: 16
+                  }}
+                />
                 <Box mt={5}>
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={5}>
@@ -173,7 +258,7 @@ function ChangePassword({ handleNotifications, handleLoading }: IFormData): JSX.
                     </Grid>
                   </Grid>
                 </Box>
-              </Form>
+              </form>
             );
           }}
         </Formik>

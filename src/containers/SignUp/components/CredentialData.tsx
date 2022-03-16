@@ -1,5 +1,5 @@
 /// IMPORTS
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 /// IMPORTS END
 
 /// FORM
@@ -11,7 +11,6 @@ import { TCredentialDataProps, IEmailStates, TCredentialDataForm, TFormData } fr
 /// TYPES END
 
 /// SERVICES
-import { getPersonalData } from '../../../services/getPersonalData.service';
 /// SERVICES END
 
 /// OWN COMPONENTS
@@ -31,7 +30,9 @@ import { FormControl, FormHelperText, Link, Typography } from '@material-ui/core
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../../../i18n/globals/i18n';
+import { NAMESPACE_KEY as i18nGlobal } from '../../../i18n/globals/i18n';
+import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
+
 /// i18n END
 
 /// INITIAL STATES
@@ -44,163 +45,164 @@ const initialEmailStates: IEmailStates = {
 function CredentialData({
   values,
   errors,
-  touched,
   handleBlur,
   handleChange,
-  updatePassword,
-  updateEmail
+  touched,
+  setCustomPopUpError
 }: TCredentialDataProps & FormikProps<TCredentialDataForm | TFormData>): JSX.Element {
-  const { t } = useTranslation([NAMESPACE_KEY, 'forms']);
+  const { t } = useTranslation([i18nGlobal, i18Forms]);
   const [inputEmailStates, setInputEmailStates] = useState(initialEmailStates);
   const [termsAndConditionOpen, setTermsAndConditionOpen] = useState(false);
   const [informedConsentOpen, setInformedConsentOpen] = useState(false);
-  /// USE EFFECTS
-  useEffect(() => {
-    const regexp = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-    if (regexp.test(values.email)) {
-      setInputEmailStates({ ...inputEmailStates, fetching: true });
-      getPersonalData(values.email)
-        .then(() => {
-          setInputEmailStates({
-            message: `${t('message.email.is_register', { ns: 'forms' })}`,
-            fetching: false
-          });
-        })
-        .catch(() => {
-          setInputEmailStates({
-            message: '',
-            fetching: false
-          });
-        });
+
+  const handleGlobalFormErrors = () => {
+    if (errors.confirmPassword === t('validations.password.matched', { ns: i18Forms })) {
+      setCustomPopUpError(t('validations.password.matched', { ns: i18Forms }));
+      return;
     }
-  }, [values.email]);
-  /// USE EFFECTS END
+    if (errors.confirmPassword === t('validations.password.regex', { ns: i18Forms })) {
+      setCustomPopUpError(t('message.error.fields_required', { ns: i18Forms }));
+      return;
+    }
+    if (errors.terms) {
+      setCustomPopUpError(t('validations.terms', { ns: i18Forms }));
+      return;
+    }
+    if (errors.services) {
+      setCustomPopUpError(t('validations.services', { ns: i18Forms }));
+    }
+  };
+
+  useEffect(() => {
+    const flatErrors = Object.values(errors);
+    if (flatErrors.includes(t('validations.required', { ns: i18Forms }))) {
+      setCustomPopUpError(null);
+      return;
+    }
+    handleGlobalFormErrors();
+  }, [errors.terms, errors.services, errors.confirmPassword]);
 
   return (
     <>
-      {!updatePassword && (
-        <Input
-          fullWidth
-          id="email"
-          name="email"
-          type="email"
-          label={t('label.email.email', { ns: NAMESPACE_KEY })}
-          value={values.email}
-          error={touched.email && (Boolean(errors.email) || Boolean(inputEmailStates.message))}
-          onBlur={handleBlur}
-          loading={inputEmailStates.fetching}
-          onChange={handleChange}
-          helperText={errors.email ? errors.email : inputEmailStates.message}
-        />
-      )}
-      {!updateEmail && (
-        <>
-          <Input
-            fullWidth
-            id="password"
-            name="password"
-            type="password"
-            label={
-              updatePassword
-                ? `${t('label.password.new', { ns: NAMESPACE_KEY })}`
-                : `${t('label.password.password', { ns: NAMESPACE_KEY })}`
+      <Input
+        fullWidth
+        id="email"
+        name="email"
+        type="email"
+        label={t('label.email.email', { ns: i18nGlobal })}
+        value={values.email}
+        error={errors.email && touched.email}
+        helperText={errors.email}
+        onBlur={handleBlur}
+        loading={inputEmailStates.fetching}
+        handleLblError
+        onChange={handleChange}
+      />
+      <Input
+        fullWidth
+        id="password"
+        name="password"
+        type="password"
+        label={t('label.password.password', { ns: i18nGlobal })}
+        value={values.password}
+        error={errors.password && touched.password}
+        helperText={errors.password}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        handleLblError
+        inputProps={{
+          maxLength: 16
+        }}
+      />
+      <SecurityPasswordIdicator value={values.password} />
+      <Input
+        fullWidth
+        id="confirmPassword"
+        name="confirmPassword"
+        type="password"
+        label={t('label.password.confirm_password', { ns: i18nGlobal })}
+        value={values.confirmPassword}
+        error={errors.confirmPassword && touched.confirmPassword}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        helperText={errors.confirmPassword}
+        handleLblError
+        inputProps={{
+          maxLength: 16
+        }}
+      />
+      <FormControl>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="termsandconditions"
+                checked={values.terms}
+                onChange={handleChange}
+                name="terms"
+                color="primary"
+                style={{ zIndex: 3 }}
+              />
             }
-            value={values.password}
-            error={touched.password && Boolean(errors.password)}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            helperText={errors.password}
-            inputProps={{
-              maxLength: 16
-            }}
-          />
-          <SecurityPasswordIdicator value={values.password} />
-          <Input
-            fullWidth
-            id="confirmPassword"
-            name="confirmPassword"
-            type="password"
             label={
-              updatePassword
-                ? `${t('label.password.label', { ns: NAMESPACE_KEY })}`
-                : `${t('label.password.confirm', { ns: NAMESPACE_KEY })}`
+              <Typography
+                component="label"
+                variant="body1"
+                style={{
+                  fontSize: '14px'
+                }}
+              >
+                {t('label.accept', { ns: i18nGlobal })}{' '}
+                <Link
+                  underline="always"
+                  component="span"
+                  variant="body1"
+                  onClick={() => setTermsAndConditionOpen(true)}
+                  style={{ cursor: 'pointer', color: '#FF4003', fontSize: '14px' }}
+                >
+                  {t('label.terms', { ns: i18nGlobal })}
+                </Link>
+              </Typography>
             }
-            value={values.confirmPassword}
-            error={touched.confirmPassword && Boolean(errors.confirmPassword)}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            helperText={errors.confirmPassword}
-            inputProps={{
-              maxLength: 16
-            }}
           />
-        </>
-      )}
+          {touched.terms && !values.terms && <FormHelperText error>{errors.terms}</FormHelperText>}
 
-      {!updateEmail && !updatePassword && (
-        <FormControl>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  id="termsandconditions"
-                  checked={values.terms}
-                  onChange={handleChange}
-                  name="terms"
-                  color="primary"
-                  style={{ zIndex: 3 }}
-                />
-              }
-              label={
-                <Typography component="label" variant="body1">
-                  {t('label.accept', { ns: NAMESPACE_KEY })}{' '}
-                  <Link
-                    underline="always"
-                    component="span"
-                    variant="body1"
-                    onClick={() => setTermsAndConditionOpen(true)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    {t('label.terms', { ns: NAMESPACE_KEY })}
-                  </Link>
-                </Typography>
-              }
-            />
-            {touched.terms && !values.terms && (
-              <FormHelperText error>{errors.terms}</FormHelperText>
-            )}
-
-            <FormControlLabel
-              control={
-                <Checkbox
-                  id="consent"
-                  checked={values.services}
-                  onChange={handleChange}
-                  name="services"
-                  color="primary"
-                />
-              }
-              label={
-                <Typography component="label" variant="body1">
-                  {t('label.accept', { ns: NAMESPACE_KEY })}{' '}
-                  <Link
-                    underline="always"
-                    component="span"
-                    variant="body1"
-                    onClick={() => setInformedConsentOpen(true)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    {t('label.consent', { ns: NAMESPACE_KEY })}
-                  </Link>
-                </Typography>
-              }
-            />
-          </FormGroup>
+          <FormControlLabel
+            control={
+              <Checkbox
+                id="consent"
+                checked={values.services}
+                onChange={handleChange}
+                name="services"
+                color="primary"
+              />
+            }
+            label={
+              <Typography
+                component="label"
+                variant="body1"
+                style={{
+                  fontSize: '14px'
+                }}
+              >
+                {t('label.accept', { ns: i18nGlobal })}{' '}
+                <Link
+                  underline="always"
+                  component="span"
+                  variant="body1"
+                  onClick={() => setInformedConsentOpen(true)}
+                  style={{ cursor: 'pointer', color: '#FF4003', fontSize: '14px' }}
+                >
+                  {t('label.consent', { ns: i18nGlobal })}
+                </Link>
+              </Typography>
+            }
+          />
           {touched.services && !values.services && (
             <FormHelperText error>{errors.services}</FormHelperText>
           )}
-        </FormControl>
-      )}
+        </FormGroup>
+      </FormControl>
 
       <Modal open={termsAndConditionOpen} onClose={() => setTermsAndConditionOpen(false)}>
         <TermsAndConditions />

@@ -15,6 +15,12 @@ import { enSubscriptions } from './subscriptions/en';
 import { esSubscriptions } from './subscriptions/es';
 import { enPreferences } from './preferences/en';
 import { esPreferences } from './preferences/es';
+import { esRecipesAndPrescriptions } from './recipes_and_prescriptions/es';
+import { enRecipesAndPrescriptions } from './recipes_and_prescriptions/en';
+import { enProfile } from './profile/en';
+import { esProfile } from './profile/es';
+import { enGeneralData } from './generalData/en';
+import { esGeneralData } from './generalData/es';
 
 const resources = {
   enUS: {
@@ -24,7 +30,10 @@ const resources = {
     forms: enForms,
     code: enCode,
     subscriptions: enSubscriptions,
-    preferences: enPreferences
+    preferences: enPreferences,
+    recipesAndPrescriptions: enRecipesAndPrescriptions,
+    profile: enProfile,
+    generalData: enGeneralData
   },
   es: {
     globals: esGlobals,
@@ -33,11 +42,25 @@ const resources = {
     forms: esForms,
     code: esCode,
     subscriptions: esSubscriptions,
-    preferences: esPreferences
+    preferences: esPreferences,
+    recipesAndPrescriptions: esRecipesAndPrescriptions,
+    profile: esProfile,
+    generalData: esGeneralData
   }
 };
 
-const namespaces = ['globals', 'home', 'menu', 'forms', 'code', 'subscriptions', 'preferences'];
+const namespaces = [
+  'globals',
+  'home',
+  'menu',
+  'forms',
+  'code',
+  'subscriptions',
+  'preferences',
+  'recipes-and-prescriptions',
+  'profile',
+  'generalData'
+];
 
 const DETECTION_OPTIONS = {
   order: ['localStorage', 'navigator'],

@@ -22,7 +22,7 @@ import { LegalProfile } from '../../containers/Profile/LegalProfile';
 import { PersonalProfile } from '../../containers/Profile/PersonalProfile';
 import { withAppContext } from '../../context';
 import LayoutContent from '../../layouts/LayoutContent';
-import LayoutLoggedIn from '../../layouts/LayoutLoggedIn';
+import LayoutInner from '../../layouts/LayoutInner';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
@@ -34,7 +34,7 @@ function ProfilePage({ user }: AppStates): JSX.Element {
   const { t } = useTranslation(NAMESPACE_KEY);
   const classes = ProfileStyles();
   return (
-    <LayoutLoggedIn>
+    <LayoutInner>
       <LayoutContent
         title={<TitleContent title={t('title.profile')} />}
         leftContent={
@@ -72,7 +72,7 @@ function ProfilePage({ user }: AppStates): JSX.Element {
           </>
         }
       />
-    </LayoutLoggedIn>
+    </LayoutInner>
   );
 }
 

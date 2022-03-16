@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+/// BASE IMPORTS
+import { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
+/// BASE  IMPORTS END
 
 /// CONTEXT
 import { withAppContext } from '../../context/index';
@@ -23,29 +25,14 @@ import LayoutCode from '../../layouts/LayoutCode';
 
 /// STYLES & TYPES
 import LayoutCodeStyles from '../../layouts/LayoutCode/styles.module';
-import { logoutService } from '../../services/auth.service';
-import { User } from '../../types/auth.types';
-import { getUserFromLocalStorage } from '../../services/localStorage.service';
+import { UserContext } from '../../context/UserContext';
 /// STYLES & TYPES END
-
-/// FORM STATES & VALIDATIONS
-/// FORM STATES & VALIDATIONS END
 
 function LogOut(): JSX.Element {
   const { t } = useTranslation(NAMESPACE_KEY);
+  const { handleUserLogOut, userLogState } = useContext(UserContext);
   const classes = LayoutCodeStyles();
   const router = useRouter();
-  const [email, setEmail] = useState('');
-
-  useEffect(() => {
-    const user: User = getUserFromLocalStorage('user');
-    setEmail(user.email);
-  });
-
-  const closeSession = (): void => {
-    logoutService(email);
-    router.replace('/');
-  };
 
   return (
     <LayoutCode
@@ -65,7 +52,11 @@ function LogOut(): JSX.Element {
       rightButton={
         <Button
           fullWidth
-          onClick={() => closeSession()}
+          disabled={userLogState === 'LOGGEDOUT' || userLogState === 'UNKNOWN'}
+          onClick={() => {
+            handleUserLogOut();
+            router.replace('/');
+          }}
           color="primary"
           variant="contained"
           className={classes.button}

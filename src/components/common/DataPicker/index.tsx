@@ -4,15 +4,16 @@ import * as dateFnsLocale from 'date-fns/locale';
 /// MATERIAL - UI
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
-import { FormControlProps, FormLabelProps, createMuiTheme } from '@material-ui/core';
+import { FormControlProps, FormLabelProps, createMuiTheme, ThemeOptions } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import { DatePicker, DatePickerProps, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 import {
   poppinsFontFamily,
   secondaryContrastTextColor,
-  secondaryDarkColor,
-  secondaryLightColor,
+  primaryLightColor,
+  primaryDarkColor,
+  primaryMainColor,
   secondaryMainColor
 } from '../../../styles/js/theme';
 import i18next from 'i18next';
@@ -25,10 +26,10 @@ type IProps = {
 
 const datepickerTheme = createMuiTheme({
   palette: {
-    secondary: {
-      light: secondaryLightColor,
-      main: secondaryMainColor,
-      dark: secondaryDarkColor,
+    primary: {
+      light: primaryLightColor,
+      main: primaryMainColor,
+      dark: primaryDarkColor,
       contrastText: secondaryContrastTextColor
     }
   },
@@ -36,6 +37,11 @@ const datepickerTheme = createMuiTheme({
     fontFamily: poppinsFontFamily
   },
   overrides: {
+    MuiPickersToolbar: {
+      toolbar: {
+        backgroundColor: primaryMainColor
+      }
+    },
     MuiButton: {
       label: {
         textTransform: 'capitalize'
@@ -43,6 +49,8 @@ const datepickerTheme = createMuiTheme({
     },
     MuiFormLabel: {
       root: {
+        fontSize: '14px',
+        lineHeight: '12px',
         color: 'rgba(0, 0, 0, 0.87)'
       }
     },
@@ -52,9 +60,18 @@ const datepickerTheme = createMuiTheme({
           margin: 0
         }
       }
+    },
+    MuiOutlinedInput: {
+      root: {
+        '&$focused': {
+          '& fieldset': {
+            borderColor: `${secondaryMainColor} !important`
+          }
+        }
+      }
     }
   }
-});
+} as ThemeOptions);
 
 function DataPicker({ label, formControlProps, labelProps, ...props }: IProps): JSX.Element {
   const currentI18nKey = i18next.language || window.localStorage.i18nextLng;
@@ -67,7 +84,7 @@ function DataPicker({ label, formControlProps, labelProps, ...props }: IProps): 
           {label}
         </FormLabel>
         <MuiPickersUtilsProvider utils={DateFnsUtils} locale={locale}>
-          <DatePicker {...props} margin="none" color="secondary" />
+          <DatePicker {...props} color="primary" />
         </MuiPickersUtilsProvider>
       </FormControl>
     </ThemeProvider>

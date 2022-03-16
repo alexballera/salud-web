@@ -1,4 +1,5 @@
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
+import { secondaryMainColor, tertiaryLightColor } from '../../styles/js/theme';
 
 const ProfileStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -10,15 +11,19 @@ const ProfileStyles = makeStyles((theme: Theme) =>
       position: 'relative'
     },
     imgAvatar: {
-      height: '86px !important',
-      width: '86px !important',
-      boxShadow: `0px 8px 10px 1px rgba(0, 0, 0, 0.14),
-0px 3px 14px 2px rgba(0, 0, 0, 0.12),
-0px 5px 5px -3px rgba(0, 0, 0, 0.2)`,
+      height: '80px !important',
+      width: '80px !important',
       [theme.breakpoints.up('md')]: {
         height: '164px !important',
         width: '164px !important'
       }
+    },
+    imgAvatarGD: {
+      height: '80px !important',
+      width: '80px !important',
+      margin: 'auto',
+      border: `8px solid ${tertiaryLightColor}`,
+      marginTop: 10
     },
     buttonIcon: {
       backgroundColor: 'white',
@@ -48,6 +53,15 @@ const ProfileStyles = makeStyles((theme: Theme) =>
         marginLeft: 0
       }
     },
+    nameContaner: {
+      background: tertiaryLightColor,
+      margin: '-45px auto',
+      textAlign: 'center',
+      paddingTop: 50,
+      width: '100%',
+      borderTopRightRadius: 10,
+      borderTopLeftRadius: 10
+    },
     textFullname: {
       color: 'rgba(0, 0, 0, 0.87)',
       fontSize: 16,
@@ -56,6 +70,12 @@ const ProfileStyles = makeStyles((theme: Theme) =>
         fontSize: 20,
         fontWeight: 500
       }
+    },
+    textName: {
+      color: secondaryMainColor,
+      fontSize: 20,
+      fontWeight: 500,
+      lineHeight: '32px'
     },
     textDocument: {
       color: 'rgba(0, 0, 0, 0.6)',

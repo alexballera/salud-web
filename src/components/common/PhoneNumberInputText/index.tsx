@@ -43,6 +43,7 @@ type TProps = {
   labelProps?: FormLabelProps;
   onResetValue: (value: string) => void;
   formControlProps?: { 'data-testid'?: string } & FormControlProps;
+  country: string;
 } & OutlinedInputProps;
 /// TYPES END
 
@@ -58,17 +59,20 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const getCurrentPhoneConfig = (value = '') => {
+const getCurrentPhoneConfig = (value = '', _country: string) => {
+  const selectIndexCountry = countriesPhoneNumbers.findIndex(country => country.value === _country);
   const [countryCode] = value.split(' ');
-  return _.find(countriesPhoneNumbers, { countryCode }) || countriesPhoneNumbers[0];
+  return (
+    _.find(countriesPhoneNumbers, { countryCode }) || countriesPhoneNumbers[`${selectIndexCountry}`]
+  );
 };
 
 function PhoneNumberInputText(props: TProps): JSX.Element {
   const classes = useStyles();
   const isMounted = useIsMounted();
   const { t } = useTranslation(i18nGlobal);
-  const { id, error, label, labelProps, helperText, value } = props;
-  const [phoneConfig, setPhoneConfig] = useState(getCurrentPhoneConfig(value as string));
+  const { id, error, label, labelProps, helperText, value, country } = props;
+  const [phoneConfig, setPhoneConfig] = useState(getCurrentPhoneConfig(value as string, country));
 
   useEffect(() => {
     const { onResetValue } = props;

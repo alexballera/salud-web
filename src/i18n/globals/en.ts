@@ -26,8 +26,7 @@ export const enGlobals = {
   description: {
     beneficiaries: 'La o las personas que querés que disfruten los beneficios de tu plan',
     extra_data: 'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma',
-    credential_data:
-      'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma',
+    credential_data: 'Define the credentials you want to use to enter the platform',
     identify: 'Para empezar tu registro bríndanos tu número de identificación',
     logout: '¿Estás seguro que querés cerrar tu sesión en plataforma?',
     login: 'Coloca tu correo electrónico y contraseña para acceder a tu portal.',
@@ -66,12 +65,14 @@ export const enGlobals = {
     save_changes: 'Guardar cambios',
     send: 'Enviar',
     send_email: 'Send email',
-    remove_beneficiary: 'Eliminar beneficiario'
+    remove_beneficiary: 'Eliminar beneficiario',
+    show_more: 'Show more'
   },
 
   label: {
     accept: 'Acepto',
     birthdate: 'Fecha de nacimiento',
+    date: 'Date',
     change: 'Cambiar',
     consent: 'Consentimiento informado',
     edit: 'Editar',
@@ -84,6 +85,8 @@ export const enGlobals = {
     same_residence: 'Igual que mi domicilio',
     residence: 'Domicilio',
     language: 'Idioma',
+    for: 'For',
+    invalid_date_format: 'invalid date format',
 
     country: {
       country: 'Country',
@@ -125,9 +128,9 @@ export const enGlobals = {
     },
 
     gender: {
-      gender: 'Sexo biológico designado al nacer',
-      female: 'Femenino',
-      male: 'Masculino',
+      gender: 'Biological sex at birth',
+      female: 'Female',
+      male: 'Male',
       tooltip:
         'This information is for purposes related to health issues and conditions related to biological sex. It has nothing to do with the person is identity.',
       placeholder: 'Select gender'
@@ -135,6 +138,7 @@ export const enGlobals = {
 
     password: {
       confirm: 'New password confirmation',
+      confirm_password: 'Confirm password',
       password: 'Contraseña',
       new: 'new password',
       change_description: 'Ingresá tu contraseña anterior y la nueva',
@@ -161,10 +165,15 @@ export const enGlobals = {
   responses: {
     signin: {
       error_400: 'The data provided does not match',
-      error_401: 'The data provided does not match'
+      error_401: 'The data provided does not match',
+      error_429: 'You have made many requests at the same time'
     },
     recover: {
       error_401: 'Invalid token, request it again'
+    },
+    signup: {
+      error_409:
+        'The email is already registered in the system. Please indicate another or contact us at OspiCenter for more information'
     }
   },
 
@@ -185,5 +194,38 @@ export const enGlobals = {
     title: 'Need help?',
     label: 'Contact us at our ',
     ospi_center: 'Ospi Center at {{telephone}}'
+  },
+
+  profile: {
+    height: 'Height',
+    weight: 'Weight',
+    biologicSex: 'Biologic Sex',
+    pronoun: 'Pronoun',
+    civilStatus: 'Civil status',
+    ocupation: 'Ocupation',
+    address: 'Address',
+    age: 'Age'
+  },
+
+  months: {
+    0: 'January',
+    1: 'February',
+    2: 'March',
+    3: 'April',
+    4: 'May',
+    5: 'June',
+    6: 'July',
+    7: 'August',
+    8: 'September',
+    9: 'October',
+    10: 'November',
+    11: 'December'
+  },
+
+  config: {
+    simple_hour: '{{hour}} hour',
+    many_hour: '{{hour}} hours',
+    simple_unit: '{{unit}} unit',
+    many_unit: '{{unit}} units'
   }
 };

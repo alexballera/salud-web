@@ -1,6 +1,6 @@
 import { Appwrite, Models } from 'appwrite';
 
-type TPatient = {
+export type TPatient = {
   documentType: string;
   documentNumber: string;
   birthDate: string;
@@ -9,6 +9,7 @@ type TPatient = {
   province: string;
   canton: string;
   district: string;
+  country: string;
   userId: string;
 };
 
@@ -32,11 +33,16 @@ const api = {
     return appwrite;
   },
 
-  createAccount: (unique, email, password, name) => {
+  createAccount: (
+    unique: string,
+    email: string,
+    password: string,
+    name: string
+  ): Promise<Models.User<Models.Preferences>> => {
     return api.provider().account.create(unique, email, password, name);
   },
 
-  getAccount: () => {
+  getAccount: (): Promise<Models.User<Models.Preferences>> => {
     return api.provider().account.get();
   },
 
@@ -89,15 +95,15 @@ const api = {
 
   createPatient: (patient: TPatient): Promise<Models.Document> => {
     const { patientCollectionID } = SERVER;
-    return api
-      .provider()
-      .database.createDocument(
-        patientCollectionID,
-        'unique()',
-        patient,
-        ['role:all'],
-        ['user:[USER_ID]']
-      );
+    return api.provider().database.createDocument(patientCollectionID, 'unique()', patient);
+  },
+
+  getUserSession: (sessionID: string): Promise<Models.Session> => {
+    return api.provider().account.getSession(sessionID);
+  },
+
+  userLogOut: (sessionID: string): Promise<any> => {
+    return api.provider().account.deleteSession(sessionID);
   }
 };
 

@@ -1,7 +1,7 @@
 // BASE IMPORTS
 import { useState, useEffect, useRef } from 'react';
 import { addYears } from 'date-fns';
-import { convertToMask } from '../../../utils/helpers';
+import { convertToMask, upperCamelCase } from '../../../utils/helpers';
 /// BASE IMPORTS END
 
 /// FORM
@@ -101,6 +101,17 @@ function PersonalData({
   const inputMaskRef = useRef(null);
   const [fetchUserDataState, setFetchUserDateState] = useState(FETCH_USER_DATA_STATE);
 
+  const handlerError = (code = '') => {
+    switch (code) {
+      case 'sld-user-1':
+        return t('validations.userNotFound', { ns: i18Forms });
+      case 'sld-user-2':
+        return t('validations.userExists', { ns: i18Forms });
+      default:
+        return t('validations.document.invalid', { ns: i18Forms });
+    }
+  };
+
   const handleCurrDocTypeChange = ({ documentType, country }: TFormData) => {
     const documentTypes = countriesDocumentTypes.find(item => item.code === country)?.items || [];
     const findDocumentType = documentTypes.find(item => item.id === documentType);
@@ -121,10 +132,11 @@ function PersonalData({
       return;
     }
 
-    setFetchUserDateState({ isLoading: true, error: '' });
+    setFetchUserDateState({ isLoading: true, error: null });
     autocompleteUserDataFn({ docType, docNumber: docNumberSanitized })
       .then(setUserValues)
-      .catch(() => {
+      .catch(error => {
+        const searchError = handlerError(error.response.data.error.code);
         const i18nPopUpError = t('validations.document.invalid_pop_up', { ns: i18Forms });
         setUserValues(null); // Reset user info inputs
         setCustomPopUpError(i18nPopUpError); // Save this error on form state, it should be appear if continue button is clicked
@@ -132,7 +144,7 @@ function PersonalData({
         // Handle input error
         setFetchUserDateState(prevState => ({
           ...prevState,
-          error: t('validations.document.invalid', { ns: i18Forms })
+          error: searchError
         }));
       })
       .finally(() => {
@@ -155,8 +167,12 @@ function PersonalData({
   };
 
   const setUserValues = (data: TAutocompleteUser | null) => {
-    setFieldValue('fullName', data ? data.fullName : '');
+    setFieldValue('fullName', data ? upperCamelCase(data.fullName) : '');
     setFieldValue('birthDate', data ? data.birthDate : '');
+  };
+
+  const setTransformUpperCalmelCase = (s: string): void => {
+    setFieldValue('fullName', upperCamelCase(s));
   };
 
   useEffect(() => {
@@ -206,7 +222,7 @@ function PersonalData({
       <FormControl fullWidth variant="filled">
         <FormLabel
           id="document-type-selector-label"
-          style={{ marginBottom: 10 }}
+          style={{ marginBottom: 10, marginTop: 10 }}
           error={touched.documentType && !!errors.documentType}
         >
           {t('label.document.type', { ns: i18Global })}
@@ -258,6 +274,11 @@ function PersonalData({
             docNumber: e.target.value,
             docType: values.documentType
           });
+
+          // Reset fetch message
+          if (fetchUserDataState.error) {
+            setFetchUserDateState(prevState => ({ ...prevState, error: null }));
+          }
         }}
         inputComponent={convertToMask(currDocTypeArgs?.mask) ? (TextMaskCustom as any) : 'input'}
         inputProps={{
@@ -278,7 +299,10 @@ function PersonalData({
             disabled={currDocTypeArgs.reqFetchPerInf}
             error={touched.fullName && !currDocTypeArgs.reqFetchPerInf && !!errors.fullName}
             onBlur={handleBlur}
-            onChange={handleChange}
+            onChange={e => {
+              handleChange(e);
+              setTransformUpperCalmelCase(e.target.value);
+            }}
             formControlProps={{ margin: 'normal' }}
           />
           <DatePicker

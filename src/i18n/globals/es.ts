@@ -26,8 +26,7 @@ export const esGlobals = {
   description: {
     beneficiaries: 'La o las personas que querés que disfruten los beneficios de tu plan',
     extra_data: 'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma',
-    credential_data:
-      'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma',
+    credential_data: 'Definí las credenciales que querés utilizar para ingresar a la plataforma',
     identify: 'Para empezar tu registro bríndanos tu número de identificación',
     logout: '¿Estás seguro que querés cerrar tu sesión en plataforma?',
     login: 'Coloca tu correo electrónico y contraseña para acceder a tu portal.',
@@ -66,12 +65,14 @@ export const esGlobals = {
     save_changes: 'Guardar cambios',
     send: 'Enviar',
     send_email: 'Enviar correo',
-    remove_beneficiary: 'Eliminar beneficiario'
+    remove_beneficiary: 'Eliminar beneficiario',
+    show_more: 'Ver más'
   },
 
   label: {
     accept: 'Acepto',
     birthdate: 'Fecha de nacimiento',
+    date: 'Fecha',
     change: 'Cambiar',
     consent: 'Consentimiento informado',
     edit: 'Editar',
@@ -84,6 +85,8 @@ export const esGlobals = {
     same_residence: 'Igual que mi domicilio',
     residence: 'Domicilio',
     language: 'Idioma',
+    for: 'Por',
+    invalid_date_format: 'Formato de fecha inválido',
 
     country: {
       country: 'País de residencia',
@@ -125,7 +128,7 @@ export const esGlobals = {
     },
 
     gender: {
-      gender: 'Sexo biológico designado al nacer',
+      gender: 'Sexo biológico al nacer',
       female: 'Femenino',
       male: 'Masculino',
       tooltip:
@@ -135,6 +138,7 @@ export const esGlobals = {
 
     password: {
       confirm: 'Confirmación de la contraseña nueva',
+      confirm_password: 'Confirmar contraseña',
       password: 'Contraseña',
       new: 'Contraseña nueva',
       change_description: 'Ingresá tu contraseña anterior y la nueva',
@@ -161,10 +165,15 @@ export const esGlobals = {
   responses: {
     signin: {
       error_400: 'Los datos brindados no coinciden',
-      error_401: 'Los datos brindados no coinciden'
+      error_401: 'Los datos brindados no coinciden',
+      error_429: 'Has realizo muchas solicitudes al mismo tiempo'
     },
     recover: {
       error_401: 'Token inválido, solicítalo nuevamente'
+    },
+    signup: {
+      error_409:
+        'El correo electrónico ya está registrado en el sistema. Por favor indique otro o contáctenos al OspiCenter para más información'
     }
   },
 
@@ -185,5 +194,38 @@ export const esGlobals = {
     title: '¿Necesitás ayuda?',
     label: 'Contactanos a nuestro ',
     ospi_center: 'Ospi Center al {{telephone}}'
+  },
+
+  profile: {
+    height: 'Altura',
+    weight: 'Peso',
+    biologicSex: 'Sexo biológico',
+    pronoun: 'Pronombre',
+    civilStatus: 'Estado civil',
+    ocupation: 'Profesión',
+    address: 'Dirección',
+    age: 'Edad'
+  },
+
+  months: {
+    0: 'Enero',
+    1: 'Febrero',
+    2: 'Marzo',
+    3: 'Abril',
+    4: 'Mayo',
+    5: 'Junio',
+    6: 'Julio',
+    7: 'Agosto',
+    8: 'Septiembre',
+    9: 'Octubre',
+    10: 'Noviembre',
+    11: 'Diciembre'
+  },
+
+  config: {
+    simple_hour: '{{hour}} hora',
+    many_hour: '{{hour}} horas',
+    simple_unit: '{{unit}} unidad',
+    many_unit: '{{unit}} unidades'
   }
 };

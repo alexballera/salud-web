@@ -107,9 +107,11 @@ export type TExtraDataProps = {
 };
 
 export type TCredentialDataProps = {
-  handleNotifications: (props: INotificationProps) => void;
   updatePassword?: boolean;
   updateEmail?: boolean;
+  errorConfirmPassword?: boolean;
+  clickToSubmit?: boolean;
+  setCustomPopUpError?: React.Dispatch<React.SetStateAction<null | string>>;
 };
 
 export type GenderEnum = '1' | '2' | '';

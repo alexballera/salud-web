@@ -10,6 +10,14 @@ export const esMenu = {
     main: 'Inicio',
     profile: 'Perfil',
     subscription: 'Tu suscripción',
-    preferences: 'Preferencias'
+    preferences: 'Preferencias',
+    generalData: 'Datos generales',
+    recipes_and_prescriptions: 'Recetas y prescripciones',
+    recipes_and_prescriptions_preview: 'Detalle',
+    proceedings: 'Expediente médico',
+    clinic_history: 'Historia clínica',
+    diseases: 'Mis enfermedades',
+    allergies: 'Mis alergias',
+    clinic_history_habits: 'Control de hábitos'
   }
 };

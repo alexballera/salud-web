@@ -1,11 +1,10 @@
 /// BASE IMPORTS
-import React, { PropsWithChildren, useEffect } from 'react';
+import React, { PropsWithChildren, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 /// BASE IMPORTS END
 
 /// MATERIAL - UI
-import { Box, Hidden, IconButton, Snackbar } from '@material-ui/core';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { Box, Hidden, IconButton, Snackbar, CircularProgress } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 /// MATERIAL - UI END
 
@@ -18,15 +17,8 @@ import { Alert } from '@material-ui/lab';
 
 /// TYPES
 import { IProps } from './types';
+import { UserContext } from '../../context/UserContext';
 /// TYPES END
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    alertText: {
-      marginLeft: 10
-    }
-  })
-);
 
 export default withAppContext(function Layout({
   children,
@@ -36,12 +28,33 @@ export default withAppContext(function Layout({
   handleNotifications
 }: PropsWithChildren<IProps>): JSX.Element {
   const router = useRouter();
+  const { isLoading, userLogState, loggedInRoutes } = useContext(UserContext);
 
   useEffect(() => {
     handleNotifications({ ...notificationState, open: false });
   }, [router.pathname]);
 
-  const classes = useStyles();
+  if (isLoading || userLogState === 'UNKNOWN') {
+    return (
+      <>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="100vh"
+          width="100vw"
+        >
+          <CircularProgress />
+        </Box>
+      </>
+    );
+  }
+
+  if (userLogState === 'LOGGEDOUT' && loggedInRoutes.includes(router.pathname)) {
+    router.replace('/');
+    return <></>;
+  }
+
   return (
     <>
       <Navbar />

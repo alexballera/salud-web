@@ -1,15 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import { withAppContext } from '../../../context';
 
 /// MATERIAL UI
-import { AppBar, Toolbar, Hidden, Grid, Avatar, Typography } from '@material-ui/core';
+import { AppBar, Toolbar, Hidden, Grid, Avatar, Typography, IconButton } from '@material-ui/core';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 /// MATERIAL UI END
 
 /// STYLES & TYPES
-import { IProps } from './types';
 import navbarStyles from './styles.module';
 /// STYLES & TYPES END
+
+/// i18n
+import { useTranslation, withTranslation } from 'react-i18next';
+import { NAMESPACE_KEY as i18Global } from '../../../i18n/globals/i18n';
+import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
+import { NAMESPACE_KEY as i18nProceedings } from '../../../i18n/proceedings/i18n';
+
+/// i18n END
 
 /// OWN COMPONENTS
 import SvgContainer from '../SvgContainer';
@@ -17,23 +25,15 @@ import SvgLogo from '../Svg/SvgLogo.component';
 import ActionButtons from './components/ActionButtons.component';
 import DropDownButton from './components/DropDownButton';
 import Menu from '../Menu';
-import { User } from '../../../types/auth.types';
-import { getUserFromLocalStorage } from '../../../services/localStorage.service';
+import { UserContext } from '../../../context/UserContext';
+import { getDataFromLocalStorage } from '@/src/services/localStorage.service';
 /// OWN COMPONENTS END
 
-function Navbar({ loggedIn }: IProps): JSX.Element {
+function Navbar(): JSX.Element {
   const classes = navbarStyles();
   const router = useRouter();
-  const [firstName, setFirstName] = useState('');
-  const [documentNumber, setDocumentNumber] = useState('');
-
-  useEffect(() => {
-    if (loggedIn) {
-      const user: User = getUserFromLocalStorage('user');
-      setFirstName(user.firstName);
-      setDocumentNumber(user.documentNumber);
-    }
-  });
+  const { userLogState, account } = useContext(UserContext);
+  const { t } = useTranslation([i18Global, i18Forms]);
 
   const showMenuMobile = () => {
     switch (router.pathname) {
@@ -65,14 +65,101 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
     }
   };
 
-  const noActionPathNames = ['/main', '/profile', '/subscriptions', '/preferences', '/help'];
+  const showBackButton = () => {
+    switch (router.pathname) {
+      case '/medicalData':
+        return true;
+      case '/recipes_and_prescriptions':
+        return true;
+      case '/recipes_and_prescriptions/preview/[item_id]':
+        return true;
+      case '/generalData':
+        return true;
+      case '/proceedings':
+        return true;
+      case '/clinic_history':
+        return true;
+      case '/clinic_history/diseases':
+        return true;
+      case '/clinic_history/allergies/[allergie_id]':
+        return true;
+      case '/exam_results':
+        return true;
+      case '/clinic_history/allergies':
+        return true;
+      case '/clinic_history/habits':
+        return true;
+      case '/exam_results/detail/[item_id]':
+        return true;
+      default:
+        return false;
+    }
+  };
+
+  const showPageTitle = () => {
+    switch (router.pathname) {
+      case '/medicalData':
+        return t('items.generalData', { ns: 'menu' });
+      case '/recipes_and_prescriptions':
+        return t('items.recipes_and_prescriptions', { ns: 'menu' });
+      case '/recipes_and_prescriptions/preview/[item_id]':
+        return t('items.recipes_and_prescriptions_preview', { ns: 'menu' });
+      case '/generalData':
+        return t('proceedings.generalData', { ns: i18nProceedings });
+      case '/proceedings':
+        return t('items.proceedings', { ns: 'menu' });
+      case '/clinic_history':
+        return t('items.clinic_history', { ns: 'menu' });
+      case '/clinic_history/diseases':
+        return t('items.diseases', { ns: 'menu' });
+      case '/clinic_history/allergies/[allergie_id]':
+        return t('items.allergies', { ns: 'menu' });
+      case '/exam_results':
+        return t('proceedings.examResults', { ns: i18nProceedings });
+      case '/clinic_history/allergies':
+        return t('items.allergies', { ns: 'menu' });
+      case '/clinic_history/habits':
+        return t('items.clinic_history_habits', { ns: 'menu' });
+      case '/exam_results/detail/[item_id]':
+        return getDataFromLocalStorage('titleExamResultDetail');
+      default:
+        return false;
+    }
+  };
+
+  const customRedirectList = {
+    '/recipes_and_prescriptions': '/main'
+  };
+
+  const customRedirectBackButton = () => {
+    // Use custom redirect to avoid router history
+    const redirectTo = customRedirectList[router.pathname];
+    if (redirectTo) {
+      router.push(redirectTo);
+      return;
+    }
+    router.back();
+  };
+
+  const noActionPathNames = [
+    '/main',
+    '/profile',
+    '/subscriptions',
+    '/preferences',
+    '/help',
+    '/medicalData',
+    '/recipes_and_prescriptions',
+    '/recipes_and_prescriptions/preview/[item_id]',
+    '/proceedings',
+    '/generalData'
+  ];
 
   const exitButtonPathNames = [
     '/recover_password/forward_email',
     '/recover_password/change_password'
   ];
 
-  const closeButtonPathNames = ['/login', '/signup/email_verification'];
+  const closeButtonPathNames = ['/login', '/signup', '/signup/email_verification'];
 
   const backButtonPathNames = [
     '/update/phone',
@@ -85,14 +172,41 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
     '/signup/registered_patient'
   ];
 
+  const activeShadowPathNames = [
+    '/clinic_history/allergies',
+    '/clinic_history/allergies/[allergie_id]',
+    '/clinic_history/habits',
+    '/medicalData'
+  ];
+
   return (
     <>
       {showMenu() && (
         <>
           <Hidden mdUp>
-            <AppBar position="sticky" color="inherit" elevation={0}>
+            <AppBar
+              position="sticky"
+              color="inherit"
+              elevation={0}
+              className={activeShadowPathNames.includes(router.pathname) ? classes.shadow : ''}
+            >
               <Toolbar>
                 <Grid container justify="center">
+                  {showBackButton() && (
+                    <Grid container justify="flex-start" alignItems="center">
+                      <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="arrow-back"
+                        onClick={() => customRedirectBackButton()}
+                      >
+                        <ArrowBackIcon />
+                      </IconButton>
+                      <Typography variant="body1" className={classes.title}>
+                        {showPageTitle()}
+                      </Typography>
+                    </Grid>
+                  )}
                   <Grid container>
                     <Grid item xs={6} md={6}>
                       <Grid
@@ -102,20 +216,20 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                         style={{ height: '100%' }}
                       >
                         {showMenuMobile() && <Menu type="mobile" />}
-                        <SvgContainer title="Logo Icon" width={54} height={28}>
-                          <SvgLogo />
-                        </SvgContainer>
+                        {!showBackButton() && (
+                          <SvgContainer title="Logo Icon" width={54} height={28}>
+                            <SvgLogo />
+                          </SvgContainer>
+                        )}
                       </Grid>
                     </Grid>
                     <Grid item xs={6} md={6} className={classes.buttonAction}>
-                      {!loggedIn && (
-                        <ActionButtons
-                          noActionPathNames={noActionPathNames}
-                          exitButtonPathNames={exitButtonPathNames}
-                          backButtonPathNames={backButtonPathNames}
-                          closeButtonPathNames={closeButtonPathNames}
-                        />
-                      )}
+                      <ActionButtons
+                        noActionPathNames={noActionPathNames}
+                        exitButtonPathNames={exitButtonPathNames}
+                        backButtonPathNames={backButtonPathNames}
+                        closeButtonPathNames={closeButtonPathNames}
+                      />
                     </Grid>
                   </Grid>
                 </Grid>
@@ -127,10 +241,27 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
               <Toolbar>
                 <Grid container justify="center">
                   <Grid container>
+                    {showBackButton() && (
+                      <Grid container justify="flex-start" alignItems="center">
+                        <IconButton
+                          edge="start"
+                          color="inherit"
+                          aria-label="arrow-back"
+                          onClick={() => router.back()}
+                        >
+                          <ArrowBackIcon />
+                        </IconButton>
+                        <Typography variant="body1" className={classes.title}>
+                          {showPageTitle()}
+                        </Typography>
+                      </Grid>
+                    )}
                     <Grid item xs={6} md={6} container alignItems="center">
-                      <SvgContainer title="Logo Icon" width={54} height={28}>
-                        <SvgLogo />
-                      </SvgContainer>
+                      {!showBackButton() && (
+                        <SvgContainer title="Logo Icon" width={54} height={28}>
+                          <SvgLogo />
+                        </SvgContainer>
+                      )}
                     </Grid>
                     <Grid item xs={6} md={6} className={classes.buttonAction}>
                       <ActionButtons
@@ -140,10 +271,10 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                         closeButtonPathNames={closeButtonPathNames}
                       />
                       {/* TODO corregir mostrar solo para cuando esté logueado: usar "loggedIn" */}
-                      {showMenuMobile() && loggedIn && (
+                      {showMenuMobile() && userLogState === 'LOGGEDIN' && (
                         <Grid container justify="flex-end" alignItems="center" spacing={2}>
                           <Grid item>
-                            <Avatar variant="square">{firstName?.charAt(0)}</Avatar>
+                            <Avatar variant="square">{account?.name?.charAt(0)}</Avatar>
                           </Grid>
                           <Grid
                             container
@@ -153,9 +284,11 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
                             xs={4}
                             md={3}
                           >
-                            <Typography className={classes.name}>{firstName}</Typography>
+                            <Typography className={classes.name}>
+                              {account?.name.split(' ')[1]}
+                            </Typography>
                             <Typography className={classes.documentNumber}>
-                              {documentNumber}
+                              {account?.$id}
                             </Typography>
                           </Grid>
                           <Grid item xs={2} md={1} className={classes.dropDownContainer}>
@@ -169,11 +302,13 @@ function Navbar({ loggedIn }: IProps): JSX.Element {
               </Toolbar>
             </AppBar>
           </Hidden>
-          <Hidden smDown>{showMenuMobile() && loggedIn && <Menu type="desktop" />}</Hidden>
+          <Hidden smDown>
+            {showMenuMobile() && userLogState === 'LOGGEDIN' && <Menu type="desktop" />}
+          </Hidden>
         </>
       )}
     </>
   );
 }
 
-export default withAppContext(Navbar);
+export default withTranslation([i18Global, i18Forms])(withAppContext(Navbar));
