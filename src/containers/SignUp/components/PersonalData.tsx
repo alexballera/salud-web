@@ -103,8 +103,6 @@ function PersonalData({
 
   const handlerError = (code = '') => {
     switch (code) {
-      case 'sld-user-1':
-        return t('validations.userNotFound', { ns: i18Forms });
       case 'sld-user-2':
         return t('validations.userExists', { ns: i18Forms });
       default:
