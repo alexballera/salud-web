@@ -194,6 +194,7 @@ function ExtraData({
                 color="secondary"
                 labelId="gender-selector-label"
                 onBlur={handleBlur}
+                error={touched.gender && !!errors.gender}
                 variant="outlined"
                 onChange={handleChange}
               >
@@ -238,6 +239,7 @@ function ExtraData({
               id="pronoun-selector"
               name="pronoun"
               value={values.pronoun}
+              error={touched.pronoun && !!errors.pronoun}
               color="secondary"
               labelId="pronoun-selector-label"
               onBlur={handleBlur}
