@@ -202,7 +202,15 @@ function PersonalData({
           value={values.country}
           onBlur={handleBlur}
           onChange={e => {
-            cleanFormInputs(['documentType', 'documentNumber', 'fullName', 'birthDate']);
+            cleanFormInputs([
+              'documentType',
+              'documentNumber',
+              'fullName',
+              'birthDate',
+              'firstLevel',
+              'secondLevel',
+              'thirdLevel'
+            ]);
             handleChange(e);
           }}
         >
