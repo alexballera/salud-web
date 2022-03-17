@@ -27,14 +27,15 @@ export type TExamResultsGroup = { month: string; items: TGeneralData }[];
 export type TDose = {
   dose: string;
   date: string;
-}[];
+};
 
 export type TVaccines = {
   name: string;
   regular?: TDose[];
   reinforcement?: TDose[];
   extra?: TDose[];
-}[];
+  vaccineId?: string;
+};
 
 export type TVaccinesData = {
   userId: string;
@@ -77,8 +78,8 @@ export const getExamResultsByYear = (data: TGeneralData, year: number): TExamRes
   return groupByMonth;
 };
 
-export const getExamResultsData = (id: string): Promise<AxiosResponse<TGeneralData>> => {
-  return axios.get(`${process.env.NEXT_PUBLIC_API_URL_BFF}/patients/${id}/exams`);
+export const getExamResultsData = (userId: string): Promise<AxiosResponse<TGeneralData>> => {
+  return axios.get(`${process.env.NEXT_PUBLIC_API_URL_BFF}/patients/${userId}/exams`);
 };
 
 export const getExamResultsById = (userId: string, id: string): Promise<TGeneralData[0]> => {
@@ -93,6 +94,6 @@ export const getExamResultsById = (userId: string, id: string): Promise<TGeneral
   });
 };
 
-export const getVaccinesData = (id: string): Promise<AxiosResponse<TVaccinesData>> => {
-  return axios.get(`${process.env.NEXT_PUBLIC_API_URL_BFF}/patients/${id}/vaccines`);
+export const getVaccinesData = (userId: string): Promise<AxiosResponse<TVaccinesData>> => {
+  return axios.get(`${process.env.NEXT_PUBLIC_API_URL_BFF}/patients/${userId}/vaccines`);
 };
