@@ -6,5 +6,9 @@ export const esClinicHistory = {
     injuries: 'Mis cirugías y lesiones',
     vaccines: 'Vacunas',
     familyIllnesses: 'Enfermedades familiares'
+  },
+
+  vaccine_preview: {
+    sub_title: 'Vacuna contra la {{disease}}'
   }
 };
