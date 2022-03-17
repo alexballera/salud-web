@@ -93,7 +93,3 @@ export const getExamResultsById = (userId: string, id: string): Promise<TGeneral
       .finally(() => resolve(findItem));
   });
 };
-
-export const getVaccinesData = (userId: string): Promise<AxiosResponse<TVaccinesData>> => {
-  return axios.get(`${process.env.NEXT_PUBLIC_API_URL_BFF}/patients/${userId}/vaccines`);
-};
