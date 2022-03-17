@@ -15,15 +15,28 @@ type AllergieResponse = {
 };
 
 type THabits = {
-  description: string;
-  isActive: boolean;
-  comments: string;
-  performer: string;
-  specialization: string;
+  status?: boolean;
+  addictionStatus?: string;
+  passive?: boolean;
+  quantity?: string;
+  frequency?: string;
+  period?: string;
+  wantsToQuit?: boolean;
+  type?: string;
+  duration?: string;
+  details?: string;
+};
+
+type THabitsDrugs = {
+  name: string;
+  observation: string;
 };
 
 type HabitsResponse = {
-  allergies: THabits[];
+  smoking?: THabits;
+  alcoholism?: THabits;
+  physicalActivity?: THabits;
+  drugs?: THabitsDrugs[];
 };
 
 // Create our baseQuery instance
