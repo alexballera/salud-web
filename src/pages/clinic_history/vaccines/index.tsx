@@ -1,5 +1,5 @@
 /// BASE IMPORTS
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 /// BASE IMPORTS
 
@@ -31,12 +31,25 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import clsx from 'clsx';
 import { examStyles } from '@/src/containers/ExamResult/styles.module';
 import muiTheme from '@/src/styles/js/muiTheme';
+import { getVaccinesData } from '@/src/services/getExamResultsData.service';
 /// STYLES END
 
 const Vaccines = (): JSX.Element => {
   const { t } = useTranslation(i18ClinicHistory);
   const classes = examStyles();
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    const id = 'ee957013-b02f-45b2-b837-092b490242ea';
+    getVaccinesData(id)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => console.error(err))
+      .finally(() => setLoading(false));
+  }, []);
 
   const patienVaccines = {
     userId: '12345677',

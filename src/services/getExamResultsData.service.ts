@@ -23,6 +23,25 @@ export type TGeneralData = {
 }[];
 
 export type TExamResultsGroup = { month: string; items: TGeneralData }[];
+
+export type TDose = {
+  dose: string;
+  date: string;
+}[];
+
+export type TVaccines = {
+  name: string;
+  regular?: TDose[];
+  reinforcement?: TDose[];
+  extra?: TDose[];
+}[];
+
+export type TVaccinesData = {
+  userId: string;
+  registeredBy: string;
+  schema: string;
+  vaccines: TVaccines[];
+};
 /// TYPES END
 
 const groupResultsByMonth = (data: TGeneralData) => {
@@ -72,4 +91,8 @@ export const getExamResultsById = (userId: string, id: string): Promise<TGeneral
       .catch(err => console.error(err))
       .finally(() => resolve(findItem));
   });
+};
+
+export const getVaccinesData = (id: string): Promise<AxiosResponse<TVaccinesData>> => {
+  return axios.get(`${process.env.NEXT_PUBLIC_API_URL_BFF}/patients/${id}/vaccines`);
 };
