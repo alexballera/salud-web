@@ -1,20 +1,21 @@
 export const enGlobals = {
+  welcome: 'Main',
   title: {
-    beneficiaries: 'Beneficiarios',
-    credential_data: 'Credenciales de ingreso',
-    credential_profile: 'Credenciales y contacto',
-    extra_data: 'Datos adicionales',
-    identify: 'Identifícate',
+    beneficiaries: 'Beneficiaries',
+    credential_data: 'Login Credentials',
+    credential_profile: 'Credentials and contact',
+    extra_data: 'Additional data',
+    identify: 'Identify yourself',
     legal: 'Legal',
     login_page: 'Login',
-    login_title: 'Hola, ingresá a tu portal',
-    logout: 'Cerrar sesión',
-    personal_data: 'Datos personales',
-    preferences: 'Preferencias',
-    profile: 'Perfil',
-    publicity: 'Publicidad',
-    reminder: 'Recordatorios',
-    edit_beneficiary_title: 'Editar beneficiario',
+    login_title: 'Hello, enter your portal',
+    logout: 'Logout',
+    personal_data: 'Personal information',
+    preferences: 'Preferences',
+    profile: 'Profile',
+    publicity: 'Publicity',
+    reminder: 'Reminders',
+    edit_beneficiary_title: 'Edit beneficiary',
     recover: {
       forget: 'Recover your password'
     },
@@ -24,15 +25,15 @@ export const enGlobals = {
   },
 
   description: {
-    beneficiaries: 'La o las personas que querés que disfruten los beneficios de tu plan',
-    extra_data: 'Estos datos se usarán únicamente con propósitos médicos dentro de la plataforma',
+    beneficiaries: 'The person(s) you want to enjoy the benefits of your plan',
+    extra_data: 'These data will be used solely for medical purposes within the platform',
     credential_data: 'Define the credentials you want to use to enter the platform',
-    identify: 'Para empezar tu registro bríndanos tu número de identificación',
-    logout: '¿Estás seguro que querés cerrar tu sesión en plataforma?',
-    login: 'Coloca tu correo electrónico y contraseña para acceder a tu portal.',
-    preferences: 'La o las personas que querés que disfruten los beneficios de tu plan',
-    edit_beneficiary: 'Información personal',
-    steps_header: 'Paso {{step}} de {{totalSteps}}',
+    identify: 'To start your registration, provide us with your identification number',
+    logout: '¿Are you sure you want to close your session on the platform?',
+    login: 'Enter your email and password to access your portal.',
+    preferences: 'The person(s) you want to enjoy the benefits of your plan',
+    edit_beneficiary: 'Personal information',
+    steps_header: 'Step {{step}} of {{totalSteps}}',
     recover: {
       forget: 'To recover your password we need to verify your identity.'
     },
@@ -48,43 +49,43 @@ export const enGlobals = {
   button: {
     back: 'Go back',
     cancel: 'Cancel',
-    continue: 'Continuar',
-    create_account: 'Crear cuenta',
+    continue: 'Continue',
+    create_account: 'Create account',
     close: 'Close',
-    end: 'Finalizar',
-    enter: 'Ingresar',
-    exit: 'Salir',
-    following: 'Siguiente',
+    end: 'Finalize',
+    enter: 'Enter',
+    exit: 'Exit',
+    following: 'Following',
     goto_login: 'Go to login',
-    login: 'Iniciar sesión',
-    logout: 'Cerrar sesión',
-    logout_confirm: 'Si, cerrar sesión',
-    recover: 'Recuperar',
-    register: 'Registrarse',
+    login: 'login',
+    logout: 'logout',
+    logout_confirm: 'Yes, logout',
+    recover: 'Recover',
+    register: 'Register',
     save: 'Save',
-    save_changes: 'Guardar cambios',
-    send: 'Enviar',
+    save_changes: 'Save changes',
+    send: 'Send',
     send_email: 'Send email',
-    remove_beneficiary: 'Eliminar beneficiario',
+    remove_beneficiary: 'Delete beneficiary',
     show_more: 'Show more'
   },
 
   label: {
-    accept: 'Acepto',
-    birthdate: 'Fecha de nacimiento',
+    accept: 'accept',
+    birthdate: 'Birthdate',
     date: 'Date',
-    change: 'Cambiar',
-    consent: 'Consentimiento informado',
-    edit: 'Editar',
-    go_help: 'Ir a ayuda',
-    lastname: 'Apellidos',
+    change: 'Change',
+    consent: 'Informed consent',
+    edit: 'Edit',
+    go_help: 'Go to help',
+    lastname: 'Lastname',
     name: 'Full name',
     no_register: "Aren't you registered in Ospi yet?",
     sms: 'SMS',
-    terms: 'Términos y condiciones',
-    same_residence: 'Igual que mi domicilio',
-    residence: 'Domicilio',
-    language: 'Idioma',
+    terms: 'Terms and Conditions',
+    same_residence: 'Just like my residence',
+    residence: 'Residence',
+    language: 'Language',
     for: 'For',
     invalid_date_format: 'invalid date format',
 
@@ -94,15 +95,15 @@ export const enGlobals = {
     },
 
     email: {
-      actual: 'Correo electrónico actual',
-      change_description: 'Ingresá tu nuevo correo electrónico para actualizarlo en la plataforma',
+      actual: 'Current email',
+      change_description: 'Enter your new email to update it on the platform',
       email: 'Email',
       email_en: 'Email',
-      new: 'Cambiar correo electrónico'
+      new: 'Change email'
     },
 
     address: {
-      address: 'Domicilio',
+      address: 'Residence',
       placeholder: 'Select {{child}}',
       crc: {
         firstLevel: 'Province',
@@ -117,11 +118,11 @@ export const enGlobals = {
     },
 
     document: {
-      type: 'Tipo de identificación',
-      number: 'Número de identificación',
-      passport: 'Pasaporte',
-      physical: 'Cédula Física',
-      residence: 'Cédula de Residencia',
+      type: 'Identification Type',
+      number: 'Identification number',
+      passport: 'Passport',
+      physical: 'Physical ID',
+      residence: 'Residence ID',
       placeholder: 'Select document',
       unique: 'Unique Population Registry Code (CURP)',
       elector: 'Voter Credential (INE)'
@@ -141,16 +142,16 @@ export const enGlobals = {
       confirm_password: 'Confirm password',
       password: 'Contraseña',
       new: 'new password',
-      change_description: 'Ingresá tu contraseña anterior y la nueva',
-      forget: '¿Olvidaste tu contraseña?'
+      change_description: 'Enter your old and new password',
+      forget: '¿Did you forget your password?'
     },
 
     phone: {
-      new: 'Nuevo número de teléfono',
-      change: 'Cambiar número de teléfono',
-      change_description: 'Ingresá tu nuevo número de teléfono para actualizarlo en la plataforma',
-      actual: 'Número de teléfono actual',
-      phone: 'Número de teléfono'
+      new: 'New phone number',
+      change: 'Change phone number',
+      change_description: 'Enter your new phone number to update it on the platform',
+      actual: 'Current phone number',
+      phone: 'Phone number'
     },
 
     pronoun: {

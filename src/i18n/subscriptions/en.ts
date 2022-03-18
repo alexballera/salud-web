@@ -1,21 +1,21 @@
 export const enSubscriptions = {
-  title: 'Tu plan de suscripción',
-  tab_lavel1: 'Mi plan',
-  tab_lavel2: 'Configuración',
+  title: 'Your subscription plan',
+  tab_lavel1: 'My plan',
+  tab_lavel2: 'Setting',
 
-  plan_change: 'Cambiar de plan',
-  plan_actual: 'Plan actual',
-  plan_benefits: 'Beneficios de mi plan',
-  plan_benefit1: '3 Videoconsultas mensuales',
-  plan_benefit2: 'Chat de orientación médica ilimitado',
-  plan_benefit3: 'Promociones con los mejores médicos y procedimientos',
+  plan_change: 'Change plan',
+  plan_actual: 'Current plan',
+  plan_benefits: 'Benefits of my plan',
+  plan_benefit1: '3 Monthly video consultations',
+  plan_benefit2: 'Unlimited Medical Guidance Chat',
+  plan_benefit3: 'Promotions with the best doctors and procedures',
 
-  help: '¿Tenés alguna consulta sobre tu suscripción?',
-  help_link: 'Cambiar de plan',
+  help: '¿Do you have any questions about your subscription?',
+  help_link: 'Change plan',
 
-  conf_change_plan_link: 'Cambiar plan',
-  conf_beneficiaries_link: 'Beneficiarios',
-  conf_payment_info_link: 'Información de pago',
-  conf_billing_info_link: 'Información de facturación',
-  conf_cancel_subs_link: 'Cancelar mi suscripción'
+  conf_change_plan_link: 'Change plan',
+  conf_beneficiaries_link: 'Beneficiaries',
+  conf_payment_info_link: 'Payment information',
+  conf_billing_info_link: 'Billing information',
+  conf_cancel_subs_link: 'Cancel my subscription'
 };

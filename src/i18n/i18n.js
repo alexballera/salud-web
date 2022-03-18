@@ -21,6 +21,18 @@ import { enProfile } from './profile/en';
 import { esProfile } from './profile/es';
 import { enGeneralData } from './generalData/en';
 import { esGeneralData } from './generalData/es';
+import { enProceedings } from './proceedings/en';
+import { esProceedings } from './proceedings/es';
+import { enClinicHistory } from './clinic_history/en';
+import { esClinicHistory } from './clinic_history/es';
+import { enAllergies } from './allergies/en';
+import { esAllergies } from './allergies/es';
+import { enDiseases } from './diseases/en';
+import { esDiseases } from './diseases/es';
+import { enExamResult } from './exam_result/en';
+import { esExamResult } from './exam_result/es';
+import { enHabits } from './habits/en';
+import { esHabits } from './habits/es';
 
 const resources = {
   enUS: {
@@ -33,7 +45,13 @@ const resources = {
     preferences: enPreferences,
     recipesAndPrescriptions: enRecipesAndPrescriptions,
     profile: enProfile,
-    generalData: enGeneralData
+    generalData: enGeneralData,
+    proceedings: enProceedings,
+    clinic_history: enClinicHistory,
+    allergies: enAllergies,
+    diseases: enDiseases,
+    habits: enHabits,
+    exam_result: enExamResult
   },
   es: {
     globals: esGlobals,
@@ -45,7 +63,13 @@ const resources = {
     preferences: esPreferences,
     recipesAndPrescriptions: esRecipesAndPrescriptions,
     profile: esProfile,
-    generalData: esGeneralData
+    generalData: esGeneralData,
+    proceedings: esProceedings,
+    clinic_history: esClinicHistory,
+    allergies: esAllergies,
+    diseases: esDiseases,
+    habits: esHabits,
+    exam_result: esExamResult
   }
 };
 
@@ -94,5 +118,12 @@ i18n
     ns: namespaces,
     debug: false
   });
+
+if (typeof window !== 'undefined') {
+  const i18nextLng = localStorage.getItem('i18nextLng');
+  if (i18nextLng !== 'es' && i18nextLng !== 'enUS') {
+    i18n.changeLanguage('es');
+  }
+}
 
 export default i18n;
