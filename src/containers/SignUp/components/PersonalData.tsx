@@ -317,7 +317,6 @@ function PersonalData({
             id="birthDate"
             views={['year', 'month', 'date']}
             label={t('label.birthdate', { ns: i18Global })}
-            margin="normal"
             format="dd/MM/yyyy"
             variant="inline"
             inputVariant="outlined"
