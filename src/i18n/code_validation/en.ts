@@ -1,18 +1,17 @@
 export const enCode = {
-  title: 'Cuenta creada exitosamente',
-  label: 'Código de validación',
+  title: 'Account created successfully',
+  label: 'Validation code',
 
   messages: {
-    dont_recive: '¿No recibiste el código?',
-    expired: 'Código de validación expirado',
-    expired_description:
-      'El código ingresado se ha vencido, se le ha enviado un nuevo código al correo electrónico',
-    invalid: 'Código inválido',
-    resend_email: 'Reenviar correo',
-    resend_label: 'Podés volver a intentar en',
-    success: 'Usuario activado correctamente'
+    dont_recive: '¿You did not receive the code?',
+    expired: 'Validation code expired',
+    expired_description: 'The entered code has expired, a new code has been sent to your email',
+    invalid: 'Invalid code',
+    resend_email: 'Resend e-mail',
+    resend_label: 'You can try again at',
+    success: 'User successfully activated'
   },
 
   description:
-    'Felicidades {{name}}, has creado tu cuenta correctamente, se envió un mensaje a tu correo electrónico para que actives tu cuenta.'
+    'Congratulations {{name}}, you have successfully created your account, a message was sent to your email for you to activate your account.'
 };

@@ -9,7 +9,15 @@ export type IMeasurement = {
   name: string;
   type: string;
   unit: string;
-  measurements: any[];
+  measurements: IMeasurementRecord[];
+};
+
+export type IMeasurementRecord = {
+  systolic?: number;
+  diastolic?: number;
+  time: string;
+  value?: number;
+  performer: string;
 };
 
 export const mockData = {

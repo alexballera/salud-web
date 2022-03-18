@@ -1,4 +1,5 @@
 export const esGlobals = {
+  welcome: 'Inicio',
   title: {
     beneficiaries: 'Beneficiarios',
     credential_data: 'Credenciales de ingreso',
