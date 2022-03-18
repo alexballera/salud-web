@@ -1,5 +1,5 @@
 import i18next from '../i18n';
-import { enDiseases} from './en';
+import { enDiseases } from './en';
 import { esDiseases } from './es';
 
 export const NAMESPACE_KEY = 'diseases';
