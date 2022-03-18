@@ -29,15 +29,15 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 /// OWN COMPONENTS
 /// OWN COMPONENTS END
 
-/// SERVICES
+/// SERVICES & TYPES
 import { useGetVaccinesQuery } from '@/src/services/apiBFF';
-/// SERVICES END
+import { TVaccines } from '@/src/services/getExamResultsData.service';
+/// SERVICES & TYPES END
 
 /// STYLES
 import clsx from 'clsx';
 import { examStyles } from '@/src/containers/ExamResult/styles.module';
 import muiTheme from '@/src/styles/js/muiTheme';
-import { TDose, TVaccines } from '@/src/services/getExamResultsData.service';
 /// STYLES END
 
 const Vaccines = (): JSX.Element => {
@@ -59,6 +59,19 @@ const Vaccines = (): JSX.Element => {
       vaccines.unshift(...covid);
       return vaccines;
     }
+  };
+
+  const showDose = (regular: number, reinforcement: number, extra: number) => {
+    const dose = regular + reinforcement + extra;
+    const totalDose = {
+      1: 'I',
+      2: 'I, II',
+      3: 'I, II, III',
+      4: 'IV',
+      5: 'V',
+      6: 'VI'
+    };
+    return totalDose[dose];
   };
 
   const ListItemVaccines = (item: TVaccines, i: number): JSX.Element => (
@@ -93,9 +106,7 @@ const Vaccines = (): JSX.Element => {
               component="span"
               variant="body2"
             >
-              {item.regular?.map((regular: TDose) => `${regular.dose}, `)}
-              {item.reinforcement?.map((reinforcement: TDose) => `${reinforcement.dose}, `)}
-              {item.extra?.map((extra: TDose) => `${extra.dose} `)}
+              {showDose(item.regular?.length, item.reinforcement?.length, item.extra?.length)}{' '}
               {t('vaccines.dose', { ns: i18ClinicHistory })}
             </Typography>
           }
