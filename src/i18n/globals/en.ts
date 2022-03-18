@@ -87,6 +87,7 @@ export const enGlobals = {
     language: 'Idioma',
     for: 'For',
     invalid_date_format: 'invalid date format',
+    neither: 'Ninguno',
 
     country: {
       country: 'Country',

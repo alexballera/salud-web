@@ -87,6 +87,7 @@ export const esGlobals = {
     language: 'Idioma',
     for: 'Por',
     invalid_date_format: 'Formato de fecha inválido',
+    neither: 'Ninguno',
 
     country: {
       country: 'País de residencia',
