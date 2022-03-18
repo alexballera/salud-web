@@ -37,6 +37,7 @@ import { useGetVaccinesQuery } from '@/src/services/apiBFF';
 import clsx from 'clsx';
 import { examStyles } from '@/src/containers/ExamResult/styles.module';
 import muiTheme from '@/src/styles/js/muiTheme';
+import { TDose, TVaccines } from '@/src/services/getExamResultsData.service';
 /// STYLES END
 
 const Vaccines = (): JSX.Element => {
@@ -49,6 +50,68 @@ const Vaccines = (): JSX.Element => {
   const handleClick = (id: string): void => {
     router.push(`/clinic_history/vaccines/${id}`);
   };
+
+  const getVaccines = (): TVaccines[] => {
+    if (data) {
+      const vaccines = data.vaccines.filter(vaccine => vaccine.name !== 'Covid-19');
+      const covid = data.vaccines.filter(vaccine => vaccine.name === 'Covid-19');
+      vaccines.unshift(...covid);
+      return vaccines;
+    }
+  };
+
+  const ListItemVaccines = (item: TVaccines, i: number): JSX.Element => (
+    <React.Fragment key={item.vaccineId}>
+      <ListItem disablePadding button onClick={() => handleClick(item.vaccineId)} sx={{ pl: 1 }}>
+        <ListItemText
+          primary={
+            <Typography
+              sx={{
+                display: 'block',
+                color: '#455255',
+                fontWeight: 400,
+                fontSize: 14,
+                lineHeight: '143%'
+              }}
+              component="span"
+              variant="body2"
+              color="text.primary"
+            >
+              {item.name}
+            </Typography>
+          }
+          secondary={
+            <Typography
+              sx={{
+                display: 'block',
+                color: '#829296',
+                fontWeight: 400,
+                fontSize: 12,
+                lineHeight: '166%'
+              }}
+              component="span"
+              variant="body2"
+            >
+              {item.regular?.map((regular: TDose) => `${regular.dose}, `)}
+              {item.reinforcement?.map((reinforcement: TDose) => `${reinforcement.dose}, `)}
+              {item.extra?.map((extra: TDose) => `${extra.dose} `)}
+              {t('vaccines.dose', { ns: i18ClinicHistory })}
+            </Typography>
+          }
+        />
+        <ListItemSecondaryAction>
+          <IconButton edge="end" aria-label={item.name} onClick={() => handleClick(item.vaccineId)}>
+            <ChevronRightIcon color="secondary" />
+          </IconButton>
+        </ListItemSecondaryAction>
+      </ListItem>
+      <Divider
+        className={clsx({
+          [classes.hidden]: i === data.vaccines.length - 1
+        })}
+      />
+    </React.Fragment>
+  );
 
   return (
     <ThemeProvider theme={muiTheme}>
@@ -86,67 +149,7 @@ const Vaccines = (): JSX.Element => {
                 <CircularProgress color="secondary" />
               </Grid>
             )}
-            {data?.vaccines.map((item, i) => (
-              <React.Fragment key={item.vaccineId}>
-                <ListItem
-                  disablePadding
-                  button
-                  onClick={() => handleClick(item.vaccineId)}
-                  sx={{ pl: 1 }}
-                >
-                  <ListItemText
-                    primary={
-                      <Typography
-                        sx={{
-                          display: 'block',
-                          color: '#455255',
-                          fontWeight: 400,
-                          fontSize: 14,
-                          lineHeight: '143%'
-                        }}
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
-                      >
-                        {item.name}
-                      </Typography>
-                    }
-                    secondary={
-                      <Typography
-                        sx={{
-                          display: 'block',
-                          color: '#829296',
-                          fontWeight: 400,
-                          fontSize: 12,
-                          lineHeight: '166%'
-                        }}
-                        component="span"
-                        variant="body2"
-                      >
-                        {item.regular.map(reg => `${reg.dose}, `)}
-                        {item.reinforcement.map(reg => `${reg.dose}, `)}
-                        {item.extra.map(reg => `${reg.dose} `)}
-                        {t('vaccines.dose', { ns: i18ClinicHistory })}
-                      </Typography>
-                    }
-                  />
-                  <ListItemSecondaryAction>
-                    <IconButton
-                      edge="end"
-                      aria-label={item.name}
-                      onClick={() => handleClick(item.vaccineId)}
-                    >
-                      <ChevronRightIcon color="secondary" />
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>
-                <Divider
-                  className={clsx({
-                    [classes.hidden]: i === data.vaccines.length - 1
-                  })}
-                />
-              </React.Fragment>
-            ))}
+            {getVaccines()?.map((item, i) => ListItemVaccines(item, i))}
           </List>
         </Box>
       </Box>
