@@ -160,12 +160,12 @@ function CardLink({ title, text1, text2, reportedBy, action }: TProps): JSX.Elem
               <Typography className={classes.cardDoctor}>{reportedBy}</Typography>
             </Grid>
             <Grid item>
-              <Grid container direction="row" className={classes.redirectLink}>
-                <CustomMuiLink underline="none" onClick={action}>
+              <CustomMuiLink underline="none" onClick={action}>
+                <Grid container direction="row" className={classes.redirectLink}>
                   {t('button.show_more')}
-                </CustomMuiLink>
-                <ArrowRight />
-              </Grid>
+                  <ArrowRight />
+                </Grid>
+              </CustomMuiLink>
             </Grid>
           </Grid>
         </Box>

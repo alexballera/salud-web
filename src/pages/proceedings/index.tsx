@@ -112,7 +112,6 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
 
   const userId = '1';
   const { data, isLoading } = useGetMeasurementsQuery(userId);
-  console.log(data);
   const items = [
     {
       title: t('proceedings.generalMedicalData', { ns: i18nProceedings }),

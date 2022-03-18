@@ -14,6 +14,22 @@ type AllergieResponse = {
   allergies: TAllergies[];
 };
 
+type TGeneralData = {
+  userId: string;
+  firstName: string;
+  firstLastName: string;
+  secondLastName: string;
+  birthDate: string;
+  height: number;
+  weight: number;
+  biologicSex: string;
+  pronoun: string;
+  civilStatus: string;
+  sons: string;
+  ocupation: string;
+  address: string;
+};
+
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
   baseUrl: baseUrl,
@@ -35,8 +51,11 @@ export const apiBFF = createApi({
     }),
     getMeasurements: builder.query<IMeasurementsData, string>({
       query: userId => ({ url: `/patients/${userId}/measurements`, method: 'get' })
+    }),
+    getGeneralData: builder.query<TGeneralData, void>({
+      query: () => ({ url: '/patients/1/info', method: 'get' })
     })
   })
 });
 
-export const { useGetAllergiesQuery, useGetMeasurementsQuery } = apiBFF;
+export const { useGetAllergiesQuery, useGetGeneralDataQuery, useGetMeasurementsQuery } = apiBFF;
