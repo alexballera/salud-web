@@ -2,7 +2,7 @@ export const enRecipesAndPrescriptions = {
   details_title: 'General information',
   details_indications_text: 'Indications',
   details_comments_text: 'Comments',
-  no_records: 'No data recorded',
+  no_records: 'There are no exams available to show',
   recipe_or_prescription_not_found: 'Recipe or prescription not found',
   card: {
     date: 'Date',
