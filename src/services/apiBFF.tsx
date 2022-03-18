@@ -39,6 +39,11 @@ type HabitsResponse = {
   drugs?: THabitsDrugs[];
 };
 
+type DiseasesResponse = {
+  childhood?: [];
+  adulthood?: [];
+};
+
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
   baseUrl: baseUrl,
@@ -60,8 +65,11 @@ export const apiBFF = createApi({
     }),
     getHabits: builder.query<HabitsResponse, void>({
       query: () => ({ url: '/patients/1/habits', method: 'get' })
+    }),
+    getDiseases: builder.query<DiseasesResponse, void>({
+      query: () => ({ url: '/patients/1/diseases', method: 'get' })
     })
   })
 });
 
-export const { useGetAllergiesQuery, useGetHabitsQuery } = apiBFF;
+export const { useGetAllergiesQuery, useGetHabitsQuery, useGetDiseasesQuery } = apiBFF;

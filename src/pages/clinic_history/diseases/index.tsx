@@ -1,38 +1,27 @@
-/// BASE IMPORTS
-import React, { useState } from 'react';
-/// BASE IMPORTS
-
-/// i18n
-import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY as i18Diseases } from '@/src/i18n/diseases/i18n';
-/// i18n END
-
-/// MATERIAL UI
+import React, { useEffect, useState } from 'react';
 import { Box, Tab, Tabs, Typography, Card, Divider, Grid } from '@material-ui/core';
-/// MATERIAL UI END
+import { useTranslation } from 'react-i18next';
 
-/// STYLES
+import { NAMESPACE_KEY as i18Diseases } from '@/src/i18n/diseases/i18n';
 import diseasesStyles from './styles.module';
-/// STYLES END
+import { useGetDiseasesQuery } from '../../../services/apiBFF';
 
-type TDiseases = {
-  name: string;
-  status: boolean;
-  demographic: number;
-};
-
-type TProps = {
-  diseases: TDiseases[];
-};
-
-const Diseases = ({ diseases }: TProps): JSX.Element => {
+const Diseases = (): JSX.Element => {
   const classes = diseasesStyles();
   const { t } = useTranslation(i18Diseases);
+  const [demographic, setDemographic] = useState('adulthood');
+  const [dataDiseases, setDataDiseases] = useState([]);
+  const { data, isLoading } = useGetDiseasesQuery();
 
-  const [demographic, setDemographic] = useState(0);
+  useEffect(() => {
+    if (data && demographic === 'adulthood') {
+      setDataDiseases(data.adulthood);
+    }
+  }, [isLoading]);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: React.SyntheticEvent, newValue) => {
     setDemographic(newValue);
+    setDataDiseases(data[newValue]);
   };
 
   return (
@@ -48,10 +37,12 @@ const Diseases = ({ diseases }: TProps): JSX.Element => {
               className={classes.shadow}
             >
               <Tab
+                value="adulthood"
                 label={t('tabs.adulthood', { ns: i18Diseases })}
                 className={classes.typography14}
               />
               <Tab
+                value="childhood"
                 label={t('tabs.childhood', { ns: i18Diseases })}
                 className={classes.typography14}
               />
@@ -63,7 +54,7 @@ const Diseases = ({ diseases }: TProps): JSX.Element => {
         <Grid item xs={12}>
           <Box role="tabpanel" m={3}>
             <Typography paragraph className={classes.typography14}>
-              {demographic === 0
+              {demographic === 'adulthood'
                 ? t('content.adulthood_description', { ns: i18Diseases })
                 : t('content.childhood_description', { ns: i18Diseases })}
             </Typography>
@@ -74,21 +65,21 @@ const Diseases = ({ diseases }: TProps): JSX.Element => {
                 </Typography>
               </Box>
               <Divider />
-              {!diseases.filter(filter => filter.demographic === demographic).length && (
+              {dataDiseases.length === 0 && (
                 <Box my={3} ml={2}>
                   <Typography paragraph className={classes.typography14}>
                     {t('content.unregistered', { ns: i18Diseases })}
                   </Typography>
                 </Box>
               )}
-              {diseases
-                .filter(filter => filter.demographic === demographic)
-                .map((disease, index) => (
+
+              {data &&
+                dataDiseases.map((disease, index) => (
                   <Box my={2.5} ml={2} key={index}>
                     <Grid container>
                       <Grid item xs={8}>
                         <Typography paragraph className={classes.typography16}>
-                          {disease.name}
+                          {disease}
                         </Typography>
                       </Grid>
                     </Grid>
@@ -100,39 +91,6 @@ const Diseases = ({ diseases }: TProps): JSX.Element => {
       </Grid>
     </>
   );
-};
-
-Diseases.getInitialProps = async () => {
-  const diseases: TDiseases[] = [
-    {
-      name: 'Asma intrínseca',
-      status: true,
-      demographic: 0
-    },
-    {
-      name: 'Diabetes',
-      status: true,
-      demographic: 0
-    },
-    {
-      name: 'Asma intrínseca',
-      status: true,
-      demographic: 1
-    },
-    {
-      name: 'Varicela',
-      status: true,
-      demographic: 1
-    },
-    {
-      name: 'Sarampión',
-      status: true,
-      demographic: 1
-    }
-  ];
-  return {
-    diseases
-  };
 };
 
 export default Diseases;
