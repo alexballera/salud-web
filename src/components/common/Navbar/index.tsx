@@ -132,7 +132,7 @@ function Navbar(): JSX.Element {
   };
 
   const customRedirectList = {
-    '/recipes_and_prescriptions': '/main'
+    '/recipes_and_prescriptions': '/proceedings'
   };
 
   const customRedirectBackButton = () => {
