@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
+import { IMeasurementsData } from '../services/getMeasurementsData.service';
 const baseUrl = process.env.NEXT_PUBLIC_API_URL_BFF;
 
 type TAllergies = {
@@ -32,8 +32,11 @@ export const apiBFF = createApi({
   endpoints: builder => ({
     getAllergies: builder.query<AllergieResponse, void>({
       query: () => ({ url: '/patients/1/allergies', method: 'get' })
+    }),
+    getMeasurements: builder.query<IMeasurementsData, string>({
+      query: userId => ({ url: `/patients/${userId}/measurements`, method: 'get' })
     })
   })
 });
 
-export const { useGetAllergiesQuery } = apiBFF;
+export const { useGetAllergiesQuery, useGetMeasurementsQuery } = apiBFF;

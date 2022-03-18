@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 /// MATERIAL UI
 import { Grid, makeStyles, Typography } from '@material-ui/core';
@@ -10,7 +10,8 @@ import MeasurementCard from '../../components/common/Card/MeasurementCard';
 import { useTranslation, withTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18nGeneralData } from '../../i18n/generalData/i18n';
 import { NAMESPACE_KEY as i18nGlobalsData } from '../../i18n/globals/i18n';
-import { mockData } from '../../services/getGeneralData.service';
+import { IMeasurementRecord } from '../../services/getMeasurementsData.service';
+import { useGetMeasurementsQuery } from '../../services/apiBFF';
 /// i18n END
 
 type IProps = {
@@ -40,30 +41,44 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const initialState = {
+  systolic: null,
+  diastolic: null,
+  time: null,
+  value: null,
+  performer: ''
+};
+
 const TabContent = ({ tab }: IProps): JSX.Element => {
   const classes = useStyles();
   const { t } = useTranslation([i18nGeneralData]);
-  const [data, setData] = useState(mockData);
+  const [measurement, setMeasurement] = useState<IMeasurementRecord>(initialState);
+
+  const { data, isLoading } = useGetMeasurementsQuery();
+
+  useEffect(() => {
+    if (data) {
+      let measurement;
+      switch (tab) {
+        case 0:
+          measurement = data.records.find(x => x.type === 'arterialPressure');
+          break;
+        case 1:
+          measurement = data.records.find(x => x.type === 'weight');
+          break;
+        case 2:
+          measurement = data.records.find(x => x.type === 'bloodGlocuse');
+          break;
+      }
+      const result =
+        measurement && measurement.measurements.length > 0 ? measurement.measurements[0] : null;
+      setMeasurement(result);
+    }
+  }, [isLoading]);
 
   const renderDoctor = () => {
     let dr = [];
-    switch (tab) {
-      case 1:
-        if (data.weight.generalData.performer) {
-          dr = data.weight.generalData.performer.split(' ');
-        }
-        break;
-      case 2:
-        if (data.bloodGlocuse.generalData.performer) {
-          dr = data.bloodGlocuse.generalData.performer.split(' ');
-        }
-        break;
-      default:
-        if (data.arterialPressure.generalData.performer) {
-          dr = data.arterialPressure.generalData.performer.split(' ');
-        }
-        break;
-    }
+    dr = measurement?.performer.split(' ');
     return (
       <Typography className={classes.smallText}>
         {t('content.lastMeasurement', { ns: i18nGeneralData })}
@@ -83,14 +98,8 @@ const TabContent = ({ tab }: IProps): JSX.Element => {
             <MeasurementCard
               title={t('tabs.pressure', { ns: i18nGeneralData })}
               noSVG
-              value={`${
-                data.arterialPressure.generalData.systolic > 0
-                  ? data.arterialPressure.generalData.systolic.toString()
-                  : '-'
-              }/${
-                data.arterialPressure.generalData.diastolic > 0
-                  ? data.arterialPressure.generalData.diastolic.toString()
-                  : '-'
+              value={`${measurement?.systolic > 0 ? measurement?.systolic.toString() : '-'}/${
+                measurement?.diastolic > 0 ? measurement?.diastolic.toString() : '-'
               }`}
             />
           )}
@@ -98,18 +107,14 @@ const TabContent = ({ tab }: IProps): JSX.Element => {
             <MeasurementCard
               title={t('tabs.weight', { ns: i18nGeneralData })}
               noSVG
-              value={data.weight.generalData.value.toString()}
+              value={measurement?.value.toString()}
             />
           )}
           {tab === 2 && (
             <MeasurementCard
               title={t('tabs.bloodGlucose', { ns: i18nGeneralData })}
               noSVG
-              value={
-                data.bloodGlocuse.generalData.value > 0
-                  ? data.bloodGlocuse.generalData.value.toString()
-                  : '-'
-              }
+              value={measurement?.value > 0 ? measurement?.value.toString() : '-'}
             />
           )}
         </Grid>
