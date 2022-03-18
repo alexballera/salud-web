@@ -31,6 +31,8 @@ import {
 import { useGetMeasurementsQuery } from '../../services/apiBFF';
 
 import {
+  Box,
+  CircularProgress,
   Container,
   Divider,
   Grid,
@@ -108,18 +110,7 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
   // const i18nPopUpError = t('message.error.general_fetch', { ns: i18Forms });
   const router = useRouter();
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   const id = 'ee957013-b02f-45b2-b837-092b490242ea';
-  //   getVaccinesData(id)
-  //     .then(res => {
-  //       setVaccines(res.data);
-  //       console.log('vacunas', res.data);
-  //     })
-  //     .catch(err => console.error(err))
-  //     .finally(() => setLoading(false));
-  // }, []);
-  const userId = 'ee957013-b02f-45b2-b837-092b490242ea';
+  const userId = '1';
   const { data, isLoading } = useGetMeasurementsQuery(userId);
   console.log(data);
   const items = [
@@ -151,6 +142,13 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
   return (
     <>
       {isLoading && (
+        <Box mt={6}>
+          <Grid container direction="column" justify="center" alignItems="center">
+            <CircularProgress color="inherit" />
+          </Grid>
+        </Box>
+      )}
+      {!isLoading && (
         <>
           <Container maxWidth="sm" className={classes.cardContainer2}>
             <List component="nav" className={classes.root} aria-label="menubox proceedings">

@@ -54,7 +54,7 @@ const TabContent = ({ tab }: IProps): JSX.Element => {
   const { t } = useTranslation([i18nGeneralData]);
   const [measurement, setMeasurement] = useState<IMeasurementRecord>(initialState);
 
-  const { data, isLoading } = useGetMeasurementsQuery();
+  const { data } = useGetMeasurementsQuery('1');
 
   useEffect(() => {
     if (data) {
@@ -74,7 +74,7 @@ const TabContent = ({ tab }: IProps): JSX.Element => {
         measurement && measurement.measurements.length > 0 ? measurement.measurements[0] : null;
       setMeasurement(result);
     }
-  }, [isLoading]);
+  }, [tab]);
 
   const renderDoctor = () => {
     let dr = [];
@@ -101,20 +101,23 @@ const TabContent = ({ tab }: IProps): JSX.Element => {
               value={`${measurement?.systolic > 0 ? measurement?.systolic.toString() : '-'}/${
                 measurement?.diastolic > 0 ? measurement?.diastolic.toString() : '-'
               }`}
+              time={measurement?.time}
             />
           )}
           {tab === 1 && (
             <MeasurementCard
               title={t('tabs.weight', { ns: i18nGeneralData })}
               noSVG
-              value={measurement?.value.toString()}
+              value={measurement?.value}
+              time={measurement?.time}
             />
           )}
           {tab === 2 && (
             <MeasurementCard
               title={t('tabs.bloodGlucose', { ns: i18nGeneralData })}
               noSVG
-              value={measurement?.value > 0 ? measurement?.value.toString() : '-'}
+              value={measurement?.value > 0 ? measurement?.value : '-'}
+              time={measurement?.time}
             />
           )}
         </Grid>

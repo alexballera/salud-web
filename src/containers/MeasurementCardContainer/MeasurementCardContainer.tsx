@@ -34,33 +34,43 @@ export const MeasurementCardContainer = ({ generalData }: IProps): JSX.Element =
     arterialPressure && arterialPressure.measurements.length > 0
       ? arterialPressure.measurements[0].systolic + '/' + arterialPressure.measurements[0].diastolic
       : '-';
+  const arterialPressureTime =
+    arterialPressure && arterialPressure.measurements.length > 0
+      ? arterialPressure.measurements[0].time
+      : '-';
   const bloodGlocuse = records.find(x => x.type === 'bloodGlocuse');
   const bloodGlocuseValue =
     bloodGlocuse && bloodGlocuse.measurements.length > 0 ? bloodGlocuse.measurements[0].value : '-';
+  const bloodGlocuseTime =
+    bloodGlocuse && bloodGlocuse.measurements.length > 0 ? bloodGlocuse.measurements[0].time : '-';
   const weight = records.find(x => x.type === 'weight');
   const weightValue =
     weight && weight.measurements.length > 0
       ? weight.measurements[0].value + ' ' + weight.unit
       : '-';
+  const weightTime = weight && weight.measurements.length > 0 ? weight.measurements[0].time : '-';
 
   const items = [
     {
       route: '/generalData',
       title: arterialPressure?.name,
       value: arterialPressureValue,
-      type: arterialPressure?.type
+      type: arterialPressure?.type,
+      time: arterialPressureTime
     },
     {
       route: '/generalData',
       title: weight?.name,
       value: weightValue,
-      type: weight?.type
+      type: weight?.type,
+      time: weightTime
     },
     {
       route: '/generalData',
       title: bloodGlocuse?.name,
       value: bloodGlocuseValue,
-      type: bloodGlocuse?.type
+      type: bloodGlocuse?.type,
+      time: bloodGlocuseTime
     }
   ];
 
@@ -74,6 +84,7 @@ export const MeasurementCardContainer = ({ generalData }: IProps): JSX.Element =
             value={item.value}
             type={item.type}
             tab={i}
+            time={item.time}
           />
         </React.Fragment>
       ))}
