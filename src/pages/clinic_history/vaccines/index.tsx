@@ -53,8 +53,9 @@ const Vaccines = (): JSX.Element => {
 
   const getVaccines = (): TVaccines[] => {
     if (data) {
-      const vaccines = data.vaccines.filter(vaccine => vaccine.name !== 'Covid-19');
       const covid = data.vaccines.filter(vaccine => vaccine.name === 'Covid-19');
+      const vaccines = data.vaccines.filter(vaccine => vaccine.name !== 'Covid-19');
+      vaccines.sort((a, b) => a.name.localeCompare(b.name));
       vaccines.unshift(...covid);
       return vaccines;
     }
