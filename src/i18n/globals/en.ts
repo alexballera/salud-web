@@ -1,4 +1,5 @@
 export const enGlobals = {
+  welcome: 'Main',
   title: {
     beneficiaries: 'Beneficiaries',
     credential_data: 'Login Credentials',
