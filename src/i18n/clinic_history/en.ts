@@ -8,7 +8,11 @@ export const enClinicHistory = {
     familyIllnesses: 'Family illnesses'
   },
 
-  vaccine_preview: {
-    sub_title: 'Vacuna contra la {{disease}}'
+  vaccines: {
+    preview_sub_title: 'Vacuna contra la {{disease}}',
+    title: 'Keep track of your vaccinations and the doses you take',
+    dose: 'dose',
+    dose_with_value: '{{dose}} Dose',
+    no_applied: 'No applied'
   }
 };
