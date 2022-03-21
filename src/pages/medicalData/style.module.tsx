@@ -6,7 +6,7 @@ const MedicalStyles = makeStyles({
   },
   contentAvatar: {
     display: 'flex',
-    justifyContent: 'end'
+    justifyContent: 'flex-end'
   },
   avatar: {
     width: '64px',
@@ -15,7 +15,7 @@ const MedicalStyles = makeStyles({
   edit: {
     position: 'relative',
     display: 'flex',
-    justifyContent: 'end',
+    justifyContent: 'flex-end',
     top: '-36px',
     fontSize: '13px',
     fontWeight: 500,
