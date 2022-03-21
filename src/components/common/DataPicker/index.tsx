@@ -1,5 +1,11 @@
+/// DATE-FNS
 import DateFnsUtils from '@date-io/date-fns';
 import * as dateFnsLocale from 'date-fns/locale';
+/// DATE-FNS END
+
+/// i18n
+import i18next from 'i18next';
+/// i18n END
 
 /// MATERIAL - UI
 import FormLabel from '@material-ui/core/FormLabel';
@@ -7,7 +13,9 @@ import FormControl from '@material-ui/core/FormControl';
 import { FormControlProps, FormLabelProps, createMuiTheme, ThemeOptions } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import { DatePicker, DatePickerProps, MuiPickersUtilsProvider } from '@material-ui/pickers';
+/// MATERIAL - UI
 
+/// THEME
 import {
   poppinsFontFamily,
   secondaryContrastTextColor,
@@ -16,8 +24,7 @@ import {
   primaryMainColor,
   secondaryMainColor
 } from '../../../styles/js/theme';
-import i18next from 'i18next';
-/// MATERIAL - UI
+/// THEME END
 
 type IProps = {
   labelProps?: FormLabelProps;
@@ -63,6 +70,9 @@ const datepickerTheme = createMuiTheme({
     },
     MuiOutlinedInput: {
       root: {
+        '& fieldset': {
+          top: 0
+        },
         '&$focused': {
           '& fieldset': {
             borderColor: `${secondaryMainColor} !important`

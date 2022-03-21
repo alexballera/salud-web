@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
+import { IMeasurementsData } from '../services/getMeasurementsData.service';
 const baseUrl = process.env.NEXT_PUBLIC_API_URL_BFF;
 
 type TAllergies = {
@@ -46,6 +46,22 @@ type DiseasesResponse = {
   adulthood?: [];
 };
 
+type TGeneralData = {
+  userId: string;
+  firstName: string;
+  firstLastName: string;
+  secondLastName: string;
+  birthDate: string;
+  height: number;
+  weight: number;
+  biologicSex: string;
+  pronoun: string;
+  civilStatus: string;
+  sons: string;
+  ocupation: string;
+  address: string;
+};
+
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
   baseUrl: baseUrl,
@@ -70,8 +86,20 @@ export const apiBFF = createApi({
     }),
     getDiseases: builder.query<DiseasesResponse, void>({
       query: () => ({ url: '/patients/1/diseases', method: 'get' })
+    }),
+    getMeasurements: builder.query<IMeasurementsData, string>({
+      query: userId => ({ url: `/patients/${userId}/measurements`, method: 'get' })
+    }),
+    getGeneralData: builder.query<TGeneralData, void>({
+      query: () => ({ url: '/patients/1/info', method: 'get' })
     })
   })
 });
 
-export const { useGetAllergiesQuery, useGetHabitsQuery, useGetDiseasesQuery } = apiBFF;
+export const {
+  useGetAllergiesQuery,
+  useGetHabitsQuery,
+  useGetDiseasesQuery,
+  useGetMeasurementsQuery,
+  useGetGeneralDataQuery
+} = apiBFF;

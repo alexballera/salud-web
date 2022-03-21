@@ -4,7 +4,7 @@ import Link from 'next/link';
 /// BASE IMPORTS
 
 /// SLICE SERVICE
-import { useGetAllergiesQuery } from '../../../services/apiBFF';
+import { useGetAllergiesQuery } from '@/src/services/apiBFF';
 /// SLICE SERVICE END
 
 /// STYLES
