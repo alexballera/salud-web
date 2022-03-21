@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { TVaccinesData, TVaccines } from './getExamResultsData.service';
+import { IMeasurementsData } from '../services/getMeasurementsData.service';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL_BFF;
 
@@ -18,6 +19,22 @@ type AllergieResponse = {
 type TGetVaccineByIdParams = {
   userId: string;
   vaccineId: string;
+};
+
+type TGeneralData = {
+  userId: string;
+  firstName: string;
+  firstLastName: string;
+  secondLastName: string;
+  birthDate: string;
+  height: number;
+  weight: number;
+  biologicSex: string;
+  pronoun: string;
+  civilStatus: string;
+  sons: string;
+  ocupation: string;
+  address: string;
 };
 
 // Create our baseQuery instance
@@ -55,8 +72,20 @@ export const apiBFF = createApi({
         const { vaccines } = response;
         return vaccines.find(item => item.vaccineId === vaccineId);
       }
+    }),
+    getMeasurements: builder.query<IMeasurementsData, string>({
+      query: userId => ({ url: `/patients/${userId}/measurements`, method: 'get' })
+    }),
+    getGeneralData: builder.query<TGeneralData, void>({
+      query: () => ({ url: '/patients/1/info', method: 'get' })
     })
   })
 });
 
-export const { useGetAllergiesQuery, useGetVaccinesQuery, useGetVaccineByIdQuery } = apiBFF;
+export const {
+  useGetAllergiesQuery,
+  useGetGeneralDataQuery,
+  useGetMeasurementsQuery,
+  useGetVaccinesQuery,
+  useGetVaccineByIdQuery
+} = apiBFF;

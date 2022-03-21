@@ -1,12 +1,12 @@
 export const enProceedings = {
   proceedings: {
-    generalData: 'Mis datos generales',
-    title2: '¡Todo al alcance de tu mano!',
-    prescriptions: 'Recetas y prescripciones',
-    examResults: 'Resultados de exámenes',
+    generalData: 'My general data',
+    title2: '¡Everything at your fingertips!',
+    prescriptions: 'Recipes and prescriptions',
+    examResults: 'Exam results',
     title3: 'Accede a',
-    generalMedicalData: 'Datos médicos generales',
-    clinicHistory: 'Historia clínica',
-    historyOfConsultations: 'Historial de consultas'
+    generalMedicalData: 'General medical data',
+    clinicHistory: 'Clinic history',
+    historyOfConsultations: 'Query history'
   }
 };

@@ -1,4 +1,5 @@
 export const esGlobals = {
+  welcome: 'Inicio',
   title: {
     beneficiaries: 'Beneficiarios',
     credential_data: 'Credenciales de ingreso',
@@ -87,6 +88,7 @@ export const esGlobals = {
     language: 'Idioma',
     for: 'Por',
     invalid_date_format: 'Formato de fecha inválido',
+    neither: 'Ninguno',
 
     country: {
       country: 'País de residencia',

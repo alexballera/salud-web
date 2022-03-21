@@ -1,12 +1,12 @@
 export const enForms = {
   message: {
     email: {
-      required: 'Debes especificar un email.',
+      required: 'You must specify an email.',
       not_found: 'No user has been found that matches the email provided',
       email_not_found: 'Email not found',
-      not_received: '¿No recibiste el correo?',
-      not_register: 'El correo indicado no está registrado, ¿desea registrarse?',
-      is_register: 'Este correo ya fue registrado previamente',
+      not_received: '¿You did not receive the mail?',
+      not_register: 'The indicated email is not registered, ¿want to register?',
+      is_register: 'This email was previously registered',
       too_many_request: 'You have exceeded the limit, please try again later'
     },
     error: {
@@ -20,20 +20,20 @@ export const enForms = {
       generated_user: 'Successfully generated user. Welcome to Ospi!'
     },
     password: {
-      change_success: 'La contraseña se ha cambiado correctamente.',
+      change_success: 'The password has been changed successfully.',
       updated: 'Updated password'
     }
   },
 
   validations: {
-    required: 'Campo requerido',
-    date_invalid: 'Fecha inválida',
-    max_18_age: 'Para afiliarse a Ospi debe de ser mayor de edad',
-    min_3: 'Número de caracteres minimos 3',
-    min_8: 'Número de caracteres minimos 8',
-    min_9: 'Número de caracteres minimos 9',
-    min_10_max_15: 'Caracteres mínimos para Residencia 10, máx 15',
-    min_9_max_20: 'Número de caracteres mínimos para Pasaporte 9, máx 20',
+    required: 'Required field',
+    date_invalid: 'Invalid date',
+    max_18_age: 'To join Ospi you must be of legal age',
+    min_3: 'Minimum number of characters 3',
+    min_8: 'Minimum number of characters 8',
+    min_9: 'Minimum number of characters 9',
+    min_10_max_15: 'Minimum characters for residence 10, máx 15',
+    min_9_max_20: 'Minimum number of characters for passport 9, máx 20',
     terms: 'You must accept the Terms and Conditions to continue',
     services: 'You must accept the Informed Consent to continue',
     userExists: 'There is already a patient with that identity number registered in Ospi',
@@ -41,11 +41,11 @@ export const enForms = {
 
     password: {
       required: 'Password required',
-      required_short: 'Contraseña requerida',
-      min_8: 'La contraseña debe ser de al menos 8 caracteres',
-      max_16: 'La contraseña debe ser máximo de 16 caracteres',
+      required_short: 'Password required',
+      min_8: 'The password must be at least 8 characters',
+      max_16: 'The password must be maximum de 16 characters',
       regex:
-        'La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número',
+        'Password must contain at least one uppercase letter, one lowercase letter and one number',
       matched: 'Passwords do not match',
       capitalize: 'Use lowercase',
       lowercase: 'Usar minúsculas',

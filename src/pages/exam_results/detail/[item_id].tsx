@@ -132,7 +132,7 @@ function ExamResultsDetailPage({ examResult }: TProps): JSX.Element {
       },
       {
         title: t('card.comments', { ns: i18nExamResults }),
-        value: result.comments
+        value: result.comments || `${t('label.neither', { ns: i18nGlobal })}`
       }
     ];
   };
