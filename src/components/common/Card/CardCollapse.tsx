@@ -24,8 +24,7 @@ import {
   secondaryMainColor,
   poppinsFontFamily,
   cardDividerColor,
-  title2Color,
-  boxShadow
+  title2Color
 } from '../../../styles/js/theme';
 /// STYLES END
 
@@ -39,7 +38,6 @@ type TProps = {
   cardProps?: CardProps;
   items: TListItem[];
   isExpanded?: boolean;
-  showArrow?: boolean;
   itemClick: (values: TListItem) => void;
 };
 
@@ -57,49 +55,47 @@ const Typography = styled(MuiTypography)({
   fontWeight: 'normal'
 });
 
-const useStyles = makeStyles({
-  card: {
-    borderRadius: 8,
-    textAlign: 'center'
-    // boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.5)'
-  },
-  title: {
-    fontSize: 16,
-    letterSpacing: '0.15px',
-    lineHeight: '150%',
-    color: secondaryMainColor,
-    textAlign: 'left'
-  },
-  subTitle: {
-    fontSize: 14,
-    letterSpacing: '0.15px',
-    lineHeight: '143%',
-    color: title2Color,
-    textAlign: 'left'
-  },
-  arrowIcon: {
-    padding: 3
-  },
-  divider: {
-    backgroundColor: cardDividerColor
-  },
-  arrow: {
-    color: secondaryMainColor
-  }
-});
-
 function CardCollapse({
   title,
   subTitle,
   items,
   itemClick,
-  cardProps = { elevation: 0, style: { boxShadow } },
-  isExpanded = false,
-  showArrow = true
+  cardProps = {},
+  isExpanded = false
 }: TProps): JSX.Element {
   const [expand, setExpand] = useState(isExpanded);
-  const classes = useStyles();
+  const useStyles = makeStyles({
+    card: {
+      boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.5)',
+      borderRadius: 8,
+      textAlign: 'center'
+    },
+    title: {
+      fontSize: 16,
+      letterSpacing: '0.15px',
+      lineHeight: '150%',
+      color: secondaryMainColor,
+      textAlign: 'left'
+    },
+    subTitle: {
+      fontSize: 14,
+      letterSpacing: '0.15px',
+      lineHeight: '143%',
+      color: title2Color,
+      textAlign: 'left'
+    },
+    arrowIcon: {
+      padding: 3
+    },
+    divider: {
+      backgroundColor: cardDividerColor
+    },
+    arrow: {
+      color: secondaryMainColor
+    }
+  });
 
+  const classes = useStyles();
   return (
     <Card className={classes.card} {...cardProps}>
       <CardContent>
@@ -107,13 +103,11 @@ function CardCollapse({
           <Grid item>
             <Typography className={classes.title}>{title}</Typography>
           </Grid>
-          {showArrow && (
-            <Grid item>
-              <IconButton className={classes.arrowIcon} onClick={() => setExpand(!expand)}>
-                {!expand ? <ArrowDown /> : <ArrowUp />}
-              </IconButton>
-            </Grid>
-          )}
+          <Grid item>
+            <IconButton className={classes.arrowIcon} onClick={() => setExpand(!expand)}>
+              {!expand ? <ArrowDown /> : <ArrowUp />}
+            </IconButton>
+          </Grid>
         </Grid>
       </CardContent>
       {expand && <Divider className={classes.divider} />}
