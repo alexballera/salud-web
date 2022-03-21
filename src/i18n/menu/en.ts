@@ -18,11 +18,7 @@ export const enMenu = {
     clinic_history: 'Clinic history',
     diseases: 'My diseases',
     allergies: 'My allergies',
-<<<<<<< HEAD
-    clinic_history_habits: 'Control de hábitos',
+    clinic_history_habits: 'Control of habits',
     clinic_history_vaccines: 'Vaccines'
-=======
-    clinic_history_habits: 'Control of habits'
->>>>>>> develop
   }
 };
