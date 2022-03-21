@@ -1,5 +1,5 @@
 /// BASE IMPORTS
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 /// BASE IMPORTS
 
@@ -46,6 +46,8 @@ const Vaccines = (): JSX.Element => {
   const router = useRouter();
   const userId = 'ee957013-b02f-45b2-b837-092b490242ea';
   const { data, isLoading } = useGetVaccinesQuery(userId);
+  const [searchField, setSearchField] = useState('');
+  const [searchShow, setSearchShow] = useState(false);
 
   const handleClick = (id: string): void => {
     router.push(`/clinic_history/vaccines/${id}`);
@@ -58,6 +60,19 @@ const Vaccines = (): JSX.Element => {
       vaccines.sort((a, b) => a.name.localeCompare(b.name));
       vaccines.unshift(...covid);
       return vaccines;
+    }
+  };
+
+  const filteredVaccines = getVaccines()?.filter(vaccine => {
+    return vaccine.name.toLowerCase().includes(searchField.toLowerCase());
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchField(e.target.value);
+    if (e.target.value === '') {
+      setSearchShow(false);
+    } else {
+      setSearchShow(true);
     }
   };
 
@@ -140,6 +155,7 @@ const Vaccines = (): JSX.Element => {
             type="search"
             color="secondary"
             fullWidth
+            onChange={handleChange}
             InputLabelProps={{
               shrink: true
             }}
@@ -161,7 +177,8 @@ const Vaccines = (): JSX.Element => {
                 <CircularProgress color="secondary" />
               </Grid>
             )}
-            {getVaccines()?.map((item, i) => ListItemVaccines(item, i))}
+            {searchShow && filteredVaccines.map((item, i) => ListItemVaccines(item, i))}
+            {!searchShow && getVaccines()?.map((item, i) => ListItemVaccines(item, i))}
           </List>
         </Box>
       </Box>
