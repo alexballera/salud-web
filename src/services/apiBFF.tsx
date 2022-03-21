@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const baseUrl = process.env.NEXT_PUBLIC_API_URL_BFF;
 
 type TAllergies = {
+  id: string;
   description: string;
   isActive: boolean;
   comments: string;
@@ -15,6 +16,7 @@ type AllergieResponse = {
 };
 
 type THabits = {
+  id: string;
   status?: boolean;
   addictionStatus?: string;
   passive?: boolean;

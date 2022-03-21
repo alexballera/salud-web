@@ -21,6 +21,8 @@ import { enProfile } from './profile/en';
 import { esProfile } from './profile/es';
 import { enGeneralData } from './generalData/en';
 import { esGeneralData } from './generalData/es';
+import { enHabits } from './habits/en';
+import { esHabits } from './habits/es';
 
 const resources = {
   enUS: {
@@ -33,7 +35,8 @@ const resources = {
     preferences: enPreferences,
     recipesAndPrescriptions: enRecipesAndPrescriptions,
     profile: enProfile,
-    generalData: enGeneralData
+    generalData: enGeneralData,
+    habits: enHabits
   },
   es: {
     globals: esGlobals,
@@ -45,7 +48,8 @@ const resources = {
     preferences: esPreferences,
     recipesAndPrescriptions: esRecipesAndPrescriptions,
     profile: esProfile,
-    generalData: esGeneralData
+    generalData: esGeneralData,
+    habits: esHabits
   }
 };
 

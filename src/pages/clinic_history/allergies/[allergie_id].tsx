@@ -1,24 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-
-/// SLICE SERVICE
-import { useGetAllergiesQuery } from '../../../services/apiBFF';
-/// SLICE SERVICE END
-
-/// MATERIAL UI
-import { Box, Typography, Card, Divider, Chip, Grid } from '@material-ui/core';
-/// MATERIAL UI END
-
-/// STYLES & TYPES
-import allergieStyles from './styles.module';
-/// STYLES & TYPES END
-
-/// i18n
 import { useTranslation } from 'react-i18next';
+import { Box, Typography, Card, Divider, Chip, Grid } from '@material-ui/core';
+
 import { NAMESPACE_KEY as i18Allergies } from '@/src/i18n/allergies/i18n';
-/// i18n END
+import allergieStyles from './styles.module';
+import { useGetAllergiesQuery } from '../../../services/apiBFF';
 
 type TAllergie = {
+  id: string;
   description: string;
   isActive: boolean;
   comments: string;
@@ -27,6 +17,7 @@ type TAllergie = {
 };
 
 const initialState = {
+  id: '',
   description: '',
   isActive: null,
   comments: '',
@@ -46,7 +37,7 @@ const AllergieDetail = (): JSX.Element => {
 
   useEffect(() => {
     if (data) {
-      const result = data.allergies.find(allergie => allergie.description === id);
+      const result = data.allergies.find(allergie => allergie.id === id);
       setAllergie(result);
     }
   }, [isLoading]);

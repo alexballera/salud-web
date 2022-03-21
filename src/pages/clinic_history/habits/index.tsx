@@ -21,7 +21,6 @@ const Habits = (): JSX.Element => {
 
   const listDrugs = drugs => {
     const drugsNames = drugs.map(drug => `<p>${drug.name ? drug.name : ''}</p>`).join('');
-    console.log(drugsNames);
     return drugsNames;
   };
 
@@ -33,47 +32,44 @@ const Habits = (): JSX.Element => {
             <Box px={3} my={3}>
               {data.physicalActivity && (
                 <CardSimple
-                  title="Actividad física"
+                  title={t('habits.physical_activity', { ns: i18Habits })}
                   content={
                     data.physicalActivity.frequency
                       ? data.physicalActivity.frequency
                       : t('not_assigned', { ns: i18Habits })
                   }
-                  href={''}
+                  href={data.physicalActivity.id ? '/clinic_history/habits/physicalActivity' : ''}
                 />
               )}
               {data.alcoholism && (
                 <CardSimple
-                  title="Alcoholismo"
+                  title={t('habits.alcoholism', { ns: i18Habits })}
                   content={
                     data.alcoholism.frequency
                       ? data.alcoholism.frequency
                       : t('not_assigned', { ns: i18Habits })
                   }
-                  href={''}
+                  href={data.alcoholism.id ? '/clinic_history/habits/alcoholism' : ''}
                 />
               )}
               {data.smoking && (
                 <CardSimple
-                  title="Tabaquismo"
+                  title={t('habits.smoking', { ns: i18Habits })}
                   content={
                     data.smoking.frequency
                       ? data.smoking.frequency
                       : t('not_assigned', { ns: i18Habits })
                   }
-                  href={''}
+                  href={data.smoking.id ? '/clinic_history/habits/smoking' : ''}
                 />
               )}
               {data.drugs && (
                 <CardSimple
-                  title="Tabaquismo"
+                  title={t('habits.drugs', { ns: i18Habits })}
                   content={
-                    listDrugs(data.drugs)
-                    /* data.smoking.frequency
-                      ? data.smoking.frequency
-                      : t('not_assigned', { ns: i18Habits }) */
+                    data.drugs ? listDrugs(data.drugs) : t('without_consumption', { ns: i18Habits })
                   }
-                  href={''}
+                  href={data.smoking.id ? '/clinic_history/habits/drugs' : ''}
                 />
               )}
             </Box>

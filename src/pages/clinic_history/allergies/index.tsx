@@ -43,7 +43,7 @@ const Allergies = (): JSX.Element => {
                 <Box mx={2}>
                   {data.allergies.map((allergie, index) => (
                     <Box key={index}>
-                      <Link href={`/clinic_history/allergies/${allergie.description}`} passHref>
+                      <Link href={`/clinic_history/allergies/${allergie.id}`} passHref>
                         <Box component="span" className={classes.contentButton}>
                           <Typography
                             variant="body2"
