@@ -1,103 +1,75 @@
 import React from 'react';
-import Link from 'next/link';
-
-/// MUI COMPONENTS
-import { Box, Card, Container, Divider, Typography } from '@material-ui/core';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-/// MUI COMPONENTS END
-
-/// STYLES
-import habitStyles from './styles.module';
-/// STYLES END
-
-/// i18n
 import { useTranslation } from 'react-i18next';
+import { Box, Grid } from '@material-ui/core';
+
 import { NAMESPACE_KEY as i18Habits } from '@/src/i18n/habits/i18n';
-/// i18n END
+import { useGetHabitsQuery } from '../../../services/apiBFF';
+import CardSimple from '@/src/components/common/CardSimple';
 
-type THabits = {
-  name: string;
-  frequencyOfConsumption: string;
-};
-
-type TProps = {
-  habits: THabits[];
-};
-/// / TYPES END
-
-const Habits = ({ habits }: TProps): JSX.Element => {
-  const classes = habitStyles();
+const Habits = (): JSX.Element => {
   const { t } = useTranslation(i18Habits);
+
+  const { data } = useGetHabitsQuery();
+
+  const listDrugs = drugs => {
+    const drugsNames = drugs.map(drug => `<p>${drug.name ? drug.name : ''}</p>`).join('');
+    return drugsNames;
+  };
 
   return (
     <>
-      <Container>
-        {habits.map((habit, index) => (
-          <Box my={2} key={index}>
-            <Card className={classes.cardHabits}>
-              {habit.frequencyOfConsumption ? (
-                <Link href={`/clinic_history/habits/${habit.name}`} passHref>
-                  <Box component="span" className={classes.cardContentLink}>
-                    <Typography paragraph color="secondary" className={classes.typography16}>
-                      {habit.name}
-                    </Typography>
-                    <ChevronRightIcon color="secondary" />
-                  </Box>
-                </Link>
-              ) : (
-                <Box component="span" className={classes.cardContentLink}>
-                  <Typography paragraph color="secondary" className={classes.typography16}>
-                    {habit.name}
-                  </Typography>
-                  <ChevronRightIcon color="secondary" />
-                </Box>
+      <Grid container>
+        <Grid item xs={12}>
+          {data && (
+            <Box px={3} my={3}>
+              {data.physicalActivity && (
+                <CardSimple
+                  title={t('habits.physicalActivity', { ns: i18Habits })}
+                  content={
+                    data.physicalActivity.frequency
+                      ? data.physicalActivity.frequency
+                      : t('not_assigned', { ns: i18Habits })
+                  }
+                  href={data.physicalActivity.id ? '/clinic_history/habits/physicalActivity' : ''}
+                />
               )}
-              <Divider />
-              <Box mt={2}>
-                {habit.name === 'Drogas' && habit.frequencyOfConsumption === '' ? (
-                  <Typography variant="body2" className={classes.typography14}>
-                    {habit.frequencyOfConsumption
-                      ? habit.frequencyOfConsumption
-                      : t('without_consumption', { ns: i18Habits })}
-                  </Typography>
-                ) : (
-                  <Typography variant="body2" className={classes.typography14}>
-                    {habit.frequencyOfConsumption
-                      ? habit.frequencyOfConsumption
-                      : t('not_assigned', { ns: i18Habits })}
-                  </Typography>
-                )}
-              </Box>
-            </Card>
-          </Box>
-        ))}
-      </Container>
+              {data.alcoholism && (
+                <CardSimple
+                  title={t('habits.alcoholism', { ns: i18Habits })}
+                  content={
+                    data.alcoholism.frequency
+                      ? data.alcoholism.frequency
+                      : t('not_assigned', { ns: i18Habits })
+                  }
+                  href={data.alcoholism.id ? '/clinic_history/habits/alcoholism' : ''}
+                />
+              )}
+              {data.smoking && (
+                <CardSimple
+                  title={t('habits.smoking', { ns: i18Habits })}
+                  content={
+                    data.smoking.frequency
+                      ? data.smoking.frequency
+                      : t('not_assigned', { ns: i18Habits })
+                  }
+                  href={data.smoking.id ? '/clinic_history/habits/smoking' : ''}
+                />
+              )}
+              {data.drugs && (
+                <CardSimple
+                  title={t('habits.drugs', { ns: i18Habits })}
+                  content={
+                    data.drugs ? listDrugs(data.drugs) : t('without_consumption', { ns: i18Habits })
+                  }
+                  href={data.smoking.id ? '/clinic_history/habits/drugs' : ''}
+                />
+              )}
+            </Box>
+          )}
+        </Grid>
+      </Grid>
     </>
   );
-};
-
-Habits.getInitialProps = async () => {
-  const habits: THabits[] = [
-    {
-      name: 'Actividad física',
-      frequencyOfConsumption: 'Parcial'
-    },
-    {
-      name: 'Alcoholismo',
-      frequencyOfConsumption: 'Consumo parcial'
-    },
-    {
-      name: 'Tabaquismo',
-      frequencyOfConsumption: ''
-    },
-    {
-      name: 'Drogas',
-      frequencyOfConsumption: ''
-    }
-  ];
-  return {
-    habits
-  };
 };
 
 export default Habits;

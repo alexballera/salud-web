@@ -5,13 +5,13 @@ import {
   chipInactiveBackground,
   chipInactiveTextColor,
   title2Color,
-  shadowCardColor
+  shadowCardColor,
+  background2Color
 } from '../../../styles/js/theme';
 
 const allergieStyles = makeStyles({
   cardAllergie: {
-    marginTop: '24px',
-    borderRadius: 16,
+    borderRadius: 10,
     boxShadow: `0px 4px 8px ${shadowCardColor}`
   },
   contentButton: {
@@ -49,6 +49,10 @@ const allergieStyles = makeStyles({
   },
   typography16: {
     fontSize: '16px'
+  },
+  mainGrid: {
+    backgroundColor: background2Color,
+    height: '100%'
   }
 });
 

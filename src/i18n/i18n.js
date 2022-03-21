@@ -46,11 +46,11 @@ const resources = {
     recipesAndPrescriptions: enRecipesAndPrescriptions,
     profile: enProfile,
     generalData: enGeneralData,
+    habits: enHabits,
     proceedings: enProceedings,
     clinic_history: enClinicHistory,
     allergies: enAllergies,
     diseases: enDiseases,
-    habits: enHabits,
     exam_result: enExamResult
   },
   es: {
@@ -64,11 +64,11 @@ const resources = {
     recipesAndPrescriptions: esRecipesAndPrescriptions,
     profile: esProfile,
     generalData: esGeneralData,
+    habits: esHabits,
     proceedings: esProceedings,
     clinic_history: esClinicHistory,
     allergies: esAllergies,
     diseases: esDiseases,
-    habits: esHabits,
     exam_result: esExamResult
   }
 };
