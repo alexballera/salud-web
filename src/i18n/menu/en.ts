@@ -18,6 +18,7 @@ export const enMenu = {
     clinic_history: 'Clinic history',
     diseases: 'My diseases',
     allergies: 'My allergies',
-    clinic_history_habits: 'Control of habits'
+    clinic_history_habits: 'Control de hábitos',
+    clinic_history_vaccines: 'Vaccines'
   }
 };
