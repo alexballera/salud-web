@@ -14,7 +14,7 @@ const navbarStyles = makeStyles({
     fontWeight: 'normal'
   },
   title: {
-    color: 'rgba(0, 0, 0, 1)',
+    color: 'rgba(69, 82, 85, 1)',
     fontSize: 16,
     fontWeight: 400,
     marginLeft: 10
