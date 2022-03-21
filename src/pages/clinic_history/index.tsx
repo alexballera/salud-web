@@ -1,7 +1,6 @@
 /// BASE IMPORTS
 import React from 'react';
 import { useRouter } from 'next/router';
-import clsx from 'clsx';
 /// BASE IMPORTS
 
 /// i18n
@@ -17,9 +16,10 @@ import {
   List,
   ListItem,
   ListItemSecondaryAction,
-  ListItemText
-} from '@material-ui/core';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+  ListItemText,
+  ThemeProvider
+} from '@mui/material';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 /// MUI COMPONENTS END
 
 /// OWN COMPONENTS
@@ -34,25 +34,13 @@ import SvgInjuries from '@/src/components/common/Svg/SvgInjuries.component';
 /// OWN COMPONENTS END
 
 /// STYLES
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '100%',
-      backgroundColor: theme.palette.background.paper
-    },
-    text: {
-      marginLeft: 28
-    },
-    hidden: {
-      display: 'none'
-    }
-  })
-);
+import clsx from 'clsx';
+import muiTheme from '@/src/styles/js/muiTheme';
+import { examStyles } from '@/src/containers/ExamResult/styles.module';
 /// STYLES END
 
 const clinicHistory = (): JSX.Element => {
-  const classes = useStyles();
+  const classes = examStyles();
   const router = useRouter();
   const { t } = useTranslation(i18ClinicHistory);
   const items = [
@@ -93,34 +81,36 @@ const clinicHistory = (): JSX.Element => {
   };
 
   return (
-    <Box p={3}>
-      <List className={classes.root} aria-label="clinic history folders">
-        {items.map((item, i) => (
-          <React.Fragment key={item.name}>
-            <ListItem button onClick={() => handleClick(item.action)}>
-              <SvgContainer title={item.name} width={30} height={30}>
-                {item.icon}
-              </SvgContainer>
-              <ListItemText primary={item.name} className={classes.text} />
-              <ListItemSecondaryAction>
-                <IconButton
-                  edge="end"
-                  aria-label={item.name}
-                  onClick={() => handleClick(item.action)}
-                >
-                  <ChevronRightIcon color="secondary" />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-            <Divider
-              className={clsx({
-                [classes.hidden]: i === items.length - 1
-              })}
-            />
-          </React.Fragment>
-        ))}
-      </List>
-    </Box>
+    <ThemeProvider theme={muiTheme}>
+      <Box p={3}>
+        <List className={classes.root} aria-label="clinic history folders">
+          {items.map((item, i) => (
+            <React.Fragment key={item.name}>
+              <ListItem button onClick={() => handleClick(item.action)}>
+                <SvgContainer title={item.name} width={30} height={30}>
+                  {item.icon}
+                </SvgContainer>
+                <ListItemText primary={item.name} className={classes.text} />
+                <ListItemSecondaryAction>
+                  <IconButton
+                    edge="end"
+                    aria-label={item.name}
+                    onClick={() => handleClick(item.action)}
+                  >
+                    <ChevronRightIcon color="secondary" />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+              <Divider
+                className={clsx({
+                  [classes.hidden]: i === items.length - 1
+                })}
+              />
+            </React.Fragment>
+          ))}
+        </List>
+      </Box>
+    </ThemeProvider>
   );
 };
 

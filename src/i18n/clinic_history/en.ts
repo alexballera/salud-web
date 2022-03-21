@@ -6,5 +6,9 @@ export const enClinicHistory = {
     injuries: 'My surgeries and injuries',
     vaccines: 'Vaccines',
     familyIllnesses: 'Family illnesses'
+  },
+  vaccines: {
+    title: 'Keep track of your vaccinations and the doses you take',
+    dose: 'dose'
   }
 };
