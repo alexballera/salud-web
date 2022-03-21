@@ -15,6 +15,12 @@ import {
 import { useRouter } from 'next/router';
 import { setDataToLocalStorage } from '@/src/services/localStorage.service';
 
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY } from '../../../i18n/globals/i18n';
+
+import { isValid, parseISO, format } from 'date-fns';
+
 const useStyles = makeStyles({
   root: {
     minWidth: 124,
@@ -63,16 +69,26 @@ const useStyles = makeStyles({
 });
 type IProps = {
   title?: string;
-  value: string;
+  value: number | string;
   type?: string;
   noSVG?: boolean;
   route?: string;
   tab?: number;
+  time?: string;
 };
 
-export default function MeasurementCard({ title, value, type, noSVG = false, route, tab }: IProps) {
+export default function MeasurementCard({
+  title,
+  value,
+  type,
+  noSVG = false,
+  route,
+  tab,
+  time
+}: IProps) {
   const classes = useStyles();
   const router = useRouter();
+  const { t } = useTranslation(NAMESPACE_KEY);
 
   const getSvg = type => {
     switch (type) {
@@ -85,6 +101,29 @@ export default function MeasurementCard({ title, value, type, noSVG = false, rou
       default:
         break;
     }
+  };
+
+  const getCardDate = (date: string) => {
+    const toDate = parseISO(date);
+
+    if (!isValid(toDate)) {
+      return t('invalid_date_format');
+    }
+
+    const year = toDate.getFullYear();
+    const day = toDate.getDate().toString();
+    const month = toDate.getMonth();
+    return `${day.padStart(2, '0')} ${t(`months.${month}`).substring(0, 3).toLowerCase()}, ${year}`;
+  };
+
+  const getCardHours = (date: string) => {
+    const toDate = parseISO(date);
+
+    if (!isValid(toDate)) {
+      return t('invalid_date_format');
+    }
+
+    return `${format(toDate, 'hh:mm aaaa')}`;
   };
 
   const redirectTo = () => {
@@ -102,9 +141,9 @@ export default function MeasurementCard({ title, value, type, noSVG = false, rou
         <Typography className={!noSVG ? classes.smallText : classes.mediumText}>
           {!noSVG && 'Última medición:'}
           <br />
-          01 feb, 2022
+          {getCardDate(time)}
           <br />
-          1:32 p.m.
+          {getCardHours(time)}
         </Typography>
       </CardContent>
     </Card>

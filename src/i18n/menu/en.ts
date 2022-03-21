@@ -1,24 +1,28 @@
 export const enMenu = {
   alert: {
-    slide_title: 'Volver a la página principal',
-    confirm_title: '¿Seguro deseas salir?'
+    slide_title: 'Return to main page',
+    confirm_title: '¿Sure you want to go out?'
   },
   text: {
-    helpTitle: '¿Tenés alguna consulta?'
+    helpTitle: '¿Do you have any questions?'
   },
   items: {
-    main: 'Inicio',
-    profile: 'Perfil',
-    subscription: 'Tu suscripción',
-    preferences: 'Preferencias',
-    generalData: 'Datos generales',
+    main: 'Main',
+    profile: 'Profile',
+    subscription: 'Your subscription',
+    preferences: 'Preferences',
+    generalData: 'General data',
     recipes_and_prescriptions: 'Recipes and prescriptions',
     recipes_and_prescriptions_preview: 'Details',
-    proceedings: 'Expediente médico',
-    clinic_history: 'Historia clínica',
-    diseases: 'Mis enfermedades',
+    proceedings: 'Medical record',
+    clinic_history: 'Clinic history',
+    diseases: 'My diseases',
     allergies: 'My allergies',
+<<<<<<< HEAD
     clinic_history_habits: 'Control de hábitos',
     clinic_history_vaccines: 'Vaccines'
+=======
+    clinic_history_habits: 'Control of habits'
+>>>>>>> develop
   }
 };
