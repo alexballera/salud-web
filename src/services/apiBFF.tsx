@@ -1,4 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { TVaccinesData } from './getExamResultsData.service';
+
 import { IMeasurementsData } from '../services/getMeasurementsData.service';
 const baseUrl = process.env.NEXT_PUBLIC_API_URL_BFF;
 
@@ -49,6 +51,9 @@ export const apiBFF = createApi({
     getAllergies: builder.query<AllergieResponse, void>({
       query: () => ({ url: '/patients/1/allergies', method: 'get' })
     }),
+    getVaccines: builder.query<TVaccinesData, string>({
+      query: userId => ({ url: `/patients/${userId}/vaccines`, method: 'get' })
+    }),
     getMeasurements: builder.query<IMeasurementsData, string>({
       query: userId => ({ url: `/patients/${userId}/measurements`, method: 'get' })
     }),
@@ -58,4 +63,9 @@ export const apiBFF = createApi({
   })
 });
 
-export const { useGetAllergiesQuery, useGetGeneralDataQuery, useGetMeasurementsQuery } = apiBFF;
+export const {
+  useGetAllergiesQuery,
+  useGetGeneralDataQuery,
+  useGetMeasurementsQuery,
+  useGetVaccinesQuery
+} = apiBFF;
