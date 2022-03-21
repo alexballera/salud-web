@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Box, Card, Grid, Divider } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
+import { Box, Card, Grid, Typography } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 
+import { NAMESPACE_KEY as i18Habits } from '@/src/i18n/habits/i18n';
+import { NAMESPACE_KEY as i18Global } from '@/src/i18n/globals/i18n';
 import habitStyles from './styles.module';
-import { useGetHabitsQuery } from '../../../services/apiBFF';
+import { useGetHabitsQuery } from '@/src/services/apiBFF';
+import { HabitRow } from '@/src/containers/Habits/HabitRow';
 
 type THabit = {
   id: string;
@@ -35,33 +40,104 @@ const initialState = {
 
 const HabitsDetail = (): JSX.Element => {
   const classes = habitStyles();
+  const { t } = useTranslation([i18Habits, i18Global]);
 
   const router = useRouter();
-  const { habit_id: id } = router.query;
+  const { habits_id: habitsId } = router.query;
 
   const [habit, setHabit] = useState<THabit>(initialState);
+  const [drugs, setDrugs] = useState([]);
   const { data, isLoading } = useGetHabitsQuery();
 
   useEffect(() => {
     if (data) {
-      console.log('id: ', id);
-      // console.log(data[id]);
-      // setHabit();
+      setHabit(data[`${habitsId}`]);
+      if (habitsId === 'drugs') {
+        setDrugs(data[`${habitsId}`]);
+      }
     }
-  }, [id]);
+  }, [habitsId, isLoading]);
 
   return (
-    <Grid container className={classes.mainGrid}>
-      <Grid item xs={12}>
-        <Box mt={2} px={3} py={3}>
-          <Box mb={2}>okokok</Box>
-          <Card className={classes.cardHabits}>
-            HOLA
-            <Divider />
-          </Card>
-        </Box>
+    <Box className={classes.mainGrid}>
+      <Box mx={4} className={classes.edit}>
+        <EditIcon className={classes.editIcon} /> {t('label.edit', { ns: i18Global })}
+      </Box>
+      <Grid container>
+        <Grid item xs={12}>
+          <Box px={3} py={1}>
+            <Box mb={2}>
+              <Typography className={classes.typography16}>
+                {t(`habits.${habitsId}`, { ns: i18Habits })}
+              </Typography>
+            </Box>
+            {data && habitsId === 'drugs' ? (
+              <>
+                {drugs.map((habit, index) => (
+                  <Card className={`${classes.cardHabits} ${classes.cardSpacing}`} key={index}>
+                    <HabitRow title={t(`drug`, { ns: i18Habits })} content={habit.name} />
+                    <HabitRow
+                      title={t(`observation`, { ns: i18Habits })}
+                      content={habit.observation}
+                      hideDivider={true}
+                    />
+                  </Card>
+                ))}
+              </>
+            ) : (
+              <Card className={classes.cardHabits}>
+                {data && (habitsId === 'alcoholism' || habitsId === 'smoking') && (
+                  <HabitRow
+                    title={t(`frequency_of_consumption`, { ns: i18Habits })}
+                    content={habit.quantity}
+                  />
+                )}
+
+                {data && (habitsId === 'alcoholism' || habitsId === 'smoking') && (
+                  <HabitRow
+                    title={t(`state_of_addiction`, { ns: i18Habits })}
+                    content={habit.addictionStatus}
+                  />
+                )}
+
+                {data && habitsId === 'physicalActivity' && (
+                  <HabitRow
+                    title={t(`physical_activity`, { ns: i18Habits })}
+                    content={habit.type}
+                  />
+                )}
+                {data && habitsId === 'physicalActivity' && (
+                  <HabitRow title={t(`duration`, { ns: i18Habits })} content={habit.duration} />
+                )}
+
+                {data &&
+                  (habitsId === 'alcoholism' ||
+                    habitsId === 'smoking' ||
+                    habitsId === 'physicalActivity') && (
+                    <HabitRow title={t(`frequency`, { ns: i18Habits })} content={habit.frequency} />
+                  )}
+
+                {data && habitsId === 'physicalActivity' && (
+                  <HabitRow
+                    title={t(`details`, { ns: i18Habits })}
+                    content={habit.details}
+                    hideDivider={true}
+                  />
+                )}
+
+                {data && (habitsId === 'alcoholism' || habitsId === 'smoking') && (
+                  <HabitRow
+                    title={t(`i_want_to_stop_consuming`, { ns: i18Habits })}
+                    content={habit.wantsToQuit ? 'Si' : 'No'}
+                    hideDivider={true}
+                  />
+                )}
+              </Card>
+            )}
+          </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </Box>
   );
 };
 

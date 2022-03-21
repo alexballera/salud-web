@@ -11,14 +11,6 @@ const Habits = (): JSX.Element => {
 
   const { data } = useGetHabitsQuery();
 
-  // `/clinic_history/habits/${data.physicalActivity}`
-
-  /**
-   * {habit.frequencyOfConsumption
-      ? habit.frequencyOfConsumption
-      : t('without_consumption', { ns: i18Habits })}
-   */
-
   const listDrugs = drugs => {
     const drugsNames = drugs.map(drug => `<p>${drug.name ? drug.name : ''}</p>`).join('');
     return drugsNames;
@@ -32,7 +24,7 @@ const Habits = (): JSX.Element => {
             <Box px={3} my={3}>
               {data.physicalActivity && (
                 <CardSimple
-                  title={t('habits.physical_activity', { ns: i18Habits })}
+                  title={t('habits.physicalActivity', { ns: i18Habits })}
                   content={
                     data.physicalActivity.frequency
                       ? data.physicalActivity.frequency

@@ -11,15 +11,35 @@ const habitStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between'
   },
+  cardSpacing: {
+    marginBottom: '16px'
+  },
   typography14: {
     fontSize: '14px'
   },
   typography16: {
     fontSize: '16px'
   },
+  typographyTitle: {
+    marginBottom: '0px !important'
+  },
   mainGrid: {
     backgroundColor: background2Color,
     height: '100%'
+  },
+  edit: {
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    top: '-36px',
+    fontSize: '13px',
+    fontWeight: 500,
+    zIndex: 1101
+  },
+  editIcon: {
+    width: '13.5px',
+    height: '13.5px',
+    marginRight: '8px'
   }
 });
 
