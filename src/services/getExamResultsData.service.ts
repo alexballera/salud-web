@@ -27,6 +27,7 @@ export type TExamResultsGroup = { month: string; items: TGeneralData }[];
 export type TDose = {
   dose: string;
   date: string;
+  applied?: boolean;
 };
 
 export type TVaccines = {
