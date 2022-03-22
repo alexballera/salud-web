@@ -9,6 +9,7 @@ export const enClinicHistory = {
   },
   vaccines: {
     title: 'Keep track of your vaccinations and the doses you take',
-    dose: 'dose'
+    dose: 'dose',
+    no_records: 'Vaccine not found'
   }
 };

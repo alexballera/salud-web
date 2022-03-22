@@ -85,7 +85,7 @@ const ExamResult = (): JSX.Element => {
 
             {!loading && !examResultsGroups.length && (
               <Box mt={4}>
-                <Typography className={classes.noRecords}>
+                <Typography variant="caption" className={classes.noRecords}>
                   {t('no_records', { ns: i18Recipes })}
                 </Typography>
               </Box>
