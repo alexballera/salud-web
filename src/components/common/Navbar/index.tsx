@@ -89,6 +89,8 @@ function Navbar(): JSX.Element {
         return true;
       case '/clinic_history/habits':
         return true;
+      case '/clinic_history/habits/[habits_id]':
+        return true;
       case '/clinic_history/vaccines':
         return true;
       case '/exam_results/detail/[item_id]':
@@ -114,13 +116,15 @@ function Navbar(): JSX.Element {
         return t('items.clinic_history', { ns: 'menu' });
       case '/clinic_history/diseases':
         return t('items.diseases', { ns: 'menu' });
-      case '/clinic_history/allergies/[allergie_id]':
-        return t('items.allergies', { ns: 'menu' });
       case '/exam_results':
         return t('proceedings.examResults', { ns: i18nProceedings });
       case '/clinic_history/allergies':
         return t('items.allergies', { ns: 'menu' });
+      case '/clinic_history/allergies/[allergie_id]':
+        return t('items.allergies', { ns: 'menu' });
       case '/clinic_history/habits':
+        return t('items.clinic_history_habits', { ns: 'menu' });
+      case '/clinic_history/habits/[habits_id]':
         return t('items.clinic_history_habits', { ns: 'menu' });
       case '/clinic_history/vaccines':
         return t('items.clinic_history_vaccines', { ns: 'menu' });
@@ -180,6 +184,7 @@ function Navbar(): JSX.Element {
     '/clinic_history/allergies',
     '/clinic_history/allergies/[allergie_id]',
     '/clinic_history/habits',
+    '/clinic_history/habits/[habits_id]',
     '/clinic_history/vaccines',
     '/medicalData'
   ];
