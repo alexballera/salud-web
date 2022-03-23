@@ -2,7 +2,7 @@ export const esRecipesAndPrescriptions = {
   details_title: 'Información General',
   details_indications_text: 'Indicaciones',
   details_comments_text: 'Comentarios',
-  no_records: 'No hay exámenes disponibles para mostrar',
+  no_records: 'No hay recetas y prescripciones disponibles para mostrar',
   recipe_or_prescription_not_found: 'Receta o prescripción no encontrada',
   card: {
     date: 'Fecha ',

@@ -13,6 +13,7 @@
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx --max-warnings=0",
     "sso-login": "aws sso login --profile omnisalud",
     "build": "npx next build",
+    "build:start": "next build && npm run start",
     "build:serverless:dev": "SLS_DEBUG=1 env-cmd -f .env.development sls build --component=nextApp --stage dev",
     "build:serverless:qa": "SLS_DEBUG=1 env-cmd -f .env.qa sls build --component=nextApp --stage dev",
     "deploy:dev": "npm run build:serverless:dev && npm run sso-login && SLS_DEBUG=1 sls --component=nextApp -v --region us-east-1 --stage dev",
