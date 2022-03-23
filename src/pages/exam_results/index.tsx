@@ -66,7 +66,12 @@ const ExamResult = (): JSX.Element => {
           setExamResultsGroups(res);
         })
         .catch(err => console.error(err))
-        .finally(() => setLoading(false));
+        .finally(() => {
+          setLoading(false);
+          if (sliderYear && selectedYear) {
+            router.replace(PAGE_PATHNAME);
+          }
+        });
     }
   }, [sliderYear]);
 
