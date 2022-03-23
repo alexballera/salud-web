@@ -26,9 +26,6 @@ export const cardStyles = makeStyles(() =>
         color: purpleLight
       }
     },
-    date: {
-      textTransform: 'lowercase'
-    },
     performer: {
       color: titlePageColor,
       fontSize: '14px !important',

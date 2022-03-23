@@ -12,7 +12,7 @@ import { styled } from '@material-ui/styles';
 /// MATERIAL UI END
 
 /// STYLES
-import {
+import theme, {
   secondaryMainColor,
   poppinsFontFamily,
   titleCardTagBg,
@@ -81,6 +81,12 @@ type TProps = {
 };
 
 const useStyles = makeStyles({
+  card: {
+    width: '100%',
+    [theme.breakpoints.up(360)]: {
+      width: 312
+    }
+  },
   cardTitleBg: {
     backgroundColor: titleCardTagBg,
     display: 'inline-block',
@@ -111,6 +117,10 @@ const useStyles = makeStyles({
     textTransform: 'lowercase',
     marginTop: '4px'
   },
+  cardDateLabel: {
+    fontSize: 12,
+    textTransform: 'capitalize'
+  },
   cardDoctor: {
     fontSize: 14,
     lineHeight: '143%',
@@ -139,11 +149,11 @@ function CardLink({ title, text1, text2, reportedBy, action }: TProps): JSX.Elem
     const year = toDate.getFullYear();
     const day = toDate.getDate().toString();
     const month = toDate.getMonth();
-    return `${day.padStart(2, '0')} ${t(`months.${month}`).substring(0, 3)} ${year}`;
+    return `${day.padStart(2, '0')} ${t(`months.${month}`).substring(0, 3)}, ${year}`;
   };
 
   return (
-    <Card>
+    <Card className={classes.card}>
       <CardHeader
         title={
           <Box className={classes.cardTitleBg}>
@@ -153,7 +163,12 @@ function CardLink({ title, text1, text2, reportedBy, action }: TProps): JSX.Elem
       />
       <CardContent>
         <Typography className={classes.cardDrug}>{text1}</Typography>
-        <Typography className={classes.cardDate}>{getCardDate(text2)}</Typography>
+        <Typography variant="caption" className={classes.cardDate}>
+          <MuiTypography variant="caption" component="span" className={classes.cardDateLabel}>
+            {t('label.date')}:{' '}
+          </MuiTypography>
+          {getCardDate(text2)}
+        </Typography>
         <Box className={classes.cardFooter}>
           <Grid container direction="row" alignItems="center" justify="space-between">
             <Grid item>

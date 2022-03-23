@@ -4,14 +4,19 @@ import Link from 'next/link';
 /// BASE IMPORTS
 
 /// MUI COMPONENTS
-import { Button, Card, CardActions, CardContent, Chip, Stack, Typography } from '@mui/material';
+import { Button, Card, CardActions, CardContent, Chip, Grid, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 /// MUI COMPONENTS END
 
 /// STYLES
 import { ThemeProvider } from '@mui/material/styles';
 import { cardStyles } from './styles.module';
-import { boxShadow, textValueCardColor, textValueCardColor2 } from '@/src/styles/js/theme';
+import {
+  boxShadow,
+  textValueCardColor,
+  textValueCardColor2,
+  titlePageColor
+} from '@/src/styles/js/theme';
 import muiTheme from '@/src/styles/js/muiTheme';
 /// STYLES END
 
@@ -38,7 +43,10 @@ const CardComponent = (props: TCard): JSX.Element => {
         className={classes.card}
       >
         <CardContent sx={{ padding: 0 }}>
-          <Chip label={type} size="small" className={classes.chip} />
+          {/* <Chip label={type} size="small" className={classes.chip} /> */}
+          <Typography variant="body2" component="div" className={classes.chip}>
+            {type}
+          </Typography>
           <Typography
             variant="body2"
             component="div"
@@ -60,12 +68,38 @@ const CardComponent = (props: TCard): JSX.Element => {
             }}
           >
             {t('label.date', { ns: i18Globals })}:{' '}
-            <span className={classes.date}>{getCardDate(date, t)}</span>
+            <Typography
+              variant="caption"
+              component="span"
+              sx={{ textTransform: 'lowercase', boxShadow: '0 !important' }}
+            >
+              {getCardDate(date, t)}
+            </Typography>
           </Typography>
         </CardContent>
         <CardActions sx={{ padding: 0 }}>
-          <Stack direction="row" justifyContent="space-between" sx={{ width: '100%' }}>
-            <Typography variant="body2" component="div" className={classes.performer}>
+          <Grid
+            container
+            item
+            xs={12}
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Typography
+              variant="body2"
+              component="div"
+              sx={{
+                boxShadow: '0 !important',
+                color: titlePageColor,
+                fontSize: '14px !important',
+                display: 'flex',
+                alignItems: 'center',
+                fontWeight: 'normal !important',
+                lineHeight: '143% !important'
+              }}
+              // className={classes.performer}
+            >
               {performer}
             </Typography>
             <Link href={redirectTo} passHref>
@@ -74,12 +108,13 @@ const CardComponent = (props: TCard): JSX.Element => {
                 size="small"
                 color="secondary"
                 endIcon={<ArrowForwardIcon />}
-                sx={{ textTransform: 'inherit' }}
+                variant="text"
+                sx={{ textTransform: 'inherit', boxShadow: '0 !important' }}
               >
                 {t('button.show_more', { ns: i18Globals })}
               </Button>
             </Link>
-          </Stack>
+          </Grid>
         </CardActions>
       </Card>
     </ThemeProvider>
