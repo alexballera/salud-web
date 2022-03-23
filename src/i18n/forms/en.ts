@@ -50,7 +50,8 @@ export const enForms = {
       capitalize: 'Use lowercase',
       lowercase: 'Usar minúsculas',
       numbers: 'Use numbers',
-      characters: 'Be between 8 and 16 characters'
+      characters: 'Be between 8 and 16 characters',
+      format: 'Incorrect fields, you must correct them to continue'
     },
 
     document: {
