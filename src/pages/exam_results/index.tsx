@@ -37,7 +37,6 @@ const PAGE_PATHNAME = '/exam_results';
 
 const ExamResult = (): JSX.Element => {
   const { t } = useTranslation([i18Recipes, i18Forms, i18nGlobal]);
-  const classes = examStyles();
   const router = useRouter();
   const listContainerRef = createRef();
   const renderCompleteVerifyRef = createRef();
