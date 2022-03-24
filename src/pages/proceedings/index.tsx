@@ -1,4 +1,5 @@
 /// BASE IMPORTS
+import { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 /// BASE IMPORTS
@@ -185,11 +186,11 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
             </Typography>
             <Grid container alignItems="center" justify="center" spacing={3}>
               {itemsCard.map(item => (
-                <React.Fragment key={item.title}>
+                <Fragment key={item.title}>
                   <Grid item xs={6}>
                     <ProceedingsCard title={item.title} route={item.action} />
                   </Grid>
-                </React.Fragment>
+                </Fragment>
               ))}
             </Grid>
           </Container>
@@ -200,7 +201,7 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
             </Typography>
             <List component="nav" className={classes.root} aria-label="menubox proceedings">
               {items.map((item, i) => (
-                <React.Fragment key={item.title}>
+                <Fragment key={item.title}>
                   <ListItem button onClick={() => router.push(item.action)}>
                     <ListItemText className={classes.textMenuItem} primary={item.title} />
                     <ListItemSecondaryAction>
@@ -218,7 +219,7 @@ function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Eleme
                       [classes.hidden]: i === items.length - 1
                     })}
                   />
-                </React.Fragment>
+                </Fragment>
               ))}
             </List>
           </Container>

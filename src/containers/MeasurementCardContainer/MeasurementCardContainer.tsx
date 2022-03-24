@@ -32,7 +32,11 @@ export const MeasurementCardContainer = ({ generalData }: IProps): JSX.Element =
   const arterialPressure = records.find(x => x.type === 'arterialPressure');
   const arterialPressureValue =
     arterialPressure && arterialPressure.measurements.length > 0
-      ? arterialPressure.measurements[0].systolic + '/' + arterialPressure.measurements[0].diastolic
+      ? arterialPressure.measurements[0].systolic +
+        '/' +
+        arterialPressure.measurements[0].diastolic +
+        ' ' +
+        arterialPressure.unit
       : '-';
   const arterialPressureTime =
     arterialPressure && arterialPressure.measurements.length > 0
