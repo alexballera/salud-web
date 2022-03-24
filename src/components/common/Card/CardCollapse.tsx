@@ -41,6 +41,7 @@ type TProps = {
   isExpanded?: boolean;
   showArrow?: boolean;
   itemClick: (values: TListItem) => void;
+  disabled?: boolean;
 };
 
 const ArrowDown = styled(KeyboardArrowDown)({
@@ -92,6 +93,7 @@ function CardCollapse({
   subTitle,
   items,
   itemClick,
+  disabled = false,
   cardProps = { elevation: 0, style: { boxShadow } },
   isExpanded = false,
   showArrow = true
@@ -108,7 +110,11 @@ function CardCollapse({
           </Grid>
           {showArrow && (
             <Grid item>
-              <IconButton className={classes.arrowIcon} onClick={() => setExpand(!expand)}>
+              <IconButton
+                className={classes.arrowIcon}
+                disabled={disabled}
+                onClick={() => setExpand(!expand)}
+              >
                 {!expand ? <ArrowDown /> : <ArrowUp />}
               </IconButton>
             </Grid>
