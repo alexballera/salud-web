@@ -5,6 +5,7 @@ import { TAllergieResponse } from '@/src/types/services/allergie.types';
 import { THabitsResponse } from '@/src/types/services/habit.types';
 import { TDiseasesResponse } from '@/src/types/services/diseases.types';
 import { TGeneralData } from '@/src/types/services/generalData.types';
+import { TFamiliarDiseasesResponse } from '../types/services/familiarDiseases.types';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL_BFF;
 
@@ -41,6 +42,9 @@ export const apiBFF = createApi({
     }),
     getGeneralData: builder.query<TGeneralData, void>({
       query: () => ({ url: '/patients/1/info', method: 'get' })
+    }),
+    getFamiliarDiseases: builder.query<TFamiliarDiseasesResponse, void>({
+      query: () => ({ url: '/patients/1/familiarDiseases', method: 'get' })
     })
   })
 });
@@ -51,5 +55,6 @@ export const {
   useGetDiseasesQuery,
   useGetVaccinesQuery,
   useGetMeasurementsQuery,
-  useGetGeneralDataQuery
+  useGetGeneralDataQuery,
+  useGetFamiliarDiseasesQuery
 } = apiBFF;

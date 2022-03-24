@@ -39,6 +39,7 @@ type TProps = {
   items: TListItem[];
   isExpanded?: boolean;
   itemClick: (values: TListItem) => void;
+  disabled?: boolean;
 };
 
 const ArrowDown = styled(KeyboardArrowDown)({
@@ -61,7 +62,8 @@ function CardCollapse({
   items,
   itemClick,
   cardProps = {},
-  isExpanded = false
+  isExpanded = false,
+  disabled = false
 }: TProps): JSX.Element {
   const [expand, setExpand] = useState(isExpanded);
   const useStyles = makeStyles({
@@ -104,7 +106,11 @@ function CardCollapse({
             <Typography className={classes.title}>{title}</Typography>
           </Grid>
           <Grid item>
-            <IconButton className={classes.arrowIcon} onClick={() => setExpand(!expand)}>
+            <IconButton
+              className={classes.arrowIcon}
+              disabled={disabled}
+              onClick={() => setExpand(!expand)}
+            >
               {!expand ? <ArrowDown /> : <ArrowUp />}
             </IconButton>
           </Grid>
