@@ -1,11 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { TVaccinesData } from './getExamResultsData.service';
+import type { TVaccinesData, TVaccines } from './getExamResultsData.service';
 import { IMeasurementsData } from '../services/getMeasurementsData.service';
 import { TAllergieResponse } from '@/src/types/services/allergie.types';
 import { THabitsResponse } from '@/src/types/services/habit.types';
 import { TDiseasesResponse } from '@/src/types/services/diseases.types';
 import { TGeneralData } from '@/src/types/services/generalData.types';
 import { TFamiliarDiseasesResponse } from '../types/services/familiarDiseases.types';
+
+type TGetVaccineByIdParams = {
+  userId: string;
+  vaccineId: string;
+};
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL_BFF;
 
@@ -37,6 +42,20 @@ export const apiBFF = createApi({
     getVaccines: builder.query<TVaccinesData, string>({
       query: userId => ({ url: `/patients/${userId}/vaccines`, method: 'get' })
     }),
+    getVaccineById: builder.query<TVaccines, TGetVaccineByIdParams>({
+      query: ({ userId }: TGetVaccineByIdParams) => ({
+        url: `/patients/${userId}/vaccines`,
+        method: 'get'
+      }),
+      transformResponse: (
+        response: TVaccinesData,
+        _tag: unknown,
+        { vaccineId }: TGetVaccineByIdParams
+      ) => {
+        const { vaccines } = response;
+        return vaccines.find(item => item.vaccineId === vaccineId);
+      }
+    }),
     getMeasurements: builder.query<IMeasurementsData, string>({
       query: userId => ({ url: `/patients/${userId}/measurements`, method: 'get' })
     }),
@@ -56,5 +75,6 @@ export const {
   useGetVaccinesQuery,
   useGetMeasurementsQuery,
   useGetGeneralDataQuery,
-  useGetFamiliarDiseasesQuery
+  useGetFamiliarDiseasesQuery,
+  useGetVaccineByIdQuery
 } = apiBFF;
