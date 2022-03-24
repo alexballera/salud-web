@@ -15,5 +15,6 @@ export const enHabits = {
   duration: 'Duration',
   frequency: 'Frequency',
   details: 'Details',
-  i_want_to_stop_consuming: 'I want to stop consuming'
+  i_want_to_stop_consuming: 'I want to stop consuming',
+  none: 'None'
 };

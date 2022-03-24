@@ -120,7 +120,7 @@ const HabitsDetail = (): JSX.Element => {
                 {data && habitsId === 'physicalActivity' && (
                   <HabitRow
                     title={t(`details`, { ns: i18Habits })}
-                    content={habit.details}
+                    content={habit.details ? habit.details : t(`none`, { ns: i18Habits })}
                     hideDivider={true}
                   />
                 )}
