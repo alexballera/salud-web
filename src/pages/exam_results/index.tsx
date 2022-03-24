@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18Recipes } from '@/src/i18n/recipes_and_prescriptions/i18n';
 import { NAMESPACE_KEY as i18Forms } from '@/src/i18n/forms/i18n';
 import { NAMESPACE_KEY as i18nGlobal } from '@/src/i18n/globals/i18n';
+import { NAMESPACE_KEY as i18nExams } from '@/src/i18n/exam_result/i18n';
 /// i18n END
 
 /// MUI COMPONENTS
@@ -36,7 +37,7 @@ const CircularProgress = styled(MuiCircularProgress)({
 const PAGE_PATHNAME = '/exam_results';
 
 const ExamResult = (): JSX.Element => {
-  const { t } = useTranslation([i18Recipes, i18Forms, i18nGlobal]);
+  const { t } = useTranslation([i18Recipes, i18Forms, i18nGlobal, i18nExams]);
   const classes = examStyles();
   const router = useRouter();
   const listContainerRef = createRef();
@@ -119,7 +120,7 @@ const ExamResult = (): JSX.Element => {
                   color: title3Color
                 }}
               >
-                {t('no_records', { ns: i18Recipes })}
+                {t('no_records', { ns: i18nExams })}
               </Typography>
             </Box>
           )}

@@ -83,7 +83,8 @@ const namespaces = [
   'preferences',
   'recipes-and-prescriptions',
   'profile',
-  'generalData'
+  'generalData',
+  'exam_result'
 ];
 
 const DETECTION_OPTIONS = {

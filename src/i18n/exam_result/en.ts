@@ -1,4 +1,6 @@
 export const enExamResult = {
+  no_records: 'There are no exams available to show',
+  not_found: 'Clinical exams not found',
   items: {
     diseases: 'My diseases'
   },
