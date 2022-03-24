@@ -21,7 +21,6 @@ import CardLink from '@/src/components/common/Card/CardLink';
 /// OWN COMPONENTS END
 
 /// STYLES
-import { examStyles } from '@/src/containers/ExamResult/styles.module';
 import { secondaryMainColor, title2Color, title3Color } from '@/src/styles/js/theme';
 /// STYLES END
 
