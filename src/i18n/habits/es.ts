@@ -15,5 +15,6 @@ export const esHabits = {
   duration: 'Duración',
   frequency: 'Frecuencia',
   details: 'Detalles',
-  i_want_to_stop_consuming: 'Quiero dejar de consumir'
+  i_want_to_stop_consuming: 'Quiero dejar de consumir',
+  comments: 'Comentarios'
 };
