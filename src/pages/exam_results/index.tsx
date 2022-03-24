@@ -12,8 +12,7 @@ import { NAMESPACE_KEY as i18nExams } from '@/src/i18n/exam_result/i18n';
 /// i18n END
 
 /// MUI COMPONENTS
-import MuiCircularProgress from '@mui/material/CircularProgress';
-import { Box, Grid, styled, Typography } from '@mui/material';
+import { Box, Grid, CircularProgress, Typography, ThemeProvider } from '@mui/material';
 /// MUI COMPONENTS END
 
 /// OWN COMPONENTS
@@ -22,23 +21,18 @@ import CardLink from '@/src/components/common/Card/CardLink';
 /// OWN COMPONENTS END
 
 /// STYLES
-import { examStyles } from '@/src/containers/ExamResult/styles.module';
-import { secondaryMainColor, title2Color, title3Color } from '@/src/styles/js/theme';
+import { title2Color, title3Color } from '@/src/styles/js/theme';
+import muiTheme from '@/src/styles/js/muiTheme';
 /// STYLES END
 
 /// SERVICES
 import { getExamResultsByYear, TExamResultsGroup } from '@/src/services/getExamResultsData.service';
 /// SERVICES END
 
-const CircularProgress = styled(MuiCircularProgress)({
-  color: secondaryMainColor
-});
-
 const PAGE_PATHNAME = '/exam_results';
 
 const ExamResult = (): JSX.Element => {
   const { t } = useTranslation([i18Recipes, i18Forms, i18nGlobal, i18nExams]);
-  const classes = examStyles();
   const router = useRouter();
   const listContainerRef = createRef();
   const renderCompleteVerifyRef = createRef();
@@ -59,8 +53,8 @@ const ExamResult = (): JSX.Element => {
   };
 
   useEffect(() => {
-    setLoading(true);
     if (sliderYear) {
+      setLoading(true);
       const id = 'ee957013-b02f-45b2-b837-092b490242ea';
       getExamResultsByYear(id, sliderYear)
         .then(res => {
@@ -85,89 +79,91 @@ const ExamResult = (): JSX.Element => {
   };
 
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        <YearSlider
-          disabled={loading}
-          itemClick={item => {
-            setSliderYear(item);
-          }}
-        />
-        <Box px={3}>
-          {loading && (
-            <Grid
-              container
-              item
-              xs={12}
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
-              sx={{ height: 'calc(100vh - 104px)' }}
-            >
-              <CircularProgress color="secondary" />
-            </Grid>
-          )}
-
-          {!loading && !examResultsGroups.length && (
-            <Box mt={4}>
-              <Typography
-                variant="caption"
-                component="div"
-                sx={{
-                  fontSize: '12px !important',
-                  lineHeight: '19.92px !important',
-                  letterSpacing: '0.4px',
-                  color: title3Color
-                }}
+    <ThemeProvider theme={muiTheme}>
+      <Grid container>
+        <Grid item xs={12}>
+          <YearSlider
+            disabled={loading}
+            itemClick={item => {
+              setSliderYear(item);
+            }}
+          />
+          <Box px={3}>
+            {loading && (
+              <Grid
+                container
+                item
+                xs={12}
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+                sx={{ height: 'calc(100vh - 104px)' }}
               >
-                {t('no_records', { ns: i18nExams })}
-              </Typography>
-            </Box>
-          )}
+                <CircularProgress color="secondary" />
+              </Grid>
+            )}
 
-          <Box {...{ ref: listContainerRef }}>
-            {!loading &&
-              examResultsGroups.map((group, i) => (
-                // Group items by month
-                <Box key={i}>
-                  <Typography
-                    variant="body1"
-                    component="div"
-                    sx={{
-                      fontSize: 12,
-                      letterSpacing: 1,
-                      textTransform: 'uppercase',
-                      color: title2Color,
-                      lineHeight: '31.92px',
-                      mt: 16 / 8,
-                      mb: 8 / 8
-                    }}
-                  >
-                    {t(`months.${group.month}`, { ns: i18nGlobal })}
-                  </Typography>
-                  {group.items.map((item, i) => {
-                    return (
-                      <Box mb={2} key={`${item.userId}-${i}`}>
-                        <CardLink
-                          title={getExamTitle(item.type)}
-                          text1={item.name}
-                          text2={item.date}
-                          reportedBy={item.performer}
-                          action={() => {
-                            pushRouteItem(item.id);
-                            router.push(`${PAGE_PATHNAME}/detail/${item.id}`);
-                          }}
-                        />
-                      </Box>
-                    );
-                  })}
-                </Box>
-              ))}
+            {!loading && !examResultsGroups.length && (
+              <Box mt={4}>
+                <Typography
+                  variant="caption"
+                  component="div"
+                  sx={{
+                    fontSize: '12px !important',
+                    lineHeight: '19.92px !important',
+                    letterSpacing: '0.4px',
+                    color: title3Color
+                  }}
+                >
+                  {t('no_records', { ns: i18nExams })}
+                </Typography>
+              </Box>
+            )}
+
+            <Box {...{ ref: listContainerRef }}>
+              {!loading &&
+                examResultsGroups.map((group, i) => (
+                  // Group items by month
+                  <Box key={i}>
+                    <Typography
+                      variant="body1"
+                      component="div"
+                      sx={{
+                        fontSize: 12,
+                        letterSpacing: 1,
+                        textTransform: 'uppercase',
+                        color: title2Color,
+                        lineHeight: '31.92px',
+                        mt: 16 / 8,
+                        mb: 8 / 8
+                      }}
+                    >
+                      {t(`months.${group.month}`, { ns: i18nGlobal })}
+                    </Typography>
+                    {group.items.map((item, i) => {
+                      return (
+                        <Box mb={2} key={`${item.userId}-${i}`}>
+                          <CardLink
+                            title={getExamTitle(item.type)}
+                            text1={item.name}
+                            text2={item.date}
+                            reportedBy={item.performer}
+                            action={() => {
+                              pushRouteItem(item.id);
+                              router.push(`${PAGE_PATHNAME}/detail/${item.id}`);
+                            }}
+                          />
+                        </Box>
+                      );
+                    })}
+                  </Box>
+                ))}
+            </Box>
+            <Box {...({ ref: renderCompleteVerifyRef } as any)} />
           </Box>
-          <Box {...({ ref: renderCompleteVerifyRef } as any)} />
-        </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </ThemeProvider>
   );
 };
 
