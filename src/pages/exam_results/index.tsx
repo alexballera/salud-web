@@ -39,6 +39,7 @@ const ExamResult = (): JSX.Element => {
 
   useEffect(() => {
     setLoading(true);
+    console.log('ok');
     if (selectedYear) {
       const id = 'ee957013-b02f-45b2-b837-092b490242ea';
       getExamResultsData(id)

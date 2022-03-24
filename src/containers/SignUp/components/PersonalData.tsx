@@ -26,6 +26,9 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 /// MATERIAL-UI END
 
+import { uiOnAlert } from '@/src/store/slice/ui.slice';
+import { useDispatch } from 'react-redux';
+
 /// i18n
 import { TFunction, useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18Global } from '../../../i18n/globals/i18n';
@@ -92,7 +95,6 @@ function PersonalData({
   setFieldTouched,
   setFieldValue,
   setCustomPopUpError,
-  handleNotifications,
   setCurrDocTypeArgs,
   currDocTypeArgs
 }: TPersonalDataProps & FormikProps<TFormData>): JSX.Element {
@@ -100,6 +102,7 @@ function PersonalData({
   const { t } = useTranslation([i18Global, i18Forms]);
   const inputMaskRef = useRef(null);
   const [fetchUserDataState, setFetchUserDateState] = useState(FETCH_USER_DATA_STATE);
+  const dispatch = useDispatch();
 
   const handlerError = (code = '') => {
     switch (code) {
@@ -138,7 +141,12 @@ function PersonalData({
         const i18nPopUpError = t('validations.document.invalid_pop_up', { ns: i18Forms });
         setUserValues(null); // Reset user info inputs
         setCustomPopUpError(i18nPopUpError); // Save this error on form state, it should be appear if continue button is clicked
-        handleNotifications({ open: true, message: i18nPopUpError, severity: 'error' }); /// Handle Form pop up error
+        dispatch(
+          uiOnAlert({
+            type: 'error',
+            message: i18nPopUpError
+          })
+        );
         // Handle input error
         setFetchUserDateState(prevState => ({
           ...prevState,

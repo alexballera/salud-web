@@ -1,5 +1,5 @@
 /// BASE IMPORTS
-import React, { PropsWithChildren, useContext, useEffect } from 'react';
+import React, { PropsWithChildren, useContext } from 'react';
 import { useRouter } from 'next/router';
 /// BASE IMPORTS END
 
@@ -23,16 +23,10 @@ import { UserContext } from '../../context/UserContext';
 export default withAppContext(function Layout({
   children,
   errorState,
-  handleError,
-  notificationState,
-  handleNotifications
+  handleError
 }: PropsWithChildren<IProps>): JSX.Element {
   const router = useRouter();
   const { isLoading, userLogState, loggedInRoutes } = useContext(UserContext);
-
-  useEffect(() => {
-    handleNotifications({ ...notificationState, open: false });
-  }, [router.pathname]);
 
   if (isLoading || userLogState === 'UNKNOWN') {
     return (
@@ -59,10 +53,7 @@ export default withAppContext(function Layout({
     <>
       <Navbar />
       <Hidden only={['md', 'lg', 'xl']}>
-        <Notifications
-          {...notificationState}
-          onClose={() => handleNotifications({ ...notificationState, open: false })}
-        />
+        <Notifications />
       </Hidden>
       <Box component="main" data-testid="main">
         {children}
@@ -75,7 +66,7 @@ export default withAppContext(function Layout({
         autoHideDuration={7000}
       >
         <Alert
-          severity={errorState.type}
+          severity={errorState?.type}
           action={
             <IconButton
               aria-label="close"

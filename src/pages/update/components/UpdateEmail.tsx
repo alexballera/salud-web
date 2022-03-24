@@ -68,8 +68,7 @@ const initialValues: TFormData = {
 /// FORM STATES & VALIDATIONS END
 function UpdateEmail({
   handleLogin,
-  handleError,
-  handleNotifications
+  handleError
 }: TCredentialDataProps & InferGetStaticPropsType<typeof getStaticProps> & TProps): JSX.Element {
   const { t } = useTranslation(NAMESPACE_KEY);
   const router = useRouter();

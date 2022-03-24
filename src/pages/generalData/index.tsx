@@ -1,5 +1,5 @@
 /// BASE IMPORTS
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 /// BASE IMPORTS
 
 /// i18n
@@ -13,14 +13,13 @@ import TabContent from '../../containers/GeneralData/TabContent';
 /// OWN COMPONENTS END
 
 /// STYLES & TYPES
-import { TPersonalDataProps } from '../../containers/SignUp/index.types';
 import { Tab, Tabs } from '@material-ui/core';
 import {
   getDataFromLocalStorage,
   removeDataFromLocalStorage
 } from '@/src/services/localStorage.service';
 
-function GeneralDataPage({ handleNotifications }: TPersonalDataProps): JSX.Element {
+function GeneralDataPage(): JSX.Element {
   const { t } = useTranslation([i18nGeneralData, i18Forms]);
   const [tab, setTab] = useState<number>(parseInt(getDataFromLocalStorage('cardSelected')) || 0);
   removeDataFromLocalStorage('cardSelected');

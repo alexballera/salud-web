@@ -4,7 +4,6 @@ export type AppStates = {
   user: any;
   loggedIn: boolean;
   fetching: boolean;
-  errorState: { open: boolean; message: string; type: 'success' | 'error' | 'warning' };
 };
 
 export type TProps = {

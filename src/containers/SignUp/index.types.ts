@@ -1,13 +1,10 @@
 import { IAppProps } from '../../context/index';
-import { INotificationProps } from '../../context/types';
 
 /// TYPES
 export type TProps = {
-  handleNotifications?: (props: INotificationProps) => void;
   handleLogin: (user: any) => void;
   handleError: (open: boolean, message: string, type?: string) => void;
   onClickLink?;
-  notificationState?: INotificationProps;
 } & IAppProps;
 
 type documentType = number | string;
@@ -93,7 +90,6 @@ export type TFormData = TExtraDataForm & TPersonalDataForm & TCredentialDataForm
 
 export type TPersonalDataProps = {
   documentTypesOptions: IDocumentTypes[];
-  handleNotifications: (props: INotificationProps) => void;
   setCustomPopUpError?: React.Dispatch<React.SetStateAction<null | string>>;
   customPopUpError?: string | null;
   setCurrDocTypeArgs?: React.Dispatch<React.SetStateAction<TCountryDocumentTypeItem>>;

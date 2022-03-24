@@ -16,12 +16,6 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 /// MATERIAL - UI END
 
-/// CONTEXT
-/// CONTEXT END
-
-/// SERVICES
-/// SERVICES END
-
 /// OWN COMPONENTS
 import Alert from '../components/common/Notifications';
 import ReactCodeInput from '../components/common/CodeInput';

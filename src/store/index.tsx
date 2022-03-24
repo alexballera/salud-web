@@ -3,10 +3,12 @@ import type { TypedUseSelectorHook } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import type { Action, ThunkAction } from '@reduxjs/toolkit';
 
-import { apiBFF } from '../services/apiBFF';
+import { apiBFF } from '@/src/services/apiBFF';
+import uiSlice from '@/src/store/slice/ui.slice';
 
 const store = configureStore({
   reducer: {
+    ui: uiSlice,
     [apiBFF.reducerPath]: apiBFF.reducer
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(apiBFF.middleware),
