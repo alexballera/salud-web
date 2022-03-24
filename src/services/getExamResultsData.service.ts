@@ -73,10 +73,15 @@ const filterResultsByYear = (data: TGeneralData, year: number) => {
   });
 };
 
-export const getExamResultsByYear = (data: TGeneralData, year: number): TExamResultsGroup => {
+export const getExamResultsByYear = async (
+  userId: string,
+  year: number
+): Promise<TExamResultsGroup> => {
+  const { data } = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL_BFF}/patients/${userId}/exams`
+  );
   const filterResults = filterResultsByYear(data, year);
-  const groupByMonth = groupResultsByMonth(filterResults);
-  return groupByMonth;
+  return groupResultsByMonth(filterResults);
 };
 
 export const getExamResultsData = (userId: string): Promise<AxiosResponse<TGeneralData>> => {

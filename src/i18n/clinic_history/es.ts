@@ -13,6 +13,7 @@ export const esClinicHistory = {
     title: 'Llevá el registro de tus vacunas y las dósis que llevas',
     dose: 'dosis',
     dose_with_value: '{{dose}} Dosis',
-    no_applied: 'Sin aplicar'
+    no_applied: 'Sin aplicar',
+    no_records: 'No se encontró la vacuna'
   }
 };

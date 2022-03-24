@@ -51,7 +51,8 @@ export const esForms = {
       capitalize: 'Usar mayúsculas',
       lowercase: 'Usar minúsculas',
       numbers: 'Usar números',
-      characters: 'Tener entre 8 y 16 caracteres'
+      characters: 'Tener entre 8 y 16 caracteres',
+      format: 'Campos incorrectos, debés corregirlos para continuar'
     },
 
     email: {

@@ -61,7 +61,7 @@ function CredentialData({
       return;
     }
     if (errors.confirmPassword === t('validations.password.regex', { ns: i18Forms })) {
-      setCustomPopUpError(t('message.error.fields_required', { ns: i18Forms }));
+      setCustomPopUpError(t('validations.password.format', { ns: i18Forms }));
       return;
     }
     if (errors.terms) {
