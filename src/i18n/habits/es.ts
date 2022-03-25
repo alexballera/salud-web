@@ -11,7 +11,7 @@ export const esHabits = {
   observation: 'Observación',
   frequency_of_consumption: 'Frecuencia de consumo',
   state_of_addiction: 'Estado de la adicción',
-  physical_activity: 'Actividad Física',
+  physical_activity: 'Tipo de actividad física',
   duration: 'Duración',
   frequency: 'Frecuencia',
   details: 'Detalles',
