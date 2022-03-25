@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function Notifications2(): JSX.Element {
+function Notifications(): JSX.Element {
   const classes = useStyles();
   const { open, duration, message, type } = useSelector(state => state.ui?.alert);
   const dispatch = useDispatch();
@@ -46,4 +46,4 @@ function Notifications2(): JSX.Element {
   );
 }
 
-export default Notifications2;
+export default Notifications;
