@@ -1,5 +1,5 @@
 /// BASE IMPORTS
-import React, { PropsWithChildren, useContext } from 'react';
+import React, { PropsWithChildren, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 /// BASE IMPORTS END
 
@@ -20,6 +20,9 @@ import { IProps } from './types';
 import { UserContext } from '../../context/UserContext';
 /// TYPES END
 
+import { uiClean } from '@/src/store/slice/ui.slice';
+import { useDispatch } from 'react-redux';
+
 export default withAppContext(function Layout({
   children,
   errorState,
@@ -27,6 +30,12 @@ export default withAppContext(function Layout({
 }: PropsWithChildren<IProps>): JSX.Element {
   const router = useRouter();
   const { isLoading, userLogState, loggedInRoutes } = useContext(UserContext);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(uiClean());
+  }, [router.asPath]);
 
   if (isLoading || userLogState === 'UNKNOWN') {
     return (

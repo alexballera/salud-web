@@ -36,6 +36,7 @@ function Notifications2(): JSX.Element {
       clearTimeout(timer);
     };
   }, [open]);
+
   return (
     <Box className={classes.root}>
       <Collapse in={open}>

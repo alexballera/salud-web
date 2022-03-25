@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type AlertType = 'success' | 'error' | 'info' | 'warning' | '';
+type AlertType = 'success' | 'error' | 'info' | 'warning';
 
 export interface uiState {
   loading: boolean;
@@ -19,7 +19,7 @@ const initialState: uiState = {
   alert: {
     open: false,
     duration: 0,
-    type: '',
+    type: 'error',
     message: ''
   }
 };
@@ -45,7 +45,7 @@ export const uiSlice = createSlice({
         ...state,
         alert: {
           open: true,
-          duration: 20000,
+          duration: 5000,
           ...action.payload
         }
       };
@@ -53,7 +53,7 @@ export const uiSlice = createSlice({
     uiOffAlert: state => {
       return {
         ...state,
-        ...initialState.alert
+        ...initialState
       };
     },
     uiClean: state => {

@@ -10,13 +10,6 @@ export type TProps = {
   children?: React.ReactNode;
 };
 
-export type INotificationProps = {
-  open: boolean;
-  message: string;
-  severity: INotificationTypes;
-  duration?: number;
-};
-
 export type TUserContent = {
   session: Models.Session;
   isLoading: boolean;
@@ -33,5 +26,4 @@ export type TUserContent = {
   initializeGuestSession: (session: Models.Session) => void;
 };
 
-export type INotificationTypes = 'success' | 'error' | 'info' | 'warning';
 // INTERFACES && TYPES END
