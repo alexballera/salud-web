@@ -77,7 +77,7 @@ const HabitsDetail = (): JSX.Element => {
                   <Card className={`${classes.cardHabits} ${classes.cardSpacing}`} key={index}>
                     <HabitRow title={t(`drug`, { ns: i18Habits })} content={habit.name} />
                     <HabitRow
-                      title={t(`observation`, { ns: i18Habits })}
+                      title={t(`comments`, { ns: i18Habits })}
                       content={habit.observation}
                       hideDivider={true}
                     />
