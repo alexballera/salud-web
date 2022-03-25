@@ -11,10 +11,11 @@ export const enHabits = {
   observation: 'Observation',
   frequency_of_consumption: 'Frequency of consumption',
   state_of_addiction: 'State of addiction',
-  physical_activity: 'Physical activity',
+  physical_activity: 'Type of physical activity',
   duration: 'Duration',
   frequency: 'Frequency',
   details: 'Details',
   i_want_to_stop_consuming: 'I want to stop consuming',
-  comments: 'Comments'
+  comments: 'Comments',
+  none: 'None'
 };
