@@ -1,68 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { TVaccinesData } from './getExamResultsData.service';
-
+import type { TVaccinesData, TVaccines } from './getExamResultsData.service';
 import { IMeasurementsData } from '../services/getMeasurementsData.service';
-const baseUrl = process.env.NEXT_PUBLIC_API_URL_BFF;
+import { TAllergieResponse } from '@/src/types/services/allergie.types';
+import { THabitsResponse } from '@/src/types/services/habit.types';
+import { TDiseasesResponse } from '@/src/types/services/diseases.types';
+import { TGeneralData } from '@/src/types/services/generalData.types';
+import { TFamiliarDiseasesResponse } from '../types/services/familiarDiseases.types';
 
-type TAllergies = {
-  id: string;
-  description: string;
-  isActive: boolean;
-  comments: string;
-  performer: string;
-  specialization: string;
-};
-
-type AllergieResponse = {
-  allergies: TAllergies[];
-};
-
-type THabits = {
-  id: string;
-  status?: boolean;
-  addictionStatus?: string;
-  passive?: boolean;
-  quantity?: string;
-  frequency?: string;
-  period?: string;
-  wantsToQuit?: boolean;
-  type?: string;
-  duration?: string;
-  details?: string;
-};
-
-type THabitsDrugs = {
-  name: string;
-  observation: string;
-};
-
-type HabitsResponse = {
-  smoking?: THabits;
-  alcoholism?: THabits;
-  physicalActivity?: THabits;
-  drugs?: THabitsDrugs[];
-};
-
-type DiseasesResponse = {
-  childhood?: [];
-  adulthood?: [];
-};
-
-type TGeneralData = {
+type TGetVaccineByIdParams = {
   userId: string;
-  firstName: string;
-  firstLastName: string;
-  secondLastName: string;
-  birthDate: string;
-  height: number;
-  weight: number;
-  biologicSex: string;
-  pronoun: string;
-  civilStatus: string;
-  sons: string;
-  ocupation: string;
-  address: string;
+  vaccineId: string;
 };
+
+const baseUrl = process.env.NEXT_PUBLIC_API_URL_BFF;
 
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
@@ -80,23 +30,40 @@ const baseQuery = fetchBaseQuery({
 export const apiBFF = createApi({
   baseQuery: baseQuery,
   endpoints: builder => ({
-    getAllergies: builder.query<AllergieResponse, void>({
+    getAllergies: builder.query<TAllergieResponse, void>({
       query: () => ({ url: '/patients/1/allergies', method: 'get' })
     }),
-    getHabits: builder.query<HabitsResponse, void>({
+    getHabits: builder.query<THabitsResponse, void>({
       query: () => ({ url: '/patients/1/habits', method: 'get' })
     }),
-    getDiseases: builder.query<DiseasesResponse, void>({
+    getDiseases: builder.query<TDiseasesResponse, void>({
       query: () => ({ url: '/patients/1/diseases', method: 'get' })
     }),
     getVaccines: builder.query<TVaccinesData, string>({
       query: userId => ({ url: `/patients/${userId}/vaccines`, method: 'get' })
+    }),
+    getVaccineById: builder.query<TVaccines, TGetVaccineByIdParams>({
+      query: ({ userId }: TGetVaccineByIdParams) => ({
+        url: `/patients/${userId}/vaccines`,
+        method: 'get'
+      }),
+      transformResponse: (
+        response: TVaccinesData,
+        _tag: unknown,
+        { vaccineId }: TGetVaccineByIdParams
+      ) => {
+        const { vaccines } = response;
+        return vaccines.find(item => item.vaccineId === vaccineId);
+      }
     }),
     getMeasurements: builder.query<IMeasurementsData, string>({
       query: userId => ({ url: `/patients/${userId}/measurements`, method: 'get' })
     }),
     getGeneralData: builder.query<TGeneralData, void>({
       query: () => ({ url: '/patients/1/info', method: 'get' })
+    }),
+    getFamiliarDiseases: builder.query<TFamiliarDiseasesResponse, void>({
+      query: () => ({ url: '/patients/1/familiarDiseases', method: 'get' })
     })
   })
 });
@@ -107,5 +74,7 @@ export const {
   useGetDiseasesQuery,
   useGetVaccinesQuery,
   useGetMeasurementsQuery,
-  useGetGeneralDataQuery
+  useGetGeneralDataQuery,
+  useGetFamiliarDiseasesQuery,
+  useGetVaccineByIdQuery
 } = apiBFF;

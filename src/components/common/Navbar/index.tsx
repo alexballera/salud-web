@@ -93,6 +93,10 @@ function Navbar(): JSX.Element {
         return true;
       case '/clinic_history/vaccines':
         return true;
+      case '/clinic_history/familyIllnesses':
+        return true;
+      case '/clinic_history/vaccines/[item_id]':
+        return true;
       case '/exam_results/detail/[item_id]':
         return true;
       default:
@@ -127,6 +131,10 @@ function Navbar(): JSX.Element {
       case '/clinic_history/habits/[habits_id]':
         return t('items.clinic_history_habits', { ns: 'menu' });
       case '/clinic_history/vaccines':
+        return t('items.clinic_history_vaccines', { ns: 'menu' });
+      case '/clinic_history/familyIllnesses':
+        return t('items.clinic_history_family_illnesses', { ns: 'menu' });
+      case '/clinic_history/vaccines/[item_id]':
         return t('items.clinic_history_vaccines', { ns: 'menu' });
       case '/exam_results/detail/[item_id]':
         return getDataFromLocalStorage('titleExamResultDetail');
@@ -186,6 +194,8 @@ function Navbar(): JSX.Element {
     '/clinic_history/habits',
     '/clinic_history/habits/[habits_id]',
     '/clinic_history/vaccines',
+    '/clinic_history/familyIllnesses',
+    '/clinic_history/vaccines/[item_id]',
     '/medicalData'
   ];
 
