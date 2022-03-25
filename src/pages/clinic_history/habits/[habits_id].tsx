@@ -88,16 +88,12 @@ const HabitsDetail = (): JSX.Element => {
               <Card className={classes.cardHabits}>
                 {data && (habitsId === 'alcoholism' || habitsId === 'smoking') && (
                   <HabitRow
-                    title={t(`frequency_of_consumption`, { ns: i18Habits })}
-                    content={habit.quantity}
-                  />
-                )}
-
-                {data && (habitsId === 'alcoholism' || habitsId === 'smoking') && (
-                  <HabitRow
                     title={t(`state_of_addiction`, { ns: i18Habits })}
                     content={habit.addictionStatus}
                   />
+                )}
+                {data && (habitsId === 'alcoholism' || habitsId === 'smoking') && (
+                  <HabitRow title={t(`quantity`, { ns: i18Habits })} content={habit.quantity} />
                 )}
 
                 {data && habitsId === 'physicalActivity' && (
@@ -127,7 +123,7 @@ const HabitsDetail = (): JSX.Element => {
 
                 {data && (habitsId === 'alcoholism' || habitsId === 'smoking') && (
                   <HabitRow
-                    title={t(`i_want_to_stop_consuming`, { ns: i18Habits })}
+                    title={t(`intent_to_quit`, { ns: i18Habits })}
                     content={habit.wantsToQuit ? 'Si' : 'No'}
                     hideDivider={true}
                   />
