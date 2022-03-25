@@ -17,7 +17,6 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 /// MATERIAL - UI END
 
 /// OWN COMPONENTS
-import Alert from '../components/common/Notifications';
 import ReactCodeInput from '../components/common/CodeInput';
 import CustomTextField from '../components/common/TextField';
 import TextMaskCustom from '../components/common/InputTextMask';
@@ -203,43 +202,6 @@ function ComponentsView(): JSX.Element {
           inputMode="numeric"
         />
       </form>
-      <div>
-        <Typography component="h3" variant="h3">
-          Alerts
-        </Typography>
-        <Alert
-          open
-          message="There is a success alert"
-          severity="success"
-          onClose={() => {
-            'Success';
-          }}
-        />
-        <Alert
-          open
-          message="There is a success alert"
-          severity="error"
-          onClose={() => {
-            'Error';
-          }}
-        />
-        <Alert
-          open
-          message="There is a success alert"
-          severity="warning"
-          onClose={() => {
-            'Warning';
-          }}
-        />
-        <Alert
-          open
-          message="There is a success alert"
-          severity="info"
-          onClose={() => {
-            'Info';
-          }}
-        />
-      </div>
     </div>
   );
 }
