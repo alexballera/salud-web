@@ -33,8 +33,21 @@ export default withAppContext(function Layout({
 
   const dispatch = useDispatch();
 
+  const pathNotificationClean = [
+    '/',
+    '/login',
+    '/recover_password',
+    '/recover_password/change_password',
+    '/recover_password/forward_email',
+    '/signup',
+    '/signup/email_verification',
+    '/signup/registered_patient'
+  ];
+
   useEffect(() => {
-    dispatch(uiClean());
+    if (pathNotificationClean.includes(router.pathname)) {
+      dispatch(uiClean());
+    }
   }, [router.asPath]);
 
   if (isLoading || userLogState === 'UNKNOWN') {

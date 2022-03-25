@@ -45,7 +45,7 @@ export const uiSlice = createSlice({
         ...state,
         alert: {
           open: true,
-          duration: 5000,
+          duration: 20000,
           ...action.payload
         }
       };
