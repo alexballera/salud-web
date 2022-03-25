@@ -28,6 +28,9 @@ import { withAppContext } from '../../context';
 import api from '../../api/api';
 /// SERVICES END
 
+import { uiOnAlert } from '@/src/store/slice/ui.slice';
+import { useDispatch } from 'react-redux';
+
 /// TYPES
 import { IProps } from '../../types/recover.types';
 /// TYPES END
@@ -43,12 +46,13 @@ const initialValues: IProps = {
 };
 /// FORM STATES & VALIDATIONS END
 
-function RecoverPasswordPage({ handleLoading, handleNotifications }: IProps): JSX.Element {
+function RecoverPasswordPage({ handleLoading }: IProps): JSX.Element {
   const classes = recoverStyles();
   const { t } = useTranslation([i18Global, i18Forms]);
   const [msgError, setMsgError] = useState<string>();
   const [codeError, setCodeError] = useState<number>();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const VALIDATIONS = {
     schema: yup.object().shape({
@@ -88,11 +92,12 @@ function RecoverPasswordPage({ handleLoading, handleNotifications }: IProps): JS
       })
       .catch(err => {
         setErrorMessage(err.code);
-        handleNotifications({
-          open: true,
-          message: getErrorMessage(err.code),
-          severity: 'error'
-        });
+        dispatch(
+          uiOnAlert({
+            type: 'error',
+            message: getErrorMessage(err.code)
+          })
+        );
       })
       .finally(() => handleLoading && handleLoading(false));
   };

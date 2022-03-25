@@ -14,7 +14,6 @@ import { getDocumentsTypes } from '../../services/getPersonalData.service';
 import { convertToMask } from '../../utils/helpers';
 import { IAppProps, withAppContext } from '../../context/index';
 import { getProvinces, getCanton, getDistrict } from '../../services/address.service';
-import { INotificationProps } from '../../context/types';
 import CustomAutoComplete from '../../components/common/Select';
 import TextMaskCustom from '../../components/common/InputTextMask';
 import DatePicker from '../../components/common/DataPicker';
@@ -28,9 +27,10 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { NAMESPACE_KEY as i18Global } from '../../i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
+import { uiOnAlert } from '@/src/store/slice/ui.slice';
+import { useDispatch } from 'react-redux';
 
 type TProps = {
-  handleNotifications: (_args: INotificationProps) => void;
   beneficiary: TFormData;
 } & IAppProps;
 
@@ -248,7 +248,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function EditBeneficiary({ beneficiary, handleNotifications }: TProps): JSX.Element {
+function EditBeneficiary({ beneficiary }: TProps): JSX.Element {
   const { t } = useTranslation([i18Global, i18Forms]);
   const inputMaskRef = useRef(null);
   const router = useRouter();
@@ -260,6 +260,7 @@ function EditBeneficiary({ beneficiary, handleNotifications }: TProps): JSX.Elem
   const [documentTypeOptions, setDocumentTypeOptions] = useState([]);
   const [typeError, setTypeError] = useState<string>(null);
   const [loading, setLoading] = useState<TLoading>('before-mount');
+  const dispatch = useDispatch();
 
   const onSubmit = (values: TFormData) => {
     // TODO: Send this data to update beneficiary
@@ -408,7 +409,12 @@ function EditBeneficiary({ beneficiary, handleNotifications }: TProps): JSX.Elem
   };
 
   const printFetchError = (message: string, err: unknown) => {
-    handleNotifications({ open: true, message, severity: 'error' });
+    dispatch(
+      uiOnAlert({
+        type: 'error',
+        message: message
+      })
+    );
     console.error(err);
   };
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AppContext } from './index';
 // TYPES
-import type { AppStates, INotificationProps, TProps } from './types';
+import type { AppStates, TProps } from './types';
 // APOLLO
 import Client from '../config/apollo';
 import { ApolloProvider } from '@apollo/client';
@@ -11,25 +11,11 @@ const apolloClient = Client.getInstance();
 export const initialStates: AppStates = {
   user: null,
   loggedIn: false,
-  fetching: false,
-  errorState: { open: false, message: '', type: 'error' }
+  fetching: false
 };
 
 export default function AppProvider({ children }: TProps): JSX.Element {
   const [state, setState] = useState(initialStates);
-  const [notificationState, setNofiticationState] = useState<INotificationProps>({
-    open: false,
-    message: '',
-    severity: 'success',
-    duration: 20000
-  });
-
-  const handleNotifications = (props: INotificationProps) => {
-    setNofiticationState({
-      ...notificationState,
-      ...props
-    });
-  };
 
   const handleLogin = user => {
     setState(prevState => ({ ...prevState, user, loggedIn: true }));
@@ -49,9 +35,7 @@ export default function AppProvider({ children }: TProps): JSX.Element {
         ...state,
         handleLogin,
         handleError,
-        handleLoading,
-        notificationState,
-        handleNotifications
+        handleLoading
       }}
     >
       <ApolloProvider client={apolloClient}>{children}</ApolloProvider>

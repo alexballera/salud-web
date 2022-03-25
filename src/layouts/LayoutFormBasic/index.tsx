@@ -18,16 +18,10 @@ import Notifications from '../../components/common/Notifications';
 import SvgSideForm from '../../components/common/Svg/SvgSideForm.component';
 /// LOGO END
 
-/// TYPES
-import { INotificationProps } from '../../context/types';
-/// TYPES END
-
 type TProps = {
   header?: JSX.Element;
   form: JSX.Element;
-  notificationState?: INotificationProps;
   handleLoading?: (loading: boolean) => void;
-  handleNotifications?: (props: INotificationProps) => void;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -63,13 +57,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 /// FORM STATES & VALIDATIONS END
-const LayoutForm = ({
-  form,
-  header,
-  notificationState,
-  handleNotifications
-}: TProps): JSX.Element => {
+const LayoutForm = ({ form, header }: TProps): JSX.Element => {
   const classes = useStyles();
+
   return (
     <Grid container item xs={12} sm={12} md={12} lg={12} xl={12} className={classes.mainContainer}>
       <Hidden only={['xs', 'sm']}>
@@ -83,10 +73,7 @@ const LayoutForm = ({
         <Box className={classes.formChildContainer}>
           {header}
           <Hidden only={['xs', 'sm']}>
-            <Notifications
-              {...notificationState}
-              onClose={() => handleNotifications({ ...notificationState, open: false })}
-            />
+            <Notifications />
           </Hidden>
           {form}
         </Box>

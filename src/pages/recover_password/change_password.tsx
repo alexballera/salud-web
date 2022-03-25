@@ -29,13 +29,14 @@ import api from '../../api/api';
 
 /// STYLES & TYPES
 import recoverStyles from '../../styles/js/RecoverPageStyles.module';
-import { INotificationProps } from '../../context/types';
 import { setDataToSessionStorage } from '../../services/localStorage.service';
 import TextField from '../../components/common/TextField';
 import SecurityPasswordIndicator from '../../components/common/SecurityPasswordIndicator';
 /// STYLES & TYPES END
 
 /// TYPES
+import { uiOnAlert } from '@/src/store/slice/ui.slice';
+import { useDispatch } from 'react-redux';
 
 type TRecoverData = {
   password: string;
@@ -46,8 +47,6 @@ type TProps = {
   handleLogin: (user: any) => void;
   handleLoading: (isLoading: boolean) => void;
   handleError: (open: boolean, message?: string) => void;
-  notificationState?: INotificationProps;
-  handleNotifications?: (props: INotificationProps) => void;
   fetching: boolean;
 };
 
@@ -59,11 +58,12 @@ const initialValues: any = {
 
 const PASS_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 
-function ChangePassword({ handleNotifications, handleLoading }: TProps): JSX.Element {
+function ChangePassword({ handleLoading }: TProps): JSX.Element {
   const { t } = useTranslation([i18nGlobal, i18nForms]);
   const classes = recoverStyles();
   const router = useRouter();
   const [fetchHasError, setFetchHasError] = useState(false);
+  const dispatch = useDispatch();
 
   const VALIDATIONS = {
     name: 'ChangePassword',
@@ -125,12 +125,12 @@ function ChangePassword({ handleNotifications, handleLoading }: TProps): JSX.Ele
   const handleGlobalFormErrors = (values: TRecoverData, errors: FormikErrors<TRecoverData>) => {
     const i18Key = getGlobalFormErrors(values, errors);
     if (i18Key) {
-      handleNotifications({
-        message: t(i18Key, { ns: i18nForms }),
-        severity: 'error',
-        open: true,
-        duration: 20000
-      });
+      dispatch(
+        uiOnAlert({
+          type: 'error',
+          message: t(i18Key, { ns: i18nForms })
+        })
+      );
     }
   };
 
@@ -145,11 +145,12 @@ function ChangePassword({ handleNotifications, handleLoading }: TProps): JSX.Ele
       })
       .catch(err => {
         setFetchHasError(true);
-        handleNotifications({
-          open: true,
-          message: getErrorMessage(err.code),
-          severity: 'error'
-        });
+        dispatch(
+          uiOnAlert({
+            type: 'error',
+            message: getErrorMessage(err.code)
+          })
+        );
       })
       .finally(() => handleLoading && handleLoading(false));
   };

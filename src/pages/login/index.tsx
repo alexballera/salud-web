@@ -12,6 +12,9 @@ import { NAMESPACE_KEY as i18Global, i18n } from '../../i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
 /// i18n END
 
+import { uiOnAlert } from '@/src/store/slice/ui.slice';
+import { useDispatch } from 'react-redux';
+
 /// MATERIAL UI
 import { Box, Button, Divider, Hidden } from '@material-ui/core';
 /// MATERIAL UI END
@@ -44,13 +47,14 @@ import { UserContext } from '../../context/UserContext';
 const INITIAL_STATE: TLoginData = { email: '', password: '' };
 /// FORM STATES & VALIDATIONS END
 
-function LoginPage({ fetching, handleLoading, handleNotifications }: TProps): JSX.Element {
+function LoginPage({ fetching, handleLoading }: TProps): JSX.Element {
   const { t } = useTranslation([i18Global, i18Forms]);
   const { handleUserSignIn, initializeSession, initializeGuestSession } = useContext(UserContext);
   const [updatedPassword, setUpdatedPassword] = useState<string>();
   const [fetchHasError, setFetchHasError] = useState(false);
   const classes = LoginStyles();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     updatedPasswordNotification();
@@ -59,11 +63,12 @@ function LoginPage({ fetching, handleLoading, handleNotifications }: TProps): JS
   const updatedPasswordNotification = () => {
     setUpdatedPassword(getDataFromSessionStorage('updated_password'));
     if (updatedPassword) {
-      handleNotifications({
-        open: true,
-        message: `${t('message.password.updated', { ns: i18Forms })}`,
-        severity: 'success'
-      });
+      dispatch(
+        uiOnAlert({
+          type: 'success',
+          message: `${t('message.password.updated', { ns: i18Forms })}`
+        })
+      );
       removeDataFromSessionStorage('updated_password');
     }
   };
@@ -93,12 +98,12 @@ function LoginPage({ fetching, handleLoading, handleNotifications }: TProps): JS
       }
     } catch (e) {
       setFetchHasError(true);
-      handleNotifications({
-        message: mapFetchErrors(e.code),
-        severity: 'error',
-        open: true,
-        duration: 20000
-      });
+      dispatch(
+        uiOnAlert({
+          type: 'error',
+          message: mapFetchErrors(e.code)
+        })
+      );
     } finally {
       handleLoading && handleLoading(false);
     }
@@ -132,12 +137,12 @@ function LoginPage({ fetching, handleLoading, handleNotifications }: TProps): JS
   const handleGlobalFormErrors = (values: TLoginData, errors: FormikErrors<TLoginData>) => {
     const i18Key = getGlobalFormErrors(values, errors);
     if (i18Key) {
-      handleNotifications({
-        message: t(i18Key, { ns: i18Forms }),
-        severity: 'error',
-        open: true,
-        duration: 20000
-      });
+      dispatch(
+        uiOnAlert({
+          type: 'error',
+          message: t(i18Key, { ns: i18Forms })
+        })
+      );
     }
   };
 

@@ -16,7 +16,7 @@ import { withAppContext } from '../../context/index';
 
 /// TYPES
 import type {
-  TProps,
+  // TProps,
   TFormData,
   TCountryDocumentTypeItem
 } from '../../containers/SignUp/index.types';
@@ -56,6 +56,9 @@ import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18Global, i18n } from '../../i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
 /// i18n END
+
+import { uiOnAlert, uiClean } from '@/src/store/slice/ui.slice';
+import { useDispatch } from 'react-redux';
 
 type TSteper = {
   [key: number]: {
@@ -113,16 +116,16 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function SignUpView(props: TProps): JSX.Element {
+function SignUpView(): JSX.Element {
   const classes = useStyles();
   const router = useRouter();
-  const { handleNotifications, notificationState } = props;
   const { t } = useTranslation(i18Global);
   const { initializeGuestSession } = useContext(UserContext);
   const [customPopUpError, setCustomPopUpError] = useState<null | string>(null);
   const [currentStep, setCurrentStep] = useState(0);
   const [customSubmitCount, setCustomSubmitCount] = useState(0);
   const [currDocTypeArgs, setCurrDocTypeArgs] = useState<TCountryDocumentTypeItem | null>(null);
+  const dispatch = useDispatch();
 
   const yupPersonalData = {
     name: 'PersonalData',
@@ -224,7 +227,6 @@ function SignUpView(props: TProps): JSX.Element {
           <PersonalDataForm
             setCurrDocTypeArgs={setCurrDocTypeArgs}
             currDocTypeArgs={currDocTypeArgs}
-            handleNotifications={handleNotifications}
             setCustomPopUpError={setCustomPopUpError}
             documentTypesOptions={[]}
             {...formik}
@@ -268,11 +270,12 @@ function SignUpView(props: TProps): JSX.Element {
   const handleGlobalFormErrors = (errors: FormikErrors<TFormData>) => {
     const formError = mapAndGetFormErrors(errors);
     if (formError) {
-      handleNotifications({
-        open: true,
-        severity: 'error',
-        message: formError
-      });
+      dispatch(
+        uiOnAlert({
+          type: 'error',
+          message: formError
+        })
+      );
     }
   };
 
@@ -306,11 +309,12 @@ function SignUpView(props: TProps): JSX.Element {
 
       router.push('/signup/email_verification');
     } catch (e) {
-      handleNotifications({
-        open: true,
-        severity: 'error',
-        message: mapFetchErrors(e.code)
-      });
+      dispatch(
+        uiOnAlert({
+          type: 'error',
+          message: mapFetchErrors(e.code)
+        })
+      );
     }
   };
 
@@ -323,7 +327,8 @@ function SignUpView(props: TProps): JSX.Element {
   };
 
   const handleNext = (values: TFormData) => {
-    handleNotifications({ ...notificationState, open: false });
+    dispatch(uiClean());
+    console.log('activar Next');
     setCustomPopUpError(null);
     if (MAP_STEPS[currentStep + 1]) {
       setCurrentStep(currentStep + 1);
@@ -335,7 +340,8 @@ function SignUpView(props: TProps): JSX.Element {
 
   const handlePrev = () => {
     if (MAP_STEPS[currentStep - 1]) {
-      handleNotifications({ ...notificationState, open: false });
+      dispatch(uiClean());
+      console.log('activar Next');
       setCustomPopUpError(null);
       setCurrentStep(currentStep - 1);
       window.scrollTo(0, 0);
