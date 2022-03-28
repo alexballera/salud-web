@@ -196,7 +196,8 @@ function Navbar(): JSX.Element {
     '/clinic_history/vaccines',
     '/clinic_history/familyIllnesses',
     '/clinic_history/vaccines/[item_id]',
-    '/medicalData'
+    '/medicalData',
+    '/proceedings'
   ];
 
   return (
