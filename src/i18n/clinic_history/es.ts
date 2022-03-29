@@ -10,7 +10,7 @@ export const esClinicHistory = {
 
   vaccines: {
     preview_sub_title: 'Vacuna contra la {{disease}}',
-    title: 'Llevá el registro de tus vacunas y las dósis que llevas',
+    title: 'Llevá el registro de tus vacunas y las dosis que llevas',
     dose: 'dosis',
     no_records: 'No se encontró la vacuna'
   },
