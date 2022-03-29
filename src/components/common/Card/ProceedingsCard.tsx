@@ -11,6 +11,9 @@ import FolderOpenOutlinedIcon from '@material-ui/icons/FolderOpenOutlined';
 import SvgMedicine from '../Svg/SvgMedicine.component';
 import SvgFolder from '../Svg/SvgFolder.component';
 
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY as i18nProceedings } from '../../../i18n/proceedings/i18n';
+
 const useStyles = makeStyles({
   textCard2: {
     color: secondaryMainColor,
@@ -43,12 +46,13 @@ type TProps = {
 export default function ProceedingsCard({ title, route }: TProps): JSX.Element {
   const classes = useStyles();
   const router = useRouter();
+  const { t } = useTranslation([i18nProceedings]);
 
   const selectIcon = (icon): React.ReactElement => {
     switch (icon) {
-      case 'Recetas y prescripciones':
+      case t('proceedings.prescriptions', { ns: i18nProceedings }):
         return <SvgMedicine />;
-      case 'Resultados de exámenes':
+      case t('proceedings.examResults', { ns: i18nProceedings }):
         return <SvgFolder />;
       default:
         return <FolderOpenOutlinedIcon htmlColor={secondaryMainColor} />;
