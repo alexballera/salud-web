@@ -1,25 +1,20 @@
-/// BASE IMPORTS
 import React, { useState } from 'react';
-/// BASE IMPORTS
-
-/// i18n
 import { useTranslation, withTranslation } from 'react-i18next';
+import { Box, Grid, Tab, Tabs, Typography } from '@material-ui/core';
+
 import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
 import { NAMESPACE_KEY as i18nGeneralData } from '../../i18n/generalData/i18n';
-/// i18n END
-/// OWN COMPONENTS
 import { withAppContext } from '../../context';
 import TabContent from '../../containers/GeneralData/TabContent';
-/// OWN COMPONENTS END
-
-/// STYLES & TYPES
-import { Tab, Tabs } from '@material-ui/core';
+import generalDataStyles from './styles.module';
 import {
   getDataFromLocalStorage,
   removeDataFromLocalStorage
 } from '@/src/services/localStorage.service';
+import MeasurementGraphic from '@/src/components/common/Graphics/Measurement';
 
 function GeneralDataPage(): JSX.Element {
+  const classes = generalDataStyles();
   const { t } = useTranslation([i18nGeneralData, i18Forms]);
   const [tab, setTab] = useState<number>(parseInt(getDataFromLocalStorage('cardSelected')) || 0);
   removeDataFromLocalStorage('cardSelected');
@@ -43,6 +38,7 @@ function GeneralDataPage(): JSX.Element {
   return (
     <>
       <Tabs
+        className={classes.shadow}
         value={tab}
         indicatorColor="secondary"
         textColor="secondary"
@@ -52,10 +48,22 @@ function GeneralDataPage(): JSX.Element {
       >
         {items.map((item, i) => (
           // eslint-disable-next-line react/jsx-key
-          <Tab label={item.label} onClick={() => setTab(i)} />
+          <Tab key={i} label={item.label} onClick={() => setTab(i)} />
         ))}
       </Tabs>
-      <TabContent tab={tab} />
+      <Grid container className={classes.mainGrid}>
+        <Grid item xs={12}>
+          <Box role="tabpanel" m={3}>
+            <TabContent tab={tab} />
+            <Box mt={3} mb={1}>
+              <Typography variant="body2" className={classes.typography16}>
+                Gráfico de presión
+              </Typography>
+            </Box>
+            <MeasurementGraphic />
+          </Box>
+        </Grid>
+      </Grid>
     </>
   );
 }
