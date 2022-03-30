@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Badge, Box, Card, Typography } from '@material-ui/core';
 import Chart from 'chart.js/auto';
 
@@ -10,15 +10,18 @@ import {
 } from '../../../../styles/js/theme';
 import measurementGraphicStyles from './styles.module';
 
+import { IMeasurementRecord } from '../../../../services/getMeasurementsData.service';
+import { useGetMeasurementsQuery } from '../../../../services/apiBFF';
+
 const options = {
   responsive: true,
   scaleShowVerticalLines: false,
   plugins: {
     legend: false,
-    title: false,
-    tooltips: {
-      enabled: true
-    }
+    title: false
+  },
+  tooltips: {
+    mode: 'point'
   },
   elements: {
     point: {
@@ -35,11 +38,23 @@ const options = {
   }
 };
 
-const MeasurementGraphic = (): JSX.Element => {
+const initialState = {
+  systolic: null,
+  diastolic: null,
+  time: null,
+  value: null,
+  performer: ''
+};
+
+const MeasurementGraphic = ({ datos }): JSX.Element => {
   const canvasEl = useRef(null);
   const classes = measurementGraphicStyles();
 
   useEffect(() => {
+    // const diastolic = measurement2.measurement.map(item => item.diastolic);
+    // console.log('diastolic', diastolic);
+    console.log('data tool', datos.measurements);
+
     const ctx = canvasEl.current.getContext('2d');
     const gradientArea = ctx.createLinearGradient(0, 16, 0, 600);
     gradientArea.addColorStop(0, graphicGradientPrimary);
@@ -52,14 +67,16 @@ const MeasurementGraphic = (): JSX.Element => {
           data: [33, 25, 35, 51, 54, 76],
           fill: false,
           lineTension: 0.5,
-          borderColor: purple
+          borderColor: purple,
+          borderWidth: 3
         },
         {
           data: [0, 41, 44, 65, 0, 50],
           fill: true,
           lineTension: 0.5,
           backgroundColor: gradientArea,
-          borderColor: secondaryLightColor
+          borderColor: secondaryLightColor,
+          borderWidth: 4
         }
       ]
     };
