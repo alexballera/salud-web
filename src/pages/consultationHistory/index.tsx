@@ -71,14 +71,6 @@ const ConsultationHistory = (): JSX.Element => {
   //   }
   // }, [sliderYear]);
 
-  const getConsultationTitle = (type: string): string => {
-    const title = {
-      laboratory: `${t('card.laboratory', { ns: i18Recipes })}`,
-      procedure: `${t('card.procedure', { ns: i18Recipes })}`
-    };
-    return title[type];
-  };
-
   return (
     <ThemeProvider theme={muiTheme}>
       <Grid container>
@@ -145,7 +137,7 @@ const ConsultationHistory = (): JSX.Element => {
                       return (
                         <Box mb={2} key={`${item.userId}-${i}`}>
                           <CardLink
-                            title={getConsultationTitle(item.type)}
+                            title={item.performer}
                             text1={item.name}
                             text2={item.date}
                             reportedBy={item.performer}
