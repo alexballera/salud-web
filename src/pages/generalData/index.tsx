@@ -63,7 +63,7 @@ function GeneralDataPage(): JSX.Element {
           measurement = data.records.find(x => x.type === 'bloodGlocuse');
           break;
       }
-      const result = measurement && measurement.length > 0 ? measurement[0] : null;
+      const result = measurement || [];
       setMeasurement2(result);
     }
   }, [tab, isLoading, data]);

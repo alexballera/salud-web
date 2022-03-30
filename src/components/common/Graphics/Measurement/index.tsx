@@ -46,14 +46,15 @@ const initialState = {
   performer: ''
 };
 
-const MeasurementGraphic = ({ datos }): JSX.Element => {
+const MeasurementGraphic = ({ datos }: any): JSX.Element => {
   const canvasEl = useRef(null);
   const classes = measurementGraphicStyles();
 
   useEffect(() => {
-    // const diastolic = measurement2.measurement.map(item => item.diastolic);
-    // console.log('diastolic', diastolic);
-    console.log('data tool', datos.measurements);
+    const diastolic = datos.measurements?.map(item => item.diastolic);
+    const systolic = datos.measurements?.map(item => item.systolic);
+    console.log('diastolic', diastolic);
+    console.log('systolic', systolic);
 
     const ctx = canvasEl.current.getContext('2d');
     const gradientArea = ctx.createLinearGradient(0, 16, 0, 600);
@@ -61,17 +62,17 @@ const MeasurementGraphic = ({ datos }): JSX.Element => {
     gradientArea.addColorStop(0.65, graphicGradientSecondary);
 
     const data = {
-      labels: ['', '', '', '', ''],
+      labels: ['', '', '', '', '', '', ''],
       datasets: [
         {
-          data: [33, 25, 35, 51, 54, 76],
+          data: diastolic,
           fill: false,
           lineTension: 0.5,
           borderColor: purple,
           borderWidth: 3
         },
         {
-          data: [0, 41, 44, 65, 0, 50],
+          data: systolic,
           fill: true,
           lineTension: 0.5,
           backgroundColor: gradientArea,
@@ -91,29 +92,6 @@ const MeasurementGraphic = ({ datos }): JSX.Element => {
       myLineChart.destroy();
     };
   });
-
-  return (
-    <>
-      <Card className={classes.cardMeasurement}>
-        <canvas id="myChart" ref={canvasEl} height="160" />
-        <Box mt={1} style={{ display: 'flex', justifyContent: 'center' }}>
-          Here controls
-        </Box>
-        <Box mt={2} ml={2} display="flex">
-          <Box component="span" mr={2}>
-            <Badge color="primary" variant="dot"></Badge>
-          </Box>
-          <Typography variant="body2">Registro de presión sistólica</Typography>
-        </Box>
-        <Box my={1} ml={2} display="flex">
-          <Box component="span" mr={2}>
-            <Badge color="secondary" variant="dot"></Badge>
-          </Box>
-          <Typography variant="body2">Registro de presión diastólica</Typography>
-        </Box>
-      </Card>
-    </>
-  );
 };
 
 export default MeasurementGraphic;
