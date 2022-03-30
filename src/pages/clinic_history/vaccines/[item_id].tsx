@@ -98,7 +98,7 @@ function VaccinesPreview(): JSX.Element {
     const toDate = parseISO(date);
 
     if (!isValid(toDate)) {
-      return t('invalid_date_format');
+      return t('invalid_date_format', { ns: i18nGlobal });
     }
 
     const year = toDate.getUTCFullYear();
@@ -122,7 +122,7 @@ function VaccinesPreview(): JSX.Element {
     <Box px={3} py={4} className={classes.main}>
       <Typography className={classes.diseaseText}>{data.name}</Typography>
       <Typography className={classes.subTitle}>
-        {t('vaccines.preview_sub_title', { disease: data.name })}
+        {t('vaccines.preview_sub_title', { disease: data.name, ns: i18nClinicHistory })}
       </Typography>
 
       {Object.values(data)
@@ -132,7 +132,10 @@ function VaccinesPreview(): JSX.Element {
             <Box my={3} key={idx}>
               <CardCollapse
                 items={[{ value: getCardBodyText(item as TDose[]) }]}
-                title={t('vaccines.dose_with_value', { dose: 'I'.repeat(idx + 1) })}
+                title={t('vaccines.dose_with_value', {
+                  dose: 'I'.repeat(idx + 1),
+                  ns: i18nClinicHistory
+                })}
                 showArrow={false}
                 isExpanded={true}
                 cardProps={{ elevation: 0 }}
