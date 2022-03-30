@@ -16,7 +16,6 @@ export const enMenu = {
     recipes_and_prescriptions_preview: 'Details',
     proceedings: 'Medical record',
     clinic_history: 'Clinic history',
-    my_general_data: 'My general data',
     diseases: 'My diseases',
     allergies: 'My allergies',
     clinic_history_habits: 'Control of habits',
