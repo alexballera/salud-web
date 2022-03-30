@@ -12,7 +12,9 @@ export const enClinicHistory = {
     preview_sub_title: 'Vacuna contra la {{disease}}',
     title: 'Keep track of your vaccinations and the doses you take',
     dose: 'dose',
-    no_records: 'Vaccine not found'
+    no_records: 'Vaccine not found',
+    dose_with_value: '{{dose}} Dose',
+    no_applied: 'No applied'
   },
   familyIllnesses: {
     diabetes: 'Diabetes',
@@ -37,8 +39,6 @@ export const enClinicHistory = {
     nephew_niece: 'Nephew / Niece',
     child: 'Child',
     carer: 'Carer',
-    dose: 'dose',
-    dose_with_value: '{{dose}} Dose',
-    no_applied: 'No applied'
+    dose: 'dose'
   }
 };
