@@ -6,6 +6,7 @@ import { THabitsResponse } from '@/src/types/services/habit.types';
 import { TDiseasesResponse } from '@/src/types/services/diseases.types';
 import { TGeneralData } from '@/src/types/services/generalData.types';
 import { TFamiliarDiseasesResponse } from '../types/services/familiarDiseases.types';
+import { TConsultationHistoryResponse } from '../types/services/consultationHistory.types';
 
 type TGetVaccineByIdParams = {
   userId: string;
@@ -64,6 +65,9 @@ export const apiBFF = createApi({
     }),
     getFamiliarDiseases: builder.query<TFamiliarDiseasesResponse, void>({
       query: () => ({ url: '/patients/1/familiarDiseases', method: 'get' })
+    }),
+    getConsultationHistory: builder.query<TConsultationHistoryResponse, void>({
+      query: () => ({ url: '/patients/1/consultationHistory', method: 'get' })
     })
   })
 });
@@ -76,5 +80,6 @@ export const {
   useGetMeasurementsQuery,
   useGetGeneralDataQuery,
   useGetFamiliarDiseasesQuery,
-  useGetVaccineByIdQuery
+  useGetVaccineByIdQuery,
+  useGetConsultationHistoryQuery
 } = apiBFF;

@@ -5,10 +5,10 @@ import { useRouter } from 'next/router';
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY as i18Recipes } from '@/src/i18n/recipes_and_prescriptions/i18n';
-import { NAMESPACE_KEY as i18Forms } from '@/src/i18n/forms/i18n';
-import { NAMESPACE_KEY as i18nGlobal } from '@/src/i18n/globals/i18n';
-import { NAMESPACE_KEY as i18nExams } from '@/src/i18n/exam_result/i18n';
+import { NAMESPACE_KEY as i18Recipes } from '../../i18n/recipes_and_prescriptions/i18n';
+import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
+import { NAMESPACE_KEY as i18nGlobal } from '../../i18n/globals/i18n';
+import { NAMESPACE_KEY as i18nExams } from '../../i18n/exam_result/i18n';
 /// i18n END
 
 /// MUI COMPONENTS
@@ -16,17 +16,17 @@ import { Box, Grid, CircularProgress, Typography, ThemeProvider } from '@mui/mat
 /// MUI COMPONENTS END
 
 /// OWN COMPONENTS
-import YearSlider from '@/src/components/common/YearSlider';
-import CardLink from '@/src/components/common/Card/CardLink';
+import YearSlider from '../../components/common/YearSlider';
+import CardLink from '../../components/common/Card/CardLink';
 /// OWN COMPONENTS END
 
 /// STYLES
-import { title2Color, title3Color } from '@/src/styles/js/theme';
-import muiTheme from '@/src/styles/js/muiTheme';
+import { title2Color, title3Color } from '../../styles/js/theme';
+import muiTheme from '../../styles/js/muiTheme';
 /// STYLES END
 
 /// SERVICES
-import { getExamResultsByYear, TExamResultsGroup } from '@/src/services/getExamResultsData.service';
+import { useGetConsultationHistoryQuery } from '../../services/apiBFF';
 /// SERVICES END
 
 const PAGE_PATHNAME = '/exam_results';
@@ -39,7 +39,8 @@ const ConsultationHistory = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [sliderYear, setSliderYear] = useState<null | number>(null);
   const { 'selected-year': selectedYear, 'selected-item': selectedItem } = router.query;
-  const [examResultsGroups, setExamResultsGroups] = useState<TExamResultsGroup>([]);
+  const [consultationHistoryGroups, setConsultationHistoryGroups] =
+    useState<TConsultationHistoryGroup>([]);
 
   // TODO: replace this route state using the redux or context
   const pushRouteItem = (itemIdx?: string) => {
@@ -52,25 +53,25 @@ const ConsultationHistory = (): JSX.Element => {
     });
   };
 
-  useEffect(() => {
-    if (sliderYear) {
-      setLoading(true);
-      const id = 'ee957013-b02f-45b2-b837-092b490242ea';
-      getExamResultsByYear(id, sliderYear)
-        .then(res => {
-          setExamResultsGroups(res);
-        })
-        .catch(err => console.error(err))
-        .finally(() => {
-          setLoading(false);
-          if (sliderYear && selectedYear) {
-            router.replace(PAGE_PATHNAME);
-          }
-        });
-    }
-  }, [sliderYear]);
+  // useEffect(() => {
+  //   if (sliderYear) {
+  //     setLoading(true);
+  //     const id = 'ee957013-b02f-45b2-b837-092b490242ea';
+  //     getExamResultsByYear(id, sliderYear)
+  //       .then(res => {
+  //         setConsultationHistoryGroups(res);
+  //       })
+  //       .catch(err => console.error(err))
+  //       .finally(() => {
+  //         setLoading(false);
+  //         if (sliderYear && selectedYear) {
+  //           router.replace(PAGE_PATHNAME);
+  //         }
+  //       });
+  //   }
+  // }, [sliderYear]);
 
-  const getExamTitle = (type: string): string => {
+  const getConsultationTitle = (type: string): string => {
     const title = {
       laboratory: `${t('card.laboratory', { ns: i18Recipes })}`,
       procedure: `${t('card.procedure', { ns: i18Recipes })}`
@@ -103,7 +104,7 @@ const ConsultationHistory = (): JSX.Element => {
               </Grid>
             )}
 
-            {!loading && !examResultsGroups.length && (
+            {!loading && !consultationHistoryGroups.length && (
               <Box mt={4}>
                 <Typography
                   variant="caption"
@@ -122,7 +123,7 @@ const ConsultationHistory = (): JSX.Element => {
 
             <Box {...{ ref: listContainerRef }}>
               {!loading &&
-                examResultsGroups.map((group, i) => (
+                consultationHistoryGroups.map((group, i) => (
                   // Group items by month
                   <Box key={i}>
                     <Typography
@@ -144,7 +145,7 @@ const ConsultationHistory = (): JSX.Element => {
                       return (
                         <Box mb={2} key={`${item.userId}-${i}`}>
                           <CardLink
-                            title={getExamTitle(item.type)}
+                            title={getConsultationTitle(item.type)}
                             text1={item.name}
                             text2={item.date}
                             reportedBy={item.performer}
