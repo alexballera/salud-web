@@ -18,6 +18,10 @@ const generalDataStyles = makeStyles({
   mainGrid: {
     backgroundColor: background2Color,
     height: '100%'
+  },
+  canvasStyle: {
+    height: '40vh',
+    width: '100vw'
   }
 });
 

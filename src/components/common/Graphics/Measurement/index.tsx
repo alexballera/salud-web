@@ -28,6 +28,12 @@ const MeasurementGraphic = ({ datos }: any): JSX.Element => {
     gradientArea.addColorStop(0, graphicGradientPrimary);
     gradientArea.addColorStop(0.65, graphicGradientSecondary);
 
+    const iconPrimary = new Image();
+    iconPrimary.src = 'images/iconPrimary.svg';
+
+    const iconSecundary = new Image();
+    iconSecundary.src = 'images/iconSecundary.svg';
+
     const contentCharts = [];
     switch (datos.type) {
       case 'arterialPressure':
@@ -38,7 +44,8 @@ const MeasurementGraphic = ({ datos }: any): JSX.Element => {
             fill: false,
             lineTension: 0.5,
             borderColor: purple,
-            borderWidth: 3
+            borderWidth: 3,
+            pointStyle: iconSecundary
           },
           {
             data: systolic,
@@ -47,7 +54,8 @@ const MeasurementGraphic = ({ datos }: any): JSX.Element => {
             lineTension: 0.5,
             backgroundColor: gradientArea,
             borderColor: secondaryLightColor,
-            borderWidth: 4
+            borderWidth: 4,
+            pointStyle: iconPrimary
           }
         );
         break;
@@ -58,7 +66,8 @@ const MeasurementGraphic = ({ datos }: any): JSX.Element => {
           lineTension: 0.5,
           backgroundColor: gradientArea,
           borderColor: secondaryLightColor,
-          borderWidth: 4
+          borderWidth: 4,
+          pointStyle: iconPrimary
         });
         break;
       case 'bloodGlocuse':
@@ -68,7 +77,8 @@ const MeasurementGraphic = ({ datos }: any): JSX.Element => {
           lineTension: 0.5,
           backgroundColor: gradientArea,
           borderColor: secondaryLightColor,
-          borderWidth: 4
+          borderWidth: 4,
+          pointStyle: iconPrimary
         });
         break;
       default:
@@ -78,7 +88,8 @@ const MeasurementGraphic = ({ datos }: any): JSX.Element => {
           lineTension: 0.5,
           backgroundColor: gradientArea,
           borderColor: secondaryLightColor,
-          borderWidth: 4
+          borderWidth: 4,
+          pointStyle: iconPrimary
         });
         break;
     }
@@ -93,7 +104,12 @@ const MeasurementGraphic = ({ datos }: any): JSX.Element => {
       data: data,
       options: {
         responsive: true,
+        aspectRatio: 2,
+        events: [],
         plugins: {
+          filler: {
+            propagate: true
+          },
           legend: {
             display: false
           },
@@ -103,7 +119,7 @@ const MeasurementGraphic = ({ datos }: any): JSX.Element => {
         },
         elements: {
           point: {
-            radius: 8
+            radius: 0
           }
         },
         scales: {
@@ -145,12 +161,11 @@ const MeasurementGraphic = ({ datos }: any): JSX.Element => {
     // myLineChart.tooltip.active;
     // triggerTooltip(myLineChart);
 
-    /* myLineChart.setActiveElements([
-      { datasetIndex: 0, index: 1 },
-      { datasetIndex: 1, index: 1 }
+    myLineChart.setActiveElements([
+      { datasetIndex: 0, index: 2 },
+      { datasetIndex: 1, index: 2 }
     ]);
     myLineChart.update();
-    myLineChart.draw(); */
 
     return function cleanup() {
       myLineChart.destroy();
@@ -160,7 +175,7 @@ const MeasurementGraphic = ({ datos }: any): JSX.Element => {
   return (
     <>
       <Card className={classes.cardMeasurement}>
-        <canvas id="myChart" ref={canvasEl} height="160" />
+        <canvas id="myChart" ref={canvasEl} className={classes.canvasStyle} />
         <Box mt={1} style={{ display: 'flex', justifyContent: 'center' }}>
           Here controls
         </Box>
