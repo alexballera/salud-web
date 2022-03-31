@@ -29,7 +29,7 @@ const useStyles = makeStyles({
     minWidth: 148,
     minHeight: 116,
     borderRadius: 16,
-    boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.5)'
+    boxShadow: '0px 4px 8px rgba(207, 225, 227, 0.25)'
   },
   alignCenter: {
     display: 'flex',
@@ -60,7 +60,7 @@ export default function ProceedingsCard({ title, route }: TProps): JSX.Element {
   };
 
   return (
-    <CardActionArea>
+    <CardActionArea className={classes.root}>
       <Card className={classes.root} onClick={() => router.push(route)}>
         <CardContent>
           <div className={classes.alignCenter}>{selectIcon(title)}</div>
