@@ -7,5 +7,14 @@ export const enGeneralData = {
   content: {
     lastMeasurement: 'Last measurement',
     noRegistry: 'No registry'
+  },
+  pressureChart: 'Pressure chart',
+  weightChart: 'Weight chart',
+  bloodGlucoseGraph: 'Blood glucose chart',
+  graphic: {
+    systolicPressureRecording: 'Systolic pressure recording',
+    diastolicPressureRecording: 'Diastolic pressure recording',
+    weightRecords: 'Weight records',
+    bloodGlucoseRecords: 'Blood glucose records'
   }
 };

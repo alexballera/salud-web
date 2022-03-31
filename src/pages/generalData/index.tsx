@@ -26,7 +26,7 @@ const initialState = {
 function GeneralDataPage(): JSX.Element {
   const classes = generalDataStyles();
   const { t } = useTranslation([i18nGeneralData, i18Forms]);
-  const [tab, setTab] = useState<number>(0);
+  const [tab, setTab] = useState<number>(parseInt(getDataFromLocalStorage('cardSelected')) || 0);
   removeDataFromLocalStorage('cardSelected');
 
   const handleChange = (event, newValue) => {
@@ -45,8 +45,7 @@ function GeneralDataPage(): JSX.Element {
     }
   ];
 
-  const [measurement2, setMeasurement2] = useState<IMeasurementRecord>(initialState);
-
+  const [measurement, setMeasurement] = useState<IMeasurementRecord>(initialState);
   const { data, isLoading } = useGetMeasurementsQuery('1');
 
   useEffect(() => {
@@ -64,11 +63,9 @@ function GeneralDataPage(): JSX.Element {
           break;
       }
       const result = measurement || [];
-      setMeasurement2(result);
+      setMeasurement(result);
     }
   }, [tab, isLoading, data]);
-
-  console.log('data 1', measurement2);
 
   return (
     <>
@@ -82,7 +79,6 @@ function GeneralDataPage(): JSX.Element {
         aria-label="tabs-general-data"
       >
         {items.map((item, i) => (
-          // eslint-disable-next-line react/jsx-key
           <Tab key={i} label={item.label} onClick={() => setTab(i)} />
         ))}
       </Tabs>
@@ -92,10 +88,14 @@ function GeneralDataPage(): JSX.Element {
             {data && <TabContent tab={tab} />}
             <Box mt={3} mb={1}>
               <Typography variant="body2" className={classes.typography16}>
-                Gráfico de presión
+                {tab === 0
+                  ? t('pressureChart', { ns: i18nGeneralData })
+                  : tab === 1
+                  ? t('weightChart', { ns: i18nGeneralData })
+                  : tab === 2 && t('bloodGlucoseGraph', { ns: i18nGeneralData })}
               </Typography>
             </Box>
-            {data && <MeasurementGraphic datos={measurement2} />}
+            {data && <MeasurementGraphic datos={measurement} />}
           </Box>
         </Grid>
       </Grid>
