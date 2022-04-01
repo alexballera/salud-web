@@ -13,8 +13,6 @@ import { NAMESPACE_KEY as i18nClinic } from '@/src/i18n/clinic_history/i18n';
 /// MATERIAL UI
 import {
   Box,
-  Divider,
-  Grid,
   List,
   ListItem,
   ListItemText,
@@ -56,13 +54,13 @@ const items = [
   }
 ];
 
-export type TListItem = {
+type TListItem = {
   label: string;
   value: string;
   divider?: boolean;
 };
 
-export type TConsultations = {
+type TConsultations = {
   medicalConsultationId?: string;
   month?: string;
   name: string;
@@ -72,41 +70,45 @@ export type TConsultations = {
   date?: string;
 };
 
-const ListItemCustom = ({ label, value, divider }: TListItem): JSX.Element => (
-  <>
-    <ListItem sx={{ py: 2 }} divider={divider}>
-      <Stack direction="column">
-        <ListItemText sx={{ my: 0 }}>
-          <Typography
-            variant="body2"
-            sx={{
-              color: title3Color,
-              fontWeight: 400,
-              fontSize: 14,
-              lineHeight: '143%'
-            }}
-          >
-            {label}
-          </Typography>
-        </ListItemText>
-        <ListItemText sx={{ my: 0 }}>
-          <Typography
-            sx={{
-              color: title2Color,
-              fontWeight: 400,
-              fontSize: 14,
-              lineHeight: '143%'
-            }}
-          >
-            {value}
-          </Typography>
-        </ListItemText>
-      </Stack>
-    </ListItem>
-  </>
-);
+const ListItemCustom = (props: TListItem): JSX.Element => {
+  const { label, value, divider } = props;
+  return (
+    <>
+      <ListItem sx={{ py: 2 }} divider={divider}>
+        <Stack direction="column">
+          <ListItemText sx={{ my: 0 }}>
+            <Typography
+              variant="body2"
+              sx={{
+                color: title3Color,
+                fontWeight: 400,
+                fontSize: 14,
+                lineHeight: '143%'
+              }}
+            >
+              {label}
+            </Typography>
+          </ListItemText>
+          <ListItemText sx={{ my: 0 }}>
+            <Typography
+              sx={{
+                color: title2Color,
+                fontWeight: 400,
+                fontSize: 14,
+                lineHeight: '143%'
+              }}
+            >
+              {value}
+            </Typography>
+          </ListItemText>
+        </Stack>
+      </ListItem>
+    </>
+  );
+};
 
-const CardCustom = ({ name, reason, healthSite, doctor }: TConsultations): JSX.Element => {
+const CardCustom = (props: TConsultations): JSX.Element => {
+  const { name, reason, healthSite, doctor } = props;
   const { t } = useTranslation(i18nClinic);
   return (
     <Paper elevation={0} sx={{ borderRadius: 2, mb: 2 }}>
@@ -142,11 +144,13 @@ function ConsultationHistoryDetailPage(): JSX.Element {
         </Typography>
         {items.map(item => (
           <React.Fragment key={item.userId}>
-            {item.consultations.map(({ name, reason, healthSite, doctor }: TConsultations, i) => (
-              <React.Fragment key={i}>
-                <CardCustom name={name} reason={reason} healthSite={healthSite} doctor={doctor} />
-              </React.Fragment>
-            ))}
+            {item.consultations.map(
+              ({ name, reason, healthSite, doctor, medicalConsultationId }: TConsultations) => (
+                <React.Fragment key={medicalConsultationId}>
+                  <CardCustom name={name} reason={reason} healthSite={healthSite} doctor={doctor} />
+                </React.Fragment>
+              )
+            )}
           </React.Fragment>
         ))}
       </Box>
