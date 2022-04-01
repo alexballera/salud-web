@@ -113,7 +113,7 @@ function Navbar(): JSX.Element {
       case '/generalData':
         return t('proceedings.generalData', { ns: i18nProceedings });
       case '/proceedings':
-        return t('items.generalData', { ns: 'menu' });
+        return t('items.proceedings', { ns: 'menu' });
       case '/clinic_history':
         return t('items.clinic_history', { ns: 'menu' });
       case '/clinic_history/diseases':
