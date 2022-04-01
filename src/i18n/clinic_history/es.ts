@@ -43,5 +43,12 @@ export const esClinicHistory = {
     dose: 'dosis',
     dose_with_value: '{{dose}} Dosis',
     no_applied: 'Sin aplicar'
+  },
+  consultation: {
+    title: 'Información de consulta',
+    type: 'Tipo de consulta',
+    reason: 'Razón',
+    establishment: 'Establecimiento',
+    specialist: 'Especialista'
   }
 };

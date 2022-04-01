@@ -20,6 +20,7 @@ export const esMenu = {
     allergies: 'Mis alergias',
     clinic_history_habits: 'Control de hábitos',
     clinic_history_family_illnesses: 'Enfermedades familiares',
-    clinic_history_vaccines: 'Vacunas'
+    clinic_history_vaccines: 'Vacunas',
+    detail: 'Detalle'
   }
 };
