@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { Badge, Box, Card, Typography } from '@material-ui/core';
+import React, { useEffect, useRef, useState } from 'react';
+import { Badge, Box, Card, Grid, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import Chart from 'chart.js/auto';
 
@@ -11,51 +11,61 @@ import {
   purple
 } from '../../../../styles/js/theme';
 import measurementGraphicStyles from './styles.module';
+import moment from 'moment';
+import 'moment/locale/es'; // Spanish
 
 const MeasurementGraphic = ({ datos }: any): JSX.Element => {
   const canvasEl = useRef(null);
   const classes = measurementGraphicStyles();
   const { t } = useTranslation([i18nGeneralData]);
 
+  const [days, setDays] = useState([]);
+
   useEffect(() => {
+    /** extract dataPoints */
     const diastolic = datos.measurements?.map(item => item.diastolic);
     const systolic = datos.measurements?.map(item => item.systolic);
+
     const weight = datos.measurements?.map(item => item.value);
     const bloodGlocuse = datos.measurements?.map(item => item.value);
 
+    /** set background primary KPI */
     const ctx = canvasEl.current.getContext('2d');
     const gradientArea = ctx.createLinearGradient(0, 16, 0, 600);
     gradientArea.addColorStop(0, graphicGradientPrimary);
     gradientArea.addColorStop(0.65, graphicGradientSecondary);
 
+    /** prepare images indicators */
     const iconPrimary = new Image();
-    iconPrimary.src = 'images/iconPrimary.svg';
-
     const iconSecundary = new Image();
+    iconPrimary.src = 'images/iconPrimary.svg';
     iconSecundary.src = 'images/iconSecundary.svg';
 
+    const white = '#ffffff';
+    /** create structure lines */
     const contentCharts = [];
     switch (datos.type) {
       case 'arterialPressure':
         contentCharts.push(
           {
-            data: diastolic,
-            label: 'Label1',
-            fill: false,
-            lineTension: 0.5,
-            borderColor: purple,
-            borderWidth: 3,
-            pointStyle: iconSecundary
-          },
-          {
             data: systolic,
-            label: 'Label2',
             fill: true,
             lineTension: 0.5,
             backgroundColor: gradientArea,
             borderColor: secondaryLightColor,
             borderWidth: 4,
             pointStyle: iconPrimary
+          },
+          {
+            data: diastolic,
+            fill: false,
+            lineTension: 0.5,
+            borderColor: purple,
+            borderWidth: 3,
+            pointStyle: iconSecundary
+            /* pointBackgroundColor: white,
+            pointHoverRadius: 10,
+            pointHoverBackgroundColor: white */
           }
         );
         break;
@@ -94,27 +104,57 @@ const MeasurementGraphic = ({ datos }: any): JSX.Element => {
         break;
     }
 
+    const activeDate = datos.measurements?.map(item => moment(item.time).format('DD MMM yyyy'));
+    setDays(activeDate);
+
+    /** set structure lines and spaces */
     const data = {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: contentCharts
+      labels: ['', '', '', '', '', '', ''],
+      datasets: contentCharts.reverse()
     };
 
+    /** select active items with tooltips */
+    function triggerTooltip(chart, itemsActive) {
+      console.log(chart);
+      console.log(itemsActive);
+      chart.setActiveElements(itemsActive);
+      const tooltip = chart.tooltip;
+      if (tooltip.getActiveElements().length > 0) {
+        console.log('entro aqui');
+        tooltip.setActiveElements([], { x: 0, y: 0 });
+        chart.update();
+      } else {
+        const chartArea = chart.chartArea;
+        tooltip.setActiveElements(itemsActive, {
+          x: (chartArea.left + chartArea.right) / 2,
+          y: (chartArea.top + chartArea.bottom) / 2
+        });
+      }
+
+      chart.update();
+    }
+
+    /** create chart with options */
     const myLineChart = new Chart(ctx, {
       type: 'line',
       data: data,
       options: {
         responsive: true,
-        aspectRatio: 2,
+        aspectRatio: 1.5,
         events: [],
         plugins: {
-          filler: {
-            propagate: true
-          },
           legend: {
             display: false
           },
           title: {
             display: false
+          },
+          tooltip: {
+            enabled: true,
+            displayColors: false,
+            backgroundColor: 'rgb(27 31 35 / 0%)',
+            bodyColor: '#000',
+            bodyFont: { weight: 'bold', size: 14 }
           }
         },
         elements: {
@@ -124,60 +164,73 @@ const MeasurementGraphic = ({ datos }: any): JSX.Element => {
         },
         scales: {
           x: {
-            display: false
+            display: true,
+            grid: {
+              borderDash: [2, 10],
+              color: '#0000001c'
+            }
           },
           y: {
             display: false
+          }
+        },
+        onClick(e) {
+          const activePoints = myLineChart.getElementsAtEventForMode(
+            e,
+            'nearest',
+            {
+              intersect: true
+            },
+            false
+          );
+          if (activePoints.length > 0) {
+            console.log(contentCharts.length);
+            if (contentCharts.length === 2) {
+              triggerTooltip(myLineChart, [
+                { datasetIndex: 1, index: activePoints[0].index },
+                { datasetIndex: 0, index: activePoints[0].index }
+              ]);
+            } else {
+              triggerTooltip(myLineChart, [{ datasetIndex: 0, index: activePoints[0].index }]);
+            }
           }
         }
       }
     });
 
-    /* myLineChart.tooltip.setActiveElements(
-      [
-        { datasetIndex: 0, index: 1 },
-        { datasetIndex: 1, index: 1 }
-      ],
-      {
-        x: 0,
-        y: 0
-      }
-    ); */
+    /* const monthName = moment('2022-07-17T21:01:03Z').format('MMMM');
+    const dayName = moment('2022-07-17T21:01:03Z').format('dddd');
+    const yearName = moment('2022-07-17T21:01:03Z').format('yyyy');
+    const dateFormat = moment('2022-07-17T21:01:03Z').format('DD MMMM, yyyy');
+    console.log(monthName);
+    console.log(dayName);
+    console.log(yearName);
+    console.log(dateFormat); */
 
-    /* myLineChart.tooltip.setActiveElements(
-      [
-        {
-          datasetIndex: 0,
-          index: 2
-        },
-        {
-          datasetIndex: 1,
-          index: 2
-        }
-      ],
-      { y: 0, x: 0 }
-    ); */
-
-    // myLineChart.tooltip.active;
-    // triggerTooltip(myLineChart);
-
-    myLineChart.setActiveElements([
-      { datasetIndex: 0, index: 2 },
-      { datasetIndex: 1, index: 2 }
-    ]);
-    myLineChart.update();
-
+    /** end post render */
     return function cleanup() {
       myLineChart.destroy();
     };
-  });
+  }, [datos]);
 
   return (
     <>
       <Card className={classes.cardMeasurement}>
         <canvas id="myChart" ref={canvasEl} className={classes.canvasStyle} />
-        <Box mt={1} style={{ display: 'flex', justifyContent: 'center' }}>
-          Here controls
+        <Box mt={1}>
+          <Grid container style={{ flexWrap: 'nowrap' }}>
+            {days &&
+              days.map((day, index) => (
+                <Grid
+                  item
+                  key={index}
+                  className={classes.typography12}
+                  style={{ display: 'flex', justifyContent: 'flex-end' }}
+                >
+                  {day.replace('.', ',')}
+                </Grid>
+              ))}
+          </Grid>
         </Box>
         <Box mt={2} ml={2} display="flex">
           <Box component="span" mr={2}>

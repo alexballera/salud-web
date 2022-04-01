@@ -6,6 +6,11 @@ const generalDataStyles = makeStyles({
     borderRadius: 10,
     boxShadow: `0px 4px 8px ${shadowCardColor}`
   },
+  typography12: {
+    fontSize: '12px',
+    color: '#67777A',
+    textAlign: 'center'
+  },
   typography14: {
     fontSize: '14px'
   },

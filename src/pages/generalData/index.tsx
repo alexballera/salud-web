@@ -67,6 +67,14 @@ function GeneralDataPage(): JSX.Element {
     }
   }, [tab, isLoading, data]);
 
+  const selectedDate = (date, enabled = false): void => {
+    console.log(enabled);
+    if (enabled) {
+      console.log(measurement.measurements.filter(item => item.time === date));
+      console.log(measurement.measurements.filter(item => item.time === date));
+    }
+  };
+
   return (
     <>
       <Tabs
@@ -95,7 +103,7 @@ function GeneralDataPage(): JSX.Element {
                   : tab === 2 && t('bloodGlucoseGraph', { ns: i18nGeneralData })}
               </Typography>
             </Box>
-            {data && <MeasurementGraphic datos={measurement} />}
+            {data && <MeasurementGraphic datos={measurement} onSelected={selectedDate} />}
           </Box>
         </Grid>
       </Grid>
