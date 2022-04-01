@@ -12,16 +12,8 @@ import {
   removeDataFromLocalStorage
 } from '@/src/services/localStorage.service';
 import MeasurementGraphic from '@/src/components/common/Graphics/Measurement';
-import { IMeasurementRecord } from '../../services/getMeasurementsData.service';
+import { IMeasurement } from '../../services/getMeasurementsData.service';
 import { useGetMeasurementsQuery } from '../../services/apiBFF';
-
-const initialState = {
-  systolic: null,
-  diastolic: null,
-  time: null,
-  value: null,
-  performer: ''
-};
 
 function GeneralDataPage(): JSX.Element {
   const classes = generalDataStyles();
@@ -45,7 +37,8 @@ function GeneralDataPage(): JSX.Element {
     }
   ];
 
-  const [measurement, setMeasurement] = useState<IMeasurementRecord>(initialState);
+  const [measurement, setMeasurement] = useState<IMeasurement>(null);
+  const [seleted, setSeleted] = useState<number>(0);
   const { data, isLoading } = useGetMeasurementsQuery('1');
 
   useEffect(() => {
@@ -67,11 +60,10 @@ function GeneralDataPage(): JSX.Element {
     }
   }, [tab, isLoading, data]);
 
-  const selectedDate = (date, enabled = false): void => {
-    console.log(enabled);
+  const selectedDate = (date, enabled = false, index): void => {
     if (enabled) {
-      console.log(measurement.measurements.filter(item => item.time === date));
-      console.log(measurement.measurements.filter(item => item.time === date));
+      setSeleted(index);
+      // console.log(measurement.measurements.filter(item => item.time === date));
     }
   };
 
@@ -103,7 +95,9 @@ function GeneralDataPage(): JSX.Element {
                   : tab === 2 && t('bloodGlucoseGraph', { ns: i18nGeneralData })}
               </Typography>
             </Box>
-            {data && <MeasurementGraphic datos={measurement} onSelected={selectedDate} />}
+            {data && (
+              <MeasurementGraphic datos={measurement} onSelected={selectedDate} seleted={seleted} />
+            )}
           </Box>
         </Grid>
       </Grid>

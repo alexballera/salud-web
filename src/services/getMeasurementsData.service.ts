@@ -5,6 +5,13 @@ export type IMeasurementsData = {
   records: IMeasurement[];
 };
 
+export type IMeasurement = {
+  name: string;
+  type: string;
+  unit: string;
+  measurements: IMeasurementRecord[];
+};
+
 export type IMeasurementRecord = {
   systolic?: number;
   diastolic?: number;
@@ -13,12 +20,6 @@ export type IMeasurementRecord = {
   performer: string;
 };
 
-export type IMeasurement = {
-  name: string;
-  type: string;
-  unit: string;
-  measurements: IMeasurementRecord[];
-};
 export const mockData = {
   userId: 'ee957013-b02f-45b2-b837-092b490242ea',
   records: [

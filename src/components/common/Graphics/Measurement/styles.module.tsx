@@ -9,7 +9,8 @@ const generalDataStyles = makeStyles({
   typography12: {
     fontSize: '12px',
     color: '#67777A',
-    textAlign: 'center'
+    textAlign: 'center',
+    textDecoration: 'none'
   },
   typography14: {
     fontSize: '14px'
@@ -27,6 +28,11 @@ const generalDataStyles = makeStyles({
   canvasStyle: {
     height: '40vh',
     width: '100vw'
+  },
+  active: {
+    color: 'black !important',
+    fontWeight: 530,
+    textDecoration: 'none'
   }
 });
 
