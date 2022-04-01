@@ -1,5 +1,5 @@
 /// BASE IMPORTS
-import React, { createRef, useEffect, useState } from 'react';
+import React, { createRef, useState } from 'react';
 import { useRouter } from 'next/router';
 /// BASE IMPORTS
 
@@ -36,12 +36,15 @@ const ConsultationHistory = (): JSX.Element => {
   const router = useRouter();
   const listContainerRef = createRef();
   const renderCompleteVerifyRef = createRef();
-  const [loading, setLoading] = useState(false);
-  const [sliderYear, setSliderYear] = useState<null | number>(null);
+  // const [loading, setLoading] = useState(false);
+  const [sliderYear, setSliderYear] = useState<number>(null);
   const { 'selected-year': selectedYear, 'selected-item': selectedItem } = router.query;
-  const [consultationHistoryGroups, setConsultationHistoryGroups] =
-    useState<TConsultationHistoryGroup>([]);
+  // const [consultationHistoryGroups, setConsultationHistoryGroups] =
+  //   useState<TConsultationHistoryGroup>([]);
 
+  const { data, isLoading } = useGetConsultationHistoryQuery({
+    ...(sliderYear && { year: sliderYear.toString() })
+  });
   // TODO: replace this route state using the redux or context
   const pushRouteItem = (itemIdx?: string) => {
     router.push({
@@ -76,13 +79,13 @@ const ConsultationHistory = (): JSX.Element => {
       <Grid container>
         <Grid item xs={12}>
           <YearSlider
-            disabled={loading}
+            disabled={isLoading}
             itemClick={item => {
               setSliderYear(item);
             }}
           />
           <Box px={3}>
-            {loading && (
+            {isLoading && (
               <Grid
                 container
                 item
@@ -96,7 +99,7 @@ const ConsultationHistory = (): JSX.Element => {
               </Grid>
             )}
 
-            {!loading && !consultationHistoryGroups.length && (
+            {data.length === 0 && (
               <Box mt={4}>
                 <Typography
                   variant="caption"
@@ -114,8 +117,8 @@ const ConsultationHistory = (): JSX.Element => {
             )}
 
             <Box {...{ ref: listContainerRef }}>
-              {!loading &&
-                consultationHistoryGroups.map((group, i) => (
+              {!isLoading &&
+                data.map((group, i) => (
                   // Group items by month
                   <Box key={i}>
                     <Typography
@@ -135,15 +138,15 @@ const ConsultationHistory = (): JSX.Element => {
                     </Typography>
                     {group.items.map((item, i) => {
                       return (
-                        <Box mb={2} key={`${item.userId}-${i}`}>
+                        <Box mb={2} key={`${item.medicalConsultationId}-${i}`}>
                           <CardLink
-                            title={item.performer}
+                            title={item.healthSite}
                             text1={item.name}
                             text2={item.date}
-                            reportedBy={item.performer}
+                            reportedBy={item.doctor}
                             action={() => {
-                              pushRouteItem(item.id);
-                              router.push(`${PAGE_PATHNAME}/detail/${item.id}`);
+                              pushRouteItem(item.medicalConsultationId);
+                              router.push(`${PAGE_PATHNAME}/detail/${item.medicalConsultationId}`);
                             }}
                           />
                         </Box>

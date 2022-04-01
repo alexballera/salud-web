@@ -1,4 +1,16 @@
 export type TConsultationHistoryResponse = {
-  childhood?: [];
-  adulthood?: [];
+  userId: string;
+  consultations: TConsultationHistory[];
 };
+
+export type TConsultationHistory = {
+  medicalConsultationId: string;
+  month: string;
+  name: string;
+  doctor: string;
+  reason: string;
+  healthSite: string;
+  date: string;
+};
+
+export type TConsultationHistoryGroup = { month: string; items: TConsultationHistory[] }[];
