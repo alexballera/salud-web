@@ -19,6 +19,9 @@ import { Button, ButtonGroup, Box, Typography, Hidden } from '@material-ui/core'
 import Notifications from '../components/common/Notifications';
 /// OWN COMPONENTS END
 
+import { uiOnAlert } from '@/src/store/slice/ui.slice';
+import { useDispatch } from 'react-redux';
+
 /// i18n
 import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as home } from '../i18n/home/i18n';
@@ -27,24 +30,18 @@ import { NAMESPACE_KEY as i18nForms } from '../i18n/forms/i18n';
 /// i18n END
 
 /// TYPES
-import { INotificationProps } from '../context/types';
 import { UserContext } from '../context/UserContext';
 type IFormData = {
   handleLoading?: (loading: boolean) => void;
-  handleNotifications: (props: INotificationProps) => void;
-  notificationState?: INotificationProps;
 };
 /// TYPES END
 
-const HomePage = ({
-  handleNotifications,
-  handleLoading,
-  notificationState
-}: IFormData): JSX.Element => {
+const HomePage = ({ handleLoading }: IFormData): JSX.Element => {
   const { t, i18n } = useTranslation([home, i18nGlobal, i18nForms]);
   const { verifyEmail } = useContext(UserContext);
   const router = useRouter();
   const { userId, secret } = router.query;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     updateVerification();
@@ -54,19 +51,21 @@ const HomePage = ({
     if (userId) {
       verifyEmail(userId as string, secret as string)
         .then(() =>
-          handleNotifications({
-            open: true,
-            message: `${t('message.success.generated_user', { ns: i18nForms })}`,
-            severity: 'success'
-          })
+          dispatch(
+            uiOnAlert({
+              type: 'success',
+              message: `${t('message.success.generated_user', { ns: i18nForms })}`
+            })
+          )
         )
         .catch(e => {
           console.error(e);
-          handleNotifications({
-            open: true,
-            message: `${t('message.error.general_fetch', { ns: i18nForms })}`,
-            severity: 'error'
-          });
+          dispatch(
+            uiOnAlert({
+              type: 'error',
+              message: `${t('message.error.general_fetch', { ns: i18nForms })}`
+            })
+          );
         })
         .finally(() => handleLoading(false));
     }
@@ -79,10 +78,7 @@ const HomePage = ({
       </Head>
       <Box p={3} component="main">
         <Hidden only={['xs', 'sm']}>
-          <Notifications
-            {...notificationState}
-            onClose={() => handleNotifications({ ...notificationState, open: false })}
-          />
+          <Notifications />
         </Hidden>
 
         <Box>

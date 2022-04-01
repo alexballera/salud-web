@@ -177,8 +177,17 @@ const Vaccines = (): JSX.Element => {
                 <CircularProgress color="secondary" />
               </Grid>
             )}
-            {searchShow && filteredVaccines.map((item, i) => ListItemVaccines(item, i))}
-            {!searchShow && getVaccines()?.map((item, i) => ListItemVaccines(item, i))}
+            {!isLoading && searchShow && !filteredVaccines?.length && (
+              <Typography variant="caption" className={classes.noRecords}>
+                {t('vaccines.no_records', { ns: i18ClinicHistory })}
+              </Typography>
+            )}
+            {!isLoading &&
+              !searchShow &&
+              getVaccines()?.map((item, i) => ListItemVaccines(item, i))}
+            {!isLoading &&
+              searchShow &&
+              filteredVaccines.map((item, i) => ListItemVaccines(item, i))}
           </List>
         </Box>
       </Box>

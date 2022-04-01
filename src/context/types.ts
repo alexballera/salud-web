@@ -4,18 +4,10 @@ export type AppStates = {
   user: any;
   loggedIn: boolean;
   fetching: boolean;
-  errorState: { open: boolean; message: string; type: 'success' | 'error' | 'warning' };
 };
 
 export type TProps = {
   children?: React.ReactNode;
-};
-
-export type INotificationProps = {
-  open: boolean;
-  message: string;
-  severity: INotificationTypes;
-  duration?: number;
 };
 
 export type TUserContent = {
@@ -34,5 +26,4 @@ export type TUserContent = {
   initializeGuestSession: (session: Models.Session) => void;
 };
 
-export type INotificationTypes = 'success' | 'error' | 'info' | 'warning';
 // INTERFACES && TYPES END

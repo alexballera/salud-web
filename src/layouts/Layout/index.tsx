@@ -20,19 +20,35 @@ import { IProps } from './types';
 import { UserContext } from '../../context/UserContext';
 /// TYPES END
 
+import { uiClean } from '@/src/store/slice/ui.slice';
+import { useDispatch } from 'react-redux';
+
 export default withAppContext(function Layout({
   children,
   errorState,
-  handleError,
-  notificationState,
-  handleNotifications
+  handleError
 }: PropsWithChildren<IProps>): JSX.Element {
   const router = useRouter();
   const { isLoading, userLogState, loggedInRoutes } = useContext(UserContext);
 
+  const dispatch = useDispatch();
+
+  const pathNotificationClean = [
+    '/',
+    '/login',
+    '/recover_password',
+    '/recover_password/change_password',
+    '/recover_password/forward_email',
+    '/signup',
+    '/signup/email_verification',
+    '/signup/registered_patient'
+  ];
+
   useEffect(() => {
-    handleNotifications({ ...notificationState, open: false });
-  }, [router.pathname]);
+    if (pathNotificationClean.includes(router.pathname)) {
+      dispatch(uiClean());
+    }
+  }, [router.asPath]);
 
   if (isLoading || userLogState === 'UNKNOWN') {
     return (
@@ -59,10 +75,7 @@ export default withAppContext(function Layout({
     <>
       <Navbar />
       <Hidden only={['md', 'lg', 'xl']}>
-        <Notifications
-          {...notificationState}
-          onClose={() => handleNotifications({ ...notificationState, open: false })}
-        />
+        <Notifications />
       </Hidden>
       <Box component="main" data-testid="main">
         {children}
@@ -75,7 +88,7 @@ export default withAppContext(function Layout({
         autoHideDuration={7000}
       >
         <Alert
-          severity={errorState.type}
+          severity={errorState?.type}
           action={
             <IconButton
               aria-label="close"

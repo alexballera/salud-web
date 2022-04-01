@@ -10,10 +10,14 @@ export const esHabits = {
   drug: 'Droga',
   observation: 'Observación',
   frequency_of_consumption: 'Frecuencia de consumo',
+  quantity: 'Cantidad',
   state_of_addiction: 'Estado de la adicción',
-  physical_activity: 'Actividad Física',
+  physical_activity: 'Tipo de actividad física',
   duration: 'Duración',
   frequency: 'Frecuencia',
   details: 'Detalles',
-  i_want_to_stop_consuming: 'Quiero dejar de consumir'
+  intent_to_quit: 'Intensión de dejarlo',
+  i_want_to_stop_consuming: 'Quiero dejar de consumir',
+  comments: 'Comentarios',
+  none: 'Ninguno'
 };

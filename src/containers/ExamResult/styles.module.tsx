@@ -16,10 +16,10 @@ export const examStyles = makeStyles(() =>
       display: 'none'
     },
     noRecords: {
+      color: `${title3Color} !important`,
       fontSize: '12px !important',
-      lineHeight: '19.92px !important',
       letterSpacing: '0.4px',
-      color: title3Color
+      lineHeight: '166% !important'
     },
     vaccineTitle: {
       fontFamily: `${poppinsFontFamily} !important`,

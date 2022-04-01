@@ -1,5 +1,5 @@
 /// BASE IMPORTS
-import { Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 /// BASE IMPORTS
@@ -15,19 +15,11 @@ import { NAMESPACE_KEY as i18nProceedings } from '../../i18n/proceedings/i18n';
 import { withAppContext } from '../../context';
 /// OWN COMPONENTS END
 
-/// STYLES & TYPES
-import { TPersonalDataProps } from '../../containers/SignUp/index.types';
-
 /// LAYOUT
 /// LAYOUT END
 
 /// SERVICES
 import { MeasurementCardContainer } from '../../containers/MeasurementCardContainer/MeasurementCardContainer';
-import {
-  getMeasurementsData,
-  IMeasurementsData,
-  mockData
-} from '../../services/getMeasurementsData.service';
 import { useGetMeasurementsQuery } from '../../services/apiBFF';
 
 import {
@@ -119,7 +111,7 @@ const useStyles = makeStyles({
 });
 
 /// SERVICES END
-function ProceedingsPage({ handleNotifications }: TPersonalDataProps): JSX.Element {
+function ProceedingsPage(): JSX.Element {
   const classes = useStyles();
 
   const { t } = useTranslation([i18Global, i18Forms, i18nProceedings]);

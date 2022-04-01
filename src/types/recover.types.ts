@@ -1,10 +1,6 @@
-import { INotificationProps } from '../context/types';
-
-/// TYPES
 export type IProps = {
   email?: string;
   handleLoading?: (loading: boolean) => void;
-  handleNotifications?: (props: INotificationProps) => void;
 };
 
 export type IValidationDataForm = {
