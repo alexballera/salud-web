@@ -11,6 +11,7 @@ export const esGeneralData = {
   pressureChart: 'Gráfico de presión',
   weightChart: 'Gráfico de peso',
   bloodGlucoseGraph: 'Gráfico de glicemia',
+  noRecords: 'Aún no tenés mediciones',
   graphic: {
     systolicPressureRecording: 'Registro de presión sistólica',
     diastolicPressureRecording: 'Registro de presión diastólica',

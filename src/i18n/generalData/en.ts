@@ -11,6 +11,7 @@ export const enGeneralData = {
   pressureChart: 'Pressure chart',
   weightChart: 'Weight chart',
   bloodGlucoseGraph: 'Blood glucose chart',
+  noRecords: "You still haven't received",
   graphic: {
     systolicPressureRecording: 'Systolic pressure recording',
     diastolicPressureRecording: 'Diastolic pressure recording',

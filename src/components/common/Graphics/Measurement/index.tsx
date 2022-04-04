@@ -69,7 +69,7 @@ const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element
     if (datos) {
       const diastolic = datos.measurements?.map(item => item.diastolic);
       const systolic = datos.measurements?.map(item => item.systolic);
-      const weight = datos.measurements?.map(item => item.value);
+      const weight = []; // datos.measurements?.map(item => item.value);
       const bloodGlocuse = datos.measurements?.map(item => item.value);
 
       /** set background primary KPI */
@@ -164,48 +164,6 @@ const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element
           responsive: true,
           aspectRatio: 1.5,
           events: [],
-          plugins: {
-            legend: {
-              display: false
-            },
-            title: {
-              display: false
-            },
-            tooltip: {
-              enabled: true,
-              displayColors: false,
-              backgroundColor: 'rgb(27 31 35 / 0%)',
-              titleColor: '#67777A',
-              bodyFont: { weight: 'bold', size: 14 },
-              callbacks: {
-                labelTextColor: function () {
-                  return '#67777A';
-                },
-                label: function (context) {
-                  let content = '';
-                  if (context.dataset.label === 'mmHg') {
-                    content =
-                      `${context.raw.toString()} mmhg`.split(' ')[0] +
-                      '  ' +
-                      `${context.raw.toString()} mmhg`.split(' ')[1];
-                  }
-                  if (context.dataset.label === 'kg') {
-                    content =
-                      `${context.raw.toString()} kg`.split(' ')[0] +
-                      '  ' +
-                      `${context.raw.toString()} kg`.split(' ')[1];
-                  }
-                  if (context.dataset.label === 'mg/dl') {
-                    content =
-                      `${context.raw.toString()} mg/dl`.split(' ')[0] +
-                      '  ' +
-                      `${context.raw.toString()} mg/dl`.split(' ')[1];
-                  }
-                  return content;
-                }
-              }
-            }
-          },
           elements: {
             point: {
               radius: 0
@@ -226,7 +184,68 @@ const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element
               min: 0,
               max: 200
             }
-          }
+          },
+          plugins: [
+            {
+              legend: {
+                display: false
+              },
+              title: {
+                display: false
+              },
+              tooltip: {
+                enabled: true,
+                displayColors: false,
+                backgroundColor: 'rgb(27 31 35 / 0%)',
+                titleColor: '#67777A',
+                bodyFont: { weight: 'bold', size: 14 },
+                callbacks: {
+                  labelTextColor: function () {
+                    return '#67777A';
+                  },
+                  label: function (context) {
+                    let content = '';
+                    if (context.dataset.label === 'mmHg') {
+                      content =
+                        `${context.raw.toString()} mmhg`.split(' ')[0] +
+                        '  ' +
+                        `${context.raw.toString()} mmhg`.split(' ')[1];
+                    }
+                    if (context.dataset.label === 'kg') {
+                      content =
+                        `${context.raw.toString()} kg`.split(' ')[0] +
+                        '  ' +
+                        `${context.raw.toString()} kg`.split(' ')[1];
+                    }
+                    if (context.dataset.label === 'mg/dl') {
+                      content =
+                        `${context.raw.toString()} mg/dl`.split(' ')[0] +
+                        '  ' +
+                        `${context.raw.toString()} mg/dl`.split(' ')[1];
+                    }
+                    return content;
+                  }
+                }
+              },
+              beforeInit: function (chart) {
+                const data = chart.data.datasets[0].data;
+                if (data.length === 0) {
+                  // No data is present
+                  const current = chart.ctx;
+                  const width = chart.width;
+                  const height = chart.height;
+                  chart.clear();
+
+                  current.save();
+                  current.textAlign = 'center';
+                  current.textBaseline = 'middle';
+                  current.font = "16px normal 'poppins'";
+                  current.fillText(t('noRecords', { ns: i18nGeneralData }), width / 2, height / 2);
+                  current.restore();
+                }
+              }
+            }
+          ]
         }
       });
 
@@ -257,7 +276,7 @@ const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element
     <>
       <Card className={classes.cardMeasurement}>
         <canvas id="myChart" ref={canvasEl} className={classes.canvasStyle} />
-        {days ? (
+        {days && (
           <>
             <Box>
               <Grid container style={{ flexWrap: 'nowrap' }}>
@@ -301,7 +320,7 @@ const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element
             </Box>
 
             <Box my={1} ml={2} display="flex">
-              {datos && datos.type === 'arterialPressure' && (
+              {datos.type === 'arterialPressure' && (
                 <>
                   <Box component="span" mr={2}>
                     <Badge color="secondary" variant="dot"></Badge>
@@ -313,10 +332,6 @@ const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element
               )}
             </Box>
           </>
-        ) : (
-          <Box mt={2} ml={2} display="flex">
-            No data
-          </Box>
         )}
       </Card>
     </>
