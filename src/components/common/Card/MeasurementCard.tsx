@@ -85,7 +85,7 @@ export default function MeasurementCard({
   route,
   tab,
   time
-}: IProps) {
+}: IProps): JSX.Element {
   const classes = useStyles();
   const router = useRouter();
   const { t } = useTranslation(NAMESPACE_KEY);

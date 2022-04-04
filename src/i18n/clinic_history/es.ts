@@ -12,7 +12,9 @@ export const esClinicHistory = {
     preview_sub_title: 'Vacuna contra la {{disease}}',
     title: 'Llevá el registro de tus vacunas y las dosis que llevas',
     dose: 'dosis',
-    no_records: 'No se encontró la vacuna'
+    no_records: 'No se encontró la vacuna',
+    dose_with_value: '{{dose}} Dosis',
+    no_applied: 'Sin aplicar'
   },
   familyIllnesses: {
     diabetes: 'Diabetes',
@@ -40,8 +42,6 @@ export const esClinicHistory = {
     nephew_niece: 'Sobrino / Sobrina',
     child: 'Hijo (a)',
     carer: 'Cuidador',
-    dose: 'dosis',
-    dose_with_value: '{{dose}} Dosis',
-    no_applied: 'Sin aplicar'
+    dose: 'dosis'
   }
 };
