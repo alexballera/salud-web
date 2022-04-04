@@ -28,26 +28,32 @@ type measurements = {
 };
 
 type Tprops = {
-  datos: measurements;
+  dataGraphic: measurements;
   onSelected;
-  seleted: number;
+  selected: number;
+  tab: number;
 };
 
-const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element => {
+const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops): JSX.Element => {
   const canvasEl = useRef(null);
   const classes = measurementGraphicStyles();
   const { t } = useTranslation([i18nGeneralData]);
 
   const [days, setDays] = useState([]);
   const [active, setActive] = useState(0);
+  const [noRecordArterialPressure, setNoRecordArterialPressure] = useState(true);
+  const [noRecordBloodGlocuse, setNoRecordBloodGlocuse] = useState(true);
+  const [noRecordWeight, setNoRecordWeight] = useState(true);
 
   const changeActive = index => {
     setActive(index);
   };
 
   useEffect(() => {
-    /** extract dataPoints */
+    setActive(0);
+  }, [tab]);
 
+  useEffect(() => {
     /** select active items with tooltips */
     function triggerTooltip(chart, itemsActive) {
       chart.setActiveElements(itemsActive);
@@ -66,11 +72,12 @@ const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element
       chart.update();
     }
 
-    if (datos) {
-      const diastolic = datos.measurements?.map(item => item.diastolic);
-      const systolic = datos.measurements?.map(item => item.systolic);
-      const weight = []; // datos.measurements?.map(item => item.value);
-      const bloodGlocuse = datos.measurements?.map(item => item.value);
+    if (dataGraphic) {
+      /** extract dataPoints */
+      const diastolic = dataGraphic.measurements?.map(item => item.diastolic);
+      const systolic = dataGraphic.measurements?.map(item => item.systolic);
+      const weight = dataGraphic.measurements?.map(item => item.value);
+      const bloodGlocuse = dataGraphic.measurements?.map(item => item.value);
 
       /** set background primary KPI */
       const ctx = canvasEl.current.getContext('2d');
@@ -84,9 +91,20 @@ const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element
       iconPrimary.src = 'images/iconPrimary.svg';
       iconSecundary.src = 'images/iconSecundary.svg';
 
+      /** set days line */
+      const setActiveDate = data => {
+        const activeDate = data?.map(item => {
+          return {
+            dateVisual: moment(item.time).format('DD MMM yyyy'),
+            dateSelected: item.time
+          };
+        });
+        setDays(activeDate.reverse());
+      };
+
       /** create structure lines */
       const contentCharts = [];
-      switch (datos.type) {
+      switch (dataGraphic.type) {
         case 'arterialPressure':
           contentCharts.push(
             {
@@ -107,11 +125,9 @@ const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element
               borderColor: purple,
               borderWidth: 3,
               pointStyle: iconSecundary
-              /* pointBackgroundColor: white,
-            pointHoverRadius: 10,
-            pointHoverBackgroundColor: white */
             }
           );
+          setActiveDate(diastolic);
           break;
         case 'weight':
           contentCharts.push({
@@ -124,6 +140,7 @@ const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element
             borderWidth: 4,
             pointStyle: iconPrimary
           });
+          setActiveDate(weight);
           break;
         case 'bloodGlocuse':
           contentCharts.push({
@@ -136,24 +153,36 @@ const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element
             borderWidth: 4,
             pointStyle: iconPrimary
           });
+          setActiveDate(bloodGlocuse);
           break;
-      }
-
-      /** set days line */
-      if (datos.measurements) {
-        const activeDate = datos.measurements?.map(item => {
-          return {
-            dateVisual: moment(item.time).format('DD MMM yyyy'),
-            dateSelected: item.time
-          };
-        });
-        setDays(activeDate.reverse());
       }
 
       /** set structure lines and spaces */
       const data = {
         labels: ['', '', '', '', '', '', ''],
         datasets: contentCharts.reverse()
+      };
+
+      /** create chart empty message */
+      const empty = {
+        id: 'empty',
+        afterDraw: chart => {
+          const data = chart.data.datasets[0].data;
+          if (data.length === 0) {
+            // No data is present
+            const current = chart.ctx;
+            const width = chart.width;
+            const height = chart.height;
+            // chart.clear();
+
+            current.save();
+            current.textAlign = 'center';
+            current.textBaseline = 'middle';
+            current.font = "16px normal 'poppins'";
+            current.fillText(t('noRecords', { ns: i18nGeneralData }), width / 2, height / 2);
+            current.restore();
+          }
+        }
       };
 
       /** create chart with options */
@@ -175,9 +204,7 @@ const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element
               grid: {
                 borderDash: [2, 10],
                 color: '#0000001c'
-              },
-              min: 0,
-              max: 200
+              }
             },
             y: {
               display: false,
@@ -185,83 +212,57 @@ const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element
               max: 200
             }
           },
-          plugins: [
-            {
-              legend: {
-                display: false
-              },
-              title: {
-                display: false
-              },
-              tooltip: {
-                enabled: true,
-                displayColors: false,
-                backgroundColor: 'rgb(27 31 35 / 0%)',
-                titleColor: '#67777A',
-                bodyFont: { weight: 'bold', size: 14 },
-                callbacks: {
-                  labelTextColor: function () {
-                    return '#67777A';
-                  },
-                  label: function (context) {
-                    let content = '';
-                    if (context.dataset.label === 'mmHg') {
-                      content =
-                        `${context.raw.toString()} mmhg`.split(' ')[0] +
-                        '  ' +
-                        `${context.raw.toString()} mmhg`.split(' ')[1];
-                    }
-                    if (context.dataset.label === 'kg') {
-                      content =
-                        `${context.raw.toString()} kg`.split(' ')[0] +
-                        '  ' +
-                        `${context.raw.toString()} kg`.split(' ')[1];
-                    }
-                    if (context.dataset.label === 'mg/dl') {
-                      content =
-                        `${context.raw.toString()} mg/dl`.split(' ')[0] +
-                        '  ' +
-                        `${context.raw.toString()} mg/dl`.split(' ')[1];
-                    }
-                    return content;
-                  }
-                }
-              },
-              beforeInit: function (chart) {
-                const data = chart.data.datasets[0].data;
-                if (data.length === 0) {
-                  // No data is present
-                  const current = chart.ctx;
-                  const width = chart.width;
-                  const height = chart.height;
-                  chart.clear();
-
-                  current.save();
-                  current.textAlign = 'center';
-                  current.textBaseline = 'middle';
-                  current.font = "16px normal 'poppins'";
-                  current.fillText(t('noRecords', { ns: i18nGeneralData }), width / 2, height / 2);
-                  current.restore();
+          plugins: {
+            legend: {
+              display: false
+            },
+            title: {
+              display: false
+            },
+            tooltip: {
+              enabled: true,
+              displayColors: false,
+              backgroundColor: 'rgb(27 31 35 / 0%)',
+              titleColor: '#67777A',
+              bodyFont: { size: 14 },
+              callbacks: {
+                labelTextColor: function () {
+                  return '#67777A';
+                },
+                label: function (context) {
+                  const content =
+                    `${context.raw.toString()} ${context.dataset.label}`.split(' ')[0] +
+                    '  ' +
+                    `${context.raw.toString()} ${context.dataset.label}`.split(' ')[1];
+                  return content;
                 }
               }
             }
-          ]
-        }
+          }
+        },
+        plugins: [empty]
       });
 
       /** set indicators points */
       if (contentCharts.length === 2 && diastolic.length > 0 && systolic.length > 0) {
         triggerTooltip(myLineChart, [
-          { datasetIndex: 1, index: seleted },
-          { datasetIndex: 0, index: seleted }
+          { datasetIndex: 1, index: selected },
+          { datasetIndex: 0, index: selected }
         ]);
+        setNoRecordArterialPressure(true);
       } else {
+        setNoRecordArterialPressure(false);
         if (weight && weight.length > 0 && contentCharts[0].label === 'kg') {
-          triggerTooltip(myLineChart, [{ datasetIndex: 0, index: seleted }]);
+          triggerTooltip(myLineChart, [{ datasetIndex: 0, index: selected }]);
+          setNoRecordWeight(true);
+        } else {
+          setNoRecordWeight(false);
         }
-
         if (bloodGlocuse && bloodGlocuse.length > 0 && contentCharts[0].label === 'mg/dl') {
-          triggerTooltip(myLineChart, [{ datasetIndex: 0, index: seleted }]);
+          triggerTooltip(myLineChart, [{ datasetIndex: 0, index: selected }]);
+          setNoRecordBloodGlocuse(true);
+        } else {
+          setNoRecordBloodGlocuse(false);
         }
       }
 
@@ -270,12 +271,16 @@ const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element
         myLineChart.destroy();
       };
     }
-  }, [datos, seleted]);
+  }, [dataGraphic, selected]);
+
+  const dot = () => {
+    return <Badge color="primary" variant="dot"></Badge>;
+  };
 
   return (
     <>
       <Card className={classes.cardMeasurement}>
-        <canvas id="myChart" ref={canvasEl} className={classes.canvasStyle} />
+        <canvas id="myChart" ref={canvasEl} />
         {days && (
           <>
             <Box>
@@ -294,7 +299,7 @@ const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element
                       }}
                       className={active === index ? classes.active : classes.typography12}
                     >
-                      {day.dateVisual.replace('.', ',')}
+                      {!day.activeDates && day.dateVisual.replace('.', ',')}
                     </a>
                   </Grid>
                 ))}
@@ -302,17 +307,22 @@ const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element
             </Box>
 
             <Box mt={2} ml={2} display="flex">
-              {datos && datos.type && (
+              {dataGraphic && (
                 <>
                   <Box component="span" mr={2}>
-                    <Badge color="primary" variant="dot"></Badge>
+                    {noRecordArterialPressure
+                      ? dot()
+                      : noRecordWeight
+                      ? dot()
+                      : noRecordBloodGlocuse && dot()}
                   </Box>
                   <Typography variant="body2">
-                    {datos.type === 'arterialPressure'
+                    {dataGraphic.type === 'arterialPressure' && noRecordArterialPressure
                       ? t('graphic.systolicPressureRecording', { ns: i18nGeneralData })
-                      : datos.type === 'weight'
+                      : dataGraphic.type === 'weight' && noRecordWeight
                       ? t('graphic.weightRecords', { ns: i18nGeneralData })
-                      : datos.type === 'bloodGlocuse' &&
+                      : dataGraphic.type === 'bloodGlocuse' &&
+                        noRecordBloodGlocuse &&
                         t('graphic.bloodGlucoseRecords', { ns: i18nGeneralData })}
                   </Typography>
                 </>
@@ -320,7 +330,7 @@ const MeasurementGraphic = ({ datos, onSelected, seleted }: Tprops): JSX.Element
             </Box>
 
             <Box my={1} ml={2} display="flex">
-              {datos.type === 'arterialPressure' && (
+              {dataGraphic && dataGraphic.type === 'arterialPressure' && noRecordArterialPressure && (
                 <>
                   <Box component="span" mr={2}>
                     <Badge color="secondary" variant="dot"></Badge>

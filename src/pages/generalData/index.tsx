@@ -58,11 +58,16 @@ function GeneralDataPage(): JSX.Element {
       const result = measurement || [];
       setMeasurement(result);
     }
+    selectedDate('', true, 0);
   }, [tab, isLoading, data]);
 
   const selectedDate = (date, enabled = false, index): void => {
     if (enabled) {
       setSeleted(index);
+      /** This function interacts with the dates of the calendar and allows filtering
+       * the information so that it can be sent to the TabContent component.
+       */
+
       // console.log(measurement.measurements.filter(item => item.time === date));
     }
   };
@@ -96,7 +101,12 @@ function GeneralDataPage(): JSX.Element {
               </Typography>
             </Box>
             {data && (
-              <MeasurementGraphic datos={measurement} onSelected={selectedDate} seleted={seleted} />
+              <MeasurementGraphic
+                dataGraphic={measurement}
+                onSelected={selectedDate}
+                selected={seleted}
+                tab={tab}
+              />
             )}
           </Box>
         </Grid>

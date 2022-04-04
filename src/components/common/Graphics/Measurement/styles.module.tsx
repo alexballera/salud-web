@@ -25,10 +25,6 @@ const generalDataStyles = makeStyles({
     backgroundColor: background2Color,
     height: '100%'
   },
-  canvasStyle: {
-    height: '40vh',
-    width: '100vw'
-  },
   active: {
     color: 'black !important',
     fontWeight: 530,
