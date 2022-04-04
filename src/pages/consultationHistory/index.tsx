@@ -29,50 +29,17 @@ import muiTheme from '../../styles/js/muiTheme';
 import { useGetConsultationHistoryQuery } from '../../services/apiBFF';
 /// SERVICES END
 
-const PAGE_PATHNAME = '/exam_results';
+const PAGE_PATHNAME = '/consultationHistory';
 
 const ConsultationHistory = (): JSX.Element => {
   const { t } = useTranslation([i18Recipes, i18Forms, i18nGlobal, i18nExams]);
   const router = useRouter();
   const listContainerRef = createRef();
   const renderCompleteVerifyRef = createRef();
-  // const [loading, setLoading] = useState(false);
+  const year = new Date().getFullYear();
   const [sliderYear, setSliderYear] = useState<number>(null);
-  const { 'selected-year': selectedYear, 'selected-item': selectedItem } = router.query;
-  // const [consultationHistoryGroups, setConsultationHistoryGroups] =
-  //   useState<TConsultationHistoryGroup>([]);
 
-  const { data, isLoading } = useGetConsultationHistoryQuery({
-    ...(sliderYear && { year: sliderYear.toString() })
-  });
-  // TODO: replace this route state using the redux or context
-  const pushRouteItem = (itemIdx?: string) => {
-    router.push({
-      pathname: PAGE_PATHNAME,
-      query: {
-        'selected-year': sliderYear,
-        'selected-item': itemIdx || selectedItem || '-1'
-      }
-    });
-  };
-
-  // useEffect(() => {
-  //   if (sliderYear) {
-  //     setLoading(true);
-  //     const id = 'ee957013-b02f-45b2-b837-092b490242ea';
-  //     getExamResultsByYear(id, sliderYear)
-  //       .then(res => {
-  //         setConsultationHistoryGroups(res);
-  //       })
-  //       .catch(err => console.error(err))
-  //       .finally(() => {
-  //         setLoading(false);
-  //         if (sliderYear && selectedYear) {
-  //           router.replace(PAGE_PATHNAME);
-  //         }
-  //       });
-  //   }
-  // }, [sliderYear]);
+  const { data, isLoading, isFetching } = useGetConsultationHistoryQuery(sliderYear || year);
 
   return (
     <ThemeProvider theme={muiTheme}>
@@ -85,7 +52,7 @@ const ConsultationHistory = (): JSX.Element => {
             }}
           />
           <Box px={3}>
-            {isLoading && (
+            {isFetching && (
               <Grid
                 container
                 item
@@ -99,7 +66,7 @@ const ConsultationHistory = (): JSX.Element => {
               </Grid>
             )}
 
-            {data.length === 0 && (
+            {!isFetching && !data && (
               <Box mt={4}>
                 <Typography
                   variant="caption"
@@ -145,7 +112,6 @@ const ConsultationHistory = (): JSX.Element => {
                             text2={item.date}
                             reportedBy={item.doctor}
                             action={() => {
-                              pushRouteItem(item.medicalConsultationId);
                               router.push(`${PAGE_PATHNAME}/detail/${item.medicalConsultationId}`);
                             }}
                           />

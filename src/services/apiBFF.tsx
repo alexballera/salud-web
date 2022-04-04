@@ -69,8 +69,8 @@ export const apiBFF = createApi({
     getFamiliarDiseases: builder.query<TFamiliarDiseasesResponse, void>({
       query: () => ({ url: '/patients/1/familiarDiseases', method: 'get' })
     }),
-    getConsultationHistory: builder.query<TConsultationHistoryGroup, any>({
-      query: arg => ({ url: '/patients/1/consultationHistory', method: 'get', params: arg }),
+    getConsultationHistory: builder.query<TConsultationHistoryGroup, number>({
+      query: year => ({ url: `/patients/1/medicalConsultation/${year}`, method: 'get' }),
       transformResponse: (response: TConsultationHistoryResponse) => {
         const groups = response.consultations.reduce((groups, curr) => {
           const month = new Date(curr.date).getMonth().toLocaleString();

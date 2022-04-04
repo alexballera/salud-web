@@ -114,8 +114,8 @@ function ProceedingsPage(): JSX.Element {
       action: '/clinic_history'
     },
     {
-      title: t('proceedings.historyOfConsultations', { ns: i18nProceedings }),
-      action: '/historyOfConsultations'
+      title: t('proceedings.consultationHistory', { ns: i18nProceedings }),
+      action: '/consultationHistory'
     }
   ];
 
