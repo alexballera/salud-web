@@ -2,7 +2,7 @@
 import axios from 'axios';
 /// BASE IMPORTS
 
-const BFF_URL = 'https://bff-dev.omnisaludhub.net/api/'; // TODO: Get env variable for this value
+const BFF_URL = process.env.NEXT_PUBLIC_API_URL_BFF; // TODO: Get env variable for this value
 
 /// TYPES
 export type TPatientRecipiesAndPrescription<T extends string, U> = {
@@ -76,7 +76,7 @@ export const getRecipiesAndPrescriptionsById = async (
   id: string,
   userId = ''
 ): Promise<TPatientRecipiesAndPrescriptionList[0] | null> => {
-  const { data } = await axios.get(`${BFF_URL}patients/${userId}/recipies-prescriptions`);
+  const { data } = await axios.get(`${BFF_URL}/patients/${userId}/recipies-prescriptions`);
   return data.find(item => item.id === id) as TPatientRecipiesAndPrescriptionList[0] | null;
 };
 
@@ -84,7 +84,7 @@ export const getRecipiesAndPrescriptionsByYear = async (
   year: number,
   userId = 1
 ): Promise<TPatientRecipiesAndPrescriptionGroups> => {
-  const { data } = await axios.get(`${BFF_URL}patients/${userId}/recipies-prescriptions`);
+  const { data } = await axios.get(`${BFF_URL}/patients/${userId}/recipies-prescriptions`);
   console.table(data);
   const filterResults = filterResultsByYear(data, year);
   return groupResultsByMonth(filterResults);
