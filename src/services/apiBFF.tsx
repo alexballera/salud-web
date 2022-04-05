@@ -6,6 +6,10 @@ import { THabitsResponse } from '@/src/types/services/habit.types';
 import { TDiseasesResponse } from '@/src/types/services/diseases.types';
 import { TGeneralData } from '@/src/types/services/generalData.types';
 import { TFamiliarDiseasesResponse } from '../types/services/familiarDiseases.types';
+import {
+  TConsultationHistoryGroup,
+  TConsultationHistoryResponse
+} from '../types/services/consultationHistory.types';
 
 type TGetVaccineByIdParams = {
   userId: string;
@@ -64,6 +68,25 @@ export const apiBFF = createApi({
     }),
     getFamiliarDiseases: builder.query<TFamiliarDiseasesResponse, void>({
       query: () => ({ url: '/patients/1/familiarDiseases', method: 'get' })
+    }),
+    getConsultationHistory: builder.query<TConsultationHistoryGroup, number>({
+      query: year => ({ url: `/patients/1/medicalConsultation/${year}`, method: 'get' }),
+      transformResponse: (response: TConsultationHistoryResponse) => {
+        const groups = response.consultations.reduce((groups, curr) => {
+          const month = new Date(curr.date).getMonth().toLocaleString();
+          if (!groups[month]) {
+            groups[month] = [];
+          }
+          groups[month].push(curr);
+          return groups;
+        }, {});
+        return Object.keys(groups).map(month => {
+          return {
+            month: month.toString(),
+            items: groups[month]
+          };
+        });
+      }
     })
   })
 });
@@ -76,5 +99,6 @@ export const {
   useGetMeasurementsQuery,
   useGetGeneralDataQuery,
   useGetFamiliarDiseasesQuery,
-  useGetVaccineByIdQuery
+  useGetVaccineByIdQuery,
+  useGetConsultationHistoryQuery
 } = apiBFF;

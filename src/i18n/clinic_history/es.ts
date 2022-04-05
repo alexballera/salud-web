@@ -30,7 +30,7 @@ export const esClinicHistory = {
     epilepsy: 'Epilepsia',
     tuberculosis: 'Tuberculosis',
     noOne: 'Nadie',
-    withoutAply: 'Sin registro',
+    withoutAply: 'Sin aplicar',
     yes: 'Sí',
     uncles: 'Tíos',
     otherFamily: 'Otros Familiares',

@@ -101,6 +101,8 @@ function Navbar(): JSX.Element {
         return true;
       case '/exam_results/detail/[item_id]':
         return true;
+      case '/consultationHistory':
+        return true;
       default:
         return false;
     }
@@ -140,6 +142,8 @@ function Navbar(): JSX.Element {
         return t('items.clinic_history_vaccines', { ns: 'menu' });
       case '/exam_results/detail/[item_id]':
         return getDataFromLocalStorage('titleExamResultDetail');
+      case '/consultationHistory':
+        return t('items.history_of_consultations', { ns: 'menu' });
       default:
         return false;
     }
