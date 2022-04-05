@@ -86,7 +86,7 @@ function FamilyIllnessesPage(): JSX.Element {
 
   const getSubTitleCard = (disease: string[]) => {
     if (disease?.length === 0) {
-      return t('familyIllnesses.withoutAply', { ns: i18nClinicHistory });
+      return t('familyIllnesses.noRegistration', { ns: i18nClinicHistory });
     } else {
       if (disease.find(text => text === 'NO')) {
         return t('familyIllnesses.noOne', { ns: i18nClinicHistory });

@@ -45,6 +45,8 @@ function Navbar(): JSX.Element {
         return true;
       case '/preferences':
         return true;
+      case '/proceedings':
+        return true;
       case '/help':
         return true;
       default:
@@ -60,6 +62,8 @@ function Navbar(): JSX.Element {
         return false;
       case '/':
         return true;
+      case '/proceedings':
+        return true;
       default:
         return true;
     }
@@ -74,8 +78,6 @@ function Navbar(): JSX.Element {
       case '/recipes_and_prescriptions/preview/[item_id]':
         return true;
       case '/generalData':
-        return true;
-      case '/proceedings':
         return true;
       case '/clinic_history':
         return true;
@@ -200,7 +202,8 @@ function Navbar(): JSX.Element {
     '/clinic_history/vaccines',
     '/clinic_history/familyIllnesses',
     '/clinic_history/vaccines/[item_id]',
-    '/medicalData'
+    '/medicalData',
+    '/proceedings'
   ];
 
   return (
@@ -216,6 +219,14 @@ function Navbar(): JSX.Element {
             >
               <Toolbar>
                 <Grid container justify="center">
+                  {showMenuMobile() && (
+                    <Grid container justify="flex-start" alignItems="center">
+                      <Menu type="mobile" />
+                      <Typography variant="body1" className={classes.title}>
+                        {showPageTitle()}
+                      </Typography>
+                    </Grid>
+                  )}
                   {showBackButton() && (
                     <Grid container justify="flex-start" alignItems="center">
                       <IconButton
@@ -239,8 +250,8 @@ function Navbar(): JSX.Element {
                         justify="flex-start"
                         style={{ height: '100%' }}
                       >
-                        {showMenuMobile() && <Menu type="mobile" />}
-                        {!showBackButton() && (
+                        {showMenuMobile() && !showPageTitle() && <Menu type="mobile" />}
+                        {!showBackButton() && !showPageTitle() && (
                           <SvgContainer title="Logo Icon" width={54} height={28}>
                             <SvgLogo />
                           </SvgContainer>

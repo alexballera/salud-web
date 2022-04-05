@@ -177,7 +177,7 @@ const Vaccines = (): JSX.Element => {
                 <CircularProgress color="secondary" />
               </Grid>
             )}
-            {!isLoading && !searchShow && !getVaccines()?.length && (
+            {!isLoading && searchShow && !filteredVaccines?.length && (
               <Typography variant="caption" className={classes.noRecords}>
                 {t('vaccines.no_records', { ns: i18ClinicHistory })}
               </Typography>

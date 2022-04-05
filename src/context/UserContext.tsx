@@ -17,7 +17,19 @@ import useIsMounted from '../hooks/useIsMounted';
 
 const STORANGE_KEY = 'SESSIONID';
 
-const LOGGEDIN_ROUTES = ['/main', '/profile', '/logout', '/medicalData', '/proceedings'];
+const LOGGEDIN_ROUTES = [
+  '/main',
+  '/profile',
+  '/logout',
+  '/medicalData',
+  '/proceedings',
+  '/clinic_history',
+  '/clinic_history/diseases',
+  '/clinic_history/allergies',
+  '/clinic_history/allergies/[allergie_id]',
+  '/clinic_history/habits',
+  '/clinic_history/habits/[habits_id]'
+];
 
 const UserContext = createContext({} as TUserContent);
 
