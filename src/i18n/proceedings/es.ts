@@ -7,6 +7,6 @@ export const esProceedings = {
     title3: 'Accede a',
     generalMedicalData: 'Datos médicos generales',
     clinicHistory: 'Historia clínica',
-    historyOfConsultations: 'Historial de consultas'
+    consultationHistory: 'Historial de consultas'
   }
 };

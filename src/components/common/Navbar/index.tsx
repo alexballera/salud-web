@@ -99,6 +99,8 @@ function Navbar(): JSX.Element {
         return true;
       case '/exam_results/detail/[item_id]':
         return true;
+      case '/consultationHistory':
+        return true;
       case '/consultationHistory/detail/[item_id]':
         return true;
       default:
@@ -142,6 +144,8 @@ function Navbar(): JSX.Element {
         return getDataFromLocalStorage('titleExamResultDetail');
       case '/consultationHistory/detail/[item_id]':
         return t('items.detail', { ns: 'menu' });
+      case '/consultationHistory':
+        return t('items.history_of_consultations', { ns: 'menu' });
       default:
         return false;
     }
@@ -295,7 +299,6 @@ function Navbar(): JSX.Element {
                         backButtonPathNames={backButtonPathNames}
                         closeButtonPathNames={closeButtonPathNames}
                       />
-                      {/* TODO corregir mostrar solo para cuando esté logueado: usar "loggedIn" */}
                       {showMenuMobile() && userLogState === 'LOGGEDIN' && (
                         <Grid container justify="flex-end" alignItems="center" spacing={2}>
                           <Grid item>
