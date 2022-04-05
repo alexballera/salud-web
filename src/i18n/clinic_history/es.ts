@@ -42,6 +42,7 @@ export const esClinicHistory = {
     nephew_niece: 'Sobrino / Sobrina',
     child: 'Hijo (a)',
     carer: 'Cuidador',
-    dose: 'dosis'
+    dose: 'dosis',
+    noRegistration: 'Sin registro'
   }
 };
