@@ -8,11 +8,14 @@ import {
   secondaryLightColor,
   graphicGradientPrimary,
   graphicGradientSecondary,
-  purple
+  purple,
+  borderDash,
+  textValueCardColor,
+  graphicTooltipBackground
 } from '../../../../styles/js/theme';
 import measurementGraphicStyles from './styles.module';
-import moment from 'moment';
-import 'moment/locale/es'; // Spanish
+
+import { parseISO, format } from 'date-fns';
 
 type item = {
   diastolic?: number;
@@ -92,15 +95,13 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
       iconSecundary.src = 'images/iconSecundary.svg';
 
       /** set days line */
-      const setActiveDate = data => {
-        const activeDate = data?.map(item => {
-          return {
-            dateVisual: moment(item.time).format('DD MMM yyyy'),
-            dateSelected: item.time
-          };
-        });
-        setDays(activeDate.reverse());
-      };
+      const activeDate = dataGraphic.measurements?.map(item => {
+        return {
+          dateVisual: format(parseISO(item.time), 'dd MMM yyyy'), // moment(item.time).format('DD MMM yyyy'),
+          dateSelected: item.time
+        };
+      });
+      setDays(activeDate);
 
       /** create structure lines */
       const contentCharts = [];
@@ -127,7 +128,6 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
               pointStyle: iconSecundary
             }
           );
-          setActiveDate(diastolic);
           break;
         case 'weight':
           contentCharts.push({
@@ -140,7 +140,6 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
             borderWidth: 4,
             pointStyle: iconPrimary
           });
-          setActiveDate(weight);
           break;
         case 'bloodGlocuse':
           contentCharts.push({
@@ -153,7 +152,6 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
             borderWidth: 4,
             pointStyle: iconPrimary
           });
-          setActiveDate(bloodGlocuse);
           break;
       }
 
@@ -173,12 +171,10 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
             const current = chart.ctx;
             const width = chart.width;
             const height = chart.height;
-            // chart.clear();
 
             current.save();
             current.textAlign = 'center';
             current.textBaseline = 'middle';
-            current.font = "16px normal 'poppins'";
             current.fillText(t('noRecords', { ns: i18nGeneralData }), width / 2, height / 2);
             current.restore();
           }
@@ -203,7 +199,7 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
               display: true,
               grid: {
                 borderDash: [2, 10],
-                color: '#0000001c'
+                color: borderDash
               }
             },
             y: {
@@ -222,12 +218,12 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
             tooltip: {
               enabled: true,
               displayColors: false,
-              backgroundColor: 'rgb(27 31 35 / 0%)',
-              titleColor: '#67777A',
+              backgroundColor: graphicTooltipBackground,
+              titleColor: textValueCardColor,
               bodyFont: { size: 14 },
               callbacks: {
                 labelTextColor: function () {
-                  return '#67777A';
+                  return textValueCardColor;
                 },
                 label: function (context) {
                   const content =
@@ -273,78 +269,76 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
     }
   }, [dataGraphic, selected]);
 
-  const dot = () => {
+  const dotElement = () => {
     return <Badge color="primary" variant="dot"></Badge>;
   };
 
   return (
-    <>
-      <Card className={classes.cardMeasurement}>
-        <canvas id="myChart" ref={canvasEl} />
-        {days && (
-          <>
-            <Box>
-              <Grid container style={{ flexWrap: 'nowrap' }}>
-                {days.map((day, index) => (
-                  <Grid
-                    item
-                    key={index}
-                    className={classes.typography12}
-                    style={{ display: 'flex', justifyContent: 'flex-end' }}
+    <Card className={classes.cardMeasurement}>
+      <canvas id="myChart" ref={canvasEl} />
+      {days && (
+        <>
+          <Box>
+            <Grid container style={{ flexWrap: 'nowrap' }}>
+              {days.map((day, index) => (
+                <Grid
+                  item
+                  key={index}
+                  className={classes.typography12}
+                  style={{ display: 'flex', justifyContent: 'flex-end' }}
+                >
+                  <a
+                    onClick={() => {
+                      onSelected(day.dateSelected, true, index);
+                      changeActive(index);
+                    }}
+                    className={active === index ? classes.active : classes.typography12}
                   >
-                    <a
-                      onClick={() => {
-                        onSelected(day.dateSelected, true, index);
-                        changeActive(index);
-                      }}
-                      className={active === index ? classes.active : classes.typography12}
-                    >
-                      {!day.activeDates && day.dateVisual.replace('.', ',')}
-                    </a>
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
+                    {!day.activeDates && day.dateVisual.replace('.', ',')}
+                  </a>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
 
-            <Box mt={2} ml={2} display="flex">
-              {dataGraphic && (
-                <>
-                  <Box component="span" mr={2}>
-                    {noRecordArterialPressure
-                      ? dot()
-                      : noRecordWeight
-                      ? dot()
-                      : noRecordBloodGlocuse && dot()}
-                  </Box>
-                  <Typography variant="body2">
-                    {dataGraphic.type === 'arterialPressure' && noRecordArterialPressure
-                      ? t('graphic.systolicPressureRecording', { ns: i18nGeneralData })
-                      : dataGraphic.type === 'weight' && noRecordWeight
-                      ? t('graphic.weightRecords', { ns: i18nGeneralData })
-                      : dataGraphic.type === 'bloodGlocuse' &&
-                        noRecordBloodGlocuse &&
-                        t('graphic.bloodGlucoseRecords', { ns: i18nGeneralData })}
-                  </Typography>
-                </>
-              )}
-            </Box>
+          <Box mt={2} ml={2} display="flex">
+            {dataGraphic && (
+              <>
+                <Box component="span" mr={2}>
+                  {noRecordArterialPressure
+                    ? dotElement()
+                    : noRecordWeight
+                    ? dotElement()
+                    : noRecordBloodGlocuse && dotElement()}
+                </Box>
+                <Typography variant="body2">
+                  {dataGraphic.type === 'arterialPressure' && noRecordArterialPressure
+                    ? t('graphic.systolicPressureRecording', { ns: i18nGeneralData })
+                    : dataGraphic.type === 'weight' && noRecordWeight
+                    ? t('graphic.weightRecords', { ns: i18nGeneralData })
+                    : dataGraphic.type === 'bloodGlocuse' &&
+                      noRecordBloodGlocuse &&
+                      t('graphic.bloodGlucoseRecords', { ns: i18nGeneralData })}
+                </Typography>
+              </>
+            )}
+          </Box>
 
-            <Box my={1} ml={2} display="flex">
-              {dataGraphic && dataGraphic.type === 'arterialPressure' && noRecordArterialPressure && (
-                <>
-                  <Box component="span" mr={2}>
-                    <Badge color="secondary" variant="dot"></Badge>
-                  </Box>
-                  <Typography variant="body2">
-                    {t('graphic.diastolicPressureRecording', { ns: i18nGeneralData })}
-                  </Typography>
-                </>
-              )}
-            </Box>
-          </>
-        )}
-      </Card>
-    </>
+          <Box my={1} ml={2} display="flex">
+            {dataGraphic && dataGraphic.type === 'arterialPressure' && noRecordArterialPressure && (
+              <>
+                <Box component="span" mr={2}>
+                  <Badge color="secondary" variant="dot"></Badge>
+                </Box>
+                <Typography variant="body2">
+                  {t('graphic.diastolicPressureRecording', { ns: i18nGeneralData })}
+                </Typography>
+              </>
+            )}
+          </Box>
+        </>
+      )}
+    </Card>
   );
 };
 

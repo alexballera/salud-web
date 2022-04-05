@@ -38,6 +38,8 @@ export const background3Color = '#F2F2F2';
 export const avatarBackground = '#E0F3F4';
 export const graphicGradientPrimary = 'rgba(86, 200, 216, 0.4';
 export const graphicGradientSecondary = 'rgba(86, 200, 216, 0.1)';
+export const graphicTooltipBackground = 'rgb(27 31 35 / 0%)';
+export const borderDash = '#0000001c';
 
 const defaultTheme: ThemeOptions = {
   palette: {

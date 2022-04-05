@@ -67,8 +67,6 @@ function GeneralDataPage(): JSX.Element {
       /** This function interacts with the dates of the calendar and allows filtering
        * the information so that it can be sent to the TabContent component.
        */
-
-      // console.log(measurement.measurements.filter(item => item.time === date));
     }
   };
 

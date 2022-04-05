@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { shadowCardColor, background2Color } from '../../../../styles/js/theme';
+import { shadowCardColor, background2Color, textValueCardColor } from '../../../../styles/js/theme';
 
 const generalDataStyles = makeStyles({
   cardMeasurement: {
@@ -8,7 +8,7 @@ const generalDataStyles = makeStyles({
   },
   typography12: {
     fontSize: '12px',
-    color: '#67777A',
+    color: textValueCardColor,
     textAlign: 'center',
     textDecoration: 'none'
   },
