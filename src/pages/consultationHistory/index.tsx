@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18Recipes } from '../../i18n/recipes_and_prescriptions/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
 import { NAMESPACE_KEY as i18nGlobal } from '../../i18n/globals/i18n';
-import { NAMESPACE_KEY as i18nExams } from '../../i18n/exam_result/i18n';
+import { NAMESPACE_KEY as i18nConsultationHistory } from '../../i18n/consultation_history/i18n';
 /// i18n END
 
 /// MUI COMPONENTS
@@ -32,7 +32,7 @@ import { useGetConsultationHistoryQuery } from '../../services/apiBFF';
 const PAGE_PATHNAME = '/consultationHistory';
 
 const ConsultationHistory = (): JSX.Element => {
-  const { t } = useTranslation([i18Recipes, i18Forms, i18nGlobal, i18nExams]);
+  const { t } = useTranslation([i18Recipes, i18Forms, i18nGlobal, i18nConsultationHistory]);
   const router = useRouter();
   const listContainerRef = createRef();
   const renderCompleteVerifyRef = createRef();
@@ -66,7 +66,7 @@ const ConsultationHistory = (): JSX.Element => {
               </Grid>
             )}
 
-            {!isFetching && !data && (
+            {!isFetching && !data.length && (
               <Box mt={4}>
                 <Typography
                   variant="caption"
@@ -78,7 +78,7 @@ const ConsultationHistory = (): JSX.Element => {
                     color: title3Color
                   }}
                 >
-                  {t('no_records', { ns: i18nExams })}
+                  {t('no_records', { ns: i18nConsultationHistory })}
                 </Typography>
               </Box>
             )}

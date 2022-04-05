@@ -98,7 +98,7 @@ function VaccinesPreview(): JSX.Element {
     const toDate = parseISO(date);
 
     if (!isValid(toDate)) {
-      return t('invalid_date_format');
+      return t('invalid_date_format', { ns: i18nGlobal });
     }
 
     const year = toDate.getUTCFullYear();
@@ -109,12 +109,8 @@ function VaccinesPreview(): JSX.Element {
     }).toLowerCase()} ${year}`;
   };
 
-  const getCardBodyText = (doses: TDose[]) => {
-    // Sort the doses with date asc
-    const { applied, date } = doses.reduce((a, b) => {
-      return new Date(a.date) > new Date(b.date) ? a : b;
-    });
-
+  const getCardBodyText = (doses: TDose) => {
+    const { applied, date } = doses;
     return applied === true ? formatDate(date) : t('vaccines.no_applied');
   };
 
@@ -122,17 +118,22 @@ function VaccinesPreview(): JSX.Element {
     <Box px={3} py={4} className={classes.main}>
       <Typography className={classes.diseaseText}>{data.name}</Typography>
       <Typography className={classes.subTitle}>
-        {t('vaccines.preview_sub_title', { disease: data.name })}
+        {t('vaccines.preview_sub_title', { disease: data.name, ns: i18nClinicHistory })}
       </Typography>
 
       {Object.values(data)
-        .filter(item => Array.isArray(item) && item.length)
+        .filter(item => Array.isArray(item))
+        .flatMap(item => item as TDose[])
+        .sort((a, b) => +new Date(b.date) - +new Date(a.date))
         .map((item, idx) => {
           return (
             <Box my={3} key={idx}>
               <CardCollapse
-                items={[{ value: getCardBodyText(item as TDose[]) }]}
-                title={t('vaccines.dose_with_value', { dose: 'I'.repeat(idx + 1) })}
+                items={[{ value: getCardBodyText(item) }]}
+                title={t('vaccines.dose_with_value', {
+                  dose: 'I'.repeat(idx + 1),
+                  ns: i18nClinicHistory
+                })}
                 showArrow={false}
                 isExpanded={true}
                 cardProps={{ elevation: 0 }}

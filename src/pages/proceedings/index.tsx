@@ -1,5 +1,5 @@
 /// BASE IMPORTS
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 /// BASE IMPORTS
@@ -34,7 +34,9 @@ import {
   ListItemSecondaryAction,
   ListItemText,
   makeStyles,
-  Typography
+  Typography,
+  Link,
+  styled
 } from '@material-ui/core';
 import {
   background2Color,
@@ -45,6 +47,20 @@ import {
 } from '../../styles/js/theme';
 import ProceedingsCard from '../../components/common/Card/ProceedingsCard';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+
+const CustomMuiLink = styled(Link)({
+  fontFamily: poppinsFontFamily,
+  fontStyle: 'normal',
+  fontWeight: 500,
+  fontSize: 14,
+  lineHeight: '24px',
+  letterSpacing: '0.4px',
+  color: secondaryMainColor,
+  textUnderlineOffset: '4px',
+  '&:hover': {
+    color: secondaryMainColor
+  }
+});
 
 const useStyles = makeStyles({
   root: {
@@ -143,20 +159,14 @@ function ProceedingsPage(): JSX.Element {
         <>
           <Container maxWidth="sm" className={classes.cardContainer2}>
             <List component="nav" className={classes.root} aria-label="menubox proceedings">
-              <ListItem button onClick={() => router.push('/generalData')}>
+              <ListItem>
                 <ListItemText
                   className={classes.textMenuItem}
                   primary={t('proceedings.generalData', { ns: i18nProceedings })}
                 />
-                <ListItemSecondaryAction>
-                  <IconButton
-                    edge="end"
-                    aria-label="arrow"
-                    onClick={() => router.push('/generalData')}
-                  >
-                    <ArrowForwardIosIcon fontSize="small" htmlColor={secondaryMainColor} />
-                  </IconButton>
-                </ListItemSecondaryAction>
+                <CustomMuiLink underline="always" href="/generalData">
+                  {t('button.show_more')}
+                </CustomMuiLink>
               </ListItem>
             </List>
             <MeasurementCardContainer generalData={data} />
@@ -168,11 +178,11 @@ function ProceedingsPage(): JSX.Element {
             </Typography>
             <Grid container alignItems="center" justify="center" spacing={3}>
               {itemsCard.map(item => (
-                <React.Fragment key={item.title}>
+                <Fragment key={item.title}>
                   <Grid item xs={6}>
                     <ProceedingsCard title={item.title} route={item.action} />
                   </Grid>
-                </React.Fragment>
+                </Fragment>
               ))}
             </Grid>
           </Container>
@@ -183,7 +193,7 @@ function ProceedingsPage(): JSX.Element {
             </Typography>
             <List component="nav" className={classes.root} aria-label="menubox proceedings">
               {items.map((item, i) => (
-                <React.Fragment key={item.title}>
+                <Fragment key={item.title}>
                   <ListItem button onClick={() => router.push(item.action)}>
                     <ListItemText className={classes.textMenuItem} primary={item.title} />
                     <ListItemSecondaryAction>
@@ -201,7 +211,7 @@ function ProceedingsPage(): JSX.Element {
                       [classes.hidden]: i === items.length - 1
                     })}
                   />
-                </React.Fragment>
+                </Fragment>
               ))}
             </List>
           </Container>
