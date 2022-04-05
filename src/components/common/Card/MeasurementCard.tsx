@@ -49,7 +49,7 @@ const useStyles = makeStyles({
     fontFamily: poppinsFontFamily,
     fontStyle: 'normal',
     fontWeight: 'normal',
-    fontSize: 24,
+    fontSize: 14,
     color: textValueCardColor
   },
   smallText: {
