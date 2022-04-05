@@ -26,6 +26,8 @@ import {
 /// STYLES
 import { background3Color, title2Color, title3Color } from '@/src/styles/js/theme';
 import muiTheme from '@/src/styles/js/muiTheme';
+import { useGetConsultationHistoryByIdQuery } from '@/src/services/apiBFF';
+import { useRouter } from 'next/router';
 /// STYLES END
 
 const items = [
@@ -110,6 +112,13 @@ const ListItemCustom = (props: TListItem): JSX.Element => {
 const CardCustom = (props: TConsultations): JSX.Element => {
   const { name, reason, healthSite, doctor } = props;
   const { t } = useTranslation(i18nClinic);
+  const router = useRouter();
+  const { item_id: medicalConsultationId } = router.query;
+  const { data } = useGetConsultationHistoryByIdQuery({
+    userId: '53828014-c02f-4aaa-ba51-a47734fb34yg',
+    medicalConsultationId: medicalConsultationId as string,
+    year: '2022'
+  });
   return (
     <Paper elevation={0} sx={{ borderRadius: 2, mb: 2 }}>
       <Box px={2}>
