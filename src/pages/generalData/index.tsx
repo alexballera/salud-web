@@ -7,6 +7,7 @@ import { useTranslation, withTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
 import { NAMESPACE_KEY as i18nGeneralData } from '../../i18n/generalData/i18n';
 /// i18n END
+
 /// OWN COMPONENTS
 import { withAppContext } from '../../context';
 import TabContent from '../../containers/GeneralData/TabContent';
@@ -14,10 +15,14 @@ import TabContent from '../../containers/GeneralData/TabContent';
 
 /// STYLES & TYPES
 import { Tab, Tabs } from '@material-ui/core';
+/// STYLES & TYPES END
+
+/// SERVICES
 import {
   getDataFromLocalStorage,
   removeDataFromLocalStorage
 } from '@/src/services/localStorage.service';
+/// SERVICES END
 
 function GeneralDataPage(): JSX.Element {
   const { t } = useTranslation([i18nGeneralData, i18Forms]);
@@ -51,8 +56,7 @@ function GeneralDataPage(): JSX.Element {
         aria-label="tabs-general-data"
       >
         {items.map((item, i) => (
-          // eslint-disable-next-line react/jsx-key
-          <Tab label={item.label} onClick={() => setTab(i)} />
+          <Tab label={item.label} key={i} onClick={() => setTab(i)} />
         ))}
       </Tabs>
       <TabContent tab={tab} />
