@@ -2,6 +2,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import { shadowCardColor, background2Color, textValueCardColor } from '../../../../styles/js/theme';
 
 const generalDataStyles = makeStyles({
+  a: {
+    cursor: 'pointer',
+    '&:hover': {
+      color: textValueCardColor
+    }
+  },
   cardMeasurement: {
     borderRadius: 10,
     boxShadow: `0px 4px 8px ${shadowCardColor}`

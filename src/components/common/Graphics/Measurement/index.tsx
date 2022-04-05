@@ -292,7 +292,9 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
                       onSelected(day.dateSelected, true, index);
                       changeActive(index);
                     }}
-                    className={active === index ? classes.active : classes.typography12}
+                    className={`${classes.a} ${
+                      active === index ? classes.active : classes.typography12
+                    }`}
                   >
                     {!day.activeDates && day.dateVisual.replace('.', ',')}
                   </a>
