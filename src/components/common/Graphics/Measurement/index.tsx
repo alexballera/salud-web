@@ -221,16 +221,17 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
               backgroundColor: graphicTooltipBackground,
               titleColor: textValueCardColor,
               bodyFont: { size: 14 },
+              yAlign: 'center',
               callbacks: {
                 labelTextColor: function () {
                   return textValueCardColor;
                 },
                 label: function (context) {
-                  const content =
-                    `${context.raw.toString()} ${context.dataset.label}`.split(' ')[0] +
-                    '  ' +
-                    `${context.raw.toString()} ${context.dataset.label}`.split(' ')[1];
-                  return content;
+                  return `${context.raw.toString()} ${context.dataset.label}`;
+                },
+                afterLabel: function () {
+                  const someValue2 = '\n'.repeat(1);
+                  return someValue2;
                 }
               }
             }
