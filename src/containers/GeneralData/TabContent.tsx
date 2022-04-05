@@ -91,41 +91,39 @@ const TabContent = ({ tab }: IProps): JSX.Element => {
     );
   };
   return (
-    <>
-      <Grid container className={classes.paddingContainer} justify="space-around">
-        <Grid item xs={5}>
-          {tab === 0 && (
-            <MeasurementCard
-              title={t('tabs.pressure', { ns: i18nGeneralData })}
-              noSVG
-              value={`${measurement?.systolic > 0 ? measurement?.systolic.toString() : '-'}/${
-                measurement?.diastolic > 0 ? measurement?.diastolic.toString() : '-'
-              }`}
-              time={measurement?.time}
-            />
-          )}
-          {tab === 1 && (
-            <MeasurementCard
-              title={t('tabs.weight', { ns: i18nGeneralData })}
-              noSVG
-              value={measurement?.value}
-              time={measurement?.time}
-            />
-          )}
-          {tab === 2 && (
-            <MeasurementCard
-              title={t('tabs.bloodGlucose', { ns: i18nGeneralData })}
-              noSVG
-              value={measurement?.value > 0 ? measurement?.value : '-'}
-              time={measurement?.time}
-            />
-          )}
-        </Grid>
-        <Grid item xs={5}>
-          {renderDoctor()}
-        </Grid>
+    <Grid container className={classes.paddingContainer} justify="space-around">
+      <Grid item xs={5}>
+        {tab === 0 && (
+          <MeasurementCard
+            title={t('tabs.pressure', { ns: i18nGeneralData })}
+            noSVG
+            value={`${measurement?.systolic > 0 ? measurement?.systolic.toString() : '-'}/${
+              measurement?.diastolic > 0 ? measurement?.diastolic.toString() : '-'
+            }`}
+            time={measurement?.time}
+          />
+        )}
+        {tab === 1 && (
+          <MeasurementCard
+            title={t('tabs.weight', { ns: i18nGeneralData })}
+            noSVG
+            value={measurement?.value}
+            time={measurement?.time}
+          />
+        )}
+        {tab === 2 && (
+          <MeasurementCard
+            title={t('tabs.bloodGlucose', { ns: i18nGeneralData })}
+            noSVG
+            value={measurement?.value > 0 ? measurement?.value : '-'}
+            time={measurement?.time}
+          />
+        )}
       </Grid>
-    </>
+      <Grid item xs={5}>
+        {renderDoctor()}
+      </Grid>
+    </Grid>
   );
 };
 

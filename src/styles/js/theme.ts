@@ -23,6 +23,7 @@ export const title2Color = '#4D5759';
 export const background2Color = '#F8F8F8';
 export const boxShadow = '0px 4px 8px rgba(207, 225, 227, 0.5)';
 export const purpleLight = '#AB82FF';
+export const purple = '#B45EF7';
 export const titleCardTagColor = purpleLight;
 export const titleCardTagBg = 'rgba(187, 154, 253, 0.1)';
 export const textValueCardColor2 = '#A4B6BA';
@@ -35,6 +36,10 @@ export const chipInactiveTextColor = '#829296';
 export const shadowCardColor = 'rgba(207, 225, 227, 0.5)';
 export const background3Color = '#F2F2F2';
 export const avatarBackground = '#E0F3F4';
+export const graphicGradientPrimary = 'rgba(86, 200, 216, 0.4';
+export const graphicGradientSecondary = 'rgba(86, 200, 216, 0.1)';
+export const graphicTooltipBackground = 'rgb(27 31 35 / 0%)';
+export const borderDash = '#0000001c';
 
 const defaultTheme: ThemeOptions = {
   palette: {
@@ -120,6 +125,16 @@ const defaultTheme: ThemeOptions = {
         fontSize: 14,
         letterSpacing: 0.4,
         color: textValueCardColor
+      }
+    },
+    MuiBadge: {
+      colorPrimary: {
+        color: secondaryLightColor,
+        backgroundColor: secondaryLightColor
+      },
+      colorSecondary: {
+        color: purple,
+        backgroundColor: purple
       }
     }
   }
