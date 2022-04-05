@@ -1,43 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 /// MATERIAL UI
-import { Grid, makeStyles, Typography } from '@material-ui/core';
-import { poppinsFontFamily, textValueCardColor } from '../../styles/js/theme';
-import MeasurementCard from '../../components/common/Card/MeasurementCard';
+import { makeStyles, Typography, Box } from '@material-ui/core';
+import GeneralDataCard from '../../components/common/Card/GeneralDataCard';
 /// MATERIAL UI END
+
+/// THEME
+import { background3Color, poppinsFontFamily, titlePageColor } from '../../styles/js/theme';
+/// THEME END
+
+/// TYPES
+import type { IMeasurementRecord } from '../../services/getMeasurementsData.service';
+/// TYPES END
 
 /// i18n
 import { useTranslation, withTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18nGeneralData } from '../../i18n/generalData/i18n';
 import { NAMESPACE_KEY as i18nGlobalsData } from '../../i18n/globals/i18n';
-import { IMeasurementRecord } from '../../services/getMeasurementsData.service';
 import { useGetMeasurementsQuery } from '../../services/apiBFF';
 /// i18n END
+
+/// SVG ICONS
+import SvgArterialPressure from '../../../src/components/common/Svg/SvgArterialPressure.component';
+import SvgWeight from '../../../src/components/common/Svg/SvgWeight.component';
+import SvgWater from '../../../src/components/common/Svg/SvgWater.component';
+/// SVG ICONS END
 
 type IProps = {
   tab: number;
 };
-const useStyles = makeStyles(theme => ({
+
+const useStyles = makeStyles(() => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    background: background3Color,
+    height: '100%',
+    padding: 24
   },
-  paper: {
-    backgroundColor: 'red',
-    flex: 1
-  },
-  control: {
-    padding: theme.spacing(2)
-  },
-  smallText: {
-    marginTop: 15,
+  lastMeasurementText: {
     fontFamily: poppinsFontFamily,
     fontStyle: 'normal',
     fontSize: 16,
-    color: textValueCardColor,
-    paddingRight: 40
-  },
-  paddingContainer: {
-    padding: 20
+    letterSpacing: '0.15px',
+    lineHeight: '175%',
+    fontWeight: 400,
+    color: titlePageColor
   }
 }));
 
@@ -51,81 +58,92 @@ const initialState = {
 
 const TabContent = ({ tab }: IProps): JSX.Element => {
   const classes = useStyles();
-  const { t } = useTranslation([i18nGeneralData]);
   const [measurement, setMeasurement] = useState<IMeasurementRecord>(initialState);
-
-  const { data } = useGetMeasurementsQuery('1');
+  const { t } = useTranslation([i18nGeneralData]);
+  const { isFetching, data } = useGetMeasurementsQuery('1');
 
   useEffect(() => {
-    if (data) {
-      let measurement;
-      switch (tab) {
-        case 0:
-          measurement = data.records.find(x => x.type === 'arterialPressure');
-          break;
-        case 1:
-          measurement = data.records.find(x => x.type === 'weight');
-          break;
-        case 2:
-          measurement = data.records.find(x => x.type === 'bloodGlocuse');
-          break;
-      }
-      const result =
-        measurement && measurement.measurements.length > 0 ? measurement.measurements[0] : null;
-      setMeasurement(result);
+    if (data && data.records) {
+      groupRecordsByType(tab);
     }
-  }, [tab]);
+  }, [isFetching, tab]);
 
-  const renderDoctor = () => {
-    let dr = [];
-    dr = measurement?.performer.split(' ');
-    return (
-      <Typography className={classes.smallText}>
-        {t('content.lastMeasurement', { ns: i18nGeneralData })}
-        <br />
-        <br />
-        <br />
-        {dr.length > 0 && dr[0]}{' '}
-        {dr.length > 0 ? dr[1] : t('content.noRegistry', { ns: i18nGeneralData })}
-      </Typography>
-    );
+  const groupRecordsByType = (tab: number) => {
+    switch (tab) {
+      case 0:
+        setMeasurement(filterChildMeasurementByType('arterialPressure'));
+        break;
+      case 1:
+        setMeasurement(filterChildMeasurementByType('weight'));
+        break;
+      case 2:
+        setMeasurement(filterChildMeasurementByType('bloodGlocuse'));
+        break;
+      default:
+        setMeasurement(initialState);
+    }
   };
+
+  const filterRecordByType = (typeKey: string) => {
+    if (!data || !data.records) {
+      return {
+        unit: '',
+        measurements: []
+      };
+    }
+    return data.records.find(item => item.type === typeKey);
+  };
+
+  const filterChildMeasurementByType = (typeKey: string): IMeasurementRecord => {
+    const findRecord = filterRecordByType(typeKey);
+    if (!findRecord || !findRecord.measurements) return initialState;
+    const cloneMeasurements = [...findRecord.measurements];
+    return cloneMeasurements.sort(
+      (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()
+    )[0];
+  };
+
   return (
-    <>
-      <Grid container className={classes.paddingContainer} justify="space-around">
-        <Grid item xs={5}>
-          {tab === 0 && (
-            <MeasurementCard
-              title={t('tabs.pressure', { ns: i18nGeneralData })}
-              noSVG
-              value={`${measurement?.systolic > 0 ? measurement?.systolic.toString() : '-'}/${
-                measurement?.diastolic > 0 ? measurement?.diastolic.toString() : '-'
-              }`}
-              time={measurement?.time}
-            />
-          )}
-          {tab === 1 && (
-            <MeasurementCard
-              title={t('tabs.weight', { ns: i18nGeneralData })}
-              noSVG
-              value={measurement?.value}
-              time={measurement?.time}
-            />
-          )}
-          {tab === 2 && (
-            <MeasurementCard
-              title={t('tabs.bloodGlucose', { ns: i18nGeneralData })}
-              noSVG
-              value={measurement?.value > 0 ? measurement?.value : '-'}
-              time={measurement?.time}
-            />
-          )}
-        </Grid>
-        <Grid item xs={5}>
-          {renderDoctor()}
-        </Grid>
-      </Grid>
-    </>
+    <Box className={classes.root}>
+      <Typography className={classes.lastMeasurementText}>
+        {t('content.last_measurement')}
+      </Typography>
+      {tab === 0 && (
+        <GeneralDataCard
+          tab={tab}
+          title={t('tabs.pressure', { ns: i18nGeneralData })}
+          icon={<SvgArterialPressure />}
+          doctorName={measurement.performer}
+          unit={filterRecordByType('arterialPressure')?.unit || '-'}
+          value={`${measurement?.systolic > 0 ? measurement?.systolic.toString() : '-'}/${
+            measurement?.diastolic > 0 ? measurement?.diastolic.toString() : '-'
+          }`}
+          time={measurement?.time}
+        />
+      )}
+      {tab === 1 && (
+        <GeneralDataCard
+          title={t('tabs.weight', { ns: i18nGeneralData })}
+          tab={tab}
+          icon={<SvgWeight />}
+          unit={filterRecordByType('weight')?.unit || '-'}
+          doctorName={measurement.performer}
+          value={measurement?.value}
+          time={measurement?.time}
+        />
+      )}
+      {tab === 2 && (
+        <GeneralDataCard
+          title={t('tabs.bloodGlucose', { ns: i18nGeneralData })}
+          tab={tab}
+          icon={<SvgWater />}
+          unit={filterRecordByType('bloodGlocuse')?.unit || '-'}
+          doctorName={measurement.performer}
+          value={measurement?.value > 0 ? measurement?.value : '-'}
+          time={measurement?.time}
+        />
+      )}
+    </Box>
   );
 };
 

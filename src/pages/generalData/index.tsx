@@ -18,16 +18,12 @@ import { Tab, Tabs } from '@material-ui/core';
 /// STYLES & TYPES END
 
 /// SERVICES
-import {
-  getDataFromLocalStorage,
-  removeDataFromLocalStorage
-} from '@/src/services/localStorage.service';
+import { getDataFromLocalStorage } from '@/src/services/localStorage.service';
 /// SERVICES END
 
 function GeneralDataPage(): JSX.Element {
   const { t } = useTranslation([i18nGeneralData, i18Forms]);
   const [tab, setTab] = useState<number>(parseInt(getDataFromLocalStorage('cardSelected')) || 0);
-  removeDataFromLocalStorage('cardSelected');
 
   const handleChange = (event, newValue) => {
     setTab(newValue);
