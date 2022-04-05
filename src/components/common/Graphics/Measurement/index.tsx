@@ -230,8 +230,8 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
                   return `${context.raw.toString()} ${context.dataset.label}`;
                 },
                 afterLabel: function () {
-                  const someValue2 = '\n'.repeat(1);
-                  return someValue2;
+                  const breakLine = '\n'.repeat(1);
+                  return breakLine;
                 }
               }
             }
