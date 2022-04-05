@@ -7,6 +7,7 @@ import { TDiseasesResponse } from '@/src/types/services/diseases.types';
 import { TGeneralData } from '@/src/types/services/generalData.types';
 import { TFamiliarDiseasesResponse } from '../types/services/familiarDiseases.types';
 import {
+  TConsultationHistory,
   TConsultationHistoryGroup,
   TConsultationHistoryResponse,
   TGetConsultationHistoryByIdParams
@@ -70,7 +71,10 @@ export const apiBFF = createApi({
     getFamiliarDiseases: builder.query<TFamiliarDiseasesResponse, void>({
       query: () => ({ url: '/patients/1/familiarDiseases', method: 'get' })
     }),
-    getConsultationHistoryById: builder.query<TVaccines, TGetConsultationHistoryByIdParams>({
+    getConsultationHistoryById: builder.query<
+      TConsultationHistory,
+      TGetConsultationHistoryByIdParams
+    >({
       query: ({ year, userId }: TGetConsultationHistoryByIdParams) => ({
         url: `/patients/${userId}/medicalConsultation/${year}`,
         method: 'get'

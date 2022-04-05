@@ -13,6 +13,8 @@ import { NAMESPACE_KEY as i18nClinic } from '@/src/i18n/clinic_history/i18n';
 /// MATERIAL UI
 import {
   Box,
+  CircularProgress,
+  Grid,
   List,
   ListItem,
   ListItemText,
@@ -29,32 +31,6 @@ import muiTheme from '@/src/styles/js/muiTheme';
 import { useGetConsultationHistoryByIdQuery } from '@/src/services/apiBFF';
 import { useRouter } from 'next/router';
 /// STYLES END
-
-const items = [
-  {
-    userId: '623a34d8ef9e97ce33a3',
-    consultations: [
-      {
-        medicalConsultationId: 'f942014b-8eab-47c3-9ee0-ef3972b71ce8',
-        month: 'Marzo',
-        name: 'Cita Psicólogo',
-        doctor: 'Dr. Allan Brito',
-        reason: 'Presenta ansiedad',
-        healthSite: 'Hospital Rafael Ángel Calderón Guardia',
-        date: '2022-03-26T00:55:19.596Z'
-      },
-      {
-        medicalConsultationId: '53828014-c02f-4aaa-ba51-a47734fb54ca',
-        month: 'Marzo',
-        name: 'Cita Cardiólogo',
-        doctor: 'Dr. Armando Casas',
-        reason: 'Revisión corazón',
-        healthSite: 'Hospital Rafael Ángel Calderón Guardia',
-        date: '2022-03-24T00:55:19.596Z'
-      }
-    ]
-  }
-];
 
 type TListItem = {
   label: string;
@@ -112,13 +88,6 @@ const ListItemCustom = (props: TListItem): JSX.Element => {
 const CardCustom = (props: TConsultations): JSX.Element => {
   const { name, reason, healthSite, doctor } = props;
   const { t } = useTranslation(i18nClinic);
-  const router = useRouter();
-  const { item_id: medicalConsultationId } = router.query;
-  const { data } = useGetConsultationHistoryByIdQuery({
-    userId: '53828014-c02f-4aaa-ba51-a47734fb34yg',
-    medicalConsultationId: medicalConsultationId as string,
-    year: '2022'
-  });
   return (
     <Paper elevation={0} sx={{ borderRadius: 2, mb: 2 }}>
       <Box px={2}>
@@ -142,6 +111,33 @@ const CardCustom = (props: TConsultations): JSX.Element => {
 
 function ConsultationHistoryDetailPage(): JSX.Element {
   const { t } = useTranslation(i18nClinic);
+  const router = useRouter();
+  const { slug } = router.query;
+  const { data, isLoading } = useGetConsultationHistoryByIdQuery({
+    userId: slug[0],
+    medicalConsultationId: slug[0],
+    year: slug[1]
+  });
+
+  if (isLoading) {
+    return (
+      <ThemeProvider theme={muiTheme}>
+        <Box px={3} py={4}>
+          <Grid
+            container
+            item
+            xs={12}
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ height: 'calc(100vh - 104px)' }}
+          >
+            <CircularProgress color="secondary" />
+          </Grid>
+        </Box>
+      </ThemeProvider>
+    );
+  }
   return (
     <ThemeProvider theme={muiTheme}>
       <Box p={3} sx={{ backgroundColor: background3Color, height: '100%' }}>
@@ -151,17 +147,14 @@ function ConsultationHistoryDetailPage(): JSX.Element {
         >
           {t('consultation.title')}
         </Typography>
-        {items.map(item => (
-          <React.Fragment key={item.userId}>
-            {item.consultations.map(
-              ({ name, reason, healthSite, doctor, medicalConsultationId }: TConsultations) => (
-                <React.Fragment key={medicalConsultationId}>
-                  <CardCustom name={name} reason={reason} healthSite={healthSite} doctor={doctor} />
-                </React.Fragment>
-              )
-            )}
-          </React.Fragment>
-        ))}
+        {data && (
+          <CardCustom
+            name={data.name}
+            reason={data.reason}
+            healthSite={data.healthSite}
+            doctor={data.doctor}
+          />
+        )}
       </Box>
     </ThemeProvider>
   );

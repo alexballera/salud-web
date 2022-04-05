@@ -112,7 +112,9 @@ const ConsultationHistory = (): JSX.Element => {
                             text2={item.date}
                             reportedBy={item.doctor}
                             action={() => {
-                              router.push(`${PAGE_PATHNAME}/detail/${item.medicalConsultationId}`);
+                              router.push(
+                                `${PAGE_PATHNAME}/detail/${item.medicalConsultationId}/${sliderYear}`
+                              );
                             }}
                           />
                         </Box>
