@@ -82,10 +82,7 @@ type TProps = {
 
 const useStyles = makeStyles({
   card: {
-    width: '100%',
-    [theme.breakpoints.up(360)]: {
-      width: 312
-    }
+    width: '100%'
   },
   cardTitleBg: {
     backgroundColor: titleCardTagBg,
