@@ -33,6 +33,8 @@ import { enExamResult } from './exam_result/en';
 import { esExamResult } from './exam_result/es';
 import { enHabits } from './habits/en';
 import { esHabits } from './habits/es';
+import { enConsultationHistory } from './consultation_history/en';
+import { esConsultationHistory } from './consultation_history/es';
 
 const resources = {
   enUS: {
@@ -51,7 +53,8 @@ const resources = {
     clinic_history: enClinicHistory,
     allergies: enAllergies,
     diseases: enDiseases,
-    exam_result: enExamResult
+    exam_result: enExamResult,
+    consultation_history: enConsultationHistory
   },
   es: {
     globals: esGlobals,
@@ -69,7 +72,8 @@ const resources = {
     clinic_history: esClinicHistory,
     allergies: esAllergies,
     diseases: esDiseases,
-    exam_result: esExamResult
+    exam_result: esExamResult,
+    consultation_history: esConsultationHistory
   }
 };
 
@@ -84,7 +88,8 @@ const namespaces = [
   'recipes-and-prescriptions',
   'profile',
   'generalData',
-  'exam_result'
+  'exam_result',
+  'consultation_history'
 ];
 
 const DETECTION_OPTIONS = {

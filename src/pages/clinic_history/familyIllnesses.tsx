@@ -100,7 +100,7 @@ function FamilyIllnessesPage(): JSX.Element {
     if (disease?.length === 0) {
       return true;
     } else {
-      if (disease.find(text => text === 'NO')) {
+      if (disease.find(text => text.toUpperCase() === 'NO')) {
         return true;
       } else {
         return false;
