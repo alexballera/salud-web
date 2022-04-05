@@ -39,6 +39,7 @@ export const enClinicHistory = {
     nephew_niece: 'Nephew / Niece',
     child: 'Child',
     carer: 'Carer',
-    dose: 'dose'
+    dose: 'dose',
+    noRegistration: 'No Registration'
   }
 };

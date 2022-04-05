@@ -30,7 +30,7 @@ export const esClinicHistory = {
     epilepsy: 'Epilepsia',
     tuberculosis: 'Tuberculosis',
     noOne: 'Nadie',
-    withoutAply: 'Sin aplicar',
+    withoutAply: 'Sin registro',
     yes: 'Sí',
     uncles: 'Tíos',
     otherFamily: 'Otros Familiares',
@@ -42,6 +42,7 @@ export const esClinicHistory = {
     nephew_niece: 'Sobrino / Sobrina',
     child: 'Hijo (a)',
     carer: 'Cuidador',
-    dose: 'dosis'
+    dose: 'dosis',
+    noRegistration: 'Sin registro'
   }
 };
