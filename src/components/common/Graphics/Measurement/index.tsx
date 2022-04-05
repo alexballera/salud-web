@@ -97,7 +97,7 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
       /** set days line */
       const activeDate = dataGraphic.measurements?.map(item => {
         return {
-          dateVisual: format(parseISO(item.time), 'dd MMM yyyy'), // moment(item.time).format('DD MMM yyyy'),
+          dateVisual: format(parseISO(item.time), 'dd MMM yyyy'),
           dateSelected: item.time
         };
       });
