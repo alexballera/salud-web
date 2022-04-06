@@ -50,7 +50,7 @@ export const upperCamelCase = (s: string): string => {
   });
 };
 
-export const dateInternationalization = (date: string, formatDate: string): string => {
+export const i18nDateFormat = (date: string, formatDate: string): string => {
   const currentI18nKey = i18next.language || window.localStorage.i18nextLng;
   const locale = dateFnsLocale[currentI18nKey || 'enUS'];
 
