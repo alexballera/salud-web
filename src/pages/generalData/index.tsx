@@ -25,12 +25,16 @@ import type { IMeasurement } from '@/src/services/getMeasurementsData.service';
 /// SERVICES
 import { getDataFromLocalStorage } from '@/src/services/localStorage.service';
 import { useGetMeasurementsQuery } from '@/src/services/apiBFF';
+import { CircularProgress } from '@mui/material';
 /// SERVICES END
 
 function GeneralDataPage(): JSX.Element {
   const classes = generalDataStyles();
   const { t } = useTranslation([i18nGeneralData, i18Forms]);
   const [tab, setTab] = useState<number>(parseInt(getDataFromLocalStorage('cardSelected')) || 0);
+  const [measurement, setMeasurement] = useState<IMeasurement>(null);
+  const [seleted, setSeleted] = useState<number>(0);
+  const { data, isLoading } = useGetMeasurementsQuery('1');
 
   const handleChange = (event, newValue) => {
     setTab(newValue);
@@ -47,10 +51,6 @@ function GeneralDataPage(): JSX.Element {
       label: t('tabs.bloodGlucose', { ns: i18nGeneralData })
     }
   ];
-
-  const [measurement, setMeasurement] = useState<IMeasurement>(null);
-  const [seleted, setSeleted] = useState<number>(0);
-  const { data, isLoading } = useGetMeasurementsQuery('1');
 
   useEffect(() => {
     if (data) {

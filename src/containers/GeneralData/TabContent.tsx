@@ -31,12 +31,6 @@ type IProps = {
 };
 
 const useStyles = makeStyles(() => ({
-  root: {
-    flexGrow: 1,
-    background: background3Color,
-    height: '100%',
-    padding: 24
-  },
   lastMeasurementText: {
     fontFamily: poppinsFontFamily,
     fontStyle: 'normal',
@@ -104,8 +98,8 @@ const TabContent = ({ tab }: IProps): JSX.Element => {
   };
 
   return (
-    <Box className={classes.root}>
-      <Typography className={classes.lastMeasurementText}>
+    <Box>
+      <Typography variant="body2" gutterBottom className={classes.lastMeasurementText}>
         {t('content.last_measurement')}
       </Typography>
       {tab === 0 && (
