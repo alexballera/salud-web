@@ -36,11 +36,11 @@ import SvgInjuries from '@/src/components/common/Svg/SvgInjuries.component';
 /// STYLES
 import clsx from 'clsx';
 import muiTheme from '@/src/styles/js/muiTheme';
-import { examStyles } from '@/src/containers/ExamResult/styles.module';
+import { clinicStyles } from '@/src/containers/clinicHistory/styles.module';
 /// STYLES END
 
 const clinicHistory = (): JSX.Element => {
-  const classes = examStyles();
+  const classes = clinicStyles();
   const router = useRouter();
   const { t } = useTranslation(i18ClinicHistory);
   const items = [
@@ -90,7 +90,7 @@ const clinicHistory = (): JSX.Element => {
                 <SvgContainer title={item.name} width={30} height={30}>
                   {item.icon}
                 </SvgContainer>
-                <ListItemText primary={item.name} classes={{ root: classes.title }} />
+                <ListItemText primary={item.name} className={classes.text} />
                 <ListItemSecondaryAction>
                   <IconButton
                     edge="end"
