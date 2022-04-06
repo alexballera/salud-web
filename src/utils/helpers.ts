@@ -1,4 +1,6 @@
-import { getDate, getMonth, getYear, isValid } from 'date-fns';
+import { getDate, getMonth, getYear, isValid, parseISO, format } from 'date-fns';
+import i18next from 'i18next';
+import * as dateFnsLocale from 'date-fns/locale';
 import { NAMESPACE_KEY as i18nRecipes } from '@/src/i18n/recipes_and_prescriptions/i18n';
 
 export const convertToMask = (value: string): number | (RegExp | string)[] => {
@@ -45,5 +47,14 @@ export const calculateAge = (dateString: string): number => {
 export const upperCamelCase = (s: string): string => {
   return s.toLowerCase().replace(/(^|\s)([A-zÀ-ú])/g, a => {
     return a.toUpperCase();
+  });
+};
+
+export const dateInternationalization = (date: string, formatDate: string): string => {
+  const currentI18nKey = i18next.language || window.localStorage.i18nextLng;
+  const locale = dateFnsLocale[currentI18nKey || 'enUS'];
+
+  return format(parseISO(date), formatDate, {
+    locale: locale
   });
 };
