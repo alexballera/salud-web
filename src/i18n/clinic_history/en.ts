@@ -39,6 +39,17 @@ export const enClinicHistory = {
     nephew_niece: 'Nephew / Niece',
     child: 'Child',
     carer: 'Carer',
-    dose: 'dose'
+    dose: 'dose',
+    dose_with_value: '{{dose}} Dose',
+    no_applied: 'No applied',
+    noRegistration: 'Sin registro'
+  },
+  consultation: {
+    title: 'Inquiry information',
+    type: 'Query type',
+    reason: 'Reason',
+    establishment: 'Establishment',
+    specialist: 'Specialist',
+    noRegistration: 'No Registration'
   }
 };

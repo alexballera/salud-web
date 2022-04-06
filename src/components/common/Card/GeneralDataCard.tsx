@@ -94,8 +94,8 @@ type IProps = {
   title: string;
   value: number | string;
   route?: string;
-  time: string;
-  doctorName: string;
+  time?: string;
+  doctorName?: string;
   tab: number;
   unit: string;
 };
@@ -118,7 +118,7 @@ export default function MeasurementCard({
     const toDate = parseISO(date);
 
     if (!isValid(toDate)) {
-      return t('label.invalid_date_format', { ns: i18nGlobal });
+      return t('content.noRegistry');
     }
 
     const year = toDate.getFullYear();
@@ -170,7 +170,9 @@ export default function MeasurementCard({
         <Typography className={classes.cardValueText}>{getCardDate(time)}</Typography>
         <Box mt={1}>
           <Typography className={classes.cardLabelText}>{t('content.created_by')}</Typography>
-          <Typography className={classes.cardValueText}>{doctorName}</Typography>
+          <Typography className={classes.cardValueText}>
+            {doctorName || t('content.noRegistry')}
+          </Typography>
         </Box>
       </CardContent>
     </Card>

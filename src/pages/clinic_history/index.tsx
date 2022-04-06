@@ -90,7 +90,7 @@ const clinicHistory = (): JSX.Element => {
                 <SvgContainer title={item.name} width={30} height={30}>
                   {item.icon}
                 </SvgContainer>
-                <ListItemText primary={item.name} className={classes.text} />
+                <ListItemText primary={item.name} classes={{ root: classes.title }} />
                 <ListItemSecondaryAction>
                   <IconButton
                     edge="end"

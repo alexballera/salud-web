@@ -42,6 +42,17 @@ export const esClinicHistory = {
     nephew_niece: 'Sobrino / Sobrina',
     child: 'Hijo (a)',
     carer: 'Cuidador',
-    dose: 'dosis'
+    dose: 'dosis',
+    dose_with_value: '{{dose}} Dosis',
+    no_applied: 'Sin aplicar',
+    noRegistration: 'Sin registro'
+  },
+  consultation: {
+    title: 'Información de consulta',
+    type: 'Tipo de consulta',
+    reason: 'Razón',
+    establishment: 'Establecimiento',
+    specialist: 'Especialista',
+    noRegistration: 'Sin registro'
   }
 };

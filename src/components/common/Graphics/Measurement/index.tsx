@@ -101,7 +101,7 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
           dateSelected: item.time
         };
       });
-      setDays(activeDate);
+      setDays(activeDate.reverse());
 
       /** create structure lines */
       const contentCharts = [];
@@ -110,7 +110,7 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
           contentCharts.push(
             {
               label: 'mmHg',
-              data: systolic,
+              data: systolic.reverse(),
               fill: true,
               lineTension: 0.5,
               backgroundColor: gradientArea,
@@ -120,7 +120,7 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
             },
             {
               label: 'mmHg',
-              data: diastolic,
+              data: diastolic.reverse(),
               fill: false,
               lineTension: 0.5,
               borderColor: purple,
@@ -132,7 +132,7 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
         case 'weight':
           contentCharts.push({
             label: 'kg',
-            data: weight,
+            data: weight.reverse(),
             fill: true,
             lineTension: 0.5,
             backgroundColor: gradientArea,
@@ -144,7 +144,7 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
         case 'bloodGlocuse':
           contentCharts.push({
             label: 'mg/dl',
-            data: bloodGlocuse,
+            data: bloodGlocuse.reverse(),
             fill: true,
             lineTension: 0.5,
             backgroundColor: gradientArea,
@@ -221,16 +221,17 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
               backgroundColor: graphicTooltipBackground,
               titleColor: textValueCardColor,
               bodyFont: { size: 14 },
+              yAlign: 'center',
               callbacks: {
                 labelTextColor: function () {
                   return textValueCardColor;
                 },
                 label: function (context) {
-                  const content =
-                    `${context.raw.toString()} ${context.dataset.label}`.split(' ')[0] +
-                    '  ' +
-                    `${context.raw.toString()} ${context.dataset.label}`.split(' ')[1];
-                  return content;
+                  return `${context.raw.toString()} ${context.dataset.label}`;
+                },
+                afterLabel: function () {
+                  const breakLine = '\n'.repeat(1);
+                  return breakLine;
                 }
               }
             }
