@@ -15,7 +15,9 @@ import {
 } from '../../../../styles/js/theme';
 import measurementGraphicStyles from './styles.module';
 
+import i18next from 'i18next';
 import { parseISO, format } from 'date-fns';
+import * as dateFnsLocale from 'date-fns/locale';
 
 type item = {
   diastolic?: number;
@@ -38,6 +40,8 @@ type Tprops = {
 };
 
 const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops): JSX.Element => {
+  const currentI18nKey = i18next.language || window.localStorage.i18nextLng;
+  const locale = dateFnsLocale[currentI18nKey || 'enUS'];
   const canvasEl = useRef(null);
   const classes = measurementGraphicStyles();
   const { t } = useTranslation([i18nGeneralData]);
@@ -97,7 +101,9 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
       /** set days line */
       const activeDate = dataGraphic.measurements?.map(item => {
         return {
-          dateVisual: format(parseISO(item.time), 'dd MMM yyyy'),
+          dateVisual: format(parseISO(item.time), 'dd MMM yyyy', {
+            locale: locale
+          }),
           dateSelected: item.time
         };
       });
