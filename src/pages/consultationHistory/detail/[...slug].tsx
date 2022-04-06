@@ -1,8 +1,10 @@
 /// BASE
 import React from 'react';
+import { useRouter } from 'next/router';
 /// BASE END
 
 /// OWN COMPONENTS
+import LoadingCircular from '@/src/components/common/LoadingCircular';
 /// OWN COMPONENTS END
 
 /// i18n
@@ -10,11 +12,9 @@ import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18nClinic } from '@/src/i18n/clinic_history/i18n';
 /// i18n END
 
-/// MATERIAL UI
+/// MUI
 import {
   Box,
-  CircularProgress,
-  Grid,
   List,
   ListItem,
   ListItemText,
@@ -23,15 +23,18 @@ import {
   ThemeProvider,
   Typography
 } from '@mui/material';
-/// MATERIAL UI END
+/// MUI END
+
+/// SERVICES
+import { useGetConsultationHistoryByIdQuery } from '@/src/services/apiBFF';
+/// SERVICES END
 
 /// STYLES
 import { background3Color, title2Color, title3Color } from '@/src/styles/js/theme';
 import muiTheme from '@/src/styles/js/muiTheme';
-import { useGetConsultationHistoryByIdQuery } from '@/src/services/apiBFF';
-import { useRouter } from 'next/router';
 /// STYLES END
 
+/// TYPES
 type TListItem = {
   label: string;
   value: string;
@@ -47,41 +50,40 @@ type TConsultations = {
   healthSite: string;
   date?: string;
 };
+/// TYPES END
 
 const ListItemCustom = (props: TListItem): JSX.Element => {
   const { label, value, divider } = props;
   return (
-    <>
-      <ListItem sx={{ py: 2 }} divider={divider}>
-        <Stack direction="column">
-          <ListItemText sx={{ my: 0 }}>
-            <Typography
-              variant="body2"
-              sx={{
-                color: title3Color,
-                fontWeight: 400,
-                fontSize: 14,
-                lineHeight: '143%'
-              }}
-            >
-              {label}
-            </Typography>
-          </ListItemText>
-          <ListItemText sx={{ my: 0 }}>
-            <Typography
-              sx={{
-                color: title2Color,
-                fontWeight: 400,
-                fontSize: 14,
-                lineHeight: '143%'
-              }}
-            >
-              {value}
-            </Typography>
-          </ListItemText>
-        </Stack>
-      </ListItem>
-    </>
+    <ListItem sx={{ py: 2 }} divider={divider}>
+      <Stack direction="column">
+        <ListItemText sx={{ my: 0 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: title3Color,
+              fontWeight: 400,
+              fontSize: 14,
+              lineHeight: '143%'
+            }}
+          >
+            {label}
+          </Typography>
+        </ListItemText>
+        <ListItemText sx={{ my: 0 }}>
+          <Typography
+            sx={{
+              color: title2Color,
+              fontWeight: 400,
+              fontSize: 14,
+              lineHeight: '143%'
+            }}
+          >
+            {value}
+          </Typography>
+        </ListItemText>
+      </Stack>
+    </ListItem>
   );
 };
 
@@ -113,30 +115,14 @@ function ConsultationHistoryDetailPage(): JSX.Element {
   const { t } = useTranslation(i18nClinic);
   const router = useRouter();
   const { slug } = router.query;
-  const { data, isLoading } = useGetConsultationHistoryByIdQuery({
+  const { data: consult, isLoading } = useGetConsultationHistoryByIdQuery({
     userId: slug[0],
     medicalConsultationId: slug[0],
     year: slug[1]
   });
 
   if (isLoading) {
-    return (
-      <ThemeProvider theme={muiTheme}>
-        <Box px={3} py={4}>
-          <Grid
-            container
-            item
-            xs={12}
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
-            sx={{ height: 'calc(100vh - 104px)' }}
-          >
-            <CircularProgress color="secondary" />
-          </Grid>
-        </Box>
-      </ThemeProvider>
-    );
+    return <LoadingCircular />;
   }
   return (
     <ThemeProvider theme={muiTheme}>
@@ -147,12 +133,12 @@ function ConsultationHistoryDetailPage(): JSX.Element {
         >
           {t('consultation.title')}
         </Typography>
-        {data && (
+        {consult && (
           <CardCustom
-            name={data.name}
-            reason={data.reason}
-            healthSite={data.healthSite}
-            doctor={data.doctor}
+            name={consult.name}
+            reason={consult.reason}
+            healthSite={consult.healthSite}
+            doctor={consult.doctor}
           />
         )}
       </Box>
