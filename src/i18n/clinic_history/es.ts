@@ -44,7 +44,8 @@ export const esClinicHistory = {
     carer: 'Cuidador',
     dose: 'dosis',
     dose_with_value: '{{dose}} Dosis',
-    no_applied: 'Sin aplicar'
+    no_applied: 'Sin aplicar',
+    noRegistration: 'Sin registro'
   },
   consultation: {
     title: 'Información de consulta',

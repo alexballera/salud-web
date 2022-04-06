@@ -210,6 +210,8 @@ function Navbar(): JSX.Element {
     '/proceedings'
   ];
 
+  const activeHamburgerMenu = ['/proceedings'];
+
   return (
     <>
       {showMenu() && (
@@ -223,7 +225,7 @@ function Navbar(): JSX.Element {
             >
               <Toolbar>
                 <Grid container justify="center">
-                  {showMenuMobile() && (
+                  {showMenuMobile() && activeHamburgerMenu.includes(router.pathname) && (
                     <Grid container justify="flex-start" alignItems="center">
                       <Menu type="mobile" />
                       <Typography variant="body1" className={classes.title}>
