@@ -118,7 +118,7 @@ export default function MeasurementCard({
     const toDate = parseISO(date);
 
     if (!isValid(toDate)) {
-      return t('invalid_date_format', { ns: i18nGlobal });
+      return t('label.invalid_date_format', { ns: i18nGlobal });
     }
 
     const year = toDate.getFullYear();

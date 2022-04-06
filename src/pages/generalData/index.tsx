@@ -4,7 +4,7 @@ import { useTranslation, withTranslation } from 'react-i18next';
 /// BASE IMPORTS END
 
 /// MATERIAL UI
-import { Box, Grid, Tab, Tabs, Typography } from '@material-ui/core';
+import { Box, Grid, Tab, Tabs, Typography, CircularProgress } from '@material-ui/core';
 /// MATERIAL UI - END
 
 import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
@@ -13,64 +13,137 @@ import { NAMESPACE_KEY as i18nGeneralData } from '../../i18n/generalData/i18n';
 
 /// OWN COMPONENTS
 import { withAppContext } from '../../context';
-import TabContent from '../../containers/GeneralData/TabContent';
 import MeasurementGraphic from '@/src/components/common/Graphics/Measurement';
+import GeneralDataCard from '../../../src/components/common/Card/GeneralDataCard';
 /// OWN COMPONENTS END
 
+/// SVG ICONS
+import SvgWater from '../../../src/components/common/Svg/SvgWater.component';
+import SvgWeight from '../../../src/components/common/Svg/SvgWeight.component';
+import SvgArterialPressure from '../../../src/components/common/Svg/SvgArterialPressure.component';
+
+/// SVG ICONS END
+
 /// STYLES & TYPES
-import generalDataStyles from './styles.module';
 import type { IMeasurement } from '@/src/services/getMeasurementsData.service';
+import generalDataStyles from './styles.module';
 /// STYLES & TYPES END
 
 /// SERVICES
 import { getDataFromLocalStorage } from '@/src/services/localStorage.service';
 import { useGetMeasurementsQuery } from '@/src/services/apiBFF';
-import { CircularProgress } from '@mui/material';
 /// SERVICES END
+
+const INITIAL_STATE: IMeasurement = {
+  name: '',
+  unit: '',
+  type: '',
+  measurements: []
+};
+
+const TAB_CARD_ICONS = {
+  weight: <SvgWeight />,
+  bloodGlocuse: <SvgWater />,
+  arterialPressure: <SvgArterialPressure />
+};
 
 function GeneralDataPage(): JSX.Element {
   const classes = generalDataStyles();
   const { t } = useTranslation([i18nGeneralData, i18Forms]);
   const [tab, setTab] = useState<number>(parseInt(getDataFromLocalStorage('cardSelected')) || 0);
-  const [measurement, setMeasurement] = useState<IMeasurement>(null);
+  const [measurement, setMeasurement] = useState<IMeasurement>(INITIAL_STATE);
   const [seleted, setSeleted] = useState<number>(0);
-  const { data, isLoading } = useGetMeasurementsQuery('1');
+  const { data, isLoading, isFetching } = useGetMeasurementsQuery('1');
 
-  const handleChange = (event, newValue) => {
-    setTab(newValue);
-  };
-
-  const items = [
+  const tabList = [
     {
-      label: t('tabs.pressure', { ns: i18nGeneralData })
+      label: t('tabs.pressure', { ns: i18nGeneralData }),
+      chartLabel: t('pressureChart', { ns: i18nGeneralData })
     },
     {
-      label: t('tabs.weight', { ns: i18nGeneralData })
+      label: t('tabs.weight', { ns: i18nGeneralData }),
+      chartLabel: t('weightChart', { ns: i18nGeneralData })
     },
     {
-      label: t('tabs.bloodGlucose', { ns: i18nGeneralData })
+      label: t('tabs.bloodGlucose', { ns: i18nGeneralData }),
+      chartLabel: t('bloodGlucoseGraph', { ns: i18nGeneralData })
     }
   ];
 
   useEffect(() => {
-    if (data) {
-      let measurement;
-      switch (tab) {
-        case 0:
-          measurement = data.records.find(x => x.type === 'arterialPressure');
-          break;
-        case 1:
-          measurement = data.records.find(x => x.type === 'weight');
-          break;
-        case 2:
-          measurement = data.records.find(x => x.type === 'bloodGlocuse');
-          break;
-      }
-      const result = measurement || [];
-      setMeasurement(result);
+    if (data && data.records) {
+      console.log('asfasdfasfa', data, tab);
+      groupRecordsByType(tab);
+      selectedDate('', true, 0);
     }
-    selectedDate('', true, 0);
-  }, [tab, isLoading, data]);
+  }, [isFetching, tab]);
+
+  const groupRecordsByType = (tab: number) => {
+    switch (tab) {
+      case 0:
+        setMeasurement(filterRecordByType('arterialPressure'));
+        break;
+      case 1:
+        setMeasurement(filterRecordByType('weight'));
+        break;
+      case 2:
+        setMeasurement(filterRecordByType('bloodGlocuse'));
+        break;
+      default:
+        setMeasurement(INITIAL_STATE);
+    }
+  };
+
+  const filterRecordByType = (typeKey: string) => {
+    if (!data || !data.records) {
+      return INITIAL_STATE;
+    }
+    return data.records.find(item => item.type === typeKey);
+  };
+
+  const getLatestMeasurement = () => {
+    const { measurements } = measurement;
+    const cloneMeasurements = [...measurements];
+    return cloneMeasurements.sort(
+      (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()
+    )[0];
+  };
+
+  const buildCardData = () => {
+    if (!measurement || !measurement?.measurements.length) {
+      return {
+        title: '-',
+        unit: '',
+        doctorName: '-',
+        time: '-',
+        value: '-'
+      };
+    }
+    const lastMeasurement = getLatestMeasurement();
+    const cardData = {
+      title: tabList[tab].label,
+      unit: measurement.unit,
+      doctorName: lastMeasurement.performer,
+      time: lastMeasurement.time
+    };
+
+    if (lastMeasurement.systolic) {
+      const { systolic, diastolic } = lastMeasurement;
+      return {
+        ...cardData,
+        value: `${systolic > 0 ? systolic : '-'}/${diastolic > 0 ? diastolic : '-'}`
+      };
+    }
+
+    return {
+      ...cardData,
+      value: lastMeasurement.value
+    };
+  };
+
+  const handleChange = (event, newValue) => {
+    setTab(newValue);
+  };
 
   const selectedDate = (date, enabled = false, index): void => {
     if (enabled) {
@@ -92,32 +165,52 @@ function GeneralDataPage(): JSX.Element {
         onChange={handleChange}
         aria-label="tabs-general-data"
       >
-        {items.map((item, i) => (
+        {tabList.map((item, i) => (
           <Tab label={item.label} key={i} onClick={() => setTab(i)} />
         ))}
       </Tabs>
       <Grid container className={classes.mainGrid}>
         <Grid item xs={12}>
-          <Box role="tabpanel" m={3}>
-            {data && <TabContent tab={tab} />}
-            <Box mt={3} mb={1}>
-              <Typography variant="body2" className={classes.typography16}>
-                {tab === 0
-                  ? t('pressureChart', { ns: i18nGeneralData })
-                  : tab === 1
-                  ? t('weightChart', { ns: i18nGeneralData })
-                  : tab === 2 && t('bloodGlucoseGraph', { ns: i18nGeneralData })}
-              </Typography>
-            </Box>
-            {data && (
-              <MeasurementGraphic
-                dataGraphic={measurement}
-                onSelected={selectedDate}
-                selected={seleted}
+          {isLoading && (
+            <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+              className={classes.loading}
+            >
+              <CircularProgress color="inherit" />
+            </Grid>
+          )}
+          {!isLoading && (
+            <Box role="tabpanel" m={3}>
+              <Box mt={3} mb={1}>
+                <Typography variant="body2" gutterBottom className={classes.lastMeasurementText}>
+                  {t('content.last_measurement')}
+                </Typography>
+              </Box>
+              <GeneralDataCard
                 tab={tab}
+                icon={measurement?.type ? TAB_CARD_ICONS[measurement.type] : <></>}
+                {...buildCardData()}
               />
-            )}
-          </Box>
+              {measurement && measurement?.measurements.length && (
+                <>
+                  <Box mt={3} mb={1}>
+                    <Typography variant="body2" className={classes.typography16}>
+                      {tabList[tab].chartLabel}
+                    </Typography>
+                  </Box>
+                  <MeasurementGraphic
+                    dataGraphic={measurement}
+                    onSelected={selectedDate}
+                    selected={seleted}
+                    tab={tab}
+                  />
+                </>
+              )}
+            </Box>
+          )}
         </Grid>
       </Grid>
     </>

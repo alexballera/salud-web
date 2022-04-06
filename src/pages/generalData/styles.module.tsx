@@ -1,5 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { shadowCardColor, background3Color, titlePageColor } from '../../styles/js/theme';
+import {
+  shadowCardColor,
+  background3Color,
+  titlePageColor,
+  poppinsFontFamily
+} from '../../styles/js/theme';
 
 const measurementGraphicStyles = makeStyles({
   typography14: {
@@ -14,6 +19,18 @@ const measurementGraphicStyles = makeStyles({
   },
   mainGrid: {
     backgroundColor: background3Color,
+    height: '100%'
+  },
+  lastMeasurementText: {
+    fontFamily: poppinsFontFamily,
+    fontStyle: 'normal',
+    fontSize: 16,
+    letterSpacing: '0.15px',
+    lineHeight: '175%',
+    fontWeight: 400,
+    color: titlePageColor
+  },
+  loading: {
     height: '100%'
   }
 });
