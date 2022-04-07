@@ -84,10 +84,10 @@ const useStyles = makeStyles({
     height: '100%'
   },
   mainArea: {
-    backgroundColor: 'white',
+    backgroundColor: primaryContrastTextColor,
     height: '500px',
     width: '100%',
-    borderRadius: '30px',
+    borderRadius: '32px',
     backgroundClip: 'padding-box'
   }
 });
@@ -97,7 +97,7 @@ const inputsOutlined = createMuiTheme({
     MuiInputLabel: {
       root: {
         '&$outlined': {
-          background: 'white',
+          background: primaryContrastTextColor,
           padding: '0px 10px'
         }
       }
