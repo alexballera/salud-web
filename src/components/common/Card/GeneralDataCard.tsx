@@ -1,6 +1,5 @@
 /// GENERAL IMPORTS
 import { useRouter } from 'next/router';
-import { isValid, parseISO } from 'date-fns';
 /// GENERAL IMPORTS END
 
 /// MATERIAL UI
@@ -114,19 +113,6 @@ export default function MeasurementCard({
   const router = useRouter();
   const { t } = useTranslation([i18nGeneralData, i18nGlobal]);
 
-  const getCardDate = (date: string) => {
-    const toDate = parseISO(date);
-
-    if (!isValid(toDate)) {
-      return t('content.noRegistry');
-    }
-
-    const year = toDate.getFullYear();
-    const day = toDate.getDate().toString();
-    const month = toDate.getMonth();
-    return `${day.padStart(2, '0')} ${t(`months.${month}`).substring(0, 3).toLowerCase()}, ${year}`;
-  };
-
   const redirectTo = () => {
     setDataToLocalStorage('cardSelected', tab.toString());
     route && router.push(route);
@@ -167,7 +153,7 @@ export default function MeasurementCard({
           <Divider />
         </Box>
         <Typography className={classes.cardLabelText}>{t('content.measurement_date')}</Typography>
-        <Typography className={classes.cardValueText}>{getCardDate(time)}</Typography>
+        <Typography className={classes.cardValueText}>{time || t('content.noRegistry')}</Typography>
         <Box mt={1}>
           <Typography className={classes.cardLabelText}>{t('content.created_by')}</Typography>
           <Typography className={classes.cardValueText}>

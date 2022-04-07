@@ -21,8 +21,11 @@ import GeneralDataCard from '../../../src/components/common/Card/GeneralDataCard
 import SvgWater from '../../../src/components/common/Svg/SvgWater.component';
 import SvgWeight from '../../../src/components/common/Svg/SvgWeight.component';
 import SvgArterialPressure from '../../../src/components/common/Svg/SvgArterialPressure.component';
-
 /// SVG ICONS END
+
+/// HELPERS
+import { i18nDateFormat } from '../../utils/helpers';
+/// HELPERS END
 
 /// STYLES & TYPES
 import type { IMeasurement } from '@/src/services/getMeasurementsData.service';
@@ -72,7 +75,6 @@ function GeneralDataPage(): JSX.Element {
 
   useEffect(() => {
     if (data && data.records) {
-      console.log('asfasdfasfa', data, tab);
       groupRecordsByType(tab);
       selectedDate('', true, 0);
     }
@@ -122,7 +124,7 @@ function GeneralDataPage(): JSX.Element {
       title: tabList[tab].label,
       unit: measurement.unit,
       doctorName: lastMeasurement.performer,
-      time: lastMeasurement.time
+      time: i18nDateFormat(lastMeasurement.time, 'dd MMM, yyyy - HH:mm aaaa')
     };
 
     if (lastMeasurement.systolic) {
