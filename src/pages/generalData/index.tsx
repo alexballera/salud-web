@@ -110,7 +110,7 @@ function GeneralDataPage(): JSX.Element {
   };
 
   const buildCardData = (idx: number) => {
-    if (!measurement || !measurement?.measurements.length) {
+    if (!measurement) {
       return {
         title: '-',
         unit: '',
@@ -119,6 +119,17 @@ function GeneralDataPage(): JSX.Element {
         value: '-'
       };
     }
+
+    if (!measurement?.measurements.length) {
+      return {
+        title: measurement.name,
+        unit: measurement.unit,
+        doctorName: null,
+        time: null,
+        value: '-'
+      };
+    }
+
     const lastMeasurement = getLatestMeasurement(idx);
     const cardData = {
       title: tabList[tab].label,
@@ -148,7 +159,6 @@ function GeneralDataPage(): JSX.Element {
   const selectedDate = (date, enabled = false, index): void => {
     if (enabled) {
       setSeleted(index);
-      console.log(seleted, index);
       /** This function interacts with the dates of the calendar and allows filtering
        * the information so that it can be sent to the TabContent component.
        */
@@ -195,7 +205,7 @@ function GeneralDataPage(): JSX.Element {
                 icon={measurement?.type ? TAB_CARD_ICONS[measurement.type] : <></>}
                 {...buildCardData(seleted)}
               />
-              {measurement && measurement?.measurements.length && (
+              {measurement && measurement?.measurements.length >= 1 && (
                 <>
                   <Box mt={3} mb={1}>
                     <Typography variant="body2" className={classes.typography16}>
