@@ -83,9 +83,6 @@ const useStyles = makeStyles({
 });
 
 const inputsOutlined = createMuiTheme({
-  typography: {
-    fontFamily: poppinsFontFamily
-  },
   overrides: {
     MuiInputLabel: {
       root: {
