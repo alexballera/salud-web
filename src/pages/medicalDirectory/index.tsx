@@ -19,7 +19,7 @@ import { withAppContext } from '../../context';
 /// LAYOUT END
 
 /// SERVICES
-
+import { ThemeProvider } from '@material-ui/styles';
 import {
   Divider,
   makeStyles,
@@ -30,7 +30,9 @@ import {
   Typography,
   Box,
   Grid,
-  TextField
+  TextField,
+  ThemeOptions,
+  createMuiTheme
 } from '@material-ui/core';
 import {
   background3Color,
@@ -80,6 +82,29 @@ const useStyles = makeStyles({
   }
 });
 
+const inputsOutlined = createMuiTheme({
+  typography: {
+    fontFamily: poppinsFontFamily
+  },
+  overrides: {
+    MuiInputLabel: {
+      root: {
+        '&$outlined': {
+          background: 'white',
+          padding: '0px 10px'
+        }
+      }
+    },
+    MuiOutlinedInput: {
+      root: {
+        '& fieldset': {
+          top: 0
+        }
+      }
+    }
+  }
+} as ThemeOptions);
+
 /// SERVICES END
 function MedicalDirectoryPage(): JSX.Element {
   const classes = useStyles();
@@ -97,7 +122,7 @@ function MedicalDirectoryPage(): JSX.Element {
         </Box>
       )} */}
       {/* {!isLoading && ( */}
-      <>
+      <ThemeProvider theme={inputsOutlined}>
         <Box mt={6}>
           {/* There is already an h1 in the page, let's not duplicate it. */}
           <Grid container direction="column">
@@ -155,7 +180,7 @@ function MedicalDirectoryPage(): JSX.Element {
           </Grid>
         </Box>
         <Divider />
-      </>
+      </ThemeProvider>
       {/* )} */}
     </>
   );
