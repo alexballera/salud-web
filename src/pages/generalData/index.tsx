@@ -55,7 +55,7 @@ function GeneralDataPage(): JSX.Element {
   const { t } = useTranslation([i18nGeneralData, i18Forms]);
   const [tab, setTab] = useState<number>(parseInt(getDataFromLocalStorage('cardSelected')) || 0);
   const [measurement, setMeasurement] = useState<IMeasurement>(INITIAL_STATE);
-  const [seleted, setSeleted] = useState<number>(0);
+  const [selected, setSelected] = useState<number>(0);
   const { data, isLoading, isFetching } = useGetMeasurementsQuery('1');
 
   const tabList = [
@@ -76,7 +76,7 @@ function GeneralDataPage(): JSX.Element {
   useEffect(() => {
     if (data && data.records) {
       groupRecordsByType(tab);
-      selectedDate('', true, 0);
+      selectedDate('', true, 6);
     }
   }, [isFetching, tab]);
 
@@ -105,7 +105,7 @@ function GeneralDataPage(): JSX.Element {
 
   const getLatestMeasurement = (idx: number) => {
     const { measurements } = measurement;
-    const cloneMeasurements = [...measurements].reverse();
+    const cloneMeasurements = [...measurements];
     return cloneMeasurements[idx];
   };
 
@@ -147,11 +147,7 @@ function GeneralDataPage(): JSX.Element {
 
   const selectedDate = (date, enabled = false, index): void => {
     if (enabled) {
-      setSeleted(index);
-      console.log(seleted, index);
-      /** This function interacts with the dates of the calendar and allows filtering
-       * the information so that it can be sent to the TabContent component.
-       */
+      setSelected(index);
     }
   };
 
@@ -193,7 +189,7 @@ function GeneralDataPage(): JSX.Element {
               <GeneralDataCard
                 tab={tab}
                 icon={measurement?.type ? TAB_CARD_ICONS[measurement.type] : <></>}
-                {...buildCardData(seleted)}
+                {...buildCardData(selected)}
               />
               {measurement && measurement?.measurements.length && (
                 <>
@@ -205,7 +201,7 @@ function GeneralDataPage(): JSX.Element {
                   <MeasurementGraphic
                     dataGraphic={measurement}
                     onSelected={selectedDate}
-                    selected={seleted}
+                    selected={selected}
                     tab={tab}
                   />
                 </>
