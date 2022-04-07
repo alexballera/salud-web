@@ -74,26 +74,26 @@ const defaultTheme: ThemeOptions = {
         margin: '0px !important'
       }
     },
-    MuiFormControl: {
-      root: {
-        width: '100%'
-      }
-    },
-    MuiFormControlLabel: {
-      labelPlacementStart: {
-        margin: '0px !important'
-      },
-      label: {
-        color: 'rgba(0, 0, 0, 0.87)'
-      }
-    },
-    MuiFormLabel: {
-      root: {
-        fontSize: '14px',
-        lineHeight: '12px',
-        color: 'rgba(0, 0, 0, 0.87)'
-      }
-    },
+    // MuiFormControl: {
+    //   root: {
+    //     width: '100%'
+    //   }
+    // },
+    // MuiFormControlLabel: {
+    //   labelPlacementStart: {
+    //     margin: '0px !important'
+    //   },
+    //   label: {
+    //     color: 'rgba(0, 0, 0, 0.87)'
+    //   }
+    // },
+    // MuiFormLabel: {
+    //   root: {
+    //     fontSize: '14px',
+    //     lineHeight: '12px',
+    //     color: 'rgba(0, 0, 0, 0.87)'
+    //   }
+    // },
     MuiChip: {
       colorSecondary: {
         color: secondaryMainColor,

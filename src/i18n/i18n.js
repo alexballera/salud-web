@@ -35,6 +35,8 @@ import { enHabits } from './habits/en';
 import { esHabits } from './habits/es';
 import { enConsultationHistory } from './consultation_history/en';
 import { esConsultationHistory } from './consultation_history/es';
+import { esMedicalDirectory } from './medicalDirectory/es';
+import { enMedicalDirectory } from './medicalDirectory/en';
 
 const resources = {
   enUS: {
@@ -54,7 +56,8 @@ const resources = {
     allergies: enAllergies,
     diseases: enDiseases,
     exam_result: enExamResult,
-    consultation_history: enConsultationHistory
+    consultation_history: enConsultationHistory,
+    medicalDirectory: enMedicalDirectory
   },
   es: {
     globals: esGlobals,
@@ -73,7 +76,8 @@ const resources = {
     allergies: esAllergies,
     diseases: esDiseases,
     exam_result: esExamResult,
-    consultation_history: esConsultationHistory
+    consultation_history: esConsultationHistory,
+    medicalDirectory: esMedicalDirectory
   }
 };
 
@@ -89,7 +93,8 @@ const namespaces = [
   'profile',
   'generalData',
   'exam_result',
-  'consultation_history'
+  'consultation_history',
+  'medicalDirectory'
 ];
 
 const DETECTION_OPTIONS = {
