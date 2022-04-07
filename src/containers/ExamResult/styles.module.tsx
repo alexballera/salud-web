@@ -25,10 +25,6 @@ export const examStyles = makeStyles(() =>
       fontFamily: `${poppinsFontFamily} !important`,
       fontSize: '16px !important',
       lineHeight: '24px !important'
-    },
-    title: {
-      marginLeft: 28,
-      textAlign: 'left'
     }
   })
 );
