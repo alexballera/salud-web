@@ -15,7 +15,7 @@ import {
 } from '../../../../styles/js/theme';
 import measurementGraphicStyles from './styles.module';
 
-import { parseISO, format } from 'date-fns';
+import { i18nDateFormat } from '../../../../utils/helpers';
 
 type item = {
   diastolic?: number;
@@ -97,7 +97,7 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
       /** set days line */
       const activeDate = dataGraphic.measurements?.map(item => {
         return {
-          dateVisual: format(parseISO(item.time), 'dd MMM yyyy'),
+          dateVisual: i18nDateFormat(item.time, 'dd MMM yyyy'),
           dateSelected: item.time
         };
       });
