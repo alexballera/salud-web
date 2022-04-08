@@ -105,9 +105,14 @@ const inputsOutlined = createMuiTheme({
     MuiOutlinedInput: {
       root: {
         '& fieldset': {
-          top: 0
-          // width: '312px'
+          top: 0,
+          minWidth: '312px'
         }
+      }
+    },
+    MuiFormControl: {
+      root: {
+        minWidth: '312px'
       }
     }
   }
