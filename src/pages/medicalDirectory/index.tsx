@@ -89,6 +89,7 @@ const inputsOutlined = createMuiTheme({
         '&$outlined': {
           background: 'white',
           padding: '0px 10px'
+          // width: '312px'
         }
       }
     },
@@ -96,6 +97,7 @@ const inputsOutlined = createMuiTheme({
       root: {
         '& fieldset': {
           top: 0
+          // width: '312px'
         }
       }
     }
@@ -128,18 +130,17 @@ function MedicalDirectoryPage(): JSX.Element {
                 {t('items.title', { ns: i18nMedicalDirectory })}
               </Typography>
             </Grid>
-            <Grid className={classes.inputOutline} item>
+            <Grid item>
               <FormControl variant="outlined">
                 <InputLabel htmlFor="search">
                   {t('items.labelSearch', { ns: i18nMedicalDirectory })}
                 </InputLabel>
                 <OutlinedInput
                   id="search"
-                  defaultValue="busqueda"
+                  // className={classes.inputOutline}
                   autoFocus={true}
-                  // onChange={handleChange}
                   label={t('items.labelSearch', { ns: i18nMedicalDirectory })}
-                  placeholder={t('items.labelSearch', { ns: i18nMedicalDirectory })}
+                  placeholder={t('items.placeholderSearch', { ns: i18nMedicalDirectory })}
                   endAdornment={
                     <InputAdornment position="end">
                       <SearchOutlinedIcon className={classes.icon} />
@@ -148,7 +149,7 @@ function MedicalDirectoryPage(): JSX.Element {
                 />
               </FormControl>
             </Grid>
-            <Grid className={classes.inputOutline} item>
+            <Grid item className={classes.inputOutline}>
               <FormControl variant="outlined">
                 <InputLabel htmlFor="location">
                   {t('items.labelLocation', { ns: i18nMedicalDirectory })}
@@ -156,21 +157,13 @@ function MedicalDirectoryPage(): JSX.Element {
                 <OutlinedInput
                   id="location"
                   defaultValue={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
-                  // onChange={handleChange}
                   label={t('items.labelLocation', { ns: i18nMedicalDirectory })}
-                  // placeholder={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
+                  placeholder={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
                   endAdornment={
                     <InputAdornment position="end">
                       <LocationOnOutlinedIcon className={classes.icon} />
                     </InputAdornment>
                   }
-                />
-                <TextField
-                  className={classes.inputOutline}
-                  type="text"
-                  label="Test"
-                  variant="outlined"
-                  autoFocus={true}
                 />
               </FormControl>
             </Grid>
