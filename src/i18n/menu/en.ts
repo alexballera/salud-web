@@ -22,6 +22,7 @@ export const enMenu = {
     clinic_history_habits: 'Control of habits',
     clinic_history_vaccines: 'Vaccines',
     medicalDirectory: 'Medical directory',
-    search: 'Search'
+    search: 'Search',
+    detail: 'Detail'
   }
 };
