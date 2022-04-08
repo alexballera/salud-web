@@ -23,6 +23,7 @@ export const enMenu = {
     clinic_history_vaccines: 'Vaccines',
     medicalDirectory: 'Medical directory',
     search: 'Search',
+    history_of_consultations: 'Historial de consultas',
     detail: 'Detail'
   }
 };
