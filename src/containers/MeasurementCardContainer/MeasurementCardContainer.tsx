@@ -28,7 +28,6 @@ const useStyles = makeStyles({
 export const MeasurementCardContainer = ({ generalData }: IProps): JSX.Element => {
   const classes = useStyles();
 
-  console.log(generalData);
   const { records } = generalData;
   const arterialPressure = records.find(x => x.type === 'arterialPressure');
   const arterialPressureValue =
