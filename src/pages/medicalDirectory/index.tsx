@@ -30,7 +30,6 @@ import {
   Typography,
   Box,
   Grid,
-  TextField,
   ThemeOptions,
   createMuiTheme
 } from '@material-ui/core';
@@ -148,11 +147,9 @@ function MedicalDirectoryPage(): JSX.Element {
                   </InputLabel>
                   <OutlinedInput
                     id="search"
-                    defaultValue="busqueda"
                     autoFocus={true}
-                    // onChange={handleChange}
                     label={t('items.labelSearch', { ns: i18nMedicalDirectory })}
-                    placeholder={t('items.labelSearch', { ns: i18nMedicalDirectory })}
+                    placeholder={t('items.placeholderSearch', { ns: i18nMedicalDirectory })}
                     endAdornment={
                       <InputAdornment position="end">
                         <SearchOutlinedIcon className={classes.icon} />
@@ -169,9 +166,7 @@ function MedicalDirectoryPage(): JSX.Element {
                   <OutlinedInput
                     id="location"
                     defaultValue={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
-                    // onChange={handleChange}
                     label={t('items.labelLocation', { ns: i18nMedicalDirectory })}
-                    // placeholder={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
                     endAdornment={
                       <InputAdornment position="end">
                         <LocationOnOutlinedIcon className={classes.icon} />
