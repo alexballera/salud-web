@@ -22,6 +22,7 @@ export const esMenu = {
     clinic_history_family_illnesses: 'Enfermedades familiares',
     clinic_history_vaccines: 'Vacunas',
     history_of_consultations: 'Historial de consultas',
-    medicalDirectory: 'Directorio médico'
+    medicalDirectory: 'Directorio médico',
+    detail: 'Detalle'
   }
 };

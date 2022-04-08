@@ -35,6 +35,7 @@ export default withAppContext(function Layout({
 
   const pathNotificationClean = [
     '/',
+    '/main',
     '/login',
     '/recover_password',
     '/recover_password/change_password',

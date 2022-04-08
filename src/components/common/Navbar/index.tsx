@@ -107,6 +107,8 @@ function Navbar(): JSX.Element {
         return true;
       case '/consultationHistory':
         return true;
+      case '/consultationHistory/detail/[...slug]':
+        return true;
       default:
         return false;
     }
@@ -146,6 +148,8 @@ function Navbar(): JSX.Element {
         return t('items.clinic_history_vaccines', { ns: 'menu' });
       case '/exam_results/detail/[item_id]':
         return getDataFromLocalStorage('titleExamResultDetail');
+      case '/consultationHistory/detail/[...slug]':
+        return t('items.detail', { ns: 'menu' });
       case '/consultationHistory':
         return t('items.history_of_consultations', { ns: 'menu' });
       case '/medicalDirectory':
@@ -214,6 +218,8 @@ function Navbar(): JSX.Element {
     '/medicalDirectory'
   ];
 
+  const activeHamburgerMenu = ['/proceedings'];
+
   return (
     <>
       {showMenu() && (
@@ -227,7 +233,7 @@ function Navbar(): JSX.Element {
             >
               <Toolbar>
                 <Grid container justify="center">
-                  {showMenuMobile() && (
+                  {showMenuMobile() && activeHamburgerMenu.includes(router.pathname) && (
                     <Grid container justify="flex-start" alignItems="center">
                       <Menu type="mobile" />
                       <Typography variant="body1" className={classes.title}>
@@ -313,7 +319,6 @@ function Navbar(): JSX.Element {
                         backButtonPathNames={backButtonPathNames}
                         closeButtonPathNames={closeButtonPathNames}
                       />
-                      {/* TODO corregir mostrar solo para cuando esté logueado: usar "loggedIn" */}
                       {showMenuMobile() && userLogState === 'LOGGEDIN' && (
                         <Grid container justify="flex-end" alignItems="center" spacing={2}>
                           <Grid item>

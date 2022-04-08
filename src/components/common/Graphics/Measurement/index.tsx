@@ -15,7 +15,7 @@ import {
 } from '../../../../styles/js/theme';
 import measurementGraphicStyles from './styles.module';
 
-import { parseISO, format } from 'date-fns';
+import { i18nDateFormat } from '../../../../utils/helpers';
 
 type item = {
   diastolic?: number;
@@ -43,7 +43,7 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
   const { t } = useTranslation([i18nGeneralData]);
 
   const [days, setDays] = useState([]);
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState<number>();
   const [noRecordArterialPressure, setNoRecordArterialPressure] = useState(true);
   const [noRecordBloodGlocuse, setNoRecordBloodGlocuse] = useState(true);
   const [noRecordWeight, setNoRecordWeight] = useState(true);
@@ -53,7 +53,7 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
   };
 
   useEffect(() => {
-    setActive(0);
+    setActive(days.length === 0 ? selected : days.length - 1);
   }, [tab]);
 
   useEffect(() => {
@@ -97,7 +97,7 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
       /** set days line */
       const activeDate = dataGraphic.measurements?.map(item => {
         return {
-          dateVisual: format(parseISO(item.time), 'dd MMM yyyy'),
+          dateVisual: i18nDateFormat(item.time, 'dd MMM yyyy'),
           dateSelected: item.time
         };
       });
@@ -110,6 +110,15 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
           contentCharts.push(
             {
               label: 'mmHg',
+              data: diastolic,
+              fill: false,
+              lineTension: 0.5,
+              borderColor: purple,
+              borderWidth: 3,
+              pointStyle: iconSecundary
+            },
+            {
+              label: 'mmHg',
               data: systolic,
               fill: true,
               lineTension: 0.5,
@@ -117,15 +126,6 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
               borderColor: secondaryLightColor,
               borderWidth: 4,
               pointStyle: iconPrimary
-            },
-            {
-              label: 'mmHg',
-              data: diastolic,
-              fill: false,
-              lineTension: 0.5,
-              borderColor: purple,
-              borderWidth: 3,
-              pointStyle: iconSecundary
             }
           );
           break;
@@ -158,7 +158,7 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
       /** set structure lines and spaces */
       const data = {
         labels: ['', '', '', '', '', '', ''],
-        datasets: contentCharts.reverse()
+        datasets: contentCharts
       };
 
       /** create chart empty message */
@@ -221,16 +221,17 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
               backgroundColor: graphicTooltipBackground,
               titleColor: textValueCardColor,
               bodyFont: { size: 14 },
+              yAlign: 'center',
               callbacks: {
                 labelTextColor: function () {
                   return textValueCardColor;
                 },
                 label: function (context) {
-                  const content =
-                    `${context.raw.toString()} ${context.dataset.label}`.split(' ')[0] +
-                    '  ' +
-                    `${context.raw.toString()} ${context.dataset.label}`.split(' ')[1];
-                  return content;
+                  return `${context.raw.toString()} ${context.dataset.label}`;
+                },
+                afterLabel: function () {
+                  const breakLine = '\n'.repeat(1);
+                  return breakLine;
                 }
               }
             }

@@ -5,7 +5,9 @@ export const enGeneralData = {
     bloodGlucose: 'Blood Glucose'
   },
   content: {
-    lastMeasurement: 'Last measurement',
+    created_by: 'Measurement made by:',
+    measurement_date: 'Measurement date:',
+    last_measurement: 'Last measurement',
     noRegistry: 'No registry'
   },
   pressureChart: 'Pressure chart',
