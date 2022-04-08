@@ -5,5 +5,10 @@ export const enMedicalDirectory = {
     labelLocation: 'Recipes and prescriptions',
     placeholderSearch: 'Exam results',
     placeholderLocation: 'Accede a'
+  },
+  searchBySection: {
+    searchBy: 'Search By',
+    specialty: 'Specialty',
+    doctors: 'Doctors'
   }
 };

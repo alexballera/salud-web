@@ -40,6 +40,9 @@ import {
   secondaryMainColor,
   background2Color
 } from '../../styles/js/theme';
+import CardActionImage from '@/src/components/common/Card/CardActionImage';
+import SvgSpecialty from '@/src/components/common/Svg/SvgSpecialty.component';
+import SvgDoctors from '@/src/components/common/Svg/SvgDoctors.component';
 
 const useStyles = makeStyles({
   root: {
@@ -84,10 +87,10 @@ const useStyles = makeStyles({
   },
   mainArea: {
     backgroundColor: primaryContrastTextColor,
-    height: '500px',
+    height: '450px',
     width: '100%',
-    borderRadius: '32px',
-    backgroundClip: 'padding-box'
+    borderBottomLeftRadius: '32px',
+    borderBottomRightRadius: '32px'
   }
 });
 
@@ -125,6 +128,20 @@ function MedicalDirectoryPage(): JSX.Element {
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
 
   const [search, setSearch] = useState('');
+
+  const itemsCard = [
+    {
+      title: t('searchBySection.specialty', { ns: i18nMedicalDirectory }),
+      action: '/medicalDirectory/searchBy',
+      icon: <SvgSpecialty />
+    },
+    {
+      title: t('searchBySection.doctors', { ns: i18nMedicalDirectory }),
+      action: '/medicalDirectory/searchBy',
+      icon: <SvgDoctors />
+    }
+  ];
+
   return (
     <>
       {/* {isLoading && (
@@ -184,7 +201,20 @@ function MedicalDirectoryPage(): JSX.Element {
             <Box mt={6}>
               <Grid container direction="column">
                 <Grid item xs={12}>
-                  <Typography variant="subtitle2">Busca por</Typography>
+                  <Box mb={3}>
+                    <Typography variant="subtitle2">
+                      {t('searchBySection.searchBy', { ns: i18nMedicalDirectory })}
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid container alignItems="center" justify="center" spacing={3}>
+                    {itemsCard.map(item => (
+                      <Grid item xs={6} key={item.title}>
+                        <CardActionImage title={item.title} route={item.action} icon={item.icon} />
+                      </Grid>
+                    ))}
+                  </Grid>
                 </Grid>
               </Grid>
             </Box>

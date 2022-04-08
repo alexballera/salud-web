@@ -107,6 +107,8 @@ function Navbar(): JSX.Element {
         return true;
       case '/consultationHistory':
         return true;
+      case '/medicalDirectory/searchBy':
+        return true;
       case '/consultationHistory/detail/[...slug]':
         return true;
       default:
@@ -154,6 +156,8 @@ function Navbar(): JSX.Element {
         return t('items.history_of_consultations', { ns: 'menu' });
       case '/medicalDirectory':
         return t('items.medicalDirectory', { ns: 'menu' });
+      case '/medicalDirectory/searchBy':
+        return t('items.search', { ns: 'menu' });
       default:
         return false;
     }
