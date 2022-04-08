@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
+import { useRouter } from 'next/router';
 /// BASE IMPORTS
 
 /// i18n
@@ -32,14 +33,24 @@ import {
   Grid,
   TextField,
   ThemeOptions,
-  createMuiTheme
+  createMuiTheme,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
+  List
 } from '@material-ui/core';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+
 import {
   background3Color,
   poppinsFontFamily,
   primaryContrastTextColor,
   secondaryMainColor,
-  background2Color
+  background2Color,
+  title2Color,
+  titlePageColor,
+  primaryLightColor
 } from '../../styles/js/theme';
 
 const useStyles = makeStyles({
@@ -89,6 +100,27 @@ const useStyles = makeStyles({
     width: '100%',
     borderRadius: '32px',
     backgroundClip: 'padding-box'
+  },
+  listWrapper: {
+    width: '100%'
+  },
+  listMenuTextPrimary: {
+    fontFamily: poppinsFontFamily,
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: 14,
+    lineHeight: '143%',
+    letterSpacing: '0.15px',
+    color: titlePageColor
+  },
+  listMenuTextSecondary: {
+    fontFamily: poppinsFontFamily,
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: 14,
+    lineHeight: '143%',
+    letterSpacing: '0.15px',
+    color: 'rgba(0, 0, 0, 0.54)'
   }
 });
 
@@ -115,6 +147,7 @@ const inputsOutlined = createMuiTheme({
 /// SERVICES END
 function MedicalDirectoryPage(): JSX.Element {
   const classes = useStyles();
+  const router = useRouter();
 
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
 
@@ -186,6 +219,40 @@ function MedicalDirectoryPage(): JSX.Element {
                 </Grid>
               </Grid>
             </Box>
+          </Box>
+          <Box pt={6} px={3} className={classes.listWrapper}>
+            <Typography variant="h2" className={classes.listMenuTextPrimary}>
+              Búsquedas recientes
+            </Typography>
+            <List component="nav" className={classes.root} aria-label="menubox proceedings">
+              <ListItem
+                style={{ paddingLeft: '12px', paddingRight: '12px' }}
+                button
+                onClick={() => router.push('doctor_profile/1')}
+              >
+                <ListItemText
+                  primary={
+                    <Typography variant="body2" className={classes.listMenuTextPrimary}>
+                      Dr. Orlando Carazo
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography variant="body2" className={classes.listMenuTextSecondary}>
+                      Medicina general
+                    </Typography>
+                  }
+                />
+                <ListItemSecondaryAction>
+                  <IconButton
+                    edge="end"
+                    aria-label="arrow"
+                    onClick={() => router.push('doctor_profile/1')}
+                  >
+                    <ArrowForwardIosIcon fontSize="small" htmlColor={primaryLightColor} />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            </List>
           </Box>
         </Grid>
         <Divider />
