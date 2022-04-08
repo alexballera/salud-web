@@ -28,33 +28,43 @@ const useStyles = makeStyles({
 export const MeasurementCardContainer = ({ generalData }: IProps): JSX.Element => {
   const classes = useStyles();
 
+  console.log(generalData);
   const { records } = generalData;
   const arterialPressure = records.find(x => x.type === 'arterialPressure');
   const arterialPressureValue =
     arterialPressure && arterialPressure.measurements.length > 0
-      ? arterialPressure.measurements[0].systolic +
+      ? arterialPressure.measurements[arterialPressure.measurements.length - 1].systolic +
         '/' +
-        arterialPressure.measurements[0].diastolic +
+        arterialPressure.measurements[arterialPressure.measurements.length - 1].diastolic +
         ' ' +
         arterialPressure.unit
       : '-';
   const arterialPressureTime =
     arterialPressure && arterialPressure.measurements.length > 0
-      ? arterialPressure.measurements[0].time
+      ? arterialPressure.measurements[arterialPressure.measurements.length - 1].time
       : '-';
+
   const bloodGlocuse = records.find(x => x.type === 'bloodGlocuse');
   const bloodGlocuseValue =
     bloodGlocuse && bloodGlocuse.measurements.length > 0
-      ? `${bloodGlocuse.measurements[0].value} ${bloodGlocuse.unit}`
+      ? `${bloodGlocuse.measurements[bloodGlocuse.measurements.length - 1].value} ${
+          bloodGlocuse.unit
+        }`
       : '-';
   const bloodGlocuseTime =
-    bloodGlocuse && bloodGlocuse.measurements.length > 0 ? bloodGlocuse.measurements[0].time : '-';
+    bloodGlocuse && bloodGlocuse.measurements.length > 0
+      ? bloodGlocuse.measurements[bloodGlocuse.measurements.length - 1].time
+      : '-';
+
   const weight = records.find(x => x.type === 'weight');
   const weightValue =
     weight && weight.measurements.length > 0
-      ? weight.measurements[0].value + ' ' + weight.unit
+      ? weight.measurements[weight.measurements.length - 1].value + ' ' + weight.unit
       : '-';
-  const weightTime = weight && weight.measurements.length > 0 ? weight.measurements[0].time : '-';
+  const weightTime =
+    weight && weight.measurements.length > 0
+      ? weight.measurements[weight.measurements.length - 1].time
+      : '-';
 
   const items = [
     {
