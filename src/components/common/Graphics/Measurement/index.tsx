@@ -165,7 +165,8 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
       const empty = {
         id: 'empty',
         afterDraw: chart => {
-          const data = chart.data.datasets[0].data;
+          const datasets = chart.data.datasets;
+          const data = datasets.length ? chart.data.datasets[0].data : [];
           if (data.length === 0) {
             // No data is present
             const current = chart.ctx;
