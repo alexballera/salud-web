@@ -43,7 +43,7 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
   const { t } = useTranslation([i18nGeneralData]);
 
   const [days, setDays] = useState([]);
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState<number>();
   const [noRecordArterialPressure, setNoRecordArterialPressure] = useState(true);
   const [noRecordBloodGlocuse, setNoRecordBloodGlocuse] = useState(true);
   const [noRecordWeight, setNoRecordWeight] = useState(true);
@@ -53,7 +53,7 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
   };
 
   useEffect(() => {
-    setActive(0);
+    setActive(days.length === 0 ? selected : days.length - 1);
   }, [tab]);
 
   useEffect(() => {
@@ -101,7 +101,7 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
           dateSelected: item.time
         };
       });
-      setDays(activeDate.reverse());
+      setDays(activeDate);
 
       /** create structure lines */
       const contentCharts = [];
@@ -110,29 +110,29 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
           contentCharts.push(
             {
               label: 'mmHg',
-              data: systolic.reverse(),
+              data: diastolic,
+              fill: false,
+              lineTension: 0.5,
+              borderColor: purple,
+              borderWidth: 3,
+              pointStyle: iconSecundary
+            },
+            {
+              label: 'mmHg',
+              data: systolic,
               fill: true,
               lineTension: 0.5,
               backgroundColor: gradientArea,
               borderColor: secondaryLightColor,
               borderWidth: 4,
               pointStyle: iconPrimary
-            },
-            {
-              label: 'mmHg',
-              data: diastolic.reverse(),
-              fill: false,
-              lineTension: 0.5,
-              borderColor: purple,
-              borderWidth: 3,
-              pointStyle: iconSecundary
             }
           );
           break;
         case 'weight':
           contentCharts.push({
             label: 'kg',
-            data: weight.reverse(),
+            data: weight,
             fill: true,
             lineTension: 0.5,
             backgroundColor: gradientArea,
@@ -144,7 +144,7 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
         case 'bloodGlocuse':
           contentCharts.push({
             label: 'mg/dl',
-            data: bloodGlocuse.reverse(),
+            data: bloodGlocuse,
             fill: true,
             lineTension: 0.5,
             backgroundColor: gradientArea,
@@ -158,7 +158,7 @@ const MeasurementGraphic = ({ dataGraphic, onSelected, selected, tab }: Tprops):
       /** set structure lines and spaces */
       const data = {
         labels: ['', '', '', '', '', '', ''],
-        datasets: contentCharts.reverse()
+        datasets: contentCharts
       };
 
       /** create chart empty message */
