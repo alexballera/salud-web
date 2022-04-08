@@ -47,6 +47,8 @@ function Navbar(): JSX.Element {
         return true;
       case '/proceedings':
         return true;
+      case '/medicalDirectory':
+        return true;
       case '/help':
         return true;
       default:
@@ -63,6 +65,8 @@ function Navbar(): JSX.Element {
       case '/':
         return true;
       case '/proceedings':
+        return true;
+      case '/medicalDirectory':
         return true;
       default:
         return true;
@@ -148,6 +152,8 @@ function Navbar(): JSX.Element {
         return t('items.detail', { ns: 'menu' });
       case '/consultationHistory':
         return t('items.history_of_consultations', { ns: 'menu' });
+      case '/medicalDirectory':
+        return t('items.medicalDirectory', { ns: 'menu' });
       default:
         return false;
     }
@@ -177,7 +183,8 @@ function Navbar(): JSX.Element {
     '/recipes_and_prescriptions',
     '/recipes_and_prescriptions/preview/[item_id]',
     '/proceedings',
-    '/generalData'
+    '/generalData',
+    '/medicalDirectory'
   ];
 
   const exitButtonPathNames = [
@@ -207,7 +214,8 @@ function Navbar(): JSX.Element {
     '/clinic_history/familyIllnesses',
     '/clinic_history/vaccines/[item_id]',
     '/medicalData',
-    '/proceedings'
+    '/proceedings',
+    '/medicalDirectory'
   ];
 
   const activeHamburgerMenu = ['/proceedings'];
