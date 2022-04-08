@@ -89,8 +89,8 @@ const useStyles = makeStyles({
     backgroundColor: primaryContrastTextColor,
     height: '450px',
     width: '100%',
-    borderRadius: '32px',
-    backgroundClip: 'padding-box'
+    borderBottomLeftRadius: '32px',
+    borderBottomRightRadius: '32px'
   }
 });
 
