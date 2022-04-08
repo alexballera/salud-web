@@ -38,7 +38,8 @@ import {
   background3Color,
   poppinsFontFamily,
   primaryContrastTextColor,
-  secondaryMainColor
+  secondaryMainColor,
+  background2Color
 } from '../../styles/js/theme';
 
 const useStyles = makeStyles({
@@ -73,12 +74,21 @@ const useStyles = makeStyles({
     padding: 20
   },
   inputOutline: {
-    marginLeft: '24px',
-    marginRight: '24px',
     marginTop: '24px'
   },
   icon: {
     color: 'rgba(0, 0, 0, 0.54)'
+  },
+  mainGrid: {
+    backgroundColor: background2Color,
+    height: '100%'
+  },
+  mainArea: {
+    backgroundColor: primaryContrastTextColor,
+    height: '500px',
+    width: '100%',
+    borderRadius: '32px',
+    backgroundClip: 'padding-box'
   }
 });
 
@@ -87,7 +97,7 @@ const inputsOutlined = createMuiTheme({
     MuiInputLabel: {
       root: {
         '&$outlined': {
-          background: 'white',
+          background: primaryContrastTextColor,
           padding: '0px 10px'
           // width: '312px'
         }
@@ -122,53 +132,64 @@ function MedicalDirectoryPage(): JSX.Element {
       )} */}
       {/* {!isLoading && ( */}
       <ThemeProvider theme={inputsOutlined}>
-        <Box mt={6}>
-          {/* There is already an h1 in the page, let's not duplicate it. */}
-          <Grid container direction="column">
-            <Grid item>
-              <Typography className={classes.title}>
-                {t('items.title', { ns: i18nMedicalDirectory })}
-              </Typography>
+        <Grid container className={classes.mainGrid}>
+          <Box pt={6} px={3} className={classes.mainArea}>
+            {/* There is already an h1 in the page, let's not duplicate it. */}
+            <Grid container direction="column">
+              <Grid item>
+                <Typography className={classes.title}>
+                  {t('items.title', { ns: i18nMedicalDirectory })}
+                </Typography>
+              </Grid>
+              <Grid className={classes.inputOutline} item>
+                <FormControl variant="outlined">
+                  <InputLabel htmlFor="search">
+                    {t('items.labelSearch', { ns: i18nMedicalDirectory })}
+                  </InputLabel>
+                  <OutlinedInput
+                    id="search"
+                    defaultValue="busqueda"
+                    autoFocus={true}
+                    // onChange={handleChange}
+                    label={t('items.labelSearch', { ns: i18nMedicalDirectory })}
+                    placeholder={t('items.labelSearch', { ns: i18nMedicalDirectory })}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <SearchOutlinedIcon className={classes.icon} />
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+              </Grid>
+              <Grid className={classes.inputOutline} item>
+                <FormControl variant="outlined">
+                  <InputLabel htmlFor="location">
+                    {t('items.labelLocation', { ns: i18nMedicalDirectory })}
+                  </InputLabel>
+                  <OutlinedInput
+                    id="location"
+                    defaultValue={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
+                    // onChange={handleChange}
+                    label={t('items.labelLocation', { ns: i18nMedicalDirectory })}
+                    // placeholder={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <LocationOnOutlinedIcon className={classes.icon} />
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+              </Grid>
             </Grid>
-            <Grid item>
-              <FormControl variant="outlined">
-                <InputLabel htmlFor="search">
-                  {t('items.labelSearch', { ns: i18nMedicalDirectory })}
-                </InputLabel>
-                <OutlinedInput
-                  id="search"
-                  // className={classes.inputOutline}
-                  autoFocus={true}
-                  label={t('items.labelSearch', { ns: i18nMedicalDirectory })}
-                  placeholder={t('items.placeholderSearch', { ns: i18nMedicalDirectory })}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <SearchOutlinedIcon className={classes.icon} />
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-            </Grid>
-            <Grid item className={classes.inputOutline}>
-              <FormControl variant="outlined">
-                <InputLabel htmlFor="location">
-                  {t('items.labelLocation', { ns: i18nMedicalDirectory })}
-                </InputLabel>
-                <OutlinedInput
-                  id="location"
-                  defaultValue={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
-                  label={t('items.labelLocation', { ns: i18nMedicalDirectory })}
-                  placeholder={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <LocationOnOutlinedIcon className={classes.icon} />
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-            </Grid>
-          </Grid>
-        </Box>
+            <Box mt={6}>
+              <Grid container direction="column">
+                <Grid item xs={12}>
+                  <Typography variant="subtitle2">Busca por</Typography>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        </Grid>
         <Divider />
       </ThemeProvider>
       {/* )} */}
