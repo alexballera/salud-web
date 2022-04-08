@@ -202,7 +202,7 @@ function GeneralDataPage(): JSX.Element {
                 icon={measurement?.type ? TAB_CARD_ICONS[measurement.type] : <></>}
                 {...buildCardData(selected)}
               />
-              {measurement && measurement?.measurements.length >= 1 && (
+              {measurement && (
                 <>
                   <Box mt={3} mb={1}>
                     <Typography variant="body2" className={classes.typography16}>
