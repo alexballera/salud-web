@@ -146,7 +146,7 @@ function MedicalDirectoryPage(): JSX.Element {
               </Typography>
             </Grid>
             <Grid className={classes.inputOutline} item>
-              <Box mt={2}>
+              <Box mt={1}>
                 <TextField
                   id="search"
                   label={t('items.labelSearch', { ns: i18nMedicalDirectory })}
@@ -169,7 +169,7 @@ function MedicalDirectoryPage(): JSX.Element {
               </Box>
             </Grid>
             <Grid className={classes.inputOutline} item>
-              <Box mt={2}>
+              <Box mt={1}>
                 <TextField
                   id="outlined-location"
                   label={t('items.labelLocation', { ns: i18nMedicalDirectory })}
@@ -193,7 +193,7 @@ function MedicalDirectoryPage(): JSX.Element {
               </Box>
             </Grid>
           </Grid>
-          <Box mt={6}>
+          <Box mt={3}>
             <Grid container direction="column">
               <Grid item xs={12}>
                 <Box mb={3}>
