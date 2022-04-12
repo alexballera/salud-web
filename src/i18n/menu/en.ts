@@ -21,6 +21,9 @@ export const enMenu = {
     clinic_history_family_illnesses: 'Family Diseases',
     clinic_history_habits: 'Control of habits',
     clinic_history_vaccines: 'Vaccines',
-    medicalDirectory: 'Medical directory'
+    medicalDirectory: 'Medical directory',
+    search: 'Search',
+    history_of_consultations: 'Historial de consultas',
+    detail: 'Detail'
   }
 };

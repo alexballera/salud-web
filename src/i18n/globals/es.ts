@@ -89,6 +89,7 @@ export const esGlobals = {
     for: 'Por',
     invalid_date_format: 'Formato de fecha inválido',
     neither: 'Ninguno',
+    noRegistration: 'Sin registro',
 
     country: {
       country: 'País de residencia',

@@ -31,7 +31,6 @@ import {
   Typography,
   Box,
   Grid,
-  TextField,
   ThemeOptions,
   createMuiTheme,
   ListItem,
@@ -52,7 +51,27 @@ import {
   titlePageColor,
   primaryLightColor
 } from '../../styles/js/theme';
+import CardActionImage from '@/src/components/common/Card/CardActionImage';
+import SvgSpecialty from '@/src/components/common/Svg/SvgSpecialty.component';
+import SvgDoctors from '@/src/components/common/Svg/SvgDoctors.component';
 
+const FAKE_SEARCH_HISTORY_LIST = [
+  {
+    idx: '1',
+    title: 'Dr. Orlando Carazo',
+    subTitle: 'Medicina general'
+  },
+  {
+    idx: '2',
+    title: 'Dra. Andrea Duarte',
+    subTitle: 'Oncología'
+  },
+  {
+    idx: '3',
+    title: 'Dr. Gabriel González',
+    subTitle: 'Psicologia'
+  }
+];
 const useStyles = makeStyles({
   root: {
     minWidth: 164,
@@ -96,13 +115,27 @@ const useStyles = makeStyles({
   },
   mainArea: {
     backgroundColor: primaryContrastTextColor,
-    height: '500px',
+    height: '450px',
     width: '100%',
-    borderRadius: '32px',
-    backgroundClip: 'padding-box'
+    borderBottomLeftRadius: '32px',
+    borderBottomRightRadius: '32px'
   },
   listWrapper: {
-    width: '100%'
+    width: '100%',
+    padding: 24
+  },
+  listItem: {
+    paddingLeft: 12,
+    paddingRight: 12
+  },
+  historyTextTitle: {
+    fontFamily: poppinsFontFamily,
+    fontStyle: 'normal',
+    fontWeight: 500,
+    fontSize: 14,
+    lineHeight: '157%',
+    letterSpacing: '0.1px',
+    color: title2Color
   },
   listMenuTextPrimary: {
     fontFamily: poppinsFontFamily,
@@ -131,14 +164,21 @@ const inputsOutlined = createMuiTheme({
         '&$outlined': {
           background: primaryContrastTextColor,
           padding: '0px 10px'
+          // width: '312px'
         }
       }
     },
     MuiOutlinedInput: {
       root: {
         '& fieldset': {
-          top: 0
+          top: 0,
+          minWidth: '312px'
         }
+      }
+    },
+    MuiFormControl: {
+      root: {
+        minWidth: '312px'
       }
     }
   }
@@ -152,6 +192,20 @@ function MedicalDirectoryPage(): JSX.Element {
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
 
   const [search, setSearch] = useState('');
+
+  const itemsCard = [
+    {
+      title: t('searchBySection.specialty', { ns: i18nMedicalDirectory }),
+      action: '/medicalDirectory/searchBy',
+      icon: <SvgSpecialty />
+    },
+    {
+      title: t('searchBySection.doctors', { ns: i18nMedicalDirectory }),
+      action: '/medicalDirectory/searchBy',
+      icon: <SvgDoctors />
+    }
+  ];
+
   return (
     <>
       {/* {isLoading && (
@@ -179,11 +233,9 @@ function MedicalDirectoryPage(): JSX.Element {
                   </InputLabel>
                   <OutlinedInput
                     id="search"
-                    defaultValue="busqueda"
                     autoFocus={true}
-                    // onChange={handleChange}
                     label={t('items.labelSearch', { ns: i18nMedicalDirectory })}
-                    placeholder={t('items.labelSearch', { ns: i18nMedicalDirectory })}
+                    placeholder={t('items.placeholderSearch', { ns: i18nMedicalDirectory })}
                     endAdornment={
                       <InputAdornment position="end">
                         <SearchOutlinedIcon className={classes.icon} />
@@ -200,9 +252,7 @@ function MedicalDirectoryPage(): JSX.Element {
                   <OutlinedInput
                     id="location"
                     defaultValue={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
-                    // onChange={handleChange}
                     label={t('items.labelLocation', { ns: i18nMedicalDirectory })}
-                    // placeholder={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
                     endAdornment={
                       <InputAdornment position="end">
                         <LocationOnOutlinedIcon className={classes.icon} />
@@ -215,49 +265,68 @@ function MedicalDirectoryPage(): JSX.Element {
             <Box mt={6}>
               <Grid container direction="column">
                 <Grid item xs={12}>
-                  <Typography variant="subtitle2">Busca por</Typography>
+                  <Box mb={3}>
+                    <Typography variant="subtitle2">
+                      {t('searchBySection.searchBy', { ns: i18nMedicalDirectory })}
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid container alignItems="center" justify="center" spacing={3}>
+                    {itemsCard.map(item => (
+                      <Grid item xs={6} key={item.title}>
+                        <CardActionImage title={item.title} route={item.action} icon={item.icon} />
+                      </Grid>
+                    ))}
+                  </Grid>
                 </Grid>
               </Grid>
             </Box>
           </Box>
-          <Box pt={6} px={3} className={classes.listWrapper}>
-            <Typography variant="h2" className={classes.listMenuTextPrimary}>
-              Búsquedas recientes
+          <Box className={classes.listWrapper}>
+            <Typography variant="h2" className={classes.historyTextTitle}>
+              {t('searchBySection.history', { ns: i18nMedicalDirectory })}
             </Typography>
-            <List component="nav" className={classes.root} aria-label="menubox proceedings">
-              <ListItem
-                style={{ paddingLeft: '12px', paddingRight: '12px' }}
-                button
-                onClick={() => router.push('doctor_profile/1')}
-              >
-                <ListItemText
-                  primary={
-                    <Typography variant="body2" className={classes.listMenuTextPrimary}>
-                      Dr. Orlando Carazo
-                    </Typography>
-                  }
-                  secondary={
-                    <Typography variant="body2" className={classes.listMenuTextSecondary}>
-                      Medicina general
-                    </Typography>
-                  }
-                />
-                <ListItemSecondaryAction>
-                  <IconButton
-                    edge="end"
-                    aria-label="arrow"
-                    onClick={() => router.push('doctor_profile/1')}
-                  >
-                    <ArrowForwardIosIcon fontSize="small" htmlColor={primaryLightColor} />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
+            <List
+              component="nav"
+              className={classes.root}
+              aria-label="menubox history filter items"
+            >
+              {FAKE_SEARCH_HISTORY_LIST.map((item, idx) => (
+                <ListItem
+                  button
+                  key={idx}
+                  className={classes.listItem}
+                  onClick={() => router.push(`doctor_profile/${item.idx}`)}
+                >
+                  <ListItemText
+                    primary={
+                      <Typography variant="body2" className={classes.listMenuTextPrimary}>
+                        {item.title}
+                      </Typography>
+                    }
+                    secondary={
+                      <Typography variant="body2" className={classes.listMenuTextSecondary}>
+                        {item.subTitle}
+                      </Typography>
+                    }
+                  />
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      edge="end"
+                      aria-label="arrow"
+                      onClick={() => router.push(`/doctor_profile/${item.idx}`)}
+                    >
+                      <ArrowForwardIosIcon fontSize="small" htmlColor={primaryLightColor} />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))}
             </List>
           </Box>
         </Grid>
         <Divider />
       </ThemeProvider>
-      {/* )} */}
     </>
   );
 }

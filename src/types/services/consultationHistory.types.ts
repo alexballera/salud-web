@@ -14,3 +14,9 @@ export type TConsultationHistory = {
 };
 
 export type TConsultationHistoryGroup = { month: string; items: TConsultationHistory[] }[];
+
+export type TGetConsultationHistoryByIdParams = {
+  userId: string;
+  year: string;
+  medicalConsultationId?: string;
+};

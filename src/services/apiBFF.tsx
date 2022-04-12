@@ -7,8 +7,10 @@ import { TDiseasesResponse } from '@/src/types/services/diseases.types';
 import { TGeneralData } from '@/src/types/services/generalData.types';
 import { TFamiliarDiseasesResponse } from '../types/services/familiarDiseases.types';
 import {
+  TConsultationHistory,
   TConsultationHistoryGroup,
-  TConsultationHistoryResponse
+  TConsultationHistoryResponse,
+  TGetConsultationHistoryByIdParams
 } from '../types/services/consultationHistory.types';
 
 type TGetVaccineByIdParams = {
@@ -69,6 +71,26 @@ export const apiBFF = createApi({
     getFamiliarDiseases: builder.query<TFamiliarDiseasesResponse, void>({
       query: () => ({ url: '/patients/1/familiarDiseases', method: 'get' })
     }),
+    getConsultationHistoryById: builder.query<
+      TConsultationHistory,
+      TGetConsultationHistoryByIdParams
+    >({
+      query: ({ year, userId }: TGetConsultationHistoryByIdParams) => ({
+        url: `/patients/${userId}/medicalConsultation/${year}`,
+        method: 'get'
+      }),
+      transformResponse: (
+        response: TConsultationHistoryResponse,
+        _tag: unknown,
+        { medicalConsultationId }: TGetConsultationHistoryByIdParams
+      ) => {
+        const { consultations } = response;
+        const consult = consultations.find(
+          item => item.medicalConsultationId === medicalConsultationId
+        );
+        return consult;
+      }
+    }),
     getConsultationHistory: builder.query<TConsultationHistoryGroup, number>({
       query: year => ({ url: `/patients/1/medicalConsultation/${year}`, method: 'get' }),
       transformResponse: (response: TConsultationHistoryResponse) => {
@@ -100,5 +122,6 @@ export const {
   useGetGeneralDataQuery,
   useGetFamiliarDiseasesQuery,
   useGetVaccineByIdQuery,
-  useGetConsultationHistoryQuery
+  useGetConsultationHistoryQuery,
+  useGetConsultationHistoryByIdQuery
 } = apiBFF;

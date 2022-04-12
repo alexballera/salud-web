@@ -49,7 +49,7 @@ const useStyles = makeStyles({
     fontFamily: poppinsFontFamily,
     fontStyle: 'normal',
     fontWeight: 'normal',
-    fontSize: 14,
+    fontSize: 13,
     color: textValueCardColor
   },
   smallText: {
@@ -107,7 +107,7 @@ export default function MeasurementCard({
     const toDate = parseISO(date);
 
     if (!isValid(toDate)) {
-      return t('invalid_date_format');
+      return t('label.noRegistration');
     }
 
     const year = toDate.getFullYear();
@@ -120,7 +120,7 @@ export default function MeasurementCard({
     const toDate = parseISO(date);
 
     if (!isValid(toDate)) {
-      return t('invalid_date_format');
+      return t('label.noRegistration');
     }
 
     return `${format(toDate, 'hh:mm aaaa')}`;
@@ -141,9 +141,11 @@ export default function MeasurementCard({
         <Typography className={!noSVG ? classes.smallText : classes.mediumText}>
           {!noSVG && 'Última medición:'}
           <br />
-          {getCardDate(time)}
+          {getCardDate(time) !== t('label.noRegistration')
+            ? getCardDate(time)
+            : t('label.noRegistration')}
           <br />
-          {getCardHours(time)}
+          {getCardHours(time) !== t('label.noRegistration') && getCardHours(time)}
         </Typography>
       </CardContent>
     </Card>

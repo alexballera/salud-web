@@ -89,6 +89,7 @@ export const enGlobals = {
     for: 'For',
     invalid_date_format: 'invalid date format',
     neither: 'Ninguno',
+    noRegistration: 'No registration',
 
     country: {
       country: 'Country',
