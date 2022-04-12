@@ -9,6 +9,7 @@ export const esMedicalDirectory = {
   searchBySection: {
     searchBy: 'Busca por',
     specialty: 'Especialidades',
-    doctors: 'Doctores'
+    doctors: 'Doctores',
+    history: 'Búsquedas recientes'
   }
 };

@@ -9,6 +9,7 @@ export const enMedicalDirectory = {
   searchBySection: {
     searchBy: 'Search By',
     specialty: 'Specialty',
-    doctors: 'Doctors'
+    doctors: 'Doctors',
+    history: 'Recent searches'
   }
 };

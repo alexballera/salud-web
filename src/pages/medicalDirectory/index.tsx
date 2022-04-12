@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
+import { useRouter } from 'next/router';
 /// BASE IMPORTS
 
 /// i18n
@@ -20,20 +21,54 @@ import { withAppContext } from '../../context';
 
 /// SERVICES
 import { ThemeProvider } from '@material-ui/styles';
-import { Divider, makeStyles, Typography, Box, Grid, InputAdornment } from '@material-ui/core';
 import { TextField } from '@mui/material';
+import {
+  Divider,
+  makeStyles,
+  InputAdornment,
+  Typography,
+  Box,
+  Grid,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
+  List
+} from '@material-ui/core';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+
 import {
   background3Color,
   poppinsFontFamily,
   primaryContrastTextColor,
   secondaryMainColor,
-  background2Color
+  background2Color,
+  title2Color,
+  titlePageColor,
+  primaryLightColor
 } from '../../styles/js/theme';
 import CardActionImage from '@/src/components/common/Card/CardActionImage';
 import SvgSpecialty from '@/src/components/common/Svg/SvgSpecialty.component';
 import SvgDoctors from '@/src/components/common/Svg/SvgDoctors.component';
 import muiTheme from '../../styles/js/muiTheme';
 
+const FAKE_SEARCH_HISTORY_LIST = [
+  {
+    idx: '1',
+    title: 'Dr. Orlando Carazo',
+    subTitle: 'Medicina general'
+  },
+  {
+    idx: '2',
+    title: 'Dra. Andrea Duarte',
+    subTitle: 'Oncología'
+  },
+  {
+    idx: '3',
+    title: 'Dr. Gabriel González',
+    subTitle: 'Psicologia'
+  }
+];
 const useStyles = makeStyles({
   root: {
     minWidth: 164,
@@ -77,7 +112,7 @@ const useStyles = makeStyles({
   },
   mainArea: {
     backgroundColor: primaryContrastTextColor,
-    height: '450px',
+    height: '425px',
     width: '100%',
     borderBottomLeftRadius: '32px',
     borderBottomRightRadius: '32px'
@@ -89,12 +124,48 @@ const useStyles = makeStyles({
     '& label.Mui-focused': {
       color: secondaryMainColor
     }
+  },
+  listWrapper: {
+    width: '100%',
+    padding: 24
+  },
+  listItem: {
+    paddingLeft: 12,
+    paddingRight: 12
+  },
+  historyTextTitle: {
+    fontFamily: poppinsFontFamily,
+    fontStyle: 'normal',
+    fontWeight: 500,
+    fontSize: 14,
+    lineHeight: '157%',
+    letterSpacing: '0.1px',
+    color: title2Color
+  },
+  listMenuTextPrimary: {
+    fontFamily: poppinsFontFamily,
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: 14,
+    lineHeight: '143%',
+    letterSpacing: '0.15px',
+    color: titlePageColor
+  },
+  listMenuTextSecondary: {
+    fontFamily: poppinsFontFamily,
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: 14,
+    lineHeight: '143%',
+    letterSpacing: '0.15px',
+    color: 'rgba(0, 0, 0, 0.54)'
   }
 });
 
 /// SERVICES END
 function MedicalDirectoryPage(): JSX.Element {
   const classes = useStyles();
+  const router = useRouter();
 
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
 
@@ -213,6 +284,43 @@ function MedicalDirectoryPage(): JSX.Element {
               </Grid>
             </Grid>
           </Box>
+        </Box>
+        <Box className={classes.listWrapper}>
+          <Typography variant="h2" className={classes.historyTextTitle}>
+            {t('searchBySection.history', { ns: i18nMedicalDirectory })}
+          </Typography>
+          <List component="nav" className={classes.root} aria-label="menubox history filter items">
+            {FAKE_SEARCH_HISTORY_LIST.map((item, idx) => (
+              <ListItem
+                button
+                key={idx}
+                className={classes.listItem}
+                onClick={() => router.push(`doctor_profile/${item.idx}`)}
+              >
+                <ListItemText
+                  primary={
+                    <Typography variant="body2" className={classes.listMenuTextPrimary}>
+                      {item.title}
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography variant="body2" className={classes.listMenuTextSecondary}>
+                      {item.subTitle}
+                    </Typography>
+                  }
+                />
+                <ListItemSecondaryAction>
+                  <IconButton
+                    edge="end"
+                    aria-label="arrow"
+                    onClick={() => router.push(`/doctor_profile/${item.idx}`)}
+                  >
+                    <ArrowForwardIosIcon fontSize="small" htmlColor={primaryLightColor} />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))}
+          </List>
         </Box>
       </Grid>
       <Divider />
