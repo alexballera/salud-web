@@ -20,19 +20,8 @@ import { withAppContext } from '../../context';
 
 /// SERVICES
 import { ThemeProvider } from '@material-ui/styles';
-import {
-  Divider,
-  makeStyles,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-  InputAdornment,
-  Typography,
-  Box,
-  Grid,
-  ThemeOptions,
-  createMuiTheme
-} from '@material-ui/core';
+import { Divider, makeStyles, Typography, Box, Grid, InputAdornment } from '@material-ui/core';
+import { TextField } from '@mui/material';
 import {
   background3Color,
   poppinsFontFamily,
@@ -43,6 +32,7 @@ import {
 import CardActionImage from '@/src/components/common/Card/CardActionImage';
 import SvgSpecialty from '@/src/components/common/Svg/SvgSpecialty.component';
 import SvgDoctors from '@/src/components/common/Svg/SvgDoctors.component';
+import muiTheme from '../../styles/js/muiTheme';
 
 const useStyles = makeStyles({
   root: {
@@ -76,7 +66,7 @@ const useStyles = makeStyles({
     padding: 20
   },
   inputOutline: {
-    marginTop: '24px'
+    marginTop: '18px'
   },
   icon: {
     color: 'rgba(0, 0, 0, 0.54)'
@@ -91,35 +81,16 @@ const useStyles = makeStyles({
     width: '100%',
     borderBottomLeftRadius: '32px',
     borderBottomRightRadius: '32px'
-  }
-});
-
-const inputsOutlined = createMuiTheme({
-  overrides: {
-    MuiInputLabel: {
-      root: {
-        '&$outlined': {
-          background: primaryContrastTextColor,
-          padding: '0px 10px'
-          // width: '312px'
-        }
-      }
+  },
+  inputColor: {
+    '& .MuiOutlinedInput-root:hover': {
+      '& > fieldset': { borderColor: secondaryMainColor }
     },
-    MuiOutlinedInput: {
-      root: {
-        '& fieldset': {
-          top: 0,
-          minWidth: '312px'
-        }
-      }
-    },
-    MuiFormControl: {
-      root: {
-        minWidth: '312px'
-      }
+    '& label.Mui-focused': {
+      color: secondaryMainColor
     }
   }
-} as ThemeOptions);
+});
 
 /// SERVICES END
 function MedicalDirectoryPage(): JSX.Element {
@@ -127,7 +98,29 @@ function MedicalDirectoryPage(): JSX.Element {
 
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
 
-  const [search, setSearch] = useState('');
+  const [searchField, setSearchField] = useState('');
+  const [searchShow, setSearchShow] = useState(false);
+
+  const [locationField, setLocationField] = useState('');
+  const [locationShow, setLocationShow] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchField(e.target.value);
+    if (e.target.value === '') {
+      setSearchShow(false);
+    } else {
+      setSearchShow(true);
+    }
+  };
+
+  const handleChangeLocation = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocationField(e.target.value);
+    if (e.target.value === '') {
+      setLocationShow(false);
+    } else {
+      setLocationShow(true);
+    }
+  };
 
   const itemsCard = [
     {
@@ -143,87 +136,87 @@ function MedicalDirectoryPage(): JSX.Element {
   ];
 
   return (
-    <>
-      {/* {isLoading && (
-        <Box mt={6}>
-          <Grid container direction="column" justify="center" alignItems="center">
-            <CircularProgress color="inherit" />
-          </Grid>
-        </Box>
-      )} */}
-      {/* {!isLoading && ( */}
-      <ThemeProvider theme={inputsOutlined}>
-        <Grid container className={classes.mainGrid}>
-          <Box pt={6} px={3} className={classes.mainArea}>
-            {/* There is already an h1 in the page, let's not duplicate it. */}
-            <Grid container direction="column">
-              <Grid item>
-                <Typography className={classes.title}>
-                  {t('items.title', { ns: i18nMedicalDirectory })}
-                </Typography>
-              </Grid>
-              <Grid className={classes.inputOutline} item>
-                <FormControl variant="outlined">
-                  <InputLabel htmlFor="search">
-                    {t('items.labelSearch', { ns: i18nMedicalDirectory })}
-                  </InputLabel>
-                  <OutlinedInput
-                    id="search"
-                    autoFocus={true}
-                    label={t('items.labelSearch', { ns: i18nMedicalDirectory })}
-                    placeholder={t('items.placeholderSearch', { ns: i18nMedicalDirectory })}
-                    endAdornment={
+    <ThemeProvider theme={muiTheme}>
+      <Grid container className={classes.mainGrid}>
+        <Box pt={6} px={3} className={classes.mainArea}>
+          <Grid container direction="column">
+            <Grid item>
+              <Typography className={classes.title}>
+                {t('items.title', { ns: i18nMedicalDirectory })}
+              </Typography>
+            </Grid>
+            <Grid className={classes.inputOutline} item>
+              <Box mt={2}>
+                <TextField
+                  id="search"
+                  label={t('items.labelSearch', { ns: i18nMedicalDirectory })}
+                  placeholder={t('items.placeholderSearch', { ns: i18nMedicalDirectory })}
+                  type="text"
+                  className={classes.inputColor}
+                  fullWidth
+                  onChange={handleChange}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  InputProps={{
+                    endAdornment: (
                       <InputAdornment position="end">
                         <SearchOutlinedIcon className={classes.icon} />
                       </InputAdornment>
-                    }
-                  />
-                </FormControl>
-              </Grid>
-              <Grid className={classes.inputOutline} item>
-                <FormControl variant="outlined">
-                  <InputLabel htmlFor="location">
-                    {t('items.labelLocation', { ns: i18nMedicalDirectory })}
-                  </InputLabel>
-                  <OutlinedInput
-                    id="location"
-                    defaultValue={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
-                    label={t('items.labelLocation', { ns: i18nMedicalDirectory })}
-                    endAdornment={
+                    )
+                  }}
+                />
+              </Box>
+            </Grid>
+            <Grid className={classes.inputOutline} item>
+              <Box mt={2}>
+                <TextField
+                  id="outlined-location"
+                  label={t('items.labelLocation', { ns: i18nMedicalDirectory })}
+                  defaultValue={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
+                  placeholder={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
+                  type="text"
+                  className={classes.inputColor}
+                  fullWidth
+                  onChange={handleChangeLocation}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  InputProps={{
+                    endAdornment: (
                       <InputAdornment position="end">
                         <LocationOnOutlinedIcon className={classes.icon} />
                       </InputAdornment>
-                    }
-                  />
-                </FormControl>
+                    )
+                  }}
+                />
+              </Box>
+            </Grid>
+          </Grid>
+          <Box mt={6}>
+            <Grid container direction="column">
+              <Grid item xs={12}>
+                <Box mb={3}>
+                  <Typography variant="subtitle2">
+                    {t('searchBySection.searchBy', { ns: i18nMedicalDirectory })}
+                  </Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container alignItems="center" justify="center" spacing={3}>
+                  {itemsCard.map(item => (
+                    <Grid item xs={6} key={item.title}>
+                      <CardActionImage title={item.title} route={item.action} icon={item.icon} />
+                    </Grid>
+                  ))}
+                </Grid>
               </Grid>
             </Grid>
-            <Box mt={6}>
-              <Grid container direction="column">
-                <Grid item xs={12}>
-                  <Box mb={3}>
-                    <Typography variant="subtitle2">
-                      {t('searchBySection.searchBy', { ns: i18nMedicalDirectory })}
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid container alignItems="center" justify="center" spacing={3}>
-                    {itemsCard.map(item => (
-                      <Grid item xs={6} key={item.title}>
-                        <CardActionImage title={item.title} route={item.action} icon={item.icon} />
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Box>
           </Box>
-        </Grid>
-        <Divider />
-      </ThemeProvider>
-      {/* )} */}
-    </>
+        </Box>
+      </Grid>
+      <Divider />
+    </ThemeProvider>
   );
 }
 
