@@ -222,7 +222,7 @@ function Navbar(): JSX.Element {
     '/medicalDirectory'
   ];
 
-  const activeHamburgerMenu = ['/proceedings'];
+  const activeHamburgerMenu = ['/proceedings', '/medicalDirectory'];
 
   return (
     <>
