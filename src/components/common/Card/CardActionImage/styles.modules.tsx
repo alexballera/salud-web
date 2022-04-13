@@ -1,4 +1,4 @@
-import { shadowCardColor, titlePageColor } from '../../../../styles/js/theme';
+import { shadowCardColor, titlePageColor, poppinsFontFamily } from '../../../../styles/js/theme';
 import { makeStyles } from '@material-ui/core/styles';
 
 const cardActionImageStyles = makeStyles({
@@ -10,7 +10,8 @@ const cardActionImageStyles = makeStyles({
     textAlign: 'center',
     letterSpacing: 0.4,
     marginTop: 10,
-    marginBottom: -5
+    marginBottom: -5,
+    fontFamily: poppinsFontFamily
   },
   root: {
     minWidth: 148,

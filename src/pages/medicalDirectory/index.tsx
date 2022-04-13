@@ -159,6 +159,9 @@ const useStyles = makeStyles({
     lineHeight: '143%',
     letterSpacing: '0.15px',
     color: 'rgba(0, 0, 0, 0.54)'
+  },
+  subTitle: {
+    fontFamily: poppinsFontFamily
   }
 });
 
@@ -268,7 +271,7 @@ function MedicalDirectoryPage(): JSX.Element {
             <Grid container direction="column">
               <Grid item xs={12}>
                 <Box mb={3}>
-                  <Typography variant="subtitle2">
+                  <Typography className={classes.subTitle} variant="subtitle2">
                     {t('searchBySection.searchBy', { ns: i18nMedicalDirectory })}
                   </Typography>
                 </Box>
