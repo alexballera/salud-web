@@ -66,7 +66,7 @@ const FAKE_SEARCH_HISTORY_LIST = [
   {
     idx: '3',
     title: 'Dr. Gabriel González',
-    subTitle: 'Psicologia'
+    subTitle: 'Psicología'
   }
 ];
 const useStyles = makeStyles({
@@ -211,7 +211,7 @@ function MedicalDirectoryPage(): JSX.Element {
 
   return (
     <ThemeProvider theme={muiTheme}>
-      <Grid container className={classes.mainGrid}>
+      <Grid className={classes.mainGrid}>
         <Box pt={6} px={3} className={classes.mainArea}>
           <Grid container direction="column">
             <Grid item>
