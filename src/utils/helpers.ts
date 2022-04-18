@@ -58,3 +58,36 @@ export const i18nDateFormat = (date: string, formatDate: string): string => {
     locale: locale
   });
 };
+
+export const geolocation = async () => {
+  if (navigator.geolocation) {
+    await navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
+      enableHighAccuracy: true,
+      timeout: 20000,
+      maximumAge: 0
+    });
+  }
+};
+
+function successCallback(position) {
+  console.log(position.coords);
+}
+
+function errorCallback(error) {
+  switch (error.code) {
+    case error.PERMISSION_DENIED:
+      console.error('User denied the request for Geolocation.');
+      break;
+    case error.POSITION_UNAVAILABLE:
+      console.error('Location information is unavailable.');
+      break;
+
+    case error.TIMEOUT:
+      console.error('The request to get user location timed out.');
+      break;
+
+    case error.UNKNOWN_ERROR:
+      console.error('An unknown error occurred.');
+      break;
+  }
+}

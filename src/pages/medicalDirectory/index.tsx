@@ -1,5 +1,5 @@
 /// BASE IMPORTS
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import { useRouter } from 'next/router';
@@ -51,6 +51,7 @@ import CardActionImage from '@/src/components/common/Card/CardActionImage';
 import SvgSpecialty from '@/src/components/common/Svg/SvgSpecialty.component';
 import SvgDoctors from '@/src/components/common/Svg/SvgDoctors.component';
 import muiTheme from '../../styles/js/muiTheme';
+import { geolocation } from '@/src/utils/helpers';
 
 const FAKE_SEARCH_HISTORY_LIST = [
   {
@@ -178,6 +179,10 @@ function MedicalDirectoryPage(): JSX.Element {
   const [locationField, setLocationField] = useState('');
   const [locationShow, setLocationShow] = useState(false);
 
+  useEffect(() => {
+    geolocation();
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchField(e.target.value);
     if (e.target.value === '') {
@@ -259,7 +264,9 @@ function MedicalDirectoryPage(): JSX.Element {
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <LocationOnOutlinedIcon className={classes.icon} />
+                        <a onClick={() => getLocation()}>
+                          <LocationOnOutlinedIcon className={classes.icon} />
+                        </a>
                       </InputAdornment>
                     )
                   }}
