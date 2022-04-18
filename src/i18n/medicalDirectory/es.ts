@@ -10,6 +10,7 @@ export const esMedicalDirectory = {
     searchBy: 'Busca por',
     specialty: 'Especialidades',
     doctors: 'Doctores',
-    history: 'Búsquedas recientes'
+    history: 'Búsquedas recientes',
+    noRecentSearch: 'No tiene búsquedas recientes registradas'
   }
 };
