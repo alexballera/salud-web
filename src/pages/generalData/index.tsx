@@ -55,7 +55,7 @@ function GeneralDataPage(): JSX.Element {
   const { t } = useTranslation([i18nGeneralData, i18Forms]);
   const [tab, setTab] = useState<number>(parseInt(getDataFromLocalStorage('cardSelected')) || 0);
   const [measurement, setMeasurement] = useState<IMeasurement>(INITIAL_STATE);
-  const [selected, setSelected] = useState<number>(0);
+  const [selected, setSelected] = useState<number>(6);
   const { data, isLoading, isFetching } = useGetMeasurementsQuery('1');
 
   const tabList = [
