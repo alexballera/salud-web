@@ -10,6 +10,7 @@ export const enMedicalDirectory = {
     searchBy: 'Search By',
     specialty: 'Specialty',
     doctors: 'Doctors',
-    history: 'Recent searches'
+    history: 'Recent searches',
+    noRecentSearch: 'You have no recent searches recorded'
   }
 };
