@@ -84,18 +84,16 @@ function GeneralDataPage(): JSX.Element {
   }, [isFetching, tab]);
 
   const groupRecordsByType = (tab: number) => {
+    setDataToLocalStorage('cardSelected', tab.toString());
     switch (tab) {
       case 0:
         setMeasurement(filterRecordByType('arterialPressure'));
-        setDataToLocalStorage('cardSelected', tab.toString());
         break;
       case 1:
         setMeasurement(filterRecordByType('weight'));
-        setDataToLocalStorage('cardSelected', tab.toString());
         break;
       case 2:
         setMeasurement(filterRecordByType('bloodGlocuse'));
-        setDataToLocalStorage('cardSelected', tab.toString());
         break;
       default:
         setMeasurement(INITIAL_STATE);
