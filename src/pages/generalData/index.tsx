@@ -33,7 +33,10 @@ import generalDataStyles from './styles.module';
 /// STYLES & TYPES END
 
 /// SERVICES
-import { getDataFromLocalStorage } from '@/src/services/localStorage.service';
+import {
+  getDataFromLocalStorage,
+  setDataToLocalStorage
+} from '@/src/services/localStorage.service';
 import { useGetMeasurementsQuery } from '@/src/services/apiBFF';
 /// SERVICES END
 
@@ -84,12 +87,15 @@ function GeneralDataPage(): JSX.Element {
     switch (tab) {
       case 0:
         setMeasurement(filterRecordByType('arterialPressure'));
+        setDataToLocalStorage('cardSelected', tab.toString());
         break;
       case 1:
         setMeasurement(filterRecordByType('weight'));
+        setDataToLocalStorage('cardSelected', tab.toString());
         break;
       case 2:
         setMeasurement(filterRecordByType('bloodGlocuse'));
+        setDataToLocalStorage('cardSelected', tab.toString());
         break;
       default:
         setMeasurement(INITIAL_STATE);
