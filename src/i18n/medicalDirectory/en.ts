@@ -11,6 +11,9 @@ export const enMedicalDirectory = {
     specialty: 'Specialty',
     doctors: 'Doctors',
     history: 'Recent searches',
-    noRecentSearch: 'You have no recent searches recorded'
+    noRecentSearch: 'You have no recent searches recorded',
+    searchResults: {
+      title: 'Search results'
+    }
   }
 };
