@@ -21,7 +21,7 @@ import { withAppContext } from '../../context';
 
 /// SERVICES
 import { ThemeProvider } from '@material-ui/styles';
-import { TextField } from '@mui/material';
+import { Autocomplete, TextField } from '@mui/material';
 import {
   Divider,
   makeStyles,
@@ -51,7 +51,9 @@ import CardActionImage from '@/src/components/common/Card/CardActionImage';
 import SvgSpecialty from '@/src/components/common/Svg/SvgSpecialty.component';
 import SvgDoctors from '@/src/components/common/Svg/SvgDoctors.component';
 import muiTheme from '../../styles/js/muiTheme';
-import { geolocation } from '@/src/utils/helpers';
+import { getPosition } from '@/src/utils/helpers';
+
+import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
 
 const FAKE_SEARCH_HISTORY_LIST = [
   {
@@ -124,6 +126,9 @@ const useStyles = makeStyles({
     },
     '& label.Mui-focused': {
       color: secondaryMainColor
+    },
+    '& .MuiOutlinedInput-root.Mui-focused': {
+      '& > fieldset': { borderColor: secondaryMainColor }
     }
   },
   listWrapper: {
@@ -163,6 +168,9 @@ const useStyles = makeStyles({
   },
   subTitle: {
     fontFamily: poppinsFontFamily
+  },
+  popupIndicator: {
+    transform: 'none !important'
   }
 });
 
@@ -173,6 +181,41 @@ function MedicalDirectoryPage(): JSX.Element {
 
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
 
+  const {
+    ready,
+    value,
+    suggestions: { status, data },
+    setValue,
+    clearSuggestions
+  } = usePlacesAutocomplete({
+    requestOptions: {
+      /* Define search scope here */
+    },
+    debounce: 300
+  });
+
+  const handleInput = e => {
+    // Update the keyword of the input element
+    setValue(e.target.value);
+    handleSelect(e.target.value);
+  };
+
+  const handleSelect =
+    ({ description }) =>
+    () => {
+      setValue(description, false);
+      clearSuggestions();
+
+      getGeocode({ address: description })
+        .then(results => getLatLng(results[0]))
+        .then(({ lat, lng }) => {
+          console.log('📍 Coordinates: ', { lat, lng });
+        })
+        .catch(error => {
+          console.log('😱 Error: ', error);
+        });
+    };
+
   const [searchField, setSearchField] = useState('');
   const [searchShow, setSearchShow] = useState(false);
 
@@ -180,10 +223,22 @@ function MedicalDirectoryPage(): JSX.Element {
   const [locationShow, setLocationShow] = useState(false);
 
   useEffect(() => {
-    geolocation();
-  }, []);
+    gpsPosition();
+    console.log(data);
+  }, [data]);
+
+  const gpsPosition = async () => {
+    await getPosition()
+      .then(function (result) {
+        console.log(result);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
     setSearchField(e.target.value);
     if (e.target.value === '') {
       setSearchShow(false);
@@ -214,6 +269,16 @@ function MedicalDirectoryPage(): JSX.Element {
     }
   ];
 
+  const top100Films = [
+    { title: 'The Shawshank Redemption', year: 1994 },
+    { title: 'The Godfather', year: 1972 },
+    { title: 'The Godfather: Part II', year: 1974 },
+    { title: 'The Dark Knight', year: 2008 },
+    { title: '12 Angry Men', year: 1957 },
+    { title: "Schindler's List", year: 1993 },
+    { title: 'Pulp Fiction', year: 1994 }
+  ];
+
   return (
     <ThemeProvider theme={muiTheme}>
       <Grid className={classes.mainGrid}>
@@ -227,33 +292,9 @@ function MedicalDirectoryPage(): JSX.Element {
             <Grid className={classes.inputOutline} item>
               <Box mt={1}>
                 <TextField
-                  id="search"
+                  id="outlined-location"
                   label={t('items.labelSearch', { ns: i18nMedicalDirectory })}
                   placeholder={t('items.placeholderSearch', { ns: i18nMedicalDirectory })}
-                  type="text"
-                  className={classes.inputColor}
-                  fullWidth
-                  onChange={handleChange}
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <SearchOutlinedIcon className={classes.icon} />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-              </Box>
-            </Grid>
-            <Grid className={classes.inputOutline} item>
-              <Box mt={1}>
-                <TextField
-                  id="outlined-location"
-                  label={t('items.labelLocation', { ns: i18nMedicalDirectory })}
-                  defaultValue={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
-                  placeholder={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
                   type="text"
                   className={classes.inputColor}
                   fullWidth
@@ -264,12 +305,37 @@ function MedicalDirectoryPage(): JSX.Element {
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <a onClick={() => getLocation()}>
-                          <LocationOnOutlinedIcon className={classes.icon} />
+                        <a onClick={() => gpsPosition()}>
+                          <SearchOutlinedIcon className={classes.icon} />
                         </a>
                       </InputAdornment>
                     )
                   }}
+                />
+              </Box>
+            </Grid>
+            <Grid className={classes.inputOutline} item>
+              <Box mt={1}>
+                <Autocomplete
+                  id="free-solo-demo"
+                  freeSolo
+                  options={data.map(option => option.description)}
+                  forcePopupIcon={true}
+                  popupIcon={<LocationOnOutlinedIcon className={classes.icon} />}
+                  renderInput={params => (
+                    <TextField
+                      {...params}
+                      label={t('items.labelLocation', { ns: i18nMedicalDirectory })}
+                      defaultValue={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
+                      placeholder={t('items.placeholderLocation', { ns: i18nMedicalDirectory })}
+                      className={`${classes.popupIndicator} ${classes.inputColor}`}
+                      value={value}
+                      onChange={handleInput}
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                    />
+                  )}
                 />
               </Box>
             </Grid>

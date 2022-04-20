@@ -59,35 +59,38 @@ export const i18nDateFormat = (date: string, formatDate: string): string => {
   });
 };
 
-export const geolocation = async () => {
-  if (navigator.geolocation) {
-    await navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
-      enableHighAccuracy: true,
-      timeout: 20000,
-      maximumAge: 0
-    });
-  }
+type TGeolocation = {
+  latitude: number;
+  longitude: number;
 };
 
-function successCallback(position) {
-  console.log(position.coords);
-}
+export const getPosition = async (): Promise<TGeolocation> => {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        resolve(position.coords);
+      },
+      () => {
+        reject(errorCallback(reject));
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      }
+    );
+  });
+};
 
 function errorCallback(error) {
   switch (error.code) {
     case error.PERMISSION_DENIED:
-      console.error('User denied the request for Geolocation.');
-      break;
+      return 'User denied the request for Geolocation.';
     case error.POSITION_UNAVAILABLE:
-      console.error('Location information is unavailable.');
-      break;
-
+      return 'Location information is unavailable.';
     case error.TIMEOUT:
-      console.error('The request to get user location timed out.');
-      break;
-
+      return 'The request to get user location timed out.';
     case error.UNKNOWN_ERROR:
-      console.error('An unknown error occurred.');
-      break;
+      return 'An unknown error occurred.';
   }
 }

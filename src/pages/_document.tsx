@@ -56,6 +56,7 @@ class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
           />
+          <script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
 
           {/* apple splash screen images */}
           {/* <link rel='apple-touch-startup-image' href='/static/images/apple_splash_2048.png' sizes='2048x2732' />
