@@ -6,6 +6,7 @@ import MuiTypography from '@material-ui/core/Typography';
 
 /// OWN COMPONENTS
 import CardDoctorResult from '../../../components/common/CardDoctorResult';
+import SearchNavbar from '../../../components/single/searchNavbar';
 /// OWN COMPONENTS END
 
 /// i18n
@@ -25,15 +26,17 @@ const Typography = styled(MuiTypography)({
 });
 
 const useStyles = makeStyles({
-  root: {
-    padding: 25
+  results: {
+    padding: 25,
+    paddingTop: 0
   },
   title: {
     fontSize: 14,
     lineHeight: '157%',
     letterSpacing: '0.1px',
     color: title2Color,
-    marginBottom: 16
+    marginBottom: 16,
+    marginTop: 24
   }
 });
 
@@ -42,9 +45,12 @@ function MedicalDirectoryResultsPage(): JSX.Element {
   const { t } = useTranslation(NAMESPACE_KEY);
 
   return (
-    <div className={classes.root}>
+    <div>
       <Grid container>
         <Grid item xs={12}>
+          <SearchNavbar />
+        </Grid>
+        <Grid item xs={12} className={classes.results}>
           {/* TODO: Add a loading animation here to improve the user interactions */}
           <Typography variant="h1" className={classes.title}>
             {t('searchResults.title')}
