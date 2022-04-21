@@ -33,7 +33,10 @@ import generalDataStyles from './styles.module';
 /// STYLES & TYPES END
 
 /// SERVICES
-import { getDataFromLocalStorage } from '@/src/services/localStorage.service';
+import {
+  getDataFromLocalStorage,
+  setDataToLocalStorage
+} from '@/src/services/localStorage.service';
 import { useGetMeasurementsQuery } from '@/src/services/apiBFF';
 /// SERVICES END
 
@@ -55,7 +58,7 @@ function GeneralDataPage(): JSX.Element {
   const { t } = useTranslation([i18nGeneralData, i18Forms]);
   const [tab, setTab] = useState<number>(parseInt(getDataFromLocalStorage('cardSelected')) || 0);
   const [measurement, setMeasurement] = useState<IMeasurement>(INITIAL_STATE);
-  const [selected, setSelected] = useState<number>(0);
+  const [selected, setSelected] = useState<number>(6);
   const { data, isLoading, isFetching } = useGetMeasurementsQuery('1');
 
   const tabList = [
@@ -81,6 +84,7 @@ function GeneralDataPage(): JSX.Element {
   }, [isFetching, tab]);
 
   const groupRecordsByType = (tab: number) => {
+    setDataToLocalStorage('cardSelected', tab.toString());
     switch (tab) {
       case 0:
         setMeasurement(filterRecordByType('arterialPressure'));

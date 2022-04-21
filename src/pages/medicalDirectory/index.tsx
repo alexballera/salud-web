@@ -144,6 +144,13 @@ function MedicalDirectoryPage(): JSX.Element {
               </ListItem>
             ))}
           </List>
+          {!FAKE_SEARCH_HISTORY_LIST.length && (
+            <Box px={3}>
+              <Typography variant="h2" className={classes.historyTextTitle}>
+                {t('searchBySection.noRecentSearch', { ns: i18nMedicalDirectory })}
+              </Typography>
+            </Box>
+          )}
         </Box>
       </Grid>
       <Divider />
