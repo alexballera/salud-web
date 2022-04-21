@@ -230,5 +230,10 @@ export const esGlobals = {
     many_hour: '{{hour}} horas',
     simple_unit: '{{unit}} unidad',
     many_unit: '{{unit}} unidades'
+  },
+
+  location: {
+    label: 'Ubicación',
+    placeHolder: 'Cerca de mi'
   }
 };

@@ -1,5 +1,5 @@
 /// BASE IMPORTS
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 /// BASE IMPORTS END
 
@@ -29,8 +29,20 @@ import {
 /// STYLES END
 
 /// OWN COMPONENTS
-import MedicalDirectorySearchInputs from '../../common/MedicalDirectorySearchInputs';
+import SearchWithGeolocation from '../../../containers/SearchWithGeolocation';
 /// OWN COMPONENTS END
+
+/// i18n
+import { useTranslation } from 'react-i18next';
+import { NAMESPACE_KEY as i18Global } from '../../../i18n/globals/i18n';
+import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
+import { NAMESPACE_KEY as i18nMedicalDirectory } from '../../../i18n/medicalDirectory/i18n';
+/// i18n END
+
+type TProps = {
+  searchOptions: any; // TODO: Add a type
+  setSearchOptions: any; // TODO: Add a type
+};
 
 const Chip = styled(MuiChip)({
   color: secondaryMainColor,
@@ -45,19 +57,17 @@ const Chip = styled(MuiChip)({
 });
 
 const ArrowBackIcon = styled(MuiArrowBackIcon)({
-  // padding: 0
   color: titlePageColor
 });
 
 const FilterListIcon = styled(MuiFilterListIcon)({
-  // padding: 0
   color: titlePageColor
 });
 
 const useStyles = makeStyles({
   mainWrapper: {
     boxShadow,
-    padding: '0 24px 10px 24px',
+    padding: '0 24px 20px 24px',
     borderRadius: 16
   },
   inputActionsWrapper: {
@@ -82,16 +92,21 @@ const useStyles = makeStyles({
   searchIcon: {
     marginLeft: 19
   },
+  filterIcon: {
+    paddingRight: 0
+  },
   chip: {
     marginRight: 16
   },
   chipWrapper: {
-    overflow: 'hidden'
+    overflow: 'hidden',
+    height: 34,
+    marginTop: 8
   },
   chipFlex: {
     display: 'flex',
     overflow: 'scroll',
-    paddingBottom: 10
+    paddingBottom: 15
   },
   modalContent: {
     background: primaryContrastTextColor,
@@ -101,13 +116,18 @@ const useStyles = makeStyles({
   }
 });
 
-const FAKE_TAGS = ['Cartago'];
+const FAKE_TAGS = ['Precio alto-bajo', '₡60 000', 'Cualquiera'];
 
-function SearchNavbar(): JSX.Element {
+function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element {
   const router = useRouter();
   const classes = useStyles();
   const [searchIsActive, setSearchIsActive] = useState(false);
   const [filterIsActive, setFilterIsActive] = useState(false);
+  const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
+
+  useEffect(() => {
+    setSearchOptions(prevValues => ({ ...prevValues, filters: FAKE_TAGS })); // TODO: Replace this values by the real filters
+  }, []);
 
   const Actions = (
     <Grid
@@ -149,7 +169,7 @@ function SearchNavbar(): JSX.Element {
       </Grid>
       <Grid item>
         <IconButton
-          edge="start"
+          edge="end"
           color="inherit"
           aria-label="arrow-back"
           onClick={() => setFilterIsActive(true)}
@@ -165,43 +185,35 @@ function SearchNavbar(): JSX.Element {
       {Actions}
       <Grid container>
         <Grid item className={classes.chipWrapper}>
-          <Box mt={1} className={classes.chipFlex}>
+          <div className={classes.chipFlex}>
             <Chip
               className={classes.chip}
-              label="Clickable"
+              label={searchOptions.placeName || t('location.placeHolder', { ns: i18Global })}
               variant="default"
               color="default"
-              onDelete={() => setSearchIsActive(true)}
+              onDelete={() => {
+                setSearchOptions(prevValues => ({
+                  ...prevValues,
+                  placeName: t('location.placeHolder', { ns: i18Global })
+                }));
+              }}
             />
-            <Chip
-              className={classes.chip}
-              label="Clickable"
-              variant="default"
-              color="default"
-              onDelete={() => setSearchIsActive(true)}
-            />
-            <Chip
-              className={classes.chip}
-              label="Clickable"
-              variant="default"
-              color="default"
-              onDelete={() => setSearchIsActive(true)}
-            />
-            <Chip
-              className={classes.chip}
-              label="Clickable"
-              variant="default"
-              color="default"
-              onDelete={() => setSearchIsActive(true)}
-            />
-            <Chip
-              className={classes.chip}
-              label="Clickable"
-              variant="default"
-              color="default"
-              onDelete={() => setSearchIsActive(true)}
-            />
-          </Box>
+            {(searchOptions.filters || []).map((tag, idx) => (
+              <Chip
+                key={idx}
+                className={classes.chip}
+                label={tag}
+                variant="default"
+                color="default"
+                onDelete={() => {
+                  setSearchOptions(prevValues => ({
+                    ...prevValues,
+                    filters: prevValues.filters.filter(itemTag => itemTag !== tag)
+                  }));
+                }}
+              />
+            ))}
+          </div>
         </Grid>
       </Grid>
       {/* Search modal */}
@@ -213,7 +225,13 @@ function SearchNavbar(): JSX.Element {
       >
         <Box className={classes.modalContent}>
           {Actions}
-          <MedicalDirectorySearchInputs />
+          <SearchWithGeolocation
+            search={searchOptions as any}
+            searchObject={setSearchOptions}
+            labelText={t('items.labelSearch', { ns: i18nMedicalDirectory })}
+            placeHolderText={t('items.placeholderSearch', { ns: i18nMedicalDirectory })}
+            path="/medicalDirectory/searchResults"
+          />
         </Box>
       </Modal>
       {/* Filter modal */}
@@ -223,6 +241,7 @@ function SearchNavbar(): JSX.Element {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
+        {/* TODO: Remove this styles, use an class */}
         <Box style={{ background: 'white', height: '100vh', width: '100vw' }}>
           <IconButton
             edge="start"

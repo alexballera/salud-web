@@ -58,3 +58,39 @@ export const i18nDateFormat = (date: string, formatDate: string): string => {
     locale: locale
   });
 };
+
+type TGeolocation = {
+  latitude: number;
+  longitude: number;
+};
+
+export const getPosition = (): Promise<TGeolocation> => {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        resolve(position.coords);
+      },
+      () => {
+        reject(errorCallback(reject));
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 5000,
+        maximumAge: 0
+      }
+    );
+  });
+};
+
+function errorCallback(error) {
+  switch (error.code) {
+    case error.PERMISSION_DENIED:
+      return 'User denied the request for Geolocation.';
+    case error.POSITION_UNAVAILABLE:
+      return 'Location information is unavailable.';
+    case error.TIMEOUT:
+      return 'The request to get user location timed out.';
+    case error.UNKNOWN_ERROR:
+      return 'An unknown error occurred.';
+  }
+}
