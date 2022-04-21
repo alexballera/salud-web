@@ -64,7 +64,7 @@ type TGeolocation = {
   longitude: number;
 };
 
-export const getPosition = async (): Promise<TGeolocation> => {
+export const getPosition = (): Promise<TGeolocation> => {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(
       position => {
@@ -74,8 +74,8 @@ export const getPosition = async (): Promise<TGeolocation> => {
         reject(errorCallback(reject));
       },
       {
-        enableHighAccuracy: true,
-        timeout: 10000,
+        enableHighAccuracy: false,
+        timeout: 5000,
         maximumAge: 0
       }
     );
