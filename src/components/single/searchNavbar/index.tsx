@@ -1,27 +1,22 @@
+/// BASE IMPORTS
 import { useState } from 'react';
+import { useRouter } from 'next/router';
+/// BASE IMPORTS END
+
 /// MATERIAL
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import MuiArrowBackIcon from '@material-ui/icons/ArrowBack';
 import MuiFilterListIcon from '@material-ui/icons/FilterList';
 import SearchIcon from '@material-ui/icons/SearchOutlined';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
-import TextField from '@material-ui/core/TextField';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import InputBase from '@material-ui/core/InputBase';
 import MuiChip from '@material-ui/core/Chip';
-import {
-  Box,
-  createMuiTheme,
-  makeStyles,
-  Modal,
-  MuiThemeProvider,
-  styled,
-  ThemeProvider
-} from '@material-ui/core';
+import { Box, makeStyles, Modal, styled } from '@material-ui/core';
+/// MATERIAL END
+
+/// STYLES
 import {
   background2Color,
   boxShadow,
@@ -31,10 +26,11 @@ import {
   tertiaryLightColor,
   titlePageColor
 } from '@/src/styles/js/theme';
-import muiTheme from '@/src/styles/js/muiTheme';
+/// STYLES END
+
+/// OWN COMPONENTS
 import MedicalDirectorySearchInputs from '../../common/MedicalDirectorySearchInputs';
-import { useRouter } from 'next/router';
-/// MATERIAL END
+/// OWN COMPONENTS END
 
 const Chip = styled(MuiChip)({
   color: secondaryMainColor,
@@ -61,7 +57,7 @@ const FilterListIcon = styled(MuiFilterListIcon)({
 const useStyles = makeStyles({
   mainWrapper: {
     boxShadow,
-    padding: '0 24px 20px 24px',
+    padding: '0 24px 10px 24px',
     borderRadius: 16
   },
   inputActionsWrapper: {
@@ -85,6 +81,17 @@ const useStyles = makeStyles({
   },
   searchIcon: {
     marginLeft: 19
+  },
+  chip: {
+    marginRight: 16
+  },
+  chipWrapper: {
+    overflow: 'hidden'
+  },
+  chipFlex: {
+    display: 'flex',
+    overflow: 'scroll',
+    paddingBottom: 10
   },
   modalContent: {
     background: primaryContrastTextColor,
@@ -157,9 +164,38 @@ function SearchNavbar(): JSX.Element {
     <div className={classes.mainWrapper}>
       {Actions}
       <Grid container>
-        <Grid item>
-          <Box mt={1}>
+        <Grid item className={classes.chipWrapper}>
+          <Box mt={1} className={classes.chipFlex}>
             <Chip
+              className={classes.chip}
+              label="Clickable"
+              variant="default"
+              color="default"
+              onDelete={() => setSearchIsActive(true)}
+            />
+            <Chip
+              className={classes.chip}
+              label="Clickable"
+              variant="default"
+              color="default"
+              onDelete={() => setSearchIsActive(true)}
+            />
+            <Chip
+              className={classes.chip}
+              label="Clickable"
+              variant="default"
+              color="default"
+              onDelete={() => setSearchIsActive(true)}
+            />
+            <Chip
+              className={classes.chip}
+              label="Clickable"
+              variant="default"
+              color="default"
+              onDelete={() => setSearchIsActive(true)}
+            />
+            <Chip
+              className={classes.chip}
               label="Clickable"
               variant="default"
               color="default"
