@@ -30,7 +30,7 @@ import muiTheme from '../../styles/js/muiTheme';
 import medicalDirectoryStyles from './style.module';
 import SearchWithGeolocation from '@/src/containers/SearchWithGeolocation';
 
-const FAKE_SEARCH_HISTORY_LIST = [
+export const FAKE_SEARCH_HISTORY_LIST = [
   {
     idx: '1',
     title: 'Dr. Orlando Carazo',
@@ -65,8 +65,8 @@ function MedicalDirectoryPage(): JSX.Element {
     },
     {
       title: t('searchBySection.doctors', { ns: i18nMedicalDirectory }),
-      action: '/medicalDirectory/searchBy',
-      icon: <SvgDoctors />
+      action: '/medicalDirectory/searchBy/search_by_doctor',
+      icon: <SvgDoctors width={34} heigth={34} />
     }
   ];
 

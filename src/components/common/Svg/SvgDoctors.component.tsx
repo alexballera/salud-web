@@ -3,12 +3,12 @@ type TProps = {
   heigth?: number;
 };
 
-const SvgDoctors = ({ width = 34, heigth = 34 }: TProps): JSX.Element => (
+const SvgDoctors = ({ width, heigth }: TProps): JSX.Element => (
   <svg
     width={width}
     height={heigth}
     fill="none"
-    viewBox={`0 0 ${width} ${heigth}`}
+    viewBox={`0 0 34 34`}
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
