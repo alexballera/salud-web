@@ -113,6 +113,8 @@ function Navbar(): JSX.Element {
         return true;
       case '/consultationHistory/detail/[...slug]':
         return true;
+      case '/medicalDirectory/searchBy/doctors':
+        return true;
       default:
         return false;
     }

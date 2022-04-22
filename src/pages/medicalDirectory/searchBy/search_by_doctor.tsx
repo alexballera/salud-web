@@ -66,6 +66,15 @@ const SearchByDoctor = (): JSX.Element => {
     console.log('id', item);
   };
 
+  const redirectResults = () => {
+    router.push({
+      pathname: '/medicalDirectory/searchBy/doctors',
+      query: {
+        searchField: searchField
+      }
+    });
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchField(e.target.value);
     if (e.target.value === '') {
@@ -125,6 +134,11 @@ const SearchByDoctor = (): JSX.Element => {
             color="secondary"
             fullWidth
             onChange={handleChange}
+            onKeyPress={e => {
+              if (e.key === 'Enter') {
+                redirectResults();
+              }
+            }}
             InputLabelProps={{
               shrink: true
             }}
