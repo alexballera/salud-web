@@ -22,7 +22,7 @@ import { NAMESPACE_KEY } from '../../../i18n/medicalDirectory/i18n';
 /// i18n END
 
 /// DUMMY DATA
-import { FAKE_ITEMS } from './data';
+import FAKE_ITEMS from './data.json';
 import { poppinsFontFamily, title2Color, secondaryMainColor } from '@/src/styles/js/theme';
 /// DUMMY DATA END
 
@@ -76,7 +76,7 @@ function MedicalDirectoryResultsPage(): JSX.Element {
               <CircularProgress color="inherit" />
             </Grid>
           </Box> */}
-          {FAKE_ITEMS.map((item, idx) => {
+          {FAKE_ITEMS.List.map((item, idx) => {
             return (
               <CardDoctorResult {...item} redirectTo={`${item.redirectTo}/${idx}`} key={idx} />
             );
