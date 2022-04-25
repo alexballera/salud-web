@@ -62,6 +62,8 @@ function Navbar(): JSX.Element {
         return false;
       case '/logout':
         return false;
+      case '/medicalDirectory/searchResults':
+        return false;
       case '/':
         return true;
       case '/proceedings':

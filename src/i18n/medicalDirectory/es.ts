@@ -10,5 +10,8 @@ export const esMedicalDirectory = {
     doctors: 'Doctores',
     history: 'Búsquedas recientes',
     noRecentSearch: 'No tiene búsquedas recientes registradas'
+  },
+  searchResults: {
+    title: 'Resultados de búsqueda'
   }
 };

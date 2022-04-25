@@ -29,13 +29,14 @@ const autocompleteService = { current: null };
 
 type TProps = {
   recordCoords;
+  placeName?: string;
 };
 
-const AutoCompleteGoogleMaps = ({ recordCoords }: TProps): JSX.Element => {
+const AutoCompleteGoogleMaps = ({ recordCoords, placeName }: TProps): JSX.Element => {
   const classes = autoCompleteLocationStyles();
   const { t } = useTranslation([i18Global]);
   const [value, setValue] = useState<PlaceType | null>(
-    t('location.placeHolder', { ns: i18Global })
+    placeName || t('location.placeHolder', { ns: i18Global })
   );
   const [inputValue, setInputValue] = useState('');
   const [options, setOptions] = useState<readonly PlaceType[]>([]);

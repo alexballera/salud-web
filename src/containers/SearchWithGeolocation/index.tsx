@@ -6,29 +6,42 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 
 import autoCompleteLocationStyles from '@/src/components/common/AutoCompletePlaces/style.module';
 
+type TInitialCoords = {
+  lat: string | null;
+  lng: string | null;
+  placeName: string | null;
+};
+
+type TSearch = {
+  searchField: string;
+} & TInitialCoords;
+
 type TProps = {
+  search?: TSearch;
   searchObject;
   labelText: string;
   placeHolderText: string;
   path: string;
 };
 
-const initalCoords = {
+const initalCoords: TInitialCoords = {
   lat: null,
   lng: null,
   placeName: null
 };
 
 const SearchWithGeolocation = ({
+  search,
   searchObject,
   labelText,
   placeHolderText,
   path
 }: TProps): JSX.Element => {
+  console.log('searchhhh', search);
   const router = useRouter();
   const classes = autoCompleteLocationStyles();
-  const [searchField, setSearchField] = useState('');
-  const [coords, setCoords] = useState(initalCoords);
+  const [searchField, setSearchField] = useState(search?.searchField || '');
+  const [coords, setCoords] = useState(search || initalCoords);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchField(e.target.value);
@@ -60,6 +73,7 @@ const SearchWithGeolocation = ({
               label={labelText}
               placeholder={placeHolderText}
               type="text"
+              value={search?.searchField || ''}
               className={classes.inputColor}
               fullWidth
               onChange={handleChange}
@@ -83,7 +97,7 @@ const SearchWithGeolocation = ({
         </Grid>
         <Grid mt={2} item>
           <Box mt={1}>
-            <AutoCompleteGoogleMaps recordCoords={setCoords} />
+            <AutoCompleteGoogleMaps recordCoords={setCoords} placeName={search?.placeName} />
           </Box>
         </Grid>
       </Grid>
