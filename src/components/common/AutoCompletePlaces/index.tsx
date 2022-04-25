@@ -35,7 +35,7 @@ type TProps = {
 const AutoCompleteGoogleMaps = ({ recordCoords, placeName }: TProps): JSX.Element => {
   const classes = autoCompleteLocationStyles();
   const { t } = useTranslation([i18Global]);
-  const [value, setValue] = useState<PlaceType | null>(
+  const [value, setValue] = useState<PlaceType | any>(
     placeName || t('location.placeHolder', { ns: i18Global })
   );
   const [inputValue, setInputValue] = useState('');

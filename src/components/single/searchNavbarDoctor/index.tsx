@@ -104,12 +104,7 @@ function SearchNavbarDoctor({ searchOptions, setSearchOptions }: TProps): JSX.El
           </Grid>
         )}
         <Grid item>
-          <IconButton
-            edge="end"
-            color="inherit"
-            aria-label="arrow-back"
-            onClick={() => setFilterIsActive(true)}
-          >
+          <IconButton edge="end" color="inherit" aria-label="arrow-back">
             {/* <FilterListIcon /> */}
           </IconButton>
         </Grid>

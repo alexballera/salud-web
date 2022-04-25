@@ -37,7 +37,6 @@ const SearchWithGeolocation = ({
   placeHolderText,
   path
 }: TProps): JSX.Element => {
-  console.log('searchhhh', search);
   const router = useRouter();
   const classes = autoCompleteLocationStyles();
   const [searchField, setSearchField] = useState(search?.searchField || '');
@@ -73,7 +72,7 @@ const SearchWithGeolocation = ({
               label={labelText}
               placeholder={placeHolderText}
               type="text"
-              value={search?.searchField || ''}
+              value={search?.searchField}
               className={classes.inputColor}
               fullWidth
               onChange={handleChange}

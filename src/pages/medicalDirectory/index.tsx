@@ -26,6 +26,7 @@ import CardActionImage from '@/src/components/common/Card/CardActionImage';
 import SvgSpecialty from '@/src/components/common/Svg/SvgSpecialty.component';
 import SvgDoctors from '@/src/components/common/Svg/SvgDoctors.component';
 import muiTheme from '../../styles/js/muiTheme';
+
 import medicalDirectoryStyles from './style.module';
 import SearchWithGeolocation from '@/src/containers/SearchWithGeolocation';
 
