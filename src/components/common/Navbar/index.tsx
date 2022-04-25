@@ -62,6 +62,10 @@ function Navbar(): JSX.Element {
         return false;
       case '/logout':
         return false;
+      case '/medicalDirectory/searchResults':
+        return false;
+      case '/medicalDirectory/searchBy/doctorResults':
+        return false;
       case '/':
         return true;
       case '/proceedings':
@@ -112,8 +116,6 @@ function Navbar(): JSX.Element {
       case '/medicalDirectory/searchBy/search_by_doctor':
         return true;
       case '/consultationHistory/detail/[...slug]':
-        return true;
-      case '/medicalDirectory/searchBy/doctors':
         return true;
       default:
         return false;

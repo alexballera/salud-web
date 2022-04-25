@@ -68,7 +68,7 @@ const SearchByDoctor = (): JSX.Element => {
 
   const redirectResults = () => {
     router.push({
-      pathname: '/medicalDirectory/searchBy/doctors',
+      pathname: '/medicalDirectory/searchBy/doctorResults',
       query: {
         searchField: searchField
       }
