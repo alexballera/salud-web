@@ -1,5 +1,6 @@
 // BASE IMPORTS
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 // BASE IMPORTS END
 
 // MUI
@@ -39,8 +40,14 @@ import { NAMESPACE_KEY as i18Forms } from '@/src/i18n/forms/i18n';
 import { NAMESPACE_KEY as i18ClinicHistory } from '@/src/i18n/clinic_history/i18n';
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '@/src/i18n/medicalDirectory/i18n';
 import { FAKE_SEARCH_HISTORY_LIST } from '..';
-import { useRouter } from 'next/router';
+import EmptySearchDoctor from './empty';
 /// i18n END
+
+type TDoctor = {
+  idx: string;
+  title: string;
+  subTitle: string;
+};
 
 const SearchByDoctor = (): JSX.Element => {
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory, i18ClinicHistory]);
@@ -51,7 +58,7 @@ const SearchByDoctor = (): JSX.Element => {
   const [data, setData] = useState(FAKE_SEARCH_HISTORY_LIST);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getDoctors = () => {
+  const getDoctors = (): TDoctor[] => {
     if (data) {
       data.sort((a, b) => a.title.localeCompare(b.title));
       return data;
@@ -62,9 +69,9 @@ const SearchByDoctor = (): JSX.Element => {
     return data.title.toLowerCase().includes(searchField.toLowerCase());
   });
 
-  const handleClick = (item): void => {
+  const handleClick = (doctor: TDoctor): void => {
     // router.push(`/clinic_history/vaccines/${id}`);
-    console.log('id', item);
+    console.log('id', doctor);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,9 +83,9 @@ const SearchByDoctor = (): JSX.Element => {
     }
   };
 
-  const ListItemDoctors = (item, i: number): JSX.Element => (
-    <React.Fragment key={item.idx}>
-      <ListItem button onClick={() => handleClick(item)} sx={{ pl: 1 }}>
+  const ListItemDoctors = (doctor: TDoctor): JSX.Element => (
+    <React.Fragment key={doctor.idx}>
+      <ListItem button onClick={() => handleClick(doctor)} sx={{ pl: 1 }}>
         <ListItemText
           primary={
             <Typography
@@ -93,12 +100,12 @@ const SearchByDoctor = (): JSX.Element => {
               variant="body2"
               color="text.primary"
             >
-              {item.title}
+              {doctor.title}
             </Typography>
           }
         />
         <ListItemSecondaryAction>
-          <IconButton edge="end" aria-label={item.title} onClick={() => handleClick(item)}>
+          <IconButton edge="end" aria-label={doctor.title} onClick={() => handleClick(doctor)}>
             <ChevronRightIcon color="secondary" />
           </IconButton>
         </ListItemSecondaryAction>
@@ -154,11 +161,7 @@ const SearchByDoctor = (): JSX.Element => {
                 <CircularProgress color="secondary" />
               </Grid>
             )}
-            {searchShow && !filteredDoctors?.length && (
-              <Typography variant="caption" className={classes.noRecords}>
-                {t('vaccines.no_records', { ns: i18ClinicHistory })}
-              </Typography>
-            )}
+            {searchShow && !filteredDoctors?.length && <EmptySearchDoctor />}
             {!isLoading && !searchShow && getDoctors()?.map((item, i) => ListItemDoctors(item, i))}
             {!isLoading && searchShow && filteredDoctors.map((item, i) => ListItemDoctors(item, i))}
           </List>

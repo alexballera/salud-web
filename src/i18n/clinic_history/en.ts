@@ -8,6 +8,10 @@ export const enClinicHistory = {
     familyIllnesses: 'Family illnesses'
   },
 
+  doctors: {
+    no_records: 'No results were found regarding the doctor'
+  },
+
   vaccines: {
     preview_sub_title: 'Vacuna contra la {{disease}}',
     title: 'Keep track of your vaccinations and the doses you take',
