@@ -8,6 +8,7 @@ import {
   CircularProgress,
   Grid,
   IconButton,
+  InputAdornment,
   List,
   ListItem,
   ListItemSecondaryAction,
@@ -18,6 +19,7 @@ import {
   Typography
 } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import SearchIcon from '@mui/icons-material/Search';
 // MUI END
 
 // OWN COMPONENTS
@@ -25,7 +27,6 @@ import SvgDoctors from '@/src/components/common/Svg/SvgDoctors.component';
 // OWN COMPONENTS END
 
 // STYLES
-import clsx from 'clsx';
 import { titlePageColor } from '@/src/styles/js/theme';
 import muiTheme from '@/src/styles/js/muiTheme';
 import { examStyles } from '@/src/containers/ExamResult/styles.module';
@@ -64,6 +65,15 @@ const SearchByDoctor = (): JSX.Element => {
   const handleClick = (item): void => {
     // router.push(`/clinic_history/vaccines/${id}`);
     console.log('id', item);
+  };
+
+  const redirectResults = () => {
+    router.push({
+      pathname: '/medicalDirectory/searchBy/doctorResults',
+      query: {
+        searchField: searchField
+      }
+    });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -125,8 +135,20 @@ const SearchByDoctor = (): JSX.Element => {
             color="secondary"
             fullWidth
             onChange={handleChange}
+            onKeyPress={e => {
+              if (e.key === 'Enter') {
+                redirectResults();
+              }
+            }}
             InputLabelProps={{
               shrink: true
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <SearchIcon />
+                </InputAdornment>
+              )
             }}
           />
         </Box>
@@ -148,7 +170,7 @@ const SearchByDoctor = (): JSX.Element => {
             )}
             {searchShow && !filteredDoctors?.length && (
               <Typography variant="caption" className={classes.noRecords}>
-                {t('vaccines.no_records', { ns: i18ClinicHistory })}
+                {t('doctors.no_records', { ns: i18ClinicHistory })}
               </Typography>
             )}
             {!isLoading && !searchShow && getDoctors()?.map((item, i) => ListItemDoctors(item, i))}

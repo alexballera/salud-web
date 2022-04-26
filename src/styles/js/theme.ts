@@ -22,6 +22,7 @@ export const tertiaryLightColor = '#E9F7FC';
 export const title2Color = '#4D5759';
 export const background2Color = '#F8F8F8';
 export const boxShadow = '0px 4px 8px rgba(207, 225, 227, 0.5)';
+export const boxBaseShadow = 'rgba(207, 225, 227, 0.25)';
 export const purpleLight = '#AB82FF';
 export const purple = '#B45EF7';
 export const titleCardTagColor = purpleLight;
