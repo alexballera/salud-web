@@ -14,5 +14,8 @@ export const enMedicalDirectory = {
       title: 'Search results',
       searchEdit: 'edit the search'
     }
+  },
+  editSearch: {
+    title: 'Edit search'
   }
 };
