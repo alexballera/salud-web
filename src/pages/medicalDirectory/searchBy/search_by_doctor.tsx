@@ -162,7 +162,7 @@ const SearchByDoctor = (): JSX.Element => {
             )}
             {searchShow && !filteredDoctors?.length && (
               <Typography variant="caption" className={classes.noRecords}>
-                {t('vaccines.no_records', { ns: i18ClinicHistory })}
+                {t('doctors.no_records', { ns: i18ClinicHistory })}
               </Typography>
             )}
             {!isLoading && !searchShow && getDoctors()?.map((item, i) => ListItemDoctors(item, i))}
