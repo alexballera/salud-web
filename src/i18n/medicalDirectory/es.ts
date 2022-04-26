@@ -13,5 +13,8 @@ export const esMedicalDirectory = {
   },
   searchResults: {
     title: 'Resultados de búsqueda'
+  },
+  editSearch: {
+    title: 'Editá la búsqueda'
   }
 };
