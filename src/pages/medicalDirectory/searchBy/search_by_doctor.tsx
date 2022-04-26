@@ -8,6 +8,7 @@ import {
   CircularProgress,
   Grid,
   IconButton,
+  InputAdornment,
   List,
   ListItem,
   ListItemSecondaryAction,
@@ -18,6 +19,7 @@ import {
   Typography
 } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import SearchIcon from '@mui/icons-material/Search';
 // MUI END
 
 // OWN COMPONENTS
@@ -25,7 +27,6 @@ import SvgDoctors from '@/src/components/common/Svg/SvgDoctors.component';
 // OWN COMPONENTS END
 
 // STYLES
-import clsx from 'clsx';
 import { titlePageColor } from '@/src/styles/js/theme';
 import muiTheme from '@/src/styles/js/muiTheme';
 import { examStyles } from '@/src/containers/ExamResult/styles.module';
@@ -141,6 +142,13 @@ const SearchByDoctor = (): JSX.Element => {
             }}
             InputLabelProps={{
               shrink: true
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <SearchIcon />
+                </InputAdornment>
+              )
             }}
           />
         </Box>
