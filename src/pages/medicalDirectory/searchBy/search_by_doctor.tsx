@@ -40,6 +40,7 @@ import { NAMESPACE_KEY as i18ClinicHistory } from '@/src/i18n/clinic_history/i18
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '@/src/i18n/medicalDirectory/i18n';
 import { FAKE_SEARCH_HISTORY_LIST } from '..';
 import { useRouter } from 'next/router';
+import InputSearch from '@/src/components/common/InputSearch';
 /// i18n END
 
 const SearchByDoctor = (): JSX.Element => {
@@ -50,6 +51,8 @@ const SearchByDoctor = (): JSX.Element => {
   const [searchShow, setSearchShow] = useState(false);
   const [data, setData] = useState(FAKE_SEARCH_HISTORY_LIST);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [search, setSearch] = useState({});
 
   const getDoctors = () => {
     if (data) {
@@ -65,15 +68,6 @@ const SearchByDoctor = (): JSX.Element => {
   const handleClick = (item): void => {
     // router.push(`/clinic_history/vaccines/${id}`);
     console.log('id', item);
-  };
-
-  const redirectResults = () => {
-    router.push({
-      pathname: '/medicalDirectory/searchBy/doctorResults',
-      query: {
-        searchField: searchField
-      }
-    });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,29 +121,12 @@ const SearchByDoctor = (): JSX.Element => {
           </Typography>
         </Stack>
         <Box mt={3}>
-          <TextField
-            id="outlined-search"
-            label="Búsqueda"
-            placeholder="Buscá por doctor"
-            type="search"
-            color="secondary"
-            fullWidth
-            onChange={handleChange}
-            onKeyPress={e => {
-              if (e.key === 'Enter') {
-                redirectResults();
-              }
-            }}
-            InputLabelProps={{
-              shrink: true
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <SearchIcon />
-                </InputAdornment>
-              )
-            }}
+          <InputSearch
+            search={search as any}
+            searchObject={setSearch}
+            labelText={t('items.labelSearch', { ns: i18nMedicalDirectory })}
+            placeHolderText={t('items.placeholderSearch', { ns: i18nMedicalDirectory })}
+            path="/medicalDirectory/searchBy/doctorResults"
           />
         </Box>
 
