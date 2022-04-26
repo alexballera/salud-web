@@ -11,7 +11,8 @@ export const enMedicalDirectory = {
     history: 'Recent searches',
     noRecentSearch: 'You have no recent searches recorded',
     searchResults: {
-      title: 'Search results'
+      title: 'Search results',
+      searchEdit: 'edit the search'
     }
   }
 };
