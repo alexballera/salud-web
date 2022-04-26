@@ -8,6 +8,10 @@ export const esClinicHistory = {
     familyIllnesses: 'Enfermedades familiares'
   },
 
+  doctors: {
+    no_records: 'No se encontraron resultados referentes al doctor'
+  },
+
   vaccines: {
     preview_sub_title: 'Vacuna contra la {{disease}}',
     title: 'Llevá el registro de tus vacunas y las dosis que llevas',
