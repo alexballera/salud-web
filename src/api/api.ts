@@ -47,6 +47,8 @@ const api = {
   },
 
   createSession: (email: string, password: string): Promise<Models.Session> => {
+    const JWT = api.provider().account.createJWT();
+    console.log('Api jwt', JWT);
     return api.provider().account.createSession(email, password);
   },
 
