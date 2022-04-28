@@ -1,5 +1,5 @@
 // BASE IMPORTS
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 // BASE IMPORTS END
 
@@ -35,12 +35,9 @@ import { examStyles } from '@/src/containers/ExamResult/styles.module';
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY as i18Global } from '@/src/i18n/globals/i18n';
-import { NAMESPACE_KEY as i18Forms } from '@/src/i18n/forms/i18n';
 import { NAMESPACE_KEY as i18ClinicHistory } from '@/src/i18n/clinic_history/i18n';
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '@/src/i18n/medicalDirectory/i18n';
 import { FAKE_SEARCH_HISTORY_LIST } from '..';
-import EmptySearchDoctor from './empty';
 /// i18n END
 
 type TDoctor = {
@@ -50,29 +47,25 @@ type TDoctor = {
 };
 
 const SearchByDoctor = (): JSX.Element => {
-  const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory, i18ClinicHistory]);
+  const { t } = useTranslation([i18nMedicalDirectory, i18ClinicHistory]);
   const classes = examStyles();
   const router = useRouter();
   const [searchField, setSearchField] = useState('');
-  const [searchShow, setSearchShow] = useState(false);
-  const [data, setData] = useState(FAKE_SEARCH_HISTORY_LIST);
+  const [doctors, setDoctors] = useState<TDoctor[]>();
   const [isLoading, setIsLoading] = useState(false);
 
-  const getDoctors = (): TDoctor[] => {
-    if (data) {
-      data.sort((a, b) => a.title.localeCompare(b.title));
-      return data;
-    }
-  };
-
-  const filteredDoctors = getDoctors()?.filter(data => {
-    return data.title.toLowerCase().includes(searchField.toLowerCase());
-  });
-
   const handleClick = (doctor: TDoctor): void => {
-    // router.push(`/clinic_history/vaccines/${id}`);
-    console.log('id', doctor);
+    router.push(`/doctor_profile/${doctor.idx}`);
   };
+
+  useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      const data = FAKE_SEARCH_HISTORY_LIST;
+      setDoctors(data);
+      setIsLoading(false);
+    }, 1000);
+  }, []);
 
   const redirectResults = () => {
     router.push({
@@ -81,15 +74,6 @@ const SearchByDoctor = (): JSX.Element => {
         searchField: searchField
       }
     });
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchField(e.target.value);
-    if (e.target.value === '') {
-      setSearchShow(false);
-    } else {
-      setSearchShow(true);
-    }
   };
 
   const ListItemDoctors = (doctor: TDoctor): JSX.Element => (
@@ -141,7 +125,6 @@ const SearchByDoctor = (): JSX.Element => {
             type="search"
             color="secondary"
             fullWidth
-            onChange={handleChange}
             onKeyPress={e => {
               if (e.key === 'Enter') {
                 redirectResults();
@@ -175,13 +158,12 @@ const SearchByDoctor = (): JSX.Element => {
                 <CircularProgress color="secondary" />
               </Grid>
             )}
-            {searchShow && !filteredDoctors?.length && (
+            {!isLoading && !doctors?.length && (
               <Typography variant="caption" className={classes.noRecords}>
                 {t('doctors.no_records', { ns: i18ClinicHistory })}
               </Typography>
             )}
-            {!isLoading && !searchShow && getDoctors()?.map(item => ListItemDoctors(item))}
-            {!isLoading && searchShow && filteredDoctors.map(item => ListItemDoctors(item))}
+            {!isLoading && doctors?.map(item => ListItemDoctors(item))}
           </List>
         </Box>
       </Box>
