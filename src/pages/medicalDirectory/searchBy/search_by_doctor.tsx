@@ -74,6 +74,15 @@ const SearchByDoctor = (): JSX.Element => {
     console.log('id', doctor);
   };
 
+  const redirectResults = () => {
+    router.push({
+      pathname: '/medicalDirectory/searchBy/doctorResults',
+      query: {
+        searchField: searchField
+      }
+    });
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchField(e.target.value);
     if (e.target.value === '') {
@@ -133,6 +142,11 @@ const SearchByDoctor = (): JSX.Element => {
             color="secondary"
             fullWidth
             onChange={handleChange}
+            onKeyPress={e => {
+              if (e.key === 'Enter') {
+                redirectResults();
+              }
+            }}
             InputLabelProps={{
               shrink: true
             }}
@@ -161,9 +175,13 @@ const SearchByDoctor = (): JSX.Element => {
                 <CircularProgress color="secondary" />
               </Grid>
             )}
-            {searchShow && !filteredDoctors?.length && <EmptySearchDoctor />}
-            {!isLoading && !searchShow && getDoctors()?.map((item, i) => ListItemDoctors(item, i))}
-            {!isLoading && searchShow && filteredDoctors.map((item, i) => ListItemDoctors(item, i))}
+            {searchShow && !filteredDoctors?.length && (
+              <Typography variant="caption" className={classes.noRecords}>
+                {t('doctors.no_records', { ns: i18ClinicHistory })}
+              </Typography>
+            )}
+            {!isLoading && !searchShow && getDoctors()?.map(item => ListItemDoctors(item))}
+            {!isLoading && searchShow && filteredDoctors.map(item => ListItemDoctors(item))}
           </List>
         </Box>
       </Box>

@@ -64,6 +64,8 @@ function Navbar(): JSX.Element {
         return false;
       case '/medicalDirectory/searchResults':
         return false;
+      case '/medicalDirectory/searchBy/doctorResults':
+        return false;
       case '/':
         return true;
       case '/proceedings':
@@ -170,7 +172,8 @@ function Navbar(): JSX.Element {
   };
 
   const customRedirectList = {
-    '/recipes_and_prescriptions': '/proceedings'
+    '/recipes_and_prescriptions': '/proceedings',
+    '/exam_results': '/proceedings'
   };
 
   const customRedirectBackButton = () => {

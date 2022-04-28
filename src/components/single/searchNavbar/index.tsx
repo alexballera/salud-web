@@ -37,6 +37,7 @@ import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18Global } from '../../../i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '../../../i18n/medicalDirectory/i18n';
+import { Typography } from '@mui/material';
 /// i18n END
 
 type TProps = {
@@ -113,6 +114,12 @@ const useStyles = makeStyles({
     padding: '0 24px 20px 24px',
     borderBottomLeftRadius: 16,
     borderBottomRightRadius: 16
+  },
+  title: {
+    color: 'rgba(69, 82, 85, 1)',
+    fontSize: 16,
+    fontWeight: 400,
+    marginLeft: 10
   }
 });
 
@@ -129,6 +136,14 @@ function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element 
     setSearchOptions(prevValues => ({ ...prevValues, filters: FAKE_TAGS })); // TODO: Replace this values by the real filters
   }, []);
 
+  const handleArrowBack = () => {
+    if (searchIsActive) {
+      setSearchIsActive(false);
+    } else {
+      router.back();
+    }
+  };
+
   const Actions = (
     <Grid
       container
@@ -137,36 +152,40 @@ function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element 
       className={classes.inputActionsWrapper}
     >
       <Grid item>
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="arrow-back"
-          onClick={() => router.back()}
-        >
+        <IconButton edge="start" color="inherit" aria-label="arrow-back" onClick={handleArrowBack}>
           <ArrowBackIcon width={16} height={16} />
         </IconButton>
       </Grid>
-      <Grid item className={classes.inputWrapper}>
-        <div>
-          <FormControl variant="standard">
-            <InputBase
-              className={classes.input}
-              value="Psicologia • Cerca ..."
-              readOnly
-              onClick={() => setSearchIsActive(true)}
-              startAdornment={
-                <InputAdornment
-                  position="start"
-                  className={classes.searchIcon}
-                  color={titlePageColor}
-                >
-                  <SearchIcon />
-                </InputAdornment>
-              }
-            />
-          </FormControl>
-        </div>
-      </Grid>
+      {searchIsActive && (
+        <Grid item className={classes.inputWrapper}>
+          <Typography variant="body1" className={classes.title}>
+            {t('editSearch.title', { ns: i18nMedicalDirectory })}
+          </Typography>
+        </Grid>
+      )}
+      {!searchIsActive && (
+        <Grid item className={classes.inputWrapper}>
+          <div>
+            <FormControl variant="standard">
+              <InputBase
+                className={classes.input}
+                value="Psicologia • Cerca ..."
+                readOnly
+                onClick={() => setSearchIsActive(true)}
+                startAdornment={
+                  <InputAdornment
+                    position="start"
+                    className={classes.searchIcon}
+                    color={titlePageColor}
+                  >
+                    <SearchIcon />
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+          </div>
+        </Grid>
+      )}
       <Grid item>
         <IconButton
           edge="end"
