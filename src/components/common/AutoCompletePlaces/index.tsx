@@ -30,9 +30,10 @@ const autocompleteService = { current: null };
 type TProps = {
   recordCoords;
   placeName?: string;
+  redirecTo;
 };
 
-const AutoCompleteGoogleMaps = ({ recordCoords, placeName }: TProps): JSX.Element => {
+const AutoCompleteGoogleMaps = ({ recordCoords, placeName, redirecTo }: TProps): JSX.Element => {
   const classes = autoCompleteLocationStyles();
   const { t } = useTranslation([i18Global]);
   const [value, setValue] = useState<PlaceType | any>(
@@ -137,6 +138,11 @@ const AutoCompleteGoogleMaps = ({ recordCoords, placeName }: TProps): JSX.Elemen
         }}
         onInputChange={(event, newInputValue) => {
           setInputValue(newInputValue);
+        }}
+        onKeyDown={e => {
+          if (e.key === 'Enter') {
+            redirecTo();
+          }
         }}
         forcePopupIcon={true}
         popupIcon={''}
