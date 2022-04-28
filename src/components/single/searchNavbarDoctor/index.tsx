@@ -58,10 +58,12 @@ function SearchNavbarDoctor({ searchOptions, setSearchOptions }: TProps): JSX.El
   const [filterIsActive, setFilterIsActive] = useState(false);
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
 
-  const FAKE_TAGS = [searchOptions.searchField];
-
   useEffect(() => {
-    setSearchOptions(prevValues => ({ ...prevValues, filters: FAKE_TAGS })); // TODO: Replace this values by the real filters
+    setSearchOptions(prevValues => ({
+      ...prevValues,
+      searchField: router.query.searchField,
+      filters: [router.query.searchField]
+    })); // TODO: Replace this values by the real filters
   }, [router.query]);
 
   const handleArrowBack = () => {
@@ -81,7 +83,7 @@ function SearchNavbarDoctor({ searchOptions, setSearchOptions }: TProps): JSX.El
       </Grid>
       {searchIsActive && (
         <Typography variant="body1" className={classes.titleEdit}>
-          {t('searchResults.searchEdit', { ns: i18nMedicalDirectory })}
+          {t('editSearch.title', { ns: i18nMedicalDirectory })}
         </Typography>
       )}
       {!searchIsActive && (
@@ -149,7 +151,7 @@ function SearchNavbarDoctor({ searchOptions, setSearchOptions }: TProps): JSX.El
               search={searchOptions as any}
               searchObject={setSearchOptions}
               labelText={t('items.labelSearch', { ns: i18nMedicalDirectory })}
-              placeHolderText={t('items.placeholderSearch', { ns: i18nMedicalDirectory })}
+              placeHolderText={t('searchDoctor.placeholderSearch', { ns: i18nMedicalDirectory })}
               path="/medicalDirectory/searchBy/doctorResults"
             />
           </Box>

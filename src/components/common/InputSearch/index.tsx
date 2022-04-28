@@ -59,8 +59,10 @@ function InputSearch({
       fullWidth
       onKeyDown={e => {
         if (e.key === 'Enter') {
-          redirectResults();
-          if (isActiveModal) closeModal(false);
+          if (searchField) {
+            redirectResults();
+            if (isActiveModal) closeModal(false);
+          }
         }
       }}
       InputLabelProps={{
