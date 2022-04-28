@@ -96,7 +96,11 @@ const SearchWithGeolocation = ({
         </Grid>
         <Grid mt={2} item>
           <Box mt={1}>
-            <AutoCompleteGoogleMaps recordCoords={setCoords} placeName={search?.placeName} />
+            <AutoCompleteGoogleMaps
+              recordCoords={setCoords}
+              placeName={search?.placeName}
+              redirecTo={redirecSearch}
+            />
           </Box>
         </Grid>
       </Grid>
