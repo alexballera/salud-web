@@ -61,19 +61,21 @@ function SearchNavbarDoctor({ searchOptions, setSearchOptions }: TProps): JSX.El
   const FAKE_TAGS = [searchOptions.searchField];
 
   useEffect(() => {
-    console.log(searchOptions.searchField, 'ok');
     setSearchOptions(prevValues => ({ ...prevValues, filters: FAKE_TAGS })); // TODO: Replace this values by the real filters
-  }, [searchOptions.searchField]);
+  }, [router.query]);
+
+  const handleArrowBack = () => {
+    if (searchIsActive) {
+      setSearchIsActive(false);
+    } else {
+      router.back();
+    }
+  };
 
   const Actions = (
     <Grid container alignItems="center" className={classes.inputActionsWrapper}>
       <Grid item mr={3}>
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="arrow-back"
-          onClick={() => router.back()}
-        >
+        <IconButton edge="start" color="inherit" aria-label="arrow-back" onClick={handleArrowBack}>
           <ArrowBackIcon width={16} height={16} />
         </IconButton>
       </Grid>
@@ -142,7 +144,8 @@ function SearchNavbarDoctor({ searchOptions, setSearchOptions }: TProps): JSX.El
           {Actions}
           <Box mt={3}>
             <InputSearch
-              isActiveModal={setSearchIsActive}
+              isActiveModal={searchIsActive}
+              closeModal={setSearchIsActive}
               search={searchOptions as any}
               searchObject={setSearchOptions}
               labelText={t('items.labelSearch', { ns: i18nMedicalDirectory })}

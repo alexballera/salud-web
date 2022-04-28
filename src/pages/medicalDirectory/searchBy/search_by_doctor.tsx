@@ -122,7 +122,6 @@ const SearchByDoctor = (): JSX.Element => {
         </Stack>
         <Box mt={3}>
           <InputSearch
-            search={search as any}
             searchObject={setSearch}
             labelText={t('items.labelSearch', { ns: i18nMedicalDirectory })}
             placeHolderText={t('items.placeholderSearch', { ns: i18nMedicalDirectory })}

@@ -9,7 +9,8 @@ type TSearch = {
 };
 
 type TProps = {
-  isActiveModal;
+  isActiveModal?: boolean;
+  closeModal?;
   search?: TSearch;
   searchObject;
   labelText: string;
@@ -19,6 +20,7 @@ type TProps = {
 
 function InputSearch({
   isActiveModal,
+  closeModal,
   search,
   searchObject,
   labelText,
@@ -27,19 +29,19 @@ function InputSearch({
 }: TProps): JSX.Element {
   const router = useRouter();
   const classes = searchNavbarDoctorStyles();
-  // const [searchField, setSearchField] = useState(search?.searchField || '');
+  const [searchField, setSearchField] = useState(search?.searchField || '');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // setSearchField(e.target.value);
-    searchObject(e.target.value);
+    setSearchField(e.target.value);
   };
 
   const redirectResults = () => {
+    searchObject({ searchField });
     if (path) {
       router.push({
         pathname: path,
         query: {
-          searchField: search?.searchField
+          searchField: searchField
         }
       });
     }
@@ -51,14 +53,14 @@ function InputSearch({
       label={labelText}
       placeholder={placeHolderText}
       type="text"
-      value={search?.searchField}
+      value={searchField}
       onChange={handleChange}
       className={classes.inputColor}
       fullWidth
       onKeyDown={e => {
         if (e.key === 'Enter') {
           redirectResults();
-          isActiveModal(false);
+          if (isActiveModal) closeModal(false);
         }
       }}
       InputLabelProps={{

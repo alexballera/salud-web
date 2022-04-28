@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Grid from '@mui/material/Grid';
 import doctorResultsStyles from './styles.module';
@@ -16,6 +16,10 @@ const doctorResults = (): JSX.Element => {
   const router = useRouter();
   const { t } = useTranslation(NAMESPACE_KEY);
   const [searchOptions, setSearchOptions] = useState({ ...router.query });
+
+  useEffect(() => {
+    console.log('handle the fetch here');
+  }, [searchOptions]);
 
   return (
     <>
