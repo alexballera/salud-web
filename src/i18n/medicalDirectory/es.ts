@@ -15,7 +15,7 @@ export const esMedicalDirectory = {
     title: 'Resultados de búsqueda'
   },
   editSearch: {
-    title: 'Editá la búsqueda'
+    title: 'Edita la búsqueda'
   },
   searchDoctor: {
     placeholderSearch: 'Buscá por doctor'
