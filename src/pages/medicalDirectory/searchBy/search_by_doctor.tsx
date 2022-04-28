@@ -9,18 +9,15 @@ import {
   CircularProgress,
   Grid,
   IconButton,
-  InputAdornment,
   List,
   ListItem,
   ListItemSecondaryAction,
   ListItemText,
   Stack,
-  TextField,
   ThemeProvider,
   Typography
 } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import SearchIcon from '@mui/icons-material/Search';
 // MUI END
 
 // OWN COMPONENTS
@@ -38,6 +35,7 @@ import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18ClinicHistory } from '@/src/i18n/clinic_history/i18n';
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '@/src/i18n/medicalDirectory/i18n';
 import { FAKE_SEARCH_HISTORY_LIST } from '..';
+import InputSearch from '@/src/components/common/InputSearch';
 /// i18n END
 
 type TDoctor = {
@@ -50,9 +48,10 @@ const SearchByDoctor = (): JSX.Element => {
   const { t } = useTranslation([i18nMedicalDirectory, i18ClinicHistory]);
   const classes = examStyles();
   const router = useRouter();
-  const [searchField, setSearchField] = useState('');
   const [doctors, setDoctors] = useState<TDoctor[]>();
   const [isLoading, setIsLoading] = useState(false);
+
+  const [search, setSearch] = useState({});
 
   const handleClick = (doctor: TDoctor): void => {
     router.push(`/doctor_profile/${doctor.idx}`);
@@ -66,15 +65,6 @@ const SearchByDoctor = (): JSX.Element => {
       setIsLoading(false);
     }, 1000);
   }, []);
-
-  const redirectResults = () => {
-    router.push({
-      pathname: '/medicalDirectory/searchBy/doctorResults',
-      query: {
-        searchField: searchField
-      }
-    });
-  };
 
   const ListItemDoctors = (doctor: TDoctor): JSX.Element => (
     <React.Fragment key={doctor.idx}>
@@ -118,28 +108,11 @@ const SearchByDoctor = (): JSX.Element => {
           </Typography>
         </Stack>
         <Box mt={3}>
-          <TextField
-            id="outlined-search"
-            label="Búsqueda"
-            placeholder="Buscá por doctor"
-            type="search"
-            color="secondary"
-            fullWidth
-            onKeyPress={e => {
-              if (e.key === 'Enter') {
-                redirectResults();
-              }
-            }}
-            InputLabelProps={{
-              shrink: true
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <SearchIcon />
-                </InputAdornment>
-              )
-            }}
+          <InputSearch
+            searchObject={setSearch}
+            labelText={t('items.labelSearch', { ns: i18nMedicalDirectory })}
+            placeHolderText={t('searchDoctor.placeholderSearch', { ns: i18nMedicalDirectory })}
+            path="/medicalDirectory/searchBy/doctorResults"
           />
         </Box>
 

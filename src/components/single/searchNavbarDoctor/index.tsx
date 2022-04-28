@@ -13,7 +13,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputBase from '@material-ui/core/InputBase';
 import MuiChip from '@material-ui/core/Chip';
 import { Box, Modal, styled } from '@material-ui/core';
-import { TextField, Typography, Grid } from '@mui/material';
+import { Typography, Grid } from '@mui/material';
 /// MATERIAL END
 
 /// i18n
@@ -23,6 +23,7 @@ import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '../../../i18n/medicalDirectory/i18n';
 import { secondaryMainColor, tertiaryLightColor, titlePageColor } from '@/src/styles/js/theme';
 import searchNavbarDoctorStyles from './styles.module';
+import InputSearch from '../../common/InputSearch';
 /// i18n END
 
 type TProps = {
@@ -57,64 +58,68 @@ function SearchNavbarDoctor({ searchOptions, setSearchOptions }: TProps): JSX.El
   const [filterIsActive, setFilterIsActive] = useState(false);
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
 
-  const FAKE_TAGS = [searchOptions.searchField];
-
   useEffect(() => {
-    setSearchOptions(prevValues => ({ ...prevValues, filters: FAKE_TAGS })); // TODO: Replace this values by the real filters
-  }, []);
+    setSearchOptions(prevValues => ({
+      ...prevValues,
+      searchField: router.query.searchField,
+      filters: [router.query.searchField]
+    })); // TODO: Replace this values by the real filters
+  }, [router.query]);
 
-  const Actions = (isEdit: boolean) => {
-    return (
-      <Grid container alignItems="center" className={classes.inputActionsWrapper}>
-        <Grid item mr={3}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="arrow-back"
-            onClick={() => router.back()}
-          >
-            <ArrowBackIcon width={16} height={16} />
-          </IconButton>
-        </Grid>
-        {isEdit ? (
-          <Typography variant="body1" className={classes.titleEdit}>
-            {t('searchResults.searchEdit', { ns: i18nMedicalDirectory })}
-          </Typography>
-        ) : (
-          <Grid item className={classes.inputWrapper}>
-            <div>
-              <FormControl variant="standard">
-                <InputBase
-                  className={classes.input}
-                  value={searchOptions.searchField}
-                  readOnly
-                  onClick={() => setSearchIsActive(true)}
-                  startAdornment={
-                    <InputAdornment
-                      position="start"
-                      className={classes.searchIcon}
-                      color={titlePageColor}
-                    >
-                      <SearchIcon />
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-            </div>
-          </Grid>
-        )}
-        <Grid item>
-          <IconButton edge="end" color="inherit" aria-label="arrow-back">
-            {/* <FilterListIcon /> */}
-          </IconButton>
-        </Grid>
-      </Grid>
-    );
+  const handleArrowBack = () => {
+    if (searchIsActive) {
+      setSearchIsActive(false);
+    } else {
+      router.back();
+    }
   };
+
+  const Actions = (
+    <Grid container alignItems="center" className={classes.inputActionsWrapper}>
+      <Grid item mr={3}>
+        <IconButton edge="start" color="inherit" aria-label="arrow-back" onClick={handleArrowBack}>
+          <ArrowBackIcon width={16} height={16} />
+        </IconButton>
+      </Grid>
+      {searchIsActive && (
+        <Typography variant="body1" className={classes.titleEdit}>
+          {t('editSearch.title', { ns: i18nMedicalDirectory })}
+        </Typography>
+      )}
+      {!searchIsActive && (
+        <Grid item className={classes.inputWrapper}>
+          <div>
+            <FormControl variant="standard">
+              <InputBase
+                className={classes.input}
+                value={searchOptions.searchField}
+                readOnly
+                onClick={() => setSearchIsActive(true)}
+                startAdornment={
+                  <InputAdornment
+                    position="start"
+                    className={classes.searchIcon}
+                    color={titlePageColor}
+                  >
+                    <SearchIcon />
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+          </div>
+        </Grid>
+      )}
+      <Grid item>
+        <IconButton edge="end" color="inherit" aria-label="arrow-back">
+          {/* <FilterListIcon /> */}
+        </IconButton>
+      </Grid>
+    </Grid>
+  );
 
   return (
     <div className={classes.mainWrapper}>
-      {Actions(searchIsActive)}
+      {Actions}
       <Grid container>
         <Grid item className={classes.chipWrapper} mt={1}>
           <div className={classes.chipFlex}>
@@ -138,31 +143,16 @@ function SearchNavbarDoctor({ searchOptions, setSearchOptions }: TProps): JSX.El
         aria-describedby="parent-modal-description"
       >
         <Box className={classes.modalContent}>
-          {Actions(searchIsActive)}
+          {Actions}
           <Box mt={3}>
-            <TextField
-              id="outlined-searchDoctor"
-              label={t('items.labelSearch', { ns: i18nMedicalDirectory })}
-              placeholder={t('items.placeholderSearch', { ns: i18nMedicalDirectory })}
-              type="text"
-              value={searchOptions?.searchField || ''}
-              className={classes.inputColor}
-              fullWidth
-              onKeyDown={e => {
-                if (e.key === 'Enter') {
-                  /** Add function redirectTo */
-                }
-              }}
-              InputLabelProps={{
-                shrink: true
-              }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <SearchIcon className={classes.iconColor} />
-                  </InputAdornment>
-                )
-              }}
+            <InputSearch
+              isActiveModal={searchIsActive}
+              closeModal={setSearchIsActive}
+              search={searchOptions as any}
+              searchObject={setSearchOptions}
+              labelText={t('items.labelSearch', { ns: i18nMedicalDirectory })}
+              placeHolderText={t('searchDoctor.placeholderSearch', { ns: i18nMedicalDirectory })}
+              path="/medicalDirectory/searchBy/doctorResults"
             />
           </Box>
         </Box>
