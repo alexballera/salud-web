@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react';
 
 /// MATERIAL-UI
 import { makeStyles, styled } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
 import MuiTypography from '@material-ui/core/Typography';
 import MuiCircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
+import Grid from '@mui/material/Grid';
 /// MATERIAL-UI END
 
 /// OWN COMPONENTS
@@ -56,9 +56,19 @@ function MedicalDirectoryResultsPage(): JSX.Element {
   const classes = useStyles();
   const { t } = useTranslation(NAMESPACE_KEY);
   const [searchOptions, setSearchOptions] = useState({ ...router.query });
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     console.log('handle the fetch here');
+    setIsLoading(true);
+    setTimeout(() => {
+      const result = FAKE_ITEMS.List.filter(
+        result => result.specialty === searchOptions.searchField
+      );
+      setData(result);
+      setIsLoading(false);
+    }, 1000);
   }, [searchOptions]);
 
   return (
@@ -67,20 +77,37 @@ function MedicalDirectoryResultsPage(): JSX.Element {
         <Grid item xs={12}>
           <SearchNavbar setSearchOptions={setSearchOptions} searchOptions={searchOptions} />
         </Grid>
+        {isLoading && (
+          <Grid
+            container
+            item
+            xs={12}
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ paddingTop: '10%' }}
+          >
+            <CircularProgress color="secondary" />
+          </Grid>
+        )}
         <Grid item xs={12} className={classes.results}>
-          <Typography variant="h1" className={classes.title}>
-            {t('searchResults.title')}
-          </Typography>
-          {/* <Box mt={6} mb={6}>
-            <Grid container direction="column" justify="center" alignItems="center">
-              <CircularProgress color="inherit" />
-            </Grid>
-          </Box> */}
-          {FAKE_ITEMS.List.map((item, idx) => {
-            return (
-              <CardDoctorResult {...item} redirectTo={`${item.redirectTo}/${idx}`} key={idx} />
-            );
-          })}
+          {!isLoading && data.length !== 0 && (
+            <Typography variant="h1" className={classes.title}>
+              {t('searchResults.title')}
+            </Typography>
+          )}
+          {!isLoading &&
+            data &&
+            data.map((item, idx) => {
+              return (
+                <CardDoctorResult {...item} redirectTo={`${item.redirectTo}/${idx}`} key={idx} />
+              );
+            })}
+          {!isLoading && data.length === 0 && (
+            <Box my={3} ml={2}>
+              <Typography variant="h4">Empty State</Typography>
+            </Box>
+          )}
         </Grid>
       </Grid>
     </div>
