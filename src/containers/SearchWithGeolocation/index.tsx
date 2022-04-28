@@ -107,6 +107,8 @@ const SearchWithGeolocation = ({
               recordCoords={setCoords}
               placeName={search?.placeName}
               redirecTo={redirecSearch}
+              isActiveModal={isActiveModal}
+              closeModal={closeModal}
             />
           </Box>
         </Grid>

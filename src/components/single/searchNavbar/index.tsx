@@ -126,7 +126,6 @@ const useStyles = makeStyles({
 const FAKE_TAGS = ['Precio alto-bajo', '₡60 000', 'Cualquiera'];
 
 function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element {
-  console.log(searchOptions);
   const router = useRouter();
   const classes = useStyles();
   const [searchIsActive, setSearchIsActive] = useState(false);
