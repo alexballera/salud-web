@@ -31,9 +31,17 @@ type TProps = {
   recordCoords;
   placeName?: string;
   redirecTo;
+  isActiveModal?: boolean;
+  closeModal?;
 };
 
-const AutoCompleteGoogleMaps = ({ recordCoords, placeName, redirecTo }: TProps): JSX.Element => {
+const AutoCompleteGoogleMaps = ({
+  recordCoords,
+  placeName,
+  redirecTo,
+  isActiveModal,
+  closeModal
+}: TProps): JSX.Element => {
   const classes = autoCompleteLocationStyles();
   const { t } = useTranslation([i18Global]);
   const [value, setValue] = useState<PlaceType | any>(
@@ -142,6 +150,10 @@ const AutoCompleteGoogleMaps = ({ recordCoords, placeName, redirecTo }: TProps):
         onKeyDown={e => {
           if (e.key === 'Enter') {
             redirecTo();
+            if (value) {
+              redirecTo();
+              if (isActiveModal) closeModal(false);
+            }
           }
         }}
         forcePopupIcon={true}
