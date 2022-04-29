@@ -11,11 +11,14 @@ export const enMedicalDirectory = {
     history: 'Recent searches',
     noRecentSearch: 'You have no recent searches recorded',
     searchResults: {
-      title: 'Search results',
-      searchEdit: 'edit the search'
+      title: 'Search results'
     }
   },
   editSearch: {
     title: 'Edit search'
-  }
+  },
+  searchDoctor: {
+    placeholderSearch: 'Search by doctor'
+  },
+  noResult: 'Sorry, no results found!'
 };

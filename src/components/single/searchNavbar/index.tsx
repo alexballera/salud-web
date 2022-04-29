@@ -69,7 +69,8 @@ const useStyles = makeStyles({
   mainWrapper: {
     boxShadow,
     padding: '0 24px 20px 24px',
-    borderRadius: 16
+    borderRadius: 16,
+    backgroundColor: 'white'
   },
   inputActionsWrapper: {
     height: 56
@@ -132,6 +133,11 @@ function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element 
   const [filterIsActive, setFilterIsActive] = useState(false);
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
 
+  const searchLocationLabel =
+    searchOptions?.placeName === '' || !searchOptions?.placeName
+      ? 'Cerca ...'
+      : searchOptions?.placeName;
+  const searchLabel = `${searchOptions?.searchField} • ${searchLocationLabel}`;
   useEffect(() => {
     setSearchOptions(prevValues => ({ ...prevValues, filters: FAKE_TAGS })); // TODO: Replace this values by the real filters
   }, []);
@@ -169,7 +175,7 @@ function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element 
             <FormControl variant="standard">
               <InputBase
                 className={classes.input}
-                value="Psicologia • Cerca ..."
+                value={searchLabel}
                 readOnly
                 onClick={() => setSearchIsActive(true)}
                 startAdornment={
@@ -245,6 +251,8 @@ function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element 
         <Box className={classes.modalContent}>
           {Actions}
           <SearchWithGeolocation
+            isActiveModal={searchIsActive}
+            closeModal={setSearchIsActive}
             search={searchOptions as any}
             searchObject={setSearchOptions}
             labelText={t('items.labelSearch', { ns: i18nMedicalDirectory })}

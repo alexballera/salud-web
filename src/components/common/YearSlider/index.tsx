@@ -60,14 +60,10 @@ function YearSlider({ itemClick, disabled, selectedYear }: TProps): JSX.Element 
     itemClick(year);
   }, []);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_evt: React.SyntheticEvent, newValue: number) => {
     if (disabled) return;
-    const value = event.target as HTMLElement;
-    const toNumber = Number(value.innerHTML);
-    if (typeof toNumber === 'number') {
-      setValue(newValue);
-      itemClick(toNumber);
-    }
+    setValue(newValue);
+    itemClick(years[newValue]);
   };
 
   return (

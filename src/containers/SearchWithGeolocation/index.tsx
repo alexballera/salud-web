@@ -22,6 +22,8 @@ type TProps = {
   labelText: string;
   placeHolderText: string;
   path: string;
+  isActiveModal?: boolean;
+  closeModal?;
 };
 
 const initalCoords: TInitialCoords = {
@@ -31,6 +33,8 @@ const initalCoords: TInitialCoords = {
 };
 
 const SearchWithGeolocation = ({
+  isActiveModal,
+  closeModal,
   search,
   searchObject,
   labelText,
@@ -72,13 +76,16 @@ const SearchWithGeolocation = ({
               label={labelText}
               placeholder={placeHolderText}
               type="text"
-              value={search?.searchField}
+              defaultValue={search?.searchField}
               className={classes.inputColor}
               fullWidth
               onChange={handleChange}
               onKeyDown={e => {
                 if (e.key === 'Enter') {
-                  redirecSearch();
+                  if (searchField) {
+                    redirecSearch();
+                    if (isActiveModal) closeModal(false);
+                  }
                 }
               }}
               InputLabelProps={{
@@ -96,7 +103,13 @@ const SearchWithGeolocation = ({
         </Grid>
         <Grid mt={2} item>
           <Box mt={1}>
-            <AutoCompleteGoogleMaps recordCoords={setCoords} placeName={search?.placeName} />
+            <AutoCompleteGoogleMaps
+              recordCoords={setCoords}
+              placeName={search?.placeName}
+              redirecTo={redirecSearch}
+              isActiveModal={isActiveModal}
+              closeModal={closeModal}
+            />
           </Box>
         </Grid>
       </Grid>

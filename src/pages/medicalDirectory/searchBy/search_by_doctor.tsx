@@ -1,5 +1,6 @@
 // BASE IMPORTS
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 // BASE IMPORTS END
 
 // MUI
@@ -8,18 +9,15 @@ import {
   CircularProgress,
   Grid,
   IconButton,
-  InputAdornment,
   List,
   ListItem,
   ListItemSecondaryAction,
   ListItemText,
   Stack,
-  TextField,
   ThemeProvider,
   Typography
 } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import SearchIcon from '@mui/icons-material/Search';
 // MUI END
 
 // OWN COMPONENTS
@@ -34,60 +32,43 @@ import { examStyles } from '@/src/containers/ExamResult/styles.module';
 
 /// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY as i18Global } from '@/src/i18n/globals/i18n';
-import { NAMESPACE_KEY as i18Forms } from '@/src/i18n/forms/i18n';
 import { NAMESPACE_KEY as i18ClinicHistory } from '@/src/i18n/clinic_history/i18n';
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '@/src/i18n/medicalDirectory/i18n';
 import { FAKE_SEARCH_HISTORY_LIST } from '..';
-import { useRouter } from 'next/router';
+import InputSearch from '@/src/components/common/InputSearch';
 /// i18n END
 
+type TDoctor = {
+  idx: string;
+  title: string;
+  subTitle: string;
+};
+
 const SearchByDoctor = (): JSX.Element => {
-  const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory, i18ClinicHistory]);
+  const { t } = useTranslation([i18nMedicalDirectory, i18ClinicHistory]);
   const classes = examStyles();
   const router = useRouter();
-  const [searchField, setSearchField] = useState('');
-  const [searchShow, setSearchShow] = useState(false);
-  const [data, setData] = useState(FAKE_SEARCH_HISTORY_LIST);
+  const [doctors, setDoctors] = useState<TDoctor[]>();
   const [isLoading, setIsLoading] = useState(false);
 
-  const getDoctors = () => {
-    if (data) {
-      data.sort((a, b) => a.title.localeCompare(b.title));
-      return data;
-    }
+  const [search, setSearch] = useState({});
+
+  const handleClick = (doctor: TDoctor): void => {
+    router.push(`/doctor_profile/${doctor.idx}`);
   };
 
-  const filteredDoctors = getDoctors()?.filter(data => {
-    return data.title.toLowerCase().includes(searchField.toLowerCase());
-  });
+  useEffect(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      const data = FAKE_SEARCH_HISTORY_LIST;
+      setDoctors(data);
+      setIsLoading(false);
+    }, 1000);
+  }, []);
 
-  const handleClick = (item): void => {
-    // router.push(`/clinic_history/vaccines/${id}`);
-    console.log('id', item);
-  };
-
-  const redirectResults = () => {
-    router.push({
-      pathname: '/medicalDirectory/searchBy/doctorResults',
-      query: {
-        searchField: searchField
-      }
-    });
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchField(e.target.value);
-    if (e.target.value === '') {
-      setSearchShow(false);
-    } else {
-      setSearchShow(true);
-    }
-  };
-
-  const ListItemDoctors = (item, i: number): JSX.Element => (
-    <React.Fragment key={item.idx}>
-      <ListItem button onClick={() => handleClick(item)} sx={{ pl: 1 }}>
+  const ListItemDoctors = (doctor: TDoctor): JSX.Element => (
+    <React.Fragment key={doctor.idx}>
+      <ListItem button onClick={() => handleClick(doctor)} sx={{ pl: 1 }}>
         <ListItemText
           primary={
             <Typography
@@ -102,12 +83,12 @@ const SearchByDoctor = (): JSX.Element => {
               variant="body2"
               color="text.primary"
             >
-              {item.title}
+              {doctor.title}
             </Typography>
           }
         />
         <ListItemSecondaryAction>
-          <IconButton edge="end" aria-label={item.title} onClick={() => handleClick(item)}>
+          <IconButton edge="end" aria-label={doctor.title} onClick={() => handleClick(doctor)}>
             <ChevronRightIcon color="secondary" />
           </IconButton>
         </ListItemSecondaryAction>
@@ -127,29 +108,11 @@ const SearchByDoctor = (): JSX.Element => {
           </Typography>
         </Stack>
         <Box mt={3}>
-          <TextField
-            id="outlined-search"
-            label="Búsqueda"
-            placeholder="Buscá por doctor"
-            type="search"
-            color="secondary"
-            fullWidth
-            onChange={handleChange}
-            onKeyPress={e => {
-              if (e.key === 'Enter') {
-                redirectResults();
-              }
-            }}
-            InputLabelProps={{
-              shrink: true
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <SearchIcon />
-                </InputAdornment>
-              )
-            }}
+          <InputSearch
+            searchObject={setSearch}
+            labelText={t('items.labelSearch', { ns: i18nMedicalDirectory })}
+            placeHolderText={t('searchDoctor.placeholderSearch', { ns: i18nMedicalDirectory })}
+            path="/medicalDirectory/searchBy/doctorResults"
           />
         </Box>
 
@@ -168,13 +131,12 @@ const SearchByDoctor = (): JSX.Element => {
                 <CircularProgress color="secondary" />
               </Grid>
             )}
-            {searchShow && !filteredDoctors?.length && (
+            {!isLoading && !doctors?.length && (
               <Typography variant="caption" className={classes.noRecords}>
                 {t('doctors.no_records', { ns: i18ClinicHistory })}
               </Typography>
             )}
-            {!isLoading && !searchShow && getDoctors()?.map((item, i) => ListItemDoctors(item, i))}
-            {!isLoading && searchShow && filteredDoctors.map((item, i) => ListItemDoctors(item, i))}
+            {!isLoading && doctors?.map(item => ListItemDoctors(item))}
           </List>
         </Box>
       </Box>
