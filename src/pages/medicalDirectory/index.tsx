@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import Router, { useRouter } from 'next/router';
 import { useTranslation, withTranslation } from 'react-i18next';
 
 import { NAMESPACE_KEY as i18Global } from '../../i18n/globals/i18n';
@@ -17,7 +17,8 @@ import {
   ListItemText,
   ListItemSecondaryAction,
   IconButton,
-  List
+  List,
+  styled
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
@@ -29,6 +30,16 @@ import muiTheme from '../../styles/js/muiTheme';
 
 import medicalDirectoryStyles from './style.module';
 import SearchWithGeolocation from '@/src/containers/SearchWithGeolocation';
+import { scrollTop } from '@/src/utils/helpers';
+import { useGetSearchHistoryQuery } from '@/src/services/apiBFF';
+
+import MuiCircularProgress from '@material-ui/core/CircularProgress';
+import { secondaryMainColor } from '@/src/styles/js/theme';
+/// DUMMY DATA END
+
+const CircularProgress = styled(MuiCircularProgress)({
+  color: secondaryMainColor
+});
 
 export const FAKE_SEARCH_HISTORY_LIST = [
   {
@@ -52,8 +63,8 @@ export const FAKE_SEARCH_HISTORY_LIST = [
 function MedicalDirectoryPage(): JSX.Element {
   const classes = medicalDirectoryStyles();
   const router = useRouter();
-
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
+  const { data, isLoading } = useGetSearchHistoryQuery();
 
   const [search, setSearch] = useState({});
 
@@ -69,6 +80,10 @@ function MedicalDirectoryPage(): JSX.Element {
       icon: <SvgDoctors width={34} heigth={34} />
     }
   ];
+
+  useEffect(() => {
+    scrollTop();
+  }, []);
 
   return (
     <ThemeProvider theme={muiTheme}>
@@ -112,39 +127,45 @@ function MedicalDirectoryPage(): JSX.Element {
           <Typography variant="h2" className={classes.historyTextTitle}>
             {t('searchBySection.history', { ns: i18nMedicalDirectory })}
           </Typography>
+          {isLoading && (
+            <Grid container justify="center" alignItems="center">
+              <CircularProgress color="secondary" />
+            </Grid>
+          )}
           <List component="nav" className={classes.root} aria-label="menubox history filter items">
-            {FAKE_SEARCH_HISTORY_LIST.map((item, idx) => (
-              <ListItem
-                button
-                key={idx}
-                className={classes.listItem}
-                onClick={() => router.push(`doctor_profile/${item.idx}`)}
-              >
-                <ListItemText
-                  primary={
-                    <Typography variant="body2" className={classes.listMenuTextPrimary}>
-                      {item.title}
-                    </Typography>
-                  }
-                  secondary={
-                    <Typography variant="body2" className={classes.listMenuTextSecondary}>
-                      {item.subTitle}
-                    </Typography>
-                  }
-                />
-                <ListItemSecondaryAction>
-                  <IconButton
-                    edge="end"
-                    aria-label="arrow"
-                    onClick={() => router.push(`/doctor_profile/${item.idx}`)}
-                  >
-                    <ArrowForwardIosIcon fontSize="small" htmlColor={primaryLightColor} />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-            ))}
+            {!isLoading &&
+              data.searches.map((item, idx) => (
+                <ListItem
+                  button
+                  key={idx}
+                  className={classes.listItem}
+                  onClick={() => router.push(`doctor_profile/${item.doctorId}`)}
+                >
+                  <ListItemText
+                    primary={
+                      <Typography variant="body2" className={classes.listMenuTextPrimary}>
+                        {item.doctorName}
+                      </Typography>
+                    }
+                    secondary={
+                      <Typography variant="body2" className={classes.listMenuTextSecondary}>
+                        {item.medicalSpeciality}
+                      </Typography>
+                    }
+                  />
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      edge="end"
+                      aria-label="arrow"
+                      onClick={() => router.push(`/doctor_profile/${item.doctorId}`)}
+                    >
+                      <ArrowForwardIosIcon fontSize="small" htmlColor={primaryLightColor} />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))}
           </List>
-          {!FAKE_SEARCH_HISTORY_LIST.length && (
+          {!isLoading && !data.searches.length && (
             <Box px={3}>
               <Typography variant="h2" className={classes.historyTextTitle}>
                 {t('searchBySection.noRecentSearch', { ns: i18nMedicalDirectory })}

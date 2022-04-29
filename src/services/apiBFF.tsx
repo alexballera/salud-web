@@ -6,6 +6,7 @@ import { THabitsResponse } from '@/src/types/services/habit.types';
 import { TDiseasesResponse } from '@/src/types/services/diseases.types';
 import { TGeneralData } from '@/src/types/services/generalData.types';
 import { TFamiliarDiseasesResponse } from '../types/services/familiarDiseases.types';
+import { TSearchHistoryResponse } from '../types/services/searchHistory.types';
 import {
   TConsultationHistory,
   TConsultationHistoryGroup,
@@ -109,6 +110,9 @@ export const apiBFF = createApi({
           };
         });
       }
+    }),
+    getSearchHistory: builder.query<TSearchHistoryResponse, void>({
+      query: () => ({ url: '/patients/623a34d8ef9e97ce33a3/searchHistory', method: 'get' })
     })
   })
 });
@@ -123,5 +127,6 @@ export const {
   useGetFamiliarDiseasesQuery,
   useGetVaccineByIdQuery,
   useGetConsultationHistoryQuery,
-  useGetConsultationHistoryByIdQuery
+  useGetConsultationHistoryByIdQuery,
+  useGetSearchHistoryQuery
 } = apiBFF;
