@@ -156,7 +156,7 @@ const SearchBySpecialty = (): JSX.Element => {
     <ThemeProvider theme={muiTheme}>
       <Box p={3}>
         <Stack direction="row" alignItems="center" spacing={2}>
-          <SvgSpecialty width={24} heigth={24} />
+          <SvgSpecialty />
           <Typography
             sx={{ fontWeight: 500, fontSize: 20, lineHeight: '160%', color: titlePageColor }}
           >
