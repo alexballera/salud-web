@@ -19,5 +19,6 @@ export const esMedicalDirectory = {
   },
   searchDoctor: {
     placeholderSearch: 'Buscá por doctor'
-  }
+  },
+  noResult: 'Lo sentimos, no se han encontrado resultados!'
 };
