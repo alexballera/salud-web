@@ -7,8 +7,7 @@ import { useEffect, useState } from 'react';
 import { makeStyles, styled } from '@material-ui/core';
 import MuiTypography from '@material-ui/core/Typography';
 import MuiCircularProgress from '@material-ui/core/CircularProgress';
-import Box from '@material-ui/core/Box';
-import Grid from '@mui/material/Grid';
+import { Grid, Box } from '@mui/material';
 /// MATERIAL-UI END
 
 /// OWN COMPONENTS
@@ -23,7 +22,12 @@ import { NAMESPACE_KEY } from '../../../i18n/medicalDirectory/i18n';
 
 /// DUMMY DATA
 import FAKE_ITEMS from './data.json';
-import { poppinsFontFamily, title2Color, secondaryMainColor } from '@/src/styles/js/theme';
+import {
+  poppinsFontFamily,
+  title2Color,
+  secondaryMainColor,
+  colorTextEmptyState
+} from '@/src/styles/js/theme';
 /// DUMMY DATA END
 
 const Typography = styled(MuiTypography)({
@@ -35,6 +39,8 @@ const Typography = styled(MuiTypography)({
 const CircularProgress = styled(MuiCircularProgress)({
   color: secondaryMainColor
 });
+
+const emptySVG = '/images/empty.svg';
 
 const useStyles = makeStyles({
   results: {
@@ -48,6 +54,16 @@ const useStyles = makeStyles({
     color: title2Color,
     marginBottom: 16,
     marginTop: 24
+  },
+  emptyMainGrid: {
+    backgroundImage: `url(${emptySVG})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: '44% 4px',
+    height: '100vh',
+    width: '100vw',
+    position: 'fixed',
+    color: colorTextEmptyState
   }
 });
 
@@ -73,7 +89,7 @@ function MedicalDirectoryResultsPage(): JSX.Element {
 
   return (
     <div>
-      <Grid container>
+      <Grid container className={!isLoading && data.length === 0 && classes.emptyMainGrid}>
         <Grid item xs={12}>
           <SearchNavbar setSearchOptions={setSearchOptions} searchOptions={searchOptions} />
         </Grid>
@@ -103,12 +119,14 @@ function MedicalDirectoryResultsPage(): JSX.Element {
                 <CardDoctorResult {...item} redirectTo={`${item.redirectTo}/${idx}`} key={idx} />
               );
             })}
-          {!isLoading && data.length === 0 && (
-            <Box my={3} ml={2}>
-              <Typography variant="h4">Empty State</Typography>
-            </Box>
-          )}
         </Grid>
+        {!isLoading && data.length === 0 && (
+          <Box mt={6} ml={4} sx={{ position: 'fixed', top: '130px', width: '65%' }}>
+            <Typography variant="h6" color="initial">
+              {t('noResult')}
+            </Typography>
+          </Box>
+        )}
       </Grid>
     </div>
   );

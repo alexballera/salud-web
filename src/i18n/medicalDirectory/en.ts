@@ -19,5 +19,6 @@ export const enMedicalDirectory = {
   },
   searchDoctor: {
     placeholderSearch: 'Search by doctor'
-  }
+  },
+  noResult: 'Sorry, no results found!'
 };
