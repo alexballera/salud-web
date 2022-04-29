@@ -2,7 +2,8 @@ export const esMedicalDirectory = {
   items: {
     title: '¿Qué estás buscando?',
     labelSearch: 'Búsqueda',
-    placeholderSearch: 'Buscá por especialidad, nombre...'
+    placeholderSearch: 'Buscá por especialidad, nombre...',
+    placeholderSearchSpecialty: 'Buscá por especialidad...'
   },
   searchBySection: {
     searchBy: 'Busca por',

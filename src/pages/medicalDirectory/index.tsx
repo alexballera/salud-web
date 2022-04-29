@@ -60,7 +60,7 @@ function MedicalDirectoryPage(): JSX.Element {
   const itemsCard = [
     {
       title: t('searchBySection.specialty', { ns: i18nMedicalDirectory }),
-      action: '/medicalDirectory/searchBy',
+      action: '/medicalDirectory/searchBy/search_by_specialty',
       icon: <SvgSpecialty />
     },
     {

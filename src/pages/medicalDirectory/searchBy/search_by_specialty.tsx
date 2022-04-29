@@ -23,7 +23,7 @@ import SearchIcon from '@mui/icons-material/Search';
 // MUI END
 
 // OWN COMPONENTS
-import SvgDoctors from '@/src/components/common/Svg/SvgDoctors.component';
+import SvgSpecialty from '@/src/components/common/Svg/SvgSpecialty.component';
 // OWN COMPONENTS END
 
 // STYLES
@@ -38,9 +38,44 @@ import { NAMESPACE_KEY as i18Global } from '@/src/i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '@/src/i18n/forms/i18n';
 import { NAMESPACE_KEY as i18ClinicHistory } from '@/src/i18n/clinic_history/i18n';
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '@/src/i18n/medicalDirectory/i18n';
-import { FAKE_SEARCH_HISTORY_LIST } from '..';
 import { useRouter } from 'next/router';
+import SearchWithGeolocation from '@/src/containers/SearchWithGeolocation';
 /// i18n END
+
+const FAKE_LIST_DOCTORS = [
+  {
+    idx: '1',
+    title: 'Psicología'
+  },
+  {
+    idx: '2',
+    title: 'Fisioterapia/Terapia física'
+  },
+  {
+    idx: '3',
+    title: 'Ginecología'
+  },
+  {
+    idx: '4',
+    title: 'Medicina General'
+  },
+  {
+    idx: '5',
+    title: 'Nutrición'
+  },
+  {
+    idx: '6',
+    title: 'Odontología'
+  },
+  {
+    idx: '7',
+    title: 'Dermatología'
+  },
+  {
+    idx: '8',
+    title: 'Pediatría'
+  }
+];
 
 const SearchBySpecialty = (): JSX.Element => {
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory, i18ClinicHistory]);
@@ -48,8 +83,10 @@ const SearchBySpecialty = (): JSX.Element => {
   const router = useRouter();
   const [searchField, setSearchField] = useState('');
   const [searchShow, setSearchShow] = useState(false);
-  const [data, setData] = useState(FAKE_SEARCH_HISTORY_LIST);
+  const [data, setData] = useState(FAKE_LIST_DOCTORS);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [search, setSearch] = useState({});
 
   const getSpecialtys = () => {
     if (data) {
@@ -85,7 +122,7 @@ const SearchBySpecialty = (): JSX.Element => {
     }
   };
 
-  const ListItemDoctors = (item, i: number): JSX.Element => (
+  const ListItemSpecialties = (item, i: number): JSX.Element => (
     <React.Fragment key={item.idx}>
       <ListItem button onClick={() => handleClick(item)} sx={{ pl: 1 }}>
         <ListItemText
@@ -119,41 +156,23 @@ const SearchBySpecialty = (): JSX.Element => {
     <ThemeProvider theme={muiTheme}>
       <Box p={3}>
         <Stack direction="row" alignItems="center" spacing={2}>
-          <SvgDoctors width={24} heigth={24} />
+          <SvgSpecialty width={24} heigth={24} />
           <Typography
             sx={{ fontWeight: 500, fontSize: 20, lineHeight: '160%', color: titlePageColor }}
           >
-            {t('searchBySection.doctors', { ns: i18nMedicalDirectory })}
+            {t('searchBySection.specialty', { ns: i18nMedicalDirectory })}
           </Typography>
         </Stack>
-        <Box mt={3}>
-          <TextField
-            id="outlined-search"
-            label="Búsqueda"
-            placeholder="Buscá por doctor"
-            type="search"
-            color="secondary"
-            fullWidth
-            onChange={handleChange}
-            onKeyPress={e => {
-              if (e.key === 'Enter') {
-                redirectResults();
-              }
-            }}
-            InputLabelProps={{
-              shrink: true
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <SearchIcon />
-                </InputAdornment>
-              )
-            }}
+        <Box mt={2}>
+          <SearchWithGeolocation
+            searchObject={setSearch}
+            labelText={t('items.labelSearch', { ns: i18nMedicalDirectory })}
+            placeHolderText={t('items.placeholderSearchSpecialty', { ns: i18nMedicalDirectory })}
+            path="/medicalDirectory/searchResults/bySpecialty"
           />
         </Box>
 
-        <Box mt={2}>
+        <Box mt={1}>
           <List className={classes.root} aria-label="clinic history folders">
             {isLoading && (
               <Grid
@@ -170,15 +189,15 @@ const SearchBySpecialty = (): JSX.Element => {
             )}
             {searchShow && !filteredSpecialtys?.length && (
               <Typography variant="caption" className={classes.noRecords}>
-                {t('doctors.no_records', { ns: i18ClinicHistory })}
+                {t('specialty.no_records', { ns: i18ClinicHistory })}
               </Typography>
             )}
             {!isLoading &&
               !searchShow &&
-              getSpecialtys()?.map((item, i) => ListItemDoctors(item, i))}
+              getSpecialtys()?.map((item, i) => ListItemSpecialties(item, i))}
             {!isLoading &&
               searchShow &&
-              filteredSpecialtys.map((item, i) => ListItemDoctors(item, i))}
+              filteredSpecialtys.map((item, i) => ListItemSpecialties(item, i))}
           </List>
         </Box>
       </Box>
