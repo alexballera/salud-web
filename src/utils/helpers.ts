@@ -94,3 +94,7 @@ function errorCallback(error) {
       return 'An unknown error occurred.';
   }
 }
+
+export const scrollTop = (): string => {
+  return (window.history.scrollRestoration = 'manual');
+};
