@@ -55,12 +55,14 @@ const groupResultsByMonth = (data: TGeneralData) => {
     groups[month].push(curr);
     return groups;
   }, {});
-  return Object.keys(groups).map(month => {
-    return {
-      month: month.toString(),
-      items: groups[month]
-    };
-  });
+  return Object.keys(groups)
+    .map(month => {
+      return {
+        month: month.toString(),
+        items: groups[month]
+      };
+    })
+    .reverse();
 };
 
 const filterResultsByYear = (data: TGeneralData, year: number) => {

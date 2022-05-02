@@ -70,7 +70,7 @@ function SearchNavbarDoctor({ searchOptions, setSearchOptions }: TProps): JSX.El
     if (searchIsActive) {
       setSearchIsActive(false);
     } else {
-      router.back();
+      router.push('/medicalDirectory');
     }
   };
 
