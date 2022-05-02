@@ -48,12 +48,14 @@ const groupResultsByMonth = (recipiesAndPrescriptions: TPatientRecipiesAndPrescr
     groups[month].push(curr);
     return groups;
   }, {});
-  return Object.keys(groups).map(month => {
-    return {
-      month: month.toString(),
-      items: groups[month]
-    };
-  });
+  return Object.keys(groups)
+    .map(month => {
+      return {
+        month: month.toString(),
+        items: groups[month]
+      };
+    })
+    .reverse();
 };
 
 const filterResultsByYear = (data: TPatientRecipiesAndPrescriptionList, year: number) => {
@@ -70,7 +72,9 @@ export const getRecipiesAndPrescriptionsById = async (
   id: string,
   userId = ''
 ): Promise<TPatientRecipiesAndPrescriptionList[0] | null> => {
-  const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL_BFF}/patients/${userId}/recipies-prescriptions`);
+  const { data } = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL_BFF}/patients/${userId}/recipies-prescriptions`
+  );
   return data.find(item => item.id === id) as TPatientRecipiesAndPrescriptionList[0] | null;
 };
 
@@ -78,7 +82,9 @@ export const getRecipiesAndPrescriptionsByYear = async (
   year: number,
   userId = 1
 ): Promise<TPatientRecipiesAndPrescriptionGroups> => {
-  const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL_BFF}/patients/${userId}/recipies-prescriptions`);
+  const { data } = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL_BFF}/patients/${userId}/recipies-prescriptions`
+  );
   console.table(data);
   const filterResults = filterResultsByYear(data, year);
   return groupResultsByMonth(filterResults);
