@@ -1,5 +1,5 @@
 // BASE IMPORTS
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 // BASE IMPORTS END
 
@@ -34,40 +34,24 @@ import { examStyles } from '@/src/containers/ExamResult/styles.module';
 import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18ClinicHistory } from '@/src/i18n/clinic_history/i18n';
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '@/src/i18n/medicalDirectory/i18n';
-import { FAKE_SEARCH_HISTORY_LIST } from '..';
+
 import InputSearch from '@/src/components/common/InputSearch';
 /// i18n END
-
-type TDoctor = {
-  idx: string;
-  title: string;
-  subTitle: string;
-};
+import { useGetSearchHistoryQuery } from '@/src/services/apiBFF';
 
 const SearchByDoctor = (): JSX.Element => {
   const { t } = useTranslation([i18nMedicalDirectory, i18ClinicHistory]);
   const classes = examStyles();
   const router = useRouter();
-  const [doctors, setDoctors] = useState<TDoctor[]>();
-  const [isLoading, setIsLoading] = useState(false);
-
+  const { data, isLoading } = useGetSearchHistoryQuery();
   const [search, setSearch] = useState({});
 
-  const handleClick = (doctor: TDoctor): void => {
-    router.push(`/doctor_profile/${doctor.idx}`);
+  const handleClick = (doctor): void => {
+    router.push(`/doctor_profile/${doctor.doctorId}`);
   };
 
-  useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
-      const data = FAKE_SEARCH_HISTORY_LIST;
-      setDoctors(data);
-      setIsLoading(false);
-    }, 1000);
-  }, []);
-
-  const ListItemDoctors = (doctor: TDoctor): JSX.Element => (
-    <React.Fragment key={doctor.idx}>
+  const ListItemDoctors = (doctor, index): JSX.Element => (
+    <React.Fragment key={index}>
       <ListItem button onClick={() => handleClick(doctor)} sx={{ pl: 1 }}>
         <ListItemText
           primary={
@@ -83,12 +67,12 @@ const SearchByDoctor = (): JSX.Element => {
               variant="body2"
               color="text.primary"
             >
-              {doctor.title}
+              {doctor.doctorName}
             </Typography>
           }
         />
         <ListItemSecondaryAction>
-          <IconButton edge="end" aria-label={doctor.title} onClick={() => handleClick(doctor)}>
+          <IconButton edge="end" aria-label={doctor.doctorName} onClick={() => handleClick(doctor)}>
             <ChevronRightIcon color="secondary" />
           </IconButton>
         </ListItemSecondaryAction>
@@ -131,12 +115,12 @@ const SearchByDoctor = (): JSX.Element => {
                 <CircularProgress color="secondary" />
               </Grid>
             )}
-            {!isLoading && !doctors?.length && (
+            {!isLoading && !data.searches?.length && (
               <Typography variant="caption" className={classes.noRecords}>
                 {t('doctors.no_records', { ns: i18ClinicHistory })}
               </Typography>
             )}
-            {!isLoading && doctors?.map(item => ListItemDoctors(item))}
+            {!isLoading && data.searches?.map((item, index) => ListItemDoctors(item, index))}
           </List>
         </Box>
       </Box>
