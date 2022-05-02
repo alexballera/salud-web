@@ -89,7 +89,7 @@ function MedicalDirectoryResultsPage(): JSX.Element {
 
   return (
     <div>
-      <Grid container className={!isLoading && data.length === 0 && classes.emptyMainGrid}>
+      <Grid container className={!isLoading && data.length === 0 ? classes.emptyMainGrid : ''}>
         <Grid item xs={12}>
           <SearchNavbar setSearchOptions={setSearchOptions} searchOptions={searchOptions} />
         </Grid>

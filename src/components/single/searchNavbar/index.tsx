@@ -146,7 +146,7 @@ function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element 
     if (searchIsActive) {
       setSearchIsActive(false);
     } else {
-      router.back();
+      router.push('/medicalDirectory');
     }
   };
 
