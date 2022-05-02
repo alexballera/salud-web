@@ -13,7 +13,8 @@ const searchNavbarDoctorStyles = makeStyles({
   mainWrapper: {
     boxShadow,
     padding: '0 24px 16px 24px',
-    borderRadius: 16
+    borderRadius: 16,
+    backgroundColor: 'white'
   },
   inputActionsWrapper: {
     height: 56

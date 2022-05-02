@@ -6,11 +6,13 @@ import CardDoctorResult from '../../../../components/common/CardDoctorResult';
 
 import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY } from '../../../../i18n/medicalDirectory/i18n';
+import { withAppContext } from '../../../../context';
 
 import FAKE_ITEMS from './data.json';
 import SearchNavbarDoctor from '../../../../components/single/searchNavbarDoctor';
-import { Box, Typography, CircularProgress, ThemeProvider } from '@mui/material';
+import { Typography, CircularProgress, ThemeProvider } from '@mui/material';
 import muiTheme from '@/src/styles/js/muiTheme';
+import EmptyState from '@/src/components/common/EmptyState';
 
 const doctorResults = (): JSX.Element => {
   const classes = doctorResultsStyles();
@@ -32,49 +34,44 @@ const doctorResults = (): JSX.Element => {
 
   return (
     <ThemeProvider theme={muiTheme}>
-      <Grid container>
-        <Grid item xs={12}>
-          <SearchNavbarDoctor setSearchOptions={setSearchOptions} searchOptions={searchOptions} />
-        </Grid>
-        {isLoading && (
-          <Grid
-            container
-            item
-            xs={12}
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
-            sx={{ paddingTop: '10%' }}
-          >
-            <CircularProgress color="secondary" />
+      <EmptyState loading={isLoading} length={data.length}>
+        <Grid container>
+          <Grid item xs={12}>
+            <SearchNavbarDoctor setSearchOptions={setSearchOptions} searchOptions={searchOptions} />
           </Grid>
-        )}
-        <Grid item xs={12} mx={3} mt={3}>
-          {!isLoading && data.length !== 0 && (
-            <Typography variant="subtitle2" className={classes.subTitle}>
-              {t('searchResults.title')}
-            </Typography>
+          {isLoading && (
+            <Grid
+              container
+              item
+              xs={12}
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              sx={{ paddingTop: '10%' }}
+            >
+              <CircularProgress color="secondary" />
+            </Grid>
           )}
-        </Grid>
-        <Grid item xs={12} m={3}>
-          {!isLoading &&
-            data &&
-            data.map((item, idx) => {
-              return (
-                <CardDoctorResult {...item} redirectTo={`${item.redirectTo}/${idx}`} key={idx} />
-              );
-            })}
-          {!isLoading && data.length === 0 && (
-            <Box my={3} ml={2}>
-              <Typography variant="h4" className={classes.subTitle}>
-                Empty State
+          <Grid item xs={12} mx={3} mt={3}>
+            {!isLoading && data.length !== 0 && (
+              <Typography variant="subtitle2" className={classes.subTitle}>
+                {t('searchResults.title')}
               </Typography>
-            </Box>
-          )}
+            )}
+          </Grid>
+          <Grid item xs={12} m={3}>
+            {!isLoading &&
+              data &&
+              data.map((item, idx) => {
+                return (
+                  <CardDoctorResult {...item} redirectTo={`${item.redirectTo}/${idx}`} key={idx} />
+                );
+              })}
+          </Grid>
         </Grid>
-      </Grid>
+      </EmptyState>
     </ThemeProvider>
   );
 };
 
-export default doctorResults;
+export default withAppContext(doctorResults);
