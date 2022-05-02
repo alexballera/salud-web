@@ -21,5 +21,19 @@ export const enMedicalDirectory = {
   searchDoctor: {
     placeholderSearch: 'Search by doctor'
   },
-  noResult: 'Sorry, no results found!'
+  noResult: 'Sorry, no results found!',
+  filters: {
+    title: 'Filters',
+    subTitle: 'Select the filters of your interest',
+    actionEraseAll: 'Erase all',
+    actionApplyFilters: 'Apply filters',
+    results: 'results',
+    name: {
+      sortBy: 'Sort by',
+      distance: 'Distance',
+      price: 'Price',
+      appointmentAvailability: 'Appointment availability',
+      modality: 'Modality'
+    }
+  }
 };
