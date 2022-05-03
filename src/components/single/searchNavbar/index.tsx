@@ -38,6 +38,7 @@ import { NAMESPACE_KEY as i18Global } from '../../../i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '../../../i18n/medicalDirectory/i18n';
 import { Typography } from '@mui/material';
+import ModalFilters from '../../common/ModalFilters';
 /// i18n END
 
 type TProps = {
@@ -262,26 +263,8 @@ function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element 
         </Box>
       </Modal>
       {/* Filter modal */}
-      <Modal
-        open={filterIsActive}
-        onClose={() => setFilterIsActive(false)}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-      >
-        {/* TODO: Remove this styles, use an class */}
-        <Box style={{ background: 'white', height: '100vh', width: '100vw' }}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="arrow-back"
-            onClick={() => setFilterIsActive(false)}
-          >
-            <ArrowBackIcon width={16} height={16} />
-          </IconButton>
-          {/* TODO: Add the filter component here */}
-          Filter here
-        </Box>
-      </Modal>
+
+      <ModalFilters openModal={filterIsActive} closeModal={setFilterIsActive} />
     </div>
   );
 }

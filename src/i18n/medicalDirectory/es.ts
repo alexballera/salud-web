@@ -21,5 +21,19 @@ export const esMedicalDirectory = {
   searchDoctor: {
     placeholderSearch: 'Buscá por doctor'
   },
-  noResult: 'Lo sentimos, no se han encontrado resultados!'
+  noResult: 'Lo sentimos, no se han encontrado resultados!',
+  filters: {
+    title: 'Filtros',
+    subTitle: 'Seleccioná los filtros de tu interés',
+    actionEraseAll: 'Borrar todos',
+    actionApplyFilters: 'Aplicar filtros',
+    results: 'resultados',
+    name: {
+      sortBy: 'Ordenar por',
+      distance: 'Distancia',
+      price: 'Precio',
+      appointmentAvailability: 'Disponibilidad de citas',
+      modality: 'Modalidad'
+    }
+  }
 };
