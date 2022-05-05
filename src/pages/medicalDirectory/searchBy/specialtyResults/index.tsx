@@ -13,6 +13,7 @@ import SearchNavbarDoctor from '../../../../components/single/searchNavbarDoctor
 import { Typography, CircularProgress, ThemeProvider } from '@mui/material';
 import muiTheme from '@/src/styles/js/muiTheme';
 import EmptyState from '@/src/components/common/EmptyState';
+import SearchNavbar from '@/src/components/single/searchNavbar';
 
 const specialtyResults = (): JSX.Element => {
   const classes = specialtyResultsStyles();
@@ -37,7 +38,7 @@ const specialtyResults = (): JSX.Element => {
       <EmptyState loading={isLoading} length={data.length}>
         <Grid container>
           <Grid item xs={12}>
-            <SearchNavbarDoctor setSearchOptions={setSearchOptions} searchOptions={searchOptions} />
+            <SearchNavbar setSearchOptions={setSearchOptions} searchOptions={searchOptions} />
           </Grid>
           {isLoading && (
             <Grid

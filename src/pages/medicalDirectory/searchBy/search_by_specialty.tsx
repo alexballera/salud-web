@@ -168,7 +168,7 @@ const SearchBySpecialty = (): JSX.Element => {
             searchObject={setSearch}
             labelText={t('items.labelSearch', { ns: i18nMedicalDirectory })}
             placeHolderText={t('items.placeholderSearchSpecialty', { ns: i18nMedicalDirectory })}
-            path="/medicalDirectory/searchResults/specialtyResults"
+            path="/medicalDirectory/searchBy/specialtyResults"
           />
         </Box>
 

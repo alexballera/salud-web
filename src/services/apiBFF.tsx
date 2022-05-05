@@ -70,14 +70,14 @@ export const apiBFF = createApi({
       query: () => ({ url: '/patients/1/info', method: 'get' })
     }),
     getFamiliarDiseases: builder.query<TFamiliarDiseasesResponse, void>({
-      query: () => ({ url: '/patients/1/familiarDiseases', method: 'get' })
+      query: () => ({ url: '/patients/1/familiar-diseases', method: 'get' })
     }),
     getConsultationHistoryById: builder.query<
       TConsultationHistory,
       TGetConsultationHistoryByIdParams
     >({
       query: ({ year, userId }: TGetConsultationHistoryByIdParams) => ({
-        url: `/patients/${userId}/medicalConsultation/${year}`,
+        url: `/patients/${userId}/medical-consultation/${year}`,
         method: 'get'
       }),
       transformResponse: (
@@ -93,7 +93,7 @@ export const apiBFF = createApi({
       }
     }),
     getConsultationHistory: builder.query<TConsultationHistoryGroup, number>({
-      query: year => ({ url: `/patients/1/medicalConsultation/${year}`, method: 'get' }),
+      query: year => ({ url: `/patients/1/medical-consultation/${year}`, method: 'get' }),
       transformResponse: (response: TConsultationHistoryResponse) => {
         const groups = response.consultations.reduce((groups, curr) => {
           const month = new Date(curr.date).getMonth().toLocaleString();
@@ -114,7 +114,7 @@ export const apiBFF = createApi({
       }
     }),
     getSearchHistory: builder.query<TSearchHistoryResponse, void>({
-      query: () => ({ url: '/patients/623a34d8ef9e97ce33a3/searchHistory', method: 'get' })
+      query: () => ({ url: '/guide/623a34d8ef9e97ce33a3/search-history', method: 'get' })
     })
   })
 });
