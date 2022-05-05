@@ -9,11 +9,11 @@ import { NAMESPACE_KEY } from '../../../../i18n/medicalDirectory/i18n';
 import { withAppContext } from '../../../../context';
 
 import FAKE_ITEMS from './data.json';
-import SearchNavbarDoctor from '../../../../components/single/searchNavbarDoctor';
 import { Typography, CircularProgress, ThemeProvider } from '@mui/material';
 import muiTheme from '@/src/styles/js/muiTheme';
 import EmptyState from '@/src/components/common/EmptyState';
 import SearchNavbar from '@/src/components/single/searchNavbar';
+import { useGetDoctorsQuery } from '@/src/services/apiBFF';
 
 const specialtyResults = (): JSX.Element => {
   const classes = specialtyResultsStyles();
@@ -23,6 +23,8 @@ const specialtyResults = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
 
+  const { data: doctors } = useGetDoctorsQuery();
+  console.log(doctors);
   useEffect(() => {
     console.log('handle the fetch here');
     setIsLoading(true);

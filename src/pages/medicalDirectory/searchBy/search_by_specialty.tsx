@@ -40,6 +40,7 @@ import { NAMESPACE_KEY as i18ClinicHistory } from '@/src/i18n/clinic_history/i18
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '@/src/i18n/medicalDirectory/i18n';
 import { useRouter } from 'next/router';
 import SearchWithGeolocation from '@/src/containers/SearchWithGeolocation';
+import { useGetDoctorsQuery } from '@/src/services/apiBFF';
 /// i18n END
 
 const FAKE_LIST_DOCTORS = [
@@ -85,10 +86,19 @@ const SearchBySpecialty = (): JSX.Element => {
   const [searchShow, setSearchShow] = useState(false);
   const [data, setData] = useState(FAKE_LIST_DOCTORS);
   const [isLoading, setIsLoading] = useState(false);
+  const { data: doctors } = useGetDoctorsQuery();
 
   const [search, setSearch] = useState({});
 
   const getSpecialtys = () => {
+    console.log(doctors?.doctors);
+    const result = doctors?.doctors?.reduce((acc, item) => {
+      if (!acc.includes(item.speciality)) {
+        acc.push(item);
+      }
+      return acc;
+    }, []);
+    console.log(result);
     if (data) {
       data.sort((a, b) => a.title.localeCompare(b.title));
       return data;

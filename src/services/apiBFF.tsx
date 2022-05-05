@@ -13,6 +13,7 @@ import {
   TConsultationHistoryResponse,
   TGetConsultationHistoryByIdParams
 } from '../types/services/consultationHistory.types';
+import { TDoctors } from './doctors.type';
 
 type TGetVaccineByIdParams = {
   userId: string;
@@ -115,6 +116,12 @@ export const apiBFF = createApi({
     }),
     getSearchHistory: builder.query<TSearchHistoryResponse, void>({
       query: () => ({ url: '/guide/623a34d8ef9e97ce33a3/search-history', method: 'get' })
+    }),
+    getDoctors: builder.query<TDoctors, string>({
+      query: () => ({
+        url: `/guide/doctors?latitude=9.930042&longitude=-84.108955&type=1&detail=&range=5000&order=1&price=25000&appt=1&mode=1`,
+        method: 'get'
+      })
     })
   })
 });
@@ -130,5 +137,6 @@ export const {
   useGetVaccineByIdQuery,
   useGetConsultationHistoryQuery,
   useGetConsultationHistoryByIdQuery,
-  useGetSearchHistoryQuery
+  useGetSearchHistoryQuery,
+  useGetDoctorsQuery
 } = apiBFF;
