@@ -179,7 +179,8 @@ function Navbar(): JSX.Element {
 
   const customRedirectList = {
     '/recipes_and_prescriptions': '/proceedings',
-    '/exam_results': '/proceedings'
+    '/exam_results': '/proceedings',
+    '/medicalDirectory/searchBy/search_by_doctor': '/medicalDirectory'
   };
 
   const customRedirectBackButton = () => {
