@@ -21,7 +21,7 @@ const emptyStateStyles = makeStyles({
   emptyContentTitle: {
     position: 'fixed',
     top: '130px',
-    width: '65%'
+    textAlign: 'center'
   },
   emptyTitle: {
     color: colorTextEmptyState

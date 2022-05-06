@@ -18,7 +18,7 @@ const EmptyState = ({ children, loading, length }: IEmptyState): JSX.Element => 
     <Box className={!loading && length === 0 && classes.emptyMainGrid}>
       {children}
       {!loading && length === 0 && (
-        <Box mt={6} ml={4} className={classes.emptyContentTitle}>
+        <Box mt={6} className={classes.emptyContentTitle}>
           <Typography variant="h6" className={classes.emptyTitle}>
             {t('noResult')}
           </Typography>
