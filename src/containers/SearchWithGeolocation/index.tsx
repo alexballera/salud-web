@@ -43,7 +43,7 @@ const SearchWithGeolocation = ({
   const router = useRouter();
   const classes = autoCompleteLocationStyles();
   const [searchField, setSearchField] = useState(search?.searchField || '');
-  const [coords, setCoords] = useState(search || initalCoords);
+  const [coords, setCoords] = useState(search);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchField(e.target.value);
@@ -53,7 +53,7 @@ const SearchWithGeolocation = ({
     const filters = {
       ...search,
       ...coords,
-      ...(!!searchField && { searchField })
+      searchField
     }
     
     searchObject(filters);
