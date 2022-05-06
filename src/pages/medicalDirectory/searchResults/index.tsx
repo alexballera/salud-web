@@ -22,9 +22,10 @@ import { NAMESPACE_KEY } from '../../../i18n/medicalDirectory/i18n';
 /// i18n END
 
 /// DUMMY DATA
-import FAKE_ITEMS from './data.json';
 import { poppinsFontFamily, title2Color, secondaryMainColor } from '@/src/styles/js/theme';
 import EmptyState from '@/src/components/common/EmptyState';
+import { DoctorSearchMode, DoctorSearchOrder, DoctorSearchType } from '@/src/services/doctors.type';
+import { useGetDoctorsQuery } from '@/src/services/apiBFF';
 /// DUMMY DATA END
 
 const Typography = styled(MuiTypography)({
@@ -57,23 +58,22 @@ function MedicalDirectoryResultsPage(): JSX.Element {
   const classes = useStyles();
   const { t } = useTranslation(NAMESPACE_KEY);
   const [searchOptions, setSearchOptions] = useState({ ...router.query });
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState([]);
+
+  const { data, isLoading, refetch } = useGetDoctorsQuery({
+    latitude: searchOptions.lat !== '' ? searchOptions.lat.toString() : '0',
+    longitude: searchOptions.lng !== '' ? searchOptions.lng.toString() : '0',
+    type: DoctorSearchType.general,
+    detail: searchOptions.searchField.toString(),
+    order: DoctorSearchOrder.distance,
+    mode: DoctorSearchMode.presential
+  });
 
   useEffect(() => {
-    console.log('handle the fetch here');
-    setIsLoading(true);
-    setTimeout(() => {
-      const result = FAKE_ITEMS.List.filter(
-        result => result.specialty === searchOptions.searchField
-      );
-      setData(result);
-      setIsLoading(false);
-    }, 1000);
+    refetch();
   }, [searchOptions]);
 
   return (
-    <EmptyState loading={isLoading} length={data.length}>
+    <EmptyState loading={isLoading} length={data?.doctors?.length || 0}>
       <Grid container>
         <Grid item xs={12}>
           <SearchNavbar setSearchOptions={setSearchOptions} searchOptions={searchOptions} />
@@ -92,17 +92,15 @@ function MedicalDirectoryResultsPage(): JSX.Element {
           </Grid>
         )}
         <Grid item xs={12} className={classes.results}>
-          {!isLoading && data.length !== 0 && (
+          {!isLoading && data?.doctors?.length !== 0 && (
             <Typography variant="h1" className={classes.title}>
               {t('searchResults.title')}
             </Typography>
           )}
           {!isLoading &&
             data &&
-            data.map((item, idx) => {
-              return (
-                <CardDoctorResult {...item} redirectTo={`${item.redirectTo}/${idx}`} key={idx} />
-              );
+            data?.doctors.map((item, idx) => {
+              return <CardDoctorResult {...item} redirectTo={`/doctor_profile/${idx}`} key={idx} />;
             })}
         </Grid>
       </Grid>
