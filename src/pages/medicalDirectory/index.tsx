@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useTranslation, withTranslation } from 'react-i18next';
-
-import { NAMESPACE_KEY as i18Global } from '../../i18n/globals/i18n';
-import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
-import { NAMESPACE_KEY as i18nMedicalDirectory } from '../../i18n/medicalDirectory/i18n';
-
-import { withAppContext } from '../../context';
 import { ThemeProvider } from '@material-ui/styles';
+import { useTranslation, withTranslation } from 'react-i18next';
 import {
   Divider,
   Typography,
@@ -21,21 +15,21 @@ import {
   styled
 } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-
-import { primaryLightColor } from '../../styles/js/theme';
+import MuiCircularProgress from '@material-ui/core/CircularProgress';
 import CardActionImage from '@/src/components/common/Card/CardActionImage';
 import SvgSpecialty from '@/src/components/common/Svg/SvgSpecialty.component';
 import SvgDoctors from '@/src/components/common/Svg/SvgDoctors.component';
-import muiTheme from '../../styles/js/muiTheme';
-
-import medicalDirectoryStyles from './style.module';
 import SearchWithGeolocation from '@/src/containers/SearchWithGeolocation';
 import { scrollTop } from '@/src/utils/helpers';
-import { useGetSearchHistoryQuery } from '@/src/services/apiBFF';
-
-import MuiCircularProgress from '@material-ui/core/CircularProgress';
 import { secondaryMainColor } from '@/src/styles/js/theme';
-/// DUMMY DATA END
+import { useGetSearchHistoryQuery } from '@/src/services/apiBFF';
+import muiTheme from '../../styles/js/muiTheme';
+import { primaryLightColor } from '../../styles/js/theme';
+import { NAMESPACE_KEY as i18Global } from '../../i18n/globals/i18n';
+import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
+import { NAMESPACE_KEY as i18nMedicalDirectory } from '../../i18n/medicalDirectory/i18n';
+import { withAppContext } from '../../context';
+import medicalDirectoryStyles from './style.module';
 
 const CircularProgress = styled(MuiCircularProgress)({
   color: secondaryMainColor
@@ -59,7 +53,6 @@ export const FAKE_SEARCH_HISTORY_LIST = [
   }
 ];
 
-/// SERVICES END
 function MedicalDirectoryPage(): JSX.Element {
   const classes = medicalDirectoryStyles();
   const router = useRouter();
