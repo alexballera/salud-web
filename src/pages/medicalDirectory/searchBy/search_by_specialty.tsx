@@ -8,18 +8,15 @@ import {
   CircularProgress,
   Grid,
   IconButton,
-  InputAdornment,
   List,
   ListItem,
   ListItemSecondaryAction,
   ListItemText,
   Stack,
-  TextField,
   ThemeProvider,
   Typography
 } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import SearchIcon from '@mui/icons-material/Search';
 // MUI END
 
 // OWN COMPONENTS
@@ -41,67 +38,35 @@ import { NAMESPACE_KEY as i18nMedicalDirectory } from '@/src/i18n/medicalDirecto
 import { useRouter } from 'next/router';
 import SearchWithGeolocation from '@/src/containers/SearchWithGeolocation';
 import { useGetDoctorsQuery } from '@/src/services/apiBFF';
+import { DoctorSearchMode, DoctorSearchOrder, DoctorSearchType } from '@/src/services/doctors.type';
 /// i18n END
-
-const FAKE_LIST_DOCTORS = [
-  {
-    idx: '1',
-    title: 'Psicología'
-  },
-  {
-    idx: '2',
-    title: 'Fisioterapia/Terapia física'
-  },
-  {
-    idx: '3',
-    title: 'Ginecología'
-  },
-  {
-    idx: '4',
-    title: 'Medicina General'
-  },
-  {
-    idx: '5',
-    title: 'Nutrición'
-  },
-  {
-    idx: '6',
-    title: 'Odontología'
-  },
-  {
-    idx: '7',
-    title: 'Dermatología'
-  },
-  {
-    idx: '8',
-    title: 'Pediatría'
-  }
-];
 
 const SearchBySpecialty = (): JSX.Element => {
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory, i18ClinicHistory]);
   const classes = examStyles();
   const router = useRouter();
-  const [searchField, setSearchField] = useState('');
-  const [searchShow, setSearchShow] = useState(false);
-  const [data, setData] = useState(FAKE_LIST_DOCTORS);
-  const [isLoading, setIsLoading] = useState(false);
-  const { data: doctors } = useGetDoctorsQuery();
+  const [searchField] = useState('');
+  const [searchShow] = useState(false);
+  const { data, isLoading } = useGetDoctorsQuery({
+    latitude: '0',
+    longitude: '0',
+    type: DoctorSearchType.speciality,
+    order: DoctorSearchOrder.distance,
+    mode: DoctorSearchMode.presential
+  });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [search, setSearch] = useState({});
-
   const getSpecialtys = () => {
-    console.log(doctors?.doctors);
-    const result = doctors?.doctors?.reduce((acc, item) => {
+    const result = data?.doctors?.reduce((acc, item, i) => {
       if (!acc.includes(item.speciality)) {
-        acc.push(item);
+        acc.push({ idx: i + 1, title: item.speciality });
       }
       return acc;
     }, []);
-    console.log(result);
-    if (data) {
-      data.sort((a, b) => a.title.localeCompare(b.title));
-      return data;
+    if (result) {
+      result.sort((a, b) => a.title.localeCompare(b.title));
+      return result;
     }
   };
 
@@ -110,29 +75,15 @@ const SearchBySpecialty = (): JSX.Element => {
   });
 
   const handleClick = (item): void => {
-    // router.push(`/clinic_history/vaccines/${id}`);
-    console.log('id', item);
-  };
-
-  const redirectResults = () => {
     router.push({
-      pathname: '/medicalDirectory/searchBy/doctorResults',
+      pathname: '/medicalDirectory/searchBy/specialtyResults',
       query: {
-        searchField: searchField
+        searchField: item.title
       }
     });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchField(e.target.value);
-    if (e.target.value === '') {
-      setSearchShow(false);
-    } else {
-      setSearchShow(true);
-    }
-  };
-
-  const ListItemSpecialties = (item, i: number): JSX.Element => (
+  const ListItemSpecialties = (item): JSX.Element => (
     <React.Fragment key={item.idx}>
       <ListItem button onClick={() => handleClick(item)} sx={{ pl: 1 }}>
         <ListItemText
@@ -202,12 +153,8 @@ const SearchBySpecialty = (): JSX.Element => {
                 {t('specialty.no_records', { ns: i18ClinicHistory })}
               </Typography>
             )}
-            {!isLoading &&
-              !searchShow &&
-              getSpecialtys()?.map((item, i) => ListItemSpecialties(item, i))}
-            {!isLoading &&
-              searchShow &&
-              filteredSpecialtys.map((item, i) => ListItemSpecialties(item, i))}
+            {!isLoading && !searchShow && getSpecialtys()?.map(item => ListItemSpecialties(item))}
+            {!isLoading && searchShow && filteredSpecialtys.map(item => ListItemSpecialties(item))}
           </List>
         </Box>
       </Box>

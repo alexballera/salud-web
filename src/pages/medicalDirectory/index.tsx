@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useTranslation, withTranslation } from 'react-i18next';
 
 import { NAMESPACE_KEY as i18Global } from '../../i18n/globals/i18n';
@@ -66,6 +66,7 @@ function MedicalDirectoryPage(): JSX.Element {
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
   const { data, isLoading } = useGetSearchHistoryQuery();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [search, setSearch] = useState({});
 
   const itemsCard = [

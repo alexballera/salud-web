@@ -8,36 +8,35 @@ import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY } from '../../../../i18n/medicalDirectory/i18n';
 import { withAppContext } from '../../../../context';
 
-import FAKE_ITEMS from './data.json';
 import { Typography, CircularProgress, ThemeProvider } from '@mui/material';
 import muiTheme from '@/src/styles/js/muiTheme';
 import EmptyState from '@/src/components/common/EmptyState';
 import SearchNavbar from '@/src/components/single/searchNavbar';
 import { useGetDoctorsQuery } from '@/src/services/apiBFF';
+import { DoctorSearchMode, DoctorSearchOrder, DoctorSearchType } from '@/src/services/doctors.type';
 
 const specialtyResults = (): JSX.Element => {
   const classes = specialtyResultsStyles();
   const router = useRouter();
   const { t } = useTranslation(NAMESPACE_KEY);
   const [searchOptions, setSearchOptions] = useState({ ...router.query });
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState([]);
 
-  const { data: doctors } = useGetDoctorsQuery();
-  console.log(doctors);
+  const { data, isLoading, refetch } = useGetDoctorsQuery({
+    latitude: '0',
+    longitude: '0',
+    detail: searchOptions.searchField.toString(),
+    type: DoctorSearchType.speciality,
+    order: DoctorSearchOrder.distance,
+    mode: DoctorSearchMode.presential
+  });
+
   useEffect(() => {
-    console.log('handle the fetch here');
-    setIsLoading(true);
-    setTimeout(() => {
-      const result = FAKE_ITEMS.List.filter(result => result.title === searchOptions.searchField);
-      setData(result);
-      setIsLoading(false);
-    }, 1000);
+    refetch();
   }, [searchOptions]);
 
   return (
     <ThemeProvider theme={muiTheme}>
-      <EmptyState loading={isLoading} length={data.length}>
+      <EmptyState loading={isLoading} length={data?.doctors?.length || 0}>
         <Grid container>
           <Grid item xs={12}>
             <SearchNavbar setSearchOptions={setSearchOptions} searchOptions={searchOptions} />
@@ -56,7 +55,7 @@ const specialtyResults = (): JSX.Element => {
             </Grid>
           )}
           <Grid item xs={12} mx={3} mt={3}>
-            {!isLoading && data.length !== 0 && (
+            {!isLoading && data?.doctors?.length !== 0 && (
               <Typography variant="subtitle2" className={classes.subTitle}>
                 {t('searchResults.title')}
               </Typography>
@@ -65,9 +64,9 @@ const specialtyResults = (): JSX.Element => {
           <Grid item xs={12} m={3}>
             {!isLoading &&
               data &&
-              data.map((item, idx) => {
+              data.doctors.map((item, idx) => {
                 return (
-                  <CardDoctorResult {...item} redirectTo={`${item.redirectTo}/${idx}`} key={idx} />
+                  <CardDoctorResult {...item} redirectTo={`/doctor_profile/${idx}`} key={idx} />
                 );
               })}
           </Grid>

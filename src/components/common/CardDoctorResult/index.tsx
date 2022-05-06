@@ -25,17 +25,19 @@ import {
   purpleLight,
   titleCardTagBg
 } from '../../../styles/js/theme';
+import { TMedicalInstitutions } from '@/src/services/doctors.type';
 /// STYLES END
 
 type TProps = {
-  title: string;
+  name: string;
   cardProps?: CardProps;
-  subheader: string;
-  avatarSrc: string;
+  subheader?: string;
+  avatarSrc?: string;
   redirectTo: string;
-  specialty: string;
-  priceText: string;
+  speciality: string;
+  priceText?: string;
   price: string;
+  medicalInstitutions?: TMedicalInstitutions[];
 };
 
 const Typography = styled(MuiTypography)({
@@ -113,12 +115,12 @@ const useStyles = makeStyles({
 });
 
 function CardCollapse({
-  title,
-  subheader,
+  name,
+  medicalInstitutions,
   avatarSrc,
   redirectTo,
-  specialty,
-  priceText,
+  speciality,
+  priceText = 'Precio base de consulta',
   price,
   cardProps = { style: { marginBottom: 24 } }
 }: TProps): JSX.Element {
@@ -127,14 +129,18 @@ function CardCollapse({
   return (
     <Card className={classes.card} {...cardProps}>
       <CardHeader
-        title={<Typography className={classes.title}>{title}</Typography>}
-        subheader={<Typography className={classes.subHeader}>{subheader}</Typography>}
-        avatar={<Avatar src={avatarSrc} alt={title} />}
+        title={<Typography className={classes.title}>{name}</Typography>}
+        subheader={
+          <Typography className={classes.subHeader}>
+            {medicalInstitutions && medicalInstitutions[0]?.name}
+          </Typography>
+        }
+        avatar={<Avatar src={avatarSrc} alt={name} />}
       />
       <CardContent>
         <span className={classes.tagContainer}>
           <Typography variant="body2" className={classes.tag}>
-            {specialty}
+            {speciality}
           </Typography>
         </span>
         <Typography variant="body2" className={classes.priceText}>
@@ -143,7 +149,7 @@ function CardCollapse({
         <Grid container justify="space-between" alignItems="center">
           <Grid item>
             <Typography variant="body2" className={classes.price}>
-              {price}
+              {`₡${price}`}
             </Typography>
           </Grid>
           <Grid item>
