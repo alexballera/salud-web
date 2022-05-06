@@ -1,9 +1,8 @@
-import { useRouter } from 'next/router';
-import AutoCompleteGoogleMaps from '@/src/components/common/AutoCompletePlaces';
-import { Box, Grid, InputAdornment, TextField } from '@mui/material';
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import { Box, Grid, InputAdornment, TextField } from '@mui/material';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-
+import AutoCompleteGoogleMaps from '@/src/components/common/AutoCompletePlaces';
 import autoCompleteLocationStyles from '@/src/components/common/AutoCompletePlaces/style.module';
 
 type TInitialCoords = {
@@ -51,16 +50,22 @@ const SearchWithGeolocation = ({
   };
 
   const redirecSearch = () => {
-    searchObject({ searchField, ...coords });
-
+    const filters = {
+      ...search,
+      ...coords,
+      ...(!!searchField && { searchField })
+    }
+    
+    searchObject(filters);
+    
     if (path) {
       router.push({
         pathname: path,
         query: {
-          searchField: searchField,
-          lat: coords.lat,
-          lng: coords.lng,
-          placeName: coords.placeName
+          searchField: filters.searchField,
+          lat: filters.lat,
+          lng: filters.lng,
+          placeName: filters.placeName
         }
       });
     }
@@ -82,7 +87,7 @@ const SearchWithGeolocation = ({
               onChange={handleChange}
               onKeyDown={e => {
                 if (e.key === 'Enter') {
-                  if (searchField) {
+                  if (!!searchField) {
                     redirecSearch();
                     if (isActiveModal) closeModal(false);
                   }

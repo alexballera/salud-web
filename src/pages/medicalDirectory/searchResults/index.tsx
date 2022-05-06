@@ -1,32 +1,18 @@
-/// BASE IMPORTS
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-/// BASE IMPORTS
-
-/// MATERIAL-UI
 import { makeStyles, styled } from '@material-ui/core';
 import MuiTypography from '@material-ui/core/Typography';
 import MuiCircularProgress from '@material-ui/core/CircularProgress';
 import { Grid } from '@mui/material';
-/// MATERIAL-UI END
-
-/// OWN COMPONENTS
-import CardDoctorResult from '../../../components/common/CardDoctorResult';
-import SearchNavbar from '../../../components/single/searchNavbar';
-import { withAppContext } from '../../../context';
-/// OWN COMPONENTS END
-
-/// i18n
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY } from '../../../i18n/medicalDirectory/i18n';
-/// i18n END
-
-/// DUMMY DATA
 import { poppinsFontFamily, title2Color, secondaryMainColor } from '@/src/styles/js/theme';
 import EmptyState from '@/src/components/common/EmptyState';
 import { DoctorSearchMode, DoctorSearchOrder, DoctorSearchType } from '@/src/services/doctors.type';
 import { useGetDoctorsQuery } from '@/src/services/apiBFF';
-/// DUMMY DATA END
+import CardDoctorResult from '../../../components/common/CardDoctorResult';
+import SearchNavbar from '../../../components/single/searchNavbar';
+import { withAppContext } from '../../../context';
+import { NAMESPACE_KEY } from '../../../i18n/medicalDirectory/i18n';
 
 const Typography = styled(MuiTypography)({
   font: poppinsFontFamily,

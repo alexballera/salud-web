@@ -1,9 +1,5 @@
-/// BASE IMPORTS
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-/// BASE IMPORTS END
-
-/// MATERIAL
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import MuiArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -13,10 +9,9 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import InputBase from '@material-ui/core/InputBase';
 import MuiChip from '@material-ui/core/Chip';
+import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { Box, makeStyles, Modal, styled } from '@material-ui/core';
-/// MATERIAL END
-
-/// STYLES
 import {
   background2Color,
   boxShadow,
@@ -26,24 +21,23 @@ import {
   tertiaryLightColor,
   titlePageColor
 } from '@/src/styles/js/theme';
-/// STYLES END
-
-/// OWN COMPONENTS
+import ModalFilters from '../../common/ModalFilters';
 import SearchWithGeolocation from '../../../containers/SearchWithGeolocation';
-/// OWN COMPONENTS END
-
-/// i18n
-import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18Global } from '../../../i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '../../../i18n/medicalDirectory/i18n';
-import { Typography } from '@mui/material';
-import ModalFilters from '../../common/ModalFilters';
-/// i18n END
+
+type SearchOptions = {
+  placeName?: string;
+  searchField?: string;
+  lat?: string;
+  lng?: string;
+  filters?: string[];
+};
 
 type TProps = {
-  searchOptions: any; // TODO: Add a type
-  setSearchOptions: any; // TODO: Add a type
+  searchOptions: SearchOptions; 
+  setSearchOptions: any;
 };
 
 const Chip = styled(MuiChip)({
@@ -125,7 +119,7 @@ const useStyles = makeStyles({
   }
 });
 
-const FAKE_TAGS = ['Precio alto-bajo', '₡60 000', 'Cualquiera'];
+//const FAKE_TAGS = ['Precio alto-bajo', '₡60 000', 'Cualquiera'];
 
 function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element {
   const router = useRouter();
@@ -136,11 +130,11 @@ function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element 
 
   const searchLocationLabel =
     searchOptions?.placeName === '' || !searchOptions?.placeName
-      ? 'Cerca ...'
-      : searchOptions?.placeName;
+      ? 'Cerca de mi'
+      : searchOptions.placeName;
   const searchLabel = `${searchOptions?.searchField} • ${searchLocationLabel}`;
   useEffect(() => {
-    setSearchOptions(prevValues => ({ ...prevValues, filters: FAKE_TAGS })); // TODO: Replace this values by the real filters
+    setSearchOptions(prevValues => ({ ...prevValues, filters: [] }));
   }, []);
 
   const handleArrowBack = () => {
@@ -242,7 +236,6 @@ function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element 
           </div>
         </Grid>
       </Grid>
-      {/* Search modal */}
       <Modal
         open={searchIsActive}
         onClose={() => setSearchIsActive(false)}
@@ -262,8 +255,6 @@ function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element 
           />
         </Box>
       </Modal>
-      {/* Filter modal */}
-
       <ModalFilters openModal={filterIsActive} closeModal={setFilterIsActive} />
     </div>
   );
