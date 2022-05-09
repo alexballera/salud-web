@@ -36,7 +36,7 @@ type SearchOptions = {
 };
 
 type TProps = {
-  searchOptions: SearchOptions; 
+  searchOptions: SearchOptions;
   setSearchOptions: any;
 };
 
@@ -119,7 +119,7 @@ const useStyles = makeStyles({
   }
 });
 
-//const FAKE_TAGS = ['Precio alto-bajo', '₡60 000', 'Cualquiera'];
+// const FAKE_TAGS = ['Precio alto-bajo', '₡60 000', 'Cualquiera'];
 
 function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element {
   const router = useRouter();
@@ -141,7 +141,7 @@ function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element 
     if (searchIsActive) {
       setSearchIsActive(false);
     } else {
-      router.push('/medicalDirectory');
+      router.push('/medicalDirectory/searchBy/search_by_specialty');
     }
   };
 
