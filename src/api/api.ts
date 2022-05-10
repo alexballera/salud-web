@@ -46,9 +46,14 @@ const api = {
     return api.provider().account.get();
   },
 
+  getJWT: async () => {
+    const token = await api.provider().account.createJWT();
+    localStorage.setItem('jwt', `${token.jwt}`);
+    return token.jwt;
+  },
+
   createSession: (email: string, password: string): Promise<Models.Session> => {
-    const JWT = api.provider().account.createJWT();
-    console.log('Api jwt', JWT);
+    api.getJWT();
     return api.provider().account.createSession(email, password);
   },
 

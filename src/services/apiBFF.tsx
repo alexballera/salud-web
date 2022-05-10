@@ -14,6 +14,8 @@ import {
   TGetConsultationHistoryByIdParams
 } from '../types/services/consultationHistory.types';
 import { DoctorSearchAppt, queryDoctor, TDoctors } from './doctors.type';
+import { decodeToken } from '../utils/helpers';
+import api from '../api/api';
 
 type TGetVaccineByIdParams = {
   userId: string;
@@ -25,12 +27,17 @@ const baseUrl = process.env.NEXT_PUBLIC_API_URL_BFF;
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
   baseUrl: baseUrl,
-  prepareHeaders: headers => {
-    // By default, if we have a token, let's use that for authenticated requests
-    const token = null;
-    if (token) {
-      headers.set('authentication', `Bearer ${token}`);
+  prepareHeaders: async headers => {
+    let token = '';
+    const { exp } = decodeToken(localStorage.getItem('jwt'));
+    if (Date.now() >= exp * 1000) {
+      const reGetToken = await api.getJWT();
+      token = reGetToken;
+    } else {
+      token = localStorage.getItem('jwt');
     }
+
+    headers.set('authorization', `Bearer ${token}`);
     return headers;
   }
 });
@@ -39,20 +46,20 @@ export const apiBFF = createApi({
   baseQuery: baseQuery,
   endpoints: builder => ({
     getAllergies: builder.query<TAllergieResponse, void>({
-      query: () => ({ url: '/patients/1/allergies', method: 'get' })
+      query: () => ({ url: '/patients/allergies', method: 'get' })
     }),
     getHabits: builder.query<THabitsResponse, void>({
-      query: () => ({ url: '/patients/1/habits', method: 'get' })
+      query: () => ({ url: '/patients/habits', method: 'get' })
     }),
     getDiseases: builder.query<TDiseasesResponse, void>({
-      query: () => ({ url: '/patients/1/diseases', method: 'get' })
+      query: () => ({ url: '/patients/diseases', method: 'get' })
     }),
     getVaccines: builder.query<TVaccinesData, string>({
-      query: userId => ({ url: `/patients/${userId}/vaccines`, method: 'get' })
+      query: () => ({ url: `/patients/vaccines`, method: 'get' })
     }),
     getVaccineById: builder.query<TVaccines, TGetVaccineByIdParams>({
-      query: ({ userId }: TGetVaccineByIdParams) => ({
-        url: `/patients/${userId}/vaccines`,
+      query: () => ({
+        url: `/patients/vaccines`,
         method: 'get'
       }),
       transformResponse: (
@@ -65,20 +72,20 @@ export const apiBFF = createApi({
       }
     }),
     getMeasurements: builder.query<IMeasurementsData, string>({
-      query: userId => ({ url: `/patients/${userId}/measurements`, method: 'get' })
+      query: () => ({ url: `/patients/measurements`, method: 'get' })
     }),
     getGeneralData: builder.query<TGeneralData, void>({
-      query: () => ({ url: '/patients/1/info', method: 'get' })
+      query: () => ({ url: '/patients/info', method: 'get' })
     }),
     getFamiliarDiseases: builder.query<TFamiliarDiseasesResponse, void>({
-      query: () => ({ url: '/patients/1/familiar-diseases', method: 'get' })
+      query: () => ({ url: '/patients/familiar-diseases', method: 'get' })
     }),
     getConsultationHistoryById: builder.query<
       TConsultationHistory,
       TGetConsultationHistoryByIdParams
     >({
-      query: ({ year, userId }: TGetConsultationHistoryByIdParams) => ({
-        url: `/patients/${userId}/medical-consultation/${year}`,
+      query: ({ year }: TGetConsultationHistoryByIdParams) => ({
+        url: `/patients/medical-consultation/${year}`,
         method: 'get'
       }),
       transformResponse: (
@@ -94,7 +101,7 @@ export const apiBFF = createApi({
       }
     }),
     getConsultationHistory: builder.query<TConsultationHistoryGroup, number>({
-      query: year => ({ url: `/patients/1/medical-consultation/${year}`, method: 'get' }),
+      query: year => ({ url: `/patients/medical-consultation/${year}`, method: 'get' }),
       transformResponse: (response: TConsultationHistoryResponse) => {
         const groups = response.consultations.reduce((groups, curr) => {
           const month = new Date(curr.date).getMonth().toLocaleString();
@@ -115,7 +122,7 @@ export const apiBFF = createApi({
       }
     }),
     getSearchHistory: builder.query<TSearchHistoryResponse, void>({
-      query: () => ({ url: '/guide/623a34d8ef9e97ce33a3/search-history', method: 'get' })
+      query: () => ({ url: '/guide/search-history', method: 'get' })
     }),
     getDoctors: builder.query<TDoctors, queryDoctor>({
       query: ({
