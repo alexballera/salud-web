@@ -1,71 +1,59 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Box, Grid, InputAdornment, TextField } from '@mui/material';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import AutoCompleteGoogleMaps from '@/src/components/common/AutoCompletePlaces';
 import autoCompleteLocationStyles from '@/src/components/common/AutoCompletePlaces/style.module';
-
-type TInitialCoords = {
-  lat: string | null;
-  lng: string | null;
-  placeName: string | null;
-};
-
-type TSearch = {
-  searchField: string;
-} & TInitialCoords;
+import { useSelector } from '@/src/store';
+import { searchOnFilter } from '@/src/store/slice/search.slice';
 
 type TProps = {
-  search?: TSearch;
-  searchObject;
+  isActiveModal?: boolean;
+  closeModal?;
   labelText: string;
   placeHolderText: string;
   path: string;
-  isActiveModal?: boolean;
-  closeModal?;
-};
-
-const initalCoords: TInitialCoords = {
-  lat: null,
-  lng: null,
-  placeName: null
 };
 
 const SearchWithGeolocation = ({
   isActiveModal,
   closeModal,
-  search,
-  searchObject,
   labelText,
   placeHolderText,
   path
 }: TProps): JSX.Element => {
   const router = useRouter();
   const classes = autoCompleteLocationStyles();
-  const [searchField, setSearchField] = useState(search?.searchField || '');
-  const [coords, setCoords] = useState(search);
+  const { placeName, textFilter, lat, lng } = useSelector(state => state.search);
+  const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchField(e.target.value);
+    dispatch(
+      searchOnFilter({
+        textFilter: e.target.value
+      })
+    );
+    console.log(e);
   };
 
-  const redirecSearch = () => {
-    const filters = {
-      ...search,
-      ...coords,
-      searchField
-    }
-    
-    searchObject(filters);
-    
+  const redirecSearch = (textFilter: string) => {
+    // const filters = {
+    //   ...search,
+    //   ...coords,
+    //   searchField
+    // };
+
+    // searchObject(filters);
+
     if (path) {
       router.push({
         pathname: path,
         query: {
-          searchField: filters.searchField,
-          lat: filters.lat,
-          lng: filters.lng,
-          placeName: filters.placeName
+          searchField: textFilter,
+          lat: lat,
+          lng: lng,
+          placeName: placeName
         }
       });
     }
@@ -81,16 +69,14 @@ const SearchWithGeolocation = ({
               label={labelText}
               placeholder={placeHolderText}
               type="text"
-              defaultValue={search?.searchField}
+              defaultValue={textFilter}
               className={classes.inputColor}
               fullWidth
               onChange={handleChange}
               onKeyDown={e => {
                 if (e.key === 'Enter') {
-                  if (!!searchField) {
-                    redirecSearch();
-                    if (isActiveModal) closeModal(false);
-                  }
+                  redirecSearch(textFilter);
+                  if (isActiveModal) closeModal(false);
                 }
               }}
               InputLabelProps={{
@@ -109,8 +95,6 @@ const SearchWithGeolocation = ({
         <Grid mt={2} item>
           <Box mt={1}>
             <AutoCompleteGoogleMaps
-              recordCoords={setCoords}
-              placeName={search?.placeName}
               redirecTo={redirecSearch}
               isActiveModal={isActiveModal}
               closeModal={closeModal}
