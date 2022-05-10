@@ -34,29 +34,18 @@ const SearchWithGeolocation = ({
         textFilter: e.target.value
       })
     );
-    console.log(e);
   };
 
   const redirecSearch = (textFilter: string) => {
-    // const filters = {
-    //   ...search,
-    //   ...coords,
-    //   searchField
-    // };
-
-    // searchObject(filters);
-
-    if (path) {
-      router.push({
-        pathname: path,
-        query: {
-          searchField: textFilter,
-          lat: lat,
-          lng: lng,
-          placeName: placeName
-        }
-      });
-    }
+    router.push({
+      pathname: path,
+      query: {
+        searchField: textFilter,
+        lat: lat,
+        lng: lng,
+        placeName: placeName
+      }
+    });
   };
 
   return (
@@ -69,7 +58,7 @@ const SearchWithGeolocation = ({
               label={labelText}
               placeholder={placeHolderText}
               type="text"
-              defaultValue={textFilter}
+              value={textFilter}
               className={classes.inputColor}
               fullWidth
               onChange={handleChange}

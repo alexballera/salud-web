@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -27,6 +28,7 @@ import { NAMESPACE_KEY as i18Global } from '../../../i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '../../../i18n/medicalDirectory/i18n';
 import { useSelector } from '@/src/store';
+import { searchOnFilter } from '@/src/store/slice/search.slice';
 
 const Chip = styled(MuiChip)({
   color: secondaryMainColor,
@@ -110,12 +112,12 @@ const useStyles = makeStyles({
 function SearchNavbar(): JSX.Element {
   const router = useRouter();
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [searchIsActive, setSearchIsActive] = useState(false);
   const [filterIsActive, setFilterIsActive] = useState(false);
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
 
   const { placeName, textFilter, filters } = useSelector(state => state.search);
-
   const searchLabel = `${textFilter} • ${placeName}`;
 
   const handleArrowBack = () => {
@@ -192,12 +194,13 @@ function SearchNavbar(): JSX.Element {
               label={placeName}
               variant="default"
               color="default"
-              // onDelete={() => {
-              //   setSearchOptions(prevValues => ({
-              //     ...prevValues,
-              //     placeName: t('location.placeHolder', { ns: i18Global })
-              //   }));
-              // }}
+              onDelete={() => {
+                dispatch(
+                  searchOnFilter({
+                    placeName: t('location.placeHolder', { ns: i18Global })
+                  })
+                );
+              }}
             />
             {filters.map((tag, idx) => (
               <Chip
@@ -206,12 +209,13 @@ function SearchNavbar(): JSX.Element {
                 label={tag}
                 variant="default"
                 color="default"
-                // onDelete={() => {
-                //   setSearchOptions(prevValues => ({
-                //     ...prevValues,
-                //     filters: prevValues.filters.filter(itemTag => itemTag !== tag)
-                //   }));
-                // }}
+                onDelete={() => {
+                  dispatch(
+                    searchOnFilter({
+                      filters: filters.filter(itemTag => itemTag !== tag)
+                    })
+                  );
+                }}
               />
             ))}
           </div>

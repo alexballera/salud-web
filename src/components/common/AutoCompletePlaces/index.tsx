@@ -41,7 +41,7 @@ const AutoCompleteGoogleMaps = ({ redirecTo, isActiveModal, closeModal }: TProps
   const classes = autoCompleteLocationStyles();
   const { t } = useTranslation([i18Global]);
 
-  const { placeName } = useSelector(state => state.search);
+  const { placeName, textFilter } = useSelector(state => state.search);
   const dispatch = useDispatch();
 
   const [value, setValue] = useState<PlaceType | any>(
@@ -119,6 +119,11 @@ const AutoCompleteGoogleMaps = ({ redirecTo, isActiveModal, closeModal }: TProps
     setInputValue('');
     setValue(t('location.placeHolder', { ns: i18Global }));
     gpsPosition();
+    dispatch(
+      searchOnFilter({
+        placeName: t('location.placeHolder', { ns: i18Global })
+      })
+    );
   };
 
   const gpsPosition = async () => {
@@ -159,11 +164,8 @@ const AutoCompleteGoogleMaps = ({ redirecTo, isActiveModal, closeModal }: TProps
         }}
         onKeyDown={e => {
           if (e.key === 'Enter') {
-            redirecTo();
-            if (value) {
-              redirecTo();
-              if (isActiveModal) closeModal(false);
-            }
+            redirecTo(textFilter);
+            if (isActiveModal) closeModal(false);
           }
         }}
         forcePopupIcon={true}
@@ -188,31 +190,29 @@ const AutoCompleteGoogleMaps = ({ redirecTo, isActiveModal, closeModal }: TProps
             matches.map((match: any) => [match.offset, match.offset + match.length])
           );
 
-          return (
-            <>
-              {inputValue !== t('location.placeHolder', { ns: i18Global }) && (
-                <li {...props}>
-                  <Grid container alignItems="center">
-                    <Grid item xs onClick={() => handleSelect(option)}>
-                      {parts.map((part, index) => (
-                        <span
-                          key={index}
-                          style={{
-                            fontWeight: part.highlight ? 700 : 400
-                          }}
-                        >
-                          {part.text}
-                        </span>
-                      ))}
-                      <Typography variant="body2" color="text.secondary">
-                        {option.structured_formatting.secondary_text}
-                      </Typography>
-                    </Grid>
+          if (inputValue !== t('location.placeHolder', { ns: i18Global })) {
+            return (
+              <li {...props}>
+                <Grid container alignItems="center">
+                  <Grid item xs onClick={() => handleSelect(option)}>
+                    {parts.map(part => (
+                      <span
+                        key={Math.random() * (100 - 1) + 1}
+                        style={{
+                          fontWeight: part.highlight ? 700 : 400
+                        }}
+                      >
+                        {part.text}
+                      </span>
+                    ))}
+                    <Typography variant="body2" color="text.secondary">
+                      {option.structured_formatting.secondary_text}
+                    </Typography>
                   </Grid>
-                </li>
-              )}
-            </>
-          );
+                </Grid>
+              </li>
+            );
+          }
         }}
       />
       <Box className={classes.icon} onClick={() => cleanSelect()}>

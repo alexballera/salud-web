@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { makeStyles, styled } from '@material-ui/core';
 import MuiTypography from '@material-ui/core/Typography';
 import MuiCircularProgress from '@material-ui/core/CircularProgress';
@@ -13,8 +13,8 @@ import { useGetDoctorsQuery } from '@/src/services/apiBFF';
 import CardDoctorResult from '../../../components/common/CardDoctorResult';
 import SearchNavbar from '../../../components/single/searchNavbar';
 import { withAppContext } from '../../../context';
-import { NAMESPACE_KEY } from '../../../i18n/medicalDirectory/i18n';
-
+import { NAMESPACE_KEY as i18nMedicalDirectory } from '../../../i18n/medicalDirectory/i18n';
+import { NAMESPACE_KEY as i18Global } from '../../../i18n/globals/i18n';
 import { searchOnFilter } from '@/src/store/slice/search.slice';
 
 const Typography = styled(MuiTypography)({
@@ -52,7 +52,7 @@ interface SearchState {
 function MedicalDirectoryResultsPage(): JSX.Element {
   const router = useRouter();
   const classes = useStyles();
-  const { t } = useTranslation(NAMESPACE_KEY);
+  const { t } = useTranslation([i18Global, i18nMedicalDirectory]);
   const dispatch = useDispatch();
 
   const { searchField, lat, lng, placeName = 'Cerca de mi' } = router.query as SearchState;
@@ -66,11 +66,10 @@ function MedicalDirectoryResultsPage(): JSX.Element {
     mode: DoctorSearchMode.presential
   });
 
-  // t('location.placeHolder', { ns: i18Global })
   useEffect(() => {
     dispatch(
       searchOnFilter({
-        placeName,
+        placeName: placeName || t('location.placeHolder', { ns: i18Global }),
         lat: lat !== '' ? lat : '0',
         lng: lng !== '' ? lng : '0',
         textFilter: searchField
@@ -100,7 +99,7 @@ function MedicalDirectoryResultsPage(): JSX.Element {
         <Grid item xs={12} className={classes.results}>
           {!isLoading && data?.doctors?.length !== 0 && (
             <Typography variant="h1" className={classes.title}>
-              {t('searchResults.title')}
+              {t('searchResults.title', { ns: i18nMedicalDirectory })}
             </Typography>
           )}
           {!isLoading &&
