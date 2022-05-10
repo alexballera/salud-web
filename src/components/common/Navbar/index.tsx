@@ -181,7 +181,8 @@ function Navbar(): JSX.Element {
     '/recipes_and_prescriptions': '/proceedings',
     '/exam_results': '/proceedings',
     '/medicalDirectory/searchBy/search_by_doctor': '/medicalDirectory',
-    '/medicalDirectory/searchBy/search_by_specialty': '/medicalDirectory'
+    '/medicalDirectory/searchBy/search_by_specialty': '/medicalDirectory',
+    '/medicalDirectory/searchBy/specialtyResults': '/medicalDirectory/searchBy/search_by_specialty'
   };
 
   const customRedirectBackButton = () => {
