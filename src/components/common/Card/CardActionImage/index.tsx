@@ -16,14 +16,14 @@ export default function CardActionImage({ title, route, icon }: TProps): JSX.Ele
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const handlerClick = () => {
+  const handleClick = () => {
     dispatch(searchClean());
     router.push(route);
   };
 
   return (
     <CardActionArea className={classes.root}>
-      <Card className={classes.root} onClick={() => handlerClick()}>
+      <Card className={classes.root} onClick={() => handleClick()}>
         <CardContent>
           <div className={classes.alignCenter}>{icon}</div>
           <Typography className={classes.textCard2}>{title}</Typography>
