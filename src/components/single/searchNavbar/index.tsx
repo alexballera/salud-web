@@ -120,11 +120,25 @@ function SearchNavbar(): JSX.Element {
   const { placeName, textFilter, filters } = useSelector(state => state.search);
   const searchLabel = `${textFilter} • ${placeName}`;
 
+  const routeGeneral = '/medicalDirectory/searchResults';
+  const routeSpeciality = '/medicalDirectory/searchBy/specialtyResults';
+
+  const handleRouteBack = pathName => {
+    switch (pathName) {
+      case routeGeneral:
+        router.push('/medicalDirectory');
+        break;
+      case routeSpeciality:
+        router.push('/medicalDirectory/searchBy/search_by_specialty');
+        break;
+    }
+  };
+
   const handleArrowBack = () => {
     if (searchIsActive) {
       setSearchIsActive(false);
     } else {
-      router.push('/medicalDirectory');
+      handleRouteBack(router.pathname);
     }
   };
 

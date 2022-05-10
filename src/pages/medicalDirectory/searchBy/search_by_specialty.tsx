@@ -1,6 +1,5 @@
-// BASE IMPORTS
-import React, { useState } from 'react';
-// BASE IMPORTS END
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 // MUI
 import {
@@ -39,10 +38,12 @@ import { useRouter } from 'next/router';
 import SearchWithGeolocation from '@/src/containers/SearchWithGeolocation';
 import { useGetDoctorsQuery } from '@/src/services/apiBFF';
 import { DoctorSearchMode, DoctorSearchOrder, DoctorSearchType } from '@/src/services/doctors.type';
+import { searchClean } from '@/src/store/slice/search.slice';
 /// i18n END
 
 const SearchBySpecialty = (): JSX.Element => {
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory, i18ClinicHistory]);
+  const dispatch = useDispatch();
   const classes = examStyles();
   const router = useRouter();
   const [searchField] = useState('');
@@ -69,6 +70,13 @@ const SearchBySpecialty = (): JSX.Element => {
       return result;
     }
   };
+
+  useEffect(
+    () => () => {
+      dispatch(searchClean());
+    },
+    []
+  );
 
   const filteredSpecialtys = getSpecialtys()?.filter(data => {
     return data.title.toLowerCase().includes(searchField.toLowerCase());
@@ -126,7 +134,6 @@ const SearchBySpecialty = (): JSX.Element => {
         </Stack>
         <Box mt={2}>
           <SearchWithGeolocation
-            searchObject={setSearch}
             labelText={t('items.labelSearch', { ns: i18nMedicalDirectory })}
             placeHolderText={t('items.placeholderSearchSpecialty', { ns: i18nMedicalDirectory })}
             path="/medicalDirectory/searchBy/specialtyResults"
