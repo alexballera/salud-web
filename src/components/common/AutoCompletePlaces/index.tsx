@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import { TextField, Grid, Typography, Autocomplete, Box } from '@mui/material';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
@@ -10,6 +11,9 @@ import { NAMESPACE_KEY as i18Global } from '../../../i18n/globals/i18n';
 
 import { getPosition } from '@/src/utils/helpers';
 import autoCompleteLocationStyles from './style.module';
+
+import { useSelector } from '@/src/store';
+import { searchOnFilter } from '@/src/store/slice/search.slice';
 
 interface MainTextMatchedSubstrings {
   offset: number;
@@ -28,22 +32,18 @@ interface PlaceType {
 const autocompleteService = { current: null };
 
 type TProps = {
-  recordCoords;
-  placeName?: string;
   redirecTo;
   isActiveModal?: boolean;
   closeModal?;
 };
 
-const AutoCompleteGoogleMaps = ({
-  recordCoords,
-  placeName,
-  redirecTo,
-  isActiveModal,
-  closeModal
-}: TProps): JSX.Element => {
+const AutoCompleteGoogleMaps = ({ redirecTo, isActiveModal, closeModal }: TProps): JSX.Element => {
   const classes = autoCompleteLocationStyles();
   const { t } = useTranslation([i18Global]);
+
+  const { placeName, textFilter } = useSelector(state => state.search);
+  const dispatch = useDispatch();
+
   const [value, setValue] = useState<PlaceType | any>(
     placeName || t('location.placeHolder', { ns: i18Global })
   );
@@ -82,7 +82,13 @@ const AutoCompleteGoogleMaps = ({
       if (active) {
         let newOptions: readonly PlaceType[] = [];
         if (value) newOptions = [value];
-        recordCoords({ placeName: value.description });
+        if (value.description) {
+          dispatch(
+            searchOnFilter({
+              placeName: value.description
+            })
+          );
+        }
         if (results) newOptions = [...newOptions, ...results];
         setOptions(newOptions);
       }
@@ -98,10 +104,12 @@ const AutoCompleteGoogleMaps = ({
       .then(({ lat, lng }) => {
         // console.log('📍 Coordinates: ', { lat, lng });
 
-        recordCoords(prevState => ({
-          ...prevState,
-          ...{ lat, lng }
-        }));
+        dispatch(
+          searchOnFilter({
+            lat: lat,
+            lng: lng
+          })
+        );
       })
       .catch(error => {
         console.log('😱 Error: ', error);
@@ -111,17 +119,24 @@ const AutoCompleteGoogleMaps = ({
     setInputValue('');
     setValue(t('location.placeHolder', { ns: i18Global }));
     gpsPosition();
+    dispatch(
+      searchOnFilter({
+        placeName: t('location.placeHolder', { ns: i18Global })
+      })
+    );
   };
 
   const gpsPosition = async () => {
     await getPosition()
       .then(function (result) {
-        const coords = {
-          lat: result.latitude,
-          lng: result.longitude
-        };
         // console.log('📍 Coordinates: ', result.latitude, result.longitude);
-        recordCoords(coords);
+
+        dispatch(
+          searchOnFilter({
+            lat: result.latitude,
+            lng: result.longitude
+          })
+        );
       })
       .catch(error => {
         console.log('😱 Error: ', error);
@@ -149,11 +164,8 @@ const AutoCompleteGoogleMaps = ({
         }}
         onKeyDown={e => {
           if (e.key === 'Enter') {
-            redirecTo();
-            if (value) {
-              redirecTo();
-              if (isActiveModal) closeModal(false);
-            }
+            redirecTo(textFilter);
+            if (isActiveModal) closeModal(false);
           }
         }}
         forcePopupIcon={true}
@@ -178,31 +190,29 @@ const AutoCompleteGoogleMaps = ({
             matches.map((match: any) => [match.offset, match.offset + match.length])
           );
 
-          return (
-            <>
-              {inputValue !== t('location.placeHolder', { ns: i18Global }) && (
-                <li {...props}>
-                  <Grid container alignItems="center">
-                    <Grid item xs onClick={() => handleSelect(option)}>
-                      {parts.map((part, index) => (
-                        <span
-                          key={index}
-                          style={{
-                            fontWeight: part.highlight ? 700 : 400
-                          }}
-                        >
-                          {part.text}
-                        </span>
-                      ))}
-                      <Typography variant="body2" color="text.secondary">
-                        {option.structured_formatting.secondary_text}
-                      </Typography>
-                    </Grid>
+          if (inputValue !== t('location.placeHolder', { ns: i18Global })) {
+            return (
+              <li {...props}>
+                <Grid container alignItems="center">
+                  <Grid item xs onClick={() => handleSelect(option)}>
+                    {parts.map(part => (
+                      <span
+                        key={Math.random() * (100 - 1) + 1}
+                        style={{
+                          fontWeight: part.highlight ? 700 : 400
+                        }}
+                      >
+                        {part.text}
+                      </span>
+                    ))}
+                    <Typography variant="body2" color="text.secondary">
+                      {option.structured_formatting.secondary_text}
+                    </Typography>
                   </Grid>
-                </li>
-              )}
-            </>
-          );
+                </Grid>
+              </li>
+            );
+          }
         }}
       />
       <Box className={classes.icon} onClick={() => cleanSelect()}>

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -26,19 +27,8 @@ import SearchWithGeolocation from '../../../containers/SearchWithGeolocation';
 import { NAMESPACE_KEY as i18Global } from '../../../i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '../../../i18n/medicalDirectory/i18n';
-
-type SearchOptions = {
-  placeName?: string;
-  searchField?: string;
-  lat?: string;
-  lng?: string;
-  filters?: string[];
-};
-
-type TProps = {
-  searchOptions: SearchOptions;
-  setSearchOptions: any;
-};
+import { useSelector } from '@/src/store';
+import { searchOnFilter } from '@/src/store/slice/search.slice';
 
 const Chip = styled(MuiChip)({
   color: secondaryMainColor,
@@ -119,29 +109,36 @@ const useStyles = makeStyles({
   }
 });
 
-// const FAKE_TAGS = ['Precio alto-bajo', '₡60 000', 'Cualquiera'];
-
-function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element {
+function SearchNavbar(): JSX.Element {
   const router = useRouter();
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [searchIsActive, setSearchIsActive] = useState(false);
   const [filterIsActive, setFilterIsActive] = useState(false);
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
 
-  const searchLocationLabel =
-    searchOptions?.placeName === '' || !searchOptions?.placeName
-      ? 'Cerca de mi'
-      : searchOptions.placeName;
-  const searchLabel = `${searchOptions?.searchField} • ${searchLocationLabel}`;
-  useEffect(() => {
-    setSearchOptions(prevValues => ({ ...prevValues, filters: [] }));
-  }, []);
+  const { placeName, textFilter, filters } = useSelector(state => state.search);
+  const searchLabel = `${textFilter} • ${placeName}`;
+
+  const routeGeneral = '/medicalDirectory/searchResults';
+  const routeSpeciality = '/medicalDirectory/searchBy/specialtyResults';
+
+  const handleRouteBack = pathName => {
+    switch (pathName) {
+      case routeGeneral:
+        router.push('/medicalDirectory');
+        break;
+      case routeSpeciality:
+        router.push('/medicalDirectory/searchBy/search_by_specialty');
+        break;
+    }
+  };
 
   const handleArrowBack = () => {
     if (searchIsActive) {
       setSearchIsActive(false);
     } else {
-      router.push('/medicalDirectory/searchBy/search_by_specialty');
+      handleRouteBack(router.pathname);
     }
   };
 
@@ -208,17 +205,18 @@ function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element 
           <div className={classes.chipFlex}>
             <Chip
               className={classes.chip}
-              label={searchOptions.placeName || t('location.placeHolder', { ns: i18Global })}
+              label={placeName}
               variant="default"
               color="default"
               onDelete={() => {
-                setSearchOptions(prevValues => ({
-                  ...prevValues,
-                  placeName: t('location.placeHolder', { ns: i18Global })
-                }));
+                dispatch(
+                  searchOnFilter({
+                    placeName: t('location.placeHolder', { ns: i18Global })
+                  })
+                );
               }}
             />
-            {(searchOptions.filters || []).map((tag, idx) => (
+            {filters.map((tag, idx) => (
               <Chip
                 key={idx}
                 className={classes.chip}
@@ -226,10 +224,11 @@ function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element 
                 variant="default"
                 color="default"
                 onDelete={() => {
-                  setSearchOptions(prevValues => ({
-                    ...prevValues,
-                    filters: prevValues.filters.filter(itemTag => itemTag !== tag)
-                  }));
+                  dispatch(
+                    searchOnFilter({
+                      filters: filters.filter(itemTag => itemTag !== tag)
+                    })
+                  );
                 }}
               />
             ))}
@@ -247,8 +246,6 @@ function SearchNavbar({ searchOptions, setSearchOptions }: TProps): JSX.Element 
           <SearchWithGeolocation
             isActiveModal={searchIsActive}
             closeModal={setSearchIsActive}
-            search={searchOptions as any}
-            searchObject={setSearchOptions}
             labelText={t('items.labelSearch', { ns: i18nMedicalDirectory })}
             placeHolderText={t('items.placeholderSearch', { ns: i18nMedicalDirectory })}
             path="/medicalDirectory/searchResults"
