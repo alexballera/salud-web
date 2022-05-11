@@ -35,32 +35,11 @@ const CircularProgress = styled(MuiCircularProgress)({
   color: secondaryMainColor
 });
 
-export const FAKE_SEARCH_HISTORY_LIST = [
-  {
-    idx: '1',
-    title: 'Dr. Orlando Carazo',
-    subTitle: 'Medicina general'
-  },
-  {
-    idx: '2',
-    title: 'Dra. Andrea Duarte',
-    subTitle: 'Oncología'
-  },
-  {
-    idx: '3',
-    title: 'Dr. Gabriel González',
-    subTitle: 'Psicología'
-  }
-];
-
 function MedicalDirectoryPage(): JSX.Element {
   const classes = medicalDirectoryStyles();
   const router = useRouter();
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
   const { data, isLoading } = useGetSearchHistoryQuery();
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [search, setSearch] = useState({});
 
   const itemsCard = [
     {
