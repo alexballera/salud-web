@@ -94,6 +94,10 @@ const SearchBySpecialty = (): JSX.Element => {
     });
   };
 
+  const handleRouteBack = () => {
+    router.push('/medicalDirectory');
+  };
+
   const ListItemSpecialties = (item): JSX.Element => (
     <React.Fragment key={item.idx}>
       <ListItem button onClick={() => handleClick(item)} sx={{ pl: 1 }}>
@@ -127,7 +131,12 @@ const SearchBySpecialty = (): JSX.Element => {
   const Actions = (
     <Grid container>
       <Grid item>
-        <IconButton edge="start" color="inherit" aria-label="arrow-back" onClick={handleArrowBack}>
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="arrow-back"
+          onClick={() => handleRouteBack()}
+        >
           <ArrowBackIcon width={16} height={16} />
         </IconButton>
       </Grid>
