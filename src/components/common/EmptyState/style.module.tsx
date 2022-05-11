@@ -12,7 +12,7 @@ const emptyStateStyles = makeStyles({
     backgroundImage: `url(${emptySVG})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    backgroundPosition: '44% 4px',
+    backgroundPosition: '64% 4px',
     height: '100vh',
     width: '100vw',
     position: 'fixed',
