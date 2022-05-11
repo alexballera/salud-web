@@ -9,7 +9,7 @@ export const enClinicHistory = {
   },
 
   doctors: {
-    no_records: 'No results were found regarding the doctor'
+    no_records: 'You have no recent searches logged.'
   },
 
   vaccines: {
