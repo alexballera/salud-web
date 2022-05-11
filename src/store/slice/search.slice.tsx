@@ -1,3 +1,4 @@
+import { DoctorSearchOrder } from '@/src/services/doctors.type';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface SearchState {
@@ -6,6 +7,7 @@ export interface SearchState {
   lng?: string;
   textFilter?: string;
   filters?: string[];
+  order?: DoctorSearchOrder;
 }
 
 const initialState: SearchState = {
@@ -13,6 +15,7 @@ const initialState: SearchState = {
   lat: '',
   lng: '',
   textFilter: '',
+  order: null,
   filters: []
 };
 

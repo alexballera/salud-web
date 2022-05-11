@@ -52,6 +52,7 @@ function SearchNavbar(): JSX.Element {
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
 
   const { placeName, textFilter, filters } = useSelector(state => state.search);
+
   const searchLabel = `${textFilter} • ${placeName}`;
 
   const routeGeneral = '/medicalDirectory/searchResults';

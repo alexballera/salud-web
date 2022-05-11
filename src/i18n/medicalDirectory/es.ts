@@ -34,6 +34,13 @@ export const esMedicalDirectory = {
       price: 'Precio',
       appointmentAvailability: 'Disponibilidad de citas',
       modality: 'Modalidad'
+    },
+    optionsOrder: {
+      closeness: 'Cercanía',
+      highLowPrice: 'Precio alto-bajo',
+      lowHighPrice: 'Precio bajo-alto',
+      availability: 'Disponibilidad',
+      alphabetically: 'Alfabéticamente'
     }
   }
 };

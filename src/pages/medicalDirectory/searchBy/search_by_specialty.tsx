@@ -56,8 +56,6 @@ const SearchBySpecialty = (): JSX.Element => {
     mode: DoctorSearchMode.presential
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [search, setSearch] = useState({});
   const getSpecialtys = () => {
     const result = data?.doctors?.reduce((acc, item, i) => {
       if (!acc.includes(item.speciality)) {
