@@ -29,8 +29,13 @@ const LOGGEDIN_ROUTES = [
   '/clinic_history/allergies/[allergie_id]',
   '/clinic_history/habits',
   '/clinic_history/habits/[habits_id]',
+  '/medicalDirectory',
   '/medicalDirectory/searchBy/doctorResults',
-  '/medicalDirectory/searchResults'
+  '/medicalDirectory/searchBy',
+  '/medicalDirectory/searchResults',
+  '/medicalDirectory/searchBy/search_by_specialty',
+  '/medicalDirectory/searchBy/specialtyResults',
+  '/doctor_profile/[doctor_id]'
 ];
 
 const UserContext = createContext({} as TUserContent);
