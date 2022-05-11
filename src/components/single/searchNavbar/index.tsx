@@ -184,7 +184,7 @@ function SearchNavbar(): JSX.Element {
             closeModal={setSearchIsActive}
             labelText={t('items.labelSearch', { ns: i18nMedicalDirectory })}
             placeHolderText={t('items.placeholderSearch', { ns: i18nMedicalDirectory })}
-            path="/medicalDirectory/searchResults"
+            path={`${router.pathname}`}
           />
         </Box>
       </Modal>

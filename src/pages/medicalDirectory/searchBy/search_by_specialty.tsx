@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 // MUI
@@ -74,13 +74,6 @@ const SearchBySpecialty = (): JSX.Element => {
     }
   };
 
-  useEffect(
-    () => () => {
-      dispatch(searchClean());
-    },
-    []
-  );
-
   const filteredSpecialtys = getSpecialtys()?.filter(data => {
     return data.title.toLowerCase().includes(searchField.toLowerCase());
   });
@@ -95,6 +88,7 @@ const SearchBySpecialty = (): JSX.Element => {
   };
 
   const handleRouteBack = () => {
+    dispatch(searchClean());
     router.push('/medicalDirectory');
   };
 
@@ -129,7 +123,7 @@ const SearchBySpecialty = (): JSX.Element => {
   );
 
   const Actions = (
-    <Grid container>
+    <Grid container alignItems="center">
       <Grid item>
         <IconButton
           edge="start"
@@ -140,13 +134,20 @@ const SearchBySpecialty = (): JSX.Element => {
           <ArrowBackIcon width={16} height={16} />
         </IconButton>
       </Grid>
+      <Grid item ml={2}>
+        <Typography variant="body1" sx={{ fontSize: 16, color: '#455255' }}>
+          {t('items.search', { ns: 'menu' })}
+        </Typography>
+      </Grid>
     </Grid>
   );
 
   return (
     <ThemeProvider theme={muiTheme}>
-      <Box p={3}>
+      <Box px={3} mt={1}>
         {Actions}
+      </Box>
+      <Box p={3}>
         <Stack direction="row" alignItems="center" spacing={2}>
           <SvgSpecialty />
           <Typography
