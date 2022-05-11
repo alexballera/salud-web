@@ -59,6 +59,7 @@ import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
 
 import { uiOnAlert, uiClean } from '@/src/store/slice/ui.slice';
 import { useDispatch } from 'react-redux';
+import { useCreateAccountMutation } from '@/src/services/apiBFF';
 
 type TSteper = {
   [key: number]: {
@@ -126,6 +127,7 @@ function SignUpView(): JSX.Element {
   const [customSubmitCount, setCustomSubmitCount] = useState(0);
   const [currDocTypeArgs, setCurrDocTypeArgs] = useState<TCountryDocumentTypeItem | null>(null);
   const dispatch = useDispatch();
+  const [createAccount] = useCreateAccountMutation();
 
   const yupPersonalData = {
     name: 'PersonalData',
@@ -279,8 +281,11 @@ function SignUpView(): JSX.Element {
     }
   };
 
-  const setPatient = (values: TFormData, appWriteUserId: string): TPatient => {
+  const setPatient = (values: TFormData): TPatient => {
     return {
+      email: values.email.toString(),
+      password: values.password.toString(),
+      fullName: values.fullName.toString(),
       documentType: values.documentType.toString(),
       documentNumber: values.documentNumber,
       birthDate: values.birthDate,
@@ -289,19 +294,25 @@ function SignUpView(): JSX.Element {
       province: values.firstLevel.toString(),
       canton: values.secondLevel.toString(),
       district: values.thirdLevel.toString(),
-      userId: appWriteUserId,
+      // userId: appWriteUserId,
       country: values.country
     };
   };
 
-  const storeUser = async (values: TFormData) => {
-    const { email, password, fullName } = values;
+  const storeUser = async (values: any) => {
+    const { email, password } = values;
     try {
-      const user = await api.createAccount('unique()', email, password, fullName);
+      // const user = await api.createAccount('unique()', email, password, fullName);
 
+      console.log('Antes hook');
+      console.log(setPatient(values));
+
+      await createAccount(setPatient(values)).unwrap();
+
+      console.log('Despues hook');
       const session = await api.createSession(email, password);
 
-      await api.createPatient(setPatient(values, user.$id));
+      // await api.createPatient(setPatient(values, user.$id));
 
       await api.emailVerification();
 
@@ -309,6 +320,7 @@ function SignUpView(): JSX.Element {
 
       router.push('/signup/email_verification');
     } catch (e) {
+      console.log('error', e);
       dispatch(
         uiOnAlert({
           type: 'error',

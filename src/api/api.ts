@@ -1,6 +1,9 @@
 import { Appwrite, Models } from 'appwrite';
 
 export type TPatient = {
+  email?: string;
+  password?: string;
+  fullName?: string;
   documentType: string;
   documentNumber: string;
   birthDate: string;
@@ -10,7 +13,7 @@ export type TPatient = {
   canton: string;
   district: string;
   country: string;
-  userId: string;
+  userId?: string;
 };
 
 const SERVER = {
@@ -33,14 +36,14 @@ const api = {
     return appwrite;
   },
 
-  createAccount: (
-    unique: string,
-    email: string,
-    password: string,
-    name: string
-  ): Promise<Models.User<Models.Preferences>> => {
-    return api.provider().account.create(unique, email, password, name);
-  },
+  // createAccount: (
+  //   unique: string,
+  //   email: string,
+  //   password: string,
+  //   name: string
+  // ): Promise<Models.User<Models.Preferences>> => {
+  //   return api.provider().account.create(unique, email, password, name);
+  // },
 
   getAccount: (): Promise<Models.User<Models.Preferences>> => {
     return api.provider().account.get();
@@ -48,7 +51,7 @@ const api = {
 
   getJWT: async () => {
     const token = await api.provider().account.createJWT();
-    localStorage.setItem('jwt', `${token.jwt}`);
+    localStorage.setItem('ospiSecurity', `${token.jwt}`);
     return token.jwt;
   },
 

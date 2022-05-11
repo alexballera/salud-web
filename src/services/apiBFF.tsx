@@ -27,24 +27,41 @@ const baseUrl = process.env.NEXT_PUBLIC_API_URL_BFF;
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
   baseUrl: baseUrl,
-  prepareHeaders: async headers => {
-    let token = '';
-    const { exp } = decodeToken(localStorage.getItem('jwt'));
-    if (Date.now() >= exp * 1000) {
-      const reGetToken = await api.getJWT();
-      token = reGetToken;
-    } else {
-      token = localStorage.getItem('jwt');
+  prepareHeaders: async (headers, { endpoint }) => {
+    if (endpoint !== 'createAccount') {
+      let token = '';
+
+      const { exp } = decodeToken(localStorage.getItem('ospiSecurity'));
+      if (Date.now() >= exp * 1000) {
+        const reGetToken = await api.getJWT();
+        token = reGetToken;
+      } else {
+        token = localStorage.getItem('jwt');
+      }
+
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`);
+      }
     }
 
-    headers.set('authorization', `Bearer ${token}`);
     return headers;
   }
 });
 
 export const apiBFF = createApi({
   baseQuery: baseQuery,
+  tagTypes: ['patient'],
   endpoints: builder => ({
+    createAccount: builder.mutation({
+      query(body) {
+        return {
+          url: `/patients/register`,
+          method: 'POST',
+          body
+        };
+      },
+      invalidatesTags: [{ type: 'patient', id: 'LIST' }]
+    }),
     getAllergies: builder.query<TAllergieResponse, void>({
       query: () => ({ url: '/patients/allergies', method: 'get' })
     }),
@@ -145,6 +162,7 @@ export const apiBFF = createApi({
 });
 
 export const {
+  useCreateAccountMutation,
   useGetAllergiesQuery,
   useGetHabitsQuery,
   useGetDiseasesQuery,
