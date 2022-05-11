@@ -13,7 +13,8 @@ import {
   ListItemText,
   Stack,
   ThemeProvider,
-  Typography
+  Typography,
+  styled
 } from '@mui/material';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 // MUI END
@@ -40,6 +41,10 @@ import { useGetDoctorsQuery } from '@/src/services/apiBFF';
 import { DoctorSearchMode, DoctorSearchOrder, DoctorSearchType } from '@/src/services/doctors.type';
 import { searchClean } from '@/src/store/slice/search.slice';
 /// i18n END
+import MuiArrowBackIcon from '@material-ui/icons/ArrowBack';
+const ArrowBackIcon = styled(MuiArrowBackIcon)({
+  color: titlePageColor
+});
 
 const SearchBySpecialty = (): JSX.Element => {
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory, i18ClinicHistory]);
@@ -119,9 +124,20 @@ const SearchBySpecialty = (): JSX.Element => {
     </React.Fragment>
   );
 
+  const Actions = (
+    <Grid container>
+      <Grid item>
+        <IconButton edge="start" color="inherit" aria-label="arrow-back" onClick={handleArrowBack}>
+          <ArrowBackIcon width={16} height={16} />
+        </IconButton>
+      </Grid>
+    </Grid>
+  );
+
   return (
     <ThemeProvider theme={muiTheme}>
       <Box p={3}>
+        {Actions}
         <Stack direction="row" alignItems="center" spacing={2}>
           <SvgSpecialty />
           <Typography
