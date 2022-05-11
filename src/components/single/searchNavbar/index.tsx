@@ -12,16 +12,8 @@ import InputBase from '@material-ui/core/InputBase';
 import MuiChip from '@material-ui/core/Chip';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Box, makeStyles, Modal, styled } from '@material-ui/core';
-import {
-  background2Color,
-  boxShadow,
-  poppinsFontFamily,
-  primaryContrastTextColor,
-  secondaryMainColor,
-  tertiaryLightColor,
-  titlePageColor
-} from '@/src/styles/js/theme';
+import { Box, Modal, styled } from '@material-ui/core';
+import { secondaryMainColor, tertiaryLightColor, titlePageColor } from '@/src/styles/js/theme';
 import ModalFilters from '../../common/ModalFilters';
 import SearchWithGeolocation from '../../../containers/SearchWithGeolocation';
 import { NAMESPACE_KEY as i18Global } from '../../../i18n/globals/i18n';
@@ -29,6 +21,7 @@ import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '../../../i18n/medicalDirectory/i18n';
 import { useSelector } from '@/src/store';
 import { searchOnFilter } from '@/src/store/slice/search.slice';
+import searchNavbarStyles from './styles.module';
 
 const Chip = styled(MuiChip)({
   color: secondaryMainColor,
@@ -50,74 +43,16 @@ const FilterListIcon = styled(MuiFilterListIcon)({
   color: titlePageColor
 });
 
-const useStyles = makeStyles({
-  mainWrapper: {
-    boxShadow,
-    padding: '0 24px 20px 24px',
-    borderRadius: 16,
-    backgroundColor: 'white'
-  },
-  inputActionsWrapper: {
-    height: 56
-  },
-  inputWrapper: {
-    width: '65%'
-  },
-  input: {
-    background: background2Color,
-    borderRadius: 4,
-    '& input': {
-      font: poppinsFontFamily,
-      fontStyle: 'normal',
-      fontWeight: 500,
-      fontSize: 14,
-      lineHeight: '157%',
-      letterSpacing: '0.1px',
-      opacity: '0.42'
-    }
-  },
-  searchIcon: {
-    marginLeft: 19
-  },
-  filterIcon: {
-    paddingRight: 0
-  },
-  chip: {
-    marginRight: 16
-  },
-  chipWrapper: {
-    overflow: 'hidden',
-    height: 34,
-    marginTop: 8
-  },
-  chipFlex: {
-    display: 'flex',
-    overflow: 'scroll',
-    paddingBottom: 15
-  },
-  modalContent: {
-    background: primaryContrastTextColor,
-    padding: '0 24px 20px 24px',
-    borderBottomLeftRadius: 16,
-    borderBottomRightRadius: 16
-  },
-  title: {
-    color: 'rgba(69, 82, 85, 1)',
-    fontSize: 16,
-    fontWeight: 400,
-    marginLeft: 10
-  }
-});
-
 function SearchNavbar(): JSX.Element {
   const router = useRouter();
-  const classes = useStyles();
+  const classes = searchNavbarStyles();
   const dispatch = useDispatch();
   const [searchIsActive, setSearchIsActive] = useState(false);
   const [filterIsActive, setFilterIsActive] = useState(false);
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
 
   const { placeName, textFilter, filters } = useSelector(state => state.search);
+
   const searchLabel = `${textFilter} • ${placeName}`;
 
   const routeGeneral = '/medicalDirectory/searchResults';

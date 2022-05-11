@@ -34,6 +34,13 @@ export const enMedicalDirectory = {
       price: 'Price',
       appointmentAvailability: 'Appointment availability',
       modality: 'Modality'
+    },
+    optionsOrder: {
+      closeness: 'Closeness',
+      highLowPrice: 'High-low price',
+      lowHighPrice: 'Low-High price',
+      availability: 'Availability',
+      alphabetically: 'Alphabetically'
     }
   }
 };
