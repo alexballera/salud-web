@@ -66,21 +66,21 @@ const api = {
     return api.provider().account.deleteSession('current');
   },
 
-  createDocument: (collectionId, data, read, write) => {
-    return api.provider().database.createDocument(collectionId, data, read, write);
-  },
+  // createDocument: (collectionId, data, read, write) => {
+  //   return api.provider().database.createDocument(collectionId, data, read, write);
+  // },
 
-  listDocuments: collectionId => {
-    return api.provider().database.listDocuments(collectionId);
-  },
+  // listDocuments: collectionId => {
+  //   return api.provider().database.listDocuments(collectionId);
+  // },
 
-  updateDocument: (collectionId, documentId, data, read, write) => {
-    return api.provider().database.updateDocument(collectionId, documentId, data, read, write);
-  },
+  // updateDocument: (collectionId, documentId, data, read, write) => {
+  //   return api.provider().database.updateDocument(collectionId, documentId, data, read, write);
+  // },
 
-  deleteDocument: (collectionId, documentId) => {
-    return api.provider().database.deleteDocument(collectionId, documentId);
-  },
+  // deleteDocument: (collectionId, documentId) => {
+  //   return api.provider().database.deleteDocument(collectionId, documentId);
+  // },
 
   restorePassword: (email: string): Promise<Models.Preferences> => {
     return api
@@ -105,10 +105,10 @@ const api = {
     return api.provider().account.updateRecovery(userId, secret, password, passwordVerify);
   },
 
-  createPatient: (patient: TPatient): Promise<Models.Document> => {
-    const { patientCollectionID } = SERVER;
-    return api.provider().database.createDocument(patientCollectionID, 'unique()', patient);
-  },
+  // createPatient: (patient: TPatient): Promise<Models.Document> => {
+  //   const { patientCollectionID } = SERVER;
+  //   return api.provider().database.createDocument(patientCollectionID, 'unique()', patient);
+  // },
 
   getUserSession: (sessionID: string): Promise<Models.Session> => {
     return api.provider().account.getSession(sessionID);
