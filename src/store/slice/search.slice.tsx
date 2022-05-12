@@ -8,6 +8,7 @@ export interface SearchState {
   textFilter?: string;
   filters?: string[];
   order?: DoctorSearchOrder;
+  range?: number;
 }
 
 const initialState: SearchState = {
@@ -16,7 +17,8 @@ const initialState: SearchState = {
   lng: '',
   textFilter: '',
   order: null,
-  filters: []
+  filters: [],
+  range: null
 };
 
 export const searchSlice = createSlice({
