@@ -65,7 +65,7 @@ const Diseases = (): JSX.Element => {
                 </Typography>
               </Box>
               <Divider />
-              {dataDiseases.length === 0 && (
+              {dataDiseases && dataDiseases.length === 0 && (
                 <Box my={3} ml={2}>
                   <Typography paragraph className={classes.typography14}>
                     {t('content.unregistered', { ns: i18Diseases })}
@@ -73,7 +73,7 @@ const Diseases = (): JSX.Element => {
                 </Box>
               )}
 
-              {data &&
+              {dataDiseases &&
                 dataDiseases.map((disease, index) => (
                   <Box my={2.5} ml={2} key={index}>
                     <Grid container>

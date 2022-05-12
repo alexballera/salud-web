@@ -47,6 +47,15 @@ const api = {
   //   return api.provider().account.create(unique, email, password, name);
   // },
 
+  realTime: (token: string): void => {
+    console.log('RealTime 0');
+    api.sdk.subscribe([`collections.connect_sync_tokens.documents.${token}`, 'files'], response => {
+      // Callback will be executed on changes for documents A and all files.
+      console.log('RealTime', response);
+      return response;
+    });
+  },
+
   getAccount: (): Promise<Models.User<Models.Preferences>> => {
     return api.provider().account.get();
   },
