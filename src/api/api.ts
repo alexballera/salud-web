@@ -4,10 +4,12 @@ export type TPatient = {
   email?: string;
   password?: string;
   fullName?: string;
+  pronoun?: string;
+  biologicalSex?: string;
   documentType: string;
   documentNumber: string;
   birthDate: string;
-  gender: string;
+  gender?: string;
   phoneNumbers: string[];
   province: string;
   canton: string;

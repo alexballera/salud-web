@@ -14,8 +14,8 @@ import {
   TGetConsultationHistoryByIdParams
 } from '../types/services/consultationHistory.types';
 import { DoctorSearchAppt, queryDoctor, TDoctors } from './doctors.type';
-import { decodeToken } from '../utils/helpers';
 import api from '../api/api';
+import { decodeToken } from '../utils/helpers';
 
 type TGetVaccineByIdParams = {
   userId: string;
@@ -32,11 +32,12 @@ const baseQuery = fetchBaseQuery({
       let token = '';
 
       const { exp } = decodeToken(localStorage.getItem('ospiSecurity'));
+
       if (Date.now() >= exp * 1000) {
         const reGetToken = await api.getJWT();
         token = reGetToken;
       } else {
-        token = localStorage.getItem('jwt');
+        token = localStorage.getItem('ospiSecurity');
       }
 
       if (token) {
