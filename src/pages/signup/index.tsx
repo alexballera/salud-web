@@ -58,6 +58,7 @@ import { NAMESPACE_KEY as i18Forms } from '../../i18n/forms/i18n';
 /// i18n END
 
 import { uiOnAlert, uiClean } from '@/src/store/slice/ui.slice';
+import { userSet } from '@/src/store/slice/user.slice';
 import { useDispatch } from 'react-redux';
 import { useCreateAccountMutation } from '@/src/services/apiBFF';
 
@@ -305,12 +306,9 @@ function SignUpView(): JSX.Element {
     try {
       // const user = await api.createAccount('unique()', email, password, fullName);
 
-      console.log('Antes hook');
-      console.log(setPatient(values));
+      const user = await createAccount(setPatient(values)).unwrap();
+      dispatch(userSet({ idUser: user.userId }));
 
-      await createAccount(setPatient(values)).unwrap();
-
-      console.log('Despues hook');
       const session = await api.createSession(email, password);
 
       // await api.createPatient(setPatient(values, user.$id));
