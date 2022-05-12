@@ -12,7 +12,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { searchOnFilter } from '@/src/store/slice/search.slice';
-import { useSelector } from '@/src/store';
 const ArrowBackIcon = styled(MuiArrowBackIcon)({
   color: titlePageColor
 });
@@ -49,7 +48,6 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
   const { t } = useTranslation([i18nMedicalDirectory]);
   const router = useRouter();
   const dispatch = useDispatch();
-  const { filters } = useSelector(state => state.search);
 
   const orderOptionsArray = [
     {
@@ -84,10 +82,33 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
     }
   ];
 
+  const rangeOptionsArray = [
+    {
+      label: 'A 1km',
+      id: 1,
+      isActive: false,
+      value: 1000
+    },
+    {
+      label: 'A 5km',
+      id: 2,
+      isActive: false,
+      value: 2000
+    },
+    {
+      label: 'A 10km',
+      id: 3,
+      isActive: false,
+      value: 5000
+    }
+  ];
+
   const [orderOptions, setOrderOptions] = useState(orderOptionsArray);
-  const [orderSelect, setOrderSelect] = useState<DoctorSearchOrder | null>(
-    DoctorSearchOrder.distance
-  );
+  const [orderSelect, setOrderSelect] = useState<DoctorSearchOrder | null>(null);
+
+  // filtro de distancia
+  const [rangeOptions, setRangeOptions] = useState(rangeOptionsArray);
+  const [rangeSelect, setRangeSelect] = useState<number>(0);
 
   const handleSelectOrderOption = i => {
     const newValue = orderOptions.map((item, idx) => {
@@ -98,20 +119,37 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
     setOrderSelect(orderOptions.find(item => item.id === i + 1).type);
   };
 
+  const handleSelectRangeOption = i => {
+    const newValue = rangeOptions.map((item, idx) => {
+      item.isActive = idx === i;
+      return item;
+    });
+    setRangeOptions(newValue);
+    setRangeSelect(rangeOptions.find(item => item.id === i + 1).value);
+  };
+
   const redirecSearch = () => {
+    const filters = [];
     router.push({
       pathname: router.pathname,
       query: {
         ...router.query,
-        order: orderSelect
+        ...(orderSelect && { order: orderSelect }),
+        ...(rangeSelect && { range: rangeSelect })
       }
     });
 
-    dispatch(
-      searchOnFilter({
-        filters: [orderOptions.find(item => item.type === orderSelect).label]
-      })
-    );
+    if (orderSelect) filters.push(orderOptions.find(item => item.type === orderSelect).label);
+    if (rangeSelect) filters.push(rangeOptions.find(item => item.value === rangeSelect).label);
+
+    // suma valores elegidos del filtro al array filters para mostrar los chips
+    if (filters.length) {
+      dispatch(
+        searchOnFilter({
+          filters
+        })
+      );
+    }
     closeModal(false);
   };
 
@@ -202,6 +240,30 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
               <Typography variant="caption" className={classes.titleFilter}>
                 {t('filters.name.distance', { ns: i18nMedicalDirectory })}
               </Typography>
+              <br />
+              {rangeOptions.map((tag, idx) => {
+                if (tag.isActive) {
+                  return (
+                    <ChipActive
+                      key={idx}
+                      className={classes.chip}
+                      label={tag.label}
+                      color="default"
+                      onClick={() => handleSelectRangeOption(idx)}
+                    />
+                  );
+                }
+                return (
+                  <ChipDefault
+                    key={idx}
+                    className={classes.chip}
+                    label={tag.label}
+                    variant="outlined"
+                    color="default"
+                    onClick={() => handleSelectRangeOption(idx)}
+                  />
+                );
+              })}
             </Box>
           </Grid>
           <Grid item xs={12} mt={3}>
