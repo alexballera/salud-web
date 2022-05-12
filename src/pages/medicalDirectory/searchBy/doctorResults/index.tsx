@@ -26,7 +26,7 @@ const doctorResults = (): JSX.Element => {
     longitude: '0',
     detail: searchOptions.searchField.toString(),
     type: DoctorSearchType.general,
-    order: DoctorSearchOrder.distance,
+    order: DoctorSearchOrder.available,
     mode: DoctorSearchMode.presential
   });
 
