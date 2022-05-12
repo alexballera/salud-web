@@ -106,6 +106,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
   const [orderOptions, setOrderOptions] = useState(orderOptionsArray);
   const [orderSelect, setOrderSelect] = useState<DoctorSearchOrder | null>(null);
 
+  // filtro de distancia
   const [rangeOptions, setRangeOptions] = useState(rangeOptionsArray);
   const [rangeSelect, setRangeSelect] = useState<number>(0);
 
@@ -141,6 +142,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
     if (orderSelect) filters.push(orderOptions.find(item => item.type === orderSelect).label);
     if (rangeSelect) filters.push(rangeOptions.find(item => item.value === rangeSelect).label);
 
+    // suma valores elegidos del filtro al array filters para mostrar los chips
     if (filters.length) {
       dispatch(
         searchOnFilter({
