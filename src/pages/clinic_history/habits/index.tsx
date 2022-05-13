@@ -1,18 +1,72 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Grid } from '@material-ui/core';
+import { Box, Grid, styled } from '@material-ui/core';
+import { useSelector } from '@/src/store';
+import { useDispatch } from 'react-redux';
+import MuiCircularProgress from '@material-ui/core/CircularProgress';
 
 import { NAMESPACE_KEY as i18Habits } from '@/src/i18n/habits/i18n';
 import { useGetHabitsQuery } from '../../../services/apiBFF';
 import CardSimple from '@/src/components/common/CardSimple';
 
+import api from '../../../api/api';
+import { notificationClean } from '../../../store/slice/notification.slice';
+import { secondaryMainColor } from '@/src/styles/js/theme';
+
+const CircularProgress = styled(MuiCircularProgress)({
+  color: secondaryMainColor
+});
+
 const Habits = (): JSX.Element => {
   const { t } = useTranslation(i18Habits);
 
-  const { data } = useGetHabitsQuery();
+  const [idNotification, setIdNotification] = useState('');
+  const [spinner, setSpinner] = useState(false);
+  const { id, message } = useSelector(state => state.notification);
+  const dispatch = useDispatch();
+
+  let { data, refetch, isLoading } = useGetHabitsQuery();
+
+  useEffect(() => {
+    if (data?.token) {
+      setIdNotification(data.token);
+      api.realTime(data.token);
+      setSpinner(true);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (id === idNotification) {
+      if (message === 'FULFILLED') {
+        refetch();
+      } else {
+        data = {
+          ...data,
+          drugs: []
+        };
+      }
+
+      setSpinner(false);
+      dispatch(notificationClean());
+    }
+  }, [id, message]);
+
+  if (isLoading || spinner) {
+    return (
+      <Grid container>
+        <Grid item xs={12}>
+          <Box px={3} py={3}>
+            <Grid container direction="column" justify="center" alignItems="center">
+              <CircularProgress color="inherit" />
+            </Grid>
+          </Box>
+        </Grid>
+      </Grid>
+    );
+  }
 
   const listDrugs = drugs => {
-    const drugsNames = drugs.map(drug => `<p>${drug.name ? drug.name : ''}</p>`).join('');
+    const drugsNames = drugs && drugs.map(drug => `<p>${drug.name ? drug.name : ''}</p>`).join('');
     return drugsNames;
   };
 

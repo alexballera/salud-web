@@ -1,40 +1,70 @@
-/// BASE IMPORTS
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-/// BASE IMPORTS
-
-/// SLICE SERVICE
-import { useGetAllergiesQuery } from '@/src/services/apiBFF';
-/// SLICE SERVICE END
-
-/// STYLES
-import allergieStyles from './styles.module';
-/// STYLES END
-
-/// i18n
+import { useSelector } from '@/src/store';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { NAMESPACE_KEY as i18Allergies } from '@/src/i18n/allergies/i18n';
-/// i18n END
-
-/// MATERIAL UI
-import { Box, Typography, Card, Divider, Chip, Grid } from '@material-ui/core';
+import { Box, Typography, Card, Divider, Chip, Grid, styled } from '@material-ui/core';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-/// MATERIAL UI END
+import MuiCircularProgress from '@material-ui/core/CircularProgress';
+import { useGetAllergiesQuery } from '@/src/services/apiBFF';
+import allergieStyles from './styles.module';
+import { NAMESPACE_KEY as i18Allergies } from '@/src/i18n/allergies/i18n';
+
 import api from '../../../api/api';
+import { notificationClean } from '../../../store/slice/notification.slice';
+import { secondaryMainColor } from '@/src/styles/js/theme';
+
+const CircularProgress = styled(MuiCircularProgress)({
+  color: secondaryMainColor
+});
 
 const Allergies = (): JSX.Element => {
   const classes = allergieStyles();
   const { t } = useTranslation(i18Allergies);
+  const [idNotification, setIdNotification] = useState('');
+  const [spinner, setSpinner] = useState(false);
+  const { id, message } = useSelector(state => state.notification);
+  const dispatch = useDispatch();
 
-  const { data } = useGetAllergiesQuery();
+  let { data, refetch, isLoading } = useGetAllergiesQuery();
 
   useEffect(() => {
-    // console.log(data);
     if (data?.token) {
-      api.realTime(data?.token);
+      setIdNotification(data.token);
+      api.realTime(data.token);
+      setSpinner(true);
     }
-    // api.realTime();
   }, [data]);
+
+  useEffect(() => {
+    if (id === idNotification) {
+      if (message === 'FULFILLED') {
+        refetch();
+      } else {
+        data = {
+          ...data,
+          allergies: []
+        };
+      }
+
+      setSpinner(false);
+      dispatch(notificationClean());
+    }
+  }, [id, message]);
+
+  if (isLoading || spinner) {
+    return (
+      <Grid container className={classes.mainGrid}>
+        <Grid item xs={12}>
+          <Box px={3} py={3}>
+            <Grid container direction="column" justify="center" alignItems="center">
+              <CircularProgress color="inherit" />
+            </Grid>
+          </Box>
+        </Grid>
+      </Grid>
+    );
+  }
 
   return (
     <>

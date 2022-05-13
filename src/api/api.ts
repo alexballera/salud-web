@@ -1,4 +1,6 @@
 import { Appwrite, Models } from 'appwrite';
+import store from '../store';
+import { notificationSet } from '../store/slice/notification.slice';
 
 export type TPatient = {
   email?: string;
@@ -48,12 +50,17 @@ const api = {
   // },
 
   realTime: (token: string): void => {
-    console.log('RealTime 0');
-    api.sdk.subscribe([`collections.connect_sync_tokens.documents.${token}`, 'files'], response => {
-      // Callback will be executed on changes for documents A and all files.
-      console.log('RealTime', response);
-      return response;
+    const channel = `collections.connect_sync_tokens.documents.${token}`;
+
+    api.sdk.subscribe(channel, response => {
+      store.dispatch(
+        notificationSet({
+          id: token,
+          message: response.payload.status
+        })
+      );
     });
+    // api.sdk.subscribe.close();
   },
 
   getAccount: (): Promise<Models.User<Models.Preferences>> => {

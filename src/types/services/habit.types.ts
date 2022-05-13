@@ -18,6 +18,7 @@ type THabitsDrugs = {
 };
 
 export type THabitsResponse = {
+  token?: string;
   smoking?: THabits;
   alcoholism?: THabits;
   physicalActivity?: THabits;
