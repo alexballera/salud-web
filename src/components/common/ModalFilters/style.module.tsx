@@ -41,6 +41,20 @@ const modalFiltersStyles = makeStyles({
     backgroundColor: `${secondaryMainColor} !important`,
     fontFamily: `${poppinsFontFamily} !important`,
     fontSize: '15px !important'
+  },
+  chip: {
+    marginRight: 16,
+    marginTop: 16
+  },
+  chipWrapper: {
+    overflow: 'hidden',
+    height: 34,
+    marginTop: 8
+  },
+  chipFlex: {
+    display: 'flex',
+    overflow: 'scroll',
+    paddingBottom: 15
   }
 });
 
