@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { searchOnFilter } from '@/src/store/slice/search.slice';
+import SliderPrice from '../sliderPrice';
 const ArrowBackIcon = styled(MuiArrowBackIcon)({
   color: titlePageColor
 });
@@ -271,6 +272,9 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
               <Typography variant="caption" className={classes.titleFilter}>
                 {t('filters.name.price', { ns: i18nMedicalDirectory })}
               </Typography>
+              <Box mt={2}>
+                <SliderPrice />
+              </Box>
             </Box>
           </Grid>
           <Grid item xs={12} mt={3}>
