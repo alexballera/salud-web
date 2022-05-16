@@ -6,11 +6,13 @@ import type { Action, ThunkAction } from '@reduxjs/toolkit';
 import { apiBFF } from '@/src/services/apiBFF';
 import uiSlice from '@/src/store/slice/ui.slice';
 import searchSlice from '@/src/store/slice/search.slice';
+import navBarSlice from '@/src/store/slice/navbar.slice';
 
 const store = configureStore({
   reducer: {
     ui: uiSlice,
     search: searchSlice,
+    navbar: navBarSlice,
     [apiBFF.reducerPath]: apiBFF.reducer
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(apiBFF.middleware),
