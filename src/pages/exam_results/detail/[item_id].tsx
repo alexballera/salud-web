@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { getDate, getMonth, getYear, isValid } from 'date-fns';
+import { useDispatch } from 'react-redux';
+
 /// OWN COMPONENTS
 import SimpleCardList from '../../../components/common/Card/SimpleCardList';
 /// OWN COMPONENTS END
@@ -39,10 +41,9 @@ import type { TListItem } from '../../../components/common/Card/SimpleCardList/t
 import {
   TGeneralData,
   TResult,
-  getExamResultsById,
-  getExamResultsData
+  getExamResultsById
 } from '../../../services/getExamResultsData.service';
-import { setDataToLocalStorage } from '../../../services/localStorage.service';
+import { setTitle } from '@/src/store/slice/navbar.slice';
 /// SERVICES END
 
 type TProps = {
@@ -95,12 +96,15 @@ const useStyles = makeStyles(() =>
 function ExamResultsDetailPage({ examResult }: TProps): JSX.Element {
   const classes = useStyles();
   const { t } = useTranslation([i18nGlobal, i18nExamResults, i18Recipes]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (examResult) {
-      setDataToLocalStorage('titleExamResultDetail', examResult.name);
-    }
-  }, [examResult]);
+    dispatch(
+      setTitle({
+        title: examResult.name
+      })
+    );
+  }, []);
 
   const getExamDate = (date: string) => {
     let newDate = new Date(date);
