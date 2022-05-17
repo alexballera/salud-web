@@ -51,7 +51,7 @@ function SearchNavbar(): JSX.Element {
   const [filterIsActive, setFilterIsActive] = useState(false);
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
 
-  const { placeName, textFilter, filters } = useSelector(state => state.search);
+  const { placeName, textFilter, filters, order, range } = useSelector(state => state.search);
 
   const searchLabel = `${textFilter} • ${placeName}`;
 
@@ -76,6 +76,16 @@ function SearchNavbar(): JSX.Element {
       dispatch(searchClean());
       handleRouteBack(router.pathname);
     }
+  };
+
+  const handleDeleteFilter = tag => {
+    dispatch(
+      searchOnFilter({
+        filters: filters.filter(itemTag => itemTag !== tag),
+        ...(order && order.name === tag && { order: null }),
+        ...(range && range.name === tag && { range: null })
+      })
+    );
   };
 
   const Actions = (
@@ -159,13 +169,7 @@ function SearchNavbar(): JSX.Element {
                 label={tag}
                 variant="default"
                 color="default"
-                onDelete={() => {
-                  dispatch(
-                    searchOnFilter({
-                      filters: filters.filter(itemTag => itemTag !== tag)
-                    })
-                  );
-                }}
+                onDelete={() => handleDeleteFilter(tag)}
               />
             ))}
           </div>

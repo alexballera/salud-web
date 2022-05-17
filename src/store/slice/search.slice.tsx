@@ -7,8 +7,18 @@ export interface SearchState {
   lng?: string;
   textFilter?: string;
   filters?: string[];
-  order?: DoctorSearchOrder;
-  range?: number;
+  order?: FilterOrder;
+  range?: FilterNum;
+}
+
+export interface FilterOrder {
+  name: string;
+  value: DoctorSearchOrder;
+}
+
+export interface FilterNum {
+  name: string;
+  value: number;
 }
 
 const initialState: SearchState = {

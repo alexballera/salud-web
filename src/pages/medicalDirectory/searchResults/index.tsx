@@ -82,9 +82,7 @@ function MedicalDirectoryResultsPage(): JSX.Element {
         placeName: placeName || t('location.placeHolder', { ns: i18Global }),
         lat: lat !== '' ? lat : '0',
         lng: lng !== '' ? lng : '0',
-        textFilter: searchField,
-        order: order,
-        range: range
+        textFilter: searchField
       })
     );
   }, []);
