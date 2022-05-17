@@ -49,6 +49,7 @@ interface SearchState {
   searchField?: string;
   order?: DoctorSearchOrder;
   range?: number;
+  priceRange?: string;
 }
 
 function MedicalDirectoryResultsPage(): JSX.Element {
@@ -63,7 +64,8 @@ function MedicalDirectoryResultsPage(): JSX.Element {
     lng,
     placeName = 'Cerca de mi',
     order,
-    range
+    range,
+    priceRange
   } = router.query as SearchState;
 
   const { data, isLoading, isFetching } = useGetDoctorsQuery({
@@ -73,7 +75,8 @@ function MedicalDirectoryResultsPage(): JSX.Element {
     detail: searchField.toString(),
     order: order || DoctorSearchOrder.distance,
     mode: DoctorSearchMode.presential,
-    range: range || 5000
+    range: range || 5000,
+    priceRange: priceRange
   });
 
   useEffect(() => {
@@ -84,7 +87,8 @@ function MedicalDirectoryResultsPage(): JSX.Element {
         lng: lng !== '' ? lng : '0',
         textFilter: searchField,
         order: order,
-        range: range
+        range: range,
+        priceRange: priceRange
       })
     );
   }, []);

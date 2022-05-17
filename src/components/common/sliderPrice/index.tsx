@@ -1,42 +1,75 @@
-import { Box, Grid, Slider } from '@mui/material';
-import React, { useEffect } from 'react';
-import sliderPriceStyles from './style.module';
+import { colorRailSlider, secondaryLightColor, tertiaryLightColor } from '@/src/styles/js/theme';
+import { formatMoney } from '@/src/utils/helpers';
+import { Box, Grid, styled } from '@mui/material';
+import MuiSlider, { SliderThumb } from '@mui/material/Slider';
+import React from 'react';
 
-const SliderPrice = (): JSX.Element => {
-  const classes = sliderPriceStyles();
-  const [value, setValue] = React.useState<number[]>([20, 37]);
+const Slider = styled(MuiSlider)({
+  color: secondaryLightColor,
+  height: 2,
+  '& .MuiSlider-thumb': {
+    height: 24,
+    width: 24,
+    backgroundColor: tertiaryLightColor,
+    border: `1px solid ${secondaryLightColor}`,
+    '& .airbnb-bar': {
+      height: 8,
+      width: 8,
+      backgroundColor: secondaryLightColor,
+      borderRadius: '50%'
+    }
+  },
+  '& .MuiSlider-rail': {
+    color: colorRailSlider,
+    height: 4
+  }
+});
+type thumbComponentProps = React.HTMLAttributes<unknown>;
+
+function thumbComponent(props: thumbComponentProps) {
+  const { children, ...other } = props;
+  return (
+    <SliderThumb {...other}>
+      {children}
+      <span className="airbnb-bar" />
+    </SliderThumb>
+  );
+}
+type TProps = {
+  min: number;
+  max: number;
+  step: number;
+  currency: string;
+  setRangePrice;
+};
+
+const SliderPrice = ({ min, max, step, currency, setRangePrice }: TProps): JSX.Element => {
+  const [value, setValue] = React.useState<number[]>([min, max]);
 
   const handleChange = (e, value) => {
     const [min, max] = value;
-    if (max >= 50 && min <= 50 && max !== min) {
+    if (max > min) {
       setValue(value);
+      setRangePrice(value);
     }
   };
-
-  useEffect(() => {
-    console.log(value);
-  }, [value]);
 
   return (
     <>
       <Grid container>
-        <Grid item xs={10.5}>
+        <Grid item ml={1} xs={10}>
           <Slider
-            classes={{
-              thumb: classes.thumb,
-              rail: classes.rail,
-              track: classes.track,
-              mark: classes.mark
-            }}
+            components={{ Thumb: thumbComponent }}
             value={value}
             onChange={handleChange}
-            min={0}
-            max={1000}
+            step={step}
+            min={min}
+            max={max}
           />
         </Grid>
         <Grid item xs={10.5} display="flex" justifyContent="space-between">
-          <Box>{value[0]}</Box>
-          <Box>{value[1]}</Box>
+          <Box>{formatMoney(value[0], ',', currency)}</Box>
+          <Box>{formatMoney(value[1], ',', currency)}</Box>
         </Grid>
       </Grid>
     </>

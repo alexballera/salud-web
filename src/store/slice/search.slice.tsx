@@ -9,6 +9,7 @@ export interface SearchState {
   filters?: string[];
   order?: DoctorSearchOrder;
   range?: number;
+  priceRange?: string;
 }
 
 const initialState: SearchState = {
@@ -18,7 +19,8 @@ const initialState: SearchState = {
   textFilter: '',
   order: null,
   filters: [],
-  range: null
+  range: null,
+  priceRange: null
 };
 
 export const searchSlice = createSlice({

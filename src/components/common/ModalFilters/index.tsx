@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { searchOnFilter } from '@/src/store/slice/search.slice';
 import SliderPrice from '../sliderPrice';
+
 const ArrowBackIcon = styled(MuiArrowBackIcon)({
   color: titlePageColor
 });
@@ -104,6 +105,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
     }
   ];
 
+  const [priceRange, setRangePrice] = useState([]);
   const [orderOptions, setOrderOptions] = useState(orderOptionsArray);
   const [orderSelect, setOrderSelect] = useState<DoctorSearchOrder | null>(null);
 
@@ -136,7 +138,8 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
       query: {
         ...router.query,
         ...(orderSelect && { order: orderSelect }),
-        ...(rangeSelect && { range: rangeSelect })
+        ...(rangeSelect && { range: rangeSelect }),
+        ...(priceRange && { priceRange: `${priceRange[0]}-${priceRange[1]}` })
       }
     });
 
@@ -160,6 +163,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
       onClose={() => closeModal(false)}
       aria-labelledby="parent-modal-title"
       aria-describedby="parent-modal-description"
+      disableEnforceFocus
     >
       <Box className={classes.main}>
         <Grid
@@ -237,7 +241,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
             </Box>
           </Grid>
           <Grid item xs={12} mt={3}>
-            <Box sx={{ height: 250 }}>
+            <Box>
               <Typography variant="caption" className={classes.titleFilter}>
                 {t('filters.name.distance', { ns: i18nMedicalDirectory })}
               </Typography>
@@ -273,7 +277,13 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
                 {t('filters.name.price', { ns: i18nMedicalDirectory })}
               </Typography>
               <Box mt={2}>
-                <SliderPrice />
+                <SliderPrice
+                  min={0}
+                  max={30000}
+                  step={1000}
+                  currency="₡"
+                  setRangePrice={setRangePrice}
+                />
               </Box>
             </Box>
           </Grid>

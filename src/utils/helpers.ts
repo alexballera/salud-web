@@ -98,3 +98,23 @@ function errorCallback(error) {
 export const scrollTop = (): string => {
   return (window.history.scrollRestoration = 'manual');
 };
+
+export const formatMoney = (amount: number, separator: string, currency: string): string => {
+  amount = Math.ceil(amount);
+  let text = '';
+
+  if (amount > 0) {
+    while (amount > 0) {
+      text = separator + (amount % 1000).toString().padStart(3, '0') + text;
+      amount = Math.floor(amount / 1000);
+    }
+
+    while (text[0] === separator || text[0] === '0') {
+      text = text.substring(1);
+    }
+  } else {
+    text = '0';
+  }
+  text = currency + text;
+  return text;
+};
