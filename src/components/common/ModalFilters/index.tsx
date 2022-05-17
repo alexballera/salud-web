@@ -3,8 +3,7 @@ import MuiArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '../../../i18n/medicalDirectory/i18n';
-import MuiChip from '@material-ui/core/Chip';
-import { secondaryMainColor, tertiaryLightColor, titlePageColor } from '@/src/styles/js/theme';
+import { titlePageColor } from '@/src/styles/js/theme';
 
 import modalFiltersStyles from './style.module';
 import { DoctorSearchOrder } from '@/src/services/doctors.type';
@@ -13,6 +12,7 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { searchOnFilter } from '@/src/store/slice/search.slice';
 import { useSelector } from '@/src/store';
+import ChipFilters from '../ChipFilters';
 const ArrowBackIcon = styled(MuiArrowBackIcon)({
   color: titlePageColor
 });
@@ -21,28 +21,6 @@ type Tprops = {
   openModal: boolean;
   closeModal;
 };
-
-const ChipDefault = styled(MuiChip)({
-  color: titlePageColor,
-  '& svg': {
-    color: titlePageColor
-  },
-  '&:focus': {
-    color: titlePageColor
-  }
-});
-
-const ChipActive = styled(MuiChip)({
-  color: secondaryMainColor,
-  background: tertiaryLightColor,
-  '& svg': {
-    color: secondaryMainColor
-  },
-  '&:focus': {
-    color: secondaryMainColor,
-    background: tertiaryLightColor
-  }
-});
 
 const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
   const classes = modalFiltersStyles();
@@ -168,8 +146,20 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
   };
 
   useEffect(() => {
-    if (!order) setOrderOptions(orderOptionsArray);
-    if (!range) setRangeOptions(rangeOptionsArray);
+    if (!order) {
+      setOrderOptions(orderOptionsArray);
+      delete router.query.order;
+    }
+    if (!range) {
+      setRangeOptions(rangeOptionsArray);
+      delete router.query.range;
+    }
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query
+      }
+    });
   }, [order, range]);
 
   return (
@@ -230,25 +220,13 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
               </Typography>
               <br />
               {orderOptions.map((tag, idx) => {
-                if (tag.isActive) {
-                  return (
-                    <ChipActive
-                      key={idx}
-                      className={classes.chip}
-                      label={tag.label}
-                      color="default"
-                      onClick={() => handleSelectOrderOption(idx)}
-                    />
-                  );
-                }
                 return (
-                  <ChipDefault
+                  <ChipFilters
                     key={idx}
-                    className={classes.chip}
+                    isActive={tag.isActive}
                     label={tag.label}
-                    variant="outlined"
-                    color="default"
-                    onClick={() => handleSelectOrderOption(idx)}
+                    idx={idx}
+                    handleSelect={handleSelectOrderOption}
                   />
                 );
               })}
@@ -261,25 +239,13 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
               </Typography>
               <br />
               {rangeOptions.map((tag, idx) => {
-                if (tag.isActive) {
-                  return (
-                    <ChipActive
-                      key={idx}
-                      className={classes.chip}
-                      label={tag.label}
-                      color="default"
-                      onClick={() => handleSelectRangeOption(idx)}
-                    />
-                  );
-                }
                 return (
-                  <ChipDefault
+                  <ChipFilters
                     key={idx}
-                    className={classes.chip}
+                    isActive={tag.isActive}
                     label={tag.label}
-                    variant="outlined"
-                    color="default"
-                    onClick={() => handleSelectRangeOption(idx)}
+                    idx={idx}
+                    handleSelect={handleSelectRangeOption}
                   />
                 );
               })}
