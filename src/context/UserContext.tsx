@@ -35,7 +35,9 @@ const LOGGEDIN_ROUTES = [
   '/medicalDirectory/searchResults',
   '/medicalDirectory/searchBy/search_by_specialty',
   '/medicalDirectory/searchBy/specialtyResults',
-  '/doctor_profile/[doctor_id]'
+  '/doctor_profile/[doctor_id]',
+  '/exam_results/detail/[item_id]',
+  '/exam_results'
 ];
 
 const UserContext = createContext({} as TUserContent);
