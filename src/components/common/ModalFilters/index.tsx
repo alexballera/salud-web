@@ -8,10 +8,11 @@ import { secondaryMainColor, tertiaryLightColor, titlePageColor } from '@/src/st
 
 import modalFiltersStyles from './style.module';
 import { DoctorSearchOrder } from '@/src/services/doctors.type';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { searchOnFilter } from '@/src/store/slice/search.slice';
+import { useSelector } from '@/src/store';
 const ArrowBackIcon = styled(MuiArrowBackIcon)({
   color: titlePageColor
 });
@@ -93,22 +94,21 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
       label: 'A 5km',
       id: 2,
       isActive: false,
-      value: 2000
+      value: 5000
     },
     {
       label: 'A 10km',
       id: 3,
       isActive: false,
-      value: 5000
+      value: 10000
     }
   ];
 
   const [orderOptions, setOrderOptions] = useState(orderOptionsArray);
-  const [orderSelect, setOrderSelect] = useState<DoctorSearchOrder | null>(null);
+  const { order, range } = useSelector(state => state.search);
 
   // filtro de distancia
   const [rangeOptions, setRangeOptions] = useState(rangeOptionsArray);
-  const [rangeSelect, setRangeSelect] = useState<number>(0);
 
   const handleSelectOrderOption = i => {
     const newValue = orderOptions.map((item, idx) => {
@@ -116,7 +116,14 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
       return item;
     });
     setOrderOptions(newValue);
-    setOrderSelect(orderOptions.find(item => item.id === i + 1).type);
+    dispatch(
+      searchOnFilter({
+        order: {
+          name: orderOptions.find(item => item.id === i + 1).label,
+          value: orderOptions.find(item => item.id === i + 1).type
+        }
+      })
+    );
   };
 
   const handleSelectRangeOption = i => {
@@ -125,7 +132,14 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
       return item;
     });
     setRangeOptions(newValue);
-    setRangeSelect(rangeOptions.find(item => item.id === i + 1).value);
+    dispatch(
+      searchOnFilter({
+        range: {
+          name: rangeOptions.find(item => item.id === i + 1).label,
+          value: rangeOptions.find(item => item.id === i + 1).value
+        }
+      })
+    );
   };
 
   const redirecSearch = () => {
@@ -134,13 +148,13 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
       pathname: router.pathname,
       query: {
         ...router.query,
-        ...(orderSelect && { order: orderSelect }),
-        ...(rangeSelect && { range: rangeSelect })
+        ...(order && { order: order.value }),
+        ...(range && { range: range.value })
       }
     });
 
-    if (orderSelect) filters.push(orderOptions.find(item => item.type === orderSelect).label);
-    if (rangeSelect) filters.push(rangeOptions.find(item => item.value === rangeSelect).label);
+    if (order?.name) filters.push(order.name);
+    if (range?.name) filters.push(range.name);
 
     // suma valores elegidos del filtro al array filters para mostrar los chips
     if (filters.length) {
@@ -152,6 +166,11 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
     }
     closeModal(false);
   };
+
+  useEffect(() => {
+    if (!order) setOrderOptions(orderOptionsArray);
+    if (!range) setRangeOptions(rangeOptionsArray);
+  }, [order, range]);
 
   return (
     <Modal
