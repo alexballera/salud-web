@@ -76,8 +76,7 @@ const Vaccines = (): JSX.Element => {
     }
   };
 
-  const showDose = (regular: number, reinforcement: number, extra: number) => {
-    const dose = regular + reinforcement + extra;
+  const showDose = doses => {
     const totalDose = {
       1: 'I',
       2: 'I, II',
@@ -86,12 +85,12 @@ const Vaccines = (): JSX.Element => {
       5: 'V',
       6: 'VI'
     };
-    return totalDose[dose];
+    return totalDose[doses.length];
   };
 
   const ListItemVaccines = (item: TVaccines, i: number): JSX.Element => (
-    <React.Fragment key={item.vaccineId}>
-      <ListItem disablePadding button onClick={() => handleClick(item.vaccineId)} sx={{ pl: 1 }}>
+    <React.Fragment key={item.id}>
+      <ListItem disablePadding button onClick={() => handleClick(item.id)} sx={{ pl: 1 }}>
         <ListItemText
           primary={
             <Typography
@@ -121,13 +120,12 @@ const Vaccines = (): JSX.Element => {
               component="span"
               variant="body2"
             >
-              {showDose(item.regular?.length, item.reinforcement?.length, item.extra?.length)}{' '}
-              {t('vaccines.dose', { ns: i18ClinicHistory })}
+              {`${showDose(item.doses)} ${t('vaccines.dose', { ns: i18ClinicHistory })}`}
             </Typography>
           }
         />
         <ListItemSecondaryAction>
-          <IconButton edge="end" aria-label={item.name} onClick={() => handleClick(item.vaccineId)}>
+          <IconButton edge="end" aria-label={item.name} onClick={() => handleClick(item.id)}>
             <ChevronRightIcon color="secondary" />
           </IconButton>
         </ListItemSecondaryAction>

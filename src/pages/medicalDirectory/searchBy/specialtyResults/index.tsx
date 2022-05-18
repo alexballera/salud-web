@@ -25,6 +25,7 @@ interface SearchState {
   lng?: string;
   searchField?: string;
   order?: DoctorSearchOrder;
+  mode?: number;
   range?: number;
 }
 
@@ -40,6 +41,7 @@ const specialtyResults = (): JSX.Element => {
     lng,
     placeName = 'Cerca de mi',
     order,
+    mode,
     range
   } = router.query as SearchState;
 
@@ -49,8 +51,8 @@ const specialtyResults = (): JSX.Element => {
     type: DoctorSearchType.speciality,
     detail: searchField.toString(),
     order: order || DoctorSearchOrder.distance,
-    mode: DoctorSearchMode.presential,
-    range: range
+    mode: mode || DoctorSearchMode.presential,
+    range
   });
 
   useEffect(() => {
@@ -59,9 +61,7 @@ const specialtyResults = (): JSX.Element => {
         placeName: placeName || t('location.placeHolder', { ns: i18Global }),
         lat: lat !== '' ? lat : '0',
         lng: lng !== '' ? lng : '0',
-        textFilter: searchField,
-        order,
-        range
+        textFilter: searchField
       })
     );
   }, []);

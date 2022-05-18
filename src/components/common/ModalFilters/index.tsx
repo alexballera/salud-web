@@ -7,11 +7,13 @@ import MuiChip from '@material-ui/core/Chip';
 import { secondaryMainColor, tertiaryLightColor, titlePageColor } from '@/src/styles/js/theme';
 
 import modalFiltersStyles from './style.module';
-import { DoctorSearchOrder } from '@/src/services/doctors.type';
-import { useState } from 'react';
+import { DoctorSearchMode, DoctorSearchOrder } from '@/src/services/doctors.type';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { searchOnFilter } from '@/src/store/slice/search.slice';
+import { useSelector } from '@/src/store';
+
 const ArrowBackIcon = styled(MuiArrowBackIcon)({
   color: titlePageColor
 });
@@ -93,41 +95,39 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
       label: 'A 5km',
       id: 2,
       isActive: false,
-      value: 2000
+      value: 5000
     },
     {
       label: 'A 10km',
       id: 3,
       isActive: false,
-      value: 5000
+      value: 10000
     }
   ];
 
-  const modalityOptionsArray = [
+  const modeOptionsArray = [
     {
       label: t('filters.optionsOrder.modalityTelemedicine', { ns: i18nMedicalDirectory }),
       isActive: false,
       id: 1,
-      value: 'uno'
+      value: DoctorSearchMode.virtual
     },
     {
       label: t('filters.optionsOrder.modalityFaceToFace', { ns: i18nMedicalDirectory }),
       isActive: false,
       id: 2,
-      value: 'dos'
+      value: DoctorSearchMode.presential
     }
   ];
 
   const [orderOptions, setOrderOptions] = useState(orderOptionsArray);
-  const [orderSelect, setOrderSelect] = useState<DoctorSearchOrder | null>(null);
+  const { order, range, mode } = useSelector(state => state.search);
 
   // filtro de distancia
   const [rangeOptions, setRangeOptions] = useState(rangeOptionsArray);
-  const [rangeSelect, setRangeSelect] = useState<number>(0);
 
   // modality filter
-  const [modalityOptions, setModalityOptions] = useState(modalityOptionsArray);
-  const [modalitySelect, setModalitySelect] = useState<string>('');
+  const [modeOptions, setModeOptions] = useState(modeOptionsArray);
 
   const handleSelectOrderOption = i => {
     const newValue = orderOptions.map((item, idx) => {
@@ -135,7 +135,14 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
       return item;
     });
     setOrderOptions(newValue);
-    setOrderSelect(orderOptions.find(item => item.id === i + 1).type);
+    dispatch(
+      searchOnFilter({
+        order: {
+          name: orderOptions.find(item => item.id === i + 1).label,
+          value: orderOptions.find(item => item.id === i + 1).type
+        }
+      })
+    );
   };
 
   const handleSelectRangeOption = i => {
@@ -144,16 +151,30 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
       return item;
     });
     setRangeOptions(newValue);
-    setRangeSelect(rangeOptions.find(item => item.id === i + 1).value);
+    dispatch(
+      searchOnFilter({
+        range: {
+          name: rangeOptions.find(item => item.id === i + 1).label,
+          value: rangeOptions.find(item => item.id === i + 1).value
+        }
+      })
+    );
   };
 
-  const handleSelectModalityOption = (i: number) => {
-    const newValue = modalityOptions.map((item, idx) => {
+  const handleSelectModeOption = (i: number) => {
+    const newValue = modeOptions.map((item, idx) => {
       item.isActive = idx === i;
       return item;
     });
-    setModalityOptions(newValue);
-    setModalitySelect(modalityOptions.find(item => item.id === i + 1).value);
+    setModeOptions(newValue);
+    dispatch(
+      searchOnFilter({
+        mode: {
+          name: modeOptions.find(item => item.id === i + 1).label,
+          value: modeOptions.find(item => item.id === i + 1).value
+        }
+      })
+    );
   };
 
   const redirecSearch = () => {
@@ -162,16 +183,15 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
       pathname: router.pathname,
       query: {
         ...router.query,
-        ...(orderSelect && { order: orderSelect }),
-        ...(rangeSelect && { range: rangeSelect }),
-        ...(modalitySelect && { modality: modalitySelect })
+        ...(order && { order: order.value }),
+        ...(range && { range: range.value }),
+        ...(mode && { mode: mode.value })
       }
     });
 
-    if (orderSelect) filters.push(orderOptions.find(item => item.type === orderSelect).label);
-    if (rangeSelect) filters.push(rangeOptions.find(item => item.value === rangeSelect).label);
-    if (modalitySelect)
-      filters.push(modalityOptions.find(item => item.value === modalitySelect).label);
+    if (order?.name) filters.push(order.name);
+    if (range?.name) filters.push(range.name);
+    if (mode?.name) filters.push(mode.name);
 
     // suma valores elegidos del filtro al array filters para mostrar los chips
     if (filters.length) {
@@ -183,6 +203,12 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
     }
     closeModal(false);
   };
+
+  useEffect(() => {
+    if (!order) setOrderOptions(orderOptionsArray);
+    if (!range) setRangeOptions(rangeOptionsArray);
+    if (!mode) setModeOptions(modeOptionsArray);
+  }, [order, range, mode]);
 
   return (
     <Modal
@@ -267,7 +293,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
             </Box>
           </Grid>
           <Grid item xs={12} mt={3}>
-            <Box sx={{ height: 250 }}>
+            <Box>
               <Typography variant="caption" className={classes.titleFilter}>
                 {t('filters.name.distance', { ns: i18nMedicalDirectory })}
               </Typography>
@@ -321,7 +347,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
                 {t('filters.modalityCaption', { ns: i18nMedicalDirectory })}
               </Typography>
               <br />
-              {modalityOptions.map((tag, idx) => {
+              {modeOptions.map((tag, idx) => {
                 if (tag.isActive) {
                   return (
                     <ChipActive
@@ -329,7 +355,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
                       className={classes.chip}
                       label={tag.label}
                       color="default"
-                      onClick={() => handleSelectModalityOption(idx)}
+                      onClick={() => handleSelectModeOption(idx)}
                     />
                   );
                 }
@@ -340,7 +366,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
                     label={tag.label}
                     variant="outlined"
                     color="default"
-                    onClick={() => handleSelectModalityOption(idx)}
+                    onClick={() => handleSelectModeOption(idx)}
                   />
                 );
               })}
