@@ -15,6 +15,7 @@ import { searchOnFilter } from '@/src/store/slice/search.slice';
 import SliderPrice from '../sliderPrice';
 
 import { useSelector } from '@/src/store';
+import { formatMoney } from '@/src/utils/helpers';
 const ArrowBackIcon = styled(MuiArrowBackIcon)({
   color: titlePageColor
 });
@@ -106,9 +107,9 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
     }
   ];
 
-  const [priceRange, setRangePrice] = useState([]);
+  // const [priceRange, setRangePrice] = useState([]);
   const [orderOptions, setOrderOptions] = useState(orderOptionsArray);
-  const { order, range } = useSelector(state => state.search);
+  const { order, range, priceRange } = useSelector(state => state.search);
 
   // filtro de distancia
   const [rangeOptions, setRangeOptions] = useState(rangeOptionsArray);
@@ -159,7 +160,11 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
 
     if (order?.name) filters.push(order.name);
     if (range?.name) filters.push(range.name);
-
+    if (priceRange) {
+      filters.push(
+        `${formatMoney(priceRange[0], ',', '₡')} - ${formatMoney(priceRange[1], ',', '₡')}`
+      );
+    }
     // suma valores elegidos del filtro al array filters para mostrar los chips
     if (filters.length) {
       dispatch(
@@ -301,7 +306,8 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
                   max={30000}
                   step={1000}
                   currency="₡"
-                  setRangePrice={setRangePrice}
+                  priceRange={priceRange}
+                  setRangePrice={searchOnFilter}
                 />
               </Box>
             </Box>
