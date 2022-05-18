@@ -1,5 +1,5 @@
 /// BASE IMPORTS
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 /// BASE IMPORTS END
 
 /// OWN COMPONENTS
@@ -37,6 +37,11 @@ import { NAMESPACE_KEY as i18nGlobal } from '../../i18n/globals/i18n';
 /// SERVICES
 import { useGetFamiliarDiseasesQuery } from '@/src/services/apiBFF';
 import { TFamiliarDiseasesResponse } from '@/src/types/services/familiarDiseases.types';
+import { useDispatch } from 'react-redux';
+import { useSelector } from '@/src/store';
+
+import api from '../../api/api';
+import { notificationClean } from '../../store/slice/notification.slice';
 /// SERVICES END
 
 const CircularProgress = styled(MuiCircularProgress)({
@@ -82,13 +87,57 @@ const useStyles = makeStyles(() =>
 function FamilyIllnessesPage(): JSX.Element {
   const classes = useStyles();
   const { t } = useTranslation([i18nGlobal, i18nClinicHistory]);
-  const { data, isLoading } = useGetFamiliarDiseasesQuery();
+  const [idNotification, setIdNotification] = useState('');
+  const [spinner, setSpinner] = useState(false);
+  const { id, message } = useSelector(state => state.notification);
+  const dispatch = useDispatch();
+
+  let { data, refetch, isLoading } = useGetFamiliarDiseasesQuery();
+
+  useEffect(() => {
+    console.log(data);
+    if (data?.token) {
+      setIdNotification(data.token);
+      api.realTime(data.token);
+      setSpinner(true);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    console.log('okokok');
+    if (id === idNotification) {
+      if (message === 'FULFILLED') {
+        refetch();
+      } else {
+        data = {
+          ...data,
+          diseases: {
+            alzheimer: [],
+            anxiety: [],
+            cancer: [],
+            depression: [],
+            diabetes: [],
+            epilepsy: [],
+            heartDisease: [],
+            highPressure: [],
+            mentalDiseases: [],
+            personalityProblems: [],
+            stroke: [],
+            tuberculosis: []
+          }
+        };
+      }
+
+      setSpinner(false);
+      dispatch(notificationClean());
+    }
+  }, [id, message]);
 
   const getSubTitleCard = (disease: string[]) => {
     if (disease?.length === 0) {
       return t('familyIllnesses.noRegistration', { ns: i18nClinicHistory });
     } else {
-      if (disease.find(text => text === 'NO')) {
+      if (disease?.find(text => text === 'NO')) {
         return t('familyIllnesses.noOne', { ns: i18nClinicHistory });
       } else {
         return t('familyIllnesses.yes', { ns: i18nClinicHistory });
@@ -100,7 +149,7 @@ function FamilyIllnessesPage(): JSX.Element {
     if (disease?.length === 0) {
       return true;
     } else {
-      if (disease.find(text => text.toUpperCase() === 'NO')) {
+      if (disease?.find(text => text.toUpperCase() === 'NO')) {
         return true;
       } else {
         return false;
@@ -140,7 +189,7 @@ function FamilyIllnessesPage(): JSX.Element {
       {
         title: t('familyIllnesses.diabetes', { ns: i18nClinicHistory }),
         subtitle: getSubTitleCard(data.diseases.diabetes),
-        items: data.diseases.diabetes.map(item => {
+        items: data.diseases.diabetes?.map(item => {
           return { value: getFamilyName(item) };
         }),
         disabledCollapse: disabledCollapse(data.diseases.diabetes)
@@ -148,7 +197,7 @@ function FamilyIllnessesPage(): JSX.Element {
       {
         title: t('familyIllnesses.highPressure', { ns: i18nClinicHistory }),
         subtitle: getSubTitleCard(data.diseases.highPressure),
-        items: data.diseases.highPressure.map(item => {
+        items: data.diseases.highPressure?.map(item => {
           return { value: getFamilyName(item) };
         }),
         disabledCollapse: disabledCollapse(data.diseases.highPressure)
@@ -156,7 +205,7 @@ function FamilyIllnessesPage(): JSX.Element {
       {
         title: t('familyIllnesses.cancer', { ns: i18nClinicHistory }),
         subtitle: getSubTitleCard(data.diseases.cancer),
-        items: data.diseases.cancer.map(item => {
+        items: data.diseases.cancer?.map(item => {
           return { value: getFamilyName(item) };
         }),
         disabledCollapse: disabledCollapse(data.diseases.cancer)
@@ -164,7 +213,7 @@ function FamilyIllnessesPage(): JSX.Element {
       {
         title: t('familyIllnesses.heartDisease', { ns: i18nClinicHistory }),
         subtitle: getSubTitleCard(data.diseases.heartDisease),
-        items: data.diseases.heartDisease.map(item => {
+        items: data.diseases.heartDisease?.map(item => {
           return { value: getFamilyName(item) };
         }),
         disabledCollapse: disabledCollapse(data.diseases.heartDisease)
@@ -172,7 +221,7 @@ function FamilyIllnessesPage(): JSX.Element {
       {
         title: t('familyIllnesses.mentalDiseases', { ns: i18nClinicHistory }),
         subtitle: getSubTitleCard(data.diseases.mentalDiseases),
-        items: data.diseases.mentalDiseases.map(item => {
+        items: data.diseases.mentalDiseases?.map(item => {
           return { value: getFamilyName(item) };
         }),
         disabledCollapse: disabledCollapse(data.diseases.mentalDiseases)
@@ -180,7 +229,7 @@ function FamilyIllnessesPage(): JSX.Element {
       {
         title: t('familyIllnesses.alzheimer', { ns: i18nClinicHistory }),
         subtitle: getSubTitleCard(data.diseases.alzheimer),
-        items: data.diseases.alzheimer.map(item => {
+        items: data.diseases.alzheimer?.map(item => {
           return { value: getFamilyName(item) };
         }),
         disabledCollapse: disabledCollapse(data.diseases.alzheimer)
@@ -188,7 +237,7 @@ function FamilyIllnessesPage(): JSX.Element {
       {
         title: t('familyIllnesses.depression', { ns: i18nClinicHistory }),
         subtitle: getSubTitleCard(data.diseases.depression),
-        items: data.diseases.depression.map(item => {
+        items: data.diseases.depression?.map(item => {
           return { value: getFamilyName(item) };
         }),
         disabledCollapse: disabledCollapse(data.diseases.depression)
@@ -196,7 +245,7 @@ function FamilyIllnessesPage(): JSX.Element {
       {
         title: t('familyIllnesses.anxiety', { ns: i18nClinicHistory }),
         subtitle: getSubTitleCard(data.diseases.anxiety),
-        items: data.diseases.anxiety.map(item => {
+        items: data.diseases.anxiety?.map(item => {
           return { value: getFamilyName(item) };
         }),
         disabledCollapse: disabledCollapse(data.diseases.anxiety)
@@ -204,7 +253,7 @@ function FamilyIllnessesPage(): JSX.Element {
       {
         title: t('familyIllnesses.personalityProblems', { ns: i18nClinicHistory }),
         subtitle: getSubTitleCard(data.diseases.personalityProblems),
-        items: data.diseases.personalityProblems.map(item => {
+        items: data.diseases.personalityProblems?.map(item => {
           return { value: getFamilyName(item) };
         }),
         disabledCollapse: disabledCollapse(data.diseases.personalityProblems)
@@ -212,7 +261,7 @@ function FamilyIllnessesPage(): JSX.Element {
       {
         title: t('familyIllnesses.stroke', { ns: i18nClinicHistory }),
         subtitle: getSubTitleCard(data.diseases.stroke),
-        items: data.diseases.stroke.map(item => {
+        items: data.diseases.stroke?.map(item => {
           return { value: getFamilyName(item) };
         }),
         disabledCollapse: disabledCollapse(data.diseases.stroke)
@@ -220,7 +269,7 @@ function FamilyIllnessesPage(): JSX.Element {
       {
         title: t('familyIllnesses.epilepsy', { ns: i18nClinicHistory }),
         subtitle: getSubTitleCard(data.diseases.epilepsy),
-        items: data.diseases.epilepsy.map(item => {
+        items: data.diseases.epilepsy?.map(item => {
           return { value: getFamilyName(item) };
         }),
         disabledCollapse: disabledCollapse(data.diseases.epilepsy)
@@ -228,7 +277,7 @@ function FamilyIllnessesPage(): JSX.Element {
       {
         title: t('familyIllnesses.tuberculosis', { ns: i18nClinicHistory }),
         subtitle: getSubTitleCard(data.diseases.tuberculosis),
-        items: data.diseases.tuberculosis.map(item => {
+        items: data.diseases.tuberculosis?.map(item => {
           return { value: getFamilyName(item) };
         }),
         disabledCollapse: disabledCollapse(data.diseases.tuberculosis)
@@ -236,7 +285,7 @@ function FamilyIllnessesPage(): JSX.Element {
     ];
   };
 
-  if (isLoading) {
+  if (isLoading || spinner) {
     return (
       <Grid container className={classes.mainGrid}>
         <Grid item xs={12}>
@@ -255,6 +304,7 @@ function FamilyIllnessesPage(): JSX.Element {
       <Grid item xs={12}>
         <Box px={3} py={3}>
           {data &&
+            data.diseases &&
             getItems(data).map(item => (
               <React.Fragment key={item.title}>
                 <Box className={classes.boxSpacing}>

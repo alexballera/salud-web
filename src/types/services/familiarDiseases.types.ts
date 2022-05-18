@@ -1,4 +1,5 @@
 export type TFamiliarDiseasesResponse = {
+  token?: string;
   userId: string;
   diseases: TFamiliarDiseases;
   details?: string;
