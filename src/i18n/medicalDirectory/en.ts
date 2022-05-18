@@ -41,6 +41,13 @@ export const enMedicalDirectory = {
       lowHighPrice: 'Low-High price',
       availability: 'Availability',
       alphabetically: 'Alphabetically'
+    },
+    appointmentAvailability: {
+      nearestAppointment: 'Nearest appointment',
+      onWeekend: 'On weekend',
+      weekdayMorningAppointment: 'Weekday morning appointment',
+      weekdayAfternoonAppointment: 'Weekday afternoon appointment',
+      addSpecificDate: 'Add specific date'
     }
   }
 };

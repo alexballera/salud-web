@@ -41,6 +41,13 @@ export const esMedicalDirectory = {
       lowHighPrice: 'Precio bajo-alto',
       availability: 'Disponibilidad',
       alphabetically: 'Alfabéticamente'
+    },
+    appointmentAvailability: {
+      nearestAppointment: 'Cita más próxima',
+      onWeekend: 'En fin de semana',
+      weekdayMorningAppointment: 'Cita entre semana por la mañana',
+      weekdayAfternoonAppointment: 'Cita entre semana por la tarde',
+      addSpecificDate: 'Agregar fecha específica'
     }
   }
 };

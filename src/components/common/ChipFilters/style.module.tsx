@@ -5,6 +5,11 @@ const chipFiltersStyles = makeStyles({
     marginRight: 16,
     marginTop: 16
   },
+  chipIcon: {
+    marginRight: 16,
+    marginTop: 16,
+    paddingRight: 6
+  },
   chipWrapper: {
     overflow: 'hidden',
     height: 34,

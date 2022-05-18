@@ -82,11 +82,56 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
     }
   ];
 
+  const appointmentAvailabilityOptionsArray = [
+    {
+      label: t('filters.appointmentAvailability.nearestAppointment', { ns: i18nMedicalDirectory }),
+      id: 1,
+      isActive: false,
+      value: 1,
+      icon: false
+    },
+    {
+      label: t('filters.appointmentAvailability.onWeekend', { ns: i18nMedicalDirectory }),
+      id: 2,
+      isActive: false,
+      value: 2,
+      icon: false
+    },
+    {
+      label: t('filters.appointmentAvailability.weekdayMorningAppointment', {
+        ns: i18nMedicalDirectory
+      }),
+      id: 3,
+      isActive: false,
+      value: 3,
+      icon: false
+    },
+    {
+      label: t('filters.appointmentAvailability.weekdayAfternoonAppointment', {
+        ns: i18nMedicalDirectory
+      }),
+      id: 4,
+      isActive: false,
+      value: 4,
+      icon: false
+    },
+    {
+      label: t('filters.appointmentAvailability.addSpecificDate', { ns: i18nMedicalDirectory }),
+      id: 5,
+      isActive: false,
+      value: 5,
+      icon: true
+    }
+  ];
+
   const [orderOptions, setOrderOptions] = useState(orderOptionsArray);
   const { order, range } = useSelector(state => state.search);
 
   // filtro de distancia
   const [rangeOptions, setRangeOptions] = useState(rangeOptionsArray);
+  const [appointmentAvailabilityOptions, setAppointmentAvailabilityOptions] = useState(
+    appointmentAvailabilityOptionsArray
+  );
 
   const handleSelectOrderOption = i => {
     const newValue = orderOptions.map((item, idx) => {
@@ -118,6 +163,22 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
         }
       })
     );
+  };
+
+  const handleSelectAppointmentOption = i => {
+    const newValue = appointmentAvailabilityOptions.map((item, idx) => {
+      item.isActive = idx === i;
+      return item;
+    });
+    setAppointmentAvailabilityOptions(newValue);
+    // dispatch(
+    //   searchOnFilter({
+    //     range: {
+    //       name: rangeOptions.find(item => item.id === i + 1).label,
+    //       value: rangeOptions.find(item => item.id === i + 1).value
+    //     }
+    //   })
+    // );
   };
 
   const redirecSearch = () => {
@@ -259,10 +320,23 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
             </Box>
           </Grid>
           <Grid item xs={12} mt={3}>
-            <Box sx={{ height: 250 }}>
+            <Box>
               <Typography variant="caption" className={classes.titleFilter}>
                 {t('filters.name.appointmentAvailability', { ns: i18nMedicalDirectory })}
               </Typography>
+              <br />
+              {appointmentAvailabilityOptions.map((tag, idx) => {
+                return (
+                  <ChipFilters
+                    key={idx}
+                    isActive={tag.isActive}
+                    label={tag.label}
+                    idx={idx}
+                    handleSelect={handleSelectAppointmentOption}
+                    icon={tag.icon}
+                  />
+                );
+              })}
             </Box>
           </Grid>
           <Grid item xs={12} mt={3}>
