@@ -8,5 +8,6 @@ type TAllergies = {
 };
 
 export type TAllergieResponse = {
+  token?: string;
   allergies: TAllergies[];
 };
