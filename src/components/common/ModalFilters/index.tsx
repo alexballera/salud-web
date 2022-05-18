@@ -160,6 +160,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
 
     if (order?.name) filters.push(order.name);
     if (range?.name) filters.push(range.name);
+
     if (priceRange) {
       filters.push(
         `${formatMoney(priceRange[0], ',', '₡')} - ${formatMoney(priceRange[1], ',', '₡')}`

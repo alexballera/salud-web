@@ -9,7 +9,7 @@ export interface SearchState {
   filters?: string[];
   order?: FilterOrder;
   range?: FilterNum;
-  priceRange?: string;
+  priceRange?: number[];
 }
 
 export interface FilterOrder {
