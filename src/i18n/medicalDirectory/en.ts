@@ -28,6 +28,7 @@ export const enMedicalDirectory = {
     actionEraseAll: 'Erase all',
     actionApplyFilters: 'Apply filters',
     results: 'results',
+    modalityCaption: 'The first appointments with each doctor will always be face-to-face.',
     name: {
       sortBy: 'Sort by',
       distance: 'Distance',
@@ -40,7 +41,9 @@ export const enMedicalDirectory = {
       highLowPrice: 'High-low price',
       lowHighPrice: 'Low-High price',
       availability: 'Availability',
-      alphabetically: 'Alphabetically'
+      alphabetically: 'Alphabetically',
+      modalityTelemedicine: 'Telemedicine',
+      modalityFaceToFace: 'Face to Face'
     }
   }
 };

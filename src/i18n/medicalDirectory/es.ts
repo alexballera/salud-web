@@ -28,6 +28,7 @@ export const esMedicalDirectory = {
     actionEraseAll: 'Borrar todos',
     actionApplyFilters: 'Aplicar filtros',
     results: 'resultados',
+    modalityCaption: 'Las primeras citas con cada doctor siempre serán de carácter presencial.',
     name: {
       sortBy: 'Ordenar por',
       distance: 'Distancia',
@@ -40,7 +41,9 @@ export const esMedicalDirectory = {
       highLowPrice: 'Precio alto-bajo',
       lowHighPrice: 'Precio bajo-alto',
       availability: 'Disponibilidad',
-      alphabetically: 'Alfabéticamente'
+      alphabetically: 'Alfabéticamente',
+      modalityTelemedicine: 'Telemedicina',
+      modalityFaceToFace: 'Presencial'
     }
   }
 };

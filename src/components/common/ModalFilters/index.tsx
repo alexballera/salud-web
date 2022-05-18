@@ -103,12 +103,31 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
     }
   ];
 
+  const modalityOptionsArray = [
+    {
+      label: t('filters.optionsOrder.modalityTelemedicine', { ns: i18nMedicalDirectory }),
+      isActive: false,
+      id: 1,
+      value: 'uno'
+    },
+    {
+      label: t('filters.optionsOrder.modalityFaceToFace', { ns: i18nMedicalDirectory }),
+      isActive: false,
+      id: 2,
+      value: 'dos'
+    }
+  ];
+
   const [orderOptions, setOrderOptions] = useState(orderOptionsArray);
   const [orderSelect, setOrderSelect] = useState<DoctorSearchOrder | null>(null);
 
   // filtro de distancia
   const [rangeOptions, setRangeOptions] = useState(rangeOptionsArray);
   const [rangeSelect, setRangeSelect] = useState<number>(0);
+
+  // modality filter
+  const [modalityOptions, setModalityOptions] = useState(modalityOptionsArray);
+  const [modalitySelect, setModalitySelect] = useState<string>('');
 
   const handleSelectOrderOption = i => {
     const newValue = orderOptions.map((item, idx) => {
@@ -128,6 +147,15 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
     setRangeSelect(rangeOptions.find(item => item.id === i + 1).value);
   };
 
+  const handleSelectModalityOption = (i: number) => {
+    const newValue = modalityOptions.map((item, idx) => {
+      item.isActive = idx === i;
+      return item;
+    });
+    setModalityOptions(newValue);
+    setModalitySelect(modalityOptions.find(item => item.id === i + 1).value);
+  };
+
   const redirecSearch = () => {
     const filters = [];
     router.push({
@@ -135,12 +163,15 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
       query: {
         ...router.query,
         ...(orderSelect && { order: orderSelect }),
-        ...(rangeSelect && { range: rangeSelect })
+        ...(rangeSelect && { range: rangeSelect }),
+        ...(modalitySelect && { modality: modalitySelect })
       }
     });
 
     if (orderSelect) filters.push(orderOptions.find(item => item.type === orderSelect).label);
     if (rangeSelect) filters.push(rangeOptions.find(item => item.value === rangeSelect).label);
+    if (modalitySelect)
+      filters.push(modalityOptions.find(item => item.value === modalitySelect).label);
 
     // suma valores elegidos del filtro al array filters para mostrar los chips
     if (filters.length) {
@@ -281,10 +312,38 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
             </Box>
           </Grid>
           <Grid item xs={12} mt={3}>
-            <Box sx={{ height: 250 }}>
+            <Box sx={{ height: 250, marginRight: 8 }}>
               <Typography variant="caption" className={classes.titleFilter}>
                 {t('filters.name.modality', { ns: i18nMedicalDirectory })}
               </Typography>
+              <br />
+              <Typography variant="caption" className={classes.modalityCaption}>
+                {t('filters.modalityCaption', { ns: i18nMedicalDirectory })}
+              </Typography>
+              <br />
+              {modalityOptions.map((tag, idx) => {
+                if (tag.isActive) {
+                  return (
+                    <ChipActive
+                      key={idx}
+                      className={classes.chip}
+                      label={tag.label}
+                      color="default"
+                      onClick={() => handleSelectModalityOption(idx)}
+                    />
+                  );
+                }
+                return (
+                  <ChipDefault
+                    key={idx}
+                    className={classes.chip}
+                    label={tag.label}
+                    variant="outlined"
+                    color="default"
+                    onClick={() => handleSelectModalityOption(idx)}
+                  />
+                );
+              })}
             </Box>
           </Grid>
         </Grid>
