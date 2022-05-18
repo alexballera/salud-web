@@ -61,7 +61,7 @@ export const apiBFF = createApi({
         { vaccineId }: TGetVaccineByIdParams
       ) => {
         const { vaccines } = response;
-        return vaccines.find(item => item.vaccineId === vaccineId);
+        return vaccines.find(item => item.id === vaccineId);
       }
     }),
     getMeasurements: builder.query<IMeasurementsData, string>({

@@ -109,23 +109,23 @@ function VaccinesPreview(): JSX.Element {
     }).toLowerCase()} ${year}`;
   };
 
-  const getCardBodyText = (doses: TDose) => {
-    const { applied, date } = doses;
-    return applied === true ? formatDate(date) : t('vaccines.no_applied');
+  const getCardBodyText = (item: TDose) => {
+    const { date } = item;
+    return date !== null ? formatDate(date) : t('vaccines.no_applied');
   };
 
   return (
     <Box px={3} py={4} className={classes.main}>
-      <Typography className={classes.diseaseText}>{data.name}</Typography>
+      <Typography className={classes.diseaseText}>{data && data.name}</Typography>
       <Typography className={classes.subTitle}>
-        {t('vaccines.preview_sub_title', { disease: data.name, ns: i18nClinicHistory })}
+        {t('vaccines.preview_sub_title', {
+          disease: data && data.name,
+          ns: i18nClinicHistory
+        })}
       </Typography>
 
-      {Object.values(data)
-        .filter(item => Array.isArray(item))
-        .flatMap(item => item as TDose[])
-        .sort((a, b) => +new Date(b.date) - +new Date(a.date))
-        .map((item, idx) => {
+      {data &&
+        data.doses.map((item, idx) => {
           return (
             <Box my={3} key={idx}>
               <CardCollapse

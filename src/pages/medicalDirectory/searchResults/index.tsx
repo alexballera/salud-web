@@ -86,8 +86,6 @@ function MedicalDirectoryResultsPage(): JSX.Element {
         lat: lat !== '' ? lat : '0',
         lng: lng !== '' ? lng : '0',
         textFilter: searchField,
-        order: order,
-        range: range,
         priceRange: priceRange
       })
     );
