@@ -25,22 +25,18 @@ export type TGeneralData = {
 export type TExamResultsGroup = { month: string; items: TGeneralData }[];
 
 export type TDose = {
-  dose: string;
+  description: string;
   date: string;
-  applied?: boolean;
 };
 
 export type TVaccines = {
   name: string;
-  regular?: TDose[];
-  reinforcement?: TDose[];
-  extra?: TDose[];
-  vaccineId?: string;
+  doses?: TDose[];
+  id?: string;
 };
 
 export type TVaccinesData = {
   userId: string;
-  registeredBy: string;
   schema: string;
   vaccines: TVaccines[];
 };

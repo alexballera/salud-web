@@ -26,7 +26,7 @@ import ActionButtons from './components/ActionButtons.component';
 import DropDownButton from './components/DropDownButton';
 import Menu from '../Menu';
 import { UserContext } from '../../../context/UserContext';
-import { getDataFromLocalStorage } from '@/src/services/localStorage.service';
+import { useSelector } from '@/src/store';
 /// OWN COMPONENTS END
 
 function Navbar(): JSX.Element {
@@ -34,6 +34,7 @@ function Navbar(): JSX.Element {
   const router = useRouter();
   const { userLogState, account } = useContext(UserContext);
   const { t } = useTranslation([i18Global, i18Forms]);
+  const { title } = useSelector(state => state.navbar);
 
   const showMenuMobile = () => {
     switch (router.pathname) {
@@ -159,7 +160,7 @@ function Navbar(): JSX.Element {
       case '/clinic_history/vaccines/[item_id]':
         return t('items.clinic_history_vaccines', { ns: 'menu' });
       case '/exam_results/detail/[item_id]':
-        return getDataFromLocalStorage('titleExamResultDetail');
+        return title;
       case '/consultationHistory/detail/[...slug]':
         return t('items.detail', { ns: 'menu' });
       case '/consultationHistory':
