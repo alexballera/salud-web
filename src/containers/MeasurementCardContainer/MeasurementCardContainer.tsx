@@ -29,7 +29,7 @@ export const MeasurementCardContainer = ({ generalData }: IProps): JSX.Element =
   const classes = useStyles();
 
   const { records } = generalData;
-  const arterialPressure = records.find(x => x.type === 'arterialPressure');
+  const arterialPressure = records && records.find(x => x.type === 'arterialPressure');
   const arterialPressureValue =
     arterialPressure && arterialPressure.measurements.length > 0
       ? arterialPressure.measurements[arterialPressure.measurements.length - 1].systolic +
@@ -43,7 +43,7 @@ export const MeasurementCardContainer = ({ generalData }: IProps): JSX.Element =
       ? arterialPressure.measurements[arterialPressure.measurements.length - 1].time
       : '-';
 
-  const bloodGlocuse = records.find(x => x.type === 'bloodGlocuse');
+  const bloodGlocuse = records && records.find(x => x.type === 'bloodGlocuse');
   const bloodGlocuseValue =
     bloodGlocuse && bloodGlocuse.measurements.length > 0
       ? `${bloodGlocuse.measurements[bloodGlocuse.measurements.length - 1].value} ${
@@ -55,7 +55,7 @@ export const MeasurementCardContainer = ({ generalData }: IProps): JSX.Element =
       ? bloodGlocuse.measurements[bloodGlocuse.measurements.length - 1].time
       : '-';
 
-  const weight = records.find(x => x.type === 'weight');
+  const weight = records && records.find(x => x.type === 'weight');
   const weightValue =
     weight && weight.measurements.length > 0
       ? weight.measurements[weight.measurements.length - 1].value + ' ' + weight.unit
