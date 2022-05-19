@@ -152,7 +152,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
       pathname: router.pathname,
       query: {
         ...router.query,
-        ...(priceRange && { priceRange: `${priceRange[0]}-${priceRange[1]}` }),
+        ...(priceRange && { priceRange: `${priceRange.value[0]}-${priceRange.value[1]}` }),
         ...(order && { order: order.value }),
         ...(range && { range: range.value })
       }
@@ -163,7 +163,11 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
 
     if (priceRange) {
       filters.push(
-        `${formatMoney(priceRange[0], ',', '₡')} - ${formatMoney(priceRange[1], ',', '₡')}`
+        `${formatMoney(priceRange.value[0], ',', '₡')} - ${formatMoney(
+          priceRange.value[1],
+          ',',
+          '₡'
+        )}`
       );
     }
     // suma valores elegidos del filtro al array filters para mostrar los chips
@@ -307,7 +311,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
                   max={30000}
                   step={1000}
                   currency="₡"
-                  priceRange={priceRange}
+                  priceRange={priceRange?.value}
                   setRangePrice={searchOnFilter}
                 />
               </Box>

@@ -53,7 +53,7 @@ const SliderPrice = ({
   priceRange,
   setRangePrice
 }: TProps): JSX.Element => {
-  const [value, setValue] = React.useState<number[]>(priceRange);
+  const [value, setValue] = React.useState<number[]>(priceRange || [min, max]);
   const dispatch = useDispatch();
 
   const handleChange = (e, value) => {
@@ -62,7 +62,10 @@ const SliderPrice = ({
       setValue(value);
       dispatch(
         setRangePrice({
-          priceRange: value
+          priceRange: {
+            name: 'priceRange',
+            value: value
+          }
         })
       );
     }

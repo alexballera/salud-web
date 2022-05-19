@@ -79,9 +79,11 @@ function MedicalDirectoryResultsPage(): JSX.Element {
     priceRange: priceRange
   });
 
-  const price = priceRange.split('-').map(str => {
-    return Number(str);
-  });
+  const price =
+    priceRange &&
+    priceRange.split('-').map(str => {
+      return Number(str);
+    });
 
   useEffect(() => {
     dispatch(

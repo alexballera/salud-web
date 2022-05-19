@@ -9,7 +9,7 @@ export interface SearchState {
   filters?: string[];
   order?: FilterOrder;
   range?: FilterNum;
-  priceRange?: number[];
+  priceRange?: FilterPriceRange;
 }
 
 export interface FilterOrder {
@@ -20,6 +20,11 @@ export interface FilterOrder {
 export interface FilterNum {
   name: string;
   value: number;
+}
+
+export interface FilterPriceRange {
+  name: string;
+  value: number[];
 }
 
 const initialState: SearchState = {
