@@ -6,12 +6,16 @@ import type { Action, ThunkAction } from '@reduxjs/toolkit';
 import { apiBFF } from '@/src/services/apiBFF';
 import uiSlice from '@/src/store/slice/ui.slice';
 import searchSlice from '@/src/store/slice/search.slice';
+import userSlice from '@/src/store/slice/user.slice';
+import notificationSlice from '@/src/store/slice/notification.slice';
 import navBarSlice from '@/src/store/slice/navbar.slice';
 
 const store = configureStore({
   reducer: {
     ui: uiSlice,
     search: searchSlice,
+    user: userSlice,
+    notification: notificationSlice,
     navbar: navBarSlice,
     [apiBFF.reducerPath]: apiBFF.reducer
   },

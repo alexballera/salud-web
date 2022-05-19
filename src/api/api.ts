@@ -1,16 +1,23 @@
 import { Appwrite, Models } from 'appwrite';
+import store from '../store';
+import { notificationSet } from '../store/slice/notification.slice';
 
 export type TPatient = {
+  email?: string;
+  password?: string;
+  fullName?: string;
+  pronoun?: string;
+  biologicalSex?: string;
   documentType: string;
   documentNumber: string;
   birthDate: string;
-  gender: string;
+  gender?: string;
   phoneNumbers: string[];
   province: string;
   canton: string;
   district: string;
   country: string;
-  userId: string;
+  userId?: string;
 };
 
 const SERVER = {
@@ -33,22 +40,41 @@ const api = {
     return appwrite;
   },
 
-  createAccount: (
-    unique: string,
-    email: string,
-    password: string,
-    name: string
-  ): Promise<Models.User<Models.Preferences>> => {
-    return api.provider().account.create(unique, email, password, name);
+  // createAccount: (
+  //   unique: string,
+  //   email: string,
+  //   password: string,
+  //   name: string
+  // ): Promise<Models.User<Models.Preferences>> => {
+  //   return api.provider().account.create(unique, email, password, name);
+  // },
+
+  realTime: (token: string): void => {
+    const channel = `collections.connect_sync_tokens.documents.${token}`;
+
+    api.sdk.subscribe(channel, response => {
+      store.dispatch(
+        notificationSet({
+          id: token,
+          message: response.payload.status
+        })
+      );
+    });
+    // api.sdk.subscribe.close();
   },
 
   getAccount: (): Promise<Models.User<Models.Preferences>> => {
     return api.provider().account.get();
   },
 
+  getJWT: async () => {
+    const token = await api.provider().account.createJWT();
+    localStorage.setItem('ospiSecurity', `${token.jwt}`);
+    return token.jwt;
+  },
+
   createSession: (email: string, password: string): Promise<Models.Session> => {
-    const JWT = api.provider().account.createJWT();
-    console.log('Api jwt', JWT);
+    api.getJWT();
     return api.provider().account.createSession(email, password);
   },
 
@@ -56,21 +82,21 @@ const api = {
     return api.provider().account.deleteSession('current');
   },
 
-  createDocument: (collectionId, data, read, write) => {
-    return api.provider().database.createDocument(collectionId, data, read, write);
-  },
+  // createDocument: (collectionId, data, read, write) => {
+  //   return api.provider().database.createDocument(collectionId, data, read, write);
+  // },
 
-  listDocuments: collectionId => {
-    return api.provider().database.listDocuments(collectionId);
-  },
+  // listDocuments: collectionId => {
+  //   return api.provider().database.listDocuments(collectionId);
+  // },
 
-  updateDocument: (collectionId, documentId, data, read, write) => {
-    return api.provider().database.updateDocument(collectionId, documentId, data, read, write);
-  },
+  // updateDocument: (collectionId, documentId, data, read, write) => {
+  //   return api.provider().database.updateDocument(collectionId, documentId, data, read, write);
+  // },
 
-  deleteDocument: (collectionId, documentId) => {
-    return api.provider().database.deleteDocument(collectionId, documentId);
-  },
+  // deleteDocument: (collectionId, documentId) => {
+  //   return api.provider().database.deleteDocument(collectionId, documentId);
+  // },
 
   restorePassword: (email: string): Promise<Models.Preferences> => {
     return api
@@ -95,10 +121,10 @@ const api = {
     return api.provider().account.updateRecovery(userId, secret, password, passwordVerify);
   },
 
-  createPatient: (patient: TPatient): Promise<Models.Document> => {
-    const { patientCollectionID } = SERVER;
-    return api.provider().database.createDocument(patientCollectionID, 'unique()', patient);
-  },
+  // createPatient: (patient: TPatient): Promise<Models.Document> => {
+  //   const { patientCollectionID } = SERVER;
+  //   return api.provider().database.createDocument(patientCollectionID, 'unique()', patient);
+  // },
 
   getUserSession: (sessionID: string): Promise<Models.Session> => {
     return api.provider().account.getSession(sessionID);
