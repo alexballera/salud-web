@@ -14,6 +14,7 @@ import { searchOnFilter } from '@/src/store/slice/search.slice';
 import SliderPrice from '../sliderPrice';
 
 import { useSelector } from '@/src/store';
+import { formatMoney } from '@/src/utils/helpers';
 import ChipFilters from '../ChipFilters';
 
 const ArrowBackIcon = styled(MuiArrowBackIcon)({
@@ -127,7 +128,6 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
     }
   ];
 
-  const [priceRange, setRangePrice] = useState([]);
   const modeOptionsArray = [
     {
       label: t('filters.optionsOrder.modalityTelemedicine', { ns: i18nMedicalDirectory }),
@@ -144,7 +144,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
   ];
 
   const [orderOptions, setOrderOptions] = useState(orderOptionsArray);
-  const { order, range, mode } = useSelector(state => state.search);
+  const { order, range, mode, priceRange } = useSelector(state => state.search);
 
   // filtro de distancia
   const [rangeOptions, setRangeOptions] = useState(rangeOptionsArray);
@@ -225,7 +225,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
       pathname: router.pathname,
       query: {
         ...router.query,
-        ...(priceRange && { priceRange: `${priceRange[0]}-${priceRange[1]}` }),
+        ...(priceRange && { priceRange: `${priceRange.value[0]}-${priceRange.value[1]}` }),
         ...(order && { order: order.value }),
         ...(range && { range: range.value }),
         ...(mode && { mode: mode.value })
@@ -236,6 +236,15 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
     if (range?.name) filters.push(range.name);
     if (mode?.name) filters.push(mode.name);
 
+    if (priceRange) {
+      filters.push(
+        `${formatMoney(priceRange.value[0], ',', '₡')} - ${formatMoney(
+          priceRange.value[1],
+          ',',
+          '₡'
+        )}`
+      );
+    }
     // suma valores elegidos del filtro al array filters para mostrar los chips
     if (filters.length) {
       dispatch(
@@ -369,7 +378,8 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
                   max={30000}
                   step={1000}
                   currency="₡"
-                  setRangePrice={setRangePrice}
+                  priceRange={priceRange?.value}
+                  setRangePrice={searchOnFilter}
                 />
               </Box>
             </Box>

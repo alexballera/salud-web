@@ -99,6 +99,12 @@ export const scrollTop = (): string => {
   return (window.history.scrollRestoration = 'manual');
 };
 
+export const decodeToken = token => {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace('-', '+').replace('_', '/');
+  return JSON.parse(window.atob(base64));
+};
+
 export const formatMoney = (amount: number, separator: string, currency: string): string => {
   amount = Math.ceil(amount);
   let text = '';
@@ -117,10 +123,4 @@ export const formatMoney = (amount: number, separator: string, currency: string)
   }
   text = currency + text;
   return text;
-};
-
-export const decodeToken = token => {
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replace('-', '+').replace('_', '/');
-  return JSON.parse(window.atob(base64));
 };

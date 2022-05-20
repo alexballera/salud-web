@@ -10,7 +10,7 @@ export interface SearchState {
   mode?: FilterNum;
   order?: FilterOrder;
   range?: FilterNum;
-  priceRange?: string;
+  priceRange?: FilterPriceRange;
 }
 
 export interface FilterOrder {
@@ -21,6 +21,11 @@ export interface FilterOrder {
 export interface FilterNum {
   name: string;
   value: number;
+}
+
+export interface FilterPriceRange {
+  name: string;
+  value: number[];
 }
 
 const initialState: SearchState = {

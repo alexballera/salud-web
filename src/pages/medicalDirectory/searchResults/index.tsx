@@ -79,6 +79,12 @@ function MedicalDirectoryResultsPage(): JSX.Element {
     priceRange: priceRange
   });
 
+  const price =
+    priceRange &&
+    priceRange.split('-').map(str => {
+      return Number(str);
+    });
+
   useEffect(() => {
     dispatch(
       searchOnFilter({
@@ -86,7 +92,7 @@ function MedicalDirectoryResultsPage(): JSX.Element {
         lat: lat !== '' ? lat : '0',
         lng: lng !== '' ? lng : '0',
         textFilter: searchField,
-        priceRange: priceRange
+        priceRange: price
       })
     );
   }, []);
@@ -111,13 +117,13 @@ function MedicalDirectoryResultsPage(): JSX.Element {
           </Grid>
         )}
         <Grid item xs={12} className={classes.results}>
-          {!isLoading && data?.doctors?.length !== 0 && (
+          {!isLoading && data?.doctors && data?.doctors?.length !== 0 && (
             <Typography variant="h1" className={classes.title}>
               {t('searchResults.title', { ns: i18nMedicalDirectory })}
             </Typography>
           )}
           {!isLoading &&
-            data &&
+            data?.doctors &&
             data?.doctors.map((item, idx) => {
               return <CardDoctorResult {...item} redirectTo={`/doctor_profile/${idx}`} key={idx} />;
             })}
