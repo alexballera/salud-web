@@ -135,9 +135,11 @@ function RecipeAndPrescriptionPage(): JSX.Element {
     if (sliderYear) {
       setLoading(true);
 
-      const filterResults = filterResultsByYear(data.recipies, sliderYear);
-      groupResultsByMonth(filterResults);
-      setRecipiesAndPrescriptionGroups(groupResultsByMonth(filterResults));
+      if (data) {
+        const filterResults = filterResultsByYear(data, sliderYear);
+        groupResultsByMonth(filterResults);
+        setRecipiesAndPrescriptionGroups(groupResultsByMonth(filterResults));
+      }
 
       if (!isLoading) {
         setLoading(false);

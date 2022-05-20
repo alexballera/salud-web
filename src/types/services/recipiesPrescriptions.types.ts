@@ -1,3 +1,1 @@
-export type TRecipiesPrescriptionsResponse = {
-  recipies: [];
-};
+export type TRecipiesPrescriptionsResponse = [];

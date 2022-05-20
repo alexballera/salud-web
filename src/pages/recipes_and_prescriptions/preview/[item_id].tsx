@@ -46,12 +46,9 @@ import type {
 } from '../../../services/getRecipiesAndPrescriptionData.service';
 /// / TYPES END
 
-/// SERVICES
-import { getRecipiesAndPrescriptionsById } from '../../../services/getRecipiesAndPrescriptionData.service';
-/// SERVICES END
-
 /// DATE-FNS
 import { isValid, parseISO } from 'date-fns';
+import { useGetRecipiesPrescriptionsQuery } from '@/src/services/apiBFF';
 /// DATE-FNS END
 
 const Typography = styled(MuiTypography)({
@@ -104,7 +101,6 @@ function RecipeAndPrescriptionPage(): JSX.Element {
   const classes = useStyles();
   const router = useRouter();
   const { t } = useTranslation([i18nGlobal, i18nRecipes]);
-  const [loading, setLoading] = useState(true);
   const [recipeOrPrescription, setRecipeOrPrescription] = useState<
     TPatientRecipiesAndPrescriptionList[0] | null
   >(null);
@@ -210,18 +206,17 @@ function RecipeAndPrescriptionPage(): JSX.Element {
       : getPrescriptionInformation(recipeOrPrescription.details);
   };
 
+  const { data, isLoading } = useGetRecipiesPrescriptionsQuery();
+
   useEffect(() => {
     const { item_id: id } = router.query;
-    getRecipiesAndPrescriptionsById(id as string)
-      .then(result => {
-        setRecipeOrPrescription(result);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    const result =
+      data && (data.find(item => item?.id === id) as TPatientRecipiesAndPrescriptionList[0] | null);
+
+    setRecipeOrPrescription(result);
   }, [router.query]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <Grid container className={classes.mainGrid}>
         <Grid item xs={12}>
