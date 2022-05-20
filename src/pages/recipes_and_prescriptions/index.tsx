@@ -80,6 +80,7 @@ const useStyles = makeStyles(() =>
 function RecipeAndPrescriptionPage(): JSX.Element {
   const classes = useStyles();
   const router = useRouter();
+  const { data, isLoading } = useGetRecipiesPrescriptionsQuery();
   const listContainerRef = createRef();
   const renderCompleteVerifyRef = createRef();
   const { t } = useTranslation([i18nRecipes, i18nGlobal]);
@@ -98,8 +99,6 @@ function RecipeAndPrescriptionPage(): JSX.Element {
       }
     });
   };
-
-  const { data, isLoading } = useGetRecipiesPrescriptionsQuery();
 
   const groupResultsByMonth = (recipiesAndPrescriptions: TPatientRecipiesAndPrescriptionList) => {
     const groups = recipiesAndPrescriptions.reduce((groups, curr) => {
@@ -144,7 +143,7 @@ function RecipeAndPrescriptionPage(): JSX.Element {
         }
       }
     }
-  }, [sliderYear]);
+  }, [sliderYear, data]);
 
   useEffect(() => {
     if (selectedItem && renderCompleteVerifyRef.current) {

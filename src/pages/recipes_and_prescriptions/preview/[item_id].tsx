@@ -100,6 +100,7 @@ const useStyles = makeStyles(() =>
 function RecipeAndPrescriptionPage(): JSX.Element {
   const classes = useStyles();
   const router = useRouter();
+  const { data, isLoading } = useGetRecipiesPrescriptionsQuery();
   const { t } = useTranslation([i18nGlobal, i18nRecipes]);
   const [recipeOrPrescription, setRecipeOrPrescription] = useState<
     TPatientRecipiesAndPrescriptionList[0] | null
@@ -206,15 +207,13 @@ function RecipeAndPrescriptionPage(): JSX.Element {
       : getPrescriptionInformation(recipeOrPrescription.details);
   };
 
-  const { data, isLoading } = useGetRecipiesPrescriptionsQuery();
-
   useEffect(() => {
     const { item_id: id } = router.query;
     const result =
       data && (data.find(item => item?.id === id) as TPatientRecipiesAndPrescriptionList[0] | null);
 
     setRecipeOrPrescription(result);
-  }, [router.query]);
+  }, [router.query, data]);
 
   if (isLoading) {
     return (

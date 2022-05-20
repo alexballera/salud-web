@@ -26,7 +26,8 @@ import muiTheme from '@/src/styles/js/muiTheme';
 /// STYLES END
 
 /// SERVICES
-import { getExamResultsByYear, TExamResultsGroup } from '@/src/services/getExamResultsData.service';
+import { TExamResultsGroup, TGeneralData } from '@/src/services/getExamResultsData.service';
+import { useGetExamsQuery } from '@/src/services/apiBFF';
 /// SERVICES END
 
 const PAGE_PATHNAME = '/exam_results';
@@ -34,9 +35,9 @@ const PAGE_PATHNAME = '/exam_results';
 const ExamResult = (): JSX.Element => {
   const { t } = useTranslation([i18Recipes, i18Forms, i18nGlobal, i18nExams]);
   const router = useRouter();
+  const { data, isLoading } = useGetExamsQuery();
   const listContainerRef = createRef();
   const renderCompleteVerifyRef = createRef();
-  const [loading, setLoading] = useState(false);
   const [sliderYear, setSliderYear] = useState<null | number>(null);
   const { 'selected-year': selectedYear, 'selected-item': selectedItem } = router.query;
   const [examResultsGroups, setExamResultsGroups] = useState<TExamResultsGroup>([]);
@@ -52,23 +53,50 @@ const ExamResult = (): JSX.Element => {
     });
   };
 
+  const groupResultsByMonth = (data: TGeneralData) => {
+    const groups = data.reduce((groups, curr) => {
+      const month = new Date(curr.date).getMonth().toLocaleString();
+      if (!groups[month]) {
+        groups[month] = [];
+      }
+      groups[month].push(curr);
+      return groups;
+    }, {});
+    return Object.keys(groups)
+      .map(month => {
+        return {
+          month: month.toString(),
+          items: groups[month]
+        };
+      })
+      .reverse();
+  };
+
+  const filterResultsByYear = (data: TGeneralData, year: number) => {
+    const currentDate = new Date(year, 0, 1);
+    const firstDay = new Date(currentDate.getFullYear(), 0, 1);
+    const lastDay = new Date(currentDate.getFullYear(), 11, 31);
+    return data.filter(item => {
+      const itemDateParsed = new Date(item.date);
+      return itemDateParsed >= firstDay && itemDateParsed <= lastDay;
+    });
+  };
+
   useEffect(() => {
     if (sliderYear) {
-      setLoading(true);
-      const id = 'ee957013-b02f-45b2-b837-092b490242ea';
-      getExamResultsByYear(id, sliderYear)
-        .then(res => {
-          setExamResultsGroups(res);
-        })
-        .catch(err => console.error(err))
-        .finally(() => {
-          setLoading(false);
-          if (sliderYear && selectedYear) {
-            router.replace(PAGE_PATHNAME);
-          }
-        });
+      if (data) {
+        const filterResults = filterResultsByYear(data, sliderYear);
+        groupResultsByMonth(filterResults);
+        setExamResultsGroups(groupResultsByMonth(filterResults));
+      }
+
+      if (!isLoading) {
+        if (sliderYear && selectedYear) {
+          router.replace(PAGE_PATHNAME);
+        }
+      }
     }
-  }, [sliderYear]);
+  }, [sliderYear, data]);
 
   const getExamTitle = (type: string): string => {
     const title = {
@@ -83,13 +111,13 @@ const ExamResult = (): JSX.Element => {
       <Grid container>
         <Grid item xs={12}>
           <YearSlider
-            disabled={loading}
+            disabled={isLoading}
             itemClick={item => {
               setSliderYear(item);
             }}
           />
           <Box px={3}>
-            {loading && (
+            {isLoading && (
               <Grid
                 container
                 item
@@ -103,7 +131,7 @@ const ExamResult = (): JSX.Element => {
               </Grid>
             )}
 
-            {!loading && !examResultsGroups.length && (
+            {!isLoading && !examResultsGroups.length && (
               <Box mt={4}>
                 <Typography
                   variant="caption"
@@ -121,7 +149,7 @@ const ExamResult = (): JSX.Element => {
             )}
 
             <Box {...{ ref: listContainerRef }}>
-              {!loading &&
+              {!isLoading &&
                 examResultsGroups.map((group, i) => (
                   // Group items by month
                   <Box key={i}>

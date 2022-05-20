@@ -17,6 +17,7 @@ import { DoctorSearchAppt, queryDoctor, TDoctors } from './doctors.type';
 import api from '../api/api';
 import { decodeToken } from '../utils/helpers';
 import { TRecipiesPrescriptionsResponse } from '../types/services/recipiesPrescriptions.types';
+import { TExamsResponse } from '../types/services/exam.types';
 
 type TGetVaccineByIdParams = {
   userId: string;
@@ -162,6 +163,9 @@ export const apiBFF = createApi({
     }),
     getRecipiesPrescriptions: builder.query<TRecipiesPrescriptionsResponse, void>({
       query: () => ({ url: `/patients/recipies-prescriptions`, method: 'get' })
+    }),
+    getExams: builder.query<TExamsResponse, void>({
+      query: () => ({ url: `/patients/exams`, method: 'get' })
     })
   })
 });
@@ -180,5 +184,6 @@ export const {
   useGetConsultationHistoryByIdQuery,
   useGetSearchHistoryQuery,
   useGetDoctorsQuery,
-  useGetRecipiesPrescriptionsQuery
+  useGetRecipiesPrescriptionsQuery,
+  useGetExamsQuery
 } = apiBFF;
