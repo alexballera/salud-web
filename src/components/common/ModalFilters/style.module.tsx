@@ -3,7 +3,8 @@ import {
   shadowCardColor,
   title2Color,
   poppinsFontFamily,
-  secondaryMainColor
+  secondaryMainColor,
+  chipInactiveTextColor
 } from '../../../styles/js/theme';
 
 const modalFiltersStyles = makeStyles({
@@ -18,11 +19,16 @@ const modalFiltersStyles = makeStyles({
     backgroundColor: 'white',
     padding: '8px 28px',
     minHeight: 56,
-    boxShadow: `0px 4px 8px ${shadowCardColor}`
+    boxShadow: `0px 4px 8px ${shadowCardColor}`,
+    zIndex: 2
   },
   titleFilter: {
     fontFamily: `${poppinsFontFamily} !important`,
     color: title2Color
+  },
+  modalityCaption: {
+    fontFamily: `${poppinsFontFamily} !important`,
+    color: chipInactiveTextColor
   },
   eraseText: {
     fontFamily: `${poppinsFontFamily} !important`,
