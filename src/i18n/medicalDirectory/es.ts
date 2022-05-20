@@ -22,6 +22,7 @@ export const esMedicalDirectory = {
     placeholderSearch: 'Buscá por doctor'
   },
   noResult: 'Lo sentimos, no se han encontrado resultados.',
+  noOverallResult: 'Lo sentimos, no se han encontrado resultados con los filtros seleccionados.',
   filters: {
     title: 'Filtros',
     subTitle: 'Seleccioná los filtros de tu interés',
