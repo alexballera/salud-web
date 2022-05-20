@@ -62,7 +62,7 @@ export type queryDoctor = {
   detail?: string;
   range?: number;
   order?: DoctorSearchOrder;
-  price?: number;
+  priceRange?: string;
   appt?: DoctorSearchAppt;
   mode?: DoctorSearchMode;
   date?: string;

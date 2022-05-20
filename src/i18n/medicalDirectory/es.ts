@@ -22,12 +22,14 @@ export const esMedicalDirectory = {
     placeholderSearch: 'Buscá por doctor'
   },
   noResult: 'Lo sentimos, no se han encontrado resultados.',
+  noOverallResult: 'Lo sentimos, no se han encontrado resultados con los filtros seleccionados.',
   filters: {
     title: 'Filtros',
     subTitle: 'Seleccioná los filtros de tu interés',
     actionEraseAll: 'Borrar todos',
     actionApplyFilters: 'Aplicar filtros',
     results: 'resultados',
+    modalityCaption: 'Las primeras citas con cada doctor siempre serán de carácter presencial.',
     name: {
       sortBy: 'Ordenar por',
       distance: 'Distancia',
@@ -40,7 +42,9 @@ export const esMedicalDirectory = {
       highLowPrice: 'Precio alto-bajo',
       lowHighPrice: 'Precio bajo-alto',
       availability: 'Disponibilidad',
-      alphabetically: 'Alfabéticamente'
+      alphabetically: 'Alfabéticamente',
+      modalityTelemedicine: 'Telemedicina',
+      modalityFaceToFace: 'Presencial'
     }
   }
 };
