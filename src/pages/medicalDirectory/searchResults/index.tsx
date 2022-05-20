@@ -117,13 +117,13 @@ function MedicalDirectoryResultsPage(): JSX.Element {
           </Grid>
         )}
         <Grid item xs={12} className={classes.results}>
-          {!isLoading && data?.doctors?.length !== 0 && (
+          {!isLoading && data?.doctors && (
             <Typography variant="h1" className={classes.title}>
               {t('searchResults.title', { ns: i18nMedicalDirectory })}
             </Typography>
           )}
           {!isLoading &&
-            data &&
+            data?.doctors &&
             data?.doctors.map((item, idx) => {
               return <CardDoctorResult {...item} redirectTo={`/doctor_profile/${idx}`} key={idx} />;
             })}
