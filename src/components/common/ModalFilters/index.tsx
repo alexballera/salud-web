@@ -12,6 +12,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { searchOnFilter } from '@/src/store/slice/search.slice';
+import SliderPrice from '../sliderPrice';
+
 import { useSelector } from '@/src/store';
 
 const ArrowBackIcon = styled(MuiArrowBackIcon)({
@@ -105,6 +107,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
     }
   ];
 
+  const [priceRange, setRangePrice] = useState([]);
   const modeOptionsArray = [
     {
       label: t('filters.optionsOrder.modalityTelemedicine', { ns: i18nMedicalDirectory }),
@@ -183,6 +186,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
       pathname: router.pathname,
       query: {
         ...router.query,
+        ...(priceRange && { priceRange: `${priceRange[0]}-${priceRange[1]}` }),
         ...(order && { order: order.value }),
         ...(range && { range: range.value }),
         ...(mode && { mode: mode.value })
@@ -216,6 +220,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
       onClose={() => closeModal(false)}
       aria-labelledby="parent-modal-title"
       aria-describedby="parent-modal-description"
+      disableEnforceFocus
     >
       <Box className={classes.main}>
         <Grid
@@ -328,6 +333,15 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
               <Typography variant="caption" className={classes.titleFilter}>
                 {t('filters.name.price', { ns: i18nMedicalDirectory })}
               </Typography>
+              <Box mt={2}>
+                <SliderPrice
+                  min={0}
+                  max={30000}
+                  step={1000}
+                  currency="₡"
+                  setRangePrice={setRangePrice}
+                />
+              </Box>
             </Box>
           </Grid>
           <Grid item xs={12} mt={3}>
