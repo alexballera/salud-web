@@ -25,6 +25,7 @@ interface SearchState {
   lng?: string;
   searchField?: string;
   order?: DoctorSearchOrder;
+  mode?: number;
   range?: number;
   priceRange?: string;
 }
@@ -42,7 +43,8 @@ const specialtyResults = (): JSX.Element => {
     placeName = 'Cerca de mi',
     order,
     range,
-    priceRange
+    priceRange,
+    mode
   } = router.query as SearchState;
 
   const { data, isLoading, isFetching } = useGetDoctorsQuery({
@@ -51,9 +53,9 @@ const specialtyResults = (): JSX.Element => {
     type: DoctorSearchType.speciality,
     detail: searchField.toString(),
     order: order || DoctorSearchOrder.distance,
-    mode: DoctorSearchMode.presential,
     range: range,
-    priceRange: priceRange
+    priceRange: priceRange,
+    mode: mode || DoctorSearchMode.presential
   });
 
   const price =

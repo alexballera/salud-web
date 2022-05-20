@@ -98,7 +98,7 @@ function MedicalDirectoryResultsPage(): JSX.Element {
   }, []);
 
   return (
-    <EmptyState loading={isLoading} length={data?.doctors?.length || 0}>
+    <EmptyState loading={isLoading} length={data?.doctors?.length || 0} typeSearch="general">
       <Grid container>
         <Grid item xs={12}>
           <SearchNavbar />
