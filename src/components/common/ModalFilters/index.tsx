@@ -359,7 +359,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
             </Box>
           </Grid>
           <Grid item xs={12} mt={3}>
-            <Box sx={{ height: 250 }}>
+            <Box>
               <Typography variant="caption" className={classes.titleFilter}>
                 {t('filters.name.price', { ns: i18nMedicalDirectory })}
               </Typography>
