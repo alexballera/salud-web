@@ -3581,12 +3581,12 @@
     "normalize-path" "^3.0.0"
     "picomatch" "^2.0.4"
 
-"appwrite@^6.0.1":
-  "integrity" "sha512-6FNaQvbtzn7rabo5LSrcKt/flRoG7Fezdzis1ToMGFI9E4zMpLvAXI0AQry4oFpCJpN2gHajYOktoRLOJGU4bQ=="
-  "resolved" "https://registry.npmjs.org/appwrite/-/appwrite-6.0.1.tgz"
-  "version" "6.0.1"
+"appwrite@^7.0.0":
+  "integrity" "sha512-lazJYrUqLfh/5kRBV/ycfnUHVTMxHmqDi1tRnfgoQGoUWcpUeJooQE1njx3neGjcyfM5Ow9eAY+Fv6uv12o9cA=="
+  "resolved" "https://registry.npmjs.org/appwrite/-/appwrite-7.0.0.tgz"
+  "version" "7.0.0"
   dependencies:
-    "cross-fetch" "3.1.4"
+    "cross-fetch" "3.1.5"
     "isomorphic-form-data" "2.0.0"
 
 "aproba@^1.0.3":
@@ -4886,19 +4886,12 @@
     "safe-buffer" "^5.0.1"
     "sha.js" "^2.4.8"
 
-"cross-fetch@^3.1.4":
+"cross-fetch@^3.1.4", "cross-fetch@3.1.5":
   "integrity" "sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw=="
   "resolved" "https://registry.npmjs.org/cross-fetch/-/cross-fetch-3.1.5.tgz"
   "version" "3.1.5"
   dependencies:
     "node-fetch" "2.6.7"
-
-"cross-fetch@3.1.4":
-  "integrity" "sha512-1eAtFWdIubi6T4XPy6ei9iUFoKpUkIF971QLN8lIvvvwueI65+Nw5haMNKUwfJxabqlIIDODJKGrQ66gxC0PbQ=="
-  "resolved" "https://registry.npmjs.org/cross-fetch/-/cross-fetch-3.1.4.tgz"
-  "version" "3.1.4"
-  dependencies:
-    "node-fetch" "2.6.1"
 
 "cross-spawn@^6.0.0":
   "integrity" "sha512-eTVLrBSt7fjbDygz805pMnstIs2VTBNkRm0qxZd+M7A5XDdxVRWO5MxGBXZhjY4cqLYLdtrGqRf8mBPmzwSpWQ=="
