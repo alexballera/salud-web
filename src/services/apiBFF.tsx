@@ -16,6 +16,7 @@ import {
 import { DoctorSearchAppt, queryDoctor, TDoctors } from './doctors.type';
 import api from '../api/api';
 import { decodeToken } from '../utils/helpers';
+import { TRecipiesPrescriptionsResponse } from '../types/services/recipiesPrescriptions.types';
 
 type TGetVaccineByIdParams = {
   userId: string;
@@ -158,6 +159,9 @@ export const apiBFF = createApi({
         url: `/guide/doctors?latitude=${latitude}&longitude=${longitude}&type=${type}&detail=${detail}&range=${range}&order=${order}&price=${price}&appt=${appt}&mode=${mode}&date=${date}`,
         method: 'get'
       })
+    }),
+    getRecipiesPrescriptions: builder.query<TRecipiesPrescriptionsResponse, void>({
+      query: () => ({ url: `/patients/recipies-prescriptions`, method: 'get' })
     })
   })
 });
@@ -175,5 +179,6 @@ export const {
   useGetConsultationHistoryQuery,
   useGetConsultationHistoryByIdQuery,
   useGetSearchHistoryQuery,
-  useGetDoctorsQuery
+  useGetDoctorsQuery,
+  useGetRecipiesPrescriptionsQuery
 } = apiBFF;

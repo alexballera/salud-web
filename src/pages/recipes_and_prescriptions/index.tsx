@@ -32,11 +32,12 @@ import { NAMESPACE_KEY as i18nGlobal } from '../../i18n/globals/i18n';
 /// i18n END
 
 /// SERVICES
-import { getRecipiesAndPrescriptionsByYear } from '../../services/getRecipiesAndPrescriptionData.service';
+import { TPatientRecipiesAndPrescriptionList } from '../../services/getRecipiesAndPrescriptionData.service';
 /// SERVICES END
 
 /// TYPES
 import type { TPatientRecipiesAndPrescriptionGroups } from '../../services/getRecipiesAndPrescriptionData.service';
+import { useGetRecipiesPrescriptionsQuery } from '@/src/services/apiBFF';
 /// TYPES END
 
 const Typography = styled(MuiTypography)({
@@ -99,19 +100,51 @@ function RecipeAndPrescriptionPage(): JSX.Element {
     });
   };
 
+  const { data, isLoading } = useGetRecipiesPrescriptionsQuery();
+
+  const groupResultsByMonth = (recipiesAndPrescriptions: TPatientRecipiesAndPrescriptionList) => {
+    const groups = recipiesAndPrescriptions.reduce((groups, curr) => {
+      const month = new Date(curr.reportDate).getMonth();
+      if (!groups[month]) {
+        groups[month] = [];
+      }
+      groups[month].push(curr);
+      return groups;
+    }, {});
+    return Object.keys(groups)
+      .map(month => {
+        return {
+          month: month.toString(),
+          items: groups[month]
+        };
+      })
+      .reverse();
+  };
+
+  const filterResultsByYear = (data: TPatientRecipiesAndPrescriptionList, year: number) => {
+    const currentDate = new Date(year, 5, 5);
+    const firstDay = new Date(currentDate.getFullYear(), 0, 1);
+    const lastDay = new Date(currentDate.getFullYear(), 11, 31);
+    return data.filter(item => {
+      const itemDateParsed = new Date(item.reportDate);
+      return itemDateParsed >= firstDay && itemDateParsed <= lastDay;
+    });
+  };
+
   useEffect(() => {
     if (sliderYear) {
       setLoading(true);
-      getRecipiesAndPrescriptionsByYear(sliderYear)
-        .then(result => {
-          setRecipiesAndPrescriptionGroups(result);
-        })
-        .finally(() => {
-          setLoading(false);
-          if (sliderYear && selectedYear) {
-            router.replace(PAGE_PATHNAME);
-          }
-        });
+
+      const filterResults = filterResultsByYear(data.recipies, sliderYear);
+      groupResultsByMonth(filterResults);
+      setRecipiesAndPrescriptionGroups(groupResultsByMonth(filterResults));
+
+      if (!isLoading) {
+        setLoading(false);
+        if (sliderYear && selectedYear) {
+          router.replace(PAGE_PATHNAME);
+        }
+      }
     }
   }, [sliderYear]);
 
