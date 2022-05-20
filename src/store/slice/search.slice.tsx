@@ -7,6 +7,7 @@ export interface SearchState {
   lng?: string;
   textFilter?: string;
   filters?: string[];
+  mode?: FilterNum;
   order?: FilterOrder;
   range?: FilterNum;
 }
@@ -28,6 +29,7 @@ const initialState: SearchState = {
   textFilter: '',
   order: null,
   filters: [],
+  mode: null,
   range: null
 };
 
