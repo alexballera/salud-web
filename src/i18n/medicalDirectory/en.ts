@@ -41,6 +41,9 @@ export const enMedicalDirectory = {
       lowHighPrice: 'Low-High price',
       availability: 'Availability',
       alphabetically: 'Alphabetically'
+    },
+    appointAvailable: {
+      availableDatesCaption: 'Available dates'
     }
   }
 };

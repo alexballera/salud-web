@@ -13,6 +13,10 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { searchOnFilter } from '@/src/store/slice/search.slice';
 import { useSelector } from '@/src/store';
+import ModalAppointmentAvailability from '../ModalAppointmentAvailability';
+import TagFacesIcon from '@mui/icons-material/TagFaces';
+import SendIcon from '@mui/icons-material/Send';
+
 const ArrowBackIcon = styled(MuiArrowBackIcon)({
   color: titlePageColor
 });
@@ -42,6 +46,10 @@ const ChipActive = styled(MuiChip)({
     color: secondaryMainColor,
     background: tertiaryLightColor
   }
+});
+
+const ChipIcon = styled(ChipDefault)({
+  marginRight: 0
 });
 
 const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
@@ -103,6 +111,9 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
       value: 10000
     }
   ];
+
+  const [appointmentAvailabilityValue, setAppointmentAvailabilityValue] = useState('');
+  const [appointmentAvailabilityModal, setAppointmentAvailabilityModal] = useState(false);
 
   const [orderOptions, setOrderOptions] = useState(orderOptionsArray);
   const { order, range } = useSelector(state => state.search);
@@ -297,6 +308,31 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
               <Typography variant="caption" className={classes.titleFilter}>
                 {t('filters.name.appointmentAvailability', { ns: i18nMedicalDirectory })}
               </Typography>
+              <br />
+              <Grid container alignItems="center">
+                <Grid item>
+                  <ChipIcon
+                    className={classes.chip}
+                    label={appointmentAvailabilityValue || 'Select a date'}
+                    variant="outlined"
+                    color="default"
+                    deleteIcon={<TagFacesIcon />}
+                    style={{ position: 'relative', right: 0 }}
+                    onDelete={() => setAppointmentAvailabilityModal(true)}
+                  />
+                  {appointmentAvailabilityValue && (
+                    <Button
+                      variant="text"
+                      color="success"
+                      style={{ marginTop: 16 }}
+                      onClick={() => setAppointmentAvailabilityModal(true)}
+                      endIcon={<SendIcon />}
+                    >
+                      Editar
+                    </Button>
+                  )}
+                </Grid>
+              </Grid>
             </Box>
           </Grid>
           <Grid item xs={12} mt={3}>
@@ -318,7 +354,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
         >
           <Grid item>
             <Typography variant="body2" className={classes.titleFilter}>
-              0 {t('filters.results', { ns: i18nMedicalDirectory })}
+              {t('filters.results', { ns: i18nMedicalDirectory })}
             </Typography>
           </Grid>
           <Grid item>
@@ -333,6 +369,15 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
             </Button>
           </Grid>
         </Grid>
+        <ModalAppointmentAvailability
+          isOpen={appointmentAvailabilityModal}
+          handleAction={(dateSelected: Date | null) => {
+            setAppointmentAvailabilityModal(false);
+            if (dateSelected) {
+              setAppointmentAvailabilityValue(dateSelected.toISOString());
+            }
+          }}
+        />
       </Box>
     </Modal>
   );
