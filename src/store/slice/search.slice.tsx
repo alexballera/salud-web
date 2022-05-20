@@ -7,6 +7,7 @@ export interface SearchState {
   lng?: string;
   textFilter?: string;
   filters?: string[];
+  mode?: FilterNum;
   order?: FilterOrder;
   range?: FilterNum;
   priceRange?: string;
@@ -30,7 +31,8 @@ const initialState: SearchState = {
   order: null,
   filters: [],
   range: null,
-  priceRange: null
+  priceRange: null,
+  mode: null
 };
 
 export const searchSlice = createSlice({

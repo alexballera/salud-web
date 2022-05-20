@@ -24,7 +24,9 @@ const emptyStateStyles = makeStyles({
     textAlign: 'center'
   },
   emptyTitle: {
-    color: colorTextEmptyState
+    color: colorTextEmptyState,
+    fontSize: '20px !important',
+    lineHeight: '160% !important'
   }
 });
 
