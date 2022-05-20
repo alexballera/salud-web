@@ -10,6 +10,7 @@ export interface SearchState {
   mode?: FilterNum;
   order?: FilterOrder;
   range?: FilterNum;
+  priceRange?: string;
 }
 
 export interface FilterOrder {
@@ -29,8 +30,9 @@ const initialState: SearchState = {
   textFilter: '',
   order: null,
   filters: [],
-  mode: null,
-  range: null
+  range: null,
+  priceRange: null,
+  mode: null
 };
 
 export const searchSlice = createSlice({
