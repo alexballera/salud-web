@@ -117,7 +117,7 @@ function MedicalDirectoryResultsPage(): JSX.Element {
           </Grid>
         )}
         <Grid item xs={12} className={classes.results}>
-          {!isLoading && data?.doctors && (
+          {!isLoading && data?.doctors && data?.doctors?.length !== 0 && (
             <Typography variant="h1" className={classes.title}>
               {t('searchResults.title', { ns: i18nMedicalDirectory })}
             </Typography>
