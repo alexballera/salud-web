@@ -3,8 +3,7 @@ import MuiArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '../../../i18n/medicalDirectory/i18n';
-import MuiChip from '@material-ui/core/Chip';
-import { secondaryMainColor, tertiaryLightColor, titlePageColor } from '@/src/styles/js/theme';
+import { titlePageColor } from '@/src/styles/js/theme';
 
 import modalFiltersStyles from './style.module';
 import { DoctorSearchMode, DoctorSearchOrder } from '@/src/services/doctors.type';
@@ -16,6 +15,7 @@ import SliderPrice from '../sliderPrice';
 
 import { useSelector } from '@/src/store';
 import { formatMoney } from '@/src/utils/helpers';
+import ChipFilters from '../ChipFilters';
 
 const ArrowBackIcon = styled(MuiArrowBackIcon)({
   color: titlePageColor
@@ -25,28 +25,6 @@ type Tprops = {
   openModal: boolean;
   closeModal;
 };
-
-const ChipDefault = styled(MuiChip)({
-  color: titlePageColor,
-  '& svg': {
-    color: titlePageColor
-  },
-  '&:focus': {
-    color: titlePageColor
-  }
-});
-
-const ChipActive = styled(MuiChip)({
-  color: secondaryMainColor,
-  background: tertiaryLightColor,
-  '& svg': {
-    color: secondaryMainColor
-  },
-  '&:focus': {
-    color: secondaryMainColor,
-    background: tertiaryLightColor
-  }
-});
 
 const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
   const classes = modalFiltersStyles();
@@ -108,6 +86,48 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
     }
   ];
 
+  const appointmentAvailabilityOptionsArray = [
+    {
+      label: t('filters.appointmentAvailability.nearestAppointment', { ns: i18nMedicalDirectory }),
+      id: 1,
+      isActive: false,
+      value: 1,
+      icon: false
+    },
+    {
+      label: t('filters.appointmentAvailability.onWeekend', { ns: i18nMedicalDirectory }),
+      id: 2,
+      isActive: false,
+      value: 2,
+      icon: false
+    },
+    {
+      label: t('filters.appointmentAvailability.weekdayMorningAppointment', {
+        ns: i18nMedicalDirectory
+      }),
+      id: 3,
+      isActive: false,
+      value: 3,
+      icon: false
+    },
+    {
+      label: t('filters.appointmentAvailability.weekdayAfternoonAppointment', {
+        ns: i18nMedicalDirectory
+      }),
+      id: 4,
+      isActive: false,
+      value: 4,
+      icon: false
+    },
+    {
+      label: t('filters.appointmentAvailability.addSpecificDate', { ns: i18nMedicalDirectory }),
+      id: 5,
+      isActive: false,
+      value: 5,
+      icon: true
+    }
+  ];
+
   const modeOptionsArray = [
     {
       label: t('filters.optionsOrder.modalityTelemedicine', { ns: i18nMedicalDirectory }),
@@ -128,6 +148,9 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
 
   // filtro de distancia
   const [rangeOptions, setRangeOptions] = useState(rangeOptionsArray);
+  const [appointmentAvailabilityOptions, setAppointmentAvailabilityOptions] = useState(
+    appointmentAvailabilityOptionsArray
+  );
 
   // modality filter
   const [modeOptions, setModeOptions] = useState(modeOptionsArray);
@@ -162,6 +185,22 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
         }
       })
     );
+  };
+
+  const handleSelectAppointmentOption = i => {
+    const newValue = appointmentAvailabilityOptions.map((item, idx) => {
+      item.isActive = idx === i;
+      return item;
+    });
+    setAppointmentAvailabilityOptions(newValue);
+    // dispatch(
+    //   searchOnFilter({
+    //     range: {
+    //       name: rangeOptions.find(item => item.id === i + 1).label,
+    //       value: rangeOptions.find(item => item.id === i + 1).value
+    //     }
+    //   })
+    // );
   };
 
   const handleSelectModeOption = (i: number) => {
@@ -218,9 +257,24 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
   };
 
   useEffect(() => {
-    if (!order) setOrderOptions(orderOptionsArray);
-    if (!range) setRangeOptions(rangeOptionsArray);
-    if (!mode) setModeOptions(modeOptionsArray);
+    if (!order) {
+      setOrderOptions(orderOptionsArray);
+      delete router.query.order;
+    }
+    if (!range) {
+      setRangeOptions(rangeOptionsArray);
+      delete router.query.range;
+    }
+    if (!mode) {
+      setModeOptions(modeOptionsArray);
+      delete router.query.mode;
+    }
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query
+      }
+    });
   }, [order, range, mode]);
 
   return (
@@ -282,25 +336,13 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
               </Typography>
               <br />
               {orderOptions.map((tag, idx) => {
-                if (tag.isActive) {
-                  return (
-                    <ChipActive
-                      key={idx}
-                      className={classes.chip}
-                      label={tag.label}
-                      color="default"
-                      onClick={() => handleSelectOrderOption(idx)}
-                    />
-                  );
-                }
                 return (
-                  <ChipDefault
+                  <ChipFilters
                     key={idx}
-                    className={classes.chip}
+                    isActive={tag.isActive}
                     label={tag.label}
-                    variant="outlined"
-                    color="default"
-                    onClick={() => handleSelectOrderOption(idx)}
+                    idx={idx}
+                    handleSelect={handleSelectOrderOption}
                   />
                 );
               })}
@@ -313,32 +355,20 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
               </Typography>
               <br />
               {rangeOptions.map((tag, idx) => {
-                if (tag.isActive) {
-                  return (
-                    <ChipActive
-                      key={idx}
-                      className={classes.chip}
-                      label={tag.label}
-                      color="default"
-                      onClick={() => handleSelectRangeOption(idx)}
-                    />
-                  );
-                }
                 return (
-                  <ChipDefault
+                  <ChipFilters
                     key={idx}
-                    className={classes.chip}
+                    isActive={tag.isActive}
                     label={tag.label}
-                    variant="outlined"
-                    color="default"
-                    onClick={() => handleSelectRangeOption(idx)}
+                    idx={idx}
+                    handleSelect={handleSelectRangeOption}
                   />
                 );
               })}
             </Box>
           </Grid>
           <Grid item xs={12} mt={3}>
-            <Box sx={{ height: 250 }}>
+            <Box>
               <Typography variant="caption" className={classes.titleFilter}>
                 {t('filters.name.price', { ns: i18nMedicalDirectory })}
               </Typography>
@@ -355,10 +385,23 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
             </Box>
           </Grid>
           <Grid item xs={12} mt={3}>
-            <Box sx={{ height: 250 }}>
+            <Box>
               <Typography variant="caption" className={classes.titleFilter}>
                 {t('filters.name.appointmentAvailability', { ns: i18nMedicalDirectory })}
               </Typography>
+              <br />
+              {appointmentAvailabilityOptions.map((tag, idx) => {
+                return (
+                  <ChipFilters
+                    key={idx}
+                    isActive={tag.isActive}
+                    label={tag.label}
+                    idx={idx}
+                    handleSelect={handleSelectAppointmentOption}
+                    icon={tag.icon}
+                  />
+                );
+              })}
             </Box>
           </Grid>
           <Grid item xs={12} mt={3}>
@@ -372,25 +415,13 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
               </Typography>
               <br />
               {modeOptions.map((tag, idx) => {
-                if (tag.isActive) {
-                  return (
-                    <ChipActive
-                      key={idx}
-                      className={classes.chip}
-                      label={tag.label}
-                      color="default"
-                      onClick={() => handleSelectModeOption(idx)}
-                    />
-                  );
-                }
                 return (
-                  <ChipDefault
+                  <ChipFilters
                     key={idx}
-                    className={classes.chip}
+                    isActive={tag.isActive}
                     label={tag.label}
-                    variant="outlined"
-                    color="default"
-                    onClick={() => handleSelectModeOption(idx)}
+                    idx={idx}
+                    handleSelect={handleSelectModeOption}
                   />
                 );
               })}
