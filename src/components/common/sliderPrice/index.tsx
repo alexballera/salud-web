@@ -3,6 +3,7 @@ import { formatMoney } from '@/src/utils/helpers';
 import { Box, Grid, styled } from '@mui/material';
 import MuiSlider, { SliderThumb } from '@mui/material/Slider';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 const Slider = styled(MuiSlider)({
   color: secondaryLightColor,
@@ -40,17 +41,33 @@ type TProps = {
   max: number;
   step: number;
   currency: string;
+  priceRange: number[];
   setRangePrice;
 };
 
-const SliderPrice = ({ min, max, step, currency, setRangePrice }: TProps): JSX.Element => {
-  const [value, setValue] = React.useState<number[]>([min, max]);
+const SliderPrice = ({
+  min,
+  max,
+  step,
+  currency,
+  priceRange,
+  setRangePrice
+}: TProps): JSX.Element => {
+  const [value, setValue] = React.useState<number[]>(priceRange || [min, max]);
+  const dispatch = useDispatch();
 
   const handleChange = (e, value) => {
     const [min, max] = value;
     if (max > min) {
       setValue(value);
-      setRangePrice(value);
+      dispatch(
+        setRangePrice({
+          priceRange: {
+            name: 'priceRange',
+            value: value
+          }
+        })
+      );
     }
   };
 

@@ -45,6 +45,13 @@ export const esMedicalDirectory = {
       alphabetically: 'Alfabéticamente',
       modalityTelemedicine: 'Telemedicina',
       modalityFaceToFace: 'Presencial'
+    },
+    appointmentAvailability: {
+      nearestAppointment: 'Cita más próxima',
+      onWeekend: 'En fin de semana',
+      weekdayMorningAppointment: 'Cita entre semana por la mañana',
+      weekdayAfternoonAppointment: 'Cita entre semana por la tarde',
+      addSpecificDate: 'Agregar fecha específica'
     }
   }
 };

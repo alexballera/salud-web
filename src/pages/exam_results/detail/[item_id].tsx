@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getDate, getMonth, getYear, isValid } from 'date-fns';
 import { useDispatch } from 'react-redux';
 
@@ -33,22 +33,15 @@ import { NAMESPACE_KEY as i18Recipes } from '../../../i18n/recipes_and_prescript
 /// i18n END
 
 /// TYPES
-import type { NextPageContext } from 'next/';
 import type { TListItem } from '../../../components/common/Card/SimpleCardList/types';
 /// / TYPES END
 
 /// SERVICES
-import {
-  TGeneralData,
-  TResult,
-  getExamResultsById
-} from '../../../services/getExamResultsData.service';
+import { TGeneralData, TResult } from '../../../services/getExamResultsData.service';
 import { setTitle } from '@/src/store/slice/navbar.slice';
+import { useGetExamsQuery } from '@/src/services/apiBFF';
+import { useRouter } from 'next/router';
 /// SERVICES END
-
-type TProps = {
-  examResult: TGeneralData[0];
-};
 
 const Typography = styled(MuiTypography)({
   fontFamily: poppinsFontFamily,
@@ -93,18 +86,24 @@ const useStyles = makeStyles(() =>
   })
 );
 
-function ExamResultsDetailPage({ examResult }: TProps): JSX.Element {
+function ExamResultsDetailPage(): JSX.Element {
   const classes = useStyles();
+  const router = useRouter();
+  const { data } = useGetExamsQuery();
   const { t } = useTranslation([i18nGlobal, i18nExamResults, i18Recipes]);
   const dispatch = useDispatch();
+  const [examResult, setExamResult] = useState<TGeneralData[0] | null>(null);
 
   useEffect(() => {
+    const { item_id: id } = router.query;
+    const result = data && (data.find(item => item?.id === id) as TGeneralData[0] | null);
     dispatch(
       setTitle({
-        title: examResult.name
+        title: result && result.name
       })
     );
-  }, []);
+    setExamResult(result);
+  }, [router.query, data]);
 
   const getExamDate = (date: string) => {
     let newDate = new Date(date);
@@ -229,13 +228,4 @@ function ExamResultsDetailPage({ examResult }: TProps): JSX.Element {
   );
 }
 
-ExamResultsDetailPage.getInitialProps = async ({ query }: NextPageContext) => {
-  // eslint-disable-next-line camelcase
-  const userId = 'ee957013-b02f-45b2-b837-092b490242ea';
-  const { item_id: id } = query;
-  const examResult = await getExamResultsById(userId, id as string);
-  return {
-    examResult
-  };
-};
 export default ExamResultsDetailPage;
