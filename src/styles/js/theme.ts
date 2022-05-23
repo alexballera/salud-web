@@ -42,6 +42,7 @@ export const graphicGradientSecondary = 'rgba(86, 200, 216, 0.1)';
 export const graphicTooltipBackground = 'rgb(27 31 35 / 0%)';
 export const borderDash = '#0000001c';
 export const colorTextEmptyState = '#676969';
+export const colorRailSlider = '#DBE2E3';
 
 const defaultTheme: ThemeOptions = {
   palette: {

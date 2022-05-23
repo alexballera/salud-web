@@ -32,11 +32,12 @@ import { NAMESPACE_KEY as i18nGlobal } from '../../i18n/globals/i18n';
 /// i18n END
 
 /// SERVICES
-import { getRecipiesAndPrescriptionsByYear } from '../../services/getRecipiesAndPrescriptionData.service';
+import { TPatientRecipiesAndPrescriptionList } from '../../services/getRecipiesAndPrescriptionData.service';
 /// SERVICES END
 
 /// TYPES
 import type { TPatientRecipiesAndPrescriptionGroups } from '../../services/getRecipiesAndPrescriptionData.service';
+import { useGetRecipiesPrescriptionsQuery } from '@/src/services/apiBFF';
 /// TYPES END
 
 const Typography = styled(MuiTypography)({
@@ -79,12 +80,12 @@ const useStyles = makeStyles(() =>
 function RecipeAndPrescriptionPage(): JSX.Element {
   const classes = useStyles();
   const router = useRouter();
+  const { data, isLoading } = useGetRecipiesPrescriptionsQuery();
   const listContainerRef = createRef();
   const renderCompleteVerifyRef = createRef();
   const { t } = useTranslation([i18nRecipes, i18nGlobal]);
   const { 'selected-year': selectedYear, 'selected-item': selectedItem } = router.query;
   const [sliderYear, setSliderYear] = useState<null | number>(null);
-  const [loading, setLoading] = useState(false);
   const [recipiesAndPrescriptionGroups, setRecipiesAndPrescriptionGroups] =
     useState<TPatientRecipiesAndPrescriptionGroups>([]);
 
@@ -99,21 +100,50 @@ function RecipeAndPrescriptionPage(): JSX.Element {
     });
   };
 
+  const groupResultsByMonth = (recipiesAndPrescriptions: TPatientRecipiesAndPrescriptionList) => {
+    const groups = recipiesAndPrescriptions.reduce((groups, curr) => {
+      const month = new Date(curr.reportDate).getMonth();
+      if (!groups[month]) {
+        groups[month] = [];
+      }
+      groups[month].push(curr);
+      return groups;
+    }, {});
+    return Object.keys(groups)
+      .map(month => {
+        return {
+          month: month.toString(),
+          items: groups[month]
+        };
+      })
+      .reverse();
+  };
+
+  const filterResultsByYear = (data: TPatientRecipiesAndPrescriptionList, year: number) => {
+    const currentDate = new Date(year, 5, 5);
+    const firstDay = new Date(currentDate.getFullYear(), 0, 1);
+    const lastDay = new Date(currentDate.getFullYear(), 11, 31);
+    return data.filter(item => {
+      const itemDateParsed = new Date(item.reportDate);
+      return itemDateParsed >= firstDay && itemDateParsed <= lastDay;
+    });
+  };
+
   useEffect(() => {
     if (sliderYear) {
-      setLoading(true);
-      getRecipiesAndPrescriptionsByYear(sliderYear)
-        .then(result => {
-          setRecipiesAndPrescriptionGroups(result);
-        })
-        .finally(() => {
-          setLoading(false);
-          if (sliderYear && selectedYear) {
-            router.replace(PAGE_PATHNAME);
-          }
-        });
+      if (data) {
+        const filterResults = filterResultsByYear(data, sliderYear);
+        groupResultsByMonth(filterResults);
+        setRecipiesAndPrescriptionGroups(groupResultsByMonth(filterResults));
+      }
+
+      if (!isLoading) {
+        if (sliderYear && selectedYear) {
+          router.replace(PAGE_PATHNAME);
+        }
+      }
     }
-  }, [sliderYear]);
+  }, [sliderYear, data]);
 
   useEffect(() => {
     if (selectedItem && renderCompleteVerifyRef.current) {
@@ -132,14 +162,14 @@ function RecipeAndPrescriptionPage(): JSX.Element {
         <Box>
           <YearSlider
             selectedYear={Number(selectedYear)}
-            disabled={loading}
+            disabled={isLoading}
             itemClick={item => {
               setSliderYear(item);
             }}
           />
         </Box>
         <Box className={classes.listContent}>
-          {loading && (
+          {isLoading && (
             <Box mt={6}>
               <Grid container direction="column" justify="center" alignItems="center">
                 <CircularProgress color="inherit" />
@@ -147,7 +177,7 @@ function RecipeAndPrescriptionPage(): JSX.Element {
             </Box>
           )}
 
-          {!loading && !recipiesAndPrescriptionGroups.length && (
+          {!isLoading && !recipiesAndPrescriptionGroups.length && (
             <Box mt={4}>
               <Typography className={classes.noRecords}>
                 {t('no_records', { ns: i18nRecipes })}
@@ -156,7 +186,7 @@ function RecipeAndPrescriptionPage(): JSX.Element {
           )}
 
           <Box {...{ ref: listContainerRef }}>
-            {!loading &&
+            {!isLoading &&
               recipiesAndPrescriptionGroups.map((group, i) => (
                 // Group items by month
                 <Box key={i}>

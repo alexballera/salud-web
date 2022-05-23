@@ -49,6 +49,7 @@ interface SearchState {
   searchField?: string;
   order?: DoctorSearchOrder;
   range?: number;
+  priceRange?: string;
 }
 
 function MedicalDirectoryResultsPage(): JSX.Element {
@@ -63,7 +64,8 @@ function MedicalDirectoryResultsPage(): JSX.Element {
     lng,
     placeName = 'Cerca de mi',
     order,
-    range
+    range,
+    priceRange
   } = router.query as SearchState;
 
   const { data, isLoading, isFetching } = useGetDoctorsQuery({
@@ -73,8 +75,15 @@ function MedicalDirectoryResultsPage(): JSX.Element {
     detail: searchField.toString(),
     order: order || DoctorSearchOrder.distance,
     mode: DoctorSearchMode.presential,
-    range: range || 5000
+    range: range || 5000,
+    priceRange: priceRange
   });
+
+  const price =
+    priceRange &&
+    priceRange.split('-').map(str => {
+      return Number(str);
+    });
 
   useEffect(() => {
     dispatch(
@@ -82,7 +91,8 @@ function MedicalDirectoryResultsPage(): JSX.Element {
         placeName: placeName || t('location.placeHolder', { ns: i18Global }),
         lat: lat !== '' ? lat : '0',
         lng: lng !== '' ? lng : '0',
-        textFilter: searchField
+        textFilter: searchField,
+        priceRange: price
       })
     );
   }, []);
@@ -107,13 +117,13 @@ function MedicalDirectoryResultsPage(): JSX.Element {
           </Grid>
         )}
         <Grid item xs={12} className={classes.results}>
-          {!isLoading && data?.doctors?.length !== 0 && (
+          {!isLoading && data?.doctors && data?.doctors?.length !== 0 && (
             <Typography variant="h1" className={classes.title}>
               {t('searchResults.title', { ns: i18nMedicalDirectory })}
             </Typography>
           )}
           {!isLoading &&
-            data &&
+            data?.doctors &&
             data?.doctors.map((item, idx) => {
               return <CardDoctorResult {...item} redirectTo={`/doctor_profile/${idx}`} key={idx} />;
             })}

@@ -51,7 +51,9 @@ function SearchNavbar(): JSX.Element {
   const [filterIsActive, setFilterIsActive] = useState(false);
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
 
-  const { placeName, textFilter, filters, order, range } = useSelector(state => state.search);
+  const { placeName, textFilter, filters, order, range, priceRange } = useSelector(
+    state => state.search
+  );
 
   const searchLabel = `${textFilter} • ${placeName}`;
 
@@ -78,10 +80,37 @@ function SearchNavbar(): JSX.Element {
     }
   };
 
+  const removeQueryParamsFromRouter = (router, removeList = []) => {
+    if (removeList.length > 0) {
+      removeList.forEach(param => delete router.query[param]);
+    }
+    router.replace(
+      {
+        pathname: router.pathname,
+        query: router.query
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
+
   const handleDeleteFilter = tag => {
+    const priceRangeTag =
+      tag
+        .toString()
+        .replace(/[₡$,\s]/g, '')
+        .replace(/[-]/g, ',')
+        .indexOf(priceRange?.value) !== -1 && 'priceRange';
+
+    const param = [];
+    if (priceRangeTag) param.push(priceRangeTag);
+
+    removeQueryParamsFromRouter(router, [param]);
+
     dispatch(
       searchOnFilter({
         filters: filters.filter(itemTag => itemTag !== tag),
+        ...(priceRangeTag && priceRange?.name === priceRangeTag && { priceRange: null }),
         ...(order && order.name === tag && { order: null }),
         ...(range && range.name === tag && { range: null })
       })
