@@ -7,8 +7,10 @@ export interface SearchState {
   lng?: string;
   textFilter?: string;
   filters?: string[];
+  mode?: FilterNum;
   order?: FilterOrder;
   range?: FilterNum;
+  priceRange?: FilterPriceRange;
 }
 
 export interface FilterOrder {
@@ -21,6 +23,11 @@ export interface FilterNum {
   value: number;
 }
 
+export interface FilterPriceRange {
+  name: string;
+  value: number[];
+}
+
 const initialState: SearchState = {
   placeName: '',
   lat: '',
@@ -28,7 +35,9 @@ const initialState: SearchState = {
   textFilter: '',
   order: null,
   filters: [],
-  range: null
+  range: null,
+  priceRange: null,
+  mode: null
 };
 
 export const searchSlice = createSlice({
