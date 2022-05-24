@@ -74,7 +74,6 @@ const api = {
   },
 
   createSession: (email: string, password: string): Promise<Models.Session> => {
-    api.getJWT();
     return api.provider().account.createSession(email, password);
   },
 
