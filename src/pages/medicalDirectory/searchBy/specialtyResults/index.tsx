@@ -54,7 +54,8 @@ const specialtyResults = (): JSX.Element => {
     detail: searchField.toString(),
     order: order || DoctorSearchOrder.distance,
     range: range,
-    priceRange: priceRange,
+    priceMin: priceRange && priceRange.split('-')[0],
+    priceMax: priceRange && priceRange.split('-')[1],
     mode: mode || DoctorSearchMode.presential
   });
 

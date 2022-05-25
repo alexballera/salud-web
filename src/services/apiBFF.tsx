@@ -152,12 +152,13 @@ export const apiBFF = createApi({
         detail = '',
         range = 5000,
         order,
-        priceRange = 0,
+        priceMin = 0,
+        priceMax = 0,
         appt = DoctorSearchAppt.next,
         mode,
         date = ''
       }) => ({
-        url: `/guide/doctors?latitude=${latitude}&longitude=${longitude}&type=${type}&detail=${detail}&range=${range}&order=${order}&priceRange=${priceRange}&appt=${appt}&mode=${mode}&date=${date}`,
+        url: `/guide/doctors?latitude=${latitude}&longitude=${longitude}&type=${type}&detail=${detail}&range=${range}&order=${order}&priceMin=${priceMin}&priceMax=${priceMax}&appt=${appt}&mode=${mode}&date=${date}`,
         method: 'get'
       })
     }),
