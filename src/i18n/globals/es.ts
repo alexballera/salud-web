@@ -22,7 +22,7 @@ export const esGlobals = {
     forward_email: 'Revisá tu correo',
     new_password: 'Nueva contraseña',
     registered_patient: 'Paciente ya registrado',
-    appoint_availability: 'Ver más fechas'
+    appoint_availability: 'Agregar fecha específica'
   },
 
   description: {

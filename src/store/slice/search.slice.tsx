@@ -11,6 +11,12 @@ export interface SearchState {
   order?: FilterOrder;
   range?: FilterNum;
   priceRange?: FilterPriceRange;
+  appointmentAvailability?: FilterAppointmentAvailability;
+}
+
+export interface FilterAppointmentAvailability {
+  date: string;
+  time: string;
 }
 
 export interface FilterOrder {
@@ -37,7 +43,8 @@ const initialState: SearchState = {
   filters: [],
   range: null,
   priceRange: null,
-  mode: null
+  mode: null,
+  appointmentAvailability: null
 };
 
 export const searchSlice = createSlice({
