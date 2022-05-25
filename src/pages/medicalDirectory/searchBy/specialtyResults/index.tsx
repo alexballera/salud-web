@@ -98,7 +98,7 @@ const specialtyResults = (): JSX.Element => {
             </Grid>
           )}
           <Grid item xs={12} mx={3} mt={3}>
-            {!isLoading && data?.doctors?.length !== 0 && (
+            {!isLoading && data?.doctors && data?.doctors?.length !== 0 && (
               <Typography variant="subtitle2" className={classes.subTitle}>
                 {t('searchResults.title', { ns: i18nMedicalDirectory })}
               </Typography>
@@ -106,7 +106,7 @@ const specialtyResults = (): JSX.Element => {
           </Grid>
           <Grid item xs={12} m={3}>
             {!isLoading &&
-              data &&
+              data.doctors &&
               data.doctors.map((item, idx) => {
                 return (
                   <CardDoctorResult {...item} redirectTo={`/doctor_profile/${idx}`} key={idx} />
