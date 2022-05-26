@@ -28,18 +28,24 @@ import LayoutInner from '../../layouts/LayoutInner';
 /// STYLES & TYPES
 import ProfileStyles from '../../containers/Profile/styles.module';
 import { AppStates } from '../../context/types';
+import { useGetGeneralDataQuery } from '@/src/services/apiBFF';
 /// STYLES & TYPES END
 
 function ProfilePage({ user }: AppStates): JSX.Element {
   const { t } = useTranslation(NAMESPACE_KEY);
   const classes = ProfileStyles();
+  const { data } = useGetGeneralDataQuery();
+
   return (
     <LayoutInner>
       <LayoutContent
         title={<TitleContent title={t('title.profile')} />}
         leftContent={
           <>
-            <AvatarProfile fullName={user?.fullName} documentNumber={user?.documentNumber} />
+            <AvatarProfile
+              fullName={`${data?.firstName} ${data?.firstLastName}`}
+              documentNumber={user?.documentNumber}
+            />
             <Hidden mdUp>
               <Divider className={classes.divider} />
             </Hidden>

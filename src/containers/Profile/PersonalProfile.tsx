@@ -14,11 +14,15 @@ import { NAMESPACE_KEY } from '../../i18n/globals/i18n';
 import { SectionTitle } from './components/SectionTitle';
 import { FieldTextData } from './components/FieldTextData';
 import UpdatePersonalData from './components/UpdatePersonalData';
+import { useGetGeneralDataQuery } from '@/src/services/apiBFF';
+import { format } from 'date-fns';
 /// OWN COMPONENTS END
 
 export const PersonalProfile = (): JSX.Element => {
   const { t } = useTranslation(NAMESPACE_KEY);
   const [showForm, setShowForm] = useState<boolean>(false);
+  const { data } = useGetGeneralDataQuery();
+
   const onClickLink = () => {
     setShowForm(!showForm);
   };
@@ -32,15 +36,20 @@ export const PersonalProfile = (): JSX.Element => {
         />
       </Grid>
       <Grid item xs={12}>
-        <FieldTextData title={t('label.birthdate')} data="23/07/1992" />
+        {data && (
+          <FieldTextData
+            title={t('label.birthdate')}
+            data={format(new Date(data?.birthDate), 'dd/MM/yyyy')}
+          />
+        )}
       </Grid>
       {!showForm && (
         <>
           <Grid item xs={12} className={styles.fadeIn}>
-            <FieldTextData title={t('label.gender.gender')} data="Femenino" />
+            <FieldTextData title={t('label.gender.gender')} data={data?.biologicSex} />
           </Grid>
           <Grid item xs={12} className={styles.fadeIn}>
-            <FieldTextData title={t('label.address.address')} data="San José, San José, Carmen" />
+            <FieldTextData title={t('label.address.address')} data={data?.address} />
           </Grid>
         </>
       )}
