@@ -106,6 +106,7 @@ function MedicalDirectoryPage(): JSX.Element {
           )}
           <List component="nav" className={classes.root} aria-label="menubox history filter items">
             {!isLoading &&
+              data?.searches &&
               data.searches.map((item, idx) => (
                 <ListItem
                   button
@@ -137,7 +138,7 @@ function MedicalDirectoryPage(): JSX.Element {
                 </ListItem>
               ))}
           </List>
-          {!isLoading && !data.searches.length && (
+          {!isLoading && !data.searches?.length && (
             <Box px={3}>
               <Typography variant="h2" className={classes.historyTextTitle}>
                 {t('searchBySection.noRecentSearch', { ns: i18nMedicalDirectory })}

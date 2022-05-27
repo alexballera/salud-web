@@ -108,6 +108,7 @@ function UserProvider({ children }: TProps): JSX.Element {
   const handleUserSignIn = async (email: string, password: string) => {
     const session = await api.createSession(email, password);
     const account = await api.getAccount();
+    await api.getJWT();
     return {
       session,
       account
