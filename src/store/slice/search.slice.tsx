@@ -11,6 +11,7 @@ export interface SearchState {
   order?: FilterOrder;
   range?: FilterNum;
   priceRange?: FilterPriceRange;
+  priceMax?: number;
 }
 
 export interface FilterOrder {
@@ -37,6 +38,7 @@ const initialState: SearchState = {
   filters: [],
   range: null,
   priceRange: null,
+  priceMax: 0,
   mode: null
 };
 

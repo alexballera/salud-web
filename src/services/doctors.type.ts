@@ -1,4 +1,5 @@
 export type TDoctors = {
+  priceMax: number;
   doctors: TDoctor;
 };
 

@@ -92,10 +92,11 @@ function MedicalDirectoryResultsPage(): JSX.Element {
         lat: lat !== '' ? lat : '0',
         lng: lng !== '' ? lng : '0',
         textFilter: searchField,
-        priceRange: price
+        priceRange: price,
+        priceMax: data && data.priceMax
       })
     );
-  }, []);
+  }, [data]);
 
   return (
     <EmptyState loading={isLoading} length={data?.doctors?.length || 0} typeSearch="general">
