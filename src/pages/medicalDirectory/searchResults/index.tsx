@@ -76,7 +76,8 @@ function MedicalDirectoryResultsPage(): JSX.Element {
     order: order || DoctorSearchOrder.distance,
     mode: DoctorSearchMode.presential,
     range: range || 5000,
-    priceRange: priceRange
+    priceMin: priceRange && priceRange.split('-')[0],
+    priceMax: priceRange && priceRange.split('-')[1]
   });
 
   const price =

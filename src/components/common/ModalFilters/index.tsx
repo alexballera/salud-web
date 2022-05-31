@@ -3,7 +3,9 @@ import MuiArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '../../../i18n/medicalDirectory/i18n';
+import { NAMESPACE_KEY as i18nGlobals } from '../../../i18n/globals/i18n';
 import { titlePageColor } from '@/src/styles/js/theme';
+import EditIcon from '@material-ui/icons/Edit';
 
 import modalFiltersStyles from './style.module';
 import { DoctorSearchMode, DoctorSearchOrder } from '@/src/services/doctors.type';
@@ -14,7 +16,8 @@ import { searchOnFilter } from '@/src/store/slice/search.slice';
 import SliderPrice from '../sliderPrice';
 
 import { useSelector } from '@/src/store';
-import { formatMoney } from '@/src/utils/helpers';
+import ModalAppointmentAvailability from '../ModalAppointmentAvailability';
+import { formatMoney, i18nDateFormat } from '@/src/utils/helpers';
 import ChipFilters from '../ChipFilters';
 
 const ArrowBackIcon = styled(MuiArrowBackIcon)({
@@ -27,8 +30,9 @@ type Tprops = {
 };
 
 const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
+  const { appointmentAvailability } = useSelector(state => state.search);
   const classes = modalFiltersStyles();
-  const { t } = useTranslation([i18nMedicalDirectory]);
+  const { t } = useTranslation([i18nMedicalDirectory, i18nGlobals]);
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -86,6 +90,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
     }
   ];
 
+  const [appointmentAvailabilityModal, setAppointmentAvailabilityModal] = useState(false);
   const appointmentAvailabilityOptionsArray = [
     {
       label: t('filters.appointmentAvailability.nearestAppointment', { ns: i18nMedicalDirectory }),
@@ -193,14 +198,9 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
       return item;
     });
     setAppointmentAvailabilityOptions(newValue);
-    // dispatch(
-    //   searchOnFilter({
-    //     range: {
-    //       name: rangeOptions.find(item => item.id === i + 1).label,
-    //       value: rangeOptions.find(item => item.id === i + 1).value
-    //     }
-    //   })
-    // );
+    if (i === 4) {
+      setAppointmentAvailabilityModal(true);
+    }
   };
 
   const handleSelectModeOption = (i: number) => {
@@ -391,7 +391,9 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
               </Typography>
               <br />
               {appointmentAvailabilityOptions.map((tag, idx) => {
-                return (
+                return appointmentAvailability && idx === 4 ? (
+                  ''
+                ) : (
                   <ChipFilters
                     key={idx}
                     isActive={tag.isActive}
@@ -402,6 +404,27 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
                   />
                 );
               })}
+              <Box>
+                {appointmentAvailability && (
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <ChipFilters
+                      isActive={true}
+                      label={
+                        i18nDateFormat(appointmentAvailability.date, "d 'de' MMMM ") +
+                        appointmentAvailability.time
+                      }
+                    />
+                    <Box mt={2}>
+                      <Button size="small" onClick={() => handleSelectAppointmentOption(4)}>
+                        <Typography variant="body2" className={classes.editText}>
+                          {t('label.edit', { ns: i18nGlobals })}
+                        </Typography>
+                        <EditIcon className={classes.editIcon} />
+                      </Button>
+                    </Box>
+                  </Box>
+                )}
+              </Box>
             </Box>
           </Grid>
           <Grid item xs={12} mt={3}>
@@ -439,7 +462,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
         >
           <Grid item>
             <Typography variant="body2" className={classes.titleFilter}>
-              0 {t('filters.results', { ns: i18nMedicalDirectory })}
+              {t('filters.results', { ns: i18nMedicalDirectory })}
             </Typography>
           </Grid>
           <Grid item>
@@ -454,6 +477,10 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
             </Button>
           </Grid>
         </Grid>
+        <ModalAppointmentAvailability
+          isOpen={appointmentAvailabilityModal}
+          isClose={setAppointmentAvailabilityModal}
+        />
       </Box>
     </Modal>
   );

@@ -54,7 +54,8 @@ const specialtyResults = (): JSX.Element => {
     detail: searchField.toString(),
     order: order || DoctorSearchOrder.distance,
     range: range,
-    priceRange: priceRange,
+    priceMin: priceRange && priceRange.split('-')[0],
+    priceMax: priceRange && priceRange.split('-')[1],
     mode: mode || DoctorSearchMode.presential
   });
 
@@ -97,7 +98,7 @@ const specialtyResults = (): JSX.Element => {
             </Grid>
           )}
           <Grid item xs={12} mx={3} mt={3}>
-            {!isLoading && data?.doctors?.length !== 0 && (
+            {!isLoading && data?.doctors && data?.doctors?.length !== 0 && (
               <Typography variant="subtitle2" className={classes.subTitle}>
                 {t('searchResults.title', { ns: i18nMedicalDirectory })}
               </Typography>
@@ -105,7 +106,6 @@ const specialtyResults = (): JSX.Element => {
           </Grid>
           <Grid item xs={12} m={3}>
             {!isLoading &&
-              data &&
               data.doctors &&
               data.doctors.map((item, idx) => {
                 return (
