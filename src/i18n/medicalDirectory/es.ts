@@ -42,6 +42,7 @@ export const esMedicalDirectory = {
       highLowPrice: 'Precio alto-bajo',
       lowHighPrice: 'Precio bajo-alto',
       availability: 'Disponibilidad',
+      availableDatesCaption: 'Horas disponibles',
       alphabetically: 'Alfabéticamente',
       modalityTelemedicine: 'Telemedicina',
       modalityFaceToFace: 'Presencial'

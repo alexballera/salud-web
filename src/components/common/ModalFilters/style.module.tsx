@@ -61,6 +61,16 @@ const modalFiltersStyles = makeStyles({
     display: 'flex',
     overflow: 'scroll',
     paddingBottom: 15
+  },
+  editText: {
+    textTransform: 'none',
+    fontSize: 13,
+    color: secondaryMainColor
+  },
+  editIcon: {
+    width: '15px',
+    marginLeft: 5,
+    color: secondaryMainColor
   }
 });
 
