@@ -149,7 +149,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
   ];
 
   const [orderOptions, setOrderOptions] = useState(orderOptionsArray);
-  const { order, range, mode, priceRange } = useSelector(state => state.search);
+  const { order, range, mode, priceRange, priceMax } = useSelector(state => state.search);
 
   // filtro de distancia
   const [rangeOptions, setRangeOptions] = useState(rangeOptionsArray);
@@ -375,7 +375,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
               <Box mt={2}>
                 <SliderPrice
                   min={0}
-                  max={30000}
+                  max={priceMax}
                   step={1000}
                   currency="₡"
                   priceRange={priceRange?.value}

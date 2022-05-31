@@ -11,6 +11,7 @@ export interface SearchState {
   order?: FilterOrder;
   range?: FilterNum;
   priceRange?: FilterPriceRange;
+  priceMax?: number;
   appointmentAvailability?: FilterAppointmentAvailability;
 }
 
@@ -43,6 +44,7 @@ const initialState: SearchState = {
   filters: [],
   range: null,
   priceRange: null,
+  priceMax: 0,
   mode: null,
   appointmentAvailability: null
 };
