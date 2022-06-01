@@ -21,7 +21,8 @@ export const enGlobals = {
     },
     forward_email: 'Check your email',
     new_password: 'New password',
-    registered_patient: 'Patient already registered'
+    registered_patient: 'Patient already registered',
+    appoint_availability: 'Add specific date'
   },
 
   description: {

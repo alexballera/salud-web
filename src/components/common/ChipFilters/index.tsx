@@ -7,9 +7,9 @@ import SvgAdd from '../Svg/SvgAdd.component';
 
 type Tprops = {
   isActive: boolean;
-  idx: number;
-  label: string;
-  handleSelect;
+  idx?: number;
+  label?: string;
+  handleSelect?;
   icon?: boolean;
 };
 

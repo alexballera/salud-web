@@ -70,12 +70,12 @@ export const getPosition = (): Promise<TGeolocation> => {
       position => {
         resolve(position.coords);
       },
-      () => {
-        reject(errorCallback(reject));
+      error => {
+        reject(errorCallback(error));
       },
       {
-        enableHighAccuracy: false,
-        timeout: 5000,
+        enableHighAccuracy: true,
+        timeout: 20000,
         maximumAge: 0
       }
     );
@@ -84,14 +84,12 @@ export const getPosition = (): Promise<TGeolocation> => {
 
 function errorCallback(error) {
   switch (error.code) {
-    case error.PERMISSION_DENIED:
+    case 1:
       return 'User denied the request for Geolocation.';
-    case error.POSITION_UNAVAILABLE:
+    case 2:
       return 'Location information is unavailable.';
-    case error.TIMEOUT:
+    case 3:
       return 'The request to get user location timed out.';
-    case error.UNKNOWN_ERROR:
-      return 'An unknown error occurred.';
   }
 }
 

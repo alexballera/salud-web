@@ -76,7 +76,8 @@ function MedicalDirectoryResultsPage(): JSX.Element {
     order: order || DoctorSearchOrder.distance,
     mode: DoctorSearchMode.presential,
     range: range || 5000,
-    priceRange: priceRange
+    priceMin: priceRange && priceRange.split('-')[0],
+    priceMax: priceRange && priceRange.split('-')[1]
   });
 
   const price =
@@ -92,10 +93,11 @@ function MedicalDirectoryResultsPage(): JSX.Element {
         lat: lat !== '' ? lat : '0',
         lng: lng !== '' ? lng : '0',
         textFilter: searchField,
-        priceRange: price
+        priceRange: price,
+        priceMax: data && data.priceMax
       })
     );
-  }, []);
+  }, [data]);
 
   return (
     <EmptyState loading={isLoading} length={data?.doctors?.length || 0} typeSearch="general">

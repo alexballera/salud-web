@@ -43,6 +43,7 @@ export const enMedicalDirectory = {
       lowHighPrice: 'Low-High price',
       availability: 'Availability',
       alphabetically: 'Alphabetically',
+      availableDatesCaption: 'Available dates',
       modalityTelemedicine: 'Telemedicine',
       modalityFaceToFace: 'Face to Face'
     },

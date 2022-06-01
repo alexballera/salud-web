@@ -11,6 +11,13 @@ export interface SearchState {
   order?: FilterOrder;
   range?: FilterNum;
   priceRange?: FilterPriceRange;
+  priceMax?: number;
+  appointmentAvailability?: FilterAppointmentAvailability;
+}
+
+export interface FilterAppointmentAvailability {
+  date: string;
+  time: string;
 }
 
 export interface FilterOrder {
@@ -37,7 +44,9 @@ const initialState: SearchState = {
   filters: [],
   range: null,
   priceRange: null,
-  mode: null
+  priceMax: 0,
+  mode: null,
+  appointmentAvailability: null
 };
 
 export const searchSlice = createSlice({
@@ -50,6 +59,13 @@ export const searchSlice = createSlice({
         ...action.payload
       };
     },
+    searchCleanSelected: (state, action: PayloadAction<SearchState>) => {
+      return {
+        ...state,
+        ...initialState,
+        ...action.payload
+      };
+    },
     searchClean: state => {
       return {
         ...state,
@@ -59,6 +75,6 @@ export const searchSlice = createSlice({
   }
 });
 
-export const { searchOnFilter, searchClean } = searchSlice.actions;
+export const { searchOnFilter, searchCleanSelected, searchClean } = searchSlice.actions;
 
 export default searchSlice.reducer;
