@@ -59,6 +59,13 @@ export const searchSlice = createSlice({
         ...action.payload
       };
     },
+    searchCleanSelected: (state, action: PayloadAction<SearchState>) => {
+      return {
+        ...state,
+        ...initialState,
+        ...action.payload
+      };
+    },
     searchClean: state => {
       return {
         ...state,
@@ -68,6 +75,6 @@ export const searchSlice = createSlice({
   }
 });
 
-export const { searchOnFilter, searchClean } = searchSlice.actions;
+export const { searchOnFilter, searchCleanSelected, searchClean } = searchSlice.actions;
 
 export default searchSlice.reducer;

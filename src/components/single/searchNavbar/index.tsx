@@ -20,7 +20,7 @@ import { NAMESPACE_KEY as i18Global } from '../../../i18n/globals/i18n';
 import { NAMESPACE_KEY as i18Forms } from '../../../i18n/forms/i18n';
 import { NAMESPACE_KEY as i18nMedicalDirectory } from '../../../i18n/medicalDirectory/i18n';
 import { useSelector } from '@/src/store';
-import { searchOnFilter, searchClean } from '@/src/store/slice/search.slice';
+import { searchOnFilter, searchCleanSelected } from '@/src/store/slice/search.slice';
 import searchNavbarStyles from './styles.module';
 
 const Chip = styled(MuiChip)({
@@ -51,7 +51,7 @@ function SearchNavbar(): JSX.Element {
   const [filterIsActive, setFilterIsActive] = useState(false);
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
 
-  const { placeName, textFilter, filters, order, range, priceRange } = useSelector(
+  const { placeName, textFilter, filters, order, range, priceRange, lat, lng } = useSelector(
     state => state.search
   );
 
@@ -75,7 +75,12 @@ function SearchNavbar(): JSX.Element {
     if (searchIsActive) {
       setSearchIsActive(false);
     } else {
-      dispatch(searchClean());
+      dispatch(
+        searchCleanSelected({
+          lat: lat,
+          lng: lng
+        })
+      );
       handleRouteBack(router.pathname);
     }
   };

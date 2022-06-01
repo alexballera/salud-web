@@ -61,6 +61,7 @@ const SearchWithGeolocation = ({
               value={textFilter}
               className={classes.inputColor}
               fullWidth
+              disabled={!lat && true}
               onChange={handleChange}
               autoComplete="false"
               onPaste={event => {
