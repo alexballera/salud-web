@@ -62,6 +62,10 @@ const SearchWithGeolocation = ({
               className={classes.inputColor}
               fullWidth
               onChange={handleChange}
+              autoComplete="false"
+              onPaste={event => {
+                event.preventDefault();
+              }}
               onKeyDown={e => {
                 if (e.key === 'Enter') {
                   redirecSearch(textFilter);

@@ -129,7 +129,7 @@ const AutoCompleteGoogleMaps = ({ redirecTo, isActiveModal, closeModal }: TProps
   const gpsPosition = async () => {
     await getPosition()
       .then(function (result) {
-        // console.log('📍 Coordinates: ', result.latitude, result.longitude);
+        // console.log('📍 Coordinates GPS: ', result.latitude, result.longitude);
 
         dispatch(
           searchOnFilter({
@@ -158,6 +158,9 @@ const AutoCompleteGoogleMaps = ({ redirecTo, isActiveModal, closeModal }: TProps
         onChange={(event: any, newValue: PlaceType | null) => {
           setOptions(newValue ? [newValue, ...options] : options);
           setValue(newValue);
+        }}
+        onPaste={event => {
+          event.preventDefault();
         }}
         onInputChange={(event, newInputValue) => {
           setInputValue(newInputValue);
