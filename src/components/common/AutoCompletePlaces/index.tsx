@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { TextField, Grid, Typography, Autocomplete, Box } from '@mui/material';
+import { TextField, Grid, Typography, Autocomplete, Box, styled } from '@mui/material';
+import MuiCircularProgress from '@material-ui/core/CircularProgress';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash/throttle';
 
@@ -14,6 +15,11 @@ import autoCompleteLocationStyles from './style.module';
 
 import { useSelector } from '@/src/store';
 import { searchOnFilter } from '@/src/store/slice/search.slice';
+import { secondaryMainColor } from '@/src/styles/js/theme';
+
+const CircularProgress = styled(MuiCircularProgress)({
+  color: secondaryMainColor
+});
 
 interface MainTextMatchedSubstrings {
   offset: number;
@@ -41,7 +47,7 @@ const AutoCompleteGoogleMaps = ({ redirecTo, isActiveModal, closeModal }: TProps
   const classes = autoCompleteLocationStyles();
   const { t } = useTranslation([i18Global]);
 
-  const { placeName, textFilter } = useSelector(state => state.search);
+  const { placeName, textFilter, lat } = useSelector(state => state.search);
   const dispatch = useDispatch();
 
   const [value, setValue] = useState<PlaceType | any>(
@@ -58,7 +64,9 @@ const AutoCompleteGoogleMaps = ({ redirecTo, isActiveModal, closeModal }: TProps
     []
   );
   useEffect(() => {
-    gpsPosition();
+    if (!lat) {
+      gpsPosition();
+    }
   }, []);
 
   useEffect(() => {
@@ -174,6 +182,7 @@ const AutoCompleteGoogleMaps = ({ redirecTo, isActiveModal, closeModal }: TProps
         forcePopupIcon={true}
         popupIcon={''}
         disableClearable={true}
+        disabled={!lat && true}
         fullWidth
         renderInput={params => (
           <TextField
@@ -218,9 +227,18 @@ const AutoCompleteGoogleMaps = ({ redirecTo, isActiveModal, closeModal }: TProps
           }
         }}
       />
-      <Box className={classes.icon} onClick={() => cleanSelect()}>
-        <LocationOnOutlinedIcon />
-      </Box>
+      {lat ? (
+        <Box className={classes.icon} onClick={() => cleanSelect()}>
+          <LocationOnOutlinedIcon />
+        </Box>
+      ) : (
+        <Box className={classes.icon}>
+          <CircularProgress
+            color="secondary"
+            sx={{ width: '20px !important', height: '20px !important' }}
+          />
+        </Box>
+      )}
     </>
   );
 };
