@@ -411,6 +411,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
                       isActive={true}
                       label={
                         i18nDateFormat(appointmentAvailability.date, "d 'de' MMMM ") +
+                        '- ' +
                         appointmentAvailability.time
                       }
                     />
