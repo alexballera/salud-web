@@ -59,7 +59,8 @@ const useStyles = makeStyles({
   main: {
     backgroundColor: 'white',
     height: '100vh',
-    width: '100%'
+    width: '100%',
+    overflowY: 'scroll'
   },
   navBar: {
     padding: '8px 28px',
@@ -229,7 +230,7 @@ function ModalAppointmentAvailability({ isOpen, isClose }: Tprops): JSX.Element 
             </Grid>
           )}
 
-          <Grid item xs={12} className={classes.actions} mt={3}>
+          <Grid item xs={12} className={classes.actions} mt={3} pb={3}>
             {selected && (
               <Button
                 fullWidth
