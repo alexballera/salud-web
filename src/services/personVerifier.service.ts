@@ -25,7 +25,7 @@ export const personVerifier = ({
   };
   return new Promise((resolve, reject) => {
     axios
-      .post(`${process.env.NEXT_PUBLIC_API_URL}user/validate-person`, params)
+      .post(`${process.env.NEXT_PUBLIC_API_URL_BFF}/patients/validate`, params)
       .then(res => {
         const data = res.data.result.paciente;
         const fullName = data ? `${data.name} ${data.surname} ${data?.lastSurname ?? ''}` : '';
