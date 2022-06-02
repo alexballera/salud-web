@@ -64,9 +64,7 @@ const AutoCompleteGoogleMaps = ({ redirecTo, isActiveModal, closeModal }: TProps
     []
   );
   useEffect(() => {
-    if (!lat) {
-      gpsPosition();
-    }
+    gpsPosition();
   }, []);
 
   useEffect(() => {
