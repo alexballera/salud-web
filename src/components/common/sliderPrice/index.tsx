@@ -41,7 +41,7 @@ type TProps = {
   max: number;
   step: number;
   currency: string;
-  priceRange?: number[];
+  priceRange: number[];
   setRangePrice;
 };
 
@@ -53,7 +53,6 @@ const SliderPrice = ({
   priceRange,
   setRangePrice
 }: TProps): JSX.Element => {
-  console.log(min, max);
   const [value, setValue] = React.useState<number[]>(priceRange || [min, max]);
   const dispatch = useDispatch();
 
