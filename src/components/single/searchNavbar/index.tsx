@@ -100,7 +100,7 @@ function SearchNavbar(): JSX.Element {
         .toString()
         .replace(/[₡$,\s]/g, '')
         .replace(/[-]/g, ',')
-        .indexOf(priceRange?.toString()) !== -1 && 'priceRange';
+        .indexOf(priceRange?.value) !== -1 && 'priceRange';
 
     const param = [];
     if (priceRangeTag) param.push(priceRangeTag);

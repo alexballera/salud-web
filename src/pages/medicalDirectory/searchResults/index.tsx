@@ -80,12 +80,6 @@ function MedicalDirectoryResultsPage(): JSX.Element {
     priceMax: priceRange && priceRange.split('-')[1]
   });
 
-  const price =
-    priceRange &&
-    priceRange.split('-').map(str => {
-      return Number(str);
-    });
-
   useEffect(() => {
     dispatch(
       searchOnFilter({
@@ -93,7 +87,6 @@ function MedicalDirectoryResultsPage(): JSX.Element {
         lat: lat !== '' ? lat : '0',
         lng: lng !== '' ? lng : '0',
         textFilter: searchField,
-        priceRange: price,
         priceMax: data && data.priceMax
       })
     );
