@@ -51,7 +51,7 @@ function SearchNavbar(): JSX.Element {
   const [filterIsActive, setFilterIsActive] = useState(false);
   const { t } = useTranslation([i18Global, i18Forms, i18nMedicalDirectory]);
 
-  const { placeName, textFilter, filters, order, range, priceRange, lat, lng } = useSelector(
+  const { placeName, textFilter, filters, order, range, priceRange } = useSelector(
     state => state.search
   );
 
