@@ -375,7 +375,7 @@ const ModalFilters = ({ openModal, closeModal }: Tprops): JSX.Element => {
               <Box mt={2}>
                 <SliderPrice
                   min={0}
-                  max={priceMax}
+                  max={Number(priceMax)}
                   step={1000}
                   currency="₡"
                   priceRange={priceRange?.value}
