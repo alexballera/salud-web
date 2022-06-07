@@ -29,7 +29,9 @@ type TGetDistricts = {
 /// TYPES END
 
 export const getFirstLevel = (countryCode: string): Promise<AxiosResponse<TGetProvinces>> => {
-  return axios.get(`${process.env.apiUrl}sac-general/provinces-api?countryCode=${countryCode}`);
+  return axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL_BFF}/geolocation/provinces?countryCode=${countryCode}`
+  );
 };
 
 export const getSecondLevel = (
@@ -37,7 +39,7 @@ export const getSecondLevel = (
   firstLevel: string | number
 ): Promise<AxiosResponse<TGetCantones>> => {
   return axios.get(
-    `${process.env.apiUrl}sac-general/cantons-api?countryCode=${country}&level1Code=${firstLevel}`
+    `${process.env.NEXT_PUBLIC_API_URL_BFF}/geolocation/cantons?countryCode=${country}&level1Code=${firstLevel}`
   );
 };
 
@@ -46,23 +48,23 @@ export const getThirdLevel = (
   secondLevel: string | number
 ): Promise<AxiosResponse<TGetDistricts>> => {
   return axios.get(
-    `${process.env.apiUrl}sac-general/districts-api?countryCode=${country}&level2Code=${secondLevel}`
+    `${process.env.NEXT_PUBLIC_API_URL_BFF}/geolocation/districts?countryCode=${country}&level2Code=${secondLevel}`
   );
 };
 
 // TODO: Delete this functions once beneficiary page will be changed
 export const getProvinces = (): Promise<AxiosResponse<TGetProvinces>> => {
-  return axios.get(`${process.env.apiUrl}sac-general/provinces-api?countryCode=6`);
+  return axios.get(`${process.env.NEXT_PUBLIC_API_URL_BFF}/geolocation/provinces?countryCode=6`);
 };
 
 export const getCanton = (provinceId: string | number): Promise<AxiosResponse<TGetCantones>> => {
   return axios.get(
-    `${process.env.apiUrl}sac-general/cantons-api?countryCode=1&level1Code=${provinceId}`
+    `${process.env.NEXT_PUBLIC_API_URL_BFF}/geolocation/cantons?countryCode=1&level1Code=${provinceId}`
   );
 };
 
 export const getDistrict = (cantonId: string | number): Promise<AxiosResponse<TGetDistricts>> => {
   return axios.get(
-    `${process.env.apiUrl}sac-general/districts-api?countryCode=1&level2Code=${cantonId}`
+    `${process.env.NEXT_PUBLIC_API_URL_BFF}/geolocation/districts?countryCode=1&level2Code=${cantonId}`
   );
 };
