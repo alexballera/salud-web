@@ -59,12 +59,6 @@ const specialtyResults = (): JSX.Element => {
     mode: mode || DoctorSearchMode.presential
   });
 
-  const price =
-    priceRange &&
-    priceRange.split('-').map(str => {
-      return Number(str);
-    });
-
   useEffect(() => {
     dispatch(
       searchOnFilter({
@@ -72,10 +66,10 @@ const specialtyResults = (): JSX.Element => {
         lat: lat !== '' ? lat : '0',
         lng: lng !== '' ? lng : '0',
         textFilter: searchField,
-        priceRange: price
+        priceMax: data && data.priceMax
       })
     );
-  }, []);
+  }, [data]);
 
   return (
     <ThemeProvider theme={muiTheme}>
